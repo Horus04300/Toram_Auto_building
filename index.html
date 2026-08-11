@@ -1,0 +1,1957 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>토람 온라인 데미지 계산기 & 크리스타 최적화 (V15 피드백 반영판)</title>
+    <style>
+        * { box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; color: #333; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 25px; font-size: 26px; }
+        .container { background: #fff; padding: 25px 30px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); margin-bottom: 20px; }
+        
+        .section-title { font-size: 1.25em; color: #2980b9; margin-bottom: 15px; border-bottom: 2px solid #eaf2f8; padding-bottom: 6px; font-weight: bold; }
+        
+        .equip-card { background: #fdfefe; border: 1px solid #d5dbdb; border-radius: 8px; padding: 16px; margin-bottom: 16px; }
+        .equip-card h3 { margin: 0 0 12px 0; font-size: 1.1em; color: #34495e; border-left: 4px solid #3498db; padding-left: 10px; display: flex; justify-content: space-between; align-items: center; }
+        
+        .form-group { margin-bottom: 12px; display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .form-group label.title-label { flex: 0 0 145px; font-weight: bold; color: #444; font-size: 14px; }
+        .form-group input[type="number"], .form-group select, .form-group input[type="text"] { flex: 1; min-width: 110px; padding: 8px 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 14px; }
+        .form-group input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; vertical-align: middle; }
+
+        .crysta-info { width: 100%; padding-left: 155px; display: flex; flex-wrap: wrap; gap: 5px; min-height: 20px; margin-top: -5px; margin-bottom: 8px; }
+        .stat-tag { font-size: 12px; padding: 3px 6px; border-radius: 4px; background: #eaf2f8; color: #2980b9; border: 1px solid #d4e6f1; }
+        .stat-tag.negative { background: #fdedec; color: #c0392b; border-color: #fadbd8; }
+        .stat-tag.disabled { background: #f4f6f7; color: #95a5a6; border-color: #d5dbdb; text-decoration: line-through; }
+
+        .checkbox-container { background: #fdfefe; padding: 12px; border-radius: 6px; border: 1px solid #d5dbdb; width: 100%; margin-bottom: 15px; }
+        .checkbox-grid { display: flex; flex-wrap: wrap; gap: 12px 20px; width: 100%; }
+        .checkbox-item { font-size: 13px; color: #333; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .checkbox-item input:disabled + span { color: #aaa; text-decoration: line-through; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #e9ecef; }
+        .stats-col { display: flex; flex-direction: column; text-align: center; }
+        .stats-col label { font-weight: bold; color: #e67e22; margin-bottom: 6px; font-size: 13px; }
+        .stats-col input { padding: 8px; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-size: 14px; font-weight: bold; }
+
+        .blacklist-container { background: #fdf2e9; padding: 16px; border-radius: 8px; border: 1px dashed #e67e22; margin-bottom: 20px;}
+        .tag-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+        .ban-tag { background: #e74c3c; color: white; padding: 5px 12px; border-radius: 20px; font-size: 13px; display: flex; align-items: center; gap: 6px; font-weight: 500; }
+        .ban-tag button { background: none; border: none; color: white; cursor: pointer; font-weight: bold; padding: 0; font-size: 14px; line-height: 1; }
+        
+        .add-opt-btn { background: #e8f4f8; border: 1px solid #a3d7e8; padding: 4px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; color: #1b6ec2; font-weight: bold; }
+        .add-opt-btn:hover { background: #d0e8f2; }
+        .opt-row { display: flex; gap: 6px; margin-top: 6px; width: 100%; align-items: center; }
+
+        .btn-calc { display: block; width: 100%; padding: 15px; background-color: #27ae60; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: background 0.2s; margin-top: 10px; }
+        .btn-calc:hover { background-color: #219150; }
+
+        .def-warning { background-color: #fdedec; border: 2px solid #e74c3c; color: #c0392b; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-weight: bold; line-height: 1.5; font-size:14px; }
+        .result-box { margin-top: 25px; padding: 20px; background: #fff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 2px solid #2980b9; }
+        .res-title { font-size: 1.3em; color: #2980b9; margin-bottom: 15px; border-bottom: 2px solid #eaf2f8; padding-bottom: 8px; font-weight: bold; }
+        
+        .res-6grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .res-box { background: #f9fbfd; padding: 15px; border-radius: 6px; border: 1px solid #d5dbdb; position: relative; }
+        .res-box h4 { margin: 0 0 10px 0; color: #2c3e50; font-size: 1.05em; border-bottom: 1px dashed #bdc3c7; padding-bottom: 5px; }
+        .res-box ul { list-style: none; padding: 0; margin: 0; font-size: 13px; line-height: 1.7; }
+        .res-box ul li { display: flex; justify-content: space-between; border-bottom: 1px solid #f0f3f4; padding: 4px 0; align-items: center; }
+        .res-box ul li:last-child { border-bottom: none; }
+        .res-box ul li span { font-weight: bold; color: #e67e22; }
+        .res-box ul li span.highlight { color: #c0392b; font-size: 14px; }
+
+        .stat-grid-box { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 15px; }
+        .stat-mini-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 4px; padding: 8px 0; text-align: center; font-size: 13px; color: #555; position: relative; }
+        .stat-mini-card b { display: block; font-size: 15px; color: #d35400; margin-top: 4px; }
+        .stat-pct-tag { font-size: 11px; color: #2980b9; margin-top: 2px; }
+
+        .top3-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .top3-row { background: #f4f6f7; padding: 12px; border-radius: 6px; border-left: 4px solid #7f8c8d; font-size: 14px; }
+        .top3-row h5 { margin: 0 0 5px 0; color: #34495e; font-size: 1em; }
+        .top3-list { margin:0; padding-left: 20px; color: #444; }
+        .top3-list li { margin-bottom: 4px; }
+        
+        .final-rec { background: #f0fbf4; border: 1px solid #2ecc71; padding: 15px; border-radius: 8px; position: relative; }
+        .final-rec h3 { margin: 0 0 10px 0; color: #27ae60; border-bottom: 2px solid #a9dfbf; padding-bottom: 5px; }
+        .final-rec-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; padding-top: 10px; border-top: 1px dashed #a9dfbf; }
+        .total-eff-badge { position: absolute; top: 15px; right: 15px; background: #e74c3c; color: white; padding: 5px 10px; border-radius: 20px; font-size: 13px; font-weight: bold; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+        .eff-item-container { margin-bottom: 12px; }
+        .eff-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 4px; color: #444; }
+        .eff-bar-bg { width: 100%; background-color: #ecf0f1; border-radius: 4px; height: 16px; overflow: hidden; position: relative; }
+        .eff-bar-fill { height: 100%; background: linear-gradient(90deg, #3498db, #2980b9); border-radius: 4px; transition: width 0.5s ease; }
+        
+        .lock-label { display: flex; align-items: center; gap: 4px; font-size: 12px; font-weight: bold; color: #c0392b; cursor: pointer; flex: 0 0 auto; background: #fdedec; padding: 5px 8px; border-radius: 4px; border: 1px solid #f5b7b1; }
+        .lock-label:hover { background: #fadbd8; }
+
+        /* 툴팁 스타일 */
+        .has-tooltip { position: relative; cursor: help; border-bottom: 1px dashed #e67e22; }
+        .has-tooltip .tooltip-text {
+            visibility: hidden; width: max-content; max-width: 280px; background-color: #34495e; color: #fff; text-align: left;
+            border-radius: 6px; padding: 8px 12px; position: absolute; z-index: 100; bottom: 125%; left: 50%;
+            transform: translateX(-50%); opacity: 0; transition: opacity 0.3s; font-size: 12px; font-weight: normal; line-height: 1.5; white-space: pre-wrap; box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .has-tooltip:hover .tooltip-text { visibility: visible; opacity: 1; }
+        .has-tooltip .tooltip-text::after { content: ""; position: absolute; top: 100%; left: 50%; margin-left: -5px; border-width: 5px; border-style: solid; border-color: #34495e transparent transparent transparent; }
+/* 자동완성(검색) 커스텀 스타일 */
+.autocomplete-wrapper { position: relative; display: flex; flex: 1; min-width: 110px; }
+.autocomplete-wrapper input { width: 100% !important; margin: 0; }
+.autocomplete-items {
+    position: absolute; border: 1px solid #d4e6f1; border-top: none; z-index: 999;
+    top: 100%; left: 0; right: 0; max-height: 200px; overflow-y: auto;
+    background-color: #fff; border-radius: 0 0 5px 5px; box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.autocomplete-items div {
+    padding: 8px 10px; cursor: pointer; background-color: #fff; border-bottom: 1px solid #f0f3f4; font-size: 13px;
+}
+.autocomplete-items div:hover { background-color: #eaf2f8; }
+.autocomplete-active { background-color: #3498db !important; color: #ffffff !important; }
+.autocomplete-items strong { color: #e74c3c; font-weight: bold; } /* 검색어 일치 부분 강조 */
+    </style>
+</head>
+<body>
+
+    <h1>🗡️ 토람 온라인 데미지 계산기 & 크리스타 최적화 (V12 피드백 반영판)</h1>
+
+    <div class="container">
+        <div class="section-title">1. 캐릭터 순수 스탯 (레벨업 투자 수치)</div>
+        <div class="form-group">
+            <label class="title-label">캐릭터 레벨</label>
+            <input type="number" id="charLevel" value="325">
+        </div>
+        <div class="stats-grid">
+            <div class="stats-col"><label>STR</label><input type="number" id="strBase" value="1"></div>
+            <div class="stats-col"><label>INT</label><input type="number" id="intBase" value="1"></div>
+            <div class="stats-col"><label>VIT</label><input type="number" id="vitBase" value="1"></div>
+            <div class="stats-col"><label>AGI</label><input type="number" id="agiBase" value="1"></div>
+            <div class="stats-col"><label>DEX</label><input type="number" id="dexBase" value="1"></div>
+            <div class="stats-col"><label>CRT</label><input type="number" id="crtBase" value="0"></div>
+        </div>
+
+        <div class="section-title">2. 특수 스킬 / 패시브 조건 설정</div>
+        <div class="checkbox-container">
+            <div class="checkbox-grid">
+                <label class="checkbox-item"><input type="checkbox" id="chkIsUnsheathe"> <span>발도 스킬 여부 (발도위력 적용)</span></label>
+                <label class="checkbox-item"><input type="checkbox" id="chkSpellBurst"> <span>스펠 버스트 10Lv (마법 크리 반영률 +25%)</span></label>
+                <label class="checkbox-item"><input type="checkbox" id="chkWeakness"> <span>보스 약점/쇠약 상태 (마법 크리 반영률 +50%)</span></label>
+                
+                <label class="checkbox-item" id="wrapMagicWarrior" style="display:none;"><input type="checkbox" id="chkMagicWarrior"> <span style="color:#2980b9; font-weight:bold;">마법전사의 마음가짐 (서브 마도구 전용: 페널티 상쇄)</span></label>
+                <label class="checkbox-item" id="wrapConversion" style="display:none;"><input type="checkbox" id="chkConversion"> <span style="color:#2980b9; font-weight:bold;">컨버전 (서브 마도구 전용: 무기ATK를 MATK에 가산)</span></label>
+                <label class="checkbox-item" id="wrapDualBringer" style="display:none;"><input type="checkbox" id="chkDualBringer"> <span style="color:#2980b9; font-weight:bold;">듀얼 브링거 (서브 마도구 전용: STR/INT 크리티컬 보정)</span></label>
+            </div>
+        </div>
+
+        <div class="section-title">3. 타겟(보스) 정보 및 공격 유형 세팅</div>
+        <div class="equip-card" style="background:#fef9e7; border-color:#f1c40f;">
+            <div class="form-group">
+                <label class="title-label">공격 / 거리 유형</label>
+                <select id="atkType" style="font-weight:bold; color:#c0392b;">
+                    <option value="PHYS">물리 공격 (Physical)</option>
+                    <option value="MAG">마법 공격 (Magic)</option>
+                </select>
+                <select id="rangeType" style="font-weight:bold; color:#2980b9;">
+                    <option value="SHORT">근거리 (Short Range)</option>
+                    <option value="LONG">원거리 (Long Range)</option>
+                </select>
+                <label class="title-label" style="flex:0 0 80px; text-align:right;">보스 레벨</label>
+                <input type="number" id="bossLevel" value="300" placeholder="보스 레벨" style="max-width:90px;">
+            </div>
+            <div class="form-group">
+                <label class="title-label">타겟 방어력 (DEF/MDEF)</label>
+                <input type="number" id="bossDef" value="0" placeholder="물리 방어력(DEF)">
+                <input type="number" id="bossMdef" value="0" placeholder="마법 방어력(MDEF)">
+            </div>
+            <div class="form-group">
+                <label class="title-label">타겟 내성 (물리/마법)</label>
+                <input type="number" id="bossPhysResist" value="0" placeholder="물리 내성(%)">
+                <input type="number" id="bossMagResist" value="0" placeholder="마법 내성(%)">
+            </div>
+            <div class="form-group">
+                <label class="title-label">크리티컬 저항</label>
+                <input type="number" id="bossCritResist" value="0" placeholder="크리티컬 저항 (기본0)">
+            </div>
+            <div class="form-group" style="border-top:1px dashed #d4ac0d; padding-top:10px; margin-top:10px;">
+                <label class="title-label" style="color:#d35400;">스킬 계수 (배율)</label>
+                <input type="number" id="skillMult" value="1" placeholder="예: 30" style="flex: 1;">
+                <label class="title-label" style="flex:0 0 80px; text-align:right; color:#d35400;">스킬 상수</label>
+                <input type="number" id="skillConst" value="1000" placeholder="예: 1000" style="flex: 1;">
+                <button type="button" class="add-opt-btn" onclick="addSkillStatRow()" style="margin-left: 10px; background:#fdf2e9; border-color:#e67e22; color:#d35400;">+ 스탯 보정 추가</button>
+            </div>
+            <div id="skillStatOpts" style="width: 100%; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px;"></div>
+        </div>
+
+        <div class="section-title">4. 장비 세팅 및 부여 옵션</div>
+        
+        <div class="equip-card">
+            <h3>⚔️ 주무기</h3>
+            <div class="form-group">
+                <label class="title-label">무기 종류</label>
+                <select id="mainWeaponType" onchange="updateSubWeaponList(); refreshAllCrystaInfo();">
+                    <option value="한손검">한손검</option>
+                    <option value="양손검">양손검</option>
+                    <option value="활">활</option>
+                    <option value="자동활">자동활 (보우건)</option>
+                    <option value="지팡이">지팡이</option>
+                    <option value="마도구">마도구</option>
+                    <option value="권갑">권갑</option>
+                    <option value="선풍창">선풍창</option>
+                    <option value="발도검">발도검</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="title-label">무기 ATK / 제련 / 안정률</label>
+                <input type="number" id="wpnAtk" value="625" placeholder="무기 ATK">
+                <select id="wpnRefine" class="refine-select" style="max-width:90px;"></select>
+                <input type="number" id="wpnStab" value="80" placeholder="안정률(%)" title="주무기 기본 안정률" style="max-width:110px;">
+            </div>
+            <div class="form-group">
+                <label class="title-label">무기 옵션 <button type="button" class="add-opt-btn" onclick="addOptionRow('wpnOpts')">+ 옵션 추가</button></label>
+                <div id="wpnOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [1슬롯]</label>
+                <input type="text" id="cr_wpn_1" list="dl_wpn" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_wpn_1"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_wpn_1_info"></div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [2슬롯]</label>
+                <input type="text" id="cr_wpn_2" list="dl_wpn" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_wpn_2"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_wpn_2_info"></div>
+        </div>
+
+        <div class="equip-card">
+            <h3>🛡️ 보조 장비</h3>
+            <div class="form-group">
+                <label class="title-label">보조 장비 종류</label>
+                <select id="subWeaponType" onchange="onSubWeaponChange()"></select>
+            </div>
+            <div class="form-group" id="subAtkGroup">
+                <label class="title-label">보조 ATK / 제련 / 안정률</label>
+                <input type="number" id="subAtk" value="0" placeholder="보조 무기 ATK">
+                <select id="subRefine" class="refine-select" style="max-width:90px;"></select>
+                <input type="number" id="subStab" value="0" placeholder="안정률(%)" title="보조무기 기본 안정률" style="max-width:110px;">
+            </div>
+            <div class="form-group">
+                <label class="title-label">보조 옵션 <button type="button" class="add-opt-btn" onclick="addOptionRow('subOpts')">+ 옵션 추가</button></label>
+                <div id="subOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+        </div>
+
+        <div class="equip-card">
+            <h3>👕 몸 장비 (방어구)</h3>
+            <div class="form-group">
+                <label class="title-label">옷 개조 타입</label>
+                <select id="armorType" onchange="refreshAllCrystaInfo()">
+                    <option value="일반옷">일반옷</option>
+                    <option value="경량옷">경량옷 (ASPD+50%, 회피율+)</option>
+                    <option value="중량옷">중량옷 (ASPD-50%, 가드율+)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="title-label">방어구 옵션 <button type="button" class="add-opt-btn" onclick="addOptionRow('armOpts')">+ 옵션 추가</button></label>
+                <div id="armOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [1슬롯]</label>
+                <input type="text" id="cr_arm_1" list="dl_arm" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_arm_1"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_arm_1_info"></div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [2슬롯]</label>
+                <input type="text" id="cr_arm_2" list="dl_arm" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_arm_2"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_arm_2_info"></div>
+        </div>
+
+        <div class="equip-card">
+            <h3>🎩 추가 장비</h3>
+            <div class="form-group">
+                <label class="title-label">추가 옵션 <button type="button" class="add-opt-btn" onclick="addOptionRow('addOpts')">+ 옵션 추가</button></label>
+                <div id="addOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [1슬롯]</label>
+                <input type="text" id="cr_add_1" list="dl_add" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_add_1"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_add_1_info"></div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [2슬롯]</label>
+                <input type="text" id="cr_add_2" list="dl_add" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_add_2"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_add_2_info"></div>
+        </div>
+
+        <div class="equip-card">
+            <h3>💍 특수 장비</h3>
+            <div class="form-group">
+                <label class="title-label">특수 옵션 <button type="button" class="add-opt-btn" onclick="addOptionRow('spcOpts')">+ 옵션 추가</button></label>
+                <div id="spcOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [1슬롯]</label>
+                <input type="text" id="cr_spc_1" list="dl_spc" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_spc_1"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_spc_1_info"></div>
+            <div class="form-group">
+                <label class="title-label">크리스타 [2슬롯]</label>
+                <input type="text" id="cr_spc_2" list="dl_spc" class="cr-select" oninput="renderCrystaInfo(this)" placeholder="클릭하여 리스트 보기 및 검색">
+                <label class="lock-label"><input type="checkbox" id="lock_spc_2"> 🔒 고정</label>
+            </div>
+            <div class="crysta-info" id="cr_spc_2_info"></div>
+        </div>
+        
+        <div class="equip-card" style="background:#f4f6f7;">
+            <h3>🥘 외부 버프 / 요리 / 범용 옵션</h3>
+            <div class="form-group">
+                <label class="title-label">추가 보정 <button type="button" class="add-opt-btn" onclick="addOptionRow('buffOpts')" style="background:#fff;">+ 옵션 추가</button></label>
+                <div id="buffOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+        </div>
+
+        <div class="section-title">5. 추천 제외 크리스타 (Blacklist)</div>
+        <div class="blacklist-container">
+            <div class="form-group" style="margin: 0;">
+                <label class="title-label" style="color:#c0392b;">제외할 크리스타</label>
+                <input type="text" id="banInput" list="dl_all" placeholder="클릭하여 검색 후 엔터 또는 추가 버튼">
+                <button type="button" onclick="addBanTag()" style="padding:8px 15px; cursor:pointer; background:#e74c3c; color:white; border:none; border-radius:4px; font-weight:bold;">추가</button>
+            </div>
+            <div class="tag-list" id="banTagContainer"></div>
+        </div>
+
+        <button type="button" class="btn-calc" onclick="runCalculationSafe()">🚀 상세 계산 및 크리스타 최적화 실행</button>
+
+        <div id="resultArea" class="result-box" style="display: none;">
+            
+            <div id="defWarning" class="def-warning" style="display:none;">
+                 [방어력 초과 경고]<br>현재 공격력과 스킬 상수의 합이 적의 실방어력을 뚫지 못해 기본 타격 데미지가 바닥(1)을 친 상태입니다!<br>
+                <span style="font-weight:normal; font-size:13px;">이 상태에서는 공격력이나 관통력이 아주 조금만 올라도 데미지가 수백%씩 폭증하는 수학적 착시 현상(효율 과표집)이 발생합니다. 정확한 효율을 보시려면 스킬 상수를 높은 값으로 조정하거나, 적 방어력을 낮춰주세요.</span>
+            </div>
+
+            <div class="res-title">📊 === 현재 장착 세팅 상세 요약 ===</div>
+            
+            <div class="res-6grid">
+                <div class="res-box">
+                    <h4>📝 적용된 총 보너스 수치 요약</h4>
+                    <ul id="resSumBonus"></ul>
+                </div>
+                <div class="res-box">
+                    <h4>👤 스테이터스 최종 산출</h4>
+                    <div id="resBaseStat" class="stat-grid-box"></div>
+                </div>
+                <div class="res-box">
+                    <h4>⚔️ 공격력 (ATK/MATK) 데이터</h4>
+                    <ul id="resAtkData"></ul>
+                </div>
+                <div class="res-box">
+                    <h4>🎯 데미지 팩터 (위력 및 크리티컬)</h4>
+                    <ul id="resDmgFactor"></ul>
+                </div>
+                <div class="res-box">
+                    <h4>🛡️ 방어력 관통 데이터</h4>
+                    <ul id="resPierce"></ul>
+                </div>
+                <div class="res-box">
+                    <h4>⚡ 속도(Speed) 및 기타 데이터</h4>
+                    <ul id="resSpeed"></ul>
+                </div>
+            </div>
+            
+            <div class="res-title" style="margin-top:40px; border-color:#27ae60; color:#27ae60;">🏆 === 부위별 최적 크리스타 추천 (Top 3) ===</div>
+            <div class="top3-container" id="top3ListContainer"></div>
+
+            <div class="final-rec" id="finalRecContainer">
+                <div class="total-eff-badge" id="globalEffTextBadge"></div>
+                <h3>👑 최적 딜량 최종 추천 조합</h3>
+                <div id="finalRecText" style="font-size:15px; font-weight:bold; color:#2c3e50; line-height:1.6;"></div>
+                <div class="final-rec-tags" id="finalRecTags"></div>
+            </div>
+
+            <div class="res-title" style="margin-top:30px;">📈 === 1단위 상승 시 딜 효율 순위 (현재 세팅 기준) ===</div>
+            <div id="effBars" style="padding: 10px;"></div>
+        </div>
+
+    </div>
+
+    <script>
+        // ----------------------------------------------------
+        // 크리스타 전체 데이터셋 (유저님이 직접 넣으실 공간)
+        // ----------------------------------------------------
+        const crystaDataJson = [
+{"name":"G이코노스","category":"추가","stats":{"MaxHP":1000,"CHARGE_RED":1}},
+{"name":"Pillow 키타가와","category":"추가","stats":{"MaxHP":2000,"CRIT":4,"REVIVE_TIME":-20,"UNSHEATHEP":8}},
+{"name":"P아바타","category":"노말","stats":{"EARTH_RES":1,"LIGHT_RES":1,"DARK_RES":1,"EXP":1,"FIRE_RES":1,"WATER_RES":1,"WIND_RES":1}},
+{"name":"가나마나","category":"방어구","stats":{"MAG_RES":3,"SRW":6,"AGGRO":15,"MaxHP":3000,"PHYS_RES":3}},
+{"name":"가드 골렘","category":"노말","stats":{"CSPD":-225,"ATKP":9,"MATKP":9,"ASPD":-225}},
+{"name":"가람므와","category":"방어구","stats":{"MaxHP":6000,"WATKP":6}},
+{"name":"가룡 오바비오","category":"특수","stats":{"SRW":4,"ASPD":500,"LRW":-12,"MaxMP":300},"condStats":[{"cond":{"sub":"인술 두루마리/두루마리"},"stats":{"UNSHEATHEP":5,"CRIT":5}}]},
+{"name":"갈나슈","category":"추가","stats":{"MaxHPP":18,"MATKP":3,"MAG_PIERCE":10,"AGGRO":-15}},
+{"name":"강그레프","category":"무기","stats":{"DEXP":2,"ATKP":3,"ASPD_P":1}},
+{"name":"검은 그림자","category":"노말","stats":{"MATKP":8,"ATKP":8,"AMPR":3,"MaxMP":-150}},
+{"name":"검은 복숭아 닌자","category":"방어구","stats":{"MaxHP":10000,"CDMG":9,"AGGRO":-25},"condStats":[{"cond":{"sub":"인술 두루마리/두루마리"},"stats":{"LRW":6}}]},
+{"name":"게그너","category":"방어구","stats":{"MATKP":10,"AMPRP":10,"INTP":6,"CSPD_P":40}},
+{"name":"게르미","category":"노말","stats":{"MaxHP":200,"MaxMP":100}},
+{"name":"게슈펜스트","category":"노말","stats":{"MaxMP":150,"ATKP":-1,"MATKP":-1}},
+{"name":"게슈펜스트II","category":"추가","stats":{"CSPD":400,"CRIT":10,"ACC":30,"MaxMP":200}},
+{"name":"게일곤","category":"방어구","stats":{"FRAC_BARR":10,"CSPD_P":20,"AGGRO":-30}},
+{"name":"경자년 흰쥐","category":"추가","stats":{"DROP_RATE":1}},
+{"name":"고대의 여제","category":"추가","stats":{"MATKP":3,"CSPD_P":50,"SRW":-10}},
+{"name":"고대의 여제II","category":"추가","stats":{"CSPD_P":30,"MATKP":5,"SRW":-20}},
+{"name":"고레프스","category":"방어구","stats":{"MaxMP":250,"MaxHP":750}},
+{"name":"고르도","category":"추가","stats":{"ASPD_P":80,"ATKP":7,"LRW":-15}},
+{"name":"고블린 보스","category":"노말","stats":{"ATKP":1,"ACC":-4,"CRITP":2}},
+{"name":"고블린 주코토","category":"추가","stats":{"AGGRO":-15,"MaxHPP":24,"PHYS_PIERCE":10,"ATKP":10},"condStats":[{"cond":{"sub":"방패"},"stats":{"MOTIONSPEED":1}}]},
+{"name":"고블린 형님","category":"노말","stats":{"CRIT":-1,"ATKP":2,"AGGRO":5}},
+{"name":"골둔","category":"방어구","stats":{"ACCP":3,"AGGRO":-3,"MATKP":3,"ATKP":3}},
+{"name":"골드쟝","category":"추가","stats":{"MaxHP":2000,"FRAC_BARR":10,"MaxMP":-300}},
+{"name":"골든 스켈레톤","category":"추가","stats":{"ASPD":300,"MaxHPP":-10}},
+{"name":"골렘빌더","category":"무기","stats":{"GUARD_RECHARGE":7,"GUARD_POWER":7}},
+{"name":"광폭 짐승화 리그시","category":"노말","stats":{"MaxHPP":15,"ATKP":10,"MaxMP":-100,"ASPD_P":20}},
+{"name":"괴걸 꼬마 쥐","category":"무기","stats":{"AGGRO":-20,"LRW":4,"UNSHEATHEP":4},"condStats":[{"cond":{"main":"지팡이"},"stats":{"MATKP":6}}]},
+{"name":"괴도 위스프","category":"방어구","stats":{"AVOID_RECHARGE":10,"ABS_DODGE":5,"ACCP":20,"CRIT":10}},
+{"name":"굉룡 보비나리","category":"무기","stats":{"AMPR":15,"SRW":7,"MAG_BARR":3000,"PHYS_BARR":3000}},
+{"name":"구브아","category":"특수","stats":{"AVOID_RATE":6,"AGIP":3,"UNSHEATHE":100}},
+{"name":"굴라","category":"추가","stats":{"ATKP":10,"GUARD_BREAK":10,"MaxMP":200,"CRIT":15}},
+{"name":"귤다","category":"방어구","stats":{"MaxMP":800,"FRAC_BARR":17,"CRIT":3}},
+{"name":"그랑데 포죠","category":"추가","stats":{"DROP_RATE":1}},
+{"name":"그랜 프로무스","category":"방어구","stats":{"PHYS_PURSUIT":100,"MOTIONSPEED":2,"WATKP":4,"MaxHP":6000}},
+{"name":"그레이트 키지무","category":"노말","stats":{"MAG_PIERCE":1,"PHYS_PIERCE":1,"MaxMP":300,"MaxHP":700}},
+{"name":"그리레","category":"추가","stats":{"MaxHP":500,"GUARD_POWER":5,"DEFP":5}},
+{"name":"그리시아","category":"무기","stats":{"PHYS_PIERCE":3,"MAG_PIERCE":3,"GUARD_RECHARGE":-10,"NEUTRAL_DMG":1,"ATKP":6,"AVOID_RATE":-10,"NEUTRAL_RES":1,"MATKP":6}},
+{"name":"그와이몰","category":"무기","stats":{"CRITP":4,"ATKP":6,"STRP":5,"DEFP":-15}},
+{"name":"글라우스","category":"방어구","stats":{"AVOID_RECHARGE":15,"MAG_RES":6,"MATKP":6}},
+{"name":"글록","category":"방어구","stats":{"MaxHP":4500,"MaxMP":500,"MATKP":12,"AVOID_RECHARGE":-30}},
+{"name":"기간트 나이트","category":"노말","stats":{"ATKP":1,"STRP":1,"ACCP":-10,"CDMG":1,"CRITP":-10}},
+{"name":"기계신 메이플","category":"특수","stats":{"AILMENT_RES":5,"FRAC_BARR":15,"MAG_RES":15,"PHYS_RES":15,"MaxMP":200},"condStats":[{"cond":{"armor":"중량옷"},"stats":{"SRW":10}}]},
+{"name":"기뇰","category":"노말","stats":{"ATKP":5,"MATKP":5,"ASPD":-175,"CSPD":-175}},
+{"name":"기드론","category":"특수","stats":{"ASPD":250,"MATKP":1,"MAG_PURSUIT":50}},
+{"name":"기룡 미뮤가","category":"무기","stats":{"DEXP":7,"ATKP":9,"ASPD_P":5}},
+{"name":"까마귀의 대마녀","category":"방어구","stats":{"AILMENT_RES":-14,"STABILITY":4,"MOTIONSPEED":2,"ABS_ACC":1}},
+{"name":"나루미 히나","category":"추가","stats":{"AGGRO":-10,"MATKP":4,"LRW":3,"CSPD_P":20}},
+{"name":"나스파워","category":"방어구","stats":{"MaxHPP":15,"AGGRO":30,"DEF":45}},
+{"name":"나이트 메어 포툼","category":"무기","stats":{"FRAC_BARR":2,"MaxHPP":-5,"AGGRO":10}},
+{"name":"낙룡 레돌기","category":"무기","stats":{"MATKP":10,"HP_REGENP":-12,"MP_REGENP":-12,"ATKP":10}},
+{"name":"난서","category":"노말","stats":{"ACCP":5,"CRITP":5,"STABILITY":5}},
+{"name":"날다람쥐 닌자","category":"방어구","stats":{"CDMG":9,"MaxHP":10000,"AVOID_RECHARGE":25},"condStats":[{"cond":{"sub":"인술 두루마리/두루마리"},"stats":{"SRW":6}}]},
+{"name":"네오 마기 피레시아","category":"무기","stats":{"MaxHPP":-12,"AMPR":4,"AILMENT_RES":4,"AGIP":4,"ATKP":13}},
+{"name":"네오 벨란 레피나","category":"특수","stats":{"ACC":50,"ACCP":20,"ABS_ACC":10,"MaxMP":500}},
+{"name":"네오 페리프라스티","category":"추가","stats":{"CSPD_P":75,"MATKP":5,"LRW":-16}},
+{"name":"네짐의 왕","category":"추가","stats":{"VITP":2,"CRIT":10,"MaxHP":3000},"condStats":[{"cond":{"sub":"권갑"},"stats":{"SRW":3}}]},
+{"name":"노에리엘","category":"방어구","stats":{"AMPRP":1,"CSPD_P":3,"MATKP":5}},
+{"name":"노코미","category":"추가","stats":{"DROP_RATE":1}},
+{"name":"누레토스","category":"노말","stats":{"ATKP":3,"MATKP":3,"ASPD":-150,"CSPD":-150}},
+{"name":"누토레스","category":"노말","stats":{"CSPD":150,"ATKP":2,"MATKP":2,"ASPD":150}},
+{"name":"니올라","category":"추가","stats":{"FIRE_RES":10,"AMPR":15,"CDMG":5}},
+{"name":"다크 머쉬룸","category":"특수","stats":{"MATKP":1,"MOTIONSPEED":1,"ATKP":1}},
+{"name":"닥터 포무포무","category":"방어구","stats":{"AILMENT_RES":7,"SRW":7,"CRITP":7}},
+{"name":"달맞이 대게","category":"무기","stats":{"MOTIONSPEED":1,"ATKP":6,"VITP":4}},
+{"name":"대경의 현영","category":"방어구","stats":{"MaxHP":1500,"MaxMP":300,"MATKP":6,"AVOID_RATE":-10}},
+{"name":"더스크 마키나","category":"추가","stats":{"AGGRO":10,"LRW":-10,"MaxHPP":20}},
+{"name":"데니알라","category":"특수","stats":{"AMPR":6,"MaxHP":1000}},
+{"name":"데라단비트","category":"추가","stats":{"MATKP":12,"CDMG":8,"DEXP":5,"ACCP":-20}},
+{"name":"데모나그아","category":"방어구","stats":{"MaxHP":-400,"MaxMP":-400,"ATKP":8,"CRIT":8},"condStats":[{"cond":{"sub":"방패"},"stats":{"SRW":4}}]},
+{"name":"데빌 당고","category":"무기","stats":{"AGGRO":-10,"AILMENT_RES":-15,"MaxMP":-200,"ATKP":4,"PHYS_PIERCE":20}},
+{"name":"데스타레스","category":"무기","stats":{"DEXP":4,"ATKP":13,"GUARD_BREAK":10,"AGGRO":-20,"MaxMP":-200}},
+{"name":"데콘","category":"노말","stats":{"ACCP":4,"STABILITY":4,"CRITP":4}},
+{"name":"데포미스","category":"무기","stats":{"AMPR":8,"MaxMP":-200,"ATKP":11,"ANTICIPATE":14}},
+{"name":"도리도디","category":"무기","stats":{"MaxHPP":-25,"ACCP":17,"LRW":10}},
+{"name":"도이","category":"무기","stats":{"STRP":8,"ATKP":12,"CRITP":10,"DEFP":-33}},
+{"name":"돈 프로폰도","category":"무기","stats":{"STRP":7,"ATKP":10,"CRITP":8,"DEFP":-27}},
+{"name":"돈예티","category":"특수","stats":{"ATK":100,"ASPD":-1000}},
+{"name":"듀탄넨","category":"노말","stats":{"ACCP":30,"AGGRO":10,"GUARD_BREAK":6,"ANTICIPATE":6}},
+{"name":"드라케올","category":"노말","stats":{"LRW":6,"MAG_RES":-12,"STR":6,"SRW":3}},
+{"name":"드레미나렐","category":"무기","stats":{"ATKP":8,"MaxMP":100,"MaxHP":1000,"MATKP":8}},
+{"name":"드미나레돌","category":"특수","stats":{"MATKP":8,"ASPD_P":20,"AOE_RES":20,"ATKP":8}},
+{"name":"디럭스 파이터","category":"방어구","stats":{"ACCP":10,"SRW":6,"ATKP":2,"MaxHP":5000,"FRAC_BARR":5}},
+{"name":"디럭스 파이터2","category":"방어구","stats":{"ATKP":3,"SRW":6,"ACCP":15,"MaxHP":6000,"FRAC_BARR":5}},
+{"name":"디알크","category":"무기","stats":{"MAG_PIERCE":20,"CSPD_P":-16,"MATKP":8}},
+{"name":"라갈 브라조","category":"노말","stats":{"STRP":3,"CDMG":3,"ATKP":3,"CRITP":-10,"ACCP":-10}},
+{"name":"라르바다","category":"특수","stats":{"DEFP":-4,"ATKP":4,"MATKP":4,"MDEFP":-4}},
+{"name":"라지 페루루","category":"추가","stats":{"MaxMP":-100,"SRW":10,"MaxHPP":30,"CRITP":50},"condStats":[{"cond":{"armor":"경량옷"},"stats":{"PHYS_PIERCE":-10}}]},
+{"name":"레오나르도 박사","category":"방어구","stats":{"CRITP":10,"MaxHP":5000,"AILMENT_RES":5,"MATKP":2,"LRW":6}},
+{"name":"레오나르도 박사2","category":"방어구","stats":{"AILMENT_RES":5,"MaxHP":6000,"CRITP":20,"LRW":6,"MATKP":3}},
+{"name":"레퓨톤","category":"무기","stats":{"MATKP":6,"ATKP":6,"HP_REGENP":-10,"MP_REGENP":-10}},
+{"name":"로열 옥스킹","category":"추가","stats":{"MaxMP":200,"MaxHPP":-20,"ACC":40,"SRW":8}},
+{"name":"로열 옥스킹 II","category":"추가","stats":{"SRW":12,"ACC":50,"MaxMP":200,"MaxHPP":-30}},
+{"name":"론 볼가","category":"특수","stats":{"CRITP":20,"ASPD":1000,"CSPD_P":-80}},
+{"name":"론디네","category":"무기","stats":{"MATKP":11,"DEXP":9,"CSPD_P":7}},
+{"name":"루인골렘","category":"노말","stats":{"MaxHP":200,"MDEFP":5,"MAG_RES":1}},
+{"name":"루저트","category":"특수","stats":{"CRIT":10,"FLEE":10}},
+{"name":"루트세이저","category":"노말","stats":{"AMPR":4,"MaxMP":-200,"ATKP":10,"MATKP":10}},
+{"name":"류아크 특기병장","category":"노말","stats":{"MAG_RES":-15,"MOTIONSPEED":-2,"CDMG":4,"ATKP":3}},
+{"name":"리노라이오스","category":"노말","stats":{"MaxHPP":10,"ATKP":5,"ASPD_P":15}},
+{"name":"리마시나","category":"노말","stats":{"MAG_RES":5,"AILMENT_RES":5,"PHYS_RES":5}},
+{"name":"릴리카롤라","category":"노말","stats":{"FLEEP":-5,"MaxMP":-100},"condStats":[{"cond":{"main":"발도검"},"stats":{"UNSHEATHEP":11}}]},
+{"name":"마기 피레시아","category":"추가","stats":{"INTP":3,"STABILITY":6,"MATKP":9},"condStats":[{"cond":{"sub":"마도구"},"stats":{"GUARD_BREAK":10,"AOE_RES":20}}]},
+{"name":"마르둘라","category":"무기","stats":{"ATKP":7,"ANTICIPATE":12,"AMPR":4}},
+{"name":"마르치달","category":"무기","stats":{"FLEEP":15,"STABILITY":5}},
+{"name":"마리","category":"방어구","stats":{"MaxHP":70,"PHYS_RES":-3,"MAG_RES":-3},"condStats":[{"cond":{"main":"한손검/권갑"},"stats":{"AGGRO":20}}]},
+{"name":"마무 플류크","category":"방어구","stats":{"FRAC_BARR":15,"MaxMP":700}},
+{"name":"마우에즈","category":"노말","stats":{"MaxMP":150,"CRIT":2,"ACCP":-4}},
+{"name":"마인 크위저","category":"방어구","stats":{"MOTIONSPEED":1,"CSPD":300,"MaxMP":1000}},
+{"name":"마인의 눈","category":"방어구","stats":{"ASPD":300,"MaxHP":1000}},
+{"name":"마정의 짐승","category":"무기","stats":{"AGGRO":-5,"MDEFP":-12,"MATKP":4,"MAG_PIERCE":3}},
+{"name":"마톤 조드 개정","category":"무기","stats":{"AOE_RES":14,"BULLET_RES":14,"AGGRO":-28,"MATKP":7,"ATKP":7}},
+{"name":"마톤조드","category":"방어구","stats":{"LRW":4,"MaxHP":-1000,"STRP":3,"ACCP":5}},
+{"name":"만개한 주앵","category":"방어구","stats":{"CDMG":4,"MaxHP":4000,"SRW":2}},
+{"name":"만룡 데셀","category":"노말","stats":{"ATKP":1,"MATKP":1,"MaxMP":-50}},
+{"name":"메기 스톤","category":"노말","stats":{"STR":1,"INT":1,"AGI":1,"DEX":1,"MaxHP":100,"MaxMP":50}},
+{"name":"메두소이드","category":"무기","stats":{"GUARD_RECHARGE":10,"GUARD_POWER":10,"MOTIONSPEED":1},"condStats":[{"cond":{"armor":"중량옷/경량옷"},"stats":{"AGGRO":20}}]},
+{"name":"메르제하르","category":"방어구","stats":{"MaxMP":-200,"MaxHPP":25,"PHYS_RES":15,"MATKP":13,"MAG_PIERCE":10,"CSPD_P":25}},
+{"name":"메메콜레우스","category":"특수","stats":{"ATKP":-4,"AGGRO":12,"GUARD_RECHARGE":5}},
+{"name":"메탈 스팅거","category":"노말","stats":{"ATKP":2,"CDMG":3,"MOTIONSPEED":-1,"MAG_RES":-10}},
+{"name":"멘티","category":"무기","stats":{"MATKP":11,"MaxMP":300,"GUARD_BREAK":14},"condStats":[{"cond":{"sub":"방패"},"stats":{"ASPD":250}}]},
+{"name":"모스토 마키나","category":"무기","stats":{"MATKP":6,"CSPD_P":2,"DEXP":4}},
+{"name":"모케로","category":"노말","stats":{"MaxHPP":5,"CSPD_P":10}},
+{"name":"문라이트 포툼","category":"무기","stats":{"AMPR":3,"CSPD_P":-90}},
+{"name":"믈윙구 핸드","category":"방어구","stats":{"LRW":4,"SRW":6,"ACCP":5,"MaxHP":10000,"MaxMP":-100}},
+{"name":"미노타우르스","category":"노말","stats":{"MaxHPP":5,"ASPD_P":10}},
+{"name":"미라클 포툼","category":"무기","stats":{"AVOID_RATE":5,"MaxHPP":-10}},
+{"name":"미메지아","category":"방어구","stats":{"MaxHP":2000,"CDMG":2}},
+{"name":"미스루나 산고양이","category":"노말","stats":{"STABILITY":3,"AVOID_RATE":3,"SRW":3,"LRW":-9}},
+{"name":"미엘리","category":"추가","stats":{"MAG_PIERCE":10,"CRITP":20,"CSPD":400,"MaxHPP":-20,"ASPD":400}},
+{"name":"미티아","category":"방어구","stats":{"PHYS_PIERCE":5,"UNSHEATHEP":9,"CDMG":7}},
+{"name":"바라토크","category":"방어구","stats":{"MaxHP":7000,"WATKP":7,"STABILITY":7}},
+{"name":"바우가","category":"방어구","stats":{"SRW":5,"MaxHP":7000,"CDMG":7}},
+{"name":"바위용 펠젠","category":"방어구","stats":{"WATKP":5,"MaxHP":5000}},
+{"name":"바이혼 리틀 보아","category":"추가","stats":{"DROP_RATE":1}},
+{"name":"바쿠잔","category":"무기","stats":{"DEXP":9,"ATKP":11,"ASPD_P":7}},
+{"name":"발굴 골렘","category":"무기","stats":{"GUARD_RECHARGE":5,"GUARD_POWER":5}},
+{"name":"발터","category":"무기","stats":{"ASPD_P":3,"ATKP":7,"DEXP":5}},
+{"name":"배베라","category":"노말","stats":{"MOTIONSPEED":3,"GUARD_POWER":5,"GUARD_RECHARGE":5,"AVOID_RECHARGE":5,"AILMENT_RES":-15}},
+{"name":"백광아 레이 펜","category":"무기","stats":{"AGIP":4,"ATKP":7,"AMPR":1,"MaxHPP":-12}},
+{"name":"뱅글돔","category":"방어구","stats":{"MaxHPP":-20,"MATKP":10,"ASPD_P":10,"CSPD_P":10,"ATKP":10},"condStats":[{"cond":{"armor":"경량옷"},"stats":{"MAG_PIERCE":5}},{"cond":{"sub":"방패"},"stats":{"DEXP":5}}]},
+{"name":"버튜드","category":"무기","stats":{"MAG_PIERCE":7,"AGGRO":-11,"MDEFP":-30,"MATKP":10}},
+{"name":"버포멜라","category":"추가","stats":{"LRW":6,"UNSHEATHEP":6,"SRW":6}},
+{"name":"벚꽃 당고","category":"무기","stats":{"MaxMP":-100,"AILMENT_RES":-5,"PHYS_PIERCE":20,"ATKP":4}},
+{"name":"베네나","category":"특수","stats":{"ATKP":1,"MaxMP":500,"STABILITY":2,"MATKP":1}},
+{"name":"베네나2","category":"특수","stats":{"ATKP":2,"MaxMP":600,"STABILITY":3,"MATKP":2}},
+{"name":"벡 티거","category":"방어구","stats":{"CDMG":4,"UNSHEATHEP":4,"PHYS_PIERCE":4}},
+{"name":"벡시즈","category":"특수","stats":{"ACCP":15,"WATKP":10,"CRIT":5,"MaxMP":-100}},
+{"name":"벨란 레피나","category":"추가","stats":{"MATKP":-4,"CRIT":12,"PHYS_RES":4,"ATKP":8},"condStats":[{"cond":{"armor":"중량옷"},"stats":{"PHYS_PIERCE":10}}]},
+{"name":"벨륨","category":"무기","stats":{"MaxMP":-100,"ANTICIPATE":13,"AMPR":6,"ATKP":9}},
+{"name":"벨카로이","category":"특수","stats":{"MaxMP":300,"LRW":5,"DEXP":5,"ASPD_P":10},"condStats":[{"cond":{"sub":"방패"},"stats":{"AGGRO":35}},{"cond":{"sub":"단검"},"stats":{"PHYS_PURSUIT":75}},{"cond":{"sub":"화살"},"stats":{"LRW":7}}]},
+{"name":"별의 마도사","category":"특수","stats":{"ANTICIPATE":9,"MATKP":9,"CSPD_P":9},"condStats":[{"cond":{"sub":"방패"},"stats":{"AGGRO":-9}},{"cond":{"main":"지팡이"},"stats":{"AGGRO":-9}}]},
+{"name":"병사 용 달바","category":"특수","stats":{"ACCP":17,"MaxMP":-200,"WATKP":14,"CRIT":11}},
+{"name":"보드레이","category":"특수","stats":{"ANTICIPATE":5,"PHYS_RES":5,"MAG_RES":5,"CDMG":-150}},
+{"name":"보스로가","category":"방어구","stats":{"WATKP":1,"MaxHP":1000}},
+{"name":"복면전사","category":"노말","stats":{"ATKP":1,"MATKP":1,"AMPR":2,"ACC":-3,"MaxHPP":-3}},
+{"name":"볼로툴","category":"노말","stats":{"ACCP":-10,"CRITP":-10,"CDMG":2,"STRP":2,"ATKP":2}},
+{"name":"봄의 몽환초","category":"무기","stats":{"CRIT":13,"AGGRO":-15,"MATKP":11}},
+{"name":"불길한 결정","category":"특수","stats":{"AMPR":5}},
+{"name":"브라마","category":"노말","stats":{"MaxMP":400,"MaxHP":800},"condStats":[{"cond":{"armor":"중량옷"},"stats":{"AGGRO":6}}]},
+{"name":"브로커 고블린","category":"특수","stats":{"LRW":8,"DEXP":3,"MaxMP":300},"condStats":[{"cond":{"sub":"방패"},"stats":{"AGGRO":25}},{"cond":{"sub":"단검"},"stats":{"PHYS_PURSUIT":50}}]},
+{"name":"브리타","category":"특수","stats":{"STABILITY":2,"AMPR":15,"MaxHP":5000}},
+{"name":"블라미스","category":"노말","stats":{"MATKP":3,"MaxMP":250,"ATKP":3}},
+{"name":"블랙 베리","category":"방어구","stats":{"AVOID_RECHARGE":-20,"MATKP":9,"MaxMP":400,"MaxHP":3000}},
+{"name":"비라트","category":"무기","stats":{"CSPD_P":1,"DEXP":2,"MATKP":3}},
+{"name":"비모즈","category":"방어구","stats":{"CRIT":17,"MaxMP":-150,"MATKP":6,"PHYS_PIERCE":8,"MAG_PIERCE":8,"ATKP":6}},
+{"name":"비브리더","category":"방어구","stats":{"MaxMP":600,"FRAC_BARR":12}},
+{"name":"비스컴","category":"특수","stats":{"AMPR":3,"MaxHP":100}},
+{"name":"비스키바","category":"방어구","stats":{"MaxMP":900,"FRAC_BARR":19,"CRIT":7,"CDMG":2}},
+{"name":"비오렌트","category":"특수","stats":{"ATKP":1,"PHYS_PURSUIT":50,"ASPD":250}},
+{"name":"비오렌트G","category":"특수","stats":{"PHYS_PURSUIT":100},"condStats":[{"cond":{"main":"한손검/마도구"},"stats":{"MAG_PURSUIT":100}}]},
+{"name":"비취조","category":"방어구","stats":{"AMPR":1,"MaxMP":300,"CSPD":100}},
+{"name":"빌로슈","category":"방어구","stats":{"MAG_RES":-7,"MaxHPP":60,"PHYS_RES":-7},"condStats":[{"cond":{"main":"한손검/권갑"},"stats":{"AGGRO":15}}]},
+{"name":"빌리돈","category":"노말","stats":{"AROUND_RES":-3,"AREA_RES":-3,"CDMG":3}},
+{"name":"빛나는 젠틀맨","category":"특수","stats":{"CDMGP":1,"AMPR":3,"ATKP":1,"MATKP":1}},
+{"name":"쁘띠 네이티","category":"노말","stats":{"PHYS_PURSUIT":25,"CRITP":25,"MAG_PURSUIT":25,"ASPD":-25}},
+{"name":"사령","category":"특수","stats":{"MATKP":2,"ATKP":2,"CDMGP":2,"AMPR":4}},
+{"name":"사령술사 우사사마","category":"무기","stats":{"MOTIONSPEED":3,"MaxHPP":-25,"AMPRP":-50,"MATKP":6,"CSPD_P":12}},
+{"name":"사령술사 우사사마II","category":"무기","stats":{"AMPRP":-30,"MATKP":7,"CSPD_P":14,"MOTIONSPEED":3,"MaxHPP":-15}},
+{"name":"사령술사 우사산","category":"무기","stats":{"MAG_BARR":100,"MAG_PURSUIT":100,"CSPD":100}},
+{"name":"사막 해적단 두목","category":"특수","stats":{"AGGRO":16,"AVOID_RECHARGE":8,"MATKP":-5}},
+{"name":"사신 허수아비","category":"방어구","stats":{"MaxHPP":-30,"AGGRO":-15,"LRW":6}},
+{"name":"사악한 마검","category":"무기","stats":{"CDMG":5,"AMPR":5,"AGGRO":10}},
+{"name":"살짝 구운 명태알","category":"특수","stats":{"MATKP":-10,"FLOOR_RES":-20,"MaxMP":300,"SRW":2,"FIRE_RES":1}},
+{"name":"삼족새","category":"무기","stats":{"AGGRO":-40,"ATKP":10,"AOE_RES":20,"MATKP":10,"BULLET_RES":20}},
+{"name":"상어 포툼","category":"추가","stats":{"CDMG":6,"MaxHPP":-30,"ASPD":900}},
+{"name":"샐러맨더","category":"노말","stats":{"MATKP":1,"ATKP":1,"MaxMP":200}},
+{"name":"샤온","category":"추가","stats":{"AGGRO":-15,"CRIT":15}},
+{"name":"샴피","category":"무기","stats":{"AGGRO":-7,"MAG_PIERCE":5,"MATKP":6,"MDEFP":-18}},
+{"name":"선라이트 포툼","category":"추가","stats":{"ASPD":300,"CSPD":300,"MaxHPP":-5,"MaxMP":-75}},
+{"name":"성빙상 노에리엘","category":"방어구","stats":{"MATKP":5,"CSPD_P":30,"AMPR":10}},
+{"name":"세라프 마키나","category":"노말","stats":{"AILMENT_RES":3,"PHYS_RES":3,"MAG_RES":3}},
+{"name":"셀티리오","category":"추가","stats":{"CSPD":300,"MaxMP":-150}},
+{"name":"숄","category":"노말","stats":{"ACCP":20,"AGGRO":10,"GUARD_BREAK":5,"ANTICIPATE":5}},
+{"name":"수수께끼 결정","category":"특수","stats":{"AMPR":10,"STABILITY":5},"condStats":[{"cond":{"armor":"중량옷/경량옷"},"stats":{"UNSHEATHEP":5}},{"cond":{"sub":"한손검(듀얼소드)"},"stats":{"UNSHEATHEP":5}}]},
+{"name":"슈퍼데스버섯","category":"방어구","stats":{"MaxMP":400,"AMPR":3,"CSPD":200}},
+{"name":"슈퍼어둠버섯","category":"노말","stats":{"MaxHP":500,"SRW":1,"LRW":1}},
+{"name":"스컬디지즈","category":"방어구","stats":{"BARR_SPEED":20,"WATER_RES":10,"DARK_RES":10,"AMPR":15}},
+{"name":"스쿠르다","category":"노말","stats":{"MaxHP":300,"MATKP":3,"LRW":2,"MP_REGENP":-10,"PHYS_RES":-10}},
+{"name":"스크림 섀도","category":"특수","stats":{"MaxMP":300,"CRITP":20,"CSPD":1000,"DEFP":-40}},
+{"name":"스토문","category":"무기","stats":{"WATER_RES":5,"ATKP":5,"MATKP":5,"SRW":5,"ASPD_P":5,"MOTIONSPEED":2,"INTP":5,"MaxHPP":-9},"condStats":[{"cond":{"main":"마도구/쌍검"},"stats":{}}]},
+{"name":"스톤 마세","category":"특수","stats":{"ATKP":-6,"GUARD_RECHARGE":4,"AGGRO":8}},
+{"name":"시빌라 레이스","category":"방어구","stats":{"CRIT":15,"MaxMP":-100,"ATKP":5,"MATKP":5,"PHYS_PIERCE":5,"MAG_PIERCE":5}},
+{"name":"시아카라드","category":"추가","stats":{"CSPD":500,"MaxMP":200,"MaxHPP":-10}},
+{"name":"시아카라드II","category":"추가","stats":{"MaxMP":300,"MaxHPP":-15,"CSPD":600}},
+{"name":"시카노카미","category":"특수","stats":{"SRW":5,"AMPR":20,"ACC":50,"LRW":5},"condStats":[{"cond":{"main":"미늘창"},"stats":{}}]},
+{"name":"실버 로아","category":"노말","stats":{"AMPR":4,"MaxHPP":-8}},
+{"name":"심모의 청영","category":"추가","stats":{"LRW":8,"UNSHEATHEP":8,"MaxMP":-150,"SRW":8}},
+{"name":"심해 크리스탈 몬스터","category":"특수","stats":{"PHYS_RES":6,"STABILITY":4,"SRW":4,"MaxMP":-200,"MAG_RES":6,"AILMENT_RES":5},"condStats":[{"cond":{"sub":"방패"},"stats":{}}]},
+{"name":"십이지 축복","category":"특수","stats":{"EXP":10,"ATK":10,"MATK":10,"ACC":10,"CRIT":10,"DEF":100,"MDEF":100,"ASPD":100,"CSPD":100}},
+{"name":"아놀드","category":"방어구","stats":{"CRITP":15,"ATKP":5,"MATKP":5,"SRW":5,"CRIT":15,"MaxHP":5000,"ANTICIPATE":20,"MOTIONSPEED":2},"condStats":[{"cond":{"main":"양손검"},"stats":{}}]},
+{"name":"아놀드2","category":"방어구","stats":{"MATKP":6,"SRW":6,"CRIT":15,"CRITP":15,"MaxHP":6000,"ANTICIPATE":20,"MOTIONSPEED":2,"ATKP":6},"condStats":[{"cond":{"main":"양손검"},"stats":{}}]},
+{"name":"아다로","category":"추가","stats":{"MATKP":6,"CDMG":6,"MaxHP":1000,"AGGRO":10},"condStats":[{"cond":{"armor":"중량옷"},"stats":{}}]},
+{"name":"아라네아","category":"노말","stats":{"MaxHP":400,"MaxMP":200,"AGGRO":1}},
+{"name":"아라라고","category":"노말","stats":{"MAG_RES":7,"AILMENT_RES":7,"PHYS_RES":7}},
+{"name":"아라이쿠마","category":"특수","stats":{"MATKP":-6,"AVOID_RATE":5,"AGGRO":8}},
+{"name":"아르티마키나","category":"무기","stats":{"MaxMP":400,"SRW":4,"PHYS_PIERCE":4}},
+{"name":"아말감","category":"특수","stats":{"AMPR":9,"MaxHP":2000}},
+{"name":"아말곤","category":"추가","stats":{"MaxHPP":30,"ASPD":800,"MaxMP":-300}},
+{"name":"아뮤버 마키나","category":"노말","stats":{"FLEE":5,"CRIT":-6,"AGI":6,"AVOID_RECHARGE":4}},
+{"name":"아스톨","category":"노말","stats":{"MAG_RES":1,"AVOID_RATE":3,"DEFP":-10}},
+{"name":"아옐라이오스","category":"노말","stats":{"ATKP":6,"CDMG":8,"MOTIONSPEED":-1,"MAG_RES":-15}},
+{"name":"아이야크","category":"추가","stats":{"MaxHPP":24,"MATKP":10,"MAG_PIERCE":10,"AGGRO":-15,"MOTIONSPEED":1},"condStats":[{"cond":{"main":"지팡이"},"stats":{}}]},
+{"name":"아이트리베","category":"추가","stats":{"AGGRO":-15,"MAG_PIERCE":10,"MaxHPP":12}},
+{"name":"악룡 파지노","category":"무기","stats":{"MATKP":9,"CSPD_P":5,"DEXP":7}},
+{"name":"알머이트","category":"무기","stats":{"MAG_PIERCE":20,"MATKP":5,"CSPD_P":-15}},
+{"name":"알코이리스","category":"방어구","stats":{"DEFP":10,"MaxHPP":10,"HP_REGENP":10}},
+{"name":"알타달","category":"방어구","stats":{"STRP":6,"VITP":6,"STABILITY":11},"condStats":[{"cond":{"armor":"중량옷"},"stats":{"LRW":11,"STABILITY":-5}},{"cond":{"armor":"경량옷"},"stats":{"SRW":11,"STABILITY":-5}}]},
+{"name":"알트파스","category":"추가","stats":{"CDMG":4,"DEXP":1,"ACCP":-20}},
+{"name":"알페니케","category":"추가","stats":{"PHYS_PIERCE":10,"ATKP":3,"MaxHPP":18,"AGGRO":-15}},
+{"name":"암룡 핀스단","category":"무기","stats":{"MATKP":7,"MaxMP":300,"GUARD_BREAK":12}},
+{"name":"애묘 발톱 가르샤","category":"무기","stats":{"MaxHPP":-12,"ATKP":10,"AGIP":4,"AILMENT_RES":2,"AMPR":2}},
+{"name":"야시로 아즈키","category":"노말","stats":{"MaxHP":200,"MaxMP":100,"EXP":1}},
+{"name":"야시로 아즈키 아빠","category":"추가","stats":{"AGGRO":-10,"ASPD_P":20,"SRW":3,"ATKP":4}},
+{"name":"야시로 아즈키 엄마","category":"추가","stats":{"MAG_RES":5,"PHYS_RES":5,"BULLET_RES":10,"CRIT":10}},
+{"name":"야시로 아즈키 엄마II","category":"추가","stats":{"AGGRO":-10,"CSPD_P":20,"LRW":3,"MATKP":5}},
+{"name":"어둠 두더지","category":"방어구","stats":{"GUARD_RECHARGE":10,"PHYS_RES":18,"MaxHPP":26,"FRAC_BARR":5}},
+{"name":"어둠의 마병장 With B","category":"특수","stats":{"EARTH_RES":15,"WIND_RES":10,"WATER_RES":10,"FIRE_RES":10,"MaxHP":3000,"SRW":3,"UNSHEATHEP":3,"MaxMP":-150}},
+{"name":"어둠의 언데드 기사","category":"추가","stats":{"LIGHT_RES":-10,"REVIVE_TIME":-10,"MaxMP":-100,"STABILITY":6,"SRW":6,"ATKP":6}},
+{"name":"어둠의 왕","category":"추가","stats":{"SRW":3,"AGGRO":-10,"ATKP":5,"ASPD_P":20}},
+{"name":"어스름의 용","category":"추가","stats":{"SRW":4,"LRW":4,"UNSHEATHEP":4}},
+{"name":"에로드필츠","category":"방어구","stats":{"MaxHPP":30,"PHYS_RES":-10,"MAG_RES":-10}},
+{"name":"에립마브","category":"추가","stats":{"AMPR":18,"FIRE_RES":12,"CDMG":6}},
+{"name":"에투왈","category":"특수","stats":{"CRITP":40,"ASPD":1100,"MOTIONSPEED":5,"CSPD_P":-70}},
+{"name":"엑스독스","category":"추가","stats":{"MDEF":15,"PHYS_BARR":1500,"MAG_BARR":1500,"DEF":150}},
+{"name":"염룡 블랑마","category":"무기","stats":{"PHYS_PIERCE":7,"MaxMP":400,"SRW":6}},
+{"name":"옐브","category":"추가","stats":{"LRW":-10,"ATKP":3,"ASPD_P":50}},
+{"name":"오니쿠마무시","category":"추가","stats":{"MaxMP":-200,"CSPD":450}},
+{"name":"오델론 마키나","category":"노말","stats":{"AVOID_RATE":-5,"UNSHEATHEP":10,"FLEEP":-5},"condStats":[{"cond":{"main":"발도검"},"stats":{}}]},
+{"name":"오로로 콜론","category":"무기","stats":{"SRW":12,"CSPD":1000,"MaxMP":-2000}},
+{"name":"오로바이드","category":"특수","stats":{"PHYS_RES":10,"MAG_RES":10,"DARK_RES":20,"AGGRO":20}},
+{"name":"오르고 노바","category":"추가","stats":{"CSPD":600,"CRIT":20,"ACC":60,"MaxMP":300}},
+{"name":"오르고 노바2","category":"특수","stats":{"MP_REGENP":15,"AOE_RES":15,"REVIVE_TIME":-60,"ATKP":5,"PHYS_PIERCE":5,"UNSHEATHEP":5,"MaxMP":100}},
+{"name":"오르그","category":"특수","stats":{"ATKP":2,"MATKP":2,"DEFP":-2,"MDEFP":-2}},
+{"name":"오른라프","category":"방어구","stats":{"MaxHP":3000,"WATKP":3}},
+{"name":"오릭케스","category":"노말","stats":{"AROUND_RES":-3,"CDMG":9,"AREA_RES":-3}},
+{"name":"오브시아","category":"추가","stats":{"MaxHP":7000,"GUARD_POWER":20,"DEFP":15,"PHYS_RES":10}},
+{"name":"오큐라시네","category":"무기","stats":{"MaxMP":300,"GUARD_BREAK":13,"MATKP":9}},
+{"name":"옥스킹","category":"추가","stats":{"AGGRO":-20}},
+{"name":"왕자 메기스콘","category":"무기","stats":{"FIRE_RES":3,"MaxHP":1000,"CRIT":15}},
+{"name":"왕자 메기스콘II","category":"무기","stats":{"FIRE_RES":3,"LIGHT_RES":3,"CRIT":16,"MaxHP":1200}},
+{"name":"왕자 메기스콘III","category":"무기","stats":{"FIRE_RES":3,"WIND_RES":3,"LIGHT_RES":3,"MaxHP":1400,"CRIT":18}},
+{"name":"왕자 메기스콘IV","category":"무기","stats":{"FIRE_RES":6,"CRIT":20,"MaxHP":1600,"WATER_RES":3,"LIGHT_RES":3,"WIND_RES":3}},
+{"name":"왕자 메기스콘V","category":"무기","stats":{"MaxHP":1800,"CRIT":23,"FIRE_RES":6,"WATER_RES":6,"WIND_RES":3,"EARTH_RES":3,"LIGHT_RES":3}},
+{"name":"왕자 메기스콘VI","category":"무기","stats":{"DARK_RES":3,"MaxHP":2000,"CRIT":26,"FIRE_RES":6,"WATER_RES":6,"WIND_RES":6,"EARTH_RES":3,"LIGHT_RES":3}},
+{"name":"왕자 메기스콘VII","category":"무기","stats":{"MaxHP":2200,"CRIT":29,"FIRE_RES":6,"WATER_RES":6,"WIND_RES":6,"EARTH_RES":6,"LIGHT_RES":3,"DARK_RES":3,"NEUTRAL_RES":3}},
+{"name":"왕자 메기스콘VIII","category":"무기","stats":{"MaxHP":2400,"CRIT":32,"FIRE_RES":6,"WATER_RES":6,"WIND_RES":6,"EARTH_RES":6,"LIGHT_RES":6,"DARK_RES":6,"NEUTRAL_RES":3}},
+{"name":"왕큰 코린","category":"노말","stats":{"PHYS_RES":1,"MAG_RES":1,"AILMENT_RES":1}},
+{"name":"요크","category":"노말","stats":{"ATKP":4,"MaxMP":-75,"MATKP":4,"AMPR":1}},
+{"name":"용사 포툼","category":"무기","stats":{"ACCP":10,"AGGRO":10,"MaxHPP":10,"FRAC_BARR":10}},
+{"name":"용사 포툼4","category":"무기","stats":{"MaxHPP":13,"FRAC_BARR":16,"ACCP":19,"AGGRO":22}},
+{"name":"용사 포툼II","category":"무기","stats":{"FRAC_BARR":12,"AGGRO":14,"MaxHPP":11,"ACCP":13}},
+{"name":"용사 포툼III","category":"무기","stats":{"MaxHPP":12,"AGGRO":18,"ACCP":16,"FRAC_BARR":14}},
+{"name":"용의 마녀","category":"특수","stats":{"CDMGP":5,"AMPRP":-100}},
+{"name":"울트라 포툼","category":"무기","stats":{"AVOID_RECHARGE":15,"LRW":10,"PHYS_PURSUIT":20}},
+{"name":"워몽가","category":"추가","stats":{"CRIT":6,"CDMG":2}},
+{"name":"원초의 유월화","category":"무기","stats":{"GUARD_BREAK":10,"MaxMP":-200,"ANTICIPATE":10,"MaxHPP":10,"MATKP":10,"ATKP":10}},
+{"name":"웨인혼","category":"노말","stats":{"CRIT":10,"AILMENT_RES":6,"MOTIONSPEED":2,"MaxHPP":-20}},
+{"name":"위룡 루디스","category":"노말","stats":{"CRIT":-7,"MaxMP":200,"ACCP":5,"SRW":9,"MaxHP":-300}},
+{"name":"윌버브","category":"무기","stats":{"MAG_PURSUIT":125,"CSPD":200,"MAG_BARR":200}},
+{"name":"유령술사 우산","category":"무기","stats":{"MAG_BARR":200,"MATKP":12,"MAG_PURSUIT":125,"ASPD":200}},
+{"name":"유베리아","category":"방어구","stats":{"SRW":6,"MaxMP":300,"PHYS_RES":3,"MAG_RES":3}},
+{"name":"유아샤","category":"특수","stats":{"AMPR":5,"VITP":5,"AILMENT_RES":5},"condStats":[{"cond":{"sub":"방패"},"stats":{"AGGRO":15}}]},
+{"name":"유유린","category":"노말","stats":{"GUARD_RECHARGE":2,"GUARD_POWER":2,"AVOID_RATE":2,"AILMENT_RES":-6}},
+{"name":"율라즈","category":"방어구","stats":{"MATKP":7,"AMPRP":10,"INTP":3,"CSPD_P":35}},
+{"name":"이그니툴","category":"특수","stats":{"MaxHP":1000,"FIRE_RES":20,"FIRE_DMG":5,"MaxMP":100}},
+{"name":"이레스티다","category":"무기","stats":{"MDEFP":-24,"AGGRO":-9,"MATKP":8,"MAG_PIERCE":6}},
+{"name":"이미터 그리스","category":"무기","stats":{"GUARD_BREAK":10,"MaxMP":200,"MATKP":5}},
+{"name":"이미터 베이트","category":"무기","stats":{"AMPR":2,"ATKP":5,"ANTICIPATE":10}},
+{"name":"이코노스","category":"방어구","stats":{"WATKP":2,"MaxHP":2000}},
+{"name":"인자니오","category":"노말","stats":{"WATK":10,"FRAC_BARR":3,"GUARD_RECHARGE":1,"AMPR":-1}},
+{"name":"자스","category":"추가","stats":{"FIRE_RES":8,"AMPR":12,"CDMG":4}},
+{"name":"자이언트 문어","category":"노말","stats":{"FIRE_RES":-4,"AILMENT_RES":-2,"AOE_RES":-1,"AMPR":5,"CRIT":10,"ASPD":150,"CSPD":200}},
+{"name":"자포","category":"방어구","stats":{"MaxHP":-400,"CRIT":10,"MaxMP":-400,"ATKP":10,"STRP":1},"condStats":[{"cond":{"sub":"방패"},"stats":{"SRW":5}}]},
+{"name":"자필로가","category":"방어구","stats":{"MaxHP":4000,"WATKP":4}},
+{"name":"자하크 마키나","category":"무기","stats":{"MAG_BARR":1000,"AMPR":5,"PHYS_BARR":1000}},
+{"name":"작룡 이그네우스","category":"추가","stats":{"CDMG":8,"AGIP":3,"CRIT":15}},
+{"name":"잔혹한 발톱의 철마녀","category":"무기","stats":{"SRW":5,"AMPR":10,"PHYS_BARR":2000,"MAG_BARR":2000}},
+{"name":"저주받은 크리스타","category":"무기","stats":{"MATKP":5,"ATKP":5,"STABILITY":5,"MOTIONSPEED":5,"REFLECT":20}},
+{"name":"저편의 잔영","category":"노말","stats":{"SRW":10,"PHYS_PIERCE":5,"ASPD":-250}},
+{"name":"제가","category":"무기","stats":{"AMPR":3,"MAG_RES":2,"MaxHP":400,"WATER_RES":1}},
+{"name":"제가II","category":"무기","stats":{"AMPR":4,"WATER_RES":2,"MAG_RES":3,"MaxHP":500}},
+{"name":"제가III","category":"무기","stats":{"WATER_RES":3,"MaxHP":600,"AMPR":5,"MAG_RES":4}},
+{"name":"제가IV","category":"무기","stats":{"MAG_RES":5,"WATER_RES":4,"MaxHP":700,"AMPR":6}},
+{"name":"제가V","category":"무기","stats":{"MAG_RES":6,"MaxHP":800,"AMPR":7,"WATER_RES":5}},
+{"name":"제가VI","category":"무기","stats":{"WATER_RES":6,"MAG_RES":7,"AMPR":8,"MaxHP":900}},
+{"name":"제가VII","category":"무기","stats":{"MaxHP":1000,"AMPR":9,"MAG_RES":8,"WATER_RES":7}},
+{"name":"제가VIII","category":"무기","stats":{"MaxHP":1100,"AMPR":10,"MAG_RES":9,"WATER_RES":8}},
+{"name":"제가IX","category":"무기","stats":{"AMPR":11,"WATER_RES":9,"MAG_RES":10,"MaxHP":1200}},
+{"name":"제가 X","category":"무기","stats":{"MaxHP":1300,"MAG_RES":11,"WATER_RES":10,"AMPR":12}},
+{"name":"제레 자우가","category":"특수","stats":{"PHYS_RES":5,"ITEM_CD":-1,"MAG_RES":5,"CRIT":15}},
+{"name":"제레 자우가2","category":"특수","stats":{"CRIT":20,"PHYS_RES":10,"MAG_RES":10,"ITEM_CD":-1}},
+{"name":"제프펠","category":"특수","stats":{"MaxMP":300,"CRIT":15,"WATER_RES":20,"WATER_DMG":5}},
+{"name":"젤도나","category":"추가","stats":{"CSPD":800,"MaxMP":400,"MaxHPP":-20}},
+{"name":"젤뷰즈","category":"특수","stats":{"MaxMP":-150,"CRIT":8,"WATKP":12,"ACCP":16}},
+{"name":"젬마","category":"방어구","stats":{"CDMG":6,"UNSHEATHEP":7,"PHYS_PIERCE":5}},
+{"name":"조르반","category":"무기","stats":{"HP_REGENP":-10,"MP_REGENP":-10,"ATKP":4,"MATKP":4}},
+{"name":"조에","category":"추가","stats":{"CDMG":3,"FIRE_RES":6,"AMPR":9}},
+{"name":"죠코","category":"노말","stats":{"MaxMP":200,"SRW":12,"CRIT":-9,"ACCP":7,"MaxHP":-500}},
+{"name":"졸병 용 자이비오","category":"추가","stats":{"GUARD_BREAK":5,"CRIT":15,"ATKP":5,"MaxMP":100}},
+{"name":"주목가젤","category":"무기","stats":{"MaxHPP":-28,"ACCP":14,"LRW":7}},
+{"name":"죽음을 고하는 망령","category":"특수","stats":{"ACCP":15,"AGGRO":-20,"UNSHEATHEP":10}},
+{"name":"즈리비","category":"추가","stats":{"MaxHPP":-15,"ASPD":450}},
+{"name":"지그리스타","category":"특수","stats":{"SRW":2,"STABILITY":2,"MaxMP":-100,"MAG_RES":3,"PHYS_RES":3},"condStats":[{"cond":{"sub":"방패"},"stats":{"AILMENT_RES":5}}]},
+{"name":"지브릴","category":"추가","stats":{"ANTICIPATE":1,"SRW":3,"MP_REGENP":4,"MP_REGEN":2,"LRW":5,"MaxMP":100,"CRIT":8}},
+{"name":"지브릴2","category":"추가","stats":{"MaxMP":100,"SRW":6,"LRW":8,"CRIT":12,"ANTICIPATE":2,"MP_REGEN":4,"MP_REGENP":8}},
+{"name":"지브릴3","category":"추가","stats":{"MP_REGENP":12,"MP_REGEN":6,"LRW":11,"MaxMP":100,"CRIT":16,"SRW":9,"ANTICIPATE":3}},
+{"name":"진홍빛 애꾸눈 늑대","category":"무기","stats":{"PHYS_RES":-16,"MAG_RES":-8},"condStats":[{"cond":{"sub":"단검/인술 두루마리/두루마리"},"stats":{"SRW":8,"ANTICIPATE":4}}]},
+{"name":"질바","category":"추가","stats":{"ACCP":-20,"MATKP":8,"DEXP":3,"CDMG":6}},
+{"name":"카나요간","category":"추가","stats":{"ATKP":12,"PHYS_PIERCE":10,"CRIT":16,"MATKP":-4,"PHYS_RES":-20},"condStats":[{"cond":{"armor":"중량옷"},"stats":{"PHYS_RES":24}}]},
+{"name":"카라멜로","category":"추가","stats":{"ASPD":500,"MaxHPP":10,"MaxMP":-200}},
+{"name":"카라멜로II","category":"추가","stats":{"MaxHPP":20,"ASPD":600,"MaxMP":-250}},
+{"name":"카방클","category":"노말","stats":{"REFLECT":10,"MaxHP":1000,"FLEE":-10}},
+{"name":"카스틸리아","category":"추가","stats":{"SRW":12,"LRW":6,"ASPD":-900,"ACCP":10},"condStats":[{"cond":{"sub":"인술 두루마리/두루마리"},"stats":{"MAG_PIERCE":10}},{"cond":{"sub":"마도구"},"stats":{"MOTIONSPEED":5}}]},
+{"name":"카포 프로폰도","category":"방어구","stats":{"PHYS_RES":12,"MaxHPP":16,"GUARD_RECHARGE":8}},
+{"name":"캡틴 아먀","category":"특수","stats":{"MaxHP":1000,"MaxMP":100,"AMPR":10}},
+{"name":"커맨더 골렘","category":"무기","stats":{"PHYS_BARR":100,"PHYS_PURSUIT":100,"ASPD":100}},
+{"name":"커다란 알포카","category":"추가","stats":{"SRW":6,"MaxHP":300,"MaxMP":300}},
+{"name":"케라베스","category":"방어구","stats":{"CDMG":1,"MaxHP":1000}},
+{"name":"케르베로스","category":"방어구","stats":{"CDMG":3,"UNSHEATHEP":3,"PHYS_PIERCE":3}},
+{"name":"케슈피온","category":"노말","stats":{"STABILITY":2,"SRW":-1,"CRIT":10}},
+{"name":"케이크 포툼","category":"노말","stats":{"PHYS_RES":-15,"MAG_RES":-15,"MaxHPP":30}},
+{"name":"코피니아","category":"노말","stats":{"STABILITY":4,"SRW":4,"AVOID_RECHARGE":4,"LRW":-12}},
+{"name":"콜론 데드","category":"무기","stats":{"MaxMP":-2000,"SRW":10,"ASPD":1000}},
+{"name":"콜론 두목","category":"노말","stats":{"MATKP":10,"CRITP":20,"ACC":-40}},
+{"name":"콜론 보스","category":"노말","stats":{"MaxHP":70,"MaxMP":30}},
+{"name":"콜론 커맨드","category":"방어구","stats":{"MaxMP":50,"MaxHP":150}},
+{"name":"쿠니에 골렘","category":"방어구","stats":{"AGGRO":-20,"FRAC_BARR":10,"CSPD_P":15}},
+{"name":"쿠스토","category":"무기","stats":{"AGGRO":-7,"CRIT":7,"MATKP":7}},
+{"name":"크라스톨","category":"방어구","stats":{"PHYS_RES":5,"MAG_RES":5,"NEUTRAL_RES":5,"MaxHPP":5,"FLEE":5}},
+{"name":"크리즘 엘","category":"특수","stats":{"MaxHP":3000,"AMPR":11,"STABILITY":1}},
+{"name":"크리스탈 타이탄","category":"특수","stats":{"MaxHPP":10,"MaxHP":1000,"FRAC_BARR":10}},
+{"name":"크림조슈","category":"노말","stats":{"AGI":3,"FLEE":3,"AVOID_RATE":3,"CRIT":-9}},
+{"name":"킹 피톤","category":"추가","stats":{"CRIT":10,"CDMG":4}},
+{"name":"킹포툼","category":"노말","stats":{"MaxHPP":10,"PHYS_RES":-5,"MAG_RES":-5}},
+{"name":"키바노미","category":"방어구","stats":{"WATER_RES":10,"AMPR":10,"BARR_SPEED":10}},
+{"name":"키피나","category":"무기","stats":{"MATKP":12,"AGGRO":-13,"MDEFP":-36,"MAG_PIERCE":8}},
+{"name":"태어크 로 크커트","category":"특수","stats":{"MATKP":6,"ATKP":6,"MOTIONSPEED":2}},
+{"name":"토돌이","category":"방어구","stats":{"UNSHEATHEP":1,"NEUTRAL_RES":-1,"MaxMP":100,"ATKP":1}},
+{"name":"토끼떡","category":"방어구","stats":{"NEUTRAL_RES":-10,"MaxMP":300,"ATKP":6,"UNSHEATHEP":6}},
+{"name":"토순이","category":"방어구","stats":{"ATKP":3,"UNSHEATHEP":3,"NEUTRAL_RES":-10,"MaxMP":300}},
+{"name":"트로코티다","category":"추가","stats":{"AGGRO":15,"LRW":-10,"CRIT":5,"MaxHPP":20}},
+{"name":"툴스","category":"특수","stats":{"GUARD_BREAK":10,"PHYS_PIERCE":10},"condStats":[{"cond":{"main":"양손검"},"stats":{}}]},
+{"name":"툴투가","category":"방어구","stats":{"MaxHPP":1,"GUARD_RECHARGE":5,"PHYS_RES":3}},
+{"name":"튤란 마키나","category":"무기","stats":{"ATKP":6,"DEXP":4,"ASPD_P":2}},
+{"name":"튜린 MAX","category":"방어구","stats":{"MAG_RES":10,"CRIT":10,"PHYS_RES":10,"MaxHPP":-30}},
+{"name":"튼튼한 게르미","category":"노말","stats":{"MaxHP":400,"MaxMP":200,"STABILITY":2,"ACCP":2,"CRIT":4}},
+{"name":"티테레스","category":"특수","stats":{"ABS_DODGE":5,"AMPR":10,"FLEE":20,"FLEEP":10}},
+{"name":"티파","category":"특수","stats":{"AMPR":10}},
+{"name":"판초스 키타마쿠라","category":"노말","stats":{"ACC":3,"EXP":1,"CRIT":5}},
+{"name":"파티시아","category":"특수","stats":{"AMPR":15,"ACC":25}},
+{"name":"팬티카","category":"추가","stats":{"MaxHP":5000,"DEFP":10,"GUARD_POWER":15}},
+{"name":"페런트보아","category":"추가","stats":{"MaxHP":50,"MaxMP":50,"SRW":1}},
+{"name":"페로","category":"추가","stats":{"DROP_RATE":1}},
+{"name":"페리엔","category":"특수","stats":{"ACCP":10,"ABS_ACC":5,"ACC":20,"MaxMP":300}},
+{"name":"페리프라스티","category":"추가","stats":{"ATKP":5,"LRW":-14,"ASPD_P":75}},
+{"name":"포레스티어","category":"방어구","stats":{"MATKP":1,"MAG_RES":3,"AVOID_RATE":5}},
+{"name":"포레스트 울프","category":"노말","stats":{"AVOID_RATE":2,"FLEE":6}},
+{"name":"포무찬","category":"무기","stats":{"ATKP":5},"condStats":[{"cond":{"main":"권갑"},"stats":{"AGIP":5,"AGGRO":-5}}]},
+{"name":"포무찬2","category":"무기","stats":{"ATKP":9},"condStats":[{"cond":{"main":"권갑"},"stats":{"AGIP":7,"AGGRO":-15}}]},
+{"name":"포무찬3","category":"무기","stats":{"ATKP":12},"condStats":[{"cond":{"main":"권갑"},"stats":{"AGIP":10,"AGGRO":-20}}]},
+{"name":"포비 댄서","category":"추가","stats":{"LRW":10,"SRW":10,"UNSHEATHEP":10,"MaxMP":-200}},
+{"name":"포튬터","category":"특수","stats":{"AGGRO":-30,"NEUTRAL_RES":20,"MaxMP":400}},
+{"name":"포튬터2","category":"특수","stats":{"MaxMP":400,"MOTIONSPEED":1,"AGGRO":-30,"NEUTRAL_RES":25}},
+{"name":"포튬터3","category":"특수","stats":{"MaxMP":500,"MOTIONSPEED":2,"AGGRO":-30,"NEUTRAL_RES":30}},
+{"name":"폭주 마정의 짐승","category":"무기","stats":{"MaxMP":400,"PHYS_PIERCE":10,"SRW":8}},
+{"name":"폴버로스","category":"추가","stats":{"LRW":9,"MaxMP":200,"FLEE":10,"ABS_DODGE":5},"condStats":[{"cond":{"main":"자동활"},"stats":{}}]},
+{"name":"푸이에트","category":"방어구","stats":{"MaxHP":-800,"MaxMP":-400,"ATKP":12,"CRIT":12},"condStats":[{"cond":{"sub":"방패"},"stats":{"SRW":6,"STRP":2}}]},
+{"name":"프라펜 대디","category":"방어구","stats":{"PHYS_RES":6,"MaxHPP":6,"GUARD_RECHARGE":6}},
+{"name":"프로토 레온","category":"추가","stats":{"CDMG":3,"CRIT":8}},
+{"name":"플라키 블라키","category":"노말","stats":{"CRIT":-5,"MaxMP":200,"MaxHP":-100,"SRW":7,"ACC":3}},
+{"name":"플라티나 포툼","category":"노말","stats":{"PHYS_RES":-10,"MaxHPP":20,"MAG_RES":-10}},
+{"name":"플러","category":"노말","stats":{"UNSHEATHEP":9,"FLEE":-5,"AVOID_RECHARGE":-3,"MaxMP":-50},"condStats":[{"cond":{"main":"발도검"},"stats":{}}]},
+{"name":"플레어 볼그","category":"노말","stats":{"STR":3,"MAG_RES":-4,"LRW":2}},
+{"name":"피누굴가","category":"노말","stats":{"ATKP":11,"MATKP":11,"ASPD":-300,"CSPD":-300}},
+{"name":"피스테우스","category":"무기","stats":{"DEXP":5,"MATKP":7,"CSPD_P":3}},
+{"name":"피투성이가 된 결정","category":"무기","stats":{"AGGRO":10,"CDMG":6,"AMPR":7}},
+{"name":"필러 골렘","category":"무기","stats":{"SRW":3,"MaxMP":300,"PHYS_PIERCE":3}},
+{"name":"하르푼","category":"특수","stats":{"AGGRO":24,"AVOID_RECHARGE":12,"MATKP":-4}},
+{"name":"하우드비스","category":"무기","stats":{"MP_REGENP":-14,"HP_REGENP":-14,"MATKP":12,"ATKP":12}},
+{"name":"할마무","category":"특수","stats":{"CSPD":-1000,"MATK":100}},
+{"name":"해저 유적의 괴물","category":"추가","stats":{"MaxHP":1000,"CDMG":8,"MATKP":8},"condStats":[{"cond":{"armor":"중량옷"},"stats":{}}]},
+{"name":"핸드메이드 쿠키","category":"추가","stats":{"AGGRO":-15,"MaxHPP":12,"PHYS_PIERCE":10}},
+{"name":"행운의 개구리","category":"추가","stats":{"CHARGE_RED":10,"LINE_RED":10,"MaxHP":2000}},
+{"name":"허망의 흑기사","category":"무기","stats":{"CRITP":2,"DEFP":-9,"ATKP":4,"STRP":3}},
+{"name":"호뢰파섬","category":"방어구","stats":{"ANTICIPATE":10,"ATKP":7,"MATKP":7,"SRW":7,"CRIT":15,"CRITP":15,"MaxHP":7000,"MOTIONSPEED":2},"condStats":[{"cond":{"main":"양손검"},"stats":{}}]},
+{"name":"환주의 변경백","category":"무기","stats":{"ATKP":12,"STRP":4,"MATKP":12,"INTP":4,"LRW":-6},"condStats":[{"cond":{"sub":"방패"},"stats":{"AGGRO":-50}}]},
+{"name":"황금 포툼","category":"특수","stats":{"DROP_RATE":1}},
+{"name":"화염 랑구르","category":"노말","stats":{"AGGRO":2,"MaxHP":600,"MaxMP":300}},
+{"name":"후빗","category":"무기","stats":{"MaxMP":-200,"ATKP":6,"PHYS_PIERCE":20,"AGGRO":-15,"AILMENT_RES":-15}},
+{"name":"휴미더","category":"특수","stats":{"ATKP":4,"MaxMP":700,"MATKP":4,"STABILITY":4}},
+{"name":"휴스토그","category":"노말","stats":{"MaxMP":-100,"ATKP":6,"MATKP":6,"AMPR":2}},
+{"name":"흑의의 크리스마스 공주","category":"무기","stats":{"MATKP":9,"LRW":-6,"STRP":3,"INTP":3,"ATKP":9},"condStats":[{"cond":{"sub":"방패"},"stats":{}}]},
+{"name":"흑화 리그시","category":"특수","stats":{"AGGRO":40,"AMPR":20,"ASPD":300,"AILMENT_RES":10},"condStats":[{"cond":{"armor":"중량옷/경량옷"},"stats":{}}]},
+{"name":"희룡의 삐에로","category":"무기","stats":{"ASPD":200,"CSPD":200,"ACCP":10,"CRIT":10}}
+        ];
+
+        var bannedCrystas = {};
+
+        var subWeaponRules = {
+            '한손검': ['없음', '방패', '단검', '화살', '마도구', '권갑', '인술 두루마리', '한손검(듀얼소드)'],
+            '양손검': ['없음'],
+            '활': ['없음', '화살', '발도검'],
+            '자동활': ['없음', '방패', '단검', '화살', '마도구', '권갑'],
+            '지팡이': ['없음', '방패', '단검', '화살', '마도구', '권갑', '인술 두루마리'],
+            '마도구': ['없음', '인술 두루마리'],
+            '권갑': ['없음', '방패', '단검', '화살', '마도구'],
+            '선풍창': ['없음', '화살', '단검'],
+            '발도검': ['없음', '단검', '인술 두루마리']
+        };
+
+        const tagMap = {
+            "MaxHP": "최대HP", "MaxHPP": "최대HP%", "MaxMP": "최대MP", 
+            "ATK": "ATK", "ATKP": "ATK%", "MATK": "MATK", "MATKP": "MATK%", 
+            "SRW": "근거리위력%", "LRW": "원거리위력%", "PHYS_PIERCE": "물리관통%", "MAG_PIERCE": "마법관통%", 
+            "CRIT": "크리티컬률", "CRITP": "크리티컬률%", "CDMG": "크뎀", "CDMGP": "크뎀%", 
+            "ASPD": "ASPD", "ASPD_P": "ASPD%", "CSPD": "CSPD", "CSPD_P": "CSPD%", 
+            "STABILITY": "안정률%", "UNSHEATHE": "발도공격", "UNSHEATHEP": "발도공격%", 
+            "AGGRO": "어그로%", "PHYS_RES": "물리내성%", "MAG_RES": "마법내성%", "AILMENT_RES": "이상내성%", 
+            "ANTICIPATE": "예측%", "GUARD_RECHARGE": "Guard회복%", "GUARD_POWER": "Guard력%", 
+            "AVOID_RECHARGE": "Avoid회복%", "FRAC_BARR": "비율배리어%", "AMPR": "공격MP회복", 
+            "AMPRP": "공격MP회복%", "MOTIONSPEED": "행동속도%", "STR": "STR", "STRP": "STR%", 
+            "INT": "INT", "INTP": "INT%", "VIT": "VIT", "VITP": "VIT%", 
+            "AGI": "AGI", "AGIP": "AGI%", "DEX": "DEX", "DEXP": "DEX%",
+            "ELEM_P": "속성데미지%", "WATKP": "무기ATK%", "WATK": "무기ATK+",
+            // --- 누락된 태그 추가 ---
+            "FIRE_RES": "불내성%", "WATER_RES": "물내성%", "WIND_RES": "바람내성%", "EARTH_RES": "땅내성%", 
+            "LIGHT_RES": "빛내성%", "DARK_RES": "어둠내성%", "NEUTRAL_RES": "무내성%",
+            "MP_REGENP": "MP자연회복%", "MP_REGEN": "MP자연회복", "HP_REGENP": "HP자연회복%", "HP_REGEN": "HP자연회복",
+            "ITEM_CD": "아이템쿨타임", "FIRE_DMG": "불속성대미지%", "WATER_DMG": "물속성대미지%", "WIND_DMG": "바람속성대미지%", 
+            "EARTH_DMG": "땅속성대미지%", "LIGHT_DMG": "빛속성대미지%", "DARK_DMG": "어둠속성대미지%", "NEUTRAL_DMG": "무속성대미지%",
+            "REFLECT": "반사대미지%", "BULLET_RES": "탄환경감%", "AOE_RES": "장판경감%", "AROUND_RES": "주위경감%", 
+            "AREA_RES": "범위경감%", "FLOOR_RES": "지면경감%", "CHARGE_RED": "돌진경감%", "LINE_RED": "직선경감%", 
+            "REVIVE_TIME": "부활시간%", "EXP": "획득EXP%", "DROP_RATE": "드랍률%", "ABS_DODGE": "절대회피%", 
+            "ABS_ACC": "절대명중%", "PHYS_BARR": "물리배리어", "MAG_BARR": "마법배리어", "BARR_SPEED": "배리어속도%", 
+            "PHYS_PURSUIT": "물리추격%", "MAG_PURSUIT": "마법추격%", "FLEE": "회피", "FLEEP": "회피%", 
+            "ACC": "명중", "ACCP": "명중%", "DEF": "DEF", "DEFP": "DEF%", "MDEF": "MDEF", "MDEFP": "MDEF%",
+            "GUARD_BREAK": "방어무너뜨리기%", "AVOID_RATE": "Avoid율%"
+        };
+// 태그명을 분석해 그룹을 반환하는 함수
+        function getStatCategory(key) {
+            var k = key.toUpperCase();
+            if (k.includes('MP') || k.includes('SPD') || k.includes('MOTION') || k.includes('AGI') || k.includes('AMPR') || k.includes('REGEN') || k.includes('EXP') || k.includes('DROP') || k.includes('REVIVE') || k.includes('ITEM') || k.includes('AGGRO') || k.includes('ANTICIPATE')) {
+                return '⚡ 유틸리티 (속도/MP/기타)';
+            }
+            if (k.includes('HP') || k.includes('VIT') || k.includes('DEF') || k.includes('RES') || k.includes('DODGE') || k.includes('FLEE') || k.includes('GUARD') || k.includes('BARR') || k.includes('RED') || k.includes('AVOID')) {
+                return '🛡️ 방어 관련';
+            }
+            return '⚔️ 공격 관련';
+        }
+
+        // 스탯 객체를 그룹화된 HTML로 변환해주는 함수
+        function buildGroupedTagsHtml(statsObj) {
+            var groups = { '⚔️ 공격 관련': [], '🛡️ 방어 관련': [], '⚡ 유틸리티 (속도/MP/기타)': [] };
+            for (var k in statsObj) {
+                var v = statsObj[k];
+                if (v === 0) continue;
+                var cat = getStatCategory(k);
+                var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";
+                var sign = v > 0 ? "+" : "";
+                var dName = tagMap[k] || k;
+                groups[cat].push('<span class="' + cssClass + '">' + dName + ' ' + sign + v + '</span>');
+            }
+            
+            var html = '<div style="display:block; width:100%;">';
+            for (var g in groups) {
+                if (groups[g].length > 0) {
+                    html += '<div style="margin-top:10px; margin-bottom:5px; font-size:13px; color:#2c3e50; font-weight:bold; border-bottom:1px dashed #d5dbdb; padding-bottom:3px;">[' + g + ']</div>';
+                    html += '<div style="display:flex; flex-wrap:wrap; gap:5px; margin-bottom:8px;">' + groups[g].join('') + '</div>';
+                }
+            }
+            html += '</div>';
+            return html;
+        }
+        const BASE_ASPD_MAP = {
+            "한손검": 100, "양손검": 50, "활": 75, "자동활": 30, "지팡이": 60,
+            "마도구": 90, "권갑": 120, "선풍창": 25, "발도검": 200, "맨손": 1000
+        };
+
+        function getCategoryGroup(catStr) {
+            if(!catStr) return '노말';
+            if(catStr.indexOf('무기') !== -1) return '무기';
+            if(catStr.indexOf('방어') !== -1 || catStr.indexOf('몸') !== -1) return '방어구';
+            if(catStr.indexOf('추가') !== -1) return '추가';
+            if(catStr.indexOf('특수') !== -1) return '특수';
+            return '노말';
+        }
+
+        function populateRefineSelects() {
+            var selects = document.querySelectorAll('.refine-select');
+            var options = '<option value="15" selected>+S (15)</option><option value="14">+A (14)</option><option value="13">+B (13)</option><option value="12">+C (12)</option><option value="11">+D (11)</option><option value="10">+E (10)</option>';
+            for(var i=9; i>=1; i--) options += '<option value="' + i + '">+' + i + '</option>';
+            options += '<option value="0">+0</option>';
+            for(var i=0; i<selects.length; i++) {
+                var cur = selects[i].value;
+                selects[i].innerHTML = options;
+                if(cur) selects[i].value = cur;
+            }
+        }
+
+        function updateSubWeaponList() {
+            var mainWpn = document.getElementById('mainWeaponType').value;
+            var subSelect = document.getElementById('subWeaponType');
+            subSelect.innerHTML = '';
+            
+            var allowedSubs = subWeaponRules[mainWpn] || ['없음'];
+            for(var i=0; i<allowedSubs.length; i++) {
+                var opt = document.createElement('option');
+                opt.value = allowedSubs[i];
+                opt.textContent = allowedSubs[i];
+                subSelect.appendChild(opt);
+            }
+            onSubWeaponChange();
+        }
+
+        function onSubWeaponChange() {
+            var sub = document.getElementById('subWeaponType').value;
+            var isMD = (sub === '마도구');
+            
+            // 피드백 1: 마도구 서브 장비일 때만 마법전사, 컨버전, 듀얼 브링거 표시
+            var wrapMagic = document.getElementById('wrapMagicWarrior');
+            var wrapConv = document.getElementById('wrapConversion');
+            var wrapDual = document.getElementById('wrapDualBringer');
+            
+            if(wrapMagic) wrapMagic.style.display = isMD ? 'flex' : 'none';
+            if(wrapConv) wrapConv.style.display = isMD ? 'flex' : 'none';
+            if(wrapDual) wrapDual.style.display = isMD ? 'flex' : 'none';
+
+            if(!isMD) {
+                document.getElementById('chkMagicWarrior').checked = false;
+                document.getElementById('chkConversion').checked = false;
+                document.getElementById('chkDualBringer').checked = false;
+            }
+
+            refreshAllCrystaInfo();
+        }
+
+        function refreshAllCrystaInfo() {
+            var selects = document.querySelectorAll('.cr-select');
+            for(var i=0; i<selects.length; i++) {
+                renderCrystaInfo(selects[i]);
+            }
+        }
+
+        function checkCondition(ctx, cnd) {
+            if(!cnd) return true;
+            if(cnd.sub) {
+                var subs = cnd.sub.split('/');
+                if(subs.indexOf(ctx.subType) === -1) return false;
+            }
+            if(cnd.armor) {
+                var armors = cnd.armor.split('/');
+                if(armors.indexOf(ctx.armorType) === -1) return false;
+            }
+            if(cnd.main) {
+                var mains = cnd.main.split('/');
+                if(mains.indexOf(ctx.mainType) === -1) return false;
+            }
+            return true;
+        }
+
+        function renderCrystaInfo(inputEl) {
+            var val = inputEl.value.trim();
+            var infoDiv = document.getElementById(inputEl.id + "_info");
+            if(!infoDiv) return;
+            
+            if(!val) { infoDiv.innerHTML = ""; return; }
+            var c = null;
+            for(var i=0; i<crystaDataJson.length; i++) {
+                if(crystaDataJson[i].name === val) { c = crystaDataJson[i]; break; }
+            }
+            if(!c) { infoDiv.innerHTML = ""; return; } // 입력중에는 아무것도 띄우지 않음
+            
+            var ctx = {
+                mainType: document.getElementById('mainWeaponType').value,
+                subType: document.getElementById('subWeaponType').value,
+                armorType: document.getElementById('armorType').value
+            };
+
+            var html = "";
+            var isRootActive = checkCondition(ctx, c.cond);
+
+            if(c.stats) {
+                for(var k in c.stats) {
+                    var v = c.stats[k];
+                    var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";
+                    if (!isRootActive) cssClass += " disabled";
+                    var sign = v > 0 ? "+" : "";
+                    var displayKey = tagMap[k] || k;
+                    html += '<span class="' + cssClass + '">' + displayKey + ' ' + sign + v + '</span>';
+                }
+            }
+            
+            if(c.cond && !isRootActive) {
+                html = '<span style="font-size:12px; color:#c0392b; margin-right:5px; align-self:center;">(조건불만족)</span>' + html;
+            }
+
+            if (c.condStats) {
+                for (var i = 0; i < c.condStats.length; i++) {
+                    var cItem = c.condStats[i];
+                    if (checkCondition(ctx, cItem.cond)) {
+                        for(var k in cItem.stats) {
+                            var v = cItem.stats[k];
+                            var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";
+                            var sign = v > 0 ? "+" : "";
+                            var displayKey = tagMap[k] || k;
+                            html += '<span class="' + cssClass + '">' + displayKey + ' ' + sign + v + '</span>';
+                        }
+                    }
+                }
+            }
+
+            infoDiv.innerHTML = html;
+        }
+
+        function addOptionRow(containerId) {
+            var container = document.getElementById(containerId);
+            var row = document.createElement('div');
+            row.className = 'opt-row';
+            row.innerHTML = '<select style="flex:2;" class="opt-type">' +
+                '<option value="ATKP">ATK %</option><option value="ATK">ATK (+)</option>' +
+                '<option value="MATKP">MATK %</option><option value="MATK">MATK (+)</option>' +
+                '<option value="STRP">STR %</option><option value="STR">STR (+)</option>' +
+                '<option value="DEXP">DEX %</option><option value="DEX">DEX (+)</option>' +
+                '<option value="AGIP">AGI %</option><option value="AGI">AGI (+)</option>' +
+                '<option value="INTP">INT %</option><option value="INT">INT (+)</option>' +
+                '<option value="CDMG_P">크리티컬데미지 (%)</option><option value="CDMG">크리티컬데미지 (+)</option>' +
+                '<option value="CRIT_P">크리티컬확률 (%)</option><option value="CRIT">크리티컬확률 (+)</option>' +
+                '<option value="SRW">근거리위력 (%)</option><option value="LRW">원거리위력 (%)</option>' +
+                '<option value="UNSHEATHE">발도위력 (%)</option>' +
+                '<option value="PHYS_PIERCE">물리관통 (%)</option><option value="MAG_PIERCE">마법관통 (%)</option>' +
+                '<option value="ELEM_P">속성데미지 (%)</option>' +
+                '<option value="WATKP">무기ATK (%)</option><option value="WATK">무기ATK (+)</option>' +
+                '<option value="ASPD">ASPD (+)</option><option value="ASPD_P">ASPD (%)</option>' +
+                '<option value="CSPD">CSPD (+)</option><option value="CSPD_P">CSPD (%)</option>' +
+                '<option value="STABILITY">안정률 (%)</option>' +
+                '</select>' +
+                '<input type="number" style="flex:1;" class="opt-val" value="0">' +
+                '<button type="button" onclick="this.parentElement.remove()" style="cursor:pointer; color:#e74c3c; border:none; background:none; font-weight:bold;">✕</button>';
+            container.appendChild(row);
+        }
+
+        document.getElementById('banInput').addEventListener('keypress', function(e) { 
+            if(e.key === 'Enter') { e.preventDefault(); addBanTag(); } 
+        });
+        
+        function addBanTag() {
+            var val = document.getElementById('banInput').value.trim();
+            if(val && !bannedCrystas[val]) { 
+                bannedCrystas[val] = true;
+                document.getElementById('banInput').value = ''; 
+                renderBanTags(); 
+            }
+        }
+        function removeBanTag(val) { delete bannedCrystas[val]; renderBanTags(); }
+        function renderBanTags() {
+            var container = document.getElementById('banTagContainer');
+            container.innerHTML = '';
+            for (var val in bannedCrystas) {
+                var tag = document.createElement('span');
+                tag.className = 'ban-tag';
+                tag.innerHTML = val + ' <button type="button" onclick="removeBanTag(\'' + val + '\')">✕</button>';
+                container.appendChild(tag);
+            }
+        }
+
+// 스킬 계수/상수에 스탯 기반 보정을 추가하는 함수
+        function addSkillStatRow() {
+            var container = document.getElementById('skillStatOpts');
+            var row = document.createElement('div');
+            row.className = 'opt-row';
+            row.innerHTML = '<select style="flex:1.2;" class="skill-target">' +
+                '<option value="mult">계수(배율)에 추가</option>' +
+                '<option value="const">상수에 추가</option>' +
+                '</select>' +
+                '<select style="flex:1;" class="skill-stat">' +
+                '<option value="STR">순수 STR</option>' +
+                '<option value="INT">순수 INT</option>' +
+                '<option value="VIT">순수 VIT</option>' +
+                '<option value="AGI">순수 AGI</option>' +
+                '<option value="DEX">순수 DEX</option>' +
+                '<option value="totalSTR">최종 STR</option>' +
+                '<option value="totalINT">최종 INT</option>' +
+                '<option value="totalVIT">최종 VIT</option>' +
+                '<option value="totalAGI">최종 AGI</option>' +
+                '<option value="totalDEX">최종 DEX</option>' +
+                '</select>' +
+                '<input type="number" step="any" style="flex:1;" class="skill-ratio" placeholder="비율 입력 (예: 0.01)">' +
+                '<button type="button" onclick="this.parentElement.remove()" style="cursor:pointer; color:#e74c3c; border:none; background:none; font-weight:bold;">✕</button>';
+            container.appendChild(row);
+        }
+
+
+// HTML을 일일이 수정하지 않고 JS에서 자동으로 검색 래퍼를 생성해주는 함수
+function wrapInputsForAutocomplete() {
+    var inputs = document.querySelectorAll('.cr-select, #banInput');
+    for (var i = 0; i < inputs.length; i++) {
+        var inp = inputs[i];
+        inp.removeAttribute('list'); // 기존 datalist 연결 해제
+        inp.setAttribute('autocomplete', 'off');
+        
+        var wrapper = document.createElement('div');
+        wrapper.className = 'autocomplete-wrapper';
+        
+        inp.parentNode.insertBefore(wrapper, inp);
+        wrapper.appendChild(inp);
+    }
+}
+
+// 커스텀 자동완성 및 검색 초기화 함수 (기존 populateCrystaSelects 대체)
+function initAutocomplete() {
+    wrapInputsForAutocomplete();
+
+    var wpnList = [], armList = [], addList = [], spcList = [], allList = [];
+    
+    for (var i = 0; i < crystaDataJson.length; i++) {
+        var c = crystaDataJson[i];
+        if (!c || !c.name) continue;
+        var grp = getCategoryGroup(c.category);
+        
+        allList.push(c.name);
+        if (grp === '노말') {
+            wpnList.push(c.name); armList.push(c.name); addList.push(c.name); spcList.push(c.name);
+        } else if (grp === '무기') { wpnList.push(c.name); }
+        else if (grp === '방어구') { armList.push(c.name); }
+        else if (grp === '추가') { addList.push(c.name); }
+        else if (grp === '특수') { spcList.push(c.name); }
+    }
+
+    setupAutocomplete(document.getElementById('cr_wpn_1'), wpnList);
+    setupAutocomplete(document.getElementById('cr_wpn_2'), wpnList);
+    setupAutocomplete(document.getElementById('cr_arm_1'), armList);
+    setupAutocomplete(document.getElementById('cr_arm_2'), armList);
+    setupAutocomplete(document.getElementById('cr_add_1'), addList);
+    setupAutocomplete(document.getElementById('cr_add_2'), addList);
+    setupAutocomplete(document.getElementById('cr_spc_1'), spcList);
+    setupAutocomplete(document.getElementById('cr_spc_2'), spcList);
+    setupAutocomplete(document.getElementById('banInput'), allList);
+}
+
+// 자동완성 핵심 엔진
+function setupAutocomplete(inp, arr) {
+    if (!inp) return;
+    var currentFocus;
+
+    // 1. 클릭 시에도 무조건 리스트 표출되도록 이벤트 적용
+    inp.addEventListener("click", function(e) {
+        triggerSearch(this.value);
+    });
+
+    // 2. 타이핑(검색) 시 실시간 필터링
+    inp.addEventListener("input", function(e) {
+        triggerSearch(this.value);
+        if (inp.classList.contains('cr-select')) renderCrystaInfo(this);
+    });
+
+    function triggerSearch(val) {
+        var a, b, i;
+        closeAllLists(); // 기존에 열려있는 다른 리스트 모두 초기화
+        currentFocus = -1;
+        
+        a = document.createElement("DIV");
+        a.setAttribute("id", inp.id + "autocomplete-list");
+        a.setAttribute("class", "autocomplete-items");
+        inp.parentNode.appendChild(a);
+        
+        // 검색어에 맞는 항목만 생성 (검색어가 없으면 전체 리스트 생성)
+        for (i = 0; i < arr.length; i++) {
+            var matchIdx = arr[i].toUpperCase().indexOf(val.toUpperCase());
+            if (!val || matchIdx > -1) {
+                b = document.createElement("DIV");
+                
+                // 검색어 하이라이트 처리
+                if (val && matchIdx > -1) {
+                    b.innerHTML = arr[i].substring(0, matchIdx) + "<strong>" + arr[i].substring(matchIdx, matchIdx + val.length) + "</strong>" + arr[i].substring(matchIdx + val.length);
+                } else {
+                    b.innerHTML = arr[i];
+                }
+                b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                
+                b.addEventListener("click", function(e) {
+                    inp.value = this.getElementsByTagName("input")[0].value;
+                    if (inp.classList.contains('cr-select')) renderCrystaInfo(inp);
+                    closeAllLists(); // 선택 완료 후 리스트 닫기
+                });
+                a.appendChild(b);
+            }
+        }
+    }
+
+    // 키보드 방향키 및 엔터 조작 지원
+    inp.addEventListener("keydown", function(e) {
+        var x = document.getElementById(this.id + "autocomplete-list");
+        if (x) x = x.getElementsByTagName("div");
+        if (e.keyCode == 40) { // DOWN
+            currentFocus++;
+            addActive(x);
+        } else if (e.keyCode == 38) { // UP
+            currentFocus--;
+            addActive(x);
+        } else if (e.keyCode == 13) { // ENTER
+            e.preventDefault();
+            if (currentFocus > -1) {
+                if (x) x[currentFocus].click();
+            } else if (inp.id === 'banInput') {
+                addBanTag(); 
+                closeAllLists();
+            }
+        }
+    });
+
+    function addActive(x) {
+        if (!x) return false;
+        removeActive(x);
+        if (currentFocus >= x.length) currentFocus = 0;
+        if (currentFocus < 0) currentFocus = (x.length - 1);
+        x[currentFocus].classList.add("autocomplete-active");
+        x[currentFocus].scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+    
+    function removeActive(x) {
+        for (var i = 0; i < x.length; i++) {
+            x[i].classList.remove("autocomplete-active");
+        }
+    }
+}
+
+// ★ 다중 이벤트 충돌을 막기 위해 닫기 기능을 setupAutocomplete 함수 바깥으로 뺐습니다.
+function closeAllLists(elmnt) {
+    var x = document.getElementsByClassName("autocomplete-items");
+    // HTMLCollection은 뒤에서부터 지워야 누락되지 않습니다.
+    for (var i = x.length - 1; i >= 0; i--) {
+        // 클릭된 요소가 해당 리스트의 입력창이 아닐 때만 삭제
+        var inputOfThisList = x[i].previousElementSibling;
+        if (elmnt !== x[i] && elmnt !== inputOfThisList) {
+            x[i].parentNode.removeChild(x[i]);
+        }
+    }
+}
+
+// 바탕 화면 클릭 시 닫기
+document.addEventListener("click", function (e) {
+    closeAllLists(e.target);
+});
+
+        function applyStat(ctx, key, val) {
+            if(!key || isNaN(val)) return;
+            var k = key.toUpperCase().trim();
+            if (k === 'ATKP' || k === 'ATK%' || k === 'ATK_P') ctx.atkP += val;
+            else if (k === 'ATK' || k === 'ATK+') ctx.atkF += val;
+            else if (k === 'MATKP' || k === 'MATK%' || k === 'MATK_P') ctx.matkP += val;
+            else if (k === 'MATK' || k === 'MATK+') ctx.matkF += val;
+            else if (k === 'STRP' || k === 'STR%' || k === 'STR_P') ctx.strP += val;
+            else if (k === 'STR' || k === 'STR+') ctx.strF += val;
+            else if (k === 'DEXP' || k === 'DEX%' || k === 'DEX_P') ctx.dexP += val;
+            else if (k === 'DEX' || k === 'DEX+') ctx.dexF += val;
+            else if (k === 'AGIP' || k === 'AGI%' || k === 'AGI_P') ctx.agiP += val;
+            else if (k === 'AGI' || k === 'AGI+') ctx.agiF += val;
+            else if (k === 'INTP' || k === 'INT%' || k === 'INT_P') ctx.intP += val;
+            else if (k === 'INT' || k === 'INT+') ctx.intF += val;
+            else if (k === 'CDMG_P' || k === 'CDMG%' || k === 'CDMG_PCT' || k === 'CDMGP') ctx.cdmgP += val;
+            else if (k === 'CDMG' || k === 'CDMG+') ctx.cdmgF += val;
+            else if (k === 'CRIT_P' || k === 'CRIT%' || k === 'CRITP') ctx.critP += val;
+            else if (k === 'CRIT' || k === 'CRIT+') ctx.critF += val;
+            else if (k === 'SRW' || k === '근거리위력') ctx.srw += val;
+            else if (k === 'LRW' || k === '원거리위력') ctx.lrw += val;
+            else if (k === 'UNSHEATHE' || k === '발도위력' || k === 'UNSHEATHEP') ctx.unsheathe += val;
+            else if (k === 'PHYS_PIERCE' || k === '물리관통') ctx.physPierce += val;
+            else if (k === 'MAG_PIERCE' || k === '마법관통') ctx.magPierce += val;
+            else if (k === 'ELEM_P' || k === '속성데미지') ctx.elemP += val;
+            else if (k === 'WATKP' || k === '무기ATK%') ctx.watkP += val;
+            else if (k === 'WATK' || k === '무기ATK+') ctx.watkF += val;
+            else if (k === 'ASPD') ctx.aspdF += val;
+            else if (k === 'ASPD_P' || k === 'ASPD%') ctx.aspdP += val;
+            else if (k === 'CSPD') ctx.cspdF += val;
+            else if (k === 'CSPD_P' || k === 'CSPD%') ctx.cspdP += val;
+            else if (k === 'STABILITY' || k === '안정률') ctx.stability += val;
+        }
+
+        function getBaseContext() {
+            var ctx = {
+                level: parseFloat(document.getElementById('charLevel').value) || 0,
+                strBase: parseFloat(document.getElementById('strBase').value) || 0,
+                intBase: parseFloat(document.getElementById('intBase').value) || 0,
+                vitBase: parseFloat(document.getElementById('vitBase').value) || 0,
+                agiBase: parseFloat(document.getElementById('agiBase').value) || 0,
+                dexBase: parseFloat(document.getElementById('dexBase').value) || 0,
+                crtBase: parseFloat(document.getElementById('crtBase').value) || 0,
+
+                atkType: document.getElementById('atkType').value,
+                rangeType: document.getElementById('rangeType').value,
+                mainType: document.getElementById('mainWeaponType').value,
+                wpnAtk: parseFloat(document.getElementById('wpnAtk').value) || 0,
+                wpnRefine: parseFloat(document.getElementById('wpnRefine').value) || 0,
+                wpnStab: parseFloat(document.getElementById('wpnStab').value) || 80,
+                subType: document.getElementById('subWeaponType').value,
+                subAtk: parseFloat(document.getElementById('subAtk').value) || 0,
+                subRefine: parseFloat(document.getElementById('subRefine').value) || 0,
+                subStab: parseFloat(document.getElementById('subStab').value) || 0,
+                armorType: document.getElementById('armorType').value,
+
+                bossLevel: parseFloat(document.getElementById('bossLevel').value) || 0,
+                bossDef: parseFloat(document.getElementById('bossDef').value) || 0,
+                bossMdef: parseFloat(document.getElementById('bossMdef').value) || 0,
+                bossCritResist: parseFloat(document.getElementById('bossCritResist').value) || 0,
+                bossPhysResist: parseFloat(document.getElementById('bossPhysResist').value) || 0,
+                bossMagResist: parseFloat(document.getElementById('bossMagResist').value) || 0,
+                skillMult: parseFloat(document.getElementById('skillMult').value) || 1,
+                skillConst: parseFloat(document.getElementById('skillConst').value) || 1000,
+
+                chkIsUnsheathe: document.getElementById('chkIsUnsheathe').checked,
+                chkConversion: document.getElementById('chkConversion').checked,
+                chkSpellBurst: document.getElementById('chkSpellBurst').checked,
+                chkDualBringer: document.getElementById('chkDualBringer').checked,
+                chkWeakness: document.getElementById('chkWeakness').checked,
+                chkMagicWarrior: document.getElementById('chkMagicWarrior').checked,
+
+                strP: 0, strF: 0, dexP: 0, dexF: 0, intP: 0, intF: 0, agiP: 0, agiF: 0, vitP: 0, vitF: 0,
+                atkP: 0, atkF: 0, matkP: 0, matkF: 0, cdmgP: 0, cdmgF: 0, 
+                critP: 0, critF: 0, srw: 0, lrw: 0, unsheathe: 0, elemP: 0, watkP: 0, watkF: 0,
+                physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0
+            };
+            var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
+            for(var i=0; i<optContainers.length; i++) {
+                var container = document.getElementById(optContainers[i]);
+                if(!container) continue;
+                var rows = container.querySelectorAll('.opt-row');
+                for(var j=0; j<rows.length; j++) {
+                    var key = rows[j].querySelector('.opt-type').value;
+                    var val = parseFloat(rows[j].querySelector('.opt-val').value) || 0;
+                    applyStat(ctx, key, val);
+                } // <-- 첫 번째 누락된 중괄호 복구
+            } // <-- 두 번째 누락된 중괄호 복구
+
+            // 스킬 상/계수 스탯 보정치 추가 부분
+            ctx.skillStats = [];
+            var skillRows = document.querySelectorAll('#skillStatOpts .opt-row');
+            for(var k=0; k<skillRows.length; k++) {
+                ctx.skillStats.push({
+                    target: skillRows[k].querySelector('.skill-target').value,
+                    stat: skillRows[k].querySelector('.skill-stat').value,
+                    ratio: parseFloat(skillRows[k].querySelector('.skill-ratio').value) || 0
+                });
+            }
+
+            return ctx;
+        }
+        function cloneCtx(baseCtx) {
+            var newCtx = {};
+            for(var key in baseCtx) { newCtx[key] = baseCtx[key]; }
+            return newCtx;
+        }
+
+        function simulateWithCrystas(baseCtx, crystas) {
+            var ctx = cloneCtx(baseCtx);
+            for(var i=0; i<crystas.length; i++) {
+                var c = crystas[i];
+                if(!c) continue;
+                
+                if(c.stats) {
+                    if(!c.cond || checkCondition(ctx, c.cond)) {
+                        for(var key in c.stats) applyStat(ctx, key, parseFloat(c.stats[key]) || 0);
+                    }
+                }
+                
+                if (c.condStats) {
+                    for(var k=0; k<c.condStats.length; k++) {
+                        var cItem = c.condStats[k];
+                        if (checkCondition(ctx, cItem.cond)) {
+                            for(var key in cItem.stats) applyStat(ctx, key, parseFloat(cItem.stats[key]) || 0);
+                        }
+                    }
+                }
+            }
+
+            var totalSTR = Math.floor(ctx.strBase * (1 + ctx.strP/100) + ctx.strF);
+            var totalDEX = Math.floor(ctx.dexBase * (1 + ctx.dexP/100) + ctx.dexF);
+            var totalINT = Math.floor(ctx.intBase * (1 + ctx.intP/100) + ctx.intF);
+            var totalAGI = Math.floor(ctx.agiBase * (1 + ctx.agiP/100) + ctx.agiF);
+            var totalVIT = Math.floor(ctx.vitBase * (1 + ctx.vitP/100) + ctx.vitF);
+            
+            var mainWpnBase = Math.floor((ctx.wpnAtk + ctx.watkF) * (1 + ctx.watkP/100));
+            var refineWpnBonus = Math.floor(ctx.wpnAtk * Math.pow(ctx.wpnRefine, 2)/100) + ctx.wpnRefine;
+            var baseWpnAtk = mainWpnBase + refineWpnBonus;
+
+            if (ctx.subType === '화살' && (ctx.mainType === '활' || ctx.mainType === '자동활')) {
+                baseWpnAtk += Math.floor(ctx.subAtk) + Math.floor(ctx.subAtk * Math.pow(ctx.subRefine, 2)/100) + ctx.subRefine;
+            }
+
+            var statAtk = 0;
+            var statMatk = totalINT * 4 + totalDEX * 1; 
+            var matkRatio = 0.0;
+            var m = ctx.mainType;
+
+            if (m === '한손검') { 
+                if(ctx.subType === '한손검(듀얼소드)') {
+                    // 듀얼소드 메인 무기 스탯 반영: STR 1, AGI 1, DEX 2
+                    statAtk = totalSTR*1 + totalAGI*1 + totalDEX*2;
+                } else {
+                    // 일반 한손검 스탯 반영: STR 2, DEX 2
+                    statAtk = totalSTR*2 + totalDEX*2; 
+                }
+                statMatk = totalINT*3 + totalDEX*1; 
+            }
+            else if (m === '양손검') { statAtk = totalSTR*3 + totalDEX*1; statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '활') { statAtk = totalSTR*1 + totalDEX*3; statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '자동활') { statAtk = totalDEX*4; statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '지팡이') { statAtk = totalSTR*3 + totalINT*1; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
+            else if (m === '마도구') { statAtk = totalINT*2 + totalAGI*2; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
+            else if (m === '권갑') { statAtk = totalAGI*2 + totalDEX*0.5 + totalSTR*0.5; statMatk = totalINT*4 + totalDEX*1; matkRatio = 0.5; }
+            else if (m === '선풍창') { statAtk = totalSTR*2.5 + totalAGI*1.5; statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '발도검') { statAtk = totalDEX*2.5 + totalSTR*1.5; statMatk = totalINT*3 + totalDEX*1; }
+            else { statAtk = totalSTR*1; statMatk = totalINT*3 + totalDEX*1; }
+
+            var conversionAddMatk = 0;
+            if (ctx.chkConversion && ctx.subType === '마도구') {
+                conversionAddMatk = baseWpnAtk; 
+            }
+
+            var penalty = 0;
+            if (ctx.subType === '마도구' && m !== '지팡이' && m !== '마도구' && !ctx.chkMagicWarrior) penalty = -15;
+            
+var preFinalAtk = baseWpnAtk + statAtk + ctx.level;
+            var finalATK = Math.floor(preFinalAtk * (1 + (ctx.atkP + penalty)/100)) + ctx.atkF;
+
+            // ---- 피드백 1: 듀얼소드(서브 한손검) 최종 ATK 및 서브 ATK 로직 추가 ----
+            var finalSubAtk = 0;
+            var finalSubStab = 0;
+            var isDualSword = (ctx.mainType === '한손검' && ctx.subType === '한손검(듀얼소드)');
+            
+            if (isDualSword) {
+                // 1. 서브 무기 최종 공격력 (재련치 제곱을 200으로 나눔)
+                var subWpnBase = Math.floor(ctx.subAtk + (ctx.subAtk * ctx.watkP / 100) + (ctx.subAtk * Math.pow(ctx.subRefine, 2) / 200) + ctx.subRefine + ctx.watkF);
+                
+                // 2. 서브 스탯 공격력 (통상 듀얼소드 서브 스탯은 STR 1 + AGI 3)
+                var subStatAtk = Math.floor((totalSTR * 1) + (totalAGI * 3));
+                
+                // 3. 서브 ATK
+                var preFinalSubAtk = subWpnBase + subStatAtk + ctx.level;
+                finalSubAtk = Math.floor(preFinalSubAtk * (1 + ctx.atkP / 100)) + ctx.atkF;
+                
+                // 4. 서브 안정률 (최대 100%)
+                finalSubStab = Math.floor(ctx.subStab * 0.5 + totalSTR * 0.06 + totalAGI * 0.04 + ctx.stability);
+                if (finalSubStab > 100) finalSubStab = 100;
+                
+                // 5. 듀얼소드 최종 ATK 합산
+                finalATK = finalATK + Math.floor(finalSubAtk * finalSubStab / 100);
+            }
+            // -------------------------------------------------------------
+
+            var preFinalMatk = Math.floor(baseWpnAtk * matkRatio) + statMatk + ctx.level + conversionAddMatk;
+            var finalMATK = Math.floor(preFinalMatk * (1 + (ctx.matkP + penalty)/100)) + ctx.matkF;
+            
+            var baseCDMG = (totalSTR >= totalAGI) ? 150 + Math.floor(totalSTR/5) : 150 + Math.floor((totalSTR+totalAGI)/10);
+            var calcCDMG = Math.floor(baseCDMG * (1 + ctx.cdmgP/100)) + ctx.cdmgF;
+            if (calcCDMG > 300) calcCDMG = 300 + Math.floor((calcCDMG - 300)/2);
+            
+            var baseCrit = 25 + Math.floor(ctx.crtBase / 3.4);
+            var finalCrit = Math.floor(baseCrit * (1 + ctx.critP/100)) + ctx.critF;
+            
+            var baseASPDConst = BASE_ASPD_MAP[m] || 100;
+            var statAspd = 0;
+            
+            if (m === "한손검" || ctx.subType === "한손검(듀얼소드)") { statAspd = (totalAGI * 4.2) + (totalSTR * 0.2); }
+            else if (m === "양손검") { statAspd = (totalAGI * 2.1) + (totalSTR * 0.2); }
+            else if (m === "활") { statAspd = (totalAGI * 3.1) + (totalDEX * 0.2); }
+            else if (m === "자동활") { statAspd = (totalAGI * 2.2) + (totalDEX * 0.2); }
+            else if (m === "지팡이") { statAspd = (totalAGI * 1.8) + (totalINT * 0.2); }
+            else if (m === "마도구") { statAspd = (totalAGI * 4.0) + (totalINT * 0.2); }
+            else if (m === "권갑") { statAspd = (totalAGI * 4.6) + (totalDEX * 0.1) + (totalSTR * 0.1); }
+            else if (m === "선풍창") { statAspd = (totalAGI * 3.5) + (totalSTR * 0.2); }
+            else if (m === "발도검") { statAspd = (totalAGI * 3.9) + (totalDEX * 0.3); }
+            else { statAspd = totalAGI * 9.6; }
+
+            var armorAspdP = 0;
+            if(ctx.armorType === '경량옷') armorAspdP = 50;
+            else if(ctx.armorType === '중량옷') armorAspdP = -50;
+            
+            var preAspd = baseASPDConst + ctx.level + Math.floor(statAspd);
+            var finalASPD = Math.floor((preAspd + ctx.aspdF) * (1 + (ctx.aspdP + armorAspdP)/100));
+
+            var preCspd = ctx.level + Math.floor(1.16 * totalAGI) + Math.floor(2.94 * totalDEX);
+            var finalCSPD = Math.floor((preCspd + ctx.cspdF) * (1 + ctx.cspdP/100));
+            
+            var statStab = 0;
+            if(m==='한손검') statStab = (totalSTR + totalDEX*3)/40;
+            else if(m==='양손검') statStab = totalDEX/10;
+            else if(m==='활') statStab = (totalSTR + totalDEX*3)/40;
+            else if(m==='자동활') statStab = totalSTR/20; 
+            else if(m==='지팡이') statStab = totalSTR/20;
+            else if(m==='마도구') statStab = totalDEX/10;
+            else if(m==='권갑') statStab = totalDEX/40;
+            else if(m==='선풍창') statStab = (totalSTR + totalDEX)/40;
+            else if(m==='발도검') statStab = (totalSTR*3 + totalDEX)/40;
+            
+            var physStab = ctx.wpnStab + ctx.stability + Math.floor(statStab);
+            if (ctx.subType === '화살' && (ctx.mainType === '활' || ctx.mainType === '자동활')) {
+                physStab += ctx.subStab;
+            }
+            if(physStab > 100) physStab = 100;
+
+            var isMag = (ctx.atkType === 'MAG');
+            var finalCritRate = finalCrit;
+            var finalCdmgVal = calcCDMG;
+            var finalStab = physStab;
+            
+            // 피드백 3: 툴팁 조립용 변수
+            var critTip = `기초 크리율: 25 + 스탯보정(${Math.floor(ctx.crtBase / 3.4)}) = ${baseCrit}\n옵션 보정: +${ctx.critP}%, +${ctx.critF}\n`;
+            var cdmgTip = `기초 크뎀: ${baseCDMG}\n옵션 보정: +${ctx.cdmgP}%, +${ctx.cdmgF}\n`;
+
+            if(isMag) {
+                var magCritReflect = 0;
+                if(ctx.chkSpellBurst) magCritReflect += 25;
+                if(ctx.chkDualBringer && ctx.subType === '마도구' && (totalSTR >= totalINT)) magCritReflect += 25;
+                if(ctx.chkWeakness) magCritReflect += 50;
+                finalCritRate = Math.floor(finalCrit * (magCritReflect / 100));
+                
+                critTip += `마법 크리 반영률: ${magCritReflect}% (최종: ${finalCritRate})`;
+                
+                var magCdmgReflect = 50;
+                if(ctx.chkSpellBurst) magCdmgReflect += 25;
+                if(ctx.chkDualBringer && ctx.subType === '마도구' && (totalINT > totalSTR)) magCdmgReflect += 25;
+                finalCdmgVal = 100 + Math.floor((calcCDMG - 100) * (magCdmgReflect / 100));
+                
+                cdmgTip += `마법 크뎀 반영률: ${magCdmgReflect}% (최종: ${finalCdmgVal}%)`;
+
+                finalStab = Math.floor(50 + physStab/2);
+                if(finalStab > 100) finalStab = 100;
+            } else {
+                critTip += `최종 확률: ${finalCritRate}`;
+                cdmgTip += `최종 크뎀: ${finalCdmgVal}%`;
+            }
+
+            var effectiveCritRate = finalCritRate - ctx.bossCritResist;
+            var critRateEv = Math.max(0, Math.min(effectiveCritRate, 100)) / 100;
+            var evCdmgMult = (critRateEv * finalCdmgVal + (1 - critRateEv) * 100) / 100;
+            var avgStabMult = (100 + finalStab) / 200; 
+            
+            var targetDef = isMag ? ctx.bossMdef : ctx.bossDef;
+            var targetPierce = isMag ? ctx.magPierce : ctx.physPierce;
+            var targetResist = isMag ? ctx.bossMagResist : ctx.bossPhysResist;
+            var effectiveDef = Math.floor(targetDef * (1 - (targetPierce / 100)));
+            if(effectiveDef < 0) effectiveDef = 0;
+            
+            var finalSkillMult = ctx.skillMult;
+            var finalSkillConst = ctx.skillConst;
+
+            if (ctx.skillStats) {
+                for(var i=0; i<ctx.skillStats.length; i++) {
+                    var ss = ctx.skillStats[i];
+                    var statVal = 0;
+                    switch(ss.stat) {
+                        case 'STR': statVal = ctx.strBase; break;
+                        case 'INT': statVal = ctx.intBase; break;
+                        case 'VIT': statVal = ctx.vitBase; break;
+                        case 'AGI': statVal = ctx.agiBase; break;
+                        case 'DEX': statVal = ctx.dexBase; break;
+                        case 'totalSTR': statVal = totalSTR; break;
+                        case 'totalINT': statVal = totalINT; break;
+                        case 'totalVIT': statVal = totalVIT; break;
+                        case 'totalAGI': statVal = totalAGI; break;
+                        case 'totalDEX': statVal = totalDEX; break;
+                    }
+                    if (ss.target === 'mult') {
+                        finalSkillMult += (statVal * ss.ratio);
+                    } else if (ss.target === 'const') {
+                        finalSkillConst += (statVal * ss.ratio);
+                    }
+                }
+            }
+
+
+            var baseAtkRaw = isMag ? finalMATK : finalATK;
+            var lvDiff = ctx.level - ctx.bossLevel;
+
+            var rawAtkBase = baseAtkRaw + lvDiff + finalSkillConst - effectiveDef;
+            var isPierced = (rawAtkBase > 0);
+            if(rawAtkBase < 1) rawAtkBase = 1;
+
+            var rangeDmgPct = (ctx.rangeType === 'SHORT') ? ctx.srw : ctx.lrw;
+            var rangeMult = 1 + (rangeDmgPct / 100);
+            var unsheatheMult = ctx.chkIsUnsheathe ? (1 + ctx.unsheathe / 100) : 1;
+            var resistMult = 1 - (targetResist / 100);
+            var elemMult = 1 + (ctx.elemP / 100);
+
+            var damageFactor = rawAtkBase * finalSkillMult * evCdmgMult * rangeMult * unsheatheMult * elemMult * resistMult * avgStabMult;
+
+            var extraAtkTip = isDualSword ? `\n\n[듀얼소드 합산]\n메인 + (서브ATK * 서브안정률)\n(서브 무기 ATK: ${finalSubAtk} / 서브 안정률: ${finalSubStab}%)` : '';
+
+            return { 
+                ctx: ctx, isPierced: isPierced, rawAtkBase: rawAtkBase,
+                finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
+                finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: finalCritRate,
+                finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab,
+                finalSubAtk: finalSubAtk,    // 서브ATK 추가
+                finalSubStab: finalSubStab,  // 서브안정률 추가
+                isDualSword: isDualSword,    // 듀얼소드 여부 추가
+                damageFactor: damageFactor,
+
+                tooltips: {
+                    atkTip: `무기ATK(${baseWpnAtk}) + 스탯ATK(${statAtk}) + 레벨(${ctx.level}) = ${preFinalAtk}\n최종비율/고정: +${ctx.atkP + penalty}%, +${ctx.atkF}${extraAtkTip}`,
+                    matkTip: `무기ATK(${baseWpnAtk}) * 반영률(${matkRatio}) = ${Math.floor(baseWpnAtk*matkRatio)}\n무기반영 + 스탯MATK(${statMatk}) + 레벨(${ctx.level}) ${conversionAddMatk>0?'+컨버전('+conversionAddMatk+')':''} = ${preFinalMatk}\n최종비율/고정: +${ctx.matkP + penalty}%, +${ctx.matkF}`,
+                    aspdTip: `기초(${baseASPDConst}) + 스탯ASP(${Math.floor(statAspd)}) + 레벨(${ctx.level}) = ${preAspd}\n비율/고정: +${ctx.aspdP + armorAspdP}%, +${ctx.aspdF}`,
+                    cspdTip: `레벨(${ctx.level}) + AGI보정(${Math.floor(1.16*totalAGI)}) + DEX보정(${Math.floor(2.94*totalDEX)}) = ${preCspd}\n비율/고정: +${ctx.cspdP}%, +${ctx.cspdF}`,
+                    critTip: critTip,
+                    cdmgTip: cdmgTip
+                }
+            };
+        }
+
+        // 피드백 2: input datalist 대응하여 값 가져오기 로직 유지
+        function getCurrentCrystas() {
+            var ids = ['cr_wpn_1','cr_wpn_2', 'cr_arm_1','cr_arm_2', 'cr_add_1','cr_add_2', 'cr_spc_1','cr_spc_2'];
+            var results = [];
+            for(var i=0; i<ids.length; i++) {
+                var el = document.getElementById(ids[i]);
+                if(!el || !el.value.trim()) { results.push(null); continue; }
+                var val = el.value.trim();
+                var found = null;
+                for(var j=0; j<crystaDataJson.length; j++) {
+                    if(crystaDataJson[j] && crystaDataJson[j].name === val) { found = crystaDataJson[j]; break; }
+                }
+                results.push(found);
+            }
+            return results;
+        }
+
+        function runCalculationSafe() {
+            try { runCalculation(); } 
+            catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
+        }
+
+        function runCalculation() {
+            var baseCtx = getBaseContext();
+            var currentCrystas = getCurrentCrystas();
+            var curRes = simulateWithCrystas(baseCtx, currentCrystas);
+
+            var locks = [
+                document.getElementById('lock_wpn_1').checked, document.getElementById('lock_wpn_2').checked,
+                document.getElementById('lock_arm_1').checked, document.getElementById('lock_arm_2').checked,
+                document.getElementById('lock_add_1').checked, document.getElementById('lock_add_2').checked,
+                document.getElementById('lock_spc_1').checked, document.getElementById('lock_spc_2').checked
+            ];
+            var categories = ['무기', '방어구', '추가', '특수'];
+            var bestCrystas = currentCrystas.slice(0);
+            var top3Results = [[], [], [], []];
+
+            for(var i=0; i<4; i++) {
+                var lock1 = locks[i*2];
+                var lock2 = locks[i*2+1];
+                
+                if(lock1 && lock2) {
+                    top3Results[i] = [{ c1: currentCrystas[i*2], c2: currentCrystas[i*2+1], score: curRes.damageFactor }];
+                    continue; 
+                }
+                
+                var cat = categories[i];
+                var validList = [];
+                for(var j=0; j<crystaDataJson.length; j++) {
+                    var cc = crystaDataJson[j];
+                    if(!cc || !cc.name) continue;
+                    var grp = getCategoryGroup(cc.category);
+                    if((grp === cat || grp === '노말') && !bannedCrystas[cc.name]) validList.push(cc);
+                }
+                validList.push(null);
+                var c1List = lock1 ? [currentCrystas[i*2]] : validList;
+                var c2List = lock2 ? [currentCrystas[i*2+1]] : validList;
+
+                var localScores = [];
+                var seenCombos = {}; // 중복 조합 체크용 객체 추가
+
+                for(var m=0; m<c1List.length; m++) {
+                    var c1 = c1List[m];
+                    for(var n=0; n<c2List.length; n++) {
+                        var c2 = c2List[n];
+                        if(c1 && c2 && c1.name === c2.name) {
+                            var cur1Name = currentCrystas[i*2] ? currentCrystas[i*2].name : null;
+                            var cur2Name = currentCrystas[i*2+1] ? currentCrystas[i*2+1].name : null;
+                            if (!(lock1 && lock2 && cur1Name === c1.name && cur2Name === c2.name)) continue;
+                        }
+
+                        // ---- 피드백 1: A+B 와 B+A 중복 방지 로직 ----
+                        var n1 = c1 ? c1.name : "비어있음";
+                        var n2 = c2 ? c2.name : "비어있음";
+                        
+                        // 이름순으로 정렬하여 고유 키(Key) 생성
+                        var comboKey = n1 < n2 ? n1 + "_&_" + n2 : n2 + "_&_" + n1; 
+                        
+                        if (seenCombos[comboKey]) continue; // 이미 검사한 조합이면 스킵!
+                        seenCombos[comboKey] = true;
+                        // ---------------------------------------------
+                        
+                        var tempCrystas = currentCrystas.slice(0);
+                        tempCrystas[i*2] = c1;
+                        tempCrystas[i*2+1] = c2;
+                        
+                        var testRes = simulateWithCrystas(baseCtx, tempCrystas);
+                        if(!isNaN(testRes.damageFactor)) {
+                            localScores.push({ c1: c1, c2: c2, score: testRes.damageFactor });
+                        }
+                    }
+                }
+                localScores.sort(function(a,b){ return b.score - a.score; });
+                if(localScores.length > 0) {
+                    bestCrystas[i*2] = localScores[0].c1;
+                    bestCrystas[i*2+1] = localScores[0].c2;
+                    top3Results[i] = localScores.slice(0, 3);
+                }
+            }
+
+            var optRes = simulateWithCrystas(baseCtx, bestCrystas);
+            
+            document.getElementById('resultArea').style.display = 'block';
+            var tCtx = curRes.ctx; 
+
+            document.getElementById('defWarning').style.display = curRes.isPierced ? 'none' : 'block';
+
+            var totalCombinedStats = {};
+            for(var x=0; x<currentCrystas.length; x++) {
+                var c = currentCrystas[x];
+                if(c) {
+                    if(c.stats && (!c.cond || checkCondition(tCtx, c.cond))) {
+                        for(var k in c.stats) totalCombinedStats[k] = (totalCombinedStats[k] || 0) + c.stats[k];
+                    }
+                    if(c.condStats) {
+                        for(var k=0; k<c.condStats.length; k++) {
+                            if(checkCondition(tCtx, c.condStats[k].cond)) {
+                                for(var sk in c.condStats[k].stats) totalCombinedStats[sk] = (totalCombinedStats[sk] || 0) + c.condStats[k].stats[sk];
+                            }
+                        }
+                    }
+                }
+            }
+            var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
+            for(var i=0; i<optContainers.length; i++) {
+                var container = document.getElementById(optContainers[i]);
+                if(!container) continue;
+                var rows = container.querySelectorAll('.opt-row');
+                for(var j=0; j<rows.length; j++) {
+                    var key = rows[j].querySelector('.opt-type').value;
+                    var val = parseFloat(rows[j].querySelector('.opt-val').value) || 0;
+                    totalCombinedStats[key] = (totalCombinedStats[key] || 0) + val;
+                }
+            }
+
+// 1. [적용된 총 보너스 수치 요약] 에 그룹화 적용
+            var combinedTagsHtml = buildGroupedTagsHtml(totalCombinedStats);
+
+            document.getElementById('resSumBonus').innerHTML = 
+                '<li>ATK 증가량 <span>' + tCtx.atkP + '% / +' + tCtx.atkF + '</span></li>' +
+                '<li>MATK 증가량 <span>' + tCtx.matkP + '% / +' + tCtx.matkF + '</span></li>' +
+                '<li>크리티컬데미지 <span>' + tCtx.cdmgP + '% / +' + tCtx.cdmgF + '</span></li>' +
+                '<li>무기ATK 옵션 <span>' + tCtx.watkP + '% / +' + tCtx.watkF + '</span></li>' +
+                '<li style="flex-direction:column; align-items:flex-start; border-top:1px dashed #d5dbdb; padding-top:8px; margin-top:4px;">' +
+                '<span style="font-weight:bold; color:#2c3e50;">🔗 크리스타 + 장비 옵션 총합</span>' + combinedTagsHtml + '</li>';
+
+            var strAdd = tCtx.strP > 0 ? '<div class="stat-pct-tag">(+' + tCtx.strP + '%)</div>' : '';
+            var intAdd = tCtx.intP > 0 ? '<div class="stat-pct-tag">(+' + tCtx.intP + '%)</div>' : '';
+            var vitAdd = tCtx.vitP > 0 ? '<div class="stat-pct-tag">(+' + tCtx.vitP + '%)</div>' : '';
+            var agiAdd = tCtx.agiP > 0 ? '<div class="stat-pct-tag">(+' + tCtx.agiP + '%)</div>' : '';
+            var dexAdd = tCtx.dexP > 0 ? '<div class="stat-pct-tag">(+' + tCtx.dexP + '%)</div>' : '';
+            document.getElementById('resBaseStat').innerHTML = 
+                '<div class="stat-mini-card">STR <b>' + curRes.finalSTR + '</b>' + strAdd + '</div>' +
+                '<div class="stat-mini-card">INT <b>' + curRes.finalINT + '</b>' + intAdd + '</div>' +
+                '<div class="stat-mini-card">VIT <b>' + curRes.finalVIT + '</b>' + vitAdd + '</div>' +
+                '<div class="stat-mini-card">AGI <b>' + curRes.finalAGI + '</b>' + agiAdd + '</div>' +
+                '<div class="stat-mini-card">DEX <b>' + curRes.finalDEX + '</b>' + dexAdd + '</div>';
+            
+            var dualSwordExtraHtml = '';
+            if (curRes.isDualSword) {
+                dualSwordExtraHtml = `<li>서브 무기 ATK <span style="color:#8e44ad; font-weight:bold;">${curRes.finalSubAtk}</span> <span style="font-size:11px; color:#7f8c8d;">(서브안정률 ${curRes.finalSubStab}%)</span></li>`;
+            }
+
+            document.getElementById('resAtkData').innerHTML = 
+                `<li>최종 물리 ATK <span class="has-tooltip">${curRes.finalATK}<span class="tooltip-text">${curRes.tooltips.atkTip}</span></span></li>` +
+                dualSwordExtraHtml +
+                `<li>최종 마법 MATK <span class="has-tooltip">${curRes.finalMATK}<span class="tooltip-text">${curRes.tooltips.matkTip}</span></span></li>` +
+                '<li>적용 공격 유형 <span style="color:#c0392b;">' + (tCtx.atkType==='MAG'?'마법 공격':'물리 공격') + '</span></li>';
+            
+            var appliedRangeDmg = tCtx.rangeType === 'SHORT' ? tCtx.srw : tCtx.lrw;
+            var appliedRangeLabel = tCtx.rangeType === 'SHORT' ? '근거리위력' : '원거리위력';
+            
+            document.getElementById('resDmgFactor').innerHTML = 
+                '<li>최종 크리티컬데미지 <span class="has-tooltip highlight">' + curRes.finalCDMG + '%<span class="tooltip-text">' + curRes.tooltips.cdmgTip + '</span></span></li>' +
+                '<li>최종 크리티컬확률 <span class="has-tooltip">' + curRes.finalCrit + '<span class="tooltip-text">' + curRes.tooltips.critTip + '</span></span></li>' +
+                '<li>최종 안정률 <span>' + curRes.finalStab + '%</span></li>' +
+                '<li>' + appliedRangeLabel + ' / 속성데미지 <span>+' + appliedRangeDmg + '% / +' + tCtx.elemP + '%</span></li>';
+
+            document.getElementById('resPierce').innerHTML = 
+                '<li>물리관통 <span>' + tCtx.physPierce + '%</span></li>' +
+                '<li>마법관통 <span>' + tCtx.magPierce + '%</span></li>' +
+                '<li>타겟 DEF / MDEF <span>' + tCtx.bossDef + ' / ' + tCtx.bossMdef + '</span></li>';
+            
+            var actSpeed = curRes.finalASPD > 1000 ? Math.min(50, (curRes.finalASPD - 1000)/180) : 0;
+            var castReduc = curRes.finalCSPD <= 1000 ? curRes.finalCSPD/20 : Math.min(100, 50 + (curRes.finalCSPD - 1000)/180);
+            
+            document.getElementById('resSpeed').innerHTML = 
+                `<li>ASPD <span class="has-tooltip">${curRes.finalASPD}<span class="tooltip-text">${curRes.tooltips.aspdTip}</span></span> <span style="font-size:11px; color:#7f8c8d;">(행동속도 +${actSpeed.toFixed(1)}%)</span></li>` +
+                `<li>CSPD <span class="has-tooltip">${curRes.finalCSPD}<span class="tooltip-text">${curRes.tooltips.cspdTip}</span></span> <span style="font-size:11px; color:#7f8c8d;">(시전감소 ${castReduc.toFixed(1)}%)</span></li>`;
+            
+            var top3Html = '';
+            for(var x=0; x<4; x++) {
+                var cur1 = currentCrystas[x*2] ? currentCrystas[x*2].name : '비어있음';
+                var cur2 = currentCrystas[x*2+1] ? currentCrystas[x*2+1].name : '비어있음';
+                
+                if (locks[x*2]) cur1 += ' 🔒';
+                if (locks[x*2+1]) cur2 += ' 🔒';
+                
+                top3Html += '<div class="top3-row"><h5>🎯 ' + categories[x] + ' 슬롯 (Top 3 딜 효율)</h5>';
+                top3Html += '<div style="font-size:13px; color:#7f8c8d; margin-bottom:6px; font-weight:bold;">▷ 현재 장착 중: [' + cur1 + '] + [' + cur2 + ']</div>';
+                if(locks[x*2] && locks[x*2+1]) {
+                    top3Html += '<div style="font-size:13px; color:#c0392b;">해당 부위는 모두 고정(🔒)되어 최적화에서 제외되었습니다.</div></div>';
+                    continue;
+                }
+                
+                top3Html += '<ul class="top3-list">';
+                var list = top3Results[x];
+                var curDmg = curRes.damageFactor;
+
+                for(var y=0; y<list.length; y++) {
+                    var n1 = list[y].c1 ? list[y].c1.name : '비어있음';
+                    var n2 = list[y].c2 ? list[y].c2.name : '비어있음';
+                    var gainPct = curDmg > 0 ? ((list[y].score - curDmg)/curDmg * 100) : 0;
+                    var sign = gainPct > 0 ? '+' : '';
+                    var color = gainPct > 0 ? '#27ae60' : (gainPct < 0 ? '#c0392b' : '#7f8c8d');
+                    var dmgStr = Math.floor(list[y].score).toLocaleString();
+                    top3Html += '<li>' + (y+1) + '위: <b>' + n1 + '</b> + <b>' + n2 + '</b> <span style="font-size:13px; font-weight:bold; color:'+color+';">(데미지: ' + dmgStr + ' / 상승량: ' + sign + gainPct.toFixed(2) + '%)</span></li>';
+                }
+                top3Html += '</ul></div>';
+            }
+            document.getElementById('top3ListContainer').innerHTML = top3Html;
+
+            var finalRecHtml = '';
+            for(var x=0; x<4; x++) {
+                var n1 = bestCrystas[x*2] ? bestCrystas[x*2].name : "비어있음";
+                var n2 = bestCrystas[x*2+1] ? bestCrystas[x*2+1].name : "비어있음";
+                var l1 = locks[x*2] ? " 🔒" : "";
+                var l2 = locks[x*2+1] ? " 🔒" : "";
+                finalRecHtml += '<div>• ' + categories[x] + ': <b>' + n1 + l1 + '</b> + <b>' + n2 + l2 + '</b></div>';
+            }
+            document.getElementById('finalRecText').innerHTML = finalRecHtml;
+            var totalGain = (curRes.damageFactor && curRes.damageFactor > 0) ? ((optRes.damageFactor - curRes.damageFactor) / curRes.damageFactor * 100) : 0;
+            var totalSign = totalGain > 0 ? '+' : '';
+            document.getElementById('globalEffTextBadge').innerHTML = '현재 대비 총 딜 상승률: ' + totalSign + totalGain.toFixed(2) + '%';
+
+            var sumStats = {};
+            for(var x=0; x<bestCrystas.length; x++) {
+                var c = bestCrystas[x];
+                if(c) {
+                    if(c.stats && (!c.cond || checkCondition(optRes.ctx, c.cond))) {
+                        for(var k in c.stats) sumStats[k] = (sumStats[k] || 0) + c.stats[k];
+                    }
+                    if(c.condStats) {
+                        for(var k=0; k<c.condStats.length; k++) {
+                            if(checkCondition(optRes.ctx, c.condStats[k].cond)) {
+                                for(var sk in c.condStats[k].stats) sumStats[sk] = (sumStats[sk] || 0) + c.condStats[k].stats[sk];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 2. [최종 조합 크리스타 옵션 합산] 에 그룹화 적용 및 CSS 충돌 방지
+            var tagHtml = '<span style="display:block; font-size:14px; color:#27ae60; font-weight:bold; margin-bottom:4px; padding-bottom:4px;">[최종 조합 크리스타 옵션 합산]</span>';
+            tagHtml += buildGroupedTagsHtml(sumStats);
+            
+            var finalTagsContainer = document.getElementById('finalRecTags');
+            finalTagsContainer.style.display = 'block'; // flex 속성 무력화하여 블록 구조 유지
+            finalTagsContainer.innerHTML = tagHtml;
+
+            renderMarginalUtility(baseCtx, currentCrystas, curRes.damageFactor);
+        }
+
+        function renderMarginalUtility(baseCtx, curCrystas, curBaseDF) {
+            var isMag = baseCtx.atkType === 'MAG';
+            var pierceKey = isMag ? 'MAG_PIERCE' : 'PHYS_PIERCE';
+            var pierceLabel = isMag ? '마법관통 %p (+1%)' : '물리관통 %p (+1%)';
+            var rangeKey = baseCtx.rangeType === 'SHORT' ? 'SRW' : 'LRW';
+            var rangeLabel = baseCtx.rangeType === 'SHORT' ? '근거리위력 %p (+1%)' : '원거리위력 %p (+1%)';
+
+            var targets = [
+                { key: 'ATKP', label: 'ATK %p (+1%)' }, 
+                { key: 'ATK', label: 'ATK 깡공 (+1)' },
+                { key: 'MATKP', label: 'MATK %p (+1%)' }, 
+                { key: 'MATK', label: 'MATK 깡공 (+1)' },
+                { key: 'CDMG_P', label: '크리티컬데미지 %p (+1%)' },
+                { key: 'CDMG', label: '크리티컬데미지 (+1)' },
+                { key: 'CRIT_P', label: '크리티컬확률 %p (+1%)' },
+                { key: 'CRIT', label: '크리티컬확률 (+1)' },
+                { key: 'STRP', label: 'STR %p (+1%)' },
+                { key: 'DEXP', label: 'DEX %p (+1%)' },
+                { key: 'INTP', label: 'INT %p (+1%)' },
+                { key: 'WATKP', label: '무기ATK %p (+1%)' },
+                { key: 'WATK', label: '무기ATK (+1)' },
+                { key: pierceKey, label: pierceLabel },
+                { key: rangeKey, label: rangeLabel }, 
+                { key: 'ELEM_P', label: '속성데미지 %p (+1%)' },
+                { key: 'STABILITY', label: '안정률 %p (+1%)' }
+            ];
+            if (baseCtx.chkIsUnsheathe) {
+                targets.push({ key: 'UNSHEATHE', label: '발도위력 %p (+1%)' });
+            }
+            
+            var keyMap = { 
+                'ATKP':'atkP', 'ATK':'atkF', 'MATKP':'matkP', 'MATK':'matkF', 
+                'CDMG_P':'cdmgP', 'CDMG':'cdmgF', 'CRIT_P':'critP', 'CRIT':'critF',
+                'STRP':'strP', 'DEXP':'dexP', 'INTP':'intP',
+                'WATKP':'watkP', 'WATK':'watkF', 'STABILITY':'stability', 'ELEM_P':'elemP',
+                'PHYS_PIERCE':'physPierce', 'MAG_PIERCE':'magPierce', 'SRW':'srw', 'LRW':'lrw', 'UNSHEATHE':'unsheathe' 
+            };
+            var results = [];
+            for(var i=0; i<targets.length; i++) {
+                var t = targets[i];
+                var testCtx = cloneCtx(baseCtx);
+                testCtx[keyMap[t.key]] += 1;
+                
+                var testRes = simulateWithCrystas(testCtx, curCrystas);
+                var gain = (curBaseDF && curBaseDF > 0) ? ((testRes.damageFactor - curBaseDF) / curBaseDF * 100) : 0;
+                if (gain >= 0.001) {
+                    results.push({ label: t.label, gain: gain });
+                }
+            }
+
+            results.sort(function(a,b) { return b.gain - a.gain; });
+            var maxGain = results[0] ? results[0].gain : 1;
+            if(maxGain <= 0) maxGain = 1;
+
+            var barsHtml = '';
+            for(var j=0; j<results.length; j++) {
+                var r = results[j];
+                var widthPct = (r.gain / maxGain * 100).toFixed(1);
+                if(widthPct < 0) widthPct = 0;
+                barsHtml += '<div class="eff-item-container">' +
+                    '<div class="eff-label"><span>' + r.label + '</span><span style="color:#d35400;">+' + r.gain.toFixed(3) + '%</span></div>' +
+                    '<div class="eff-bar-bg"><div class="eff-bar-fill" style="width: ' + widthPct + '%;"></div></div></div>';
+            }
+            document.getElementById('effBars').innerHTML = barsHtml;
+        }
+
+        window.onload = function() {
+            populateRefineSelects();
+            updateSubWeaponList();
+            initAutocomplete();
+            renderBanTags();
+        };
+    </script>
+</body>
+</html>
