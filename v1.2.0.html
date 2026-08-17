@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>토람 온라인 자동 빌드 계산기 v1.1.3</title>
+    <title>토람 온라인 자동 빌드 계산기 v1.2.0</title>
     <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
 
@@ -251,11 +251,87 @@ button { font-family: inherit; }
 .eff-tab-btn.active { background: var(--accent); color: white; }
 
 
-    </style>
+/* Top-level workspace tabs. The results tab is revealed after the first calculation. */
+.app-tab-navigation { display: grid; grid-template-columns: repeat(var(--tab-count, 4), minmax(0, 1fr)); gap: 6px; margin: 0 0 14px; }
+.app-tab-button { min-width: 0; padding: 11px 8px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--surface-muted); color: var(--text-secondary); cursor: pointer; font: inherit; font-size: 13px; font-weight: 700; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.app-tab-button:hover { background: var(--surface); color: var(--text); }
+.app-tab-button.active { border-color: var(--accent); background: var(--accent); color: #fff; }
+.app-tab-button:focus-visible { outline: 3px solid var(--accent-soft-border); outline-offset: 1px; }
+.app-tab-panel { display: none; }
+.app-tab-panel.active { display: block; }
+.app-global-actions { margin-top: 22px; }
+.app-global-actions .section-title { margin-top: 0; }
+@media (max-width: 600px) { .app-tab-navigation { gap: 4px; } .app-tab-button { padding: 9px 4px; font-size: 11px; } }
+/* Skill tree bookmark navigation; the editor is connected in a later step. */
+.skill-bookmark-section { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); margin: 0 0 18px; overflow: hidden; }
+.skill-bookmark-heading { display: flex; align-items: baseline; gap: 8px; padding: 17px 20px 13px; border-bottom: 1px solid var(--border); }
+.skill-bookmark-heading h2 { margin: 0; font-size: 15px; letter-spacing: -0.01em; }
+.skill-bookmark-heading span { color: var(--text-secondary); font-size: 12px; }
+.skill-bookmark-layout { display: grid; grid-template-columns: 76px 148px minmax(0, 1fr); min-height: 310px; }
+.skill-bookmark-section.other .skill-bookmark-layout { grid-template-columns: 148px minmax(0, 1fr); min-height: 220px; }
+.skill-category-rail, .skill-tree-rail { background: var(--surface-muted); padding: 10px; overflow-y: auto; }
+.skill-category-rail { border-right: 1px solid var(--border); }
+.skill-tree-rail { border-right: 1px solid var(--border); }
+.skill-bookmark-button { appearance: none; width: 100%; border: 1px solid transparent; background: transparent; border-radius: var(--radius-sm); color: var(--text-secondary); cursor: pointer; font: inherit; transition: background .15s ease, border-color .15s ease, color .15s ease; }
+.skill-bookmark-button:hover { background: var(--surface); border-color: var(--border-strong); color: var(--text); }
+.skill-bookmark-button:focus-visible { outline: 3px solid var(--accent-soft-border); outline-offset: 1px; }
+.skill-bookmark-button.active { background: var(--accent-soft); border-color: var(--accent-soft-border); color: var(--accent-dark); }
+.skill-category-button { display: flex; flex-direction: column; align-items: center; gap: 5px; min-height: 62px; padding: 7px 3px; margin-bottom: 8px; font-size: 10px; font-weight: 700; line-height: 1.15; }
+.skill-category-button img { width: 32px; height: 32px; object-fit: contain; }
+.skill-tree-button { display: flex; align-items: center; gap: 9px; min-height: 48px; padding: 6px 8px; margin-bottom: 6px; text-align: left; font-size: 12px; font-weight: 650; }
+.skill-tree-button img { flex: 0 0 34px; width: 34px; height: 34px; object-fit: contain; }
+.skill-tree-button span { overflow-wrap: anywhere; }
+.skill-bookmark-stage { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 28px; text-align: center; background: linear-gradient(135deg, #fff 0%, #fbfbff 100%); }
+.skill-bookmark-stage .stage-kicker { margin: 0 0 5px; color: var(--accent); font-size: 12px; font-weight: 700; }
+.skill-bookmark-stage h3 { margin: 0; font-size: 21px; letter-spacing: -0.03em; }
+.skill-bookmark-stage p { max-width: 330px; margin: 9px 0 0; color: var(--text-secondary); font-size: 13px; }
+@media (max-width: 600px) { .skill-bookmark-layout, .skill-bookmark-section.other .skill-bookmark-layout { grid-template-columns: 66px 118px minmax(0, 1fr); min-height: 270px; } .skill-bookmark-section.other .skill-bookmark-layout { grid-template-columns: 118px minmax(0, 1fr); } .skill-category-rail, .skill-tree-rail { padding: 7px; } .skill-tree-button { gap: 5px; padding: 5px; font-size: 11px; } .skill-tree-button img { flex-basis: 28px; width: 28px; height: 28px; } .skill-bookmark-stage { padding: 16px 10px; } .skill-bookmark-stage h3 { font-size: 17px; } }
+
+/* Skill tree simulator */
+.skill-bookmark-stage.skill-simulator-stage { display: block; padding: 8px; text-align: left; }
+.skill-simulator-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+.skill-simulator-total { color: var(--text-secondary); font-size: 12px; font-weight: 650; }
+.skill-simulator-total b { color: var(--accent-dark); font-size: 14px; }
+.skill-point-step-group { display: flex; gap: 5px; }
+.skill-point-step { min-width: 32px; padding: 5px 8px; border: 1px solid var(--border-strong); border-radius: 6px; background: var(--surface); color: var(--text-secondary); cursor: pointer; font: inherit; font-size: 12px; font-weight: 700; }
+.skill-point-step.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+.skill-bookmark-heading .skill-point-step-group { margin-left: auto; align-self: center; }
+.skill-tree-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 14px 0 8px; }
+.skill-tree-heading h3 { margin: 0; font-size: 17px; }
+.skill-tree-points { color: var(--accent-dark); font-size: 13px; font-weight: 750; white-space: nowrap; }
+.skill-tree-help { margin: 0 0 12px; color: var(--text-secondary); font-size: 11.5px; }
+.skill-tree-canvas { position: relative; display: grid; grid-template-columns: repeat(var(--tree-columns), 82px); grid-template-rows: repeat(var(--tree-rows), 68px); gap: 0; min-width: max-content; padding: 16px 12px; }
+.skill-tree-scroll { overflow: auto; border: 1px solid #20222a; border-radius: var(--radius-md); background: #30323a; }
+.skill-node { position: relative; z-index: 1; justify-self: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 78px; height: 64px; padding: 5px 2px 2px; border: 0; background-color: transparent; background-repeat: no-repeat; background-position: center 2px; background-size: 50px 50px; color: #f4f5fa; cursor: pointer; font: inherit; }
+.skill-node:hover { filter: brightness(.96); }
+.skill-node:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; border-radius: 9px; }
+.skill-node-icon { width: 34px; height: 34px; margin-top: 4px; object-fit: contain; pointer-events: none; }
+.skill-node-name { width: 100%; margin-top: 0; overflow: hidden; color: #f4f5fa; font-size: 9px; font-weight: 650; line-height: 1.1; text-align: center; text-overflow: ellipsis; white-space: nowrap; pointer-events: none; }
+.skill-node-level { margin-top: 0; color: #b8bdc9; font-size: 9px; font-weight: 750; pointer-events: none; }
+.skill-node.is-invested .skill-node-level { color: #bdbbff; }
+.skill-node-icon.is-missing { opacity: .28; }
+.skill-tree-connector-layer { position: absolute; inset: 0 auto auto 0; z-index: 0; pointer-events: none; overflow: visible; }
+.skill-tree-connector { fill: none; stroke: #747b8e; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.6; }
+.skill-tree-connector.is-active { stroke: #bdbbff; stroke-width: 2.8; }
+.skill-category-button .bookmark-info, .skill-tree-button .bookmark-info { display: flex; flex-direction: column; min-width: 0; }
+.skill-category-button .bookmark-points, .skill-tree-button .bookmark-points { display: block; margin-top: 1px; color: inherit; font-size: 10px; font-weight: 700; opacity: .76; }
+.skill-category-button { justify-content: center; }
+.skill-category-button .bookmark-info { align-items: center; }
+.skill-category-button .bookmark-label { text-align: center; }
+@media (max-width: 600px) { .skill-simulator-toolbar { align-items: flex-start; flex-direction: column; gap: 7px; } .skill-tree-canvas { grid-template-columns: repeat(var(--tree-columns), 70px); grid-template-rows: repeat(var(--tree-rows), 62px); padding: 12px 8px; } .skill-node { width: 68px; height: 60px; background-size: 44px 44px; } .skill-node-icon { width: 30px; height: 30px; margin-top: 4px; } }    </style>
+    <script src="coryn_skill_icons/skill_tree_data.js"></script>
 </head>
 <body>
 
-    <h1>🗡️ 토람 온라인 자동 빌드 계산기 v1.1.3 </h1>
+    <h1>🗡️ 토람 온라인 자동 빌드 계산기 v1.2.0 </h1>
+    <section class="skill-bookmark-section" aria-labelledby="combatSkillBookmarkTitle">
+        <div class="skill-bookmark-heading"><h2 id="combatSkillBookmarkTitle">스킬트리</h2><span>무기 · 버프 · 보조</span></div>
+        <div class="skill-bookmark-layout"><nav class="skill-category-rail" id="combatCategoryRail" aria-label="스킬 분류"></nav><nav class="skill-tree-rail" id="combatTreeRail" aria-label="스킬트리"></nav><div class="skill-bookmark-stage" id="combatSkillStage" aria-live="polite"></div></div>
+    </section>
+    <section class="skill-bookmark-section other" aria-labelledby="otherSkillBookmarkTitle">
+        <div class="skill-bookmark-heading"><h2 id="otherSkillBookmarkTitle">기타 스킬트리</h2><span>분류 선택 없이 바로 열기</span></div>
+        <div class="skill-bookmark-layout"><nav class="skill-tree-rail" id="otherTreeRail" aria-label="기타 스킬트리"></nav><div class="skill-bookmark-stage" id="otherSkillStage" aria-live="polite"></div></div>
+    </section>
 
     <div class="container">
         <div class="section-title">1. 캐릭터 순수 스탯 (레벨업 투자 수치)</div>
@@ -328,7 +404,7 @@ button { font-family: inherit; }
             <div id="skillStatOpts" style="width: 100%; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px;"></div>
         </div>
 
-        <div class="section-title">4. 장비 세팅 및 부여 옵션</div>
+        <div class="section-title">장비 세팅 및 부여 옵션</div>
         
         <div class="equip-card">
             <h3>⚔️ 주무기</h3>
@@ -464,7 +540,7 @@ button { font-family: inherit; }
             </div>
         </div>
 
-        <div class="section-title">5. 추천 제외 크리스타 (Blacklist)</div>
+        <div class="section-title">추천 제외 크리스타 (Blacklist)</div>
         <div class="blacklist-container">
             <div class="form-group" style="margin: 0;">
                 <label class="title-label" style="color:#c0392b;">제외할 크리스타</label>
@@ -2173,6 +2249,7 @@ if (document.readyState === 'loading') {
 }
 
         function runCalculationSafe() {
+            if (typeof revealResultTab === 'function') revealResultTab();
             try { runCalculation(); } 
             catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
         }
@@ -2642,6 +2719,276 @@ window.onload = function() {
             update();
         }());
 
-    </script>
+
+    // Extensible skill-tree simulator. Definitions live in coryn_skill_icons/skill_tree_data.js.
+    (function () {
+        const data = window.SKILL_TREE_DATA;
+        if (!data || !Array.isArray(data.trees)) return;
+        const maxLevel = Number(data.skillMaxLevel) || 10;
+        const prerequisiteLevel = Number(data.prerequisiteLevel) || 5;
+        const categoryDefinitions = [
+            { id: 'weapon', directory: 'Weapon Skills', display: '무기', icon: 'coryn_skill_icons/Weapon Skills/Blade/00_Hammer Slam.png' },
+            { id: 'buff', directory: 'Buff Skills', display: '버프', icon: 'coryn_skill_icons/Buff Skills/Assassin/00_Assassin Stab.png' },
+            { id: 'assist', directory: 'Assist Skills', display: '보조', icon: 'coryn_skill_icons/Assist Skills/Battle/00_Magic UP.png' }
+        ];
+        const treesById = new Map(data.trees.map(function (tree) { return [tree.id, tree]; }));
+        const state = { step: 1, levels: {} };
+        data.trees.forEach(function (tree) {
+            state.levels[tree.id] = {};
+            tree.skills.forEach(function (skill) { state.levels[tree.id][skill.id] = 0; });
+        });
+        const categoryRail = document.getElementById('combatCategoryRail');
+        const combatTreeRail = document.getElementById('combatTreeRail');
+        const otherTreeRail = document.getElementById('otherTreeRail');
+        const combatStage = document.getElementById('combatSkillStage');
+        const otherStage = document.getElementById('otherSkillStage');
+        if (!categoryRail || !combatTreeRail || !otherTreeRail || !combatStage || !otherStage) return;
+        let activeCategoryId = 'weapon';
+        let activeCombatTree = 'Blade';
+        let activeOtherTree = 'Alchemy';
+
+        function iconPath(path) { return encodeURI(path); }
+        function treeTotal(treeId) {
+            const tree = treesById.get(treeId);
+            const spent = tree.skills.reduce(function (sum, skill) { return sum + state.levels[treeId][skill.id]; }, 0);
+            return { spent: spent, maximum: tree.skills.length * maxLevel };
+        }
+        function categoryTotal(directory) {
+            return data.trees.filter(function (tree) { return tree.category === directory; }).reduce(function (sum, tree) { return sum + treeTotal(tree.id).spent; }, 0);
+        }
+        function categoryMaximum(directory) {
+            return data.trees.filter(function (tree) { return tree.category === directory; }).reduce(function (sum, tree) { return sum + tree.skills.length * maxLevel; }, 0);
+        }
+        function skillById(tree, id) { return tree.skills.find(function (skill) { return skill.id === id; }); }
+        function ensurePrerequisite(tree, skillId) {
+            if (skillId < 0) return;
+            const prerequisite = skillById(tree, skillId);
+            if (!prerequisite) return;
+            ensurePrerequisite(tree, prerequisite.prereq);
+            state.levels[tree.id][prerequisite.id] = Math.max(state.levels[tree.id][prerequisite.id], prerequisiteLevel);
+        }
+        function addSkillLevel(treeId, skillId) {
+            const tree = treesById.get(treeId);
+            const skill = skillById(tree, skillId);
+            const current = state.levels[treeId][skillId];
+            const next = Math.min(maxLevel, current + state.step);
+            if (next === current) return;
+            ensurePrerequisite(tree, skill.prereq);
+            state.levels[treeId][skillId] = next;
+            renderAll();
+        }
+        function removeDescendants(tree, skillId) {
+            tree.skills.filter(function (candidate) { return candidate.prereq === skillId; }).forEach(function (child) {
+                state.levels[tree.id][child.id] = 0;
+                removeDescendants(tree, child.id);
+            });
+        }
+        function removeSkillLevel(treeId, skillId) {
+            const tree = treesById.get(treeId);
+            const current = state.levels[treeId][skillId];
+            const next = Math.max(0, current - state.step);
+            if (next === current) return;
+            state.levels[treeId][skillId] = next;
+            if (next < prerequisiteLevel) removeDescendants(tree, skillId);
+            renderAll();
+        }
+        function createCategoryButton(category) {
+            const total = categoryTotal(category.directory);
+            const maximum = categoryMaximum(category.directory);
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'skill-bookmark-button skill-category-button' + (category.id === activeCategoryId ? ' active' : '');
+            button.setAttribute('aria-pressed', String(category.id === activeCategoryId));
+            button.title = category.display;
+            const icon = document.createElement('img'); icon.src = iconPath(category.icon); icon.alt = '';
+            const info = document.createElement('span'); info.className = 'bookmark-info';
+            const label = document.createElement('span'); label.className = 'bookmark-label'; label.textContent = category.display;
+            const points = document.createElement('span'); points.className = 'bookmark-points'; points.textContent = '(' + total + '/' + maximum + ')';
+            info.append(label, points); button.append(icon, info);
+            button.addEventListener('click', function () { activeCategoryId = category.id; activeCombatTree = categoryTrees(category.directory)[0].id; renderAll(); });
+            return button;
+        }
+        function categoryTrees(directory) { return data.trees.filter(function (tree) { return tree.category === directory; }); }
+        function createTreeButton(tree, active, onClick) {
+            const total = treeTotal(tree.id);
+            const button = document.createElement('button');
+            button.type = 'button'; button.className = 'skill-bookmark-button skill-tree-button' + (active ? ' active' : '');
+            button.setAttribute('aria-pressed', String(active)); button.title = tree.id;
+            const icon = document.createElement('img'); icon.src = iconPath('coryn_skill_icons/' + tree.category + '/' + tree.id + '/title.png'); icon.alt = '';
+            const info = document.createElement('span'); info.className = 'bookmark-info';
+            const label = document.createElement('span'); label.className = 'bookmark-label'; label.textContent = tree.id;
+            const points = document.createElement('span'); points.className = 'bookmark-points'; points.textContent = '(' + total.spent + '/' + total.maximum + ')';
+            info.append(label, points); button.append(icon, info); button.addEventListener('click', onClick);
+            return button;
+        }
+        function renderStage(stage, treeId) {
+            const tree = treesById.get(treeId);
+
+            stage.classList.add('skill-simulator-stage');
+            stage.innerHTML = '';
+
+            const scroll = document.createElement('div'); scroll.className = 'skill-tree-scroll';
+            const canvas = document.createElement('div'); canvas.className = 'skill-tree-canvas'; canvas.style.setProperty('--tree-columns', String(tree.grid.columns)); canvas.style.setProperty('--tree-rows', String(tree.grid.rows));
+            const compactLayout = window.matchMedia('(max-width: 600px)').matches;
+            const cellWidth = compactLayout ? 70 : 82;
+            const cellHeight = compactLayout ? 62 : 68;
+            const paddingX = compactLayout ? 8 : 12;
+            const paddingY = compactLayout ? 12 : 16;
+            const backgroundSize = compactLayout ? 44 : 50;
+            const svgWidth = paddingX * 2 + tree.grid.columns * cellWidth;
+            const svgHeight = paddingY * 2 + tree.grid.rows * cellHeight;
+            const pointFor = function (x, y) {
+                return [paddingX + x * cellWidth + cellWidth / 2, paddingY + y * cellHeight + 2 + backgroundSize / 2];
+            };
+            const connectorLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+            connectorLayer.setAttribute('class', 'skill-tree-connector-layer');
+            connectorLayer.setAttribute('width', String(svgWidth)); connectorLayer.setAttribute('height', String(svgHeight));
+            connectorLayer.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
+            tree.skills.filter(function (skill) { return skill.prereq >= 0; }).forEach(function (skill) {
+                const parent = skillById(tree, skill.prereq);
+                if (!parent) return;
+                const parentPoint = pointFor(parent.x, parent.y);
+                const skillPoint = pointFor(skill.x, skill.y);
+                const points = [parentPoint];
+                if (Array.isArray(skill.via) && skill.via.length === 2) {
+                    points.push(pointFor(skill.via[0], skill.via[1]));
+                } else {
+                    const bendX = (parentPoint[0] + skillPoint[0]) / 2;
+                    points.push([bendX, parentPoint[1]], [bendX, skillPoint[1]]);
+                }
+                points.push(skillPoint);
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+                line.setAttribute('class', 'skill-tree-connector' + (state.levels[tree.id][skill.id] > 0 ? ' is-active' : ''));
+                line.setAttribute('points', points.map(function (point) { return point[0] + ',' + point[1]; }).join(' '));
+                connectorLayer.appendChild(line);
+            });
+            canvas.appendChild(connectorLayer);
+            tree.skills.forEach(function (skill) {
+                const level = state.levels[tree.id][skill.id];
+                const node = document.createElement('button'); node.type = 'button'; node.className = 'skill-node' + (level > 0 ? ' is-invested' : ''); node.style.gridColumn = String(skill.x + 1); node.style.gridRow = String(skill.y + 1); node.style.backgroundImage = "url('" + iconPath('coryn_skill_icons/icons/' + (level > 0 ? 'skill_on.png' : 'skill_off.png')) + "')"; node.title = skill.name + ' Lv ' + level + '/' + maxLevel;
+                const image = document.createElement('img'); image.className = 'skill-node-icon' + (skill.iconAvailable ? '' : ' is-missing'); image.src = iconPath(skill.icon); image.alt = skill.name; image.onerror = function () { this.classList.add('is-missing'); };
+                const name = document.createElement('span'); name.className = 'skill-node-name'; name.textContent = skill.name;
+                const levelLabel = document.createElement('span'); levelLabel.className = 'skill-node-level'; levelLabel.textContent = 'Lv ' + level + '/' + maxLevel;
+                node.append(image, name, levelLabel); node.addEventListener('click', function () { addSkillLevel(tree.id, skill.id); }); node.addEventListener('contextmenu', function (event) { event.preventDefault(); removeSkillLevel(tree.id, skill.id); }); canvas.appendChild(node);
+            });
+            scroll.appendChild(canvas); stage.appendChild(scroll);
+        }
+        const stepControl = document.createElement('div');
+        stepControl.className = 'skill-point-step-group';
+        document.getElementById('combatSkillBookmarkTitle').parentElement.appendChild(stepControl);
+        function renderStepControls() {
+            stepControl.innerHTML = '';
+            [1, 5, 10].forEach(function (amount) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'skill-point-step' + (state.step === amount ? ' active' : '');
+                button.textContent = amount;
+                button.title = '한 번에 ' + amount + ' 포인트';
+                button.addEventListener('click', function () { state.step = amount; renderAll(); });
+                stepControl.appendChild(button);
+            });
+        }        function renderAll() {
+            const activeCategory = categoryDefinitions.find(function (category) { return category.id === activeCategoryId; });
+            renderStepControls();
+            categoryRail.innerHTML = ''; categoryDefinitions.forEach(function (category) { categoryRail.appendChild(createCategoryButton(category)); });
+            combatTreeRail.innerHTML = ''; categoryTrees(activeCategory.directory).forEach(function (tree) { combatTreeRail.appendChild(createTreeButton(tree, tree.id === activeCombatTree, function () { activeCombatTree = tree.id; renderAll(); })); });
+            otherTreeRail.innerHTML = ''; categoryTrees('Other Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
+            renderStage(combatStage, activeCombatTree); renderStage(otherStage, activeOtherTree);
+        }
+        window.skillSimulatorState = { data: data, levels: state.levels, getInvestments: function () { return JSON.parse(JSON.stringify(state.levels)); } };
+        renderAll();
+        let resizeTimer;
+        window.addEventListener('resize', function () {
+            window.clearTimeout(resizeTimer);
+            resizeTimer = window.setTimeout(renderAll, 120);
+        });
+    }());
+    // Top-level workspace tabs: existing controls are moved without changing their logic.
+    (function () {
+        const container = document.querySelector('.container');
+        if (!container || document.getElementById('appTabNavigation')) return;
+
+        const navigation = document.createElement('nav');
+        navigation.id = 'appTabNavigation';
+        navigation.className = 'app-tab-navigation';
+        navigation.style.setProperty('--tab-count', '4');
+        navigation.setAttribute('aria-label', '자동 빌드 계산기 구분');
+        const panelHost = document.createElement('div');
+        panelHost.id = 'appTabPanels';
+        const tabDefinitions = [
+            ['stats-target', '스탯 및 대상'], ['skills', '스킬'], ['equipment', '장비'], ['doping', '요리 및 도핑'], ['results', '결과']
+        ];
+        const panels = {};
+        const buttons = {};
+        tabDefinitions.forEach(function (definition, index) {
+            const id = definition[0];
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'app-tab-button' + (index === 0 ? ' active' : '');
+            button.id = 'appTabButton-' + id;
+            button.textContent = definition[1];
+            button.setAttribute('role', 'tab');
+            button.setAttribute('aria-selected', String(index === 0));
+            button.setAttribute('aria-controls', 'appTabPanel-' + id);
+            if (id === 'results') button.hidden = true;
+            navigation.appendChild(button);
+            buttons[id] = button;
+            const panel = document.createElement('section');
+            panel.className = 'app-tab-panel' + (index === 0 ? ' active' : '');
+            panel.id = 'appTabPanel-' + id;
+            panel.setAttribute('role', 'tabpanel');
+            panel.setAttribute('aria-labelledby', button.id);
+            panelHost.appendChild(panel);
+            panels[id] = panel;
+        });
+        function selectTab(id) {
+            if (!buttons[id] || buttons[id].hidden) return;
+            Object.keys(panels).forEach(function (key) {
+                const isSelected = key === id;
+                panels[key].classList.toggle('active', isSelected);
+                buttons[key].classList.toggle('active', isSelected);
+                buttons[key].setAttribute('aria-selected', String(isSelected));
+            });
+        }
+        Object.keys(buttons).forEach(function (id) { buttons[id].addEventListener('click', function () { selectTab(id); }); });
+        window.revealResultTab = function () {
+            if (buttons.results.hidden) {
+                buttons.results.hidden = false;
+                navigation.style.setProperty('--tab-count', '5');
+            }
+            selectTab('results');
+        };
+
+        const firstChild = container.firstChild;
+        container.insertBefore(navigation, firstChild);
+        container.insertBefore(panelHost, firstChild);
+        const sectionTitles = Array.from(container.querySelectorAll(':scope > .section-title'));
+        const equipmentStart = sectionTitles[3];
+        const blacklistStart = sectionTitles[4];
+        function moveUntil(start, stop, destination) {
+            let node = start;
+            while (node && node !== stop) {
+                const next = node.nextSibling;
+                destination.appendChild(node);
+                node = next;
+            }
+        }
+        moveUntil(sectionTitles[0], equipmentStart, panels['stats-target']);
+        const externalBuffCard = Array.from(container.children).find(function (element) {
+            return element.classList && element.classList.contains('equip-card') && element.querySelector('#buffOpts');
+        });
+        moveUntil(equipmentStart, externalBuffCard, panels.equipment);
+        if (externalBuffCard) panels.doping.appendChild(externalBuffCard);
+        document.querySelectorAll('body > .skill-bookmark-section').forEach(function (section) { panels.skills.appendChild(section); });
+        const resultArea = document.getElementById('resultArea');
+        if (resultArea) panels.results.appendChild(resultArea);
+        const globalActions = document.createElement('section');
+        globalActions.className = 'app-global-actions';
+        globalActions.setAttribute('aria-label', '공통 계산 설정');
+        moveUntil(blacklistStart, resultArea, globalActions);
+        const calculationButton = globalActions.querySelector('.btn-calc');
+        if (calculationButton) globalActions.appendChild(calculationButton);
+        container.appendChild(globalActions);
+    }());    </script>
 </body>
 </html>
