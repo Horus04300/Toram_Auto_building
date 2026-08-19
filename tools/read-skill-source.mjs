@@ -1,0 +1,22 @@
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const root = resolve(fileURLToPath(new URL('..', import.meta.url)));
+const treeId = process.argv[2];
+const maxIndex = process.argv.indexOf('--max');
+const max = maxIndex >= 0 ? Number(process.argv[maxIndex + 1]) : 0;
+if (!treeId) throw new Error('Usage: node tools/read-skill-source.mjs <treeId> [--max <characters>]');
+const links = JSON.parse(await readFile(resolve(root, 'skill_effect_source_links.json'), 'utf8'));
+const source = links.sources.find((item) => item.tree_id === treeId);
+if (!source) throw new Error(`Unknown skill tree: ${treeId}`);
+const url = new URL(source.url);
+url.searchParams.delete('s_type');
+url.searchParams.delete('s_keyword');
+const response = await fetch(url, { headers: { 'user-agent': 'Toram-Auto-Building skill data maintainer' } });
+if (!response.ok) throw new Error(`Source request failed: HTTP ${response.status}`);
+const html = await response.text();
+const match = html.match(/"articleBody"\s*:\s*"((?:\\.|[^"\\])*)"/s);
+if (!match) throw new Error('articleBody was not found in the source page.');
+const body = JSON.parse(`"${match[1]}"`).replace(/\r\n/g, '\n').trim();
+console.log(`# ${treeId}\n${url.href}\n\n${max > 0 ? body.slice(0, max) : body}`);

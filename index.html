@@ -20,15 +20,15 @@
     </section>
 
     <div class="container">
-        <div class="section-title">1. 캐릭터 순수 스탯 (레벨업 투자 수치)</div>
+        <div class="section-title">스테이터스</div>
         <div class="form-group">
             <label class="title-label">캐릭터 레벨</label>
             <input type="number" id="charLevel" value="325">
         </div>
         
         <div class="status-investment-header">
-            <span>스테이터스 투자 <span id="statusPointSummary" class="status-point-summary" aria-live="polite">5 / 0</span></span>
-            <button type="button" class="status-reset-btn" id="statusResetBtn">최소치로 초기화</button>
+            <span><span id="statusPointSummary" class="status-point-summary" aria-live="polite">5 / 0</span></span>
+            <button type="button" class="status-reset-btn" id="statusResetBtn">초기화</button>
         </div>
         <div class="stats-grid">
             <div class="stats-col"><button type="button" class="stat-easy-btn" data-stat-input="strBase" title="최대치까지 STR 투자">STR</button><input type="number" id="strBase" value="1" min="1" max="510" step="1"></div>
@@ -51,7 +51,7 @@
             </div>
         </div>
 
-        <div class="section-title">3. 타겟(보스) 정보 및 공격 유형 세팅</div>
+        <div class="section-title">타겟</div>
         <div class="equip-card" style="background:#fef9e7; border-color:#f1c40f;">
             <div class="form-group">
                 <label class="title-label">공격 / 거리 유형</label>
@@ -90,132 +90,63 @@
             <div id="skillStatOpts" style="width: 100%; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px;"></div>
         </div>
 
-        <div class="section-title">장비 세팅 및 부여 옵션</div>
-        
-        <div class="equip-card">
-            <h3>⚔️ 주무기</h3>
-            <div class="form-group">
-                <label class="title-label">무기 종류</label>
-                <select id="mainWeaponType" data-action="main-weapon-change">
-                    <option value="한손검">한손검</option>
-                    <option value="양손검">양손검</option>
-                    <option value="활">활</option>
-                    <option value="자동활">자동활 (보우건)</option>
-                    <option value="지팡이">지팡이</option>
-                    <option value="마도구">마도구</option>
-                    <option value="권갑">권갑</option>
-                    <option value="선풍창">선풍창</option>
-                    <option value="발도검">발도검</option>
-                </select>
+        <div class="section-title">장비</div>
+        <div class="equipment-layout">
+            <div class="equipment-weapons-grid">
+                <section class="equip-card equipment-slot equipment-slot-main">
+                    <h3>⚔️ 주무기</h3>
+                    <div class="equipment-field equipment-field-type">
+                        <label for="mainWeaponType">종류</label>
+                        <select id="mainWeaponType" data-action="main-weapon-change">
+                            <option value="한손검">한손검</option><option value="양손검">양손검</option><option value="활">활</option><option value="자동활">자동활</option><option value="지팡이">지팡이</option><option value="마도구">마도구</option><option value="권갑">권갑</option><option value="선풍창">선풍창</option><option value="발도검">발도검</option>
+                        </select>
+                    </div>
+                    <div class="equipment-number-grid">
+                        <label class="equipment-mini-field" for="wpnAtk"><span>ATK</span><input type="number" id="wpnAtk" value="625" placeholder="ATK"></label>
+                        <label class="equipment-mini-field" for="wpnRefine"><span>제련</span><select id="wpnRefine" class="refine-select"></select></label>
+                        <label class="equipment-mini-field" for="wpnStab"><span>안정</span><input type="number" id="wpnStab" value="80" placeholder="%" title="주무기 기본 안정률"></label>
+                    </div>
+                    <div class="equipment-options">
+                        <div class="equipment-subhead"><span>옵션</span><button type="button" class="add-opt-btn" data-add-option="wpnOpts">+ 옵션</button></div>
+                        <div id="wpnOpts" class="equipment-option-list equipment-option-list-wide"></div>
+                    </div>
+                    <div class="equipment-crysta">
+                        <div class="equipment-subhead"><span>크리스타</span></div>
+                        <div class="crysta-slots">
+                            <div class="crysta-slot"><div class="crysta-input-row"><label for="cr_wpn_1">슬롯 1</label><input type="text" id="cr_wpn_1" list="dl_wpn" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_wpn_1"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_wpn_1_info"></div></div>
+                            <div class="crysta-slot"><div class="crysta-input-row"><label for="cr_wpn_2">슬롯 2</label><input type="text" id="cr_wpn_2" list="dl_wpn" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_wpn_2"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_wpn_2_info"></div></div>
+                        </div>
+                    </div>
+                </section>
+                <section class="equip-card equipment-slot equipment-slot-sub">
+                    <h3>🛡️ 보조 장비</h3>
+                    <div class="equipment-field equipment-field-type"><label for="subWeaponType">종류</label><select id="subWeaponType" data-action="sub-weapon-change"></select></div>
+                    <div class="equipment-number-grid" id="subAtkGroup">
+                        <label class="equipment-mini-field" for="subAtk"><span>ATK</span><input type="number" id="subAtk" value="0" placeholder="ATK"></label>
+                        <label class="equipment-mini-field" for="subRefine"><span>제련</span><select id="subRefine" class="refine-select"></select></label>
+                        <label class="equipment-mini-field" for="subStab"><span>안정</span><input type="number" id="subStab" value="0" placeholder="%" title="보조무기 기본 안정률"></label>
+                    </div>
+                    <div class="equipment-options"><div class="equipment-subhead"><span>옵션</span><button type="button" class="add-opt-btn" data-add-option="subOpts">+ 옵션</button></div><div id="subOpts" class="equipment-option-list"></div></div>
+                </section>
             </div>
-            <div class="form-group">
-                <label class="title-label">무기 ATK / 제련 / 안정률</label>
-                <input type="number" id="wpnAtk" value="625" placeholder="무기 ATK">
-                <select id="wpnRefine" class="refine-select" style="max-width:90px;"></select>
-                <input type="number" id="wpnStab" value="80" placeholder="안정률(%)" title="주무기 기본 안정률" style="max-width:110px;">
+            <div class="equipment-accessories-grid">
+                <section class="equip-card equipment-slot">
+                    <h3>👕 몸 장비</h3>
+                    <div class="equipment-field equipment-field-type"><label for="armorType">개조</label><select id="armorType" data-action="armor-change"><option value="일반옷">일반옷</option><option value="경량옷">경량옷</option><option value="중량옷">중량옷</option></select></div>
+                    <div class="equipment-options"><div class="equipment-subhead"><span>옵션</span><button type="button" class="add-opt-btn" data-add-option="armOpts">+ 옵션</button></div><div id="armOpts" class="equipment-option-list"></div></div>
+                    <div class="equipment-crysta"><div class="equipment-subhead"><span>크리스타</span></div><div class="crysta-slots"><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_arm_1">슬롯 1</label><input type="text" id="cr_arm_1" list="dl_arm" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_arm_1"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_arm_1_info"></div></div><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_arm_2">슬롯 2</label><input type="text" id="cr_arm_2" list="dl_arm" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_arm_2"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_arm_2_info"></div></div></div></div>
+                </section>
+                <section class="equip-card equipment-slot">
+                    <h3>🎩 추가 장비</h3>
+                    <div class="equipment-options"><div class="equipment-subhead"><span>옵션</span><button type="button" class="add-opt-btn" data-add-option="addOpts">+ 옵션</button></div><div id="addOpts" class="equipment-option-list"></div></div>
+                    <div class="equipment-crysta"><div class="equipment-subhead"><span>크리스타</span></div><div class="crysta-slots"><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_add_1">슬롯 1</label><input type="text" id="cr_add_1" list="dl_add" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_add_1"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_add_1_info"></div></div><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_add_2">슬롯 2</label><input type="text" id="cr_add_2" list="dl_add" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_add_2"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_add_2_info"></div></div></div></div>
+                </section>
+                <section class="equip-card equipment-slot">
+                    <h3>💍 특수 장비</h3>
+                    <div class="equipment-options"><div class="equipment-subhead"><span>옵션</span><button type="button" class="add-opt-btn" data-add-option="spcOpts">+ 옵션</button></div><div id="spcOpts" class="equipment-option-list"></div></div>
+                    <div class="equipment-crysta"><div class="equipment-subhead"><span>크리스타</span></div><div class="crysta-slots"><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_spc_1">슬롯 1</label><input type="text" id="cr_spc_1" list="dl_spc" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_spc_1"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_spc_1_info"></div></div><div class="crysta-slot"><div class="crysta-input-row"><label for="cr_spc_2">슬롯 2</label><input type="text" id="cr_spc_2" list="dl_spc" class="cr-select" placeholder="검색"><label class="lock-label" title="크리스타 고정" aria-label="크리스타 고정"><input type="checkbox" id="lock_spc_2"><span aria-hidden="true">🔒</span></label></div><div class="crysta-info" id="cr_spc_2_info"></div></div></div></div>
+                </section>
             </div>
-            <div class="form-group">
-                <label class="title-label">무기 옵션 <button type="button" class="add-opt-btn" data-add-option="wpnOpts">+ 옵션 추가</button></label>
-                <div id="wpnOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
-            </div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [1슬롯]</label>
-                <input type="text" id="cr_wpn_1" list="dl_wpn" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_wpn_1"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_wpn_1_info"></div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [2슬롯]</label>
-                <input type="text" id="cr_wpn_2" list="dl_wpn" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_wpn_2"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_wpn_2_info"></div>
-        </div>
-
-        <div class="equip-card">
-            <h3>🛡️ 보조 장비</h3>
-            <div class="form-group">
-                <label class="title-label">보조 장비 종류</label>
-                <select id="subWeaponType" data-action="sub-weapon-change"></select>
-            </div>
-            <div class="form-group" id="subAtkGroup">
-                <label class="title-label">보조 ATK / 제련 / 안정률</label>
-                <input type="number" id="subAtk" value="0" placeholder="보조 무기 ATK">
-                <select id="subRefine" class="refine-select" style="max-width:90px;"></select>
-                <input type="number" id="subStab" value="0" placeholder="안정률(%)" title="보조무기 기본 안정률" style="max-width:110px;">
-            </div>
-            <div class="form-group">
-                <label class="title-label">보조 옵션 <button type="button" class="add-opt-btn" data-add-option="subOpts">+ 옵션 추가</button></label>
-                <div id="subOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
-            </div>
-        </div>
-
-        <div class="equip-card">
-            <h3>👕 몸 장비 (방어구)</h3>
-            <div class="form-group">
-                <label class="title-label">옷 개조 타입</label>
-                <select id="armorType" data-action="armor-change">
-                    <option value="일반옷">일반옷</option>
-                    <option value="경량옷">경량옷 (ASPD+50%, 회피율+)</option>
-                    <option value="중량옷">중량옷 (ASPD-50%, 가드율+)</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label class="title-label">방어구 옵션 <button type="button" class="add-opt-btn" data-add-option="armOpts">+ 옵션 추가</button></label>
-                <div id="armOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
-            </div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [1슬롯]</label>
-                <input type="text" id="cr_arm_1" list="dl_arm" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_arm_1"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_arm_1_info"></div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [2슬롯]</label>
-                <input type="text" id="cr_arm_2" list="dl_arm" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_arm_2"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_arm_2_info"></div>
-        </div>
-
-        <div class="equip-card">
-            <h3>🎩 추가 장비</h3>
-            <div class="form-group">
-                <label class="title-label">추가 옵션 <button type="button" class="add-opt-btn" data-add-option="addOpts">+ 옵션 추가</button></label>
-                <div id="addOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
-            </div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [1슬롯]</label>
-                <input type="text" id="cr_add_1" list="dl_add" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_add_1"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_add_1_info"></div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [2슬롯]</label>
-                <input type="text" id="cr_add_2" list="dl_add" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_add_2"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_add_2_info"></div>
-        </div>
-
-        <div class="equip-card">
-            <h3>💍 특수 장비</h3>
-            <div class="form-group">
-                <label class="title-label">특수 옵션 <button type="button" class="add-opt-btn" data-add-option="spcOpts">+ 옵션 추가</button></label>
-                <div id="spcOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
-            </div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [1슬롯]</label>
-                <input type="text" id="cr_spc_1" list="dl_spc" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_spc_1"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_spc_1_info"></div>
-            <div class="form-group">
-                <label class="title-label">크리스타 [2슬롯]</label>
-                <input type="text" id="cr_spc_2" list="dl_spc" class="cr-select" placeholder="클릭하여 리스트 보기 및 검색">
-                <label class="lock-label"><input type="checkbox" id="lock_spc_2"> 🔒 고정</label>
-            </div>
-            <div class="crysta-info" id="cr_spc_2_info"></div>
         </div>
         
         <div class="equip-card" style="background:#f4f6f7;">
@@ -225,18 +156,18 @@
                 <div id="buffOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
             </div>
         </div>
-
-        <div class="section-title">추천 제외 크리스타 (Blacklist)</div>
-        <div class="blacklist-container">
-            <div class="form-group" style="margin: 0;">
-                <label class="title-label" style="color:#c0392b;">제외할 크리스타</label>
-                <input type="text" id="banInput" list="dl_all" placeholder="클릭하여 검색 후 엔터 또는 추가 버튼">
-                <button type="button" data-action="add-ban" style="padding:8px 15px; cursor:pointer; background:#e74c3c; color:white; border:none; border-radius:4px; font-weight:bold;">추가</button>
+        <details class="equipment-blacklist">
+            <summary>추천 제외 크리스타 <span id="blacklistCount" class="equipment-blacklist-count"></span></summary>
+            <div class="blacklist-container">
+                <div class="form-group" style="margin: 0;">
+                    <label class="title-label" style="color:#c0392b;">제외할 크리스타</label>
+                    <input type="text" id="banInput" list="dl_all" placeholder="검색 후 엔터 또는 추가">
+                    <button type="button" data-action="add-ban" style="padding:8px 15px; cursor:pointer; background:#e74c3c; color:white; border:none; border-radius:4px; font-weight:bold;">추가</button>
+                </div>
+                <div class="tag-list" id="banTagContainer"></div>
             </div>
-            <div class="tag-list" id="banTagContainer"></div>
-        </div>
-
-        <button type="button" class="btn-calc" data-action="calculate">🚀 상세 계산 및 크리스타 최적화 실행</button>
+        </details>
+<button type="button" class="btn-calc" data-action="calculate">🚀 상세 계산 및 크리스타 최적화 실행</button>
 
         <div id="resultArea" class="result-box" style="display: none;">
             
@@ -298,7 +229,18 @@
     </div>
 
     <script src="assets/js/data/skill-tree-data.js"></script>
+    <script src="assets/js/data/skill-combat-catalog.js"></script>
+    <script src="assets/js/data/combo-rule-data.js"></script>
+    <script src="assets/js/data/skill-effect-registry.js"></script>
     <script src="assets/js/data/skill-effect-data.js"></script>
+    <script src="assets/js/data/skills/battle.js"></script>
+    <script src="assets/js/data/skills/survival.js"></script>
+    <script src="assets/js/data/skills/guard.js"></script>
+    <script src="assets/js/data/skills/support.js"></script>
+    <script src="assets/js/data/skills/blade.js"></script>
+    <script src="assets/js/data/skill-registration-metadata.js"></script>
+    <script src="assets/js/data/skill-catalog-registration.js"></script>
+    <script src="assets/js/skill-data-validator.js"></script>
     <script src="assets/js/skill-effect-engine.js"></script>
     <script src="assets/js/data/crysta-data.js"></script>
     <script src="assets/js/crysta-ui.js"></script>
@@ -307,6 +249,7 @@
     <script src="assets/js/status-points.js"></script>
     <script src="assets/js/skill-tree.js"></script>
     <script src="assets/js/tabs.js"></script>
+    <script src="assets/js/active-buff-ui.js"></script>
     <script src="assets/js/ui-bindings.js"></script>
 </body>
 </html>

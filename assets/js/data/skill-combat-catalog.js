@@ -1,0 +1,30 @@
+/* 전투 스킬 전체 목록. skill_effect_source_links.json을 출처로 하며, 비전투 트리는 명시적으로 제외한다. */
+(function () {
+  'use strict';
+  var excludedTreeIds = Object.freeze(['Smith', 'Alchemy', 'Tamer']);
+  var sourceByTree = Object.freeze({"Blade":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39513&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Shot":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39514&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Magic":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39522&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Martial":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39547&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Halberd":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39591&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Mononofu":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39819&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","DualSword":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39831&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Crusher":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39576&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=2","Sprite":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39835&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Shield":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=39876&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Dagger":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40183&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Knight":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40190&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Hunter":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40201&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Priest":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40222&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Assassin":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40264&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Wizard":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40277&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Guard":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40324&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","MagicBlade":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40902&page=1","DarkPower":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40846&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Barehand":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40881&page=1","Ninja":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40799&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Partisan":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40800&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Minstrel":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40848&page=2","Dancer":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40801&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Necromancer":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=42836&page=2","Golem":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=43396&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Survival":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40367&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Support":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40366&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Battle":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40368&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Smith":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40447&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Alchemy":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40448&s_type=search_subject_memo&s_keyword=%EC%8A%A4%ED%82%AC%20%EC%A0%95%EB%B3%B4&page=1","Tamer":"https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40552&page=1"});
+  if (!window.SKILL_TREE_DATA || !Array.isArray(window.SKILL_TREE_DATA.trees)) throw new Error('스킬 전투 카탈로그는 skill-tree-data.js 뒤에 로드해야 합니다.');
+  var skills = window.SKILL_TREE_DATA.trees.filter(function (tree) {
+    return excludedTreeIds.indexOf(tree.id) === -1;
+  }).reduce(function (entries, tree) {
+    return entries.concat(tree.skills.map(function (skill) {
+      return Object.freeze({
+        id: tree.id + ':' + skill.id,
+        treeId: tree.id,
+        skillId: skill.id,
+        name: skill.name,
+        nameKo: skill.nameKo,
+        category: tree.category,
+        treeNameKo: tree.nameKo,
+        sourceUrl: sourceByTree[tree.id] || null,
+        status: 'unreviewed'
+      });
+    }));
+  }, []);
+  window.TORAM_SKILL_COMBAT_CATALOG = Object.freeze({
+    schemaVersion: 1,
+    excludedTreeIds: excludedTreeIds,
+    sources: sourceByTree,
+    skills: Object.freeze(skills)
+  });
+}());

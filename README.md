@@ -1,13 +1,18 @@
 # Toram Auto Building 개발 소스
 
-`v1.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다.
+`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 개발 기준선은 `v0.3.0`입니다.
 
 ## 구조
 
 - `index.html`: 개발판 진입점과 화면 마크업
 - `assets/css/style.css`: 전체 스타일
 - `assets/fonts/`: Pretendard v1.3.9 가변 WOFF2와 SIL OFL 라이선스
-- `assets/js/data/`: 스킬트리와 크리스타 데이터
+- `assets/js/data/`: 스킬트리·전투 스킬 카탈로그·크리스타 데이터
+- `assets/js/data/skill-combat-catalog.js`: 전투 대상 427개 스킬과 원문 출처 연결
+- `assets/js/data/combo-rule-data.js`: 사용자 제공 게임 내 콤보 태그 규칙
+- `assets/js/data/skill-effect-data.js`: 스킬 효과·MP·공격·버프·상태 전이 정의
+- `assets/js/skill-effect-engine.js`: 제한된 조건식과 스킬 상태 전이 해석
+- `assets/js/skill-data-validator.js`: 스킬 데이터 커버리지·정합성 검사
 - `assets/js/crysta-ui.js`: 크리스타 입력·자동완성·장비 옵션 UI
 - `assets/js/calculator.js`: 스탯과 전투 수치 계산
 - `assets/js/optimizer.js`: 크리스타 추천·결과 렌더링
@@ -15,9 +20,15 @@
 - `assets/js/skill-tree.js`: 스킬트리 시뮬레이터·저장 기능
 - `assets/js/tabs.js`: 상단 탭 구성
 - `assets/js/ui-bindings.js`: 화면 이벤트 연결 및 기능별 공개 API 호출
-- `coryn_skill_icons/`: 개발용 스킬 아이콘 원본
+- `assets/icons/skills/`: Coryn 기반 스킬 트리 아이콘
+- `assets/game-data/ui/`: 이름 미정의 인게임 UI 스프라이트 원본
+- `assets/source-data/coryn-skill-simulator/`: Coryn 아이콘 매니페스트·생성 원본
+- `assets/source-data/game-icon-skill-duplicates.json`: 삭제 확정된 채굴·스킬 아이콘 매칭 기록
+- `assets/source-data/game-icon-skill-match-candidates.json`: 남은 채굴 아이콘의 상위 스킬 후보표
 - `tools/build-release.mjs`: 배포용 단일 HTML 생성기
-- `Versions/`: 생성된 배포판 보관 위치
+- `tools/read-skill-source.mjs`: 트리별 스킬 원문 조회 도구
+- `tools/audit-game-icon-matches.ps1`: 채굴 게임 아이콘과 스킬 아이콘의 후보 매칭 감사 도구
+- `docs/skill-data-schema.md`: 전투 스킬 데이터 계약- `Versions/`: 생성된 배포판 보관 위치
 
 ## 개발
 
@@ -31,4 +42,4 @@ Node.js 18 이상에서 다음 명령을 실행합니다.
 node tools/build-release.mjs vM.m.p
 ```
 
-명령의 버전값은 제목·화면 헤더·`application-version` 메타데이터에 자동 반영됩니다. 명령은 CSS·JavaScript·스킬 아이콘을 하나의 HTML로 합쳐 `Versions/v1.2.2.html`을 만듭니다. 아이콘과 Pretendard 가변 폰트는 Base64 데이터 URL로 포함되므로 배포판은 외부 폴더나 인터넷 연결 없이 동작합니다. 폰트 재배포 조건은 `assets/fonts/OFL.txt`에 보관합니다.
+명령의 버전값은 제목·화면 헤더·`application-version` 메타데이터에 자동 반영됩니다. 명령은 CSS·JavaScript·스킬 아이콘을 하나의 HTML로 합쳐 `Versions/v0.3.0.html`을 만듭니다. 아이콘과 Pretendard 가변 폰트는 Base64 데이터 URL로 포함되므로 배포판은 외부 폴더나 인터넷 연결 없이 동작합니다. 폰트 재배포 조건은 `assets/fonts/OFL.txt`에 보관합니다.

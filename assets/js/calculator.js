@@ -23,6 +23,7 @@
             else if (k === 'PHYS_PIERCE' || k === '물리관통') ctx.physPierce += val;
             else if (k === 'MAG_PIERCE' || k === '마법관통') ctx.magPierce += val;
             else if (k === 'ELEM_P' || k === '속성데미지') ctx.elemP += val;
+            else if (k === 'DAMAGE_P' || k === 'DAMAGE%' || k === '스킬데미지') ctx.damageP += val;
             else if (k === 'WATKP' || k === '무기ATK%') ctx.watkP += val;
             else if (k === 'WATK' || k === '무기ATK+') ctx.watkF += val;
             else if (k === 'ASPD') ctx.aspdF += val;
@@ -83,7 +84,7 @@
 
                 strP: 0, strF: 0, dexP: 0, dexF: 0, intP: 0, intF: 0, agiP: 0, agiF: 0, vitP: 0, vitF: 0,
                 atkP: 0, atkF: 0, matkP: 0, matkF: 0, cdmgP: 0, cdmgF: 0, 
-                critP: 0, critF: 0, srw: 0, lrw: 0, unsheathe: 0, elemP: 0, watkP: 0, watkF: 0,
+                critP: 0, critF: 0, srw: 0, lrw: 0, unsheathe: 0, elemP: 0, damageP: 0, watkP: 0, watkF: 0,
                 physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0,
                 atkUpSTR: 0, atkUpDEX: 0, atkUpINT: 0, atkUpAGI: 0, atkUpVIT: 0,
                 matkUpSTR: 0, matkUpDEX: 0, matkUpINT: 0, matkUpAGI: 0, matkUpVIT: 0
@@ -119,6 +120,13 @@
             return newCtx;
         }
 
+        function applyPassiveSkillStats(ctx) {
+            if (!window.ToramSkillEffects) return;
+            window.ToramSkillEffects.passiveStatChanges(ctx).forEach(function (change) {
+                applyStat(ctx, change.key, change.value);
+            });
+        }
+
         function simulateWithCrystas(baseCtx, crystas) {
             var ctx = cloneCtx(baseCtx);
             for(var i=0; i<crystas.length; i++) {
@@ -140,6 +148,9 @@
                     }
                 }
             }
+
+            // 장비·크리스타 조건까지 반영한 뒤, 습득 패시브의 빌드 단계 스탯을 적용한다.
+            applyPassiveSkillStats(ctx);
 
             var totalSTR = Math.floor(ctx.strBase * (1 + ctx.strP/100) + ctx.strF);
             var totalDEX = Math.floor(ctx.dexBase * (1 + ctx.dexP/100) + ctx.dexF);
@@ -476,8 +487,9 @@
             var unsheatheMult = ctx.chkIsUnsheathe ? (1 + ctx.unsheathe / 100) : 1;
             var resistMult = 1 - (targetResist / 100);
             var elemMult = 1 + (ctx.elemP / 100);
+            var activeBuffDamageMult = 1 + (ctx.damageP / 100);
 
-            var damageFactor = rawAtkBase * finalSkillMult * evCdmgMult * rangeMult * unsheatheMult * elemMult * resistMult * avgStabMult;
+            var damageFactor = rawAtkBase * finalSkillMult * evCdmgMult * rangeMult * unsheatheMult * elemMult * activeBuffDamageMult * resistMult * avgStabMult;
 
             var extraAtkTip = isDualSword ? `\n\n[듀얼소드 합산]\n메인 + (서브ATK * 서브안정률)\n(서브 무기 ATK: ${finalSubAtk} / 서브 안정률: ${finalSubStab}%)` : '';
 

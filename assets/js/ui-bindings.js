@@ -11,7 +11,7 @@
         });
         document.querySelector('[data-action="add-skill-stat"]').addEventListener('click', crystaUi.addSkillStatRow);
         document.querySelector('[data-action="add-ban"]').addEventListener('click', crystaUi.addBanTag);
-        document.querySelector('[data-action="calculate"]').addEventListener('click', optimizer.runCalculationSafe);
+        document.addEventListener('toram:calculate', optimizer.runCalculationSafe);
         document.querySelector('[data-action="main-weapon-change"]').addEventListener('change', function () {
             crystaUi.updateSubWeaponList();
             crystaUi.refreshAllCrystaInfo();

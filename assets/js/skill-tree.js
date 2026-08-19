@@ -4,9 +4,9 @@
         const maxLevel = Number(data.skillMaxLevel) || 10;
         const prerequisiteLevel = Number(data.prerequisiteLevel) || 5;
         const categoryDefinitions = [
-            { id: 'weapon', directory: 'Weapon Skills', display: '무기', icon: 'coryn_skill_icons/Weapon Skills/Blade/00_Hammer Slam.png' },
-            { id: 'buff', directory: 'Buff Skills', display: '버프', icon: 'coryn_skill_icons/Buff Skills/Assassin/00_Assassin Stab.png' },
-            { id: 'assist', directory: 'Assist Skills', display: '보조', icon: 'coryn_skill_icons/Assist Skills/Battle/00_Magic UP.png' }
+            { id: 'weapon', directory: 'Weapon Skills', display: '무기', icon: 'assets/icons/skills/Weapon Skills/Blade/00_Hammer Slam.png' },
+            { id: 'buff', directory: 'Buff Skills', display: '버프', icon: 'assets/icons/skills/Buff Skills/Assassin/00_Assassin Stab.png' },
+            { id: 'assist', directory: 'Assist Skills', display: '보조', icon: 'assets/icons/skills/Assist Skills/Battle/00_Magic UP.png' }
         ];
         const treesById = new Map(data.trees.map(function (tree) { return [tree.id, tree]; }));
         const state = { step: 1, levels: {} };
@@ -197,7 +197,7 @@ function createSkillSnapshot() {
             const button = document.createElement('button');
             button.type = 'button'; button.className = 'skill-bookmark-button skill-tree-button' + (active ? ' active' : '');
             button.setAttribute('aria-pressed', String(active)); button.title = treeLabel(tree);
-            const icon = document.createElement('img'); icon.src = iconPath('coryn_skill_icons/' + tree.category + '/' + tree.id + '/title.png'); icon.alt = '';
+            const icon = document.createElement('img'); icon.src = iconPath('assets/icons/skills/' + tree.category + '/' + tree.id + '/title.png'); icon.alt = '';
             const info = document.createElement('span'); info.className = 'bookmark-info';
             const label = document.createElement('span'); label.className = 'bookmark-label'; label.textContent = treeLabel(tree);
             const points = document.createElement('span'); points.className = 'bookmark-points'; points.textContent = '(' + total.spent + '/' + total.maximum + ')';
@@ -248,7 +248,7 @@ function createSkillSnapshot() {
             canvas.appendChild(connectorLayer);
             tree.skills.forEach(function (skill) {
                 const level = state.levels[tree.id][skill.id];
-                const node = document.createElement('button'); node.type = 'button'; node.className = 'skill-node' + (level > 0 ? ' is-invested' : ''); node.style.gridColumn = String(skill.x + 1); node.style.gridRow = String(skill.y + 1); node.style.backgroundImage = "url('" + iconPath('coryn_skill_icons/icons/' + (level > 0 ? 'skill_on.png' : 'skill_off.png')) + "')"; node.title = skillLabel(skill) + ' Lv ' + level + '/' + maxLevel;
+                const node = document.createElement('button'); node.type = 'button'; node.className = 'skill-node' + (level > 0 ? ' is-invested' : ''); node.style.gridColumn = String(skill.x + 1); node.style.gridRow = String(skill.y + 1); node.style.backgroundImage = "url('" + iconPath('assets/icons/skills/icons/' + (level > 0 ? 'skill_on.png' : 'skill_off.png')) + "')"; node.title = skillLabel(skill) + ' Lv ' + level + '/' + maxLevel;
                 const image = document.createElement('img'); image.className = 'skill-node-icon' + (skill.iconAvailable ? '' : ' is-missing'); image.src = iconPath(skill.icon); image.alt = skillLabel(skill); image.onerror = function () { this.classList.add('is-missing'); };
                 const name = document.createElement('span'); name.className = 'skill-node-name'; name.textContent = skillLabel(skill);
                 const levelLabel = document.createElement('span'); levelLabel.className = 'skill-node-level'; levelLabel.textContent = 'Lv ' + level + '/' + maxLevel;

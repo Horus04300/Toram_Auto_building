@@ -9,7 +9,7 @@ if (!version || !/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/.test(version)) {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const outputPath = resolve(root, 'Versions', `${version}.html`);
-const iconRoot = resolve(root, 'coryn_skill_icons');
+const iconRoot = resolve(root, 'assets', 'icons', 'skills');
 
 async function collectPngAssets(directory) {
   const entries = await readdir(directory, { withFileTypes: true });

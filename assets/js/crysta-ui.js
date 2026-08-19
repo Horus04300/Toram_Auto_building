@@ -270,6 +270,8 @@
         function removeBanTag(val) { delete bannedCrystas[val]; renderBanTags(); }
         function renderBanTags() {
             var container = document.getElementById('banTagContainer');
+            var count = document.getElementById('blacklistCount');
+            if (count) count.textContent = Object.keys(bannedCrystas).length + '개';
             container.innerHTML = '';
             for (var val in bannedCrystas) {
                 var tag = document.createElement('span');

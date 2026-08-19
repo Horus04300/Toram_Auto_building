@@ -1,0 +1,88 @@
+const ninjaSkills = [
+  {
+    "id": 0,
+    "name": "Ninjutsu",
+    "nameKo": "인술",
+    "prereq": -1,
+    "x": 0,
+    "y": 0,
+    "via": null,
+    "icon": "coryn_skill_icons/Buff Skills/Ninja/00_Ninjutsu.png",
+    "iconAvailable": true,
+    "type": "active",
+    "conditions": ["All"],
+    "damagetype": "none",
+    "distancePower": false,
+    "longRange": false,
+    "unsheathePower": false,
+    "getMultiplier": function(level, stats) { return 0; },
+    "getConstant": function(level, stats) { return 0; },
+    "getEffects": function(level, stats) { return {}; } // 인술 스킬 중 하나를 무작위 발동
+  },
+  {
+    "id": 1,
+    "name": "Ninja Spirit",
+    "nameKo": "신념",
+    "prereq": 0,
+    "x": 1,
+    "y": 0,
+    "via": null,
+    "icon": "coryn_skill_icons/Buff Skills/Ninja/01_Ninja Spirit.png",
+    "iconAvailable": true,
+    "type": "passive",
+    "conditions": ["All"],
+    "damagetype": "none",
+    "distancePower": false,
+    "longRange": false,
+    "unsheathePower": false,
+    "getMultiplier": function(level, stats) { return 0; },
+    "getConstant": function(level, stats) { return 0; },
+    "getEffects": function(level, stats) {
+      if (level === 0) return {};
+      return { 
+        "FLEE": level,
+        "Aggro": -(level / 2)
+      };
+    }
+  },
+  {
+    "id": 2,
+    "name": "Ninjutsu Drill I",
+    "nameKo": "인술 단련 I",
+    "prereq": 0,
+    "x": 2,
+    "y": 2,
+    "via": [0, 2],
+    "icon": "coryn_skill_icons/Buff Skills/Ninja/02_Ninjutsu Drill I.png",
+    "iconAvailable": true,
+    "type": "passive",
+    "conditions": ["All"],
+    "damagetype": "none",
+    "distancePower": false,
+    "longRange": false,
+    "unsheathePower": false,
+    "getMultiplier": function(level, stats) { return 0; },
+    "getConstant": function(level, stats) { return 0; },
+    "getEffects": function(level, stats) { return {}; } // 인술 단련 II와 합산하여 '단련 레벨' 취급
+  },
+  {
+    "id": 3,
+    "name": "Ninjutsu Drill II",
+    "nameKo": "인술 단련 II",
+    "prereq": 2,
+    "x": 3,
+    "y": 2,
+    "via": null,
+    "icon": "coryn_skill_icons/Buff Skills/Ninja/03_Ninjutsu Drill II.png",
+    "iconAvailable": true,
+    "type": "passive",
+    "conditions": ["All"],
+    "damagetype": "none",
+    "distancePower": false,
+    "longRange": false,
+    "unsheathePower": false,
+    "getMultiplier": function(level, stats) { return 0; },
+    "getConstant": function(level, stats) { return 0; },
+    "getEffects": function(level, stats) { return {}; } // 인술 단련 I과 합산하여 '단련 레벨' 취급
+  }
+];
