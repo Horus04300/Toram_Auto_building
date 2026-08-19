@@ -1,6 +1,6 @@
 # Toram Auto Building 개발 소스
 
-`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 개발 기준선은 `v0.3.0`입니다.
+`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 개발 기준선은 `v0.4.0`입니다.
 
 ## 구조
 
@@ -39,7 +39,7 @@
 Node.js 18 이상에서 다음 명령을 실행합니다.
 
 ```powershell
-node tools/build-release.mjs vM.m.p
+node tools/build-release.mjs vX.Y.Z
 ```
 
-명령의 버전값은 제목·화면 헤더·`application-version` 메타데이터에 자동 반영됩니다. 명령은 CSS·JavaScript·스킬 아이콘을 하나의 HTML로 합쳐 `Versions/v0.3.0.html`을 만듭니다. 아이콘과 Pretendard 가변 폰트는 Base64 데이터 URL로 포함되므로 배포판은 외부 폴더나 인터넷 연결 없이 동작합니다. 폰트 재배포 조건은 `assets/fonts/OFL.txt`에 보관합니다.
+명령의 버전값은 제목·화면 헤더·`application-version` 메타데이터에 자동 반영됩니다. 명령은 CSS·JavaScript·스킬 아이콘을 하나의 HTML로 합쳐 `Versions/v0.4.0.html`을 만듭니다. 아이콘과 Pretendard 가변 폰트는 Base64 데이터 URL로 포함되므로 배포판은 외부 폴더나 인터넷 연결 없이 동작합니다. 폰트 재배포 조건은 `assets/fonts/OFL.txt`에 보관합니다.
