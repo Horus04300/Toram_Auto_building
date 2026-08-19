@@ -25,6 +25,7 @@
   nameKo: '스킬명',
   kind: 'attack' | 'passive' | 'buff' | 'utility',
   activeBuff: true, // 공격·유틸리티 스킬도 시전 후 지속 버프가 있으면 사용
+  stackControl: { stateId:'uniqueStateId', minStacks:0, maxStacks:10, initialStacks:1, label:'스택', sharedGroup:'optionalGroup', sharedMaxBase:11 },
   dataStatus: 'unreviewed' | 'partial' | 'verified',
   source: 'treeSourceKey',
   requirements: { mainWeapons: [], subWeapons: [], states: [] },

@@ -74,9 +74,21 @@
     if (!cost || !test(cost.when, state)) return null;
     return { timing:cost.timing || (cost.mp && cost.mp.timing) || 'cast', mp:num(expr(cost.mp && cost.mp.value, state)), hp:num(expr(cost.hp && cost.hp.value, state)), when:cost.when || null };
   }
+  function normalizeInputs(skill, state) {
+    (skill.inputs || []).forEach(function (input) {
+      var current = state.attack.inputs[input.id];
+      if (current === undefined) current = input.default !== undefined ? expr(input.default, state) : (input.type === 'boolean' ? false : 0);
+      if (input.type === 'boolean') { state.attack.inputs[input.id] = Boolean(current); return; }
+      var value = num(current);
+      var min = input.min === undefined ? -Infinity : num(expr(input.min, state));
+      var max = input.max === undefined ? Infinity : num(expr(input.max, state));
+      state.attack.inputs[input.id] = Math.min(max, Math.max(min, value));
+    });
+  }
   function profile(id, base, combat, inputs, runtime) {
     var skill = find(id); if (!skill) return null;
     var state = context(base, skill, combat, inputs, runtime);
+    normalizeInputs(skill, state);
     var available = state.skill.level > 0 && test(skill.requirements && skill.requirements.when, state);
     return {
       skill:skill,
@@ -93,6 +105,7 @@
   function passiveStatChanges(base) {
     return definitions().filter(function (skill) { return skill.kind === 'passive' && skillLevel(skill) > 0; }).reduce(function (changes, skill) {
       var state = context(base, skill);
+      if (!test(skill.requirements && skill.requirements.when, state)) return changes;
       skill.effects.forEach(function (effect) {
         if (effect.type === 'stat' && (!effect.phase || effect.phase === 'build') && test(effect.when, state)) changes.push({ key:effect.key, value:num(expr(effect.value, state)), source:skill });
       });

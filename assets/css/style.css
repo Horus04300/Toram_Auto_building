@@ -482,3 +482,14 @@ button { font-family: inherit; }
 .equipment-blacklist[open] summary::before { transform: rotate(90deg); }
 .equipment-blacklist-count { padding: 2px 7px; border-radius: 999px; background: var(--surface); color: var(--warning); font-size: 11px; }
 .equipment-blacklist .blacklist-container { margin: 0; padding: 0 12px 12px; border: 0; border-radius: 0; background: transparent; }
+#activeBuffSkillSection .active-buff-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:8px; }
+#activeBuffSkillSection .active-buff-card { position:relative; display:flex; justify-content:center; min-height:90px; }
+#activeBuffSkillSection .active-buff-card .skill-node { min-height:90px; grid-column:auto; grid-row:auto; }
+#activeBuffSkillSection .active-buff-stack-controls { position:absolute; right:2px; bottom:1px; left:2px; z-index:3; display:flex; align-items:center; justify-content:center; gap:3px; min-height:18px; color:#312e81; font-size:9px; font-weight:800; line-height:1; }
+#activeBuffSkillSection .active-buff-stack-controls button,
+#activeBuffSkillSection .active-buff-stack-controls span { box-sizing:border-box; height:18px; border:1px solid #a5a0e8; border-radius:999px; background:#ede9fe; color:#312e81; box-shadow:0 1px 1px rgba(49,46,129,.16); }
+#activeBuffSkillSection .active-buff-stack-controls button { width:18px; padding:0; font:inherit; font-size:13px; font-weight:850; line-height:15px; cursor:pointer; }
+#activeBuffSkillSection .active-buff-stack-controls button:hover:not(:disabled) { background:#ddd6fe; border-color:#817ad8; }
+#activeBuffSkillSection .active-buff-stack-controls button:disabled { border-color:#d4d0ea; background:#f6f5fb; color:#aaa7bf; cursor:not-allowed; }
+#activeBuffSkillSection .active-buff-stack-controls span { display:flex; align-items:center; justify-content:center; min-width:31px; padding:0 5px; white-space:nowrap; }
+#activeBuffSkillSection .active-buff-empty { grid-column:1 / -1; margin:8px 0; color:#5d6d7e; }
