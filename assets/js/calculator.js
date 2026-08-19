@@ -149,9 +149,6 @@
                 }
             }
 
-            // 장비·크리스타 조건까지 반영한 뒤, 습득 패시브의 빌드 단계 스탯을 적용한다.
-            applyPassiveSkillStats(ctx);
-
             var totalSTR = Math.floor(ctx.strBase * (1 + ctx.strP/100) + ctx.strF);
             var totalDEX = Math.floor(ctx.dexBase * (1 + ctx.dexP/100) + ctx.dexF);
             var totalINT = Math.floor(ctx.intBase * (1 + ctx.intP/100) + ctx.intF);

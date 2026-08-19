@@ -115,6 +115,7 @@ if (document.readyState === 'loading') {
 
         function runCalculation() {
             var baseCtx = getBaseContext();
+            applyPassiveSkillStats(baseCtx);   // ← 추가: 패시브 스킬 스탯을 딱 1번만 계산해서 baseCtx에 미리 반영
             var currentCrystas = getCurrentCrystas();
             var curRes = simulateWithCrystas(baseCtx, currentCrystas);
 
