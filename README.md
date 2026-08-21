@@ -1,6 +1,6 @@
 # Toram Auto Building 개발 소스
 
-`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 데스크톱 개발 기준선은 `v0.5.0`입니다.
+현재 개발·배포 기준은 Tauri v2 데스크톱 앱 `v0.5.0`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
 
 ## 구조
 
@@ -25,13 +25,15 @@
 - `assets/source-data/coryn-skill-simulator/`: Coryn 아이콘 매니페스트·생성 원본
 - `assets/source-data/game-icon-skill-duplicates.json`: 삭제 확정된 채굴·스킬 아이콘 매칭 기록
 - `assets/source-data/game-icon-skill-match-candidates.json`: 남은 채굴 아이콘의 상위 스킬 후보표
-- `tools/build-release.mjs`: 배포용 단일 HTML 생성기
+- `assets/source-data/skill-registration/`: 427개 스킬 등록 메타데이터의 생성 원본
+- `tools/generate-skill-registration.mjs`: 등록 메타데이터 재생성 도구
 - `tools/read-skill-source.mjs`: 트리별 스킬 원문 조회 도구
 - `tools/audit-game-icon-matches.ps1`: 채굴 게임 아이콘과 스킬 아이콘의 후보 매칭 감사 도구
-- docs/skill-data-schema.md: 전투 스킬 데이터 계약
-- Versions/: 생성된 단일 HTML 배포판 보관 위치
+- `docs/skill-data-schema.md`: 전투 스킬 데이터 계약
+- `docs/skill-tree-verification-standard.md`: S1~S5 검증 기준
+- `docs/handoff/current-development-handoff.md`: 현재 구현·검증·배포 상태의 단일 인계 기준
 
-## 개발
+## 브라우저 프론트엔드 개발
 
 `index.html`을 브라우저에서 열어 확인합니다. 기능별 JavaScript는 위 순서대로 로드되므로, 다른 파일의 함수를 사용하려면 해당 파일보다 뒤에 배치해야 합니다.
 
@@ -63,12 +65,8 @@ npm run desktop:build
 
 현재 사용자용 NSIS 설치 폴더와 세팅 폴더는 서로 분리되어 있으며, 앱을 제거해도 세팅 JSON은 보존됩니다.
 
-## 단일 파일 배포판 생성
+## 생성 원본과 빌드 산출물
 
-Node.js 18 이상에서 다음 명령을 실행합니다.
-
-```powershell
-node tools/build-release.mjs vX.Y.Z
-```
-
-명령의 버전값은 제목·화면 헤더·`application-version` 메타데이터에 자동 반영됩니다. 명령은 CSS·JavaScript·스킬 아이콘을 하나의 HTML로 합쳐 `Versions/v0.4.0.html`을 만듭니다. 아이콘과 Pretendard 가변 폰트는 Base64 데이터 URL로 포함되므로 배포판은 외부 폴더나 인터넷 연결 없이 동작합니다. 폰트 재배포 조건은 `assets/fonts/OFL.txt`에 보관합니다.
+- `assets/source-data/`, `assets/game-data/`, `docs/sources/skills/`는 아이콘·게임 자료·검증 원문이므로 정리 대상으로 취급하지 않습니다.
+- `dist/`, `src-tauri/target/`, `src-tauri/gen/`은 재생성 가능한 로컬 산출물이며 Git에서 추적하지 않습니다.
+- `node_modules/`는 `npm install`로 복구할 수 있지만 현재 개발 명령에 사용하므로 일반 정리에서는 유지합니다.

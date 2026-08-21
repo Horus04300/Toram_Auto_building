@@ -3,7 +3,7 @@
 이 저장소에서 작업하는 모든 AI 에이전트는 코드 수정, 상태 보고, 계획 수립 전에 다음 문서를 순서대로 끝까지 읽어야 한다.
 
 1. docs/handoff/current-development-handoff.md
-2. 스킬 데이터나 계산 규칙 작업이면 docs/handoff/skill-content-verification-runbook.md
+2. 스킬 데이터나 계산 규칙 작업이면 docs/skill-tree-verification-standard.md
 3. 미구현 여부를 판단하거나 후속 구현을 하면 docs/verification/unimplemented.md
 
 필수 원칙:

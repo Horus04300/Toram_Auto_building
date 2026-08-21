@@ -20,11 +20,10 @@
 
 1. 이 문서
 2. 실제 코드와 현재 실행한 감사·회귀 테스트
-3. docs/handoff/skill-content-verification-runbook.md의 검증 절차
+3. docs/skill-tree-verification-standard.md의 검증 절차
 4. docs/verification/unimplemented.md의 항목별 후속 목록
-5. docs/handoff/skill-content-coverage-handoff.md의 역사적 초기 기준선
 
-과거 문서는 출처와 작업 맥락을 보존하기 위해 남겼다. 숫자와 완료 상태가 충돌하면 최신 코드와 실행 결과를 우선한다.
+숫자와 완료 상태가 충돌하면 최신 코드와 실행 결과를 우선한다. 초기 S1 누락 수치를 담았던 두 과거 인계 문서는 2026-08-22 저장소 정리에서 제거했다.
 
 ## 3. Git, 버전, 배포 상태
 
@@ -52,6 +51,8 @@
 - assets/js/tauri-build-storage-adapter.js: 프론트와 Rust 명령 연결
 - assets/js/build-setting-snapshot.js: 전체 세팅 스냅샷 형식
 - assets/js/build-file-storage.js: 저장 오버레이 UI와 백업 입출력
+- assets/source-data/skill-registration/: 427개 등록 메타데이터를 생성하는 동료 견본 원본
+- tools/generate-skill-registration.mjs: 위 원본에서 등록 메타데이터 재생성
 
 명령:
 
@@ -217,3 +218,12 @@ Rust 단위 테스트 3/3이 통과했다. 실제 네이티브 E2E에서 저장,
 3. 반복 가능한 Windows 빌드·릴리스 자동화
 4. docs/verification/unimplemented.md에서 사용자가 선택한 항목만 구현
 5. 중요한 상태 변경마다 이 문서 갱신
+
+## 12. 2026-08-22 저장소 정리
+
+- Tauri 전환 뒤 사용하지 않는 Versions/v0.2.1~v0.4.1 단일 HTML 배포물과 tools/build-release.mjs를 제거했다. 과거 내용은 Git 기록에서 복구할 수 있다.
+- 오래된 S1 누락 수치와 재개 순서를 담은 두 초기 handoff 문서를 제거하고 현재 인계 문서와 검증 기준으로 통합했다.
+- 루트 스킬 폴더는 삭제하지 않고 assets/source-data/skill-registration으로 이동했다. 이 자료는 skill-registration-metadata.js의 재생성 원본이다.
+- dist, src-tauri/target, src-tauri/gen은 추적하지 않는 재생성 산출물이므로 로컬에서 제거했다. npm run desktop:prepare 또는 Tauri 빌드로 다시 만들 수 있다.
+- node_modules는 현재 개발 명령에 필요한 설치 의존성이므로 유지했다.
+- 이미지, 아이콘, assets/game-data, Coryn 자료, 게임 아이콘 매칭 자료, docs/sources/skills 원문 캐시는 모두 유지했다.

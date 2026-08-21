@@ -8,7 +8,7 @@ const trees = {
 };
 const metadata = {};
 for (const [treeId, fileName] of Object.entries(trees)) {
-  const source = await readFile(resolve(root, '스킬', `${fileName}.js`), 'utf8');
+  const source = await readFile(resolve(root, 'assets', 'source-data', 'skill-registration', `${fileName}.js`), 'utf8');
   const pattern = /\{\s*"id":\s*(\d+),[\s\S]*?"type":\s*"([^"]+)",[\s\S]*?"damagetype":\s*"([^"]+)"/g;
   const matches = [...source.matchAll(pattern)];
   if (!matches.length) throw new Error(`No skill metadata parsed: ${treeId}`);
