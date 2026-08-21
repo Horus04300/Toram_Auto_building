@@ -1,5 +1,7 @@
 # 스킬 내용 검증 실행 런북
 
+> **최신 상태 경고 (2026-08-22):** 아래 재개 순서와 일부 S1 누락 수치는 초기 작업 계획이다. 현재 전역 S1 감사는 427/427을 통과한다. 절차는 참고하되 현재 상태는 docs/handoff/current-development-handoff.md, 실제 코드와 감사 결과를 우선한다.
+
 > 함께 읽을 문서: `docs/handoff/skill-content-coverage-handoff.md`  
 > 이 문서는 다음 작업자가 스킬 누락 검증을 **어떤 순서와 절차로 진행할지** 정한다.
 
