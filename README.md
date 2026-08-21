@@ -1,6 +1,6 @@
 # Toram Auto Building 개발 소스
 
-`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 개발 기준선은 `v0.4.0`입니다.
+`v0.2.1.html`은 기존 배포본 보존용 원본입니다. 새 기능은 분리된 개발판 `index.html`에서 작업합니다. 현재 데스크톱 개발 기준선은 `v0.5.0`입니다.
 
 ## 구조
 
@@ -28,11 +28,40 @@
 - `tools/build-release.mjs`: 배포용 단일 HTML 생성기
 - `tools/read-skill-source.mjs`: 트리별 스킬 원문 조회 도구
 - `tools/audit-game-icon-matches.ps1`: 채굴 게임 아이콘과 스킬 아이콘의 후보 매칭 감사 도구
-- `docs/skill-data-schema.md`: 전투 스킬 데이터 계약- `Versions/`: 생성된 배포판 보관 위치
+- docs/skill-data-schema.md: 전투 스킬 데이터 계약
+- Versions/: 생성된 단일 HTML 배포판 보관 위치
 
 ## 개발
 
 `index.html`을 브라우저에서 열어 확인합니다. 기능별 JavaScript는 위 순서대로 로드되므로, 다른 파일의 함수를 사용하려면 해당 파일보다 뒤에 배치해야 합니다.
+
+## Tauri 데스크톱 개발
+
+Windows에서는 Rust `stable-msvc`, Microsoft C++ Build Tools와 WebView2가 필요합니다.
+
+```powershell
+npm install
+npm run desktop:dev
+```
+
+Windows NSIS 설치 파일을 빌드하려면 다음 명령을 사용합니다.
+
+```powershell
+npm run desktop:build
+```
+
+설치 파일 없이 실행 파일만 빌드하려면 `npm run desktop:build:exe`를 사용합니다.
+
+빌드 전 `tools/prepare-tauri-frontend.mjs`가 기존 `index.html`과 `assets/`를 `dist/`에 준비합니다. 계산기 원본은 계속 루트의 웹 소스에서 관리합니다.
+
+이름을 붙인 세팅 JSON은 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`에 저장됩니다. 폴더는 앱에서 자동 생성하며, `localStorage`는 직전 작업 상태의 자동 복원에 계속 사용합니다.
+
+- `저장`·`불러오기`·`덮어쓰기`·`삭제`: 앱의 네이티브 세팅 폴더 사용
+- `JSON 내보내기`·`JSON 불러오기`: 다른 PC 이전과 별도 백업용
+- NSIS 설치본: `src-tauri/target/release/bundle/nsis/`
+- 설치 없는 실행 파일: `src-tauri/target/release/toram-online-auto-build-calculator.exe`
+
+현재 사용자용 NSIS 설치 폴더와 세팅 폴더는 서로 분리되어 있으며, 앱을 제거해도 세팅 JSON은 보존됩니다.
 
 ## 단일 파일 배포판 생성
 

@@ -572,28 +572,22 @@ button { font-family: inherit; }
 .build-file-dialog-header p { margin-top:5px; color:var(--text-secondary); font-size:13px; line-height:1.5; }
 .build-file-dialog-close { flex:0 0 auto; width:34px; height:34px; border:1px solid var(--border-strong); border-radius:8px; background:var(--surface-muted); color:var(--text-secondary); cursor:pointer; font-size:24px; line-height:1; }
 .build-file-dialog-close:hover { color:var(--danger-dark); border-color:var(--danger-border); background:var(--danger-soft); }
-/* File System Access API 세팅 저장 */
+/* 세팅 저장 오버레이와 저장소 어댑터 UI */
 .build-file-storage { display:grid; gap:12px; margin-top:16px; }
 .build-file-storage h3, .build-file-storage-help { margin:0; }
 .build-file-storage-help { color:var(--text-secondary); font-size:13px; line-height:1.5; }
 .build-file-functions { display:grid; gap:12px; }
 .build-file-functions[hidden] { display:none; }
-.build-folder-setup { display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:10px; border:1px solid #b9d8ee; border-radius:8px; background:#eef8ff; color:#175d8d; font-size:13px; }
 .build-file-controls { display:grid; grid-template-columns:minmax(190px, 1fr) repeat(3, max-content); align-items:end; gap:8px; }
 .build-file-controls label { display:grid; min-width:0; gap:4px; color:var(--text-secondary); font-size:11px; font-weight:700; }
-.build-folder-setup button, .build-file-controls button, .build-file-controls .build-file-import, .build-folder-guide button { min-height:36px; box-sizing:border-box; padding:7px 11px; border:1px solid #8aaec8; border-radius:7px; background:#fff; color:#175d8d; font:inherit; font-weight:750; cursor:pointer; }
-.build-folder-setup button, #buildSettingSave, #buildSettingLoad, #buildSettingOverwrite, #buildFolderConfirm:not(:disabled) { border-color:#1f78b4; background:#237eb9; color:#fff; }
+.build-file-controls button, .build-file-controls .build-file-import { min-height:36px; box-sizing:border-box; padding:7px 11px; border:1px solid #8aaec8; border-radius:7px; background:#fff; color:#175d8d; font:inherit; font-weight:750; cursor:pointer; }
+#buildSettingSave, #buildSettingLoad, #buildSettingOverwrite, #buildSettingExport { border-color:#1f78b4; background:#237eb9; color:#fff; }
 .build-file-controls input, .build-file-controls select { box-sizing:border-box; width:100%; min-height:36px; padding:6px 8px; border:1px solid var(--border-strong); border-radius:7px; background:#fff; color:var(--text); font:inherit; }
 .build-file-controls .build-file-import { display:flex; align-items:center; justify-content:center; white-space:nowrap; }
+.build-file-controls #buildSettingDelete:not(:disabled) { border-color:#d8a0a0; color:var(--danger-dark); }
 .build-file-controls button:disabled { opacity:.45; cursor:not-allowed; }
 .build-file-import input { display:none; }
+.build-file-backup { padding-top:12px; border-top:1px solid var(--border); }
 .build-file-storage-status { min-height:18px; margin:0; color:#2471a3; font-size:13px; font-weight:700; }
 .build-file-storage-status.is-error { color:var(--danger-dark); }
-.build-folder-guide { width:min(440px, calc(100vw - 32px)); border:1px solid #8aaec8; border-radius:12px; padding:22px; color:var(--text); box-shadow:0 18px 50px rgb(0 0 0 / 25%); }
-.build-folder-guide::backdrop { background:rgb(16 31 47 / 55%); }
-.build-folder-guide h3 { margin:0 0 12px; }
-.build-folder-guide p { margin:10px 0; line-height:1.55; }
-.build-folder-guide code { display:block; padding:9px 10px; border-radius:7px; background:#edf3f8; color:#175d8d; font-weight:800; }
-.build-folder-guide > div { display:flex; justify-content:flex-end; gap:8px; margin-top:18px; }
-.build-folder-guide button:disabled { opacity:.55; cursor:not-allowed; }
 @media (max-width:600px) { .app-titlebar { width:calc(100% - 20px); } .app-build-storage-button { margin-left:6px; } .build-file-overlay { padding:12px; } .build-file-dialog { max-height:calc(100vh - 24px); padding:16px; } .build-file-controls { grid-template-columns:1fr 1fr; } .build-file-controls label { grid-column:1 / -1; } .build-file-controls button, .build-file-controls .build-file-import { width:100%; } }

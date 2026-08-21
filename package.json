@@ -1,0 +1,15 @@
+{
+  "name": "toram-online-auto-build-calculator",
+  "version": "0.5.0",
+  "private": true,
+  "description": "Toram Online auto build calculator desktop shell",
+  "scripts": {
+    "desktop:prepare": "node tools/prepare-tauri-frontend.mjs",
+    "desktop:dev": "tauri dev",
+    "desktop:build": "tauri build --bundles nsis",
+    "desktop:build:exe": "tauri build --no-bundle"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.11.4"
+  }
+}
