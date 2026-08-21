@@ -300,6 +300,7 @@ const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentE
             combatTreeRail.innerHTML = ''; categoryTrees(activeCategory.directory).forEach(function (tree) { combatTreeRail.appendChild(createTreeButton(tree, tree.id === activeCombatTree, function () { activeCombatTree = tree.id; renderAll(); })); });
             otherTreeRail.innerHTML = ''; categoryTrees('Other Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
             renderStage(combatStage, activeCombatTree); renderStage(otherStage, activeOtherTree);
+            document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
         }
         window.skillSimulatorState = { data: data, levels: state.levels, getInvestments: function () { return JSON.parse(JSON.stringify(state.levels)); } };
         const charLevelInput = document.getElementById('charLevel');

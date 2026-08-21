@@ -22,8 +22,11 @@
             else if (k === 'UNSHEATHE' || k === '발도위력' || k === 'UNSHEATHEP') ctx.unsheathe += val;
             else if (k === 'PHYS_PIERCE' || k === '물리관통') ctx.physPierce += val;
             else if (k === 'MAG_PIERCE' || k === '마법관통') ctx.magPierce += val;
-            else if (k === 'ELEM_P' || k === '속성데미지') ctx.elemP += val;
+            else if (k === 'ELEM_P' || k === '속성데미지' || k === '속성에유리') ctx.elemP += val;
+            else if (k === 'ELEM_AWAKENING') ctx.elementAwakening = ctx.elementAwakening || val > 0;
+            else if (k === 'MAGIC_ELEMENT') ctx.magicElement = ctx.magicElement || val > 0;
             else if (k === 'DAMAGE_P' || k === 'DAMAGE%' || k === '스킬데미지') ctx.damageP += val;
+            else if (k === 'MAXMP' || k === 'MAX_MP' || k === '최대MP') ctx.maxMpF += val;
             else if (k === 'WATKP' || k === '무기ATK%') ctx.watkP += val;
             else if (k === 'WATK' || k === '무기ATK+') ctx.watkF += val;
             else if (k === 'ASPD') ctx.aspdF += val;
@@ -45,7 +48,20 @@
             else if (k === 'MATK_UP_VIT') ctx.matkUpVIT += val;
         }
 
+        function skillInvestment(treeId, skillId) {
+            var simulator = window.skillSimulatorState;
+            var investments = simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {};
+            return Math.max(0, Number(investments[treeId] && investments[treeId][skillId]) || 0);
+        }
+        function activeBuffIsEnabled(skillId) {
+            var selections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
+                ? window.ToramActiveBuffs.getSelections() : {};
+            var setting = selections[skillId];
+            return setting === true || Boolean(setting && setting.active);
+        }
         function getBaseContext() {
+            var appliedComboHit = window.ToramComboUi && typeof window.ToramComboUi.getAppliedHit === 'function'
+                ? window.ToramComboUi.getAppliedHit() : null;
             var ctx = {
                 level: parseFloat(document.getElementById('charLevel').value) || 0,
                 strBase: parseFloat(document.getElementById('strBase').value) || 0,
@@ -55,12 +71,12 @@
                 dexBase: parseFloat(document.getElementById('dexBase').value) || 0,
                 crtBase: parseFloat(document.getElementById('crtBase').value) || 0,
 
-                atkType: document.getElementById('atkType').value,
-                rangeType: document.getElementById('rangeType').value,
+                atkType: appliedComboHit ? appliedComboHit.atkType : 'PHYS',
+                rangeType: appliedComboHit ? appliedComboHit.rangeType : 'SHORT',
                 mainType: document.getElementById('mainWeaponType').value,
-                wpnAtk: parseFloat(document.getElementById('wpnAtk').value) || 0,
-                wpnRefine: parseFloat(document.getElementById('wpnRefine').value) || 0,
-                wpnStab: parseFloat(document.getElementById('wpnStab').value) || 80,
+                wpnAtk: document.getElementById('mainWeaponType').value === '맨손' ? 0 : (parseFloat(document.getElementById('wpnAtk').value) || 0),
+                wpnRefine: document.getElementById('mainWeaponType').value === '맨손' ? 0 : (parseFloat(document.getElementById('wpnRefine').value) || 0),
+                wpnStab: document.getElementById('mainWeaponType').value === '맨손' ? 1 : (parseFloat(document.getElementById('wpnStab').value) || 80),
                 subType: document.getElementById('subWeaponType').value,
                 subAtk: parseFloat(document.getElementById('subAtk').value) || 0,
                 subRefine: parseFloat(document.getElementById('subRefine').value) || 0,
@@ -73,19 +89,21 @@
                 bossCritResist: parseFloat(document.getElementById('bossCritResist').value) || 0,
                 bossPhysResist: parseFloat(document.getElementById('bossPhysResist').value) || 0,
                 bossMagResist: parseFloat(document.getElementById('bossMagResist').value) || 0,
-                skillMult: parseFloat(document.getElementById('skillMult').value) || 1,
-                skillConst: parseFloat(document.getElementById('skillConst').value) || 1000,
+                skillMult: appliedComboHit ? appliedComboHit.skillMult : 1,
+                skillConst: appliedComboHit ? appliedComboHit.skillConst : 1000,
 
-                chkIsUnsheathe: document.getElementById('chkIsUnsheathe').checked,
-                chkConversion: document.getElementById('chkConversion').checked,
-                chkDualBringer: document.getElementById('chkDualBringer').checked,
-                chkMagicWarrior: document.getElementById('chkMagicWarrior').checked,
-                chkGuaranteedCrit: document.getElementById('chkGuaranteedCrit') ? document.getElementById('chkGuaranteedCrit').checked : false, // 확정치명타 추가
+                chkIsUnsheathe: Boolean(appliedComboHit && appliedComboHit.unsheathe),
+                conversionLevel: skillInvestment('MagicBlade', 1),
+                conversionActive: activeBuffIsEnabled('MagicBlade:1'),
+                dualBringerLevel: skillInvestment('MagicBlade', 4),
+                dualBringerActive: activeBuffIsEnabled('MagicBlade:4'),
+                chkGuaranteedCrit: Boolean(appliedComboHit && appliedComboHit.guaranteedCritical),
 
                 strP: 0, strF: 0, dexP: 0, dexF: 0, intP: 0, intF: 0, agiP: 0, agiF: 0, vitP: 0, vitF: 0,
                 atkP: 0, atkF: 0, matkP: 0, matkF: 0, cdmgP: 0, cdmgF: 0, 
                 critP: 0, critF: 0, srw: 0, lrw: 0, unsheathe: 0, elemP: 0, damageP: 0, watkP: 0, watkF: 0,
-                physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0,
+                physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0, maxMpF: 0,
+                elementAwakening: false, magicElement: false,
                 atkUpSTR: 0, atkUpDEX: 0, atkUpINT: 0, atkUpAGI: 0, atkUpVIT: 0,
                 matkUpSTR: 0, matkUpDEX: 0, matkUpINT: 0, matkUpAGI: 0, matkUpVIT: 0
             };
@@ -100,17 +118,8 @@
                     applyStat(ctx, key, val);
                 } // <-- 첫 번째 누락된 중괄호 복구
             } // <-- 두 번째 누락된 중괄호 복구
-
-            // 스킬 상/계수 스탯 보정치 추가 부분
+            // 스킬별 계수·상수는 콤보 탭에서 선택한 타격을 통해 주입한다.
             ctx.skillStats = [];
-            var skillRows = document.querySelectorAll('#skillStatOpts .opt-row');
-            for(var k=0; k<skillRows.length; k++) {
-                ctx.skillStats.push({
-                    target: skillRows[k].querySelector('.skill-target').value,
-                    stat: skillRows[k].querySelector('.skill-stat').value,
-                    ratio: parseFloat(skillRows[k].querySelector('.skill-ratio').value) || 0
-                });
-            }
 
             return ctx;
         }
@@ -154,6 +163,7 @@
             var totalINT = Math.floor(ctx.intBase * (1 + ctx.intP/100) + ctx.intF);
             var totalAGI = Math.floor(ctx.agiBase * (1 + ctx.agiP/100) + ctx.agiF);
             var totalVIT = Math.floor(ctx.vitBase * (1 + ctx.vitP/100) + ctx.vitF);
+            var finalMaxMP = Math.max(0, Math.floor(100 + Number(ctx.level) + totalINT * 0.1 + ctx.maxMpF));
             
             var statAtkUp = Math.floor(totalSTR * ctx.atkUpSTR / 100) + 
                             Math.floor(totalDEX * ctx.atkUpDEX / 100) + 
@@ -204,8 +214,9 @@
             else { statAtk = totalSTR*1; statMatk = totalINT*3 + totalDEX*1; }
 
             var conversionAddMatk = 0;
-            if (ctx.chkConversion && ctx.subType === '마도구') {
-                conversionAddMatk = baseWpnAtk; 
+            if (ctx.conversionActive && ctx.conversionLevel > 0) {
+                conversionAddMatk = baseWpnAtk * Math.pow(ctx.conversionLevel, 2) / 100;
+                if (ctx.mainType === '권갑') conversionAddMatk /= 2;
             }
 
             //  서브 마도구 페널티 및 '마법전사의 마음가짐' 연산 로직
@@ -215,40 +226,13 @@
 
             if (ctx.subType === '마도구') {
                 subMagDeviceAtkPenalty = -15; // 서브 마도구 기본 ATK -15% 페널티
-                
-                var chkMW = document.getElementById('chkMagicWarrior');
-                var isMW = chkMW ? chkMW.checked : false;
-                var mwMitigation = 0;
-                
-                if (isMW) {
-                    var mwLv = 10; // 스킬 레벨 (10레벨 기준)
-                    
-                    // 1) ATK 페널티 완화 (스킬Lv 10% + 한손검 보너스 5% = 15% 완화, 최대 15%)
-                    mwMitigation = mwLv + (ctx.mainType === '한손검' ? 5 : 0);
-                    mwMitigation = Math.min(15, mwMitigation);
-                    
-                    // 2) MATK 고정 증가 (10레벨 기준: 3 * 10 - 5 = +25)
-                    var mwMatkF = (mwLv <= 5) ? (2 * mwLv) : (3 * mwLv - 5);
-                    ctx.matkF += mwMatkF;
-                    
-                    // 3) 시전 속도(CSPD %) 증가 (10레벨 기준: 2 * 10 - 5 = +15%)
-                    var mwCspdP = (mwLv <= 5) ? mwLv : (2 * mwLv - 5);
-                    ctx.cspdP += mwCspdP;
-                    
-                    // 4) 시전 속도(CSPD +) 고정 증가 (10 * Lv = +100)
-                    var mwCspdF = 10 * mwLv;
-                    ctx.cspdF += mwCspdF;
-                }
-                
-                // 최종 서브 마도구 페널티 계산 (예: 한손검+마음가짐10레벨 시 -15% + 15% = 0%)
-                var finalSubPenalty = subMagDeviceAtkPenalty + mwMitigation;
+                // 마음가짐의 ATK% 완화는 applyPassiveSkillStats가 투자 레벨에 따라 이미 더한다.
+                var finalSubPenalty = subMagDeviceAtkPenalty;
                 ctx.atkP += finalSubPenalty; // 최종 총 ATK%에 합산
                 
                 // 툴팁 출력용 텍스트 세팅
                 if (finalSubPenalty < 0) {
                     magWarriorTooltip = `서브마도구 ATK ${finalSubPenalty}%`;
-                } else if (isMW && finalSubPenalty === 0) {
-                    magWarriorTooltip = `마도구 페널티 상쇄됨(0%)`;
                 }
             }
 
@@ -349,10 +333,11 @@
             }
             if(physStab > 100) physStab = 100;
 
-// --- 1. 약점 속성 및 순수 기본 INT 기준 속성 데미지 보너스 계산 ---
-    var isWeakElement = document.getElementById('weakElementCheck') ? document.getElementById('weakElementCheck').checked : false;
-    
-    // 내부 엔진/외부 컨텍스트의 속성 데미지 안전 확보
+// --- 1. 약점 속성 및 순수 기본 INT 기준 속성에 유리 보너스 계산 ---
+    var hasElementAwakening = Boolean(ctx.elementAwakening);
+    var hasMagicElement = Boolean(ctx.magicElement);
+
+    // 내부 엔진/외부 컨텍스트의 속성에 유리 안전 확보
     var baseElemDmg = 0;
     if (typeof tCtx !== 'undefined' && typeof tCtx.elemP !== 'undefined') {
         baseElemDmg = tCtx.elemP;
@@ -361,23 +346,20 @@
     }
 
     var currentElemDmg = baseElemDmg;
-    var elemTipText = `기본 장비 속성 데미지: +${baseElemDmg}%\n`;
+    var elemTipText = `기본 장비 속성에 유리: +${baseElemDmg}%\n`;
 
-    if (isWeakElement) {
-        currentElemDmg += 25; // 약점 속성 공격 시 유형 불문 +25%
+    if (hasElementAwakening) {
+        currentElemDmg += 25;
         elemTipText += `약점 속성 공격 보너스: +25%\n`;
-        
-        // 공격 유형이 마법일 때만 '순수 기본 INT(ctx.intBase)' 기준 10당 1% 증가 (INT% 옵션 미적용)
-        var currentAtkType = (typeof tCtx !== 'undefined' && tCtx.atkType) ? tCtx.atkType : (ctx.atkType || 'PHYS');
-        if (currentAtkType === 'MAG') {
-            var pureBaseINT = (typeof ctx !== 'undefined' && ctx.intBase) ? ctx.intBase : 0;
-            var intElemBonus = Math.floor(pureBaseINT / 10);
-            currentElemDmg += intElemBonus;
-            elemTipText += `기본 INT 비례 보너스(INT ${pureBaseINT} / 10): +${intElemBonus}%\n`;
-        }
     }
-    
-    elemTipText += `최종 적용 속성 데미지: +${currentElemDmg}%`;
+    if (hasElementAwakening || hasMagicElement) {
+        var pureBaseINT = (typeof ctx !== 'undefined' && ctx.intBase) ? ctx.intBase : 0;
+        var intElemBonus = Math.floor(pureBaseINT / 10);
+        currentElemDmg += intElemBonus;
+        elemTipText += `기본 INT 비례 보너스(INT ${pureBaseINT} / 10): +${intElemBonus}%\n`;
+    }
+
+    elemTipText += `최종 적용 속성에 유리: +${currentElemDmg}%`;
 
     // 변수 동기화
     if (typeof tCtx !== 'undefined') {
@@ -402,8 +384,8 @@
     if (isMag) {
         // 마법 크리 반영률: 스펠 버스트(25%) + 쇠약(50%) = 기본 75% 상시 적용
         var magCritReflect = 25 + 50; 
-        if (ctx.chkDualBringer && ctx.subType === '마도구' && (totalSTR >= totalINT)) {
-            magCritReflect += 25;
+        if (ctx.dualBringerActive && ctx.subType === '마도구' && (totalSTR >= totalINT)) {
+            magCritReflect += 2.5 * ctx.dualBringerLevel;
         }
         if (ctx.mainType === '지팡이' && ctx.element === '무속성') {
             magCritReflect += 25;
@@ -413,8 +395,8 @@
         critTip += `마법 크리 반영률: ${magCritReflect}% (최종: ${finalCritRate})`;
         
         var magCdmgReflect = 50 + 25; // 기본 50% + 스펠 버스트 25%
-        if (ctx.chkDualBringer && ctx.subType === '마도구' && (totalINT > totalSTR)) {
-            magCdmgReflect += 25;
+        if (ctx.dualBringerActive && ctx.subType === '마도구' && (totalINT > totalSTR)) {
+            magCdmgReflect += 2.5 * ctx.dualBringerLevel;
         }
         
         finalCdmgVal = 100 + Math.floor((calcCDMG - 100) * (magCdmgReflect / 100));
@@ -494,7 +476,8 @@
                 ctx: ctx, isPierced: isPierced, rawAtkBase: rawAtkBase,
                 finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
                 finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: ctx.chkGuaranteedCrit ? "확정치명타" : finalCritRate,
-                finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab,
+                finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab, finalMaxMP: finalMaxMP,
+                finalWeaponAttack: baseWpnAtk,
                 finalSubAtk: finalSubAtk,    // 서브ATK 추가
                 finalSubStab: finalSubStab,  // 서브안정률 추가
                 isDualSword: isDualSword,    // 듀얼소드 여부 추가

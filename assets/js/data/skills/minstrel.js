@@ -1,25 +1,20 @@
-/* 민스트럴: 시간 경과형 노래 스택 버프. 원문 캐시: docs/sources/skills/Minstrel.txt */
-(function () {
-  'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
-  if (!registry || !catalog) throw new Error('민스트럴 효과 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
-  var v = function (n) { return { op:'value', value:n }; };
-  var r = function (path) { return { op:'ref', path:path }; };
-  var l = function () { return r('skill.level'); };
-  var m = function () { return { op:'multiply', args:[].slice.call(arguments) }; };
-  function base(id, stateId, max, sourceRef, effects) {
-    var skill = catalog.skills.find(function (item) { return item.id === 'Minstrel:' + id; });
-    if (!skill) throw new Error('민스트럴 스킬을 카탈로그에서 찾지 못했습니다: ' + id);
-    return {
-      id:skill.id, treeId:'Minstrel', skillId:id, nameKo:skill.nameKo, kind:'buff', source:'minstrel', dataStatus:'partial', sourceRef:sourceRef,
-      cost:{ mp:{ timing:'cast', value:v(200) } }, combo:{ canStart:true, canReceiveTag:true },
-      stackControl:{ stateId:stateId, minStacks:v(0), maxStacks:v(max), initialStacks:v(0), label:'노래 스택' },
-      stateTransitions:[{ event:'cast', operation:'setStacks', stateId:stateId, stacks:v(0), maxStacks:v(max) }], effects:effects
-    };
-  }
-  registry.register('Minstrel', [
-    base(4, 'minstrelLifeSong', 50, { file:'docs/sources/skills/Minstrel.txt', anchor:'최대 50스택까지 1스택이 쌓인다.' }, [{ phase:'combat', type:'stat', key:'MAXHP', value:m(v(50), l(), r('buff.stacks')) }]),
-    base(5, 'minstrelFantasySong', 9, { file:'docs/sources/skills/Minstrel.txt', anchor:'최대 9스택' }, [{ phase:'cast', type:'resourceRestore', key:'MP', value:m(v(100), r('buff.stacks')) }])
-  ]);
-}());
+/* 민스트럴 S1~S5 계산기 범위 정의. 노래 연주·파티·시간·통상 사건은 메타데이터로 보존한다. */
+(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Minstrel S5 data order');
+var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,t,f)=>({op:'if',when:w,then:t,else:f}),I=x=>r('attack.inputs.'+x),P=x=>r('player.'+x),T=x=>r('combatStats.'+x),floor=x=>({op:'floor',value:x}),truthy=x=>({op:'truthy',value:x}),eq=(x,y)=>({op:'eq',left:x,right:y});
+var songWeapon={op:'in',value:r('equipment.mainWeapon'),values:['양손검','bow','bowgun','staff','magicDevice','발도검']};
+function D(id,kind,anchor,when){var s=C.skills.find(x=>x.id==='Minstrel:'+id);if(!s)throw Error('Minstrel catalog missing '+id);return{id:s.id,treeId:'Minstrel',skillId:id,nameKo:s.nameKo,kind:kind,source:'minstrel',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Minstrel.txt',anchor:anchor},requirements:{when:when},notes:'S1~S5 calculator scope; performance, party target selection, normal attack and time events remain metadata.'};}
+function song(id,anchor,baseMp){var x=D(id,'buff',anchor,songWeapon);x.activeBuff=true;x.inputs=[{id:'mutedSongOrder',label:'감음 버프 순서',type:'number',min:v(1),max:v(10),default:v(1)},{id:'partyMemberCount',label:'파티원 수',type:'number',min:v(1),max:v(4),default:v(1)},{id:'isCaster',label:'시전자 계산',type:'boolean',default:true}];x.cost={mp:{timing:'cast',value:a(v(baseMp),m(a(I('mutedSongOrder'),v(-1)),v(100)))}};x.castTime={type:'fixed',seconds:a(v(5),m(a(I('mutedSongOrder'),v(-1)),v(4))),affectedByCastSpeed:false};x.performanceModel={mutedSongOrder:I('mutedSongOrder'),movementSpeedMultiplier:v(.5),notes:'동시에 연주 중인 노래의 파티 우선순위와 감음 획득·유지는 시간/파티 상태 엔진 필요.'};return x;}
+function hit(id,mult,constant,flags){return{id:id,damageType:'magic',count:v(1),multiplier:mult,constant:constant,flags:Object.assign({longRange:false,unsheathe:false},flags||{})};}
+var x=[song(0,'1차 치유의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',100),song(1,'요정의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',100),song(2,'3차 열정의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',300),song(3,'지혜의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',300),song(4,'생명의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',200),song(5,'2차 몽환의 노래 노래 버프 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',200),D(6,'attack','비트 블래스트액티브 / 양손검, 활, 자동활, 지팡이, 발도검, 마도구 전용',songWeapon),D(7,'passive','사운드 베일패시브 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',songWeapon),D(8,'passive','배틀 노트패시브 / 양손검, 활, 자동활, 지팡이, 마도구, 발도검 전용',songWeapon),D(9,'utility','애드립액티브 / 모든 무기 사용 가능',null)];
+x[0].effects=[{phase:'combat',type:'stat',key:'EXP_P',value:a(d(P('level'),v(10)),l())},{phase:'combat',type:'stat',key:'HP_REGEN_P',value:m(v(10),l())},{phase:'combat',type:'stat',key:'MP_REGEN_P',value:m(v(5),l()),notes:'이 노래로 인한 HP·MP 자연회복은 원문 기준 최종 계산 뒤에 더한다.'}];
+var partyFactor=d(I('partyMemberCount'),v(4)),casterOrRecipient=(caster,recipient)=>q(truthy(I('isCaster')),caster,recipient);
+x[1].effects=[{phase:'combat',type:'stat',key:'HIT_P',value:casterOrRecipient(floor(m(v(5),l(),partyFactor)),m(v(5),l()))},{phase:'combat',type:'stat',key:'HIT',value:casterOrRecipient(floor(m(v(10),l(),partyFactor)),m(v(10),l()))},{phase:'combat',type:'stat',key:'AVOID_P',value:casterOrRecipient(floor(m(v(5),l(),partyFactor)),m(v(5),l()))},{phase:'combat',type:'stat',key:'AVOID',value:casterOrRecipient(floor(m(v(10),l(),partyFactor)),m(v(10),l()))},{phase:'onGuardOrAvoidSuccess',type:'mpRestoreByAmpr',value:m(v(100),T('AMPR')),notes:'버프 수혜자의 가드/어보이드 성공 사건은 전투 상태 엔진 필요.'}];
+x[2].effects=[{phase:'combat',type:'elementalDamagePercent',value:casterOrRecipient(m(v(1.5),l(),partyFactor),m(v(1.5),l())),notes:'약점 속성 공격 및 무속성 적 판정이 필요하다.'},{phase:'onAggroTarget',type:'aggroMultiplier',value:v(1.3)}];
+x[3].effects=[{phase:'combat',type:'damageReductionPercent',value:floor(m(v(2.5),l()))},{phase:'combat',type:'knockbackReductionPercent',value:casterOrRecipient(m(v(5),l(),partyFactor),m(v(5),l()))}];
+x[4].stackControl={stateId:'minstrelLifeSong',minStacks:v(0),maxStacks:v(50),initialStacks:v(0),label:'생명의 노래 스택'};x[4].stateTransitions=[{event:'cast',operation:'setStacks',stateId:'minstrelLifeSong',stacks:v(0),maxStacks:v(50),durationSeconds:v(0)}];x[4].effects=[{phase:'combat',type:'stat',key:'MAXHP',value:m(v(50),l(),r('buff.stacks'))},{phase:'atHpZero',type:'lifeSongRecovery',value:floor(m(d(r('target.maxHp'),v(1000)),l(),r('buff.stacks'))),notes:'HP 0, 비율 피해, 스택 획득 간격·초기화, 부활 대기 감소 및 넉백 제거는 시간/피격 상태 엔진 필요.'},{phase:'combat',type:'percentageDamageReductionPercent',value:a(r('buff.stacks'),d(T('PERCENTAGE_DAMAGE_P'),v(2)))}];
+x[5].stackControl={stateId:'minstrelFantasySong',minStacks:v(0),maxStacks:v(9),initialStacks:v(0),label:'몽환의 노래 스택'};x[5].stateTransitions=[{event:'cast',operation:'setStacks',stateId:'minstrelFantasySong',stacks:v(0),maxStacks:v(9),durationSeconds:v(0)}];x[5].effects=[{phase:'afterAnySkillUse',type:'resourceRestore',key:'MP',value:m(v(100),r('buff.stacks')),notes:'스택 획득 간격, 최대 MP 초과분 스택 이월 및 퀵 드로우 상호작용은 시간/자원 상태 엔진 필요.'}];
+x[6]=Object.assign(x[6],{cost:{mp:{timing:'cast',value:v(0)}},inputs:[{id:'beatStacks',label:'비트 블래스트 스택',type:'number',min:v(0),max:v(20),default:v(0)}],stackControl:{stateId:'minstrel.beatBlast',minStacks:v(0),maxStacks:v(20),initialStacks:v(0),label:'비트 블래스트 스택'},stackModel:{mode:'party-mp-spent',hardCap:v(20),mpPerStack:v(300),consumeMaximum:v(6),notes:'버프 수혜자의 실제 MP 소비로 획득하는 스택은 전투 상태 엔진 필요.'},attacks:[{...hit('beat',a(v(1),m(v(.15),l())),v(0),{physicalPierceBonus:m(v(10),l())}),count:{op:'min',args:[v(6),I('beatStacks')]}}]});
+x[7].effects=[{phase:'whilePerforming',type:'fixedAggro',value:v(1)},{phase:'whilePerforming',type:'damageReductionPercent',value:m(I('mutedSongCount'),l()),notes:'애드립과는 더 높은 피해 감소율만 적용. 실제 연주/감음 개수 상태가 필요하다.'}];x[7].inputs=[{id:'mutedSongCount',label:'감음한 노래 수',type:'number',min:v(0),max:v(10),default:v(0)}];
+x[8].effects=[{phase:'whilePerforming',type:'battleNoteNormalAttackIntervalSeconds',value:{op:'max',args:[v(0),d(a(v(1100),m(v(-1),floor(m(T('ASPD'),d(l(),v(10)))))),v(1000))]},notes:'연주 중 사거리 내 대상에 자동 통상 공격하는 사건은 통상공격/대상 상태 엔진 필요.'}];
+x[9]=Object.assign(x[9],{cost:{mp:{timing:'cast',value:v(100)}},inputs:[{id:'performing',label:'연주 중',type:'boolean',default:false}],effects:[{phase:'whilePerforming',type:'damageReductionPercent',when:truthy(I('performing')),value:m(v(10),l())},{phase:'whilePerforming',type:'missInvulnerability',when:{op:'all',args:[truthy(I('performing')),eq(l(),v(10))]},durationSeconds:v(1)},{phase:'performanceGrace',type:'resumePerformanceWindowSeconds',when:truthy(I('performing')),value:v(10),notes:'피격/공격으로 연주가 멈춘 뒤 재개하는 유예는 전투 상태 엔진 필요.'}]});
+R.register('Minstrel',x);}());

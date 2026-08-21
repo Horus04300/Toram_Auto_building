@@ -9,7 +9,8 @@
             '마도구': ['없음', '인술 두루마리'],
             '권갑': ['없음', '방패', '단검', '화살', '마도구'],
             '선풍창': ['없음', '화살', '단검'],
-            '발도검': ['없음', '단검', '인술 두루마리']
+            '발도검': ['없음', '단검', '인술 두루마리'],
+            '맨손': ['없음']
         };
 
         const tagMap = {
@@ -25,7 +26,8 @@
             "AMPRP": "공격MP회복%", "MOTIONSPEED": "행동속도%", "STR": "STR", "STRP": "STR%", 
             "INT": "INT", "INTP": "INT%", "VIT": "VIT", "VITP": "VIT%", 
             "AGI": "AGI", "AGIP": "AGI%", "DEX": "DEX", "DEXP": "DEX%",
-            "ELEM_P": "속성데미지%", "WATKP": "무기ATK%", "WATK": "무기ATK+",
+            "ELEM_P": "속성에 유리%", "ELEM_AWAKENING": "속성 각성", "MAGIC_ELEMENT": "마력 속성", "WATKP": "무기ATK%", "WATK": "무기ATK+",
+            "DAMAGE_P": "액티브 버프%",
             // --- 누락된 태그 추가 ---
             "FIRE_RES": "불내성%", "WATER_RES": "물내성%", "WIND_RES": "바람내성%", "EARTH_RES": "땅내성%", 
             "LIGHT_RES": "빛내성%", "DARK_RES": "어둠내성%", "NEUTRAL_RES": "무내성%",
@@ -101,7 +103,28 @@
             }
         }
 
+        function syncMainWeaponInputs() {
+            var isBarehand = document.getElementById('mainWeaponType').value === '맨손';
+            [
+                { id:'wpnAtk', value:'0' },
+                { id:'wpnRefine', value:'0' },
+                { id:'wpnStab', value:'1' }
+            ].forEach(function (setting) {
+                var control = document.getElementById(setting.id);
+                if (!control) return;
+                if (isBarehand) {
+                    if (!control.disabled) control.dataset.weaponValue = control.value;
+                    control.value = setting.value;
+                    control.disabled = true;
+                } else {
+                    if (control.disabled && control.dataset.weaponValue !== undefined) control.value = control.dataset.weaponValue;
+                    delete control.dataset.weaponValue;
+                    control.disabled = false;
+                }
+            });
+        }
         function updateSubWeaponList() {
+            syncMainWeaponInputs();
             var mainWpn = document.getElementById('mainWeaponType').value;
             var subSelect = document.getElementById('subWeaponType');
             subSelect.innerHTML = '';
@@ -115,26 +138,7 @@
             }
             onSubWeaponChange();
         }
-
         function onSubWeaponChange() {
-            var sub = document.getElementById('subWeaponType').value;
-            var isMD = (sub === '마도구');
-            
-            // 피드백 1: 마도구 서브 장비일 때만 마법전사, 컨버전, 듀얼 브링거 표시
-            var wrapMagic = document.getElementById('wrapMagicWarrior');
-            var wrapConv = document.getElementById('wrapConversion');
-            var wrapDual = document.getElementById('wrapDualBringer');
-            
-            if(wrapMagic) wrapMagic.style.display = isMD ? 'flex' : 'none';
-            if(wrapConv) wrapConv.style.display = isMD ? 'flex' : 'none';
-            if(wrapDual) wrapDual.style.display = isMD ? 'flex' : 'none';
-
-            if(!isMD) {
-                document.getElementById('chkMagicWarrior').checked = false;
-                document.getElementById('chkConversion').checked = false;
-                document.getElementById('chkDualBringer').checked = false;
-            }
-
             refreshAllCrystaInfo();
         }
 
@@ -232,7 +236,8 @@
                 '<option value="SRW">근거리위력 (%)</option><option value="LRW">원거리위력 (%)</option>' +
                 '<option value="UNSHEATHE">발도위력 (%)</option>' +
                 '<option value="PHYS_PIERCE">물리관통 (%)</option><option value="MAG_PIERCE">마법관통 (%)</option>' +
-                '<option value="ELEM_P">속성데미지 (%)</option>' +
+                '<option value="ELEM_P">속성에 유리 (%)</option>' +
+                '<option value="ELEM_AWAKENING">속성 각성</option><option value="MAGIC_ELEMENT">마력 속성</option>' +
                 '<option value="WATKP">무기ATK (%)</option><option value="WATK">무기ATK (+)</option>' +
                 '<option value="ASPD">ASPD (+)</option><option value="ASPD_P">ASPD (%)</option>' +
                 '<option value="CSPD">CSPD (+)</option><option value="CSPD_P">CSPD (%)</option>' +
@@ -251,6 +256,14 @@
                 '</select>' +
                 '<input type="number" style="flex:1;" class="opt-val" value="0">' +
                 '<button type="button" class="remove-option-row" style="cursor:pointer; color:#e74c3c; border:none; background:none; font-weight:bold;">✕</button>';
+            var type = row.querySelector('.opt-type');
+            var value = row.querySelector('.opt-val');
+            function syncElementAttribute() {
+                var isElementAttribute = type.value === 'ELEM_AWAKENING' || type.value === 'MAGIC_ELEMENT';
+                value.readOnly = isElementAttribute;
+                if (isElementAttribute) value.value = '1';
+            }
+            type.addEventListener('change', syncElementAttribute);
             row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); });
             container.appendChild(row);
         }
@@ -434,6 +447,7 @@ function instantCrystaCheck(inp, newValue) {
                 '</select>' +
                 '<input type="number" step="any" style="flex:1;" class="skill-ratio" placeholder="비율 입력 (예: 0.01)">' +
                 '<button type="button" class="remove-option-row" style="cursor:pointer; color:#e74c3c; border:none; background:none; font-weight:bold;">✕</button>';
+
             row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); });
             container.appendChild(row);
         }

@@ -4975,7 +4975,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/00_Golem Call.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "골렘 소환"
         },
         {
           "id": 1,
@@ -4986,7 +4986,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/01_Neo Lancer.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "랜서형 개량"
         },
         {
           "id": 2,
@@ -4997,7 +4997,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/02_Attack Boost.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "어택 강화"
         },
         {
           "id": 3,
@@ -5008,7 +5008,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/03_Neo Shielder.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "실드형 개량"
         },
         {
           "id": 4,
@@ -5019,7 +5019,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/04_Shield Boost.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "실드 강화"
         },
         {
           "id": 5,
@@ -5030,7 +5030,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/05_Neo Buster.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "버스터형 개량"
         },
         {
           "id": 6,
@@ -5041,7 +5041,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/06_Speed Boost.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "스피드 강화"
         },
         {
           "id": 7,
@@ -5063,7 +5063,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/08_Frost Grenade.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "동결 그레네이드"
         },
         {
           "id": 9,
@@ -5074,7 +5074,7 @@ window.SKILL_TREE_DATA = {
           "via": null,
           "icon": "assets/icons/skills/Assist Skills/Golem/09_Flash Grenade.png",
           "iconAvailable": true,
-          "nameKo": "임시"
+          "nameKo": "섬광 그레네이드"
         },
         {
           "id": 10,

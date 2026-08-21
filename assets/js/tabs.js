@@ -42,6 +42,7 @@
                 buttons[key].classList.toggle('active', isSelected);
                 buttons[key].setAttribute('aria-selected', String(isSelected));
             });
+            if (id === 'combo' && window.ToramComboUi) window.ToramComboUi.refresh();
         }
         Object.keys(buttons).forEach(function (id) { buttons[id].addEventListener('click', function () {
             selectTab(id);
@@ -54,8 +55,9 @@
         container.insertBefore(navigation, firstChild);
         container.insertBefore(panelHost, firstChild);
         const sectionTitles = Array.from(container.querySelectorAll(':scope > .section-title'));
-        const equipmentStart = sectionTitles[3];
-        const blacklistStart = container.querySelector(':scope > .equipment-blacklist') || sectionTitles[4];
+        const findSectionTitle = function (text) { return sectionTitles.find(function (title) { return title.textContent.trim() === text; }); };
+        const equipmentStart = findSectionTitle('장비');
+        const blacklistStart = container.querySelector(':scope > .equipment-blacklist');
         function moveUntil(start, stop, destination) {
             let node = start;
             while (node && node !== stop) {
@@ -72,23 +74,18 @@
         const targetPane = document.createElement('section');
         targetPane.className = 'status-target-pane';
         statusLayout.append(investmentPane, targetPane);
-        const conditionPane = document.createElement('section');
-        conditionPane.className = 'status-condition-pane';
-        panels['stats-target'].append(statusLayout, conditionPane);
+        panels['stats-target'].append(statusLayout);
         const statTitle = sectionTitles[0];
-        const specialTitle = sectionTitles[1];
-        const targetTitle = sectionTitles[2];
+        const targetTitle = findSectionTitle('타겟');
         const levelGroup = document.getElementById('charLevel').closest('.form-group');
         const investmentHeader = panels['stats-target'].querySelector('.status-investment-header');
         const statsGrid = panels['stats-target'].querySelector('.stats-grid');
-        const specialOptions = panels['stats-target'].querySelector('.checkbox-container');
         const targetCard = targetTitle ? targetTitle.nextElementSibling : null;
         const investmentBody = document.createElement('div');
         investmentBody.className = 'status-investment-body';
         investmentPane.append(statTitle, investmentBody);
         investmentBody.append(levelGroup, investmentHeader, statsGrid);
         targetPane.append(targetTitle, targetCard);
-        conditionPane.append(specialTitle, specialOptions);
         const externalBuffCard = Array.from(container.children).find(function (element) {
             return element.classList && element.classList.contains('equip-card') && element.querySelector('#buffOpts');
         });

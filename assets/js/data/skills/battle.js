@@ -9,10 +9,11 @@
   var m=function(){return {op:'multiply',args:[].slice.call(arguments)};}, d=function(left,right){return {op:'divide',left:left,right:right};};
   var sub=function(left,right){return {op:'subtract',left:left,right:right};};
   var levelScale=function(){ return d(m(v(2.5),l(),r('player.level')),v(100)); };
+  var anchors=['1차 마법력 UP 패시브 / 모든 무기 사용 가능','집중 패시브 / 모든 무기 사용 가능','공격력 UP 패시브 / 모든 무기 사용 가능','강타 패시브 / 모든 무기 사용 가능','방어력 UP 패시브 / 모든 무기 사용 가능','회피 UP 패시브 / 모든 무기 사용 가능','2차 필사적인 저항 패시브 / 모든 무기 사용 가능','크리티컬 UP 패시브 / 모든 무기 사용 가능','명중 UP 패시브 / 모든 무기 사용 가능','3차 한층 더한 마력 패시브 / 모든 무기 사용 가능','위협의 위력 패시브 / 모든 무기 사용 가능','수비의 마음가짐 패시브 / 모든 무기 사용 가능','4차 스펠 버스트 패시브 / 모든 무기 사용 가능','추격의 극의 패시브 / 모든 무기 사용 가능','슈퍼그립 패시브 / 모든 무기 사용 가능'];
   function skill(skillId, kind, dataStatus, effects) {
     var source = catalog.skills.find(function (item) { return item.id === 'Battle:' + skillId; });
     if (!source) throw new Error('배틀 스킬을 카탈로그에서 찾지 못했습니다: ' + skillId);
-    return { id:source.id, treeId:'Battle', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'battle', dataStatus:dataStatus, effects:effects };
+    return { id:source.id, treeId:'Battle', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'battle', dataStatus:'partial', sourceRef:{file:'docs/sources/skills/Battle.txt',anchor:anchors[skillId]}, notes:'S1~S5 calculator scope; proc, incapacitation and death events remain metadata.', effects:effects };
   }
   registry.register('Battle', [
     skill(0, 'passive', 'verified', [{phase:'build',type:'stat',key:'MATK',value:levelScale()}]),

@@ -3,6 +3,10 @@
   var storageKey = 'toram-auto-active-buffs-v1';
   function savedState() { try { return JSON.parse(window.localStorage.getItem(storageKey) || '{}'); } catch (_) { return {}; } }
   function saveState(state) { window.localStorage.setItem(storageKey, JSON.stringify(state)); }
+  function displayNumber(value) {
+    var numeric = Number(value);
+    return Number.isFinite(numeric) ? Number(numeric.toFixed(6)) : 0;
+  }
   function iconFor(skill) {
     var simulator = window.skillSimulatorState;
     var tree = simulator && simulator.data.trees.find(function (item) { return item.id === skill.treeId; });
@@ -19,6 +23,13 @@
     return root.concat(registry ? registry.all() : []);
   }
   function isActiveBuff(skill) { return skill.kind === 'buff' || skill.activeBuff === true; }
+  function isDisplayableActiveBuff(skill) {
+    if (!isActiveBuff(skill) || !window.ToramSkillEffects) return false;
+    var context = contextFor(skill, false, 0, {});
+    if (!window.ToramSkillEffects.condition(skill.requirements && skill.requirements.when, context)) return false;
+    if (!skill.activeBuffWhen) return true;
+    return Boolean(window.ToramSkillEffects.condition(skill.activeBuffWhen, context));
+  }
   function settingFor(state, skillId) { return state[skillId]; }
   function enabledFor(state, skillId) {
     var setting = settingFor(state, skillId);
@@ -43,10 +54,12 @@
     var initial = Math.min(max, Math.max(min, evaluate(config.initialStacks, min)));
     return { stateId:config.stateId, min:min, max:max, initial:initial, label:config.label || '스택', persistWhenDisabled:Boolean(config.persistWhenDisabled), showWhenDisabled:Boolean(config.showWhenDisabled), applyWhenDisabled:Boolean(config.applyWhenDisabled), resetStacksOnEnable:Boolean(config.resetStacksOnEnable) };
   }
+  function engineMainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
   function contextFor(skill, active, stacks, states) {
     var mainWeapon = document.getElementById('mainWeaponType');
     var subWeapon = document.getElementById('subWeaponType');
-    return { skill:{ level:levelFor(skill) }, buff:{ active:active, stacks:stacks }, states:states || {}, equipment:{ mainWeapon:mainWeapon ? mainWeapon.value : null, subWeapon:subWeapon ? subWeapon.value : null } };
+    var charLevel = document.getElementById('charLevel');
+    return { skill:{ level:levelFor(skill) }, player:{ level:Number(charLevel && charLevel.value) || 0 }, buff:{ active:active, stacks:stacks }, states:states || {}, equipment:{ mainWeapon:engineMainWeapon(mainWeapon ? mainWeapon.value : null), subWeapon:subWeapon ? subWeapon.value : null } };
   }
   function stackFor(state, skill, config) {
     var setting = settingFor(state, skill.id);
@@ -58,7 +71,7 @@
     var states = {};
     effectSkills().forEach(function (skill) {
       var enabled = enabledFor(state, skill.id);
-      if (!isActiveBuff(skill) || !skill.stackControl || (!enabled && !skill.stackControl.persistWhenDisabled)) return;
+      if (!isDisplayableActiveBuff(skill) || !skill.stackControl || (!enabled && !skill.stackControl.persistWhenDisabled)) return;
       var preliminary = contextFor(skill, enabled, 0, states);
       var config = stackConfig(skill, preliminary, state, true);
       if (!config || !config.stateId) return;
@@ -89,8 +102,9 @@
     if (!proxy) { proxy = document.createElement('div'); proxy.id = 'activeSkillBuffOptions'; proxy.hidden = true; container.appendChild(proxy); }
     proxy.innerHTML = '';
     var states = runtimeStates(active);
+    var cappedTotals = {};
     effectSkills().filter(function (skill) {
-      return isActiveBuff(skill) && levelFor(skill) > 0 && (enabledFor(active, skill.id) || (skill.stackControl && skill.stackControl.applyWhenDisabled));
+      return isDisplayableActiveBuff(skill) && levelFor(skill) > 0 && (enabledFor(active, skill.id) || (skill.stackControl && skill.stackControl.applyWhenDisabled));
     }).forEach(function (skill) {
       var enabled = enabledFor(active, skill.id);
       var config = stackConfig(skill, contextFor(skill, enabled, 0, states), active, true);
@@ -104,7 +118,13 @@
         var option = document.createElement('option'); option.value = isGlobalDamageBuff ? 'DAMAGE_P' : effect.key; option.selected = true; type.appendChild(option);
         var amount = document.createElement('input'); amount.className = 'opt-val';
         var resolvedValue = window.ToramSkillEffects.expression(effect.value, context);
-        amount.value = String(isGlobalDamageBuff ? (resolvedValue - 1) * 100 : resolvedValue);
+        if (effect.capGroup) {
+          var cap = effect.cap === undefined ? Infinity : Number(window.ToramSkillEffects.expression(effect.cap, context));
+          var used = Number(cappedTotals[effect.capGroup]) || 0;
+          resolvedValue = Math.max(0, Math.min(resolvedValue, cap - used));
+          cappedTotals[effect.capGroup] = used + resolvedValue;
+        }
+        amount.value = String(displayNumber(isGlobalDamageBuff ? (resolvedValue - 1) * 100 : resolvedValue));
         row.append(type, amount); proxy.appendChild(row);
       });
     });
@@ -115,7 +135,7 @@
     var section = document.getElementById('activeBuffSkillSection');
     if (!section) { section = document.createElement('section'); section.id = 'activeBuffSkillSection'; section.className = 'equip-card'; panel.insertBefore(section, panel.firstChild); }
     var state = savedState();
-    var buffs = effectSkills().filter(function (skill) { return isActiveBuff(skill) && levelFor(skill) > 0; });
+    var buffs = effectSkills().filter(function (skill) { return isDisplayableActiveBuff(skill) && levelFor(skill) > 0; });
     section.innerHTML = '<h3>✨ 액티브 버프</h3><p style="margin:0 0 10px;color:#5d6d7e;font-size:13px;">파란색은 적용, 회색은 미적용입니다. 스택형 버프는 카드 하단에서 조절합니다.</p>';
     var grid = document.createElement('div'); grid.className = 'active-buff-grid';
     buffs.forEach(function (skill) {
@@ -149,6 +169,17 @@
     section.appendChild(grid); syncOptions(state);
   }
   document.addEventListener('toram:calculate', function () { syncOptions(savedState()); });
-  window.ToramActiveBuffs = Object.freeze({ render:render, getRuntimeStates:function () { return runtimeStates(savedState()); } });
+  document.addEventListener('change', function (event) { if (event.target && (event.target.id === 'mainWeaponType' || event.target.id === 'subWeaponType')) render(); });
+  function activeSelections() {
+    var state = savedState(), states = runtimeStates(state), result = {};
+    effectSkills().forEach(function (skill) {
+      if (!isDisplayableActiveBuff(skill)) return;
+      var enabled = enabledFor(state, skill.id);
+      var config = stackConfig(skill, contextFor(skill, enabled, 0, states), state, enabled);
+      result[skill.id] = { active:enabled, stacks:config ? stackFor(state, skill, config) : 0 };
+    });
+    return result;
+  }
+  window.ToramActiveBuffs = Object.freeze({ render:render, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, { once:true }); else render();
 }());

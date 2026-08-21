@@ -1,25 +1,5 @@
-/* 서바이벌 스킬: 원문 https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40367 기준. */
-(function () {
-  'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
-  if (!registry || !catalog) throw new Error('서바이벌 효과 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
-  var v=function(n){return {op:'value',value:n};}, r=function(path){return {op:'ref',path:path};};
-  var l=function(){return r('skill.level');}, m=function(){return {op:'multiply',args:[].slice.call(arguments)};};
-  function skill(skillId, dataStatus, effects) {
-    var source = catalog.skills.find(function (item) { return item.id === 'Survival:' + skillId; });
-    if (!source) throw new Error('서바이벌 스킬을 카탈로그에서 찾지 못했습니다: ' + skillId);
-    return { id:source.id, treeId:'Survival', skillId:skillId, nameKo:source.nameKo, kind:'passive', source:'survival', dataStatus:dataStatus, effects:effects };
-  }
-  registry.register('Survival', [
-    skill(0, 'partial', [{phase:'combat',type:'reviveTimeReduction',value:m(v(5),l())}]),
-    skill(1, 'partial', [{phase:'reward',type:'experienceGain',value:l()}]),
-    skill(2, 'partial', [{phase:'reward',type:'dropRate',value:l()}]),
-    skill(3, 'partial', [{phase:'build',type:'stat',key:'HPR_NONCOMBAT_P',value:m(v(10),l())},{phase:'build',type:'stat',key:'HPR_NONCOMBAT',value:m(v(10),l())}]),
-    skill(4, 'verified', [{phase:'build',type:'stat',key:'MAXHP_P',value:m(v(2),l())},{phase:'build',type:'stat',key:'MAXHP',value:m(v(100),l())}]),
-    skill(5, 'partial', [{phase:'build',type:'stat',key:'HPR_COMBAT_BASE_P',value:l()}]),
-    skill(6, 'partial', [{phase:'build',type:'stat',key:'MPR_NONCOMBAT_P',value:m(v(5),l())},{phase:'build',type:'stat',key:'MPR_NONCOMBAT',value:l()}]),
-    skill(7, 'verified', [{phase:'build',type:'stat',key:'MAXMP',value:m(v(30),l())}]),
-    skill(8, 'partial', [{phase:'build',type:'stat',key:'MPR_COMBAT_BASE_P',value:m(v(5),l())}])
-  ]);
-}());
+/* 서바이벌 S1~S5 계산기 범위 정의. 비전투/사망/이모션 상태는 메타데이터로 보존한다. */
+(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Survival S5 data order');var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),I=x=>r('attack.inputs.'+x);
+function D(id,anchor){var s=C.skills.find(x=>x.id==='Survival:'+id);if(!s)throw Error('Survival catalog missing '+id);return{id:s.id,treeId:'Survival',skillId:id,nameKo:s.nameKo,kind:'passive',source:'survival',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Survival.txt',anchor:anchor},requirements:{when:null},notes:'S1~S5 calculator scope; combat, death and emotion state events remain metadata.'};}
+var x=[D(0,'1차 죽은 척 패시브 / 모든 무기 사용 가능'),D(1,'경험치 업 패시브 / 모든 무기 사용 가능'),D(2,'수집률 업 패시브 / 모든 무기 사용 가능'),D(3,'안전한 휴식 패시브 / 모든 무기 사용 가능'),D(4,'HP 부스트 패시브 / 모든 무기 사용 가능'),D(5,'여유있는 전투 패시브 / 모든 무기 사용 가능'),D(6,'작은 휴식 패시브 / 모든 무기 사용 가능'),D(7,'MP 부스트 패시브 / 모든 무기 사용 가능'),D(8,'냉정한 전술 패시브 / 모든 무기 사용 가능')];
+x[0].effects=[{phase:'death',type:'reviveTimeReductionPercent',value:m(v(5),l()),notes:'최종 부활 시간은 300초 × 복귀 단축(최대 90%) × 죽은 척이며 실제 사망 상태가 필요하다.'}];x[1].effects=[{phase:'reward',type:'experienceGainPercent',value:l()}];x[2].effects=[{phase:'reward',type:'dropRatePercent',value:l()}];x[3].effects=[{phase:'build',type:'stat',key:'HPR_NONCOMBAT_P',value:m(v(10),l())},{phase:'build',type:'stat',key:'HPR_NONCOMBAT',value:m(v(10),l())},{phase:'nonCombat',type:'safeRestRegenModel',notes:'기본 HPR에 스킬 %·고정치를 적용하며 이모션 시 2배(햇볕 쬐기 4배). 장비 HPR·이모션 상태 엔진 필요.'}];x[4].effects=[{phase:'build',type:'stat',key:'MAXHP_P',value:m(v(2),l())},{phase:'build',type:'stat',key:'MAXHP',value:m(v(100),l())}];x[5].effects=[{phase:'combat',type:'hpRegenFromBasePercent',value:l()}];x[6].effects=[{phase:'build',type:'stat',key:'MPR_NONCOMBAT_P',value:m(v(5),l())},{phase:'build',type:'stat',key:'MPR_NONCOMBAT',value:l()},{phase:'nonCombat',type:'shortRestRegenModel',notes:'기본 MPR에 스킬 %·고정치를 적용하며 이모션 시 2배(햇볕 쬐기 4배). 장비 MPR·이모션 상태 엔진 필요.'}];x[7].effects=[{phase:'build',type:'stat',key:'MAXMP',value:m(v(30),l())}];x[8].effects=[{phase:'combat',type:'mpRegenFromBasePercent',value:m(v(5),l())}];R.register('Survival',x);}());

@@ -9,7 +9,6 @@
         document.querySelectorAll('[data-add-option]').forEach(function (button) {
             button.addEventListener('click', function () { crystaUi.addOptionRow(button.dataset.addOption); });
         });
-        document.querySelector('[data-action="add-skill-stat"]').addEventListener('click', crystaUi.addSkillStatRow);
         document.querySelector('[data-action="add-ban"]').addEventListener('click', crystaUi.addBanTag);
         document.addEventListener('toram:calculate', optimizer.runCalculationSafe);
         document.querySelector('[data-action="main-weapon-change"]').addEventListener('change', function () {

@@ -270,7 +270,7 @@ if (document.readyState === 'loading') {
                 '<li>최종 크리티컬데미지 <span class="has-tooltip highlight">' + curRes.finalCDMG + '%<span class="tooltip-text">' + curRes.tooltips.cdmgTip + '</span></span></li>' +
                 '<li>최종 크리티컬확률 <span class="has-tooltip">' + curRes.finalCrit + '<span class="tooltip-text">' + curRes.tooltips.critTip + '</span></span></li>' +
                 '<li>최종 안정률 <span>' + curRes.finalStab + '%</span></li>' +
-                '<li>' + appliedRangeLabel + ' / 속성데미지 <span class="has-tooltip">+' + appliedRangeDmg + '% / +' + tCtx.elemP + '%<span class="tooltip-text">' + curRes.tooltips.elemTip + '</span></span></li>';
+                '<li>' + appliedRangeLabel + ' / 속성에 유리 <span class="has-tooltip">+' + appliedRangeDmg + '% / +' + tCtx.elemP + '%<span class="tooltip-text">' + curRes.tooltips.elemTip + '</span></span></li>';
 
             document.getElementById('resPierce').innerHTML = 
                 '<li>물리관통 <span>' + tCtx.physPierce + '%</span></li>' +
@@ -417,7 +417,7 @@ if (document.readyState === 'loading') {
                 { key: 'WATK', label: '무기ATK (+' + u + ')' },
                 { key: pierceKey, label: pierceLabel },
                 { key: rangeKey, label: rangeLabel }, 
-                { key: 'ELEM_P', label: '속성데미지 %p (+' + u + '%)' },
+                { key: 'ELEM_P', label: '속성에 유리 %p (+' + u + '%)' },
                 { key: 'STABILITY', label: '안정률 %p (+' + u + '%)' }
             ];
             if (baseCtx.chkIsUnsheathe) {

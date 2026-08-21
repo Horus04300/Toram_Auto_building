@@ -1,24 +1,16 @@
-/* 댄서: 공통 춤 스택 버프. 원문 캐시: docs/sources/skills/Dancer.txt */
-(function () {
-  'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
-  if (!registry || !catalog) throw new Error('댄서 효과 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
-  var v = function (n) { return { op:'value', value:n }; };
-  var sourceRef = { file:'docs/sources/skills/Dancer.txt', anchor:'스택은 최소 0, 최대 10이지만, 동시에 여러 개의 춤 버프 스킬이 발동 중이면 최대 스택은 (11 - 동시에 발동 중인 춤 버프 스킬의 수)로 줄어든다.' };
-  function dance(id, mp, stateId) {
-    var skill = catalog.skills.find(function (item) { return item.id === 'Dancer:' + id; });
-    if (!skill) throw new Error('댄서 스킬을 카탈로그에서 찾지 못했습니다: ' + id);
-    return {
-      id:skill.id, treeId:'Dancer', skillId:id, nameKo:skill.nameKo, kind:'buff', source:'dancer', dataStatus:'partial', sourceRef:sourceRef,
-      cost:{ mp:{ timing:'cast', value:v(mp) } }, combo:{ canStart:true, canReceiveTag:true },
-      stackControl:{ stateId:stateId, minStacks:v(0), maxStacks:v(10), initialStacks:v(5), label:'춤 스택', sharedGroup:'dancerDance', sharedMaxBase:11 },
-      stateTransitions:[{ event:'cast', operation:'setStacks', stateId:stateId, stacks:v(5), maxStacks:v(10), durationSeconds:v(15) }],
-      effects:[]
-    };
-  }
-  registry.register('Dancer', [
-    dance(0, 100, 'dancerFairy'), dance(1, 200, 'dancerFrenzy'), dance(2, 500, 'dancerAstute'),
-    dance(3, 300, 'dancerCharming'), dance(4, 300, 'dancerSpirited')
-  ]);
-}());
+/* 댄서 S1~S5 계산기 범위 정의. 춤 재사용 타이밍·파티·피격 사건은 메타데이터로 보존한다. */
+(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Dancer S5 data order');
+var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,t,f)=>({op:'if',when:w,then:t,else:f}),I=x=>r('attack.inputs.'+x),tier=cases=>({op:'tier',cases:cases}),le=(x,y)=>({op:'lte',left:x,right:y}),ge=(x,y)=>({op:'gte',left:x,right:y}),truthy=x=>({op:'truthy',value:x}),not=x=>({op:'not',value:x});
+var danceWeapon={op:'in',value:r('equipment.mainWeapon'),values:['한손검','magicDevice','권갑','단검','선풍창']};
+function D(id,kind,anchor,when){var s=C.skills.find(x=>x.id==='Dancer:'+id);if(!s)throw Error('Dancer catalog missing '+id);return{id:s.id,treeId:'Dancer',skillId:id,nameKo:s.nameKo,kind:kind,source:'dancer',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Dancer.txt',anchor:anchor},requirements:{when:when},notes:'S1~S5 calculator scope; dance refresh timing, party application and damage events remain metadata.'};}
+function dance(id,mp,stateId,anchor){var x=D(id,'buff',anchor,danceWeapon);x.activeBuff=true;x.cost={mp:{timing:'cast',value:v(mp)}};x.combo={canStart:true,canReceiveTag:true};x.stackControl={stateId:stateId,minStacks:v(0),maxStacks:v(10),initialStacks:v(5),label:'춤 스택',sharedGroup:'dancerDance',sharedMaxBase:11};x.stackModel={mode:'dance-refresh',durationSeconds:v(15),initialStacks:v(5),refreshRemainingThresholdSeconds:v(5),earlyRefreshStackDelta:v(-1),lateRefreshStackDelta:v(1),sharedMaxStacks:{op:'subtract',left:v(11),right:I('simultaneousDanceCount')},notes:'재시전 시 남은 시간과 동시 춤 개수에 따른 스택 증감은 시간 상태 엔진 필요.'};x.inputs=[{id:'danceStacks',label:'춤 스택',type:'number',min:v(0),max:v(10),default:v(5)},{id:'simultaneousDanceCount',label:'동시 발동 춤 수',type:'number',min:v(1),max:v(5),default:v(1)}];x.stateTransitions=[{event:'cast',operation:'setStacks',stateId:stateId,stacks:v(5),maxStacks:v(10),durationSeconds:v(15)}];return x;}
+function danceStep(){return tier([{when:le(l(),v(3)),value:v(3)},{when:le(l(),v(6)),value:v(4)},{when:le(l(),v(9)),value:v(5)},{when:le(l(),v(10)),value:v(6)}]);}function hit(id,mult,constant,flags){return{id:id,damageType:'physical',count:v(1),multiplier:mult,constant:constant,flags:Object.assign({longRange:false,unsheathe:false},flags||{})};}
+var x=[dance(0,100,'dancerFairy','1차 요정의 춤 춤 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용'),dance(1,200,'dancerFrenzy','격정의 춤 춤 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용'),dance(2,500,'dancerAstute','2차 예민의 춤 춤 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용'),dance(3,300,'dancerCharming','3차 매혹의 춤 춤 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용'),dance(4,300,'dancerSpirited','응원의 춤 춤 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용'),D(5,'buff','우아한 몸가짐 버프 / 한손검, 마도구, 권갑, 단검, 선풍창 전용',not(truthy(I('hasAilment')))),D(6,'attack','화조풍월 물리 액티브 / 한손검, 마도구, 권갑, 단검, 선풍창 전용',danceWeapon)];
+x[0].effects=[{phase:'combat',type:'enemyHitReductionPercent',value:a(m(v(2),l()),m(danceStep(),a(I('danceStacks'),v(-5))))}];
+var frenzyStep=tier([{when:le(l(),v(5)),value:a(v(1),l())},{when:le(l(),v(10)),value:a(m(v(2),l()),v(-4))}]);x[1].effects=[{phase:'combat',type:'partBreakDamagePercent',value:a(m(v(2),l()),m(frenzyStep,a(I('danceStacks'),v(-5))))}];
+x[2].effects=[{phase:'combat',type:'enemyAvoidReductionPercent',value:a(l(),m(danceStep(),a(I('danceStacks'),v(-5))))}];
+x[3].effects=[{phase:'combat',type:'enemyStabilityReductionPercent',value:a(m(v(3),l()),m(danceStep(),a(I('danceStacks'),v(-5))))}];
+x[4].inputs=x[4].inputs.concat([{id:'postCastStacks',label:'발동 후 춤 스택',type:'number',min:v(0),max:v(10),default:v(5)},{id:'timelyActivation',label:'타이밍 발동',type:'boolean',default:false}]);var cheerBase=a(v(50),m(v(5),l()));x[4].effects=[{phase:'cast',type:'resourceRestore',key:'MP',value:m(q(ge(I('postCastStacks'),v(5)),cheerBase,m(cheerBase,v(.2),I('postCastStacks'))),q(truthy(I('timelyActivation')),v(2),v(1))),notes:'파티 전원 회복과 실제 재시전 후 스택은 파티/시간 상태 엔진 필요.'}];
+x[5]=Object.assign(x[5],{activeBuff:true,cost:{mp:{timing:'cast',value:v(100)}},inputs:[{id:'hasAilment',label:'상태이상 중',type:'boolean',default:false}],stateTransitions:[{event:'cast',operation:'grant',stateId:'dancer.elegantPoise',stacks:v(1),maxStacks:v(1),durationSeconds:v(2)}],effects:[{phase:'onNextDamage',type:'damageReductionPercent',value:d(m(l(),l()),v(2))},{phase:'onNextDamage',type:'ailmentIgnoreChance',chance:d(m(l(),l()),v(4))},{phase:'onLethalDamage',type:'surviveAtHp',value:v(1)},{phase:'onDamageReductionSuccess',type:'invulnerability',durationSeconds:v(3),notes:'1회 경감 소모, 성공 시 남은 2초를 더한 무적, 상태이상 사용 불가는 피격/상태 엔진 필요.'}]});
+x[6]=Object.assign(x[6],{cost:{mp:{timing:'cast',value:v(400)}},inputs:[{id:'healedAllyCount',label:'회복 대상 수(본인·용병·펫 포함)',type:'number',min:v(1),max:v(8),default:v(1)}],attacks:[hit('main',d(a(v(1.5),m(v(.75),l())),v(4)),v(100),{castRange:3,areaRadius:a(v(3),m(v(.3),l()))}),{...hit('main2',d(a(v(1.5),m(v(.75),l())),v(4)),v(100),{castRange:3,areaRadius:a(v(3),m(v(.3),l()))}),count:v(3)}],effects:[{phase:'duringMotion',type:'ailmentResistance',key:'flinch',value:{op:'min',args:[v(100),m(v(20),l())]}},{phase:'duringMotion',type:'ailmentResistance',key:'tumble',value:{op:'max',args:[v(0),m(v(15),a(l(),v(-5)))]}},{phase:'afterMotion',type:'heal',when:ge(l(),v(6)),value:d(a(m(v(300),l()),m(r('target.maxHp'),d(a(v(10),l()),v(100)))),I('healedAllyCount')),notes:'회복 범위와 실제 대상 수는 파티 위치 상태 엔진 필요.'}]});
+R.register('Dancer',x);}());

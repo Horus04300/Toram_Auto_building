@@ -9,7 +9,10 @@
 </head>
 <body>
 
-    <h1>🗡️ 토람 온라인 자동 빌드 계산기 {{APP_VERSION}}</h1>
+    <header class="app-titlebar">
+        <h1>🗡️ 토람 온라인 자동 빌드 계산기 {{APP_VERSION}}</h1>
+        <button type="button" id="appBuildStorageButton" class="app-build-storage-button" aria-label="세팅 파일 열기" title="세팅 파일">💾</button>
+    </header>
     <section class="skill-bookmark-section" aria-labelledby="combatSkillBookmarkTitle">
         <div class="skill-bookmark-heading"><h2 id="combatSkillBookmarkTitle">전투스킬</h2><span>무기 · 버프 · 보조</span></div>
         <div class="skill-bookmark-layout"><nav class="skill-category-rail" id="combatCategoryRail" aria-label="스킬 분류"></nav><nav class="skill-tree-rail" id="combatTreeRail" aria-label="스킬트리"></nav><div class="skill-bookmark-stage" id="combatSkillStage" aria-live="polite"></div></div>
@@ -25,7 +28,7 @@
             <label class="title-label">캐릭터 레벨</label>
             <input type="number" id="charLevel" value="325">
         </div>
-        
+
         <div class="status-investment-header">
             <span><span id="statusPointSummary" class="status-point-summary" aria-live="polite">5 / 0</span></span>
             <button type="button" class="status-reset-btn" id="statusResetBtn">초기화</button>
@@ -38,32 +41,10 @@
             <div class="stats-col"><button type="button" class="stat-easy-btn" data-stat-input="dexBase" title="최대치까지 DEX 투자">DEX</button><input type="number" id="dexBase" value="1" min="1" max="510" step="1"></div>
             <div class="stats-col"><label>CRT</label><input type="number" id="crtBase" value="0"></div>
         </div>
-
-        <div class="section-title">2. 특수 스킬 / 패시브 조건 설정</div>
-        <div class="checkbox-container">
-            <div class="checkbox-grid">
-                <label class="checkbox-item"><input type="checkbox" id="chkIsUnsheathe"> <span>발도 스킬 여부 (발도위력 적용)</span></label>
-                <label class="checkbox-item" id="wrapMagicWarrior" style="display:none;"><input type="checkbox" id="chkMagicWarrior"> <span style="color:#2980b9; font-weight:bold;">마법전사의 마음가짐 (서브 마도구 전용: 페널티 상쇄)</span></label>
-                <label class="checkbox-item" id="wrapConversion" style="display:none;"><input type="checkbox" id="chkConversion"> <span style="color:#2980b9; font-weight:bold;">컨버전 (서브 마도구 전용: 무기ATK를 MATK에 가산(매직블레이드 스킬))</span></label>
-                <label class="checkbox-item" id="wrapDualBringer" style="display:none;"><input type="checkbox" id="chkDualBringer"> <span style="color:#2980b9; font-weight:bold;">듀얼 브링거 (서브 마도구 전용: STR/INT 크리티컬 보정)</span></label>
-                <label class="checkbox-item" style="margin-top: 10px; cursor: pointer; font-weight: bold; color: #d35400;"><input type="checkbox" id="weakElementCheck"> <span>약점 속성으로 공격 (속성 데미지 +25% 및 INT 비례 보너스)</span></label>
-                <label class="checkbox-item" style="margin-top: 10px; cursor: pointer; font-weight: bold; color: #8e44ad;"><input type="checkbox" id="chkGuaranteedCrit"> <span>확정 치명타</span></label>
-            </div>
-        </div>
-
         <div class="section-title">타겟</div>
         <div class="equip-card" style="background:#fef9e7; border-color:#f1c40f;">
             <div class="form-group">
-                <label class="title-label">공격 / 거리 유형</label>
-                <select id="atkType" style="font-weight:bold; color:#c0392b;">
-                    <option value="PHYS">물리 공격 (Physical)</option>
-                    <option value="MAG">마법 공격 (Magic)</option>
-                </select>
-                <select id="rangeType" style="font-weight:bold; color:#2980b9;">
-                    <option value="SHORT">근거리 (Short Range)</option>
-                    <option value="LONG">원거리 (Long Range)</option>
-                </select>
-                <label class="title-label" style="flex:0 0 80px; text-align:right;">보스 레벨</label>
+                <label class="title-label">보스 레벨</label>
                 <input type="number" id="bossLevel" value="300" placeholder="보스 레벨" style="max-width:90px;">
             </div>
             <div class="form-group">
@@ -80,14 +61,6 @@
                 <label class="title-label">크리티컬 저항</label>
                 <input type="number" id="bossCritResist" value="0" placeholder="크리티컬 저항 (기본0)">
             </div>
-            <div class="form-group" style="border-top:1px dashed #d4ac0d; padding-top:10px; margin-top:10px;">
-                <label class="title-label" style="color:#d35400;">스킬 계수 (배율)</label>
-                <input type="number" id="skillMult" value="1" placeholder="예: 30" style="flex: 1;">
-                <label class="title-label" style="flex:0 0 80px; text-align:right; color:#d35400;">스킬 상수</label>
-                <input type="number" id="skillConst" value="1000" placeholder="예: 1000" style="flex: 1;">
-                <button type="button" class="add-opt-btn" data-action="add-skill-stat" style="margin-left: 10px; background:#fdf2e9; border-color:#e67e22; color:#d35400;">+ 스탯 보정 추가</button>
-            </div>
-            <div id="skillStatOpts" style="width: 100%; display: flex; flex-direction: column; gap: 5px; margin-bottom: 10px;"></div>
         </div>
 
         <div class="section-title">장비</div>
@@ -98,7 +71,7 @@
                     <div class="equipment-field equipment-field-type">
                         <label for="mainWeaponType">종류</label>
                         <select id="mainWeaponType" data-action="main-weapon-change">
-                            <option value="한손검">한손검</option><option value="양손검">양손검</option><option value="활">활</option><option value="자동활">자동활</option><option value="지팡이">지팡이</option><option value="마도구">마도구</option><option value="권갑">권갑</option><option value="선풍창">선풍창</option><option value="발도검">발도검</option>
+                            <option value="한손검">한손검</option><option value="양손검">양손검</option><option value="활">활</option><option value="자동활">자동활</option><option value="지팡이">지팡이</option><option value="마도구">마도구</option><option value="권갑">권갑</option><option value="선풍창">선풍창</option><option value="발도검">발도검</option><option value="맨손">맨손</option>
                         </select>
                     </div>
                     <div class="equipment-number-grid">
@@ -148,7 +121,7 @@
                 </section>
             </div>
         </div>
-        
+
         <div class="equip-card" style="background:#f4f6f7;">
             <h3>🥘 외부 버프 / 요리 / 범용 옵션</h3>
             <div class="form-group">
@@ -170,14 +143,14 @@
 <button type="button" class="btn-calc" data-action="calculate">🚀 상세 계산 및 크리스타 최적화 실행</button>
 
         <div id="resultArea" class="result-box" style="display: none;">
-            
+
             <div id="defWarning" class="def-warning" style="display:none;">
                  [방어력 초과 경고]<br>현재 공격력과 스킬 상수의 합이 적의 실방어력을 뚫지 못해 기본 타격 데미지가 바닥(1)을 친 상태입니다!<br>
                 <span style="font-weight:normal; font-size:13px;">이 상태에서는 공격력이나 관통력이 아주 조금만 올라도 데미지가 수백%씩 폭증하는 수학적 착시 현상(효율 과표집)이 발생합니다. 정확한 효율을 보시려면 스킬 상수를 높은 값으로 조정하거나, 적 방어력을 낮춰주세요.</span>
             </div>
 
             <div class="res-title">📊 === 현재 장착 세팅 상세 요약 ===</div>
-            
+
             <div class="res-6grid">
                 <div class="res-box">
                     <h4>📝 적용된 총 보너스 수치 요약</h4>
@@ -204,7 +177,7 @@
                     <ul id="resSpeed"></ul>
                 </div>
             </div>
-            
+
             <div class="res-title" style="margin-top:40px; border-color:#27ae60; color:#27ae60; display:flex; justify-content:space-between; align-items:center;">
                 <span>🏆 === 부위별 최적 크리스타 추천 (Top 3) ===</span>
                 <span id="top3CurrentDmgBadge" style="font-size:13px; font-weight:bold; background:#fdf2e9; color:#d35400; padding:4px 12px; border-radius:999px; border:1px solid #e67e22; display:none; letter-spacing:0;"></span>
@@ -239,17 +212,38 @@
     <script src="assets/js/data/skills/support.js"></script>
     <script src="assets/js/data/skills/dark-power.js"></script>
     <script src="assets/js/data/skills/dancer.js"></script>
+    <script src="assets/js/data/skills/necromancer-s5.js"></script>
+    <script src="assets/js/data/skills/golem-s5.js"></script>
     <script src="assets/js/data/skills/minstrel.js"></script>
     <script src="assets/js/data/skills/blade.js"></script>
     <script src="assets/js/data/skills/dual-sword.js"></script>
+    <script src="assets/js/data/skills/dual-sword-s5.js"></script>
     <script src="assets/js/data/skills/halberd.js"></script>
+    <script src="assets/js/data/skills/halberd-s3.js"></script>
     <script src="assets/js/data/skills/crusher.js"></script>
+    <script src="assets/js/data/skills/crusher-s5.js"></script>
     <script src="assets/js/data/skills/mononofu.js"></script>
+    <script src="assets/js/data/skills/mononofu-s5.js"></script>
     <script src="assets/js/data/skills/knight.js"></script>
+    <script src="assets/js/data/skills/knight-s5.js"></script>
     <script src="assets/js/data/skills/martial.js"></script>
     <script src="assets/js/data/skills/shot.js"></script>
+    <script src="assets/js/data/skills/magic.js"></script>
     <script src="assets/js/data/skills/sprite.js"></script>
+    <script src="assets/js/data/skills/sprite-s5.js"></script>
     <script src="assets/js/data/skills/assassin.js"></script>
+    <script src="assets/js/data/skills/assassin-s5.js"></script>
+    <script src="assets/js/data/skills/dagger-s5.js"></script>
+    <script src="assets/js/data/skills/shield-s5.js"></script>
+    <script src="assets/js/data/skills/priest-s5.js"></script>
+    <script src="assets/js/data/skills/hunter-s5.js"></script>
+    <script src="assets/js/data/skills/wizard-s5.js"></script>
+    <script src="assets/js/data/skills/guard-s5.js"></script>
+    <script src="assets/js/data/skills/dark-power-s5.js"></script>
+    <script src="assets/js/data/skills/magic-blade-s5.js"></script>
+    <script src="assets/js/data/skills/barehand-s5.js"></script>
+    <script src="assets/js/data/skills/ninja-s5.js"></script>
+    <script src="assets/js/data/skills/partisan-s5.js"></script>
 
     <script src="assets/js/data/skill-registration-metadata.js"></script>
     <script src="assets/js/data/skill-catalog-registration.js"></script>
@@ -257,12 +251,16 @@
     <script src="assets/js/skill-effect-engine.js"></script>
     <script src="assets/js/data/crysta-data.js"></script>
     <script src="assets/js/crysta-ui.js"></script>
+    <script src="assets/js/combo-sequence-engine.js"></script>
     <script src="assets/js/calculator.js"></script>
     <script src="assets/js/optimizer.js"></script>
     <script src="assets/js/status-points.js"></script>
     <script src="assets/js/skill-tree.js"></script>
     <script src="assets/js/tabs.js"></script>
     <script src="assets/js/active-buff-ui.js"></script>
+    <script src="assets/js/combo-ui.js"></script>
     <script src="assets/js/ui-bindings.js"></script>
+    <script src="assets/js/build-state-storage.js"></script>
+    <script src="assets/js/build-file-storage.js"></script>
 </body>
 </html>

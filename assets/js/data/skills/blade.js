@@ -84,9 +84,9 @@
       requirements:{when:bladeWeapon},cost:{mp:{timing:'cast',value:v(400)}},attacks:[{id:'bladeWave',damageType:'physical',count:v(1),multiplier:a(v(1.5),m(v(.1),l()),i(twoHand,a(v(1),d(base('STR'),v(500))),v(0))),constant:v(0),flags:{longRange:true,unsheathe:false,castRange:12,inertia:'physical'}},{id:'tornado',damageType:'physical',count:tier([between(1,2,2),between(3,4,3),between(5,6,4),between(7,8,5),between(9,10,6)]),multiplier:a(v(.5),m(v(.05),l()),i(oneHandMain,d(base('DEX'),v(500)),v(0))),constant:v(80),flags:{longRange:false,unsheathe:false,inertia:'magic',areaRadius:tier([between(1,2,3),between(3,5,4),between(6,8,5),between(9,10,6)])}}]
     }),
     Object.assign(identity(15,'attack','버스터 블레이드 물리 액티브 / 한손검, 양손검 전용'),{
-      requirements:{when:bladeWeapon},activeBuff:true,inputs:[{id:'auraBladeLevel',label:'오라 블레이드 레벨',type:'number',min:v(0),max:v(10),default:v(0)},{id:'shieldRefinement',label:'방패 제련치',type:'number',min:v(0),max:v(15),default:v(0)}],cost:{mp:{timing:'cast',value:v(300)}},
-      attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(m(v(.75),l()),i(oneHand,a(d(base('DEX'),v(200)),i(gte(input('auraBladeLevel'),v(1)),a(m(v(.2),input('auraBladeLevel')),d(base('DEX'),v(200))),v(0))),v(0)),i(twoHand,d(base('STR'),v(100)),v(0))),constant:m(v(30),l()),flags:{longRange:false,unsheathe:false,castRange:7,guaranteedCritical:true}}],
-      stateTransitions:[{event:'castWhenBuffInactive',operation:'grant',stateId:'blade.busterBlade',stacks:v(1),maxStacks:v(1),durationSeconds:v(10),effects:[{phase:'combat',type:'stat',key:'WATKP',value:a(v(10),i(shield,input('shieldRefinement'),v(0)))}]}],effects:[{phase:'combat',type:'stat',key:'WATKP',when:truthy(r('buff.active')),value:a(v(10),i(shield,input('shieldRefinement'),v(0)))},{phase:'castWhenBuffInactive',type:'hpRestore',value:a(v(1000),i(oneHand,m(v(2),base('VIT')),v(0)),i(shield,base('VIT'),v(0)))}]
+      requirements:{when:bladeWeapon},activeBuff:true,cost:{mp:{timing:'cast',value:v(300)}},
+      attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(m(v(.75),l()),i(oneHand,a(d(base('DEX'),v(200)),i(gte(r('investments.Blade.16'),v(1)),a(m(v(.2),r('investments.Blade.16')),d(base('DEX'),v(200))),v(0))),v(0)),i(twoHand,d(base('STR'),v(100)),v(0))),constant:m(v(30),l()),flags:{longRange:false,unsheathe:false,castRange:7,guaranteedCritical:true}}],
+      stateTransitions:[{event:'castWhenBuffInactive',operation:'grant',stateId:'blade.busterBlade',stacks:v(1),maxStacks:v(1),durationSeconds:v(10),effects:[{phase:'combat',type:'stat',key:'WATKP',value:a(v(10),i(shield,r('equipment.subWeaponRefinement'),v(0)))}]}],effects:[{phase:'combat',type:'stat',key:'WATKP',when:truthy(r('buff.active')),value:a(v(10),i(shield,r('equipment.subWeaponRefinement'),v(0)))},{phase:'castWhenBuffInactive',type:'hpRestore',value:a(v(1000),i(oneHand,m(v(2),base('VIT')),v(0)),i(shield,base('VIT'),v(0)))}]
     }),
     Object.assign(identity(21,'buff','버서크 버프 / 모든 무기 사용 가능'),{
       cost:{mp:{timing:'cast',value:v(500)}},stateTransitions:[{event:'cast',operation:'grant',stateId:'blade.berserk',stacks:v(1),maxStacks:v(1),durationSeconds:a(v(10),i(bladeWeapon,v(20),v(0)))}],
@@ -103,11 +103,11 @@
       stateTransitions:[{event:'cast',when:e(l(),v(10)),operation:'grant',stateId:'blade.firstAttack.nextSkillMpHalf',stacks:v(1),maxStacks:v(1),durationSeconds:v(0),effects:[{phase:'cast',type:'nextSkillModifier',key:'mpCostMultiplier',value:v(.5)}]}]
     }),
     {
-      id:aura.id, treeId:'Blade', skillId:16, nameKo:aura.nameKo, kind:'attack', activeBuff:true,
+      id:aura.id, treeId:'Blade', skillId:16, nameKo:aura.nameKo, kind:'attack', activeBuff:true, activeBuffWhen:oneHand,
       source:'blade', dataStatus:'partial', sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'오라 블레이드 물리 액티브'},
       requirements:{when:{op:'in',value:r('equipment.mainWeapon'),values:['한손검','양손검']}}, cost:{mp:{timing:'cast',value:v(200)}}, combo:{canStart:true,canReceiveTag:true},
       attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(5),l()),constant:v(200),flags:{longRange:true,unsheathe:false,castRange:null,areaRadius:3.5}}],
-      stateTransitions:[{event:'cast',operation:'grant',stateId:'bladeAura',stacks:v(1),maxStacks:v(1),durationSeconds:v(40),endCondition:{event:'nextSkillCast',when:{op:'any',args:[weapon('양손검'),dualSword]}},extension:{event:'busterBladeBuffGranted',seconds:v(10)},notes:'양손검·듀얼소드는 다음 스킬 사용 시 종료; 버스터 블레이드 버프 획득 성공 시 10초 연장'}],
+      stateTransitions:[{event:'cast',operation:'grant',stateId:'bladeAura',stacks:v(1),maxStacks:v(1),durationSeconds:v(40),endCondition:{event:'nextSkillCast',when:{op:'any',args:[weapon('양손검'),dualSword]}},extension:{event:'busterBladeBuffGranted',seconds:v(10)},effects:[{phase:'cast',type:'nextSkillModifier',key:'damageMultiplier',when:any(twoHand,dualSword),value:i(dualSword,v(1.1),v(1.3))},{phase:'cast',type:'nextSkillModifier',key:'physicalChaseDamage',when:any(twoHand,dualSword),value:i(twoHand,m(v(5),l()),m(v(10),l()))}],notes:'양손검·듀얼소드는 다음 스킬 사용 시 종료; 버스터 블레이드 버프 획득 성공 시 10초 연장'}],
       effects:[
         {phase:'combat',type:'damageMultiplier',target:'attack',when:dualSword,value:v(1.1)},
         {phase:'combat',type:'damageMultiplier',target:'attack',when:oneHand,value:v(1.2)},

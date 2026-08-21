@@ -10,11 +10,12 @@
   var tier=function(cases){return {op:'tier',cases:cases};};
   var levelIs=function(min,max,value){return {when:{op:'all',args:[{op:'gte',left:l(),right:v(min)},{op:'lte',left:l(),right:v(max)}]},value:v(value)};};
   var active=function(){return {op:'truthy',value:r('buff.active')};};
+  var anchors=['1차 응급처치 패시브 / 모든 무기 사용 가능','작은 힐 액티브 / 모든 무기 사용 가능','2차  리커버리 버프 / 모든 무기 사용 가능','3차 생츄어리 버프 / 모든 무기 사용 가능','4차 힐 액티브 / 모든 무기 사용 가능','라이프 리커버리 버프 / 모든 무기 사용 가능','브레이브 오라 버프 / 모든 무기 사용 가능','하이 사이클 버프 / 모든 무기 사용 가능','퀵모션 버프 / 모든 무기 사용 가능','마나 리차지 버프 / 모든 무기 사용 가능','매직 배리어 버프 / 모든 무기 사용 가능','디지토 실 버프 / 모든 무기 사용 가능','하이 리액션 버프 / 모든 무기 사용 가능'];
   function skill(skillId, kind, dataStatus, data) {
     var source = catalog.skills.find(function (item) { return item.id === 'Support:' + skillId; });
     if (!source) throw new Error('서포터 스킬을 카탈로그에서 찾지 못했습니다: ' + skillId);
     data = data || {};
-    return Object.assign({ id:source.id, treeId:'Support', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'support', dataStatus:dataStatus }, data);
+    return Object.assign({ id:source.id, treeId:'Support', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'support', dataStatus:dataStatus, sourceRef:{file:'docs/sources/skills/Support.txt',anchor:anchors[skillId]}, notes:'S1~S5 calculator scope; party range, hit and target state events remain metadata.' }, data);
   }
   function aura(skillId, mp, effects) {
     return skill(skillId, 'buff', 'partial', { cost:{mp:{timing:'cast',value:v(mp)}}, combo:{canStart:true,canReceiveTag:false}, stateTransitions:[{event:'cast',operation:'grant',stateId:'support.' + skillId,stacks:v(1),maxStacks:v(1),durationSeconds:v(900)}], effects:effects });

@@ -18,7 +18,7 @@
     cost:{ mp:{ timing:'cast', value:v(100) } }, combo:{ canStart:false, canReceiveTag:true },
     stateTransitions:[{ event:'cast', operation:'grant', stateId:'crusherDestroyer', stacks:v(1), maxStacks:v(1), durationSeconds:v(600) }],
     effects:[
-      { phase:'combat', type:'stat', key:'WATKP', when:active(), value:m(v(5), l()) },
+      { phase:'combat', type:'stat', key:'WATKP', capGroup:'martialCrusherWeaponAtk', cap:v(50), when:active(), value:m(v(5), l()) },
       { phase:'combat', type:'stat', key:'STABILITY', when:active(), value:v(-10) },
       { phase:'combat', type:'crusherDestroyerState', when:active(), notes:'호흡법 강화, 셸 브레이크 파괴 확률 +25%, 기죽음·넘어짐·기절·넉백 부여 불가. 화경과 합산한 무기 공격력 증가는 최대 50%.' }
     ]
