@@ -136,6 +136,22 @@
             });
         }
 
+        function applyActiveSkillStatConversions(ctx) {
+            if (!window.ToramSkillEffects || typeof window.ToramSkillEffects.activeBuildConversions !== 'function') return;
+            var selections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
+                ? window.ToramActiveBuffs.getSelections() : {};
+            window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:selections }).forEach(function (effect) {
+                if (effect.conversion !== 'unsheatheToAtk') return;
+                var rate = Number(effect.value) || 0;
+                var unsheathe = Number(ctx.unsheathe) || 0;
+                var converted = rate * unsheathe;
+                ctx.unsheathe = 0;
+                ctx.atkP += converted;
+                ctx.watkP += converted;
+                ctx.atkF += converted * (Number(ctx.wpnAtk) || 0);
+            });
+        }
+
         function simulateWithCrystas(baseCtx, crystas) {
             var ctx = cloneCtx(baseCtx);
             for(var i=0; i<crystas.length; i++) {
@@ -157,6 +173,8 @@
                     }
                 }
             }
+
+            applyActiveSkillStatConversions(ctx);
 
             var totalSTR = Math.floor(ctx.strBase * (1 + ctx.strP/100) + ctx.strF);
             var totalDEX = Math.floor(ctx.dexBase * (1 + ctx.dexP/100) + ctx.dexF);

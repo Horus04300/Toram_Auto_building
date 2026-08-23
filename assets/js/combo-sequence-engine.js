@@ -87,7 +87,7 @@
         copiedFrom = lastMagicAttack;
         profile = Object.assign({}, profile, { hits:lastMagicAttack.profile.hits.map(function (hit) { return Object.assign({}, hit, { flags:Object.assign({}, hit.flags || {}) }); }), castTime:null });
       }
-      var isDamageSkill = profile.skill.kind === 'attack' && profile.hits.length > 0 || Boolean(copiedFrom);
+      var isDamageSkill = profile.hits.length > 0 || Boolean(copiedFrom);
       if ((entry.tag || 'none') === 'consecutive' && position > 1) consecutiveOrdinal += 1;
       var tag = copiedFrom ? comboTag({ tag:'none' }, position, consecutiveOrdinal, index === entries.length - 1, isDamageSkill) : comboTag(entry, position, consecutiveOrdinal, index === entries.length - 1, isDamageSkill);
       var nativeMp = copiedFrom ? copiedFrom.finalMp : (profile.cost ? number(profile.cost.mp) : 0);

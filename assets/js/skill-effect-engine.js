@@ -89,6 +89,7 @@
     if (effect.durationSeconds !== undefined) result.durationSeconds = num(expr(effect.durationSeconds, state));
     if (effect.maxStacks !== undefined) result.maxStacks = num(expr(effect.maxStacks, state));
     if (effect.notes) result.notes = effect.notes;
+    if (effect.conversion) result.conversion = effect.conversion;
     return result;
   }
   function resolveTransition(transition, state) {
@@ -178,9 +179,26 @@
       return result;
     }, { multiplier:1, constant:0, mpCostFlat:0, sources:[] });
   }
+  function activeBuildConversions(base, combat, inputs, runtime) {
+    return definitions().filter(function (candidate) { return candidate.kind === 'buff' || candidate.activeBuff === true; }).reduce(function (result, candidate) {
+      var setting = activeBuffSetting(runtime, candidate.id);
+      if (!setting.active) return result;
+      var candidateRuntime = Object.assign({}, runtime || {}, { buff:{ active:true, stacks:setting.stacks } });
+      var candidateState = context(base, candidate, combat, inputs, candidateRuntime);
+      if (!test(candidate.requirements && candidate.requirements.when, candidateState)) return result;
+      (candidate.effects || []).forEach(function (effect) {
+        if (effect.phase !== 'build' || effect.type !== 'statConversion' || !test(effect.when, candidateState)) return;
+        result.push(Object.assign({ source:candidate.nameKo }, resolveEffect(effect, candidateState)));
+      });
+      return result;
+    }, []);
+  }
   function profile(id, base, combat, inputs, runtime) {
     var skill = find(id); if (!skill) return null;
-    var state = context(base, skill, combat, inputs, runtime);
+    var activeBuffs = runtime && runtime.activeBuffs;
+    var hasOwnActiveSetting = activeBuffs && Object.prototype.hasOwnProperty.call(activeBuffs, skill.id);
+    var buffState = hasOwnActiveSetting ? activeBuffSetting(runtime, skill.id) : (runtime && runtime.buff || {});
+    var state = context(base, skill, combat, inputs, Object.assign({}, runtime || {}, { buff:buffState }));
     normalizeInputs(skill, state);
     var available = state.skill.level > 0 && test(skill.requirements && skill.requirements.when, state);
     var activeModifiers = available ? activeCombatModifiers(skill, base, combat, inputs, runtime, {}) : { multiplier:1, constant:0, mpCostFlat:0, sources:[] };
@@ -195,7 +213,7 @@
       stateTransitions:available ? (skill.stateTransitions || []).map(function (item) { return resolveTransition(item, state); }).filter(Boolean) : [],
       triggeredEffects:available ? triggeredPassiveEffects(skill, base, combat, inputs, runtime) : [],
       effects:available ? (skill.effects || []).filter(function (effect) { return test(effect.when, state); }).map(function (effect) { return resolveEffect(effect, state); }) : [],
-      hits:available && skill.kind === 'attack' ? (skill.attacks || []).filter(function (hit) { return test(hit.when, state); }).map(function (hit) {
+      hits:available && Array.isArray(skill.attacks) ? skill.attacks.filter(function (hit) { return test(hit.when, state); }).map(function (hit) {
         state.attack.flags = hit.flags || {};
         var modifiers = passiveDamageModifiers(skill, base, combat, inputs, runtime, state.attack.flags);
         var active = activeCombatModifiers(skill, base, combat, inputs, runtime, state.attack.flags);
@@ -228,5 +246,5 @@
       }) : []
     };
   }
-  window.ToramSkillEffects = Object.freeze({ expression:expr, condition:test, find:find, passiveStatChanges:passiveStatChanges, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });
+  window.ToramSkillEffects = Object.freeze({ expression:expr, condition:test, find:find, passiveStatChanges:passiveStatChanges, activeBuildConversions:activeBuildConversions, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });
 }());
