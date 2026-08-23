@@ -11,7 +11,7 @@
   function definitions() {
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
-    return root.concat(registry ? registry.all() : []);
+    return root.concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
   }
   function levelFor(skill) {
     if (!window.skillSimulatorState) return 0;
@@ -303,6 +303,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, {once:true}); else initialize();
   window.ToramComboUi = Object.freeze({
     refresh:function () { if (chain) renderWorkspace(); },
-    getAppliedHit:function () { return appliedHit ? Object.assign({}, appliedHit) : null; }
+    getAppliedHit:function () { return appliedHit ? Object.assign({}, appliedHit) : null; },
+    getAvailableSkills:availableSkills
   });
 }());

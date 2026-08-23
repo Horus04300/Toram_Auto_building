@@ -59,7 +59,7 @@
   function definitions() {
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
-    return root.concat(registry ? registry.all() : []);
+    return root.concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
   }
   function context(base, skill, combat, inputs, runtime) {
     base = base || {}; runtime = runtime || {};
