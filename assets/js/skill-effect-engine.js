@@ -163,7 +163,9 @@
       var candidateState = context(base, candidate, combat, inputs, candidateRuntime);
       candidateState.attack.flags = flags || {};
       if (!test(candidate.requirements && candidate.requirements.when, candidateState)) return result;
-      (setting.active ? candidate.effects : (candidate.inactiveEffects || [])).forEach(function (effect) {
+      // 등록 정의 중에는 상태/표시 메타데이터만 있는 액티브 버프도 있다.
+      // 활성화하더라도 계산 효과가 없는 경우는 빈 효과 목록으로 처리한다.
+      (setting.active ? (candidate.effects || []) : (candidate.inactiveEffects || [])).forEach(function (effect) {
         if (!test(effect.when, candidateState)) return;
         if (effect.type === 'damageMultiplier' && matchesDamageTarget(effect.target, skill)) {
           var multiplier = num(expr(effect.value, candidateState)); result.multiplier *= multiplier; result.sources.push({ source:candidate.nameKo, value:multiplier });

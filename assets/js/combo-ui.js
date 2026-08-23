@@ -284,7 +284,9 @@
       renderChain(skills, result);
       renderOutput(result, skills);
     } catch (error) {
-      chain.innerHTML = ''; output.innerHTML = '<p class="combo-error">계산할 수 없습니다: ' + error.message + '</p>';
+      // 계산 오류가 있어도 편집할 콤보 아이콘까지 지우면 원인 확인·수정이 불가능해진다.
+      renderChain(skills, null);
+      output.innerHTML = '<p class="combo-error">계산할 수 없습니다: ' + error.message + '</p>';
     }
   }
   function renderWorkspace() {
