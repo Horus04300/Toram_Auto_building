@@ -107,10 +107,19 @@ if (document.readyState === 'loading') {
     initCrystaEvents();
 }
 
+        var calculationQueued = false;
         function runCalculationSafe() {
             if (typeof revealResultTab === 'function') revealResultTab();
-            try { runCalculation(); } 
-            catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
+            if (calculationQueued) return;
+            calculationQueued = true;
+            var execute = function () {
+                calculationQueued = false;
+                try { runCalculation(); }
+                catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
+            };
+            // 탭 전환을 먼저 그린 다음 비용이 큰 크리스타 최적화를 수행한다.
+            if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(execute);
+            else window.setTimeout(execute, 0);
         }
 
         function runCalculation() {
