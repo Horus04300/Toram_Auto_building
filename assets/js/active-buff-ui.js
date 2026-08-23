@@ -20,7 +20,21 @@
   function effectSkills() {
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
-    return root.concat(registry ? registry.all() : []);
+    var byId = Object.create(null);
+    var orderedIds = [];
+    root.concat(registry ? registry.all() : []).forEach(function (skill) {
+      if (!skill || !skill.id) return;
+      var existing = byId[skill.id];
+      if (!existing) {
+        byId[skill.id] = skill;
+        orderedIds.push(skill.id);
+        return;
+      }
+      // 기본 정의와 스택 보강 정의가 같은 스킬 ID를 공유할 수 있다.
+      // 버프 카드는 하나만 표시하고, 스택 조절 정보가 있는 보강 정의를 우선한다.
+      if (skill.stackControl && !existing.stackControl) byId[skill.id] = skill;
+    });
+    return orderedIds.map(function (id) { return byId[id]; });
   }
   function isActiveBuff(skill) { return skill.kind === 'buff' || skill.activeBuff === true; }
   function isDisplayableActiveBuff(skill) {
@@ -29,6 +43,9 @@
     if (!window.ToramSkillEffects.condition(skill.requirements && skill.requirements.when, context)) return false;
     if (!skill.activeBuffWhen) return true;
     return Boolean(window.ToramSkillEffects.condition(skill.activeBuffWhen, context));
+  }
+  function displayableBuffSkills() {
+    return effectSkills().filter(isDisplayableActiveBuff);
   }
   function settingFor(state, skillId) { return state[skillId]; }
   function enabledFor(state, skillId) {
@@ -135,7 +152,7 @@
     var section = document.getElementById('activeBuffSkillSection');
     if (!section) { section = document.createElement('section'); section.id = 'activeBuffSkillSection'; section.className = 'equip-card'; panel.insertBefore(section, panel.firstChild); }
     var state = savedState();
-    var buffs = effectSkills().filter(function (skill) { return isDisplayableActiveBuff(skill) && levelFor(skill) > 0; });
+    var buffs = displayableBuffSkills().filter(function (skill) { return levelFor(skill) > 0; });
     section.innerHTML = '<h3>✨ 액티브 버프</h3><p style="margin:0 0 10px;color:#5d6d7e;font-size:13px;">파란색은 적용, 회색은 미적용입니다. 스택형 버프는 카드 하단에서 조절합니다.</p>';
     var grid = document.createElement('div'); grid.className = 'active-buff-grid';
     buffs.forEach(function (skill) {
@@ -180,6 +197,6 @@
     });
     return result;
   }
-  window.ToramActiveBuffs = Object.freeze({ render:render, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections });
+  window.ToramActiveBuffs = Object.freeze({ render:render, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections, getDisplaySkills:displayableBuffSkills });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, { once:true }); else render();
 }());
