@@ -10,15 +10,25 @@
     var seen = new Set();
     var errors = [];
     var registry = window.ToramSkillEffectRegistry;
-    var detailed = (data.skills || []).concat(registry ? registry.all() : []);
-    detailed.forEach(function (skill) {
-      if (seen.has(skill.id)) errors.push('중복 스킬 정의: ' + skill.id);
+    var layered = (data.skills || []).concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
+    var shadowedDefinitions = [];
+    var detailed = layered.filter(function (skill) {
+      if (seen.has(skill.id)) {
+        shadowedDefinitions.push(skill.id);
+        return false;
+      }
       seen.add(skill.id);
+      return true;
+    });
+    detailed.forEach(function (skill) {
       if (!catalogIds.has(skill.id)) errors.push('전투 카탈로그에 없는 스킬 정의: ' + skill.id);
       if (kinds.indexOf(skill.kind) === -1) errors.push('알 수 없는 스킬 종류: ' + skill.id);
       if (!skill.source) errors.push('출처 키 누락: ' + skill.id);
-      if (skill.kind === 'attack' && !Array.isArray(skill.attacks)) errors.push('공격 목록 누락: ' + skill.id);
-      if ((skill.kind === 'passive' || skill.kind === 'buff') && !Array.isArray(skill.effects)) errors.push('효과 목록 누락: ' + skill.id);
+      ['attacks','specialAttacks','effects','inactiveEffects','stateTransitions','castTriggers'].forEach(function (key) {
+        if (skill[key] !== undefined && !Array.isArray(skill[key])) errors.push(key + ' 배열 형식 오류: ' + skill.id);
+      });
+      var hasModel = ['requirements','cost','castTime','attacks','specialAttacks','effects','inactiveEffects','stateTransitions','castTriggers','stackModel','stackControl','activeBuff'].some(function (key) { return skill[key] !== undefined; });
+      if (!hasModel) errors.push('계산 규칙 누락: ' + skill.id);
     });
     var status = detailed.reduce(function (result, skill) {
       result[skill.dataStatus || 'partial'] = (result[skill.dataStatus || 'partial'] || 0) + 1;
@@ -30,6 +40,8 @@
       unreviewed: status.unreviewed || 0,
       partial: status.partial || 0,
       verified: status.verified || 0,
+      layered: layered.length,
+      shadowedDefinitions: Object.freeze(shadowedDefinitions),
       errors: Object.freeze(errors)
     });
   }

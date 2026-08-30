@@ -2,7 +2,12 @@
   'use strict';
   var storageKey = 'toram-auto-active-buffs-v1';
   function savedState() { try { return JSON.parse(window.localStorage.getItem(storageKey) || '{}'); } catch (_) { return {}; } }
-  function saveState(state) { window.localStorage.setItem(storageKey, JSON.stringify(state)); }
+  function saveState(state) {
+    window.localStorage.setItem(storageKey, JSON.stringify(state));
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
+      document.dispatchEvent(new CustomEvent('toram:active-buffs-changed'));
+    }
+  }
   function displayNumber(value) {
     var numeric = Number(value);
     return Number.isFinite(numeric) ? Number(numeric.toFixed(6)) : 0;
@@ -72,11 +77,32 @@
     return { stateId:config.stateId, min:min, max:max, initial:initial, label:config.label || '스택', persistWhenDisabled:Boolean(config.persistWhenDisabled), showWhenDisabled:Boolean(config.showWhenDisabled), applyWhenDisabled:Boolean(config.applyWhenDisabled), resetStacksOnEnable:Boolean(config.resetStacksOnEnable) };
   }
   function engineMainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
-  function contextFor(skill, active, stacks, states) {
+  function currentCalculationContext() {
+    if (typeof window.getBaseContext !== 'function' || typeof window.simulateWithCrystas !== 'function' || typeof window.getCurrentCrystas !== 'function') return null;
+    try {
+      var base = window.getBaseContext();
+      if (typeof window.applyPassiveSkillStats === 'function') window.applyPassiveSkillStats(base);
+      var calculated = window.simulateWithCrystas(base, window.getCurrentCrystas());
+      var combat = { STR:calculated.finalSTR, INT:calculated.finalINT, VIT:calculated.finalVIT, AGI:calculated.finalAGI, DEX:calculated.finalDEX, CRT:base.crtBase, ATK:calculated.finalATK, MATK:calculated.finalMATK, ASPD:calculated.finalASPD, CSPD:calculated.finalCSPD, STABILITY:calculated.finalStab, WEAPON_ATK:calculated.finalWeaponAttack, MAXMP:calculated.finalMaxMP };
+      return {
+        baseStats:{ STR:base.strBase, INT:base.intBase, VIT:base.vitBase, AGI:base.agiBase, DEX:base.dexBase, CRT:base.crtBase },
+        combatStats:combat,
+        buildStats:combat
+      };
+    } catch (_) { return null; }
+  }
+  function contextFor(skill, active, stacks, states, calculated) {
     var mainWeapon = document.getElementById('mainWeaponType');
     var subWeapon = document.getElementById('subWeaponType');
     var charLevel = document.getElementById('charLevel');
-    return { skill:{ level:levelFor(skill) }, player:{ level:Number(charLevel && charLevel.value) || 0 }, buff:{ active:active, stacks:stacks }, states:states || {}, equipment:{ mainWeapon:engineMainWeapon(mainWeapon ? mainWeapon.value : null), subWeapon:subWeapon ? subWeapon.value : null } };
+    var numberValue = function (id) { var node = document.getElementById(id); return Number(node && node.value) || 0; };
+    var baseStats = calculated && calculated.baseStats || { STR:numberValue('strBase'), INT:numberValue('intBase'), VIT:numberValue('vitBase'), AGI:numberValue('agiBase'), DEX:numberValue('dexBase'), CRT:numberValue('crtBase') };
+    var combatStats = calculated && calculated.combatStats || {};
+    return {
+      skill:{ level:levelFor(skill) }, player:{ level:Number(charLevel && charLevel.value) || 0 }, buff:{ active:active, stacks:stacks }, states:states || {},
+      baseStats:baseStats, combatStats:combatStats, buildStats:calculated && calculated.buildStats || combatStats,
+      equipment:{ mainWeapon:engineMainWeapon(mainWeapon ? mainWeapon.value : null), subWeapon:subWeapon ? subWeapon.value : null, subWeaponRefinement:numberValue('subRefine'), subWeaponAttack:numberValue('subAtk'), subWeaponStability:numberValue('subStab') }
+    };
   }
   function stackFor(state, skill, config) {
     var setting = settingFor(state, skill.id);
@@ -118,16 +144,17 @@
     var proxy = container.querySelector('#activeSkillBuffOptions');
     if (!proxy) { proxy = document.createElement('div'); proxy.id = 'activeSkillBuffOptions'; proxy.hidden = true; container.appendChild(proxy); }
     proxy.innerHTML = '';
+    var calculated = currentCalculationContext();
     var states = runtimeStates(active);
     var cappedTotals = {};
     effectSkills().filter(function (skill) {
       return isDisplayableActiveBuff(skill) && levelFor(skill) > 0 && (enabledFor(active, skill.id) || (skill.stackControl && skill.stackControl.applyWhenDisabled));
     }).forEach(function (skill) {
       var enabled = enabledFor(active, skill.id);
-      var config = stackConfig(skill, contextFor(skill, enabled, 0, states), active, true);
+      var config = stackConfig(skill, contextFor(skill, enabled, 0, states, calculated), active, true);
       var stacks = config ? stackFor(active, skill, config) : 0;
-      var context = contextFor(skill, enabled, stacks, states);
-      (enabled ? skill.effects : (skill.inactiveEffects || [])).forEach(function (effect) {
+      var context = contextFor(skill, enabled, stacks, states, calculated);
+      (enabled ? (skill.effects || []) : (skill.inactiveEffects || [])).forEach(function (effect) {
         var isGlobalDamageBuff = effect.type === 'damageMultiplier' && effect.target === 'attack';
         if ((effect.type !== 'stat' && !isGlobalDamageBuff) || !window.ToramSkillEffects.condition(effect.when, context)) return;
         var row = document.createElement('div'); row.className = 'opt-row';

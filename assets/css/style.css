@@ -146,6 +146,9 @@ button { font-family: inherit; }
 .form-group input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; vertical-align: middle; accent-color: var(--accent); }
 
 .crysta-info { width: 100%; padding-left: 155px; display: flex; flex-wrap: wrap; gap: 5px; min-height: 20px; margin-top: -3px; margin-bottom: 8px; }
+.cr-select.is-invalid { border-color: var(--danger); box-shadow: 0 0 0 2px rgba(192,57,43,.12); }
+.crysta-info.is-error { color: var(--danger-dark); font-size: 12px; font-weight: 600; }
+.optimization-basis-label { margin: 0 0 12px; color: #8a929a; font-size: 12px; font-weight: 500; }
 .stat-tag { font-size: 11.5px; padding: 3px 8px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-dark); border: 1px solid var(--accent-soft-border); font-weight: 500; }
 .stat-tag.negative { background: var(--danger-soft); color: var(--danger-dark); border-color: var(--danger-border); }
 .stat-tag.disabled { background: var(--surface-sunken); color: var(--text-tertiary); border-color: var(--border); text-decoration: line-through; }
@@ -206,6 +209,24 @@ button { font-family: inherit; }
 .final-rec h3 { margin: 0 0 10px 0; color: var(--success-dark); border-bottom: 1px solid var(--success-border); padding-bottom: 8px; font-weight: 700; font-size: 1.05em; }
 .final-rec-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--success-border); }
 .total-eff-badge { position: absolute; top: 16px; right: 16px; background: var(--success); color: white; padding: 5px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; box-shadow: 0 3px 8px -2px rgba(14,159,110,0.5); }
+
+.d4-progress-panel { display:grid; gap:9px; margin:0 0 12px; padding:13px 14px; border:1px solid var(--accent-soft-border); border-radius:var(--radius-sm); background:var(--accent-soft); }
+.d4-progress-panel[hidden] { display:none; }
+.d4-progress-head { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--accent-dark); font-size:13.5px; }
+.d4-progress-head button { flex:0 0 auto; min-height:30px; padding:5px 10px; border:1px solid var(--danger-border); border-radius:7px; background:var(--surface); color:var(--danger-dark); font:inherit; font-size:12px; font-weight:750; cursor:pointer; }
+.d4-progress-head button[hidden], .d4-progress-head button:disabled { display:none; }
+.d4-progress-track { position:relative; height:10px; overflow:hidden; border-radius:999px; background:var(--surface-sunken); box-shadow:inset 0 1px 2px rgb(0 0 0 / 10%); }
+.d4-progress-track span { display:block; width:8%; height:100%; border-radius:inherit; background:linear-gradient(90deg,var(--accent),#56c1ff); transition:width .18s ease; }
+.d4-progress-track.is-indeterminate span { width:32%; animation:d4-progress-slide 1.15s ease-in-out infinite; }
+.d4-progress-meta { color:var(--text-secondary); font-size:12px; line-height:1.45; }
+.d4-global-summary { display:grid; gap:8px; }
+.d4-global-summary-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:7px; }
+.d4-global-summary-grid span { padding:7px 8px; border:1px solid var(--border); border-radius:7px; background:var(--surface); color:var(--text-secondary); font-size:12px; }
+.d4-status-exact { border-color:var(--success-border); background:var(--success-soft); }
+.d4-status-bounded { border-color:var(--warning-border); background:var(--warning-soft); }
+.d4-status-invalid, .d4-status-cancelled { border-color:var(--danger-border); background:var(--danger-soft); }
+@keyframes d4-progress-slide { 0% { transform:translateX(-110%); } 50% { transform:translateX(210%); } 100% { transform:translateX(-110%); } }
+@media (max-width:700px) { .d4-global-summary-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .total-eff-badge { position:static; display:inline-block; margin-bottom:10px; } }
 
 .eff-item-container { margin-bottom: 12px; }
 .eff-label { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; margin-bottom: 5px; color: var(--text-secondary); }

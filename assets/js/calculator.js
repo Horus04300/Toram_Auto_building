@@ -1,4 +1,4 @@
-        function applyStat(ctx, key, val) {
+        function applyStatLegacy(ctx, key, val) {
             if(!key || isNaN(val)) return;
             var k = key.toUpperCase().trim();
             if (k === 'ATKP' || k === 'ATK%' || k === 'ATK_P') ctx.atkP += val;
@@ -14,12 +14,15 @@
             else if (k === 'INTP' || k === 'INT%' || k === 'INT_P') ctx.intP += val;
             else if (k === 'INT' || k === 'INT+') ctx.intF += val;
             else if (k === 'CDMG_P' || k === 'CDMG%' || k === 'CDMG_PCT' || k === 'CDMGP') ctx.cdmgP += val;
+            else if (k === 'VITP' || k === 'VIT%' || k === 'VIT_P') ctx.vitP += val;
+            else if (k === 'VIT' || k === 'VIT+') ctx.vitF += val;
             else if (k === 'CDMG' || k === 'CDMG+') ctx.cdmgF += val;
             else if (k === 'CRIT_P' || k === 'CRIT%' || k === 'CRITP') ctx.critP += val;
             else if (k === 'CRIT' || k === 'CRIT+') ctx.critF += val;
             else if (k === 'SRW' || k === '근거리위력') ctx.srw += val;
             else if (k === 'LRW' || k === '원거리위력') ctx.lrw += val;
-            else if (k === 'UNSHEATHE' || k === '발도위력' || k === 'UNSHEATHEP') ctx.unsheathe += val;
+            else if (k === 'UNSHEATHEP' || k === '발도위력%' || k === '발도공격%') ctx.unsheatheP += val;
+            else if (k === 'UNSHEATHE' || k === '발도위력' || k === '발도공격' || k === '발도위력+' || k === '발도공격+') ctx.unsheatheF += val;
             else if (k === 'PHYS_PIERCE' || k === '물리관통') ctx.physPierce += val;
             else if (k === 'MAG_PIERCE' || k === '마법관통') ctx.magPierce += val;
             else if (k === 'ELEM_P' || k === '속성데미지' || k === '속성에유리') ctx.elemP += val;
@@ -48,6 +51,110 @@
             else if (k === 'MATK_UP_VIT') ctx.matkUpVIT += val;
         }
 
+        function applyStat(ctx, key, val) {
+            if (window.ToramStatRegistry && typeof window.ToramStatRegistry.apply === 'function') {
+                return window.ToramStatRegistry.apply(ctx, key, val);
+            }
+            return applyStatLegacy(ctx, key, val);
+        }
+
+
+        function applyNormalAttackAmprModifier(value, modifier) {
+            var result = Math.floor(Number(value) || 0);
+            var percent = Number(modifier && modifier.percent) || 0;
+            var multiplier = Number(modifier && modifier.multiplier);
+            if (!Number.isFinite(multiplier)) multiplier = 1;
+            if (percent) result = Math.floor(result * (100 + percent) / 100);
+            if (multiplier !== 1) result = Math.floor(result * multiplier);
+            result += Number(modifier && modifier.flat) || 0;
+            return Math.floor(result);
+        }
+        function resolveNormalAttackAmpr(value, profile) {
+            profile = profile || {};
+            var beforePassive = Math.floor(Number(value) || 0);
+            var afterPassive = (Array.isArray(profile.passive) ? profile.passive : []).reduce(function (current, modifier) {
+                return applyNormalAttackAmprModifier(current, modifier);
+            }, beforePassive);
+            var candidates = (Array.isArray(profile.activeCandidates) ? profile.activeCandidates : []).map(function (modifier) {
+                return Object.assign({}, modifier, { result:applyNormalAttackAmprModifier(afterPassive, modifier) });
+            });
+            var selected = candidates.reduce(function (best, candidate) {
+                if (!best || candidate.result > best.result || (candidate.result === best.result && String(candidate.id) < String(best.id))) return candidate;
+                return best;
+            }, null);
+            return {
+                beforePassive:beforePassive,
+                afterPassive:afterPassive,
+                activeCandidates:candidates,
+                selectedActive:selected,
+                final:selected ? selected.result : afterPassive
+            };
+        }
+
+        function calculateResistanceProfile(components) {
+            var values = (Array.isArray(components) ? components : [components]).map(function(value) {
+                value = Number(value);
+                return Number.isFinite(value) ? value : 0;
+            });
+            var rawResistance = values.reduce(function(total, value) { return total + value; }, 0);
+            var multiplier = Math.round((1 - rawResistance / 100) * 1e12) / 1e12;
+            return { components:values, raw:rawResistance, effective:rawResistance, multiplier:multiplier };
+        }
+        function calculateEffectiveResistance(components) { return calculateResistanceProfile(components).effective; }
+        function calculateProcDamageProfile(modifiers) {
+            var sources = (Array.isArray(modifiers) ? modifiers : []).map(function(item) {
+                var chancePercent = Math.min(100, Math.max(0, Number(item && item.chancePercent) || 0));
+                var multiplier = Number(item && item.multiplier);
+                if (!Number.isFinite(multiplier)) multiplier = 1;
+                return { source:String(item && item.source || '확률 효과'), level:Math.max(0, Number(item && item.level) || 0), chancePercent:chancePercent, multiplier:multiplier, target:item && item.target || 'attack' };
+            });
+            return sources.reduce(function(result, item) {
+                result.triggeredMultiplier *= item.multiplier;
+                result.expectedMultiplier *= 1 + (item.chancePercent / 100) * (item.multiplier - 1);
+                return result;
+            }, { sources:sources, triggeredMultiplier:1, expectedMultiplier:1 });
+        }
+        function removeEmbeddedActiveGlobalDamage(ctx, appliedComboHit) {
+            var embeddedPercent = Number(appliedComboHit && appliedComboHit.embeddedActiveGlobalDamagePercent) || 0;
+            if (embeddedPercent) ctx.damageP = Math.round(((Number(ctx.damageP) || 0) - embeddedPercent + Number.EPSILON) * 1e6) / 1e6;
+            return ctx;
+        }
+
+
+        function numericFlag(flags, key, fallback) {
+            var value = Number(flags && flags[key]);
+            return Number.isFinite(value) ? value : (fallback === undefined ? 0 : fallback);
+        }
+        function applyAttackProfileToContext(ctx, appliedComboHit) {
+            var profile = appliedComboHit && appliedComboHit.hitProfile || null;
+            var flags = Object.assign({}, profile && profile.flags || {});
+            ctx.attackProfile = profile ? { damageType:profile.damageType, count:Number(profile.count) || 1, multiplier:Number(profile.multiplier) || 0, constant:Number(profile.constant) || 0, flags:flags } : null;
+            ctx.optimizationBasisName = appliedComboHit && appliedComboHit.skillName || '평타';
+            if (!profile) return ctx;
+            ctx.atkType = profile.damageType === 'magic' ? 'MAG' : 'PHYS';
+            if (flags.forceLongRange || flags.longRange) ctx.rangeType = 'LONG';
+            else if (flags.forceShortRange || flags.shortRange) ctx.rangeType = 'SHORT';
+            ctx.chkIsUnsheathe = Boolean(flags.unsheathe);
+            ctx.chkGuaranteedCrit = Boolean(flags.guaranteedCritical);
+            ctx.noCritical = Boolean(flags.noCritical || flags.nonCritical);
+            ctx.criticalChanceBonus = numericFlag(flags, 'criticalChanceBonus') + numericFlag(flags, 'criticalBonus') - numericFlag(flags, 'criticalChancePenalty');
+            ctx.criticalChanceMultiplier = numericFlag(flags, 'criticalChanceMultiplier', 1);
+            ctx.fixedCriticalChance = Number.isFinite(Number(flags.fixedCriticalChance)) ? Number(flags.fixedCriticalChance) : null;
+            ctx.minimumCriticalDamage = numericFlag(flags, 'minimumCriticalDamage');
+            ctx.stabilityBonus = numericFlag(flags, 'stabilityBonus');
+            ctx.physicalPierceSkillBonus = numericFlag(flags, 'physicalPierceBonus') - numericFlag(flags, 'physicalPiercePenalty');
+            ctx.magicPierceSkillBonus = numericFlag(flags, 'magicPierceBonus');
+            ctx.ignoreDefense = Boolean(flags.ignoreDefense);
+            ctx.ignoreMdef = Boolean(flags.ignoreMdef);
+            ctx.halfMdefIgnored = Boolean(flags.halfMdefIgnored);
+            ctx.useHigherRangeDamage = Boolean(flags.shortOrLongRangeHigher || flags.useHigherRangeDamage);
+            ctx.attackPowerMode = flags.usesAtkPlusMatk ? 'sum' : (flags.usesHigherAtkOrMatk ? 'higher' : (flags.usesAtkInsteadOfMatk ? 'atk' : (flags.wizardMatkBlend ? 'wizardBlend' : 'default')));
+            ctx.attackElement = flags.element === undefined ? 'none' : String(flags.element);
+            ctx.attackProfileDiagnostics = Object.keys(flags).filter(function (key) {
+                return /When$/.test(key) && typeof flags[key] === 'string';
+            });
+            return ctx;
+        }
         function skillInvestment(treeId, skillId) {
             var simulator = window.skillSimulatorState;
             var investments = simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {};
@@ -62,6 +169,10 @@
         function getBaseContext() {
             var appliedComboHit = window.ToramComboUi && typeof window.ToramComboUi.getAppliedHit === 'function'
                 ? window.ToramComboUi.getAppliedHit() : null;
+            var poisonSources = window.ToramSkillEffects && typeof window.ToramSkillEffects.learnedAilmentSources === 'function'
+                ? window.ToramSkillEffects.learnedAilmentSources('poison') : [];
+            var weakenSources = window.ToramSkillEffects && typeof window.ToramSkillEffects.learnedAilmentSources === 'function'
+                ? window.ToramSkillEffects.learnedAilmentSources('weaken') : [];
             var ctx = {
                 level: parseFloat(document.getElementById('charLevel').value) || 0,
                 strBase: parseFloat(document.getElementById('strBase').value) || 0,
@@ -90,24 +201,40 @@
                 bossPhysResist: parseFloat(document.getElementById('bossPhysResist').value) || 0,
                 bossMagResist: parseFloat(document.getElementById('bossMagResist').value) || 0,
                 skillMult: appliedComboHit ? appliedComboHit.skillMult : 1,
-                skillConst: appliedComboHit ? appliedComboHit.skillConst : 1000,
+                damageMultiplierLayers: appliedComboHit && appliedComboHit.damageMultiplierLayers ? Object.assign({}, appliedComboHit.damageMultiplierLayers) : null,
+                skillConst: appliedComboHit ? appliedComboHit.skillConst : 0,
+                optimizationBasisName: appliedComboHit && appliedComboHit.skillName || '평타',
+                appliedSkillId: appliedComboHit && appliedComboHit.skillId || '',
+                attackProfile: null,
+                procDamageModifiers: appliedComboHit && Array.isArray(appliedComboHit.procDamageModifiers) ? appliedComboHit.procDamageModifiers.map(function(item) { return Object.assign({}, item); }) : [],
 
                 chkIsUnsheathe: Boolean(appliedComboHit && appliedComboHit.unsheathe),
                 conversionLevel: skillInvestment('MagicBlade', 1),
                 conversionActive: activeBuffIsEnabled('MagicBlade:1'),
                 dualBringerLevel: skillInvestment('MagicBlade', 4),
                 dualBringerActive: activeBuffIsEnabled('MagicBlade:4'),
+                spellBurstLevel: skillInvestment('Battle', 12),
+                godspeedWieldLevel: skillInvestment('Halberd', 19),
+                poisonSources: poisonSources,
+                weakenSources: weakenSources,
+                targetWeakened: weakenSources.length > 0,
                 chkGuaranteedCrit: Boolean(appliedComboHit && appliedComboHit.guaranteedCritical),
 
                 strP: 0, strF: 0, dexP: 0, dexF: 0, intP: 0, intF: 0, agiP: 0, agiF: 0, vitP: 0, vitF: 0,
                 atkP: 0, atkF: 0, matkP: 0, matkF: 0, cdmgP: 0, cdmgF: 0, 
-                critP: 0, critF: 0, srw: 0, lrw: 0, unsheathe: 0, elemP: 0, damageP: 0, watkP: 0, watkF: 0,
-                physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0, maxMpF: 0,
+                critP: 0, critF: 0, srw: 0, lrw: 0, unsheatheP: 0, unsheatheF: 0, elemP: 0, damageP: 0, watkP: 0, watkF: 0, baseWpnAtkF: 0,
+                physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0, maxMpF: 0, maxHpF: 0, maxHpP: 0, amprF: 0, amprP: 0,
                 elementAwakening: false, magicElement: false,
+                attackElement: 'none', attackProfileDiagnostics: [], attackPowerMode: 'default', useHigherRangeDamage: false,
+                noCritical: false, criticalChanceBonus: 0, criticalChanceMultiplier: 1, fixedCriticalChance: null, minimumCriticalDamage: 0,
+                stabilityBonus: 0, physicalPierceSkillBonus: 0, magicPierceSkillBonus: 0,
+                ignoreDefense: false, ignoreMdef: false, halfMdefIgnored: false,
                 atkUpSTR: 0, atkUpDEX: 0, atkUpINT: 0, atkUpAGI: 0, atkUpVIT: 0,
-                matkUpSTR: 0, matkUpDEX: 0, matkUpINT: 0, matkUpAGI: 0, matkUpVIT: 0
+                matkUpSTR: 0, matkUpDEX: 0, matkUpINT: 0, matkUpAGI: 0, matkUpVIT: 0,
+                preservedStats: {}, statDiagnostics: []
             };
             var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
+            applyAttackProfileToContext(ctx, appliedComboHit);
             for(var i=0; i<optContainers.length; i++) {
                 var container = document.getElementById(optContainers[i]);
                 if(!container) continue;
@@ -118,15 +245,29 @@
                     applyStat(ctx, key, val);
                 } // <-- 첫 번째 누락된 중괄호 복구
             } // <-- 두 번째 누락된 중괄호 복구
+            removeEmbeddedActiveGlobalDamage(ctx, appliedComboHit);
             // 스킬별 계수·상수는 콤보 탭에서 선택한 타격을 통해 주입한다.
             ctx.skillStats = [];
+            var activeSelections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
+                ? window.ToramActiveBuffs.getSelections() : {};
+            ctx.activeBuildConversions = window.ToramSkillEffects && typeof window.ToramSkillEffects.activeBuildConversions === 'function'
+                ? window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:activeSelections }).map(function (effect) { return Object.assign({}, effect); })
+                : [];
+            ctx.normalAttackAmprProfile = window.ToramSkillEffects && typeof window.ToramSkillEffects.normalAttackAmprModifiers === 'function'
+                ? window.ToramSkillEffects.normalAttackAmprModifiers(ctx, {}, {}, { activeBuffs:activeSelections })
+                : { passive:[], activeCandidates:[] };
 
             return ctx;
         }
+        function cloneContextValue(value) {
+            if (value === null || value === undefined || typeof value !== 'object') return value;
+            if (Array.isArray(value)) return value.map(cloneContextValue);
+            var result = {};
+            for (var key in value) result[key] = cloneContextValue(value[key]);
+            return result;
+        }
         function cloneCtx(baseCtx) {
-            var newCtx = {};
-            for(var key in baseCtx) { newCtx[key] = baseCtx[key]; }
-            return newCtx;
+            return cloneContextValue(baseCtx);
         }
 
         function applyPassiveSkillStats(ctx) {
@@ -137,23 +278,33 @@
         }
 
         function applyActiveSkillStatConversions(ctx) {
-            if (!window.ToramSkillEffects || typeof window.ToramSkillEffects.activeBuildConversions !== 'function') return;
-            var selections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
-                ? window.ToramActiveBuffs.getSelections() : {};
-            window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:selections }).forEach(function (effect) {
+            (Array.isArray(ctx.activeBuildConversions) ? ctx.activeBuildConversions : []).forEach(function (effect) {
                 if (effect.conversion !== 'unsheatheToAtk') return;
                 var rate = Number(effect.value) || 0;
-                var unsheathe = Number(ctx.unsheathe) || 0;
-                var converted = rate * unsheathe;
-                ctx.unsheathe = 0;
-                ctx.atkP += converted;
-                ctx.watkP += converted;
-                ctx.atkF += converted * (Number(ctx.wpnAtk) || 0);
+                var unsheatheP = Number(ctx.unsheatheP) || 0;
+                var unsheatheF = Number(ctx.unsheatheF) || 0;
+                ctx.unsheatheP = 0;
+                ctx.unsheatheF = 0;
+                var convertedUnsheatheP = Math.floor(rate * unsheatheP);
+                var convertedUnsheatheF = Math.floor(rate * unsheatheF);
+                ctx.atkP += convertedUnsheatheP;
+                ctx.baseWpnAtkF = (Number(ctx.baseWpnAtkF) || 0) + convertedUnsheatheP;
+                ctx.atkF += convertedUnsheatheF;
             });
         }
 
-        function simulateWithCrystas(baseCtx, crystas) {
+        function simulateWithCrystas(baseCtx, crystas, snapshotOnly, summaryOnly) {
             var ctx = cloneCtx(baseCtx);
+            var legacySelections = null;
+            if ((!Array.isArray(ctx.activeBuildConversions) || !ctx.normalAttackAmprProfile) && !snapshotOnly && window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function') {
+                legacySelections = window.ToramActiveBuffs.getSelections();
+            }
+            if (!Array.isArray(ctx.activeBuildConversions) && !snapshotOnly && window.ToramSkillEffects && typeof window.ToramSkillEffects.activeBuildConversions === 'function') {
+                ctx.activeBuildConversions = window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:legacySelections || {} }).map(function (effect) { return Object.assign({}, effect); });
+            }
+            if (!ctx.normalAttackAmprProfile && !snapshotOnly && window.ToramSkillEffects && typeof window.ToramSkillEffects.normalAttackAmprModifiers === 'function') {
+                ctx.normalAttackAmprProfile = window.ToramSkillEffects.normalAttackAmprModifiers(ctx, {}, {}, { activeBuffs:legacySelections || {} });
+            }
             for(var i=0; i<crystas.length; i++) {
                 var c = crystas[i];
                 if(!c) continue;
@@ -182,32 +333,41 @@
             var totalAGI = Math.floor(ctx.agiBase * (1 + ctx.agiP/100) + ctx.agiF);
             var totalVIT = Math.floor(ctx.vitBase * (1 + ctx.vitP/100) + ctx.vitF);
             var finalMaxMP = Math.max(0, Math.floor(100 + Number(ctx.level) + totalINT * 0.1 + ctx.maxMpF));
+            var finalMaxMPAfterBuff = finalMaxMP;
+            var baseMaxHP = Math.floor((totalVIT + 22.41) * Number(ctx.level) / 3 + 93);
+            var finalMaxHP = Math.min(99999, Math.max(0, Math.floor(baseMaxHP * (1 + ctx.maxHpP / 100)) + ctx.maxHpF));
+            var baseAMPR = Math.floor(10 + finalMaxMP / 100);
+            var equipmentAndBuffAMPR = Math.floor(baseAMPR * (100 + ctx.amprP) / 100) + ctx.amprF;
+            var normalAttackAmpr = resolveNormalAttackAmpr(equipmentAndBuffAMPR, ctx.normalAttackAmprProfile);
+            var amprBeforeDual = normalAttackAmpr.final;
             
-            var statAtkUp = Math.floor(totalSTR * ctx.atkUpSTR / 100) + 
-                            Math.floor(totalDEX * ctx.atkUpDEX / 100) + 
-                            Math.floor(totalINT * ctx.atkUpINT / 100) + 
-                            Math.floor(totalAGI * ctx.atkUpAGI / 100) + 
-                            Math.floor(totalVIT * ctx.atkUpVIT / 100);
+            var statAtkUp = Math.floor(ctx.strBase * ctx.atkUpSTR / 100) +
+                            Math.floor(ctx.dexBase * ctx.atkUpDEX / 100) +
+                            Math.floor(ctx.intBase * ctx.atkUpINT / 100) +
+                            Math.floor(ctx.agiBase * ctx.atkUpAGI / 100) +
+                            Math.floor(ctx.vitBase * ctx.atkUpVIT / 100);
 
-            var statMatkUp = Math.floor(totalSTR * ctx.matkUpSTR / 100) + 
-                            Math.floor(totalDEX * ctx.matkUpDEX / 100) + 
-                            Math.floor(totalINT * ctx.matkUpINT / 100) + 
-                            Math.floor(totalAGI * ctx.matkUpAGI / 100) + 
-                            Math.floor(totalVIT * ctx.matkUpVIT / 100);
+            var statMatkUp = Math.floor(ctx.strBase * ctx.matkUpSTR / 100) +
+                            Math.floor(ctx.dexBase * ctx.matkUpDEX / 100) +
+                            Math.floor(ctx.intBase * ctx.matkUpINT / 100) +
+                            Math.floor(ctx.agiBase * ctx.matkUpAGI / 100) +
+                            Math.floor(ctx.vitBase * ctx.matkUpVIT / 100);
 
 
-            // 1. 최종 무기 공격력 연산 (무기ATK% 적용 후 무기ATK+ 합산)
-            var mainWpnBase = Math.floor(ctx.wpnAtk * (1 + ctx.watkP / 100)) + ctx.watkF;
-            var refineWpnBonus = Math.floor(ctx.wpnAtk * Math.pow(ctx.wpnRefine, 2) / 100) + ctx.wpnRefine;
+            // 1. 최종 무기 공격력: 기본 무기 공격력 → 무기 ATK%·재련 → 무기 ATK(+)
+            // 일진강풍의 발도공격% 변환은 이 첫 단계의 기본 무기 공격력에만 더한다.
+            var effectiveBaseWpnAtk = Number(ctx.wpnAtk) + (Number(ctx.baseWpnAtkF) || 0);
+            var mainWpnBase = effectiveBaseWpnAtk + Math.floor(effectiveBaseWpnAtk * ctx.watkP / 100) + ctx.watkF;
+            var refineWpnBonus = Math.floor(effectiveBaseWpnAtk * Math.pow(ctx.wpnRefine, 2) / 100) + ctx.wpnRefine;
             var baseWpnAtk = mainWpnBase + refineWpnBonus;
 
             if (ctx.subType === '화살' && (ctx.mainType === '활' || ctx.mainType === '자동활')) {
-                baseWpnAtk += Math.floor(ctx.subAtk) + Math.floor(ctx.subAtk * Math.pow(ctx.subRefine, 2)/100) + ctx.subRefine;
+                baseWpnAtk += Math.floor(ctx.subAtk);
             }
 
             var statAtk = 0;
             var statMatk = totalINT * 4 + totalDEX * 1; 
-            var matkRatio = (ctx.mainType === '지팡이' || ctx.mainType === '마도구' || (ctx.subType === '마도구' && ctx.isConversion)) ? 1.0 : 0.0;
+            var matkRatio = (ctx.mainType === '지팡이' || ctx.mainType === '마도구') ? 1.0 : 0.0;
             var wpnMatkContrib = Math.floor(mainWpnBase * matkRatio);
             var m = ctx.mainType;
 
@@ -227,14 +387,16 @@
             else if (m === '지팡이') { statAtk = totalSTR*3 + totalINT*1; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
             else if (m === '마도구') { statAtk = totalINT*2 + totalAGI*2; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
             else if (m === '권갑') { statAtk = totalAGI*2 + totalDEX*0.5 + totalSTR*0.5; statMatk = totalINT*4 + totalDEX*1; matkRatio = 0.5; }
-            else if (m === '선풍창') { statAtk = totalSTR*2.5 + totalAGI*1.5; statMatk = totalINT*3 + totalDEX*1; }
-            else if (m === '발도검') { statAtk = totalDEX*2.5 + totalSTR*1.5; statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '선풍창') { statAtk = Math.floor(totalSTR * 2.5) + Math.floor(totalAGI * 1.5); statMatk = totalINT*3 + totalDEX*1; }
+            else if (m === '발도검') { statAtk = Math.floor(totalDEX * 2.5) + Math.floor(totalSTR * 1.5); statMatk = totalINT*3 + totalDEX*1; }
             else { statAtk = totalSTR*1; statMatk = totalINT*3 + totalDEX*1; }
 
             var conversionAddMatk = 0;
-            if (ctx.conversionActive && ctx.conversionLevel > 0) {
-                conversionAddMatk = baseWpnAtk * Math.pow(ctx.conversionLevel, 2) / 100;
-                if (ctx.mainType === '권갑') conversionAddMatk /= 2;
+            var conversionIntMatk = 0;
+            if (ctx.conversionLevel > 0 && ['한손검','양손검','자동활','권갑'].indexOf(ctx.mainType) >= 0) {
+                conversionAddMatk = Math.floor(baseWpnAtk * Math.pow(ctx.conversionLevel, 2) / 100);
+                if (ctx.mainType === '권갑') conversionAddMatk = Math.floor(conversionAddMatk / 2);
+                else conversionIntMatk = Math.floor(totalINT * ctx.conversionLevel * .1);
             }
 
             //  서브 마도구 페널티 및 '마법전사의 마음가짐' 연산 로직
@@ -255,9 +417,8 @@
             }
 
 
-            // 3. 무기별 MATK 반영률 (지팡이, 마도구, 서브마도구+컨버전 시 1.0 / 그 외 0.0)     
-            var matkRatio = (ctx.mainType === '지팡이' || ctx.mainType === '마도구' || (ctx.subType === '마도구' && ctx.isConversion)) ? 1.0 : 0.0;
-            var wpnMatkContrib = Math.floor(baseWpnAtk * matkRatio);
+            // 3. 무기별 MATK 반영률은 위 무기 분기에서 확정한다 (지팡이·마도구 100%, 권갑 50%).
+            wpnMatkContrib = Math.floor(baseWpnAtk * matkRatio);
 
             // 4. 최종 물리 ATK 산출
             var preFinalAtk = baseWpnAtk + statAtk + Number(ctx.level) + statAtkUp;
@@ -267,10 +428,11 @@
             var finalSubAtk = 0;
             var finalSubStab = 0;
             var isDualSword = (ctx.mainType === '한손검' && ctx.subType === '한손검(듀얼소드)');
+            var finalAMPR = amprBeforeDual * (isDualSword ? 2 : 1);
             
             if (isDualSword) {
                 // 서브 무기 최종 공격력 (재련치 제곱을 200으로 나눔)
-                var subWpnBase = Math.floor(ctx.subAtk + (ctx.subAtk * ctx.watkP / 100) + (ctx.subAtk * Math.pow(ctx.subRefine, 2) / 200) + ctx.subRefine + ctx.watkF);
+                var subWpnBase = Number(ctx.subAtk) + Math.floor(ctx.subAtk * ctx.watkP / 100) + Math.floor(ctx.subAtk * Math.pow(ctx.subRefine, 2) / 200) + Number(ctx.subRefine) + ctx.watkF;
                 
                 // 서브 스탯 공격력 (통상 듀얼소드 서브 스탯은 STR 1 + AGI 3)
                 var subStatAtk = Math.floor((totalSTR * 1) + (totalAGI * 3));
@@ -280,7 +442,7 @@
                 finalSubAtk = Math.floor(preFinalSubAtk * (1 + ctx.atkP / 100)) + ctx.atkF;
                 
                 // 서브 안정률 (최대 100%)
-                finalSubStab = Math.floor(ctx.subStab * 0.5 + totalSTR * 0.06 + totalAGI * 0.04 + ctx.stability);
+                finalSubStab = Math.floor(ctx.subStab * 0.5) + Math.floor(totalSTR * 0.06) + Math.floor(totalAGI * 0.04) + ctx.stability;
                 if (finalSubStab > 100) finalSubStab = 100;
                 
                 // 듀얼소드 최종 ATK 합산
@@ -290,8 +452,9 @@
 
 
             // 최종 마법 MATK 산출 
-            var preFinalMatk = wpnMatkContrib + statMatk + Number(ctx.level) + (conversionAddMatk || 0) + statMatkUp;
-            var finalMATK = Math.floor(preFinalMatk * (1 + ctx.matkP / 100)) + ctx.matkF;
+            var preFinalMatk = wpnMatkContrib + statMatk + Number(ctx.level) + statMatkUp;
+            var conversionFlatMatk = Math.floor(conversionAddMatk) + Math.floor(conversionIntMatk);
+            var finalMATK = Math.floor(preFinalMatk * (1 + ctx.matkP / 100)) + ctx.matkF + conversionFlatMatk;
             
             
             var baseCDMG = (totalSTR >= totalAGI) ? 150 + Math.floor(totalSTR/5) : 150 + Math.floor((totalSTR+totalAGI)/10);
@@ -299,7 +462,13 @@
             if (calcCDMG > 300) calcCDMG = 300 + Math.floor((calcCDMG - 300)/2);
             
             var baseCrit = 25 + Math.floor(ctx.crtBase / 3.4);
-            var finalCrit = Math.floor(baseCrit * (1 + ctx.critP/100)) + ctx.critF;
+            var normalAttackCritRaw = Math.floor(baseCrit * (1 + ctx.critP/100)) + ctx.critF;
+            var normalAttackCrit = normalAttackCritRaw - ctx.bossCritResist;
+            var finalCrit = normalAttackCritRaw;
+            var attackCritMultiplier = Number(ctx.criticalChanceMultiplier); if (!Number.isFinite(attackCritMultiplier)) attackCritMultiplier = 1;
+            finalCrit = Math.floor((finalCrit + (Number(ctx.criticalChanceBonus) || 0)) * attackCritMultiplier);
+            if (ctx.fixedCriticalChance !== null && ctx.fixedCriticalChance !== undefined && Number.isFinite(Number(ctx.fixedCriticalChance))) finalCrit = Number(ctx.fixedCriticalChance);
+            if (Number(ctx.minimumCriticalDamage)) calcCDMG = Math.max(calcCDMG, Number(ctx.minimumCriticalDamage));
             
             var baseASPDConst = BASE_ASPD_MAP[m] || 100;
             var statAspd = 0;
@@ -327,7 +496,7 @@
 
             var aspdMotionBonus = finalASPD >= 1000 ? (finalASPD - 1000) / 180 : 0;
             var aspdMotionFloor = Math.min(50, Math.floor(aspdMotionBonus));
-            var finalMotionSpeed = aspdMotionFloor + (ctx.motionSpeed || 0);
+            var finalMotionSpeed = Math.min(50, aspdMotionFloor + (ctx.motionSpeed || 0));
 
             var cspdCastRed = finalCSPD <= 1000 ? (finalCSPD / 20) : (50 + (finalCSPD - 1000) / 180);
             cspdCastRed = Math.min(100, cspdCastRed);
@@ -345,7 +514,7 @@
             else if(m==='선풍창') statStab = (totalSTR + totalDEX)/40;
             else if(m==='발도검') statStab = (totalSTR*3 + totalDEX)/40;
             
-            var physStab = ctx.wpnStab + ctx.stability + Math.floor(statStab);
+            var physStab = ctx.wpnStab + ctx.stability + (Number(ctx.stabilityBonus) || 0) + Math.floor(statStab);
             if (ctx.subType === '화살' && (ctx.mainType === '활' || ctx.mainType === '자동활')) {
                 physStab += ctx.subStab;
             }
@@ -354,6 +523,7 @@
 // --- 1. 약점 속성 및 순수 기본 INT 기준 속성에 유리 보너스 계산 ---
     var hasElementAwakening = Boolean(ctx.elementAwakening);
     var hasMagicElement = Boolean(ctx.magicElement);
+    var attacksWeakness = hasElementAwakening || ctx.attackElement === 'weakness';
 
     // 내부 엔진/외부 컨텍스트의 속성에 유리 안전 확보
     var baseElemDmg = 0;
@@ -366,7 +536,7 @@
     var currentElemDmg = baseElemDmg;
     var elemTipText = `기본 장비 속성에 유리: +${baseElemDmg}%\n`;
 
-    if (hasElementAwakening) {
+    if (attacksWeakness) {
         currentElemDmg += 25;
         elemTipText += `약점 속성 공격 보너스: +25%\n`;
     }
@@ -400,20 +570,18 @@
     var cdmgTip = `기초 크뎀: ${baseCDMG}\n옵션 보정: +${ctx.cdmgP}%, +${ctx.cdmgF}\n`;
 
     if (isMag) {
-        // 마법 크리 반영률: 스펠 버스트(25%) + 쇠약(50%) = 기본 75% 상시 적용
-        var magCritReflect = 25 + 50; 
-        if (ctx.dualBringerActive && ctx.subType === '마도구' && (totalSTR >= totalINT)) {
+        var spellBurstReflect = 2.5 * (Number(ctx.spellBurstLevel) || 0);
+        var weakenCriticalReflect = ctx.targetWeakened && (ctx.mainType === '지팡이' || ctx.mainType === '마도구' || attacksWeakness) ? 50 : 0;
+        var magCritReflect = spellBurstReflect + weakenCriticalReflect;
+        if (ctx.targetWeakened && ctx.dualBringerActive && ctx.subType === '마도구' && (totalSTR >= totalINT)) {
             magCritReflect += 2.5 * ctx.dualBringerLevel;
-        }
-        if (ctx.mainType === '지팡이' && ctx.element === '무속성') {
-            magCritReflect += 25;
         }
 
         finalCritRate = Math.floor(finalCrit * (magCritReflect / 100));
-        critTip += `마법 크리 반영률: ${magCritReflect}% (최종: ${finalCritRate})`;
+        critTip += `마법 크리 반영률: ${magCritReflect}% (스펠 버스트 ${spellBurstReflect}%${weakenCriticalReflect ? ' + 쇠약 50%' : ''}, 최종: ${finalCritRate})`;
         
-        var magCdmgReflect = 50 + 25; // 기본 50% + 스펠 버스트 25%
-        if (ctx.dualBringerActive && ctx.subType === '마도구' && (totalINT > totalSTR)) {
+        var magCdmgReflect = 50 + spellBurstReflect;
+        if (ctx.dualBringerActive && (totalINT > totalSTR)) {
             magCdmgReflect += 2.5 * ctx.dualBringerLevel;
         }
         
@@ -432,6 +600,10 @@
         finalCritRate = 1000;
         critTip = "특성/스킬에 의해 크리티컬 확률이 확정(100% 이상)으로 고정되었습니다.\n(적 크리티컬 저항 무시)";
     }
+    if (ctx.noCritical) {
+        finalCritRate = 0;
+        critTip = '선택한 공격은 크리티컬이 발생하지 않습니다.';
+    }
 
     var effectiveCritRate = finalCritRate - ctx.bossCritResist;
     var critRateEv = Math.max(0, Math.min(effectiveCritRate, 100)) / 100;
@@ -439,12 +611,21 @@
     var avgStabMult = (100 + finalStab) / 200;
 
     var targetDef = isMag ? ctx.bossMdef : ctx.bossDef;
-    var targetPierce = isMag ? ctx.magPierce : ctx.physPierce;
-    var targetResist = isMag ? ctx.bossMagResist : ctx.bossPhysResist;
+    var targetPierce = isMag ? ctx.magPierce + (Number(ctx.magicPierceSkillBonus) || 0) : ctx.physPierce + (Number(ctx.physicalPierceSkillBonus) || 0);
+    var targetResistanceComponents = [isMag ? ctx.bossMagResist : ctx.bossPhysResist];
+    if (Array.isArray(ctx.additionalTargetResistances)) targetResistanceComponents = targetResistanceComponents.concat(ctx.additionalTargetResistances);
+    var targetResistance = calculateResistanceProfile(targetResistanceComponents);
     var effectiveDef = Math.floor(targetDef * (1 - (targetPierce / 100)));
+    if ((isMag && ctx.ignoreMdef) || (!isMag && ctx.ignoreDefense)) effectiveDef = 0;
+    else if (isMag && ctx.halfMdefIgnored) effectiveDef = Math.floor(effectiveDef / 2);
     if (effectiveDef < 0) effectiveDef = 0;
     
-    var finalSkillMult = ctx.skillMult;
+    var damageMultiplierLayers = ctx.damageMultiplierLayers || {};
+    var layeredSkillMultiplier = Number(damageMultiplierLayers.skill);
+    var finalSkillMult = Number.isFinite(layeredSkillMultiplier) ? layeredSkillMultiplier : ctx.skillMult;
+    var passiveDamageMult = Number(damageMultiplierLayers.passive); if (!Number.isFinite(passiveDamageMult)) passiveDamageMult = 1;
+    var activeDamageLayerMult = Number(damageMultiplierLayers.active); if (!Number.isFinite(activeDamageLayerMult)) activeDamageLayerMult = 1;
+    var comboDamageMult = Number(damageMultiplierLayers.combo); if (!Number.isFinite(comboDamageMult)) comboDamageMult = 1;
     var finalSkillConst = ctx.skillConst;
 
     if (ctx.skillStats) {
@@ -473,20 +654,54 @@
 
 
             var baseAtkRaw = isMag ? finalMATK : finalATK;
+            if (ctx.attackPowerMode === 'sum') baseAtkRaw = finalATK + finalMATK;
+            else if (ctx.attackPowerMode === 'higher') baseAtkRaw = Math.max(finalATK, finalMATK);
+            else if (ctx.attackPowerMode === 'atk') baseAtkRaw = finalATK;
+            else if (ctx.attackPowerMode === 'wizardBlend') baseAtkRaw = finalATK * .25 + finalMATK * .75;
             var lvDiff = ctx.level - ctx.bossLevel;
 
-            var rawAtkBase = baseAtkRaw + lvDiff + finalSkillConst - effectiveDef;
+            // 원문 순서: (ATK+레벨 차)×내성 + 발도공격(+) + 상수 - 관통 후 방어력.
+            var resistMult = targetResistance.multiplier;
+            var rawAtkBase = Math.floor((baseAtkRaw + lvDiff) * resistMult);
+            if (ctx.chkIsUnsheathe) rawAtkBase += Number(ctx.unsheatheF) || 0;
+            rawAtkBase += finalSkillConst - effectiveDef;
             var isPierced = (rawAtkBase > 0);
             if(rawAtkBase < 1) rawAtkBase = 1;
 
             var rangeDmgPct = (ctx.rangeType === 'SHORT') ? ctx.srw : ctx.lrw;
+            if (ctx.useHigherRangeDamage) rangeDmgPct = Math.max(ctx.srw, ctx.lrw);
             var rangeMult = 1 + (rangeDmgPct / 100);
-            var unsheatheMult = ctx.chkIsUnsheathe ? (1 + ctx.unsheathe / 100) : 1;
-            var resistMult = 1 - (targetResist / 100);
+            var unsheatheMult = ctx.chkIsUnsheathe ? (1 + ctx.unsheatheP / 100) : 1;
             var elemMult = 1 + (ctx.elemP / 100);
             var activeBuffDamageMult = 1 + (ctx.damageP / 100);
 
-            var damageFactor = rawAtkBase * finalSkillMult * evCdmgMult * rangeMult * unsheatheMult * elemMult * activeBuffDamageMult * resistMult * avgStabMult;
+            // 원문에서 곱셈으로 표시된 각 단계는 단계마다 소수점을 버린다.
+            var damageFactor = Math.floor(rawAtkBase * evCdmgMult);
+            damageFactor = Math.floor(damageFactor * elemMult);
+            damageFactor = Math.floor(damageFactor * finalSkillMult);
+            damageFactor = Math.floor(damageFactor * unsheatheMult);
+            damageFactor = Math.floor(damageFactor * avgStabMult);
+            damageFactor = Math.floor(damageFactor * passiveDamageMult);
+            damageFactor = Math.floor(damageFactor * rangeMult);
+            damageFactor = Math.floor(damageFactor * activeDamageLayerMult);
+            damageFactor = Math.floor(damageFactor * activeBuffDamageMult);
+            damageFactor = Math.floor(damageFactor * comboDamageMult);
+            var procDamage = calculateProcDamageProfile(ctx.procDamageModifiers);
+            var procTriggeredDamageFactor = damageFactor * procDamage.triggeredMultiplier;
+            var procExpectedDamageFactor = damageFactor * procDamage.expectedMultiplier;
+            if (summaryOnly) return { ctx:{ statDiagnostics:ctx.statDiagnostics || [] }, finalMaxHP:finalMaxHP, finalMaxMP:finalMaxMP, amprBeforeDual:amprBeforeDual, normalAttackCrit:normalAttackCrit, finalASPD:finalASPD, optimizationDamageFactor:procExpectedDamageFactor };
+            var poisonDefenseAverage = (Number(ctx.bossDef) + Number(ctx.bossMdef)) / 2;
+            var poisonDefenseRatio = Number(ctx.bossLevel) > 0 ? Math.min(.5, poisonDefenseAverage / (Number(ctx.bossLevel) * 6)) : 0;
+            var poisonResistanceAverage = (Number(ctx.bossPhysResist) + Number(ctx.bossMagResist)) / 2;
+            var poisonDamageProfile = {
+                available: Array.isArray(ctx.poisonSources) && ctx.poisonSources.length > 0,
+                sources: Array.isArray(ctx.poisonSources) ? ctx.poisonSources.map(function (item) { return Object.assign({}, item); }) : [],
+                defenseAverage: poisonDefenseAverage,
+                defenseRatio: poisonDefenseRatio,
+                resistanceAverage: poisonResistanceAverage,
+                damage: null
+            };
+            if (poisonDamageProfile.available) poisonDamageProfile.damage = (totalDEX + (finalATK + finalMATK) * poisonDefenseRatio) * (1 - poisonResistanceAverage / 100);
 
             var extraAtkTip = isDualSword ? `\n\n[듀얼소드 합산]\n메인 + (서브ATK * 서브안정률)\n(서브 무기 ATK: ${finalSubAtk} / 서브 안정률: ${finalSubStab}%)` : '';
 
@@ -494,16 +709,28 @@
                 ctx: ctx, isPierced: isPierced, rawAtkBase: rawAtkBase,
                 finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
                 finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: ctx.chkGuaranteedCrit ? "확정치명타" : finalCritRate,
-                finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab, finalMaxMP: finalMaxMP,
+                normalAttackCrit: normalAttackCrit,
+                finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab,
+                finalMaxHP: finalMaxHP, finalMaxMP: finalMaxMP, finalMaxMPAfterBuff: finalMaxMPAfterBuff,
+                baseAMPR: baseAMPR, equipmentAndBuffAMPR: equipmentAndBuffAMPR,
+                amprBeforeNormalAttackActive: normalAttackAmpr.afterPassive, normalAttackAmprActiveCandidates: normalAttackAmpr.activeCandidates, selectedNormalAttackAmprActive: normalAttackAmpr.selectedActive,
+                amprBeforeDual: amprBeforeDual, finalAMPR: finalAMPR,
+                finalMotionSpeed: finalMotionSpeed, finalCastReduction: totalCastRed,
                 finalWeaponAttack: baseWpnAtk,
                 finalSubAtk: finalSubAtk,    // 서브ATK 추가
                 finalSubStab: finalSubStab,  // 서브안정률 추가
                 isDualSword: isDualSword,    // 듀얼소드 여부 추가
                 damageFactor: damageFactor,
+                optimizationDamageFactor: procExpectedDamageFactor,
+                procTriggeredDamageFactor: procTriggeredDamageFactor,
+                procExpectedDamageFactor: procExpectedDamageFactor,
+                procDamageProfile: procDamage,
+                targetResistance: targetResistance,
+                poisonDamageProfile: poisonDamageProfile,
 
                 tooltips: {
                     atkTip: `무기ATK(${baseWpnAtk}) + 스탯ATK(${statAtk}) + 레벨(${ctx.level}) ${statAtkUp > 0 ? '+스탯ATK업(' + statAtkUp + ')' : ''} = ${preFinalAtk}\n최종비율/고정: +${ctx.atkP}%, +${ctx.atkF}`,
-                    matkTip: `무기ATK(${wpnMatkContrib}) + 스탯MATK(${statMatk}) + 레벨(${ctx.level}) ${(conversionAddMatk || 0) > 0 ? '+컨버전(' + conversionAddMatk + ')' : ''} ${statMatkUp > 0 ? '+스탯MATK업(' + statMatkUp + ')' : ''} = ${preFinalMatk}\n최종비율/고정: +${ctx.matkP}%, +${ctx.matkF}`,
+                    matkTip: `무기ATK(${wpnMatkContrib}) + 스탯MATK(${statMatk}) + 레벨(${ctx.level}) ${statMatkUp > 0 ? '+스탯MATK업(' + statMatkUp + ')' : ''} = ${preFinalMatk}\n최종비율/고정: +${ctx.matkP}%, +${ctx.matkF}${conversionFlatMatk > 0 ? ', 컨버전 MATK(+) +' + conversionFlatMatk : ''}`,
                     motionTip: `ASPD보정(+${Math.min(50, aspdMotionBonus)}%) + 장비/크리스타(+${ctx.motionSpeed}%) = +${finalMotionSpeed}%`, // 👈 여기에 쉼표(,) 추가!!!
                     aspdTip: `기초(${baseASPDConst}) + 스탯ASP(${Math.floor(statAspd)}) + 레벨(${ctx.level}) = ${preAspd}\n비율/고정: +${ctx.aspdP + armorAspdP}%, +${ctx.aspdF}`,
                     cspdTip: `레벨(${ctx.level}) + AGI보정(${Math.floor(1.16*totalAGI)}) + DEX보정(${Math.floor(2.94*totalDEX)}) = ${preCspd}\n비율/고정: +${ctx.cspdP}%, +${ctx.cspdF}`,
@@ -515,3 +742,10 @@
         }
 
 // 실시간 경고창 제어 및 검사 함수
+
+window.ToramCalculationKernel = Object.freeze({
+    evaluateContext: function (baseContext, candidates, summaryOnly) { return simulateWithCrystas(baseContext, candidates || [], true, summaryOnly === true); },
+    cloneContext: cloneCtx,
+    applyStat: applyStat,
+    resolveNormalAttackAmpr: resolveNormalAttackAmpr
+});

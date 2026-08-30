@@ -144,6 +144,7 @@
 
         <div id="resultArea" class="result-box" style="display: none;">
 
+            <p id="optimizationBasisLabel" class="optimization-basis-label">[평타] 기준 최적화됨</p>
             <div id="defWarning" class="def-warning" style="display:none;">
                  [방어력 초과 경고]<br>현재 공격력과 스킬 상수의 합이 적의 실방어력을 뚫지 못해 기본 타격 데미지가 바닥(1)을 친 상태입니다!<br>
                 <span style="font-weight:normal; font-size:13px;">이 상태에서는 공격력이나 관통력이 아주 조금만 올라도 데미지가 수백%씩 폭증하는 수학적 착시 현상(효율 과표집)이 발생합니다. 정확한 효율을 보시려면 스킬 상수를 높은 값으로 조정하거나, 적 방어력을 낮춰주세요.</span>
@@ -179,13 +180,19 @@
             </div>
 
             <div class="res-title" style="margin-top:40px; border-color:#27ae60; color:#27ae60; display:flex; justify-content:space-between; align-items:center;">
-                <span>🏆 === 부위별 최적 크리스타 추천 (Top 3) ===</span>
+                <span>🏆 === 전역 최적 크리스타 추천 ===</span>
                 <span id="top3CurrentDmgBadge" style="font-size:13px; font-weight:bold; background:#fdf2e9; color:#d35400; padding:4px 12px; border-radius:999px; border:1px solid #e67e22; display:none; letter-spacing:0;"></span>
-            </div>            <div class="top3-container" id="top3ListContainer"></div>
+            </div>
+            <section class="d4-progress-panel" id="d4OptimizationProgress" aria-live="polite" hidden>
+                <div class="d4-progress-head"><strong id="d4OptimizationStatus">전역 후보를 준비하고 있습니다.</strong><span><button type="button" id="d4OptimizationContinue" hidden>정밀 계산 계속</button><button type="button" id="d4OptimizationCancel">계산 취소</button></span></div>
+                <div class="d4-progress-track" id="d4OptimizationTrack" role="progressbar" aria-label="전역 최적화 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuetext="후보 준비 중"><span id="d4OptimizationBar"></span></div>
+                <div class="d4-progress-meta" id="d4OptimizationMeta">캐시와 입력 스냅샷을 확인하고 있습니다.</div>
+            </section>
+            <div class="top3-container" id="top3ListContainer"></div>
 
             <div class="final-rec" id="finalRecContainer">
                 <div class="total-eff-badge" id="globalEffTextBadge"></div>
-                <h3>👑 최적 딜량 최종 추천 조합</h3>
+                <h3>👑 전역 추천 조합</h3>
                 <div id="finalRecText" style="font-size:15px; font-weight:bold; color:#2c3e50; line-height:1.6;"></div>
                 <div class="final-rec-tags" id="finalRecTags"></div>
             </div>
@@ -250,10 +257,19 @@
     <script src="assets/js/skill-data-validator.js"></script>
     <script src="assets/js/skill-effect-engine.js"></script>
     <script src="assets/js/data/crysta-data.js"></script>
+    <script src="assets/js/stat-registry.js"></script>
     <script src="assets/js/crysta-ui.js"></script>
     <script src="assets/js/combo-sequence-engine.js"></script>
     <script src="assets/js/calculator.js"></script>
+    <script src="assets/js/build-evaluator.js"></script>
+    <script src="assets/js/d4-source-profile.js"></script>
+    <script src="assets/js/d4-pair-partition.js"></script>
+    <script src="assets/js/d4-problem-compiler.js"></script>
+    <script src="assets/js/d4-global-optimizer.js"></script>
+    <script src="assets/js/d4-worker-client.js"></script>
+    <script src="assets/js/d4-native-client.js"></script>
     <script src="assets/js/optimizer.js"></script>
+    <script src="assets/js/official-level-cap.js"></script>
     <script src="assets/js/status-points.js"></script>
     <script src="assets/js/skill-tree.js"></script>
     <script src="assets/js/tabs.js"></script>
