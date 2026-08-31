@@ -5,6 +5,9 @@ mod d4_native_evaluator;
 #[allow(dead_code)]
 #[path = "../d4_native_solver.rs"]
 mod d4_native_solver;
+#[allow(dead_code)]
+#[path = "../d4_parallel_runtime.rs"]
+mod d4_parallel_runtime;
 
 use serde::Deserialize;
 use std::io::{self, Read};

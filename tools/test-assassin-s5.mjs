@@ -52,7 +52,7 @@ p = E.profile('Assassin:13', base(), combat, { venomSnatchStacks:2 });
 close(p.hits[0].multiplier, 10.3, '데스 리셉션 한손검·단검 Lv10 계수');
 close(p.hits[1].multiplier, 5.15, '데스 리셉션 주변 계수');
 ok(!E.profile('Assassin:2', base('한손검', '없음'), combat, {}).available, '퓨네빈테 단검/인술 두루마리 전용');
-levels(0, { 0:10, 1:10 });
+levels(0, { 0:10, 1:10, 5:10 });
 let result = Q.evaluate([{ skillId:'Assassin:1', inputs:{ retreatedAtLeast3m:true }, tag:'none' }, { skillId:'Assassin:5', tag:'none' }, { skillId:'Assassin:0', inputs:{ position:0 }, tag:'none' }], base(), combat, { maxMp:1000 });
 close(result.entries[2].hits[0].effectiveMultiplier, 2.4, '백스텝 강화는 중간 비공격 스킬을 지나 다음 어쌔신 스탭에만 적용');
 result = Q.evaluate([{ skillId:'Assassin:1', inputs:{ retreatedAtLeast3m:false }, tag:'none' }, { skillId:'Assassin:0', inputs:{ position:0 }, tag:'none' }], base(), combat, { maxMp:1000 });

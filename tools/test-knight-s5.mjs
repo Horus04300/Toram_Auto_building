@@ -46,6 +46,7 @@ close(p.hits[0].constant, 300, '바인드 스트라이크 Lv10 방패 상수');
 p = E.profile('Knight:11', base(), combat, { consumedStacks:2 });
 ok(p.hits[0].count === 3, '루브닐 소비 2스택 3타');
 close(p.hits[0].multiplier, 12, '루브닐 Lv10 기본 DEX 계수');
+ok(p.hits[0].resolvedFlags.longRange === false, '루브닐은 명시적으로 근거리 타격이어야 한다');
 ok(!E.profile('Knight:2', base('한손검', '없음'), combat, {}).available, 'P 디펜스 방패 전용');
 ok(!E.profile('Knight:9', base('양손검', '없음'), combat, {}).available, '블링크 소드 한손검 전용');
 levels(0, { 6:10, 0:10 });

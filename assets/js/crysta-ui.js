@@ -171,12 +171,23 @@
             var infoDiv = document.getElementById(inputEl.id + "_info");
             if(!infoDiv) return;
             
-            if(!val) { infoDiv.innerHTML = ""; return; }
-            var c = null;
-            for(var i=0; i<crystaDataJson.length; i++) {
-                if(crystaDataJson[i].name === val) { c = crystaDataJson[i]; break; }
+            if(!val) {
+                inputEl.classList.remove('is-invalid');
+                inputEl.removeAttribute('aria-invalid');
+                infoDiv.classList.remove('is-error');
+                infoDiv.innerHTML = "";
+                return;
             }
-            if(!c) { infoDiv.innerHTML = ""; return; } // 입력중에는 아무것도 띄우지 않음
+            var c = getCrystaByName(val);
+            if(!c) {
+                inputEl.classList.add('is-invalid');
+                inputEl.setAttribute('aria-invalid', 'true');
+                infoDiv.classList.add('is-error');
+                infoDiv.textContent = '목록에 없는 크리스타입니다. 이름을 확인해야 계산할 수 있습니다.';
+                return;
+            }
+            inputEl.classList.remove('is-invalid'); inputEl.removeAttribute('aria-invalid');
+            infoDiv.classList.remove('is-error');
             
             var ctx = {
                 mainType: document.getElementById('mainWeaponType').value,
@@ -231,10 +242,11 @@
                 '<option value="DEXP">DEX %</option><option value="DEX">DEX (+)</option>' +
                 '<option value="AGIP">AGI %</option><option value="AGI">AGI (+)</option>' +
                 '<option value="INTP">INT %</option><option value="INT">INT (+)</option>' +
+                '<option value="VITP">VIT %</option><option value="VIT">VIT (+)</option>' +
                 '<option value="CDMG_P">크리티컬데미지 (%)</option><option value="CDMG">크리티컬데미지 (+)</option>' +
                 '<option value="CRIT_P">크리티컬확률 (%)</option><option value="CRIT">크리티컬확률 (+)</option>' +
                 '<option value="SRW">근거리위력 (%)</option><option value="LRW">원거리위력 (%)</option>' +
-                '<option value="UNSHEATHE">발도위력 (%)</option>' +
+                '<option value="UNSHEATHEP">발도위력 (%)</option><option value="UNSHEATHE">발도위력 (+)</option>' +
                 '<option value="PHYS_PIERCE">물리관통 (%)</option><option value="MAG_PIERCE">마법관통 (%)</option>' +
                 '<option value="ELEM_P">속성에 유리 (%)</option>' +
                 '<option value="ELEM_AWAKENING">속성 각성</option><option value="MAGIC_ELEMENT">마력 속성</option>' +
@@ -242,6 +254,16 @@
                 '<option value="ASPD">ASPD (+)</option><option value="ASPD_P">ASPD (%)</option>' +
                 '<option value="CSPD">CSPD (+)</option><option value="CSPD_P">CSPD (%)</option>' +
                 '<option value="STABILITY">안정률 (%)</option>' +
+                '<option value="MAXHP">최대 HP (+)</option><option value="MAXHPP">최대 HP (%)</option>' +
+                '<option value="MAXMP">최대 MP (+)</option>' +
+                '<option value="AMPR">공격 MP 회복 (+)</option><option value="AMPRP">공격 MP 회복 (%)</option>' +
+                '<option value="PHYS_RES">물리 내성 (%)</option><option value="MAG_RES">마법 내성 (%)</option>' +
+                '<option value="DEF">DEF (+)</option><option value="DEFP">DEF (%)</option>' +
+                '<option value="MDEF">MDEF (+)</option><option value="MDEFP">MDEF (%)</option>' +
+                '<option value="FLEE">회피 (+)</option><option value="FLEEP">회피 (%)</option>' +
+                '<option value="ACC">명중 (+)</option><option value="ACCP">명중 (%)</option>' +
+                '<option value="HP_REGEN">HP 자연회복 (+)</option><option value="HP_REGENP">HP 자연회복 (%)</option>' +
+                '<option value="MP_REGEN">MP 자연회복 (+)</option><option value="MP_REGENP">MP 자연회복 (%)</option>' +
                 '<option value="ATK_UP_STR">ATK업 (STR %)</option>' +
                 '<option value="ATK_UP_DEX">ATK업 (DEX %)</option>' +
                 '<option value="ATK_UP_INT">ATK업 (INT %)</option>' +
@@ -421,6 +443,20 @@ function instantCrystaCheck(inp, newValue) {
     inp.value = newValue;
     renderCrystaInfo(inp);
     return true;
+}
+function validateCrystaInputs() {
+    var invalid = [];
+    document.querySelectorAll('.cr-select').forEach(function (input) {
+        var value = input.value.trim();
+        renderCrystaInfo(input);
+        if (value && !getCrystaByName(value)) invalid.push(input);
+    });
+    if (invalid.length) {
+        var resultArea = document.getElementById('resultArea');
+        if (resultArea) resultArea.style.display = 'none';
+        invalid[0].focus();
+    }
+    return invalid.length === 0;
 }
 
 

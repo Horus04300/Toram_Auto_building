@@ -436,6 +436,108 @@ if (document.readyState === 'loading') {
             return Number.isFinite(number) ? Math.floor(number).toLocaleString() : '-';
         }
 
+        function d4FormatMetric(value, unit, precision) {
+            var number = Number(value);
+            if (!Number.isFinite(number)) return '-';
+            var digits = precision === undefined ? 0 : precision;
+            var text = digits > 0 ? number.toFixed(digits) : Math.floor(number).toLocaleString();
+            return text + (unit || '');
+        }
+
+        function d4MetricDelta(current, recommended, unit, precision) {
+            var before = Number(current), after = Number(recommended);
+            if (!Number.isFinite(before) || !Number.isFinite(after)) return { text:'-', direction:'same' };
+            var delta = after - before;
+            var threshold = precision ? Math.pow(10, -precision) / 2 : 0.5;
+            if (Math.abs(delta) < threshold) return { text:'유지', direction:'same' };
+            var absolute = d4FormatMetric(Math.abs(delta), unit, precision);
+            var percent = Math.abs(before) > 1e-9 ? ' · ' + (delta > 0 ? '+' : '-') + (Math.abs(delta) / Math.abs(before) * 100).toFixed(2) + '%' : '';
+            return { text:(delta > 0 ? '+' : '-') + absolute + percent, direction:delta > 0 ? 'positive' : 'negative' };
+        }
+
+        function d4OutcomeMetric(outcome, path) {
+            var value = outcome;
+            for (var index = 0; index < path.length && value; index++) value = value[path[index]];
+            return value;
+        }
+
+        function d4SlotNames(item) {
+            var names = item && item.candidateNames || [];
+            var first = names[0] || '비어있음';
+            var second = names[1] || '비어있음';
+            return first + ' + ' + second;
+        }
+
+        function d4CurrentSlotNames(crystas, groupIndex) {
+            var first = crystas && crystas[groupIndex * 2] && crystas[groupIndex * 2].name || '비어있음';
+            var second = crystas && crystas[groupIndex * 2 + 1] && crystas[groupIndex * 2 + 1].name || '비어있음';
+            return first + ' + ' + second;
+        }
+
+        function d4ComparisonCard(label, current, recommended, unit, precision) {
+            var delta = d4MetricDelta(current, recommended, unit, precision);
+            return '<div class="d4-stat-change is-' + delta.direction + '"><span>' + d4Escape(label) + '</span><b>' + d4FormatMetric(current, unit, precision) + ' → ' + d4FormatMetric(recommended, unit, precision) + '</b><small>' + d4Escape(delta.text) + '</small></div>';
+        }
+
+        function renderD4RecommendationOverview(result, currentEvaluation, locks) {
+            var overview = document.getElementById('d4RecommendationOverview');
+            var summary = document.getElementById('d4RecommendationSummary');
+            if (!overview || !summary || !result || !result.outcomes || !result.bestBuild || !currentEvaluation) {
+                if (overview) overview.hidden = true;
+                return;
+            }
+            var currentOutcome = currentEvaluation;
+            var recommendedOutcome = result.outcomes;
+            var currentScore = resultDamageScore(currentOutcome.calculation || {});
+            var recommendedScore = resultDamageScore(recommendedOutcome.calculation || {});
+            var absoluteGain = Number(recommendedScore) - Number(currentScore);
+            var relativeGain = Number(currentScore) > 0 ? absoluteGain / Number(currentScore) * 100 : 0;
+            var scoreLabel = recommendedOutcome.calculation && recommendedOutcome.calculation.procDamageProfile && recommendedOutcome.calculation.procDamageProfile.sources.length ? '기대 대미지' : '대미지';
+            var packages = result.bestBuild.packages || [];
+            var currentCrystas = d4LastOptimizationRequest && d4LastOptimizationRequest.currentCrystas || [];
+            var slots = ['무기', '방어구', '추가 장비', '특수 장비'];
+            var buildRows = '';
+            for (var groupIndex = 0; groupIndex < 4; groupIndex++) {
+                var before = d4CurrentSlotNames(currentCrystas, groupIndex);
+                var after = d4SlotNames(packages[groupIndex]);
+                var locked = locks && locks[groupIndex * 2] && locks[groupIndex * 2 + 1];
+                buildRows += '<div class="d4-build-row"><span class="d4-build-slot">' + slots[groupIndex] + (locked ? ' 🔒' : '') + '</span><span class="d4-build-value">' + d4Escape(before) + '</span><span class="d4-build-arrow">→</span><span class="d4-build-value' + (before === after ? '' : ' is-change') + '">' + d4Escape(after) + '</span></div>';
+            }
+            var rawCurrent = currentOutcome.calculation || {};
+            var rawRecommended = recommendedOutcome.calculation || {};
+            var attackType = rawCurrent.ctx && rawCurrent.ctx.atkType === 'MAG' ? '마법' : '물리';
+            var rangeLabel = rawCurrent.ctx && rawCurrent.ctx.rangeType === 'LONG' ? '원거리위력' : '근거리위력';
+            var rangeKey = rawCurrent.ctx && rawCurrent.ctx.rangeType === 'LONG' ? 'lrw' : 'srw';
+            var attackMetric = attackType === '마법' ? 'MATK' : 'ATK';
+            var attackPath = attackType === '마법' ? ['offense', 'matk'] : ['offense', 'atk'];
+            var utilityMetrics = [
+                ['최대 HP', ['utility', 'maxHp'], '', 0],
+                ['최대 MP', ['utility', 'maxMpAfterBuff'], '', 0],
+                ['공격 MP 회복', ['utility', 'finalAmpr'], '', 0],
+                ['ASPD', ['utility', 'aspd'], '', 0],
+                ['행동속도', ['utility', 'motionSpeed'], '%', 1],
+                ['CSPD', ['utility', 'cspd'], '', 0],
+                ['시전시간 감소', ['utility', 'castReduction'], '%', 1]
+            ];
+            var offenseMetrics = [
+                [attackMetric, attackPath, '', 0],
+                ['크리티컬데미지', ['offense', 'criticalDamage'], '%', 0],
+                ['선택 타격 크리', ['offense', 'selectedAttackCritical'], '', 0],
+                ['안정률', ['offense', 'stability'], '%', 0],
+                [rangeLabel, ['calculation', 'ctx', rangeKey], '%', 0],
+                [attackType + ' 관통', [ 'offense', attackType === '마법' ? 'magicPierce' : 'physicalPierce' ], '%', 0]
+            ];
+            var utilityHtml = '', offenseHtml = '';
+            utilityMetrics.forEach(function(metric) {
+                utilityHtml += d4ComparisonCard(metric[0], d4OutcomeMetric(currentOutcome, metric[1]), d4OutcomeMetric(recommendedOutcome, metric[1]), metric[2], metric[3]);
+            });
+            offenseMetrics.forEach(function(metric) {
+                offenseHtml += d4ComparisonCard(metric[0], d4OutcomeMetric(currentOutcome, metric[1]), d4OutcomeMetric(recommendedOutcome, metric[1]), metric[2], metric[3]);
+            });
+            summary.innerHTML = '<div class="d4-damage-summary"><div class="d4-damage-card"><span>현재 ' + scoreLabel + '</span><b>' + d4FormatNumber(currentScore) + '</b></div><div class="d4-damage-card is-recommended"><span>추천 ' + scoreLabel + '</span><b>' + d4FormatNumber(recommendedScore) + '</b></div><div class="d4-damage-card is-gain"><span>상승량</span><b>' + (absoluteGain >= 0 ? '+' : '') + d4FormatNumber(absoluteGain) + ' <small>(' + (relativeGain >= 0 ? '+' : '') + relativeGain.toFixed(2) + '%)</small></b></div></div><div class="d4-comparison-grid"><section class="d4-comparison-card"><h3>교체 항목</h3>' + buildRows + '</section><section class="d4-comparison-card"><h3>주요 공격 스탯</h3><div class="d4-stat-list">' + offenseHtml + '</div></section><section class="d4-comparison-card"><h3>실전 유틸리티</h3><div class="d4-stat-list">' + utilityHtml + '</div></section><section class="d4-comparison-card"><h3>선택 이유</h3><p class="d4-recommendation-note">대미지뿐 아니라 최대 HP, 최대 MP, 공격 MP 회복, 속도 요구치를 같은 조건으로 다시 계산해 비교했습니다. 아래 전체 옵션에서 각 수치의 합산 내역을 확인할 수 있습니다.</p></section></div>';
+            overview.hidden = false;
+        }
+
         function d4GapText(value) {
             var gap = Number(value);
             return Number.isFinite(gap) ? (gap * 100).toFixed(gap < 0.001 ? 3 : 2) + '%' : '계산 중';
@@ -457,20 +559,25 @@ if (document.readyState === 'loading') {
             var bar = document.getElementById('d4OptimizationBar');
             var cancel = document.getElementById('d4OptimizationCancel');
             var continueButton = document.getElementById('d4OptimizationContinue');
-            if (!panel || !statusEl || !metaEl || !track || !bar || !cancel || !continueButton) return;
+            var pause = document.getElementById('d4OptimizationPause');
+            if (!panel || !statusEl || !metaEl || !track || !bar || !cancel || !continueButton || !pause) return;
             panel.hidden = false;
             panel.className = 'd4-progress-panel' + (status !== 'running' ? ' d4-status-' + status : '');
             var labels = {
                 running:state.stage === 'preparing' ? '전역 후보를 축약하고 있습니다.' : '전체 장비 조합을 백그라운드에서 계산 중입니다.',
                 exact:'전역 최적해를 증명했습니다.',
                 bounded:'제한 시간 내 최선 추천을 찾았습니다.',
+                'no-incumbent-yet':'시간 제한 안에 유효 추천을 아직 찾지 못했습니다.',
+                paused:'전역 계산을 일시 정지했습니다.',
                 heuristic:'유효한 추천을 찾았지만 최적성 상한은 아직 없습니다.',
                 cancelled:'전역 계산을 취소했습니다.',
                 invalid:'현재 입력에서는 유효한 추천을 만들 수 없습니다.'
             };
             statusEl.textContent = (fromCache ? '캐시 재사용 · ' : '') + (labels[status] || labels.running);
             cancel.hidden = status !== 'running';
-            continueButton.hidden = status !== 'bounded';
+            pause.hidden = status !== 'running' || !state.native;
+            continueButton.hidden = !((status === 'bounded' || status === 'no-incumbent-yet' || status === 'paused') && state.continuationId);
+            continueButton.textContent = status === 'paused' ? '계산 재개' : '정밀 계산 계속';
             var gap = Number(state.optimalityGap);
             var determinate = status !== 'running' || (Number.isFinite(gap) && state.lowerBound !== null && state.lowerBound !== undefined);
             track.classList.toggle('is-indeterminate', !determinate);
@@ -483,6 +590,9 @@ if (document.readyState === 'loading') {
             if (Number.isFinite(Number(state.evaluations))) parts.push('완성식 평가 ' + Number(state.evaluations).toLocaleString() + '회');
             if (Number.isFinite(Number(state.visitedNodes))) parts.push('탐색 노드 ' + Number(state.visitedNodes).toLocaleString() + '개');
             if (Number.isFinite(gap)) parts.push('최적해 대비 보장 오차 ≤ ' + d4GapText(gap));
+            if (Number.isFinite(Number(state.deadlineRemainingMs))) parts.push('남은 예산 ' + Math.max(0, Number(state.deadlineRemainingMs) / 1000).toFixed(2) + '초');
+            if (Number.isFinite(Number(state.threadsActive)) && Number.isFinite(Number(state.threadsTotal))) parts.push('활성 스레드 ' + Math.max(0, Math.floor(Number(state.threadsActive))) + '/' + Math.max(1, Math.floor(Number(state.threadsTotal))));
+            if (Number.isFinite(Number(state.readyWorkItems))) parts.push('대기 작업 ' + Number(state.readyWorkItems).toLocaleString() + '개');
             var engine = d4EngineText(state);
             if (engine) parts.push('엔진 ' + engine);
             if (Number.isFinite(Number(state.threadsUsed))) parts.push('스레드 ' + Math.max(1, Math.floor(Number(state.threadsUsed))) + '개');
@@ -493,16 +603,19 @@ if (document.readyState === 'loading') {
         function renderD4GlobalResult(result, currentEvaluation, locks, metadata) {
             var status = result && result.status || 'invalid';
             updateD4Progress(result, status, metadata && metadata.cached);
+            var overview = document.getElementById('d4RecommendationOverview');
             var list = document.getElementById('top3ListContainer');
             var finalText = document.getElementById('finalRecText');
             var badge = document.getElementById('globalEffTextBadge');
             var tags = document.getElementById('finalRecTags');
             if (status === 'cancelled') {
+                if (overview) overview.hidden = true;
                 if (list) list.innerHTML = '<div class="top3-row"><b>계산이 취소되어 현재 세팅을 유지합니다.</b></div>';
                 if (badge) badge.textContent = '계산 취소됨';
                 return;
             }
             if (!result || !result.bestBuild || !result.outcomes) {
+                if (overview) overview.hidden = true;
                 var diagnostic = result && result.diagnostics && result.diagnostics[0];
                 var message = diagnostic && (diagnostic.message || diagnostic.code) || (status === 'cancelled' ? '계산이 취소되어 현재 세팅을 유지합니다.' : 'Utility 요구치와 후보 제한을 만족하는 조합이 없습니다.');
                 if (list) list.innerHTML = '<div class="top3-row"><b>' + d4Escape(message) + '</b></div>';
@@ -510,6 +623,7 @@ if (document.readyState === 'loading') {
                 return;
             }
             var packages = result.bestBuild.packages || [];
+            renderD4RecommendationOverview(result, currentEvaluation, locks);
             var labels = {weapon:'무기', armor:'방어구', additional:'추가', special:'특수'};
             var recommendation = '';
             packages.forEach(function (item, groupIndex) {
@@ -526,12 +640,14 @@ if (document.readyState === 'loading') {
             badge.textContent = scoreLabel + d4FormatNumber(finalScore) + ' / 현재 대비 ' + (gain > 0 ? '+' : '') + gain.toFixed(2) + '%' + certification;
             tags.style.display = 'block';
             tags.innerHTML = '<span style="display:block; font-size:14px; color:#27ae60; font-weight:bold; margin-bottom:4px; padding-bottom:4px;">[전역 추천 크리스타 옵션 합산]</span>' + buildGroupedTagsHtml(result.bestBuild.statDelta || {});
-            var summaryLabel = status === 'exact' ? '모든 남은 가지의 상한을 넘어 전역 최적임을 증명했습니다.' : '시간 제한에서 찾은 최선해입니다. 표시된 gap보다 실제 최적해와의 차이가 클 수 없습니다.';
+            var optionCount = document.getElementById('d4RecommendationOptionCount');
+            if (optionCount) optionCount.textContent = '· 적용 옵션 ' + Object.keys(result.bestBuild.statDelta || {}).filter(function(key) { return Number(result.bestBuild.statDelta[key]) !== 0; }).length + '개';
+            var summaryLabel = status === 'exact' ? '모든 남은 가지의 상한을 넘어 전역 최적임을 증명했습니다.' : status === 'paused' ? '계산을 일시 정지했습니다. 같은 탐색 상태에서 재개할 수 있습니다.' : '시간 제한에서 찾은 최선해입니다. 표시된 gap보다 실제 최적해와의 차이가 클 수 없습니다.';
             var runtimeSummary = '';
             if (d4EngineText(result)) runtimeSummary += '<span>엔진 <b>' + d4Escape(d4EngineText(result)) + '</b></span>';
             if (Number.isFinite(Number(result.threadsUsed))) runtimeSummary += '<span>스레드 <b>' + Math.max(1, Math.floor(Number(result.threadsUsed))) + '개</b></span>';
             if (result.gpuPolicy) runtimeSummary += '<span>GPU <b>' + d4Escape(result.gpuPolicy === 'cpu-only.p7' ? '미사용' : String(result.gpuPolicy)) + '</b></span>';
-            list.innerHTML = '<div class="top3-row d4-global-summary"><b>' + d4Escape(summaryLabel) + '</b><div class="d4-global-summary-grid"><span>상태 <b>' + d4Escape(status) + '</b></span><span>대미지 <b>' + d4FormatNumber(finalScore) + '</b></span><span>평가 <b>' + Number(result.evaluations || 0).toLocaleString() + '회</b></span><span>보장 오차 <b>' + d4GapText(result.optimalityGap) + '</b></span>' + runtimeSummary + '</div></div>';
+            list.innerHTML = '<details class="result-detail-panel d4-calculation-detail"><summary>계산 상세 및 최적화 검증</summary><div class="top3-row d4-global-summary"><b>' + d4Escape(summaryLabel) + '</b><div class="d4-global-summary-grid"><span>상태 <b>' + d4Escape(status) + '</b></span><span>대미지 <b>' + d4FormatNumber(finalScore) + '</b></span><span>평가 <b>' + Number(result.evaluations || 0).toLocaleString() + '회</b></span><span>보장 오차 <b>' + d4GapText(result.optimalityGap) + '</b></span>' + runtimeSummary + '</div></div></details>';
             if (window.lastEffData) window.lastEffData.optimizedOutcome = result.outcomes;
         }
 
@@ -556,7 +672,10 @@ if (document.readyState === 'loading') {
         function startD4GlobalOptimization(baseCtx, scenarioSnapshot, currentCrystas, locks, currentEvaluation) {
             var version = ++d4UiRunVersion;
             if (window.ToramD4NativeClient) window.ToramD4NativeClient.cancel('입력이 변경되어 다시 계산합니다.');
+            if (window.ToramD4NativeClient) window.ToramD4NativeClient.disposeContinuation();
             if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('입력이 변경되어 다시 계산합니다.');
+            var overview = document.getElementById('d4RecommendationOverview');
+            if (overview) overview.hidden = true;
             updateD4Progress({ stage:'preparing', status:'running', elapsedMs:0, evaluations:0, visitedNodes:0, optimalityGap:null }, 'running', false);
             document.getElementById('top3ListContainer').innerHTML = '<div class="top3-row">각 부위를 따로 고르지 않고 8개 슬롯 전체를 하나의 빌드로 계산합니다.</div>';
             document.getElementById('globalEffTextBadge').textContent = '전역 계산 중…';
@@ -565,8 +684,8 @@ if (document.readyState === 'loading') {
                 try {
                     if (!window.ToramD4WorkerClient && !(window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable())) throw new Error('D4 최적화 클라이언트가 연결되지 않았습니다.');
                     var problem = compileD4GlobalCrystaProblem(baseCtx, scenarioSnapshot, currentCrystas, locks);
-                    d4LastOptimizationRequest = { problem:problem, currentEvaluation:currentEvaluation, locks:locks.slice() };
-                    launchD4Worker(problem, currentEvaluation, locks, version, 5000);
+                    d4LastOptimizationRequest = { problem:problem, currentEvaluation:currentEvaluation, currentCrystas:currentCrystas.slice(), locks:locks.slice() };
+                    launchD4Worker(problem, currentEvaluation, locks, version, 30000);
                 } catch (error) {
                     renderD4GlobalResult({ status:'invalid', diagnostics:[{ code:'START_FAILED', message:error.message }] }, currentEvaluation, locks, {});
                 }
@@ -675,16 +794,74 @@ function initializeOptimizerUi() {
             if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('사용자가 계산을 취소했습니다.');
         });
     }
+    var d4Pause = document.getElementById('d4OptimizationPause');
+    if (d4Pause) {
+        d4Pause.addEventListener('click', function() {
+            if (window.ToramD4NativeClient && window.ToramD4NativeClient.pause()) {
+                d4Pause.disabled = true;
+                d4Pause.textContent = '정지 중…';
+            }
+        });
+    }
     var d4Continue = document.getElementById('d4OptimizationContinue');
     if (d4Continue) {
         d4Continue.addEventListener('click', function() {
-            if (!d4LastOptimizationRequest || (!window.ToramD4WorkerClient && !(window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable()))) return;
+            if (!d4LastOptimizationRequest || !(window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable() && window.ToramD4NativeClient.hasContinuation())) return;
             var version = ++d4UiRunVersion;
-            updateD4Progress({ stage:'preparing', status:'running', elapsedMs:0, evaluations:0, visitedNodes:0, optimalityGap:null }, 'running', false);
+            updateD4Progress({ stage:'native-resume', status:'running', optimalityGap:null, native:true }, 'running', false);
             document.getElementById('globalEffTextBadge').textContent = '정밀 전역 계산 중…';
-            launchD4Worker(d4LastOptimizationRequest.problem, d4LastOptimizationRequest.currentEvaluation, d4LastOptimizationRequest.locks, version, 30000);
+            function resumeUntilExact() {
+                return window.ToramD4NativeClient.resume({
+                    onProgress:function(progress) {
+                        if (version === d4UiRunVersion) {
+                            if (d4Pause) { d4Pause.disabled = false; d4Pause.textContent = '일시정지'; }
+                            updateD4Progress(progress, 'running', false);
+                        }
+                    },
+                    onComplete:function(result, metadata) {
+                        if (version === d4UiRunVersion) renderD4GlobalResult(result, d4LastOptimizationRequest.currentEvaluation, d4LastOptimizationRequest.locks, metadata);
+                    }
+                }, { timeLimitMs:30000, progressIntervalMs:32 }).then(function(result) {
+                    if (version !== d4UiRunVersion || !result || !result.continuationId || !window.ToramD4NativeClient.hasContinuation()) return result;
+                    if (result.status === 'bounded' || result.status === 'no-incumbent-yet') {
+                        return new Promise(function(resolve) { window.setTimeout(resolve, 0); }).then(resumeUntilExact);
+                    }
+                    return result;
+                });
+            }
+            resumeUntilExact().catch(function(error) {
+                if (version !== d4UiRunVersion) return;
+                renderD4GlobalResult({ status:'invalid', diagnostics:[{ code:error.code || 'D4_RESUME_FAILED', message:error.message || '정밀 계산을 이어가지 못했습니다. 새 전역 계산을 시작해 주세요.' }] }, d4LastOptimizationRequest.currentEvaluation, d4LastOptimizationRequest.locks, { native:true });
+            });
         });
     }
+    // A continuation represents exactly one frozen input snapshot.  Any user
+    // edit invalidates it; this also prevents a later button click from
+    // silently applying an old result to new equipment or skill inputs.
+    function discardD4ContinuationForInputChange() {
+        if (!d4LastOptimizationRequest) return;
+        var hadContinuation = Boolean(window.ToramD4NativeClient && window.ToramD4NativeClient.hasContinuation && window.ToramD4NativeClient.hasContinuation());
+        d4LastOptimizationRequest = null;
+        d4UiRunVersion++;
+        if (window.ToramD4NativeClient) {
+            window.ToramD4NativeClient.cancel('입력이 변경되어 보존된 정밀 계산을 폐기합니다.');
+            window.ToramD4NativeClient.disposeContinuation();
+        }
+        if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('입력이 변경되어 계산을 취소합니다.');
+        if (hadContinuation) {
+            updateD4Progress({ status:'invalid', diagnostics:[{ code:'D4_CONTINUATION_DISCARDED', message:'입력이 변경되어 이전 정밀 계산 세션을 폐기했습니다. 새 전역 계산을 시작해 주세요.' }] }, 'invalid', false);
+            document.getElementById('globalEffTextBadge').textContent = '입력 변경됨';
+        }
+    }
+    document.addEventListener('input', discardD4ContinuationForInputChange, true);
+    document.addEventListener('change', discardD4ContinuationForInputChange, true);
+    window.addEventListener('pagehide', function() {
+        if (window.ToramD4NativeClient) {
+            window.ToramD4NativeClient.cancel('창이 닫혀 계산을 취소합니다.');
+            window.ToramD4NativeClient.disposeContinuation();
+        }
+        if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('창이 닫혀 계산을 취소합니다.');
+    });
 }
 function compileD4GlobalCrystaProblem(baseContext, scenarioSnapshot, currentCrystas, locks, options) {
     if (!window.ToramD4ProblemCompiler) throw new Error('D4 전역 후보 컴파일러가 연결되지 않았습니다.');

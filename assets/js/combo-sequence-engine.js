@@ -39,17 +39,44 @@
       return effect.phase === 'cast' && effect.type === 'resourceRefund' && effect.key === 'MP' ? total + number(effect.value) : total;
     }, 0);
   }
+  function comboRule(tag) {
+    var data = window.TORAM_COMBO_RULE_DATA || {};
+    return data.tags && data.tags[tag] || null;
+  }
+  function clampComboDamageMultiplier(value) {
+    var bounds = ((window.TORAM_COMBO_RULE_DATA || {}).constants || {}).damageMultiplier || {};
+    return Math.min(Number(bounds.max) || 1.5, Math.max(Number(bounds.min) || .1, value));
+  }
+  function chargeDamageMultiplier(position, effects) {
+    return effects.reduce(function (multiplier, effect) {
+      var offset = position - effect.position;
+      return offset < 1 || offset > effect.values.length ? multiplier : multiplier * Math.max(0, 1 - number(effect.values[offset - 1]));
+    }, 1);
+  }
+  function tenacityHpCost(missingMp, maxHp, rule) {
+    var cost = rule && rule.mp && rule.mp.hpCost || {};
+    return missingMp > 0 && maxHp > 0 ? maxHp * (missingMp / number(cost.perMissingMp, 100)) * (number(cost.maxHpPercent, 10) / 100) : 0;
+  }
   function comboTag(entry, position, consecutiveOrdinal, isLast, isDamageSkill) {
     var tag = position === 1 ? 'none' : (entry.tag || 'none');
-    var result = { id:tag, mpReduction:0, mpMultiplier:1, damageMultiplier:1, motionSpeed:0, nextDamageMultiplier:1, valid:true };
+    var rule = comboRule(tag);
+    var result = { id:tag, mpReduction:0, mpMultiplier:1, damageMultiplier:1, motionSpeed:0, nextDamageMultiplier:1, chargeStore:false, chargeDamageReductions:[], absoluteHit:false, hitBonus:0, usesTenacity:false, valid:true };
     if (tag === 'consecutive') {
       result.mpReduction = (position - 1) * 100;
-      if (isDamageSkill) result.damageMultiplier = Math.max(.1, 1 - consecutiveOrdinal * .1);
+      if (isDamageSkill) result.damageMultiplier = 1 - consecutiveOrdinal * .1;
+    } else if (tag === 'charge' && rule) {
+      result.chargeStore = true;
+      result.chargeDamageReductions = Array.isArray(rule.damage && rule.damage.values) ? rule.damage.values.slice() : [];
     } else if (tag === 'swift') result.motionSpeed = 50;
     else if (tag === 'smite') {
       if (isDamageSkill) result.damageMultiplier = 1.5;
       if (isLast) result.mpMultiplier = 2;
       else result.nextDamageMultiplier = .5;
+    } else if (tag === 'mindsEye' && rule) {
+      result.absoluteHit = Boolean(rule.accuracy && rule.accuracy.absoluteHit);
+      result.hitBonus = position * number(rule.accuracy && rule.accuracy.bonus && rule.accuracy.bonus.args && rule.accuracy.bonus.args[1] && rule.accuracy.bonus.args[1].value);
+    } else if (tag === 'tenacity' && rule) {
+      result.usesTenacity = true;
     } else if (tag !== 'none') result.valid = false;
     return result;
   }
@@ -59,15 +86,24 @@
     var hasMpLimit = Number.isFinite(Number(runtime.maxMp));
     var maxMp = hasMpLimit ? Math.max(0, Math.floor(Number(runtime.maxMp))) : null;
     var currentMp = maxMp;
+    var maxHp = Math.max(0, number(runtime.maxHp, combat && combat.MAXHP));
     var canceledAt = null;
+    var blockedAt = null;
+    var blockReason = '';
     var pending = emptyModifiers();
     var consecutiveOrdinal = 0;
     var lastMagicAttack = null;
+    var storedMp = 0;
+    var chargeDamageEffects = [];
     var results = [];
     entries.forEach(function (entry, index) {
       var position = index + 1;
       if (canceledAt !== null) {
         results.push({ position:position, skillId:entry.skillId, available:false, executionStatus:'skipped', canceledByPosition:canceledAt, error:'이전 스킬의 MP 부족으로 실행되지 않음' });
+        return;
+      }
+      if (blockedAt !== null) {
+        results.push({ position:position, skillId:entry.skillId, available:false, executionStatus:'skipped', blockedByPosition:blockedAt, error:blockReason + ' 이후 스킬은 실행되지 않음' });
         return;
       }
       var carriedTargeted = (pending.targeted || []).slice();
@@ -80,10 +116,31 @@
         else pending.targeted.push(item);
       });
       var profile = effects.profile(entry.skillId, base, combat, entry.inputs || {}, Object.assign({}, runtime, { maxMp:maxMp, currentMp:currentMp, combo:{ position:position } }));
-      if (!profile) { results.push({ position:position, skillId:entry.skillId, available:false, executionStatus:'unavailable', error:'정의가 없는 스킬' }); return; }
+      if (!profile) {
+        blockedAt = position; blockReason = '정의가 없는 스킬';
+        results.push({ position:position, skillId:entry.skillId, available:false, executionStatus:'unavailable', error:blockReason });
+        return;
+      }
+      if (!profile.available) {
+        blockedAt = position; blockReason = '현재 장비·조건에서 사용할 수 없는 스킬';
+        results.push({ position:position, skillId:entry.skillId, skill:profile.skill, available:false, executionStatus:'unavailable', error:blockReason });
+        return;
+      }
+      var comboRules = profile.skill.combo || {};
+      var requestedTag = position === 1 ? 'none' : (entry.tag || 'none');
+      if (position === 1 && comboRules.canStart === false) {
+        blockedAt = position; blockReason = '콤보 기점으로 사용할 수 없는 스킬';
+        results.push({ position:position, skillId:entry.skillId, skill:profile.skill, available:false, executionStatus:'unavailable', error:blockReason });
+        return;
+      }
+      if (requestedTag !== 'none' && comboRules.canReceiveTag === false) {
+        blockedAt = position; blockReason = '콤보 효과를 설정할 수 없는 스킬';
+        results.push({ position:position, skillId:entry.skillId, skill:profile.skill, available:false, executionStatus:'unavailable', error:blockReason });
+        return;
+      }
       var copiedFrom = null;
       if (profile.skill.id === 'Magic:5') {
-        if (!lastMagicAttack) { results.push({ position:position, skillId:entry.skillId, skill:profile.skill, available:false, executionStatus:'unavailable', error:'복사할 이전 매직 공격 스킬이 없습니다.' }); return; }
+        if (!lastMagicAttack) { blockedAt = position; blockReason = '복사할 이전 매직 공격 스킬이 없습니다.'; results.push({ position:position, skillId:entry.skillId, skill:profile.skill, available:false, executionStatus:'unavailable', error:blockReason }); return; }
         copiedFrom = lastMagicAttack;
         profile = Object.assign({}, profile, { hits:lastMagicAttack.profile.hits.map(function (hit) { return Object.assign({}, hit, { flags:Object.assign({}, hit.flags || {}) }); }), castTime:null });
       }
@@ -97,29 +154,64 @@
       });
       var skillAdjustedMp = nativeMp * applied.mpCostMultiplier;
       var finalMp = Math.max(0, Math.round((skillAdjustedMp - tag.mpReduction) * tag.mpMultiplier));
-      if (hasMpLimit && finalMp > currentMp) {
+      var storedMpBefore = storedMp;
+      var storedMpUsed = 0;
+      var mpPaidFromCurrent = 0;
+      var hpCost = 0;
+      var discardedStoredMp = 0;
+      var chargeStoredMp = 0;
+      if (tag.chargeStore) {
+        discardedStoredMp = storedMp;
+        storedMp = nativeMp;
+        chargeStoredMp = storedMp;
+      } else {
+        storedMpUsed = Math.min(storedMp, finalMp);
+        storedMp -= storedMpUsed;
+        mpPaidFromCurrent = finalMp - storedMpUsed;
+        if (tag.usesTenacity && hasMpLimit && mpPaidFromCurrent > currentMp) {
+          hpCost = tenacityHpCost(mpPaidFromCurrent - currentMp, maxHp, comboRule('tenacity'));
+          mpPaidFromCurrent = currentMp;
+        }
+      }
+      if (hasMpLimit && mpPaidFromCurrent > currentMp) {
+        storedMp = storedMpBefore;
         pending = applied;
         canceledAt = position;
         results.push({
           position:position, skillId:entry.skillId, skill:profile.skill, available:profile.available, executionStatus:'canceled',
           tag:tag, nativeMp:nativeMp, skillAdjustedMp:skillAdjustedMp, finalMp:finalMp,
           mpBefore:currentMp, mpAfter:currentMp, appliedNextSkillModifiers:applied,
+          storedMpBefore:storedMpBefore, storedMpUsed:storedMpUsed, chargeStoredMp:chargeStoredMp, discardedStoredMp:discardedStoredMp, hpCost:0,
           damageMultiplier:1, motionSpeed:0, physicalChaseDamage:0, hits:[], effects:[], stateTransitions:[],
           generatedNextSkillModifiers:copyModifiers(pending), error:'현재 MP보다 소모 MP가 많아 콤보가 취소됨'
         });
         return;
       }
-      var damageMultiplier = copiedFrom ? 1 : applied.damageMultiplier * tag.damageMultiplier;
+      var appliedDamageMultiplier = copiedFrom ? 1 : applied.damageMultiplier;
+      var tagDamageMultiplier = copiedFrom ? 1 : tag.damageMultiplier;
+      var damageMultiplier = copiedFrom ? 1 : clampComboDamageMultiplier(appliedDamageMultiplier * tagDamageMultiplier * chargeDamageMultiplier(position, chargeDamageEffects));
       var motionSpeed = Math.min(50, applied.motionSpeed + tag.motionSpeed);
-      var hits = profile.hits.map(function (hit) { return Object.assign({}, hit, { flags:Object.assign({}, hit.flags || {}, applied.guaranteedCritical ? { guaranteedCritical:true } : {}), constant:hit.constant + applied.skillConstant, effectiveMultiplier:hit.multiplier * damageMultiplier }); });
+      var hitBonus = applied.hit + tag.hitBonus;
+      var hits = profile.hits.map(function (hit) {
+        var runtimeFlags = hit.resolvedFlags || hit.flags || {};
+        var comboDamageMultiplier = runtimeFlags.ignoresComboDamageChange ? 1 : damageMultiplier;
+        var damageMultiplierLayers = {
+          skill:Number.isFinite(Number(hit.baseMultiplier)) ? Number(hit.baseMultiplier) : Number(hit.multiplier) || 1,
+          passive:Number.isFinite(Number(hit.passiveMultiplier)) ? Number(hit.passiveMultiplier) : 1,
+          active:Number.isFinite(Number(hit.activeMultiplier)) ? Number(hit.activeMultiplier) : 1,
+          combo:comboDamageMultiplier
+        };
+        return Object.assign({}, hit, { flags:Object.assign({}, runtimeFlags, applied.guaranteedCritical ? { guaranteedCritical:true } : {}, tag.absoluteHit ? { guaranteedHit:true } : {}, hitBonus ? { hitBonus:number(runtimeFlags.hitBonus) + hitBonus } : {}), constant:hit.constant + applied.skillConstant, damageMultiplierLayers:damageMultiplierLayers, effectiveMultiplier:hit.multiplier * comboDamageMultiplier });
+      });
       var castTimeSeconds = profile.castTime ? Math.max(0, profile.castTime.seconds * (1 - applied.castTimeReductionPercent / 100)) : null;
       var mpRefund = castMpRefund(profile);
       var result = {
         position:position, skillId:entry.skillId, skill:profile.skill, available:profile.available, executionStatus:'executed', tag:tag,
         nativeMp:nativeMp, skillAdjustedMp:skillAdjustedMp, finalMp:finalMp,
-        mpBefore:currentMp, mpAfter:hasMpLimit ? Math.min(maxMp, currentMp - finalMp + mpRefund) : null, mpRefund:mpRefund,
+        mpBefore:currentMp, mpAfter:hasMpLimit ? Math.min(maxMp, currentMp - mpPaidFromCurrent + mpRefund) : null, mpRefund:mpRefund,
+        storedMpBefore:storedMpBefore, storedMpUsed:storedMpUsed, storedMpAfter:storedMp, chargeStoredMp:chargeStoredMp, discardedStoredMp:discardedStoredMp, mpPaidFromCurrent:mpPaidFromCurrent, hpCost:hpCost,
         appliedNextSkillModifiers:applied, damageMultiplier:damageMultiplier, motionSpeed:motionSpeed, castTimeSeconds:castTimeSeconds,
-        physicalChaseDamage:applied.physicalChaseDamage, hits:hits, effects:profile.effects,
+        physicalChaseDamage:applied.physicalChaseDamage, hitBonus:hitBonus, absoluteHit:tag.absoluteHit, hits:hits, effects:profile.effects,
         stateTransitions:profile.stateTransitions
       };
       if (hasMpLimit) currentMp = result.mpAfter;
@@ -134,10 +226,18 @@
       }
       collectNextSkillModifiers(profile, pending);
       if (tag.nextDamageMultiplier !== 1) mergeModifier(pending, 'damageMultiplier', tag.nextDamageMultiplier, '강타 후속 페널티');
+      if (tag.chargeStore && tag.chargeDamageReductions.length) chargeDamageEffects.push({ position:position, values:tag.chargeDamageReductions });
       result.generatedNextSkillModifiers = copyModifiers(pending);
       results.push(result);
     });
-    return { entries:results, maxMp:maxMp, remainingMp:currentMp, canceledAt:canceledAt, unconsumedNextSkillModifiers:copyModifiers(pending) };
+    var chargeSettlementMp = 0;
+    var chargeSettlementShortfall = 0;
+    if (hasMpLimit && storedMp > 0) {
+      chargeSettlementMp = Math.min(currentMp, storedMp);
+      chargeSettlementShortfall = Math.max(0, storedMp - chargeSettlementMp);
+      currentMp -= chargeSettlementMp;
+    }
+    return { entries:results, maxMp:maxMp, remainingMp:currentMp, canceledAt:canceledAt, blockedAt:blockedAt, blockReason:blockReason, chargeSettlementMp:chargeSettlementMp, chargeSettlementShortfall:chargeSettlementShortfall, unconsumedNextSkillModifiers:copyModifiers(pending) };
   }
 
   window.ToramComboSequence = Object.freeze({ evaluate:evaluate });

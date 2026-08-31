@@ -6,7 +6,9 @@
 //! lower/upper-bound result merging with deterministic build-ID ties.
 
 use std::cmp::min;
+use std::collections::VecDeque;
 use std::sync::atomic::{AtomicUsize, Ordering};
+use std::sync::Arc;
 use std::sync::Mutex;
 
 const EPSILON: f64 = 1e-9;
@@ -134,6 +136,86 @@ where
         .collect()
 }
 
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct WorkStealingReport {
+    pub completed: usize,
+    pub spawned: usize,
+    pub steals: usize,
+}
+
+/// A shared frontier scheduler for tasks that split while running. A worker
+/// only exits when both the ready queue and active count are zero, so work
+/// created by another worker remains stealable instead of becoming a tail.
+pub fn run_work_stealing<T, F>(
+    initial: Vec<T>,
+    requested_threads: usize,
+    split: F,
+) -> WorkStealingReport
+where
+    T: Send,
+    F: Fn(T) -> Vec<T> + Sync + Send,
+{
+    if initial.is_empty() {
+        return WorkStealingReport {
+            completed: 0,
+            spawned: 0,
+            steals: 0,
+        };
+    }
+    let initial_count = initial.len();
+    let queue = Arc::new(Mutex::new(VecDeque::from(initial)));
+    let active = AtomicUsize::new(0);
+    let completed = AtomicUsize::new(0);
+    let spawned = AtomicUsize::new(initial_count);
+    let steals = AtomicUsize::new(0);
+    let workers = requested_threads.max(1);
+    std::thread::scope(|scope| {
+        let active = &active;
+        let completed = &completed;
+        let spawned = &spawned;
+        let steals = &steals;
+        let split = &split;
+        for worker in 0..workers {
+            let queue = Arc::clone(&queue);
+            scope.spawn(move || loop {
+                let task = {
+                    let mut ready = queue.lock().expect("D4 work queue mutex poisoned");
+                    let task = ready.pop_front();
+                    if task.is_some() {
+                        active.fetch_add(1, Ordering::AcqRel);
+                    }
+                    task
+                };
+                let Some(task) = task else {
+                    if active.load(Ordering::Acquire) == 0 {
+                        break;
+                    }
+                    std::thread::yield_now();
+                    continue;
+                };
+                if worker > 0 {
+                    steals.fetch_add(1, Ordering::Relaxed);
+                }
+                let children = split(task);
+                completed.fetch_add(1, Ordering::Relaxed);
+                if !children.is_empty() {
+                    spawned.fetch_add(children.len(), Ordering::Relaxed);
+                    queue
+                        .lock()
+                        .expect("D4 work queue mutex poisoned")
+                        .extend(children);
+                }
+                active.fetch_sub(1, Ordering::Release);
+            });
+        }
+    });
+    WorkStealingReport {
+        completed: completed.load(Ordering::Relaxed),
+        spawned: spawned.load(Ordering::Relaxed),
+        steals: steals.load(Ordering::Relaxed),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -197,5 +279,24 @@ mod tests {
             assert_eq!(result[0], 0);
             assert_eq!(result[127], 127 * 127);
         }
+    }
+
+    #[test]
+    fn work_stealing_consumes_tasks_created_after_workers_start() {
+        let report = run_work_stealing(vec![(0_u8, 0_u8)], 8, |(depth, value)| {
+            // Keep the first worker active briefly so the remaining workers
+            // enter the wait-for-active path before it publishes descendants.
+            if depth == 0 {
+                std::thread::sleep(std::time::Duration::from_millis(5));
+            }
+            if depth >= 6 {
+                Vec::new()
+            } else {
+                vec![(depth + 1, value * 2), (depth + 1, value * 2 + 1)]
+            }
+        });
+        assert_eq!(report.completed, 127);
+        assert_eq!(report.spawned, 127);
+        assert!(report.steals > 0);
     }
 }

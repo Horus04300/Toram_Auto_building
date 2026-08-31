@@ -49,8 +49,8 @@
       id:speed.id, treeId:'DualSword', skillId:15, nameKo:speed.nameKo, kind:'passive', source:'dualSword', dataStatus:'partial',
       sourceRef:{ file:'docs/sources/skills/DualSword.txt', anchor:'신속의 저력 패시브 / 모든 무기 사용 가능' },
       effects:[
-        { phase:'build', type:'stat', key:'UNSHEATHE', value:a(v(5), l()) },
-        { phase:'build', type:'stat', key:'UNSHEATHE', when:dualSword, value:v(10) },
+        { phase:'build', type:'stat', key:'UNSHEATHEP', value:a(v(5), l()) },
+        { phase:'build', type:'stat', key:'UNSHEATHEP', when:dualSword, value:v(10) },
         { phase:'build', type:'stat', key:'AGI', value:agi }
       ]
     },

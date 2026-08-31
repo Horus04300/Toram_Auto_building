@@ -6,7 +6,7 @@ window.SKILL_TREE_DATA = {
   "trees": [
     {
       "id": "Blade",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 7,
         "rows": 10
@@ -19,7 +19,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/00_Hammer Slam.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/00_HammerSlam.png",
           "iconAvailable": true,
           "nameKo": "해머 다운"
         },
@@ -30,7 +30,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/01_Cleaving Attack.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/01_CleavingAttack.png",
           "iconAvailable": true,
           "nameKo": "클리브 어택"
         },
@@ -41,7 +41,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/02_Storm Blaze.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/02_StormBlaze.png",
           "iconAvailable": true,
           "nameKo": "스톰 블레이저"
         },
@@ -52,7 +52,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/03_Garde Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/03_GardeBlade.png",
           "iconAvailable": true,
           "nameKo": "가드 블레이드"
         },
@@ -63,7 +63,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/04_Ogre Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/04_OgreSlash.png",
           "iconAvailable": true,
           "nameKo": "오거 슬래시"
         },
@@ -74,7 +74,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/05_Hard Hit.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/05_HardHit.png",
           "iconAvailable": true,
           "nameKo": "하드 히트"
         },
@@ -85,7 +85,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/06_Astute.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/06_Astute.png",
           "iconAvailable": true,
           "nameKo": "아스튜트"
         },
@@ -96,7 +96,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/07_Trigger Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/07_TriggerSlash.png",
           "iconAvailable": true,
           "nameKo": "트리거 슬래시"
         },
@@ -107,7 +107,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/08_Rampage.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/08_Rampage.png",
           "iconAvailable": true,
           "nameKo": "램페이지"
         },
@@ -121,7 +121,7 @@ window.SKILL_TREE_DATA = {
             2,
             3
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Blade/09_Meteor Breaker.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/09_MeteorBreaker.png",
           "iconAvailable": true,
           "nameKo": "메테오 브레이커"
         },
@@ -132,7 +132,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/10_Shut-Out.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/10_Shut-Out.png",
           "iconAvailable": true,
           "nameKo": "셧아웃"
         },
@@ -143,7 +143,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/11_Lunar Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/11_LunarSlash.png",
           "iconAvailable": true,
           "nameKo": "문 슬래시"
         },
@@ -154,7 +154,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/12_Sonic Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/12_SonicBlade.png",
           "iconAvailable": true,
           "nameKo": "액셀 블레이드"
         },
@@ -165,7 +165,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/13_Spiral Air.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/13_SpiralAir.png",
           "iconAvailable": true,
           "nameKo": "스파이럴 에어"
         },
@@ -176,7 +176,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/14_Sword Tempest.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/14_SwordTempest.png",
           "iconAvailable": true,
           "nameKo": "소드 템페스트"
         },
@@ -190,7 +190,7 @@ window.SKILL_TREE_DATA = {
             2,
             5
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Blade/15_Buster Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/15_BusterBlade.png",
           "iconAvailable": true,
           "nameKo": "버스터 블레이드"
         },
@@ -201,7 +201,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/16_Aura Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/16_AuraBlade.png",
           "iconAvailable": true,
           "nameKo": "오라 블레이드"
         },
@@ -212,7 +212,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/17_Sword Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/17_SwordMastery.png",
           "iconAvailable": true,
           "nameKo": "블레이드 마스터리"
         },
@@ -223,7 +223,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/18_Quick Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/18_QuickSlash.png",
           "iconAvailable": true,
           "nameKo": "재빠른 참격"
         },
@@ -234,7 +234,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/19_Sword Techniques.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/19_SwordTechniques.png",
           "iconAvailable": true,
           "nameKo": "장인의 검술"
         },
@@ -248,7 +248,7 @@ window.SKILL_TREE_DATA = {
             1,
             7
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Blade/20_War Cry.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/20_WarCry.png",
           "iconAvailable": true,
           "nameKo": "워 크라이"
         },
@@ -259,7 +259,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/21_Berserk.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/21_Berserk.png",
           "iconAvailable": true,
           "nameKo": "버서크"
         },
@@ -270,7 +270,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/22_Gladiate.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/22_Gladiate.png",
           "iconAvailable": true,
           "nameKo": "글래디에이트"
         },
@@ -281,7 +281,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Blade/23_Swift Attack.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Blade/23_SwiftAttack.png",
           "iconAvailable": true,
           "nameKo": "퍼스트 어택"
         }
@@ -290,7 +290,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Shot",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 7,
         "rows": 11
@@ -303,7 +303,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/00_Power Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/00_PowerShot.png",
           "iconAvailable": true,
           "nameKo": "파워 슈트"
         },
@@ -314,7 +314,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/01_Bullseye.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/01_Bullseye.png",
           "iconAvailable": true,
           "nameKo": "윈 휠"
         },
@@ -325,7 +325,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/02_Arrow Rain.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/02_ArrowRain.png",
           "iconAvailable": true,
           "nameKo": "애로 레인"
         },
@@ -339,7 +339,7 @@ window.SKILL_TREE_DATA = {
             1,
             1
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Shot/03_Snipe.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/03_Snipe.png",
           "iconAvailable": true,
           "nameKo": "스나이핑"
         },
@@ -350,7 +350,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/04_Cross Fire.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/04_CrossFire.png",
           "iconAvailable": true,
           "nameKo": "크로스 파이어"
         },
@@ -364,7 +364,7 @@ window.SKILL_TREE_DATA = {
             3,
             0
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Shot/05_Piercing Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/05_PiercingShot.png",
           "iconAvailable": true,
           "nameKo": "페니트레이터"
         },
@@ -375,7 +375,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/06_Vanquisher.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/06_Vanquisher.png",
           "iconAvailable": true,
           "nameKo": "콘퀘스터"
         },
@@ -386,7 +386,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/07_Twin Storm.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/07_TwinStorm.png",
           "iconAvailable": true,
           "nameKo": "트윈 스톰"
         },
@@ -397,7 +397,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/08_Retrograde Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/08_RetrogradeShot.png",
           "iconAvailable": true,
           "nameKo": "역행 사격"
         },
@@ -408,7 +408,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/09_Quick Loader.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/09_QuickLoader.png",
           "iconAvailable": true,
           "nameKo": "퀵 로더"
         },
@@ -419,7 +419,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/10_Moeba Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/10_MoebaShot.png",
           "iconAvailable": true,
           "nameKo": "메바 샷"
         },
@@ -430,7 +430,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/11_Paralysis Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/11_ParalysisShot.png",
           "iconAvailable": true,
           "nameKo": "패럴라이즈 샷"
         },
@@ -441,7 +441,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/12_Smoke Dust.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/12_SmokeDust.png",
           "iconAvailable": true,
           "nameKo": "스모크 더스트"
         },
@@ -452,7 +452,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/13_Arm Break.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/13_ArmBreak.png",
           "iconAvailable": true,
           "nameKo": "암 브레이크"
         },
@@ -463,7 +463,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/14_Parabola Cannon.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/14_ParabolaCannon.png",
           "iconAvailable": true,
           "nameKo": "파라볼라 카논"
         },
@@ -477,7 +477,7 @@ window.SKILL_TREE_DATA = {
             4,
             6
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Shot/15_Spread Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/15_SpreadShot.png",
           "iconAvailable": true,
           "nameKo": "와이드 스프레드"
         },
@@ -488,7 +488,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/16_Shot Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/16_ShotMastery.png",
           "iconAvailable": true,
           "nameKo": "슈트 마스터리"
         },
@@ -499,7 +499,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/17_Long Range.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/17_LongRange.png",
           "iconAvailable": true,
           "nameKo": "롱 레인지"
         },
@@ -510,7 +510,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/18_Quick Draw.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/18_QuickDraw.png",
           "iconAvailable": true,
           "nameKo": "퀵 드로우"
         },
@@ -521,7 +521,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/19_Decoy Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/19_DecoyShot.png",
           "iconAvailable": true,
           "nameKo": "디코이 슈터"
         },
@@ -532,7 +532,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/20_Element Starter.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/20_ElementStarter.png",
           "iconAvailable": true,
           "nameKo": "엘레멘트 리치"
         },
@@ -546,7 +546,7 @@ window.SKILL_TREE_DATA = {
             0,
             8
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Shot/21_Samurai Archery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/21_SamuraiArchery.png",
           "iconAvailable": true,
           "nameKo": "무사 궁술"
         },
@@ -560,7 +560,7 @@ window.SKILL_TREE_DATA = {
             0,
             9
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Shot/22_Sneak Attack.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/22_SneakAttack.png",
           "iconAvailable": true,
           "nameKo": "하이드 어택"
         },
@@ -571,7 +571,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/23_Hunting Buddy.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/23_HuntingBuddy.png",
           "iconAvailable": true,
           "nameKo": "헌팅 • 원"
         },
@@ -582,7 +582,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 10,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Shot/24_Fatal Shot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Shot/24_FatalShot.png",
           "iconAvailable": true,
           "nameKo": "디스트럭트 샷"
         }
@@ -591,7 +591,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Magic",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 7,
         "rows": 9
@@ -604,7 +604,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/00_Magic_ Arrows.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/00_Magic_Arrows.png",
           "iconAvailable": true,
           "nameKo": "술식/애로"
         },
@@ -615,7 +615,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/01_Magic_ Javelin.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/01_Magic_Javelin.png",
           "iconAvailable": true,
           "nameKo": "술식/쟈베린"
         },
@@ -626,7 +626,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/02_Magic_ Lances.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/02_Magic_Lances.png",
           "iconAvailable": true,
           "nameKo": "술식/랜서"
         },
@@ -637,7 +637,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/03_Magic_ Impact.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/03_Magic_Impact.png",
           "iconAvailable": true,
           "nameKo": "술식/임팩트"
         },
@@ -648,7 +648,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/04_Magic_ Finale.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/04_Magic_Finale.png",
           "iconAvailable": true,
           "nameKo": "술식/피날레"
         },
@@ -659,7 +659,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/05_Chronos Shift.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/05_ChronosShift.png",
           "iconAvailable": true,
           "nameKo": "크로노스 시프트"
         },
@@ -673,7 +673,7 @@ window.SKILL_TREE_DATA = {
             4,
             1
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Magic/06_Magic_ Laser.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/06_Magic_Laser.png",
           "iconAvailable": true,
           "nameKo": "술식/레이저"
         },
@@ -684,7 +684,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/07_Magic_ Wall.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/07_Magic_Wall.png",
           "iconAvailable": true,
           "nameKo": "술식/월"
         },
@@ -695,7 +695,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/08_Magic_ Blast.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/08_Magic_Blast.png",
           "iconAvailable": true,
           "nameKo": "술식/블래스트"
         },
@@ -706,7 +706,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/09_Magic_ Storm.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/09_Magic_Storm.png",
           "iconAvailable": true,
           "nameKo": "술식/스톰"
         },
@@ -717,7 +717,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/10_Magic_ Burst.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/10_Magic_Burst.png",
           "iconAvailable": true,
           "nameKo": "술식/버스트"
         },
@@ -728,7 +728,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/11_Magic_ Magic Cannon.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/11_Magic_MagicCannon.png",
           "iconAvailable": true,
           "nameKo": "술식/매직 카논"
         },
@@ -742,7 +742,7 @@ window.SKILL_TREE_DATA = {
             3,
             3
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Magic/12_Magic_ Crash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/12_Magic_Crash.png",
           "iconAvailable": true,
           "nameKo": "술식/폴"
         },
@@ -753,7 +753,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/13_Magic Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/13_MagicMastery.png",
           "iconAvailable": true,
           "nameKo": "매직 마스터리"
         },
@@ -764,7 +764,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/14_Magic Knife.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/14_MagicKnife.png",
           "iconAvailable": true,
           "nameKo": "매직 나이프"
         },
@@ -775,7 +775,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/15_Qadal.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/15_Qadal.png",
           "iconAvailable": true,
           "nameKo": "게달 일렉시오"
         },
@@ -786,7 +786,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/16_Spell Calibration.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/16_SpellCalibration.png",
           "iconAvailable": true,
           "nameKo": "스펠 튜닝"
         },
@@ -797,7 +797,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/17_MP Charge.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/17_MPCharge.png",
           "iconAvailable": true,
           "nameKo": "차징"
         },
@@ -808,7 +808,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/18_Chain Cast.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/18_ChainCast.png",
           "iconAvailable": true,
           "nameKo": "체인 캐스트"
         },
@@ -819,7 +819,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/19_Power Wave.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/19_PowerWave.png",
           "iconAvailable": true,
           "nameKo": "파워 웨이브"
         },
@@ -830,7 +830,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/20_Maximizer.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/20_Maximizer.png",
           "iconAvailable": true,
           "nameKo": "맥시마이저"
         },
@@ -841,7 +841,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/21_Rapid Charge.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/21_RapidCharge.png",
           "iconAvailable": true,
           "nameKo": "급속 차지"
         },
@@ -852,7 +852,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/22_Enchanted Barrier.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/22_EnchantedBarrier.png",
           "iconAvailable": true,
           "nameKo": "술식 결계"
         },
@@ -863,7 +863,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Magic/23_Magic_ Guardian Beam.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Magic/23_Magic_GuardianBeam.png",
           "iconAvailable": true,
           "nameKo": "술식/이겔"
         }
@@ -872,7 +872,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Martial",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 7,
         "rows": 10
@@ -885,7 +885,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/00_Smash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/00_Smash.png",
           "iconAvailable": true,
           "nameKo": "스매시"
         },
@@ -896,7 +896,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/01_Bash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/01_Bash.png",
           "iconAvailable": true,
           "nameKo": "배쉬"
         },
@@ -907,7 +907,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/02_Shell Break.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/02_ShellBreak.png",
           "iconAvailable": true,
           "nameKo": "셸 브레이크"
         },
@@ -918,7 +918,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/03_Heavy Smash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/03_HeavySmash.png",
           "iconAvailable": true,
           "nameKo": "헤비 스매시"
         },
@@ -929,7 +929,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/04_Chariot.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/04_Chariot.png",
           "iconAvailable": true,
           "nameKo": "채리엇"
         },
@@ -940,7 +940,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/05_Abstract Arms.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/05_AbstractArms.png",
           "iconAvailable": true,
           "nameKo": "심상천수"
         },
@@ -954,7 +954,7 @@ window.SKILL_TREE_DATA = {
             4,
             0
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Martial/06_Mountain Press.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/06_MountainPress.png",
           "iconAvailable": true,
           "nameKo": "첩산고"
         },
@@ -965,7 +965,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/07_Sonic Wave.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/07_SonicWave.png",
           "iconAvailable": true,
           "nameKo": "소닉 웨이브"
         },
@@ -976,7 +976,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/08_Earthbind.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/08_Earthbind.png",
           "iconAvailable": true,
           "nameKo": "어스바인드"
         },
@@ -987,7 +987,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/09_Triple Kick.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/09_TripleKick.png",
           "iconAvailable": true,
           "nameKo": "트라이 어츠"
         },
@@ -998,7 +998,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/10_Rush.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/10_Rush.png",
           "iconAvailable": true,
           "nameKo": "러시"
         },
@@ -1009,7 +1009,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/11_Asura Aura.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/11_AsuraAura.png",
           "iconAvailable": true,
           "nameKo": "아수라 오라"
         },
@@ -1023,7 +1023,7 @@ window.SKILL_TREE_DATA = {
             2,
             2
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Martial/12_Seismic Stomp.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/12_SeismicStomp.png",
           "iconAvailable": true,
           "nameKo": "진각"
         },
@@ -1037,7 +1037,7 @@ window.SKILL_TREE_DATA = {
             4,
             4
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Martial/13_Spin Sweep.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/13_SpinSweep.png",
           "iconAvailable": true,
           "nameKo": "선휘"
         },
@@ -1051,7 +1051,7 @@ window.SKILL_TREE_DATA = {
             3,
             5
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Martial/14_Flash Blink.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/14_FlashBlink.png",
           "iconAvailable": true,
           "nameKo": "플래시 아트"
         },
@@ -1062,7 +1062,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/15_Martial Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/15_MartialMastery.png",
           "iconAvailable": true,
           "nameKo": "머셜 마스터리"
         },
@@ -1073,7 +1073,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/16_Martial Discipline.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/16_MartialDiscipline.png",
           "iconAvailable": true,
           "nameKo": "체술단련"
         },
@@ -1084,7 +1084,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/17_Chakra.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/17_Chakra.png",
           "iconAvailable": true,
           "nameKo": "차크라"
         },
@@ -1095,7 +1095,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/18_Energy Control.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/18_EnergyControl.png",
           "iconAvailable": true,
           "nameKo": "화경"
         },
@@ -1106,7 +1106,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/19_Aggravate.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/19_Aggravate.png",
           "iconAvailable": true,
           "nameKo": "원 찬스"
         },
@@ -1117,7 +1117,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/20_Strong Chase Attack.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/20_StrongChaseAttack.png",
           "iconAvailable": true,
           "nameKo": "강력한 추격"
         },
@@ -1128,7 +1128,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Martial/21_Slide.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Martial/21_Slide.png",
           "iconAvailable": true,
           "nameKo": "슬라이딩"
         }
@@ -1137,7 +1137,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Halberd",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 6,
         "rows": 11
@@ -1150,7 +1150,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/00_Flash Stab.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/00_FlashStab.png",
           "iconAvailable": true,
           "nameKo": "플래쉬 스탭"
         },
@@ -1161,7 +1161,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/01_Cannon Spear.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/01_CannonSpear.png",
           "iconAvailable": true,
           "nameKo": "캐논 스피어"
         },
@@ -1172,7 +1172,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/02_Dragon Tail.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/02_DragonTail.png",
           "iconAvailable": true,
           "nameKo": "드래곤 테일"
         },
@@ -1183,7 +1183,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/03_Dive Impact.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/03_DiveImpact.png",
           "iconAvailable": true,
           "nameKo": "다이브 임팩트"
         },
@@ -1197,7 +1197,7 @@ window.SKILL_TREE_DATA = {
             2,
             0
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/04_Dragon Tooth.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/04_DragonTooth.png",
           "iconAvailable": true,
           "nameKo": "드래곤 투스"
         },
@@ -1208,7 +1208,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/05_Draconic Charge.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/05_DraconicCharge.png",
           "iconAvailable": true,
           "nameKo": "드라코닉 차지"
         },
@@ -1219,7 +1219,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/06_Deadly Spear.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/06_DeadlySpear.png",
           "iconAvailable": true,
           "nameKo": "데들리 스피어"
         },
@@ -1230,7 +1230,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/07_Strike Stab.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/07_StrikeStab.png",
           "iconAvailable": true,
           "nameKo": "스트라이크 스탭"
         },
@@ -1241,7 +1241,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/08_Chronos Drive.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/08_ChronosDrive.png",
           "iconAvailable": true,
           "nameKo": "크로노스 드라이브"
         },
@@ -1252,7 +1252,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/09_Infinite Dimension.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/09_InfiniteDimension.png",
           "iconAvailable": true,
           "nameKo": "디멘젼 틸"
         },
@@ -1266,7 +1266,7 @@ window.SKILL_TREE_DATA = {
             1,
             5
           ],
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/10_Punish Ray.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/10_PunishRay.png",
           "iconAvailable": true,
           "nameKo": "배니쉬 레이"
         },
@@ -1277,7 +1277,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/11_Blitz Spike.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/11_BlitzSpike.png",
           "iconAvailable": true,
           "nameKo": "블리츠 파이크"
         },
@@ -1288,7 +1288,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/12_Lightning Hail.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/12_LightningHail.png",
           "iconAvailable": true,
           "nameKo": "라이트닝 헤일"
         },
@@ -1299,7 +1299,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/13_Thor's Hammer.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/13_Thor'sHammer.png",
           "iconAvailable": true,
           "nameKo": "볼 해머"
         },
@@ -1310,7 +1310,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/14_Halberd Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/14_HalberdMastery.png",
           "iconAvailable": true,
           "nameKo": "할버드 마스터리"
         },
@@ -1321,7 +1321,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/15_Critical Spear.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/15_CriticalSpear.png",
           "iconAvailable": true,
           "nameKo": "회심의 일격"
         },
@@ -1332,7 +1332,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/16_Tornado Lance.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/16_TornadoLance.png",
           "iconAvailable": true,
           "nameKo": "토네이도 랜스"
         },
@@ -1343,7 +1343,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/17_Quick Aura.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/17_QuickAura.png",
           "iconAvailable": true,
           "nameKo": "퀵 오러"
         },
@@ -1354,7 +1354,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/18_War Cry of Struggle.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/18_WarCryofStruggle.png",
           "iconAvailable": true,
           "nameKo": "역경의 사자후"
         },
@@ -1365,7 +1365,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/19_Godspeed Wield.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/19_GodspeedWield.png",
           "iconAvailable": true,
           "nameKo": "신속의 수도"
         },
@@ -1376,7 +1376,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/20_Almighty Wield.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/20_AlmightyWield.png",
           "iconAvailable": true,
           "nameKo": "신의 창솜씨"
         },
@@ -1387,7 +1387,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 10,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Halberd/21_Buster Lance.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Halberd/21_BusterLance.png",
           "iconAvailable": true,
           "nameKo": "버스터랜스"
         }
@@ -1396,7 +1396,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Mononofu",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 6,
         "rows": 11
@@ -1409,7 +1409,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/00_Issen.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/00_Issen.png",
           "iconAvailable": true,
           "nameKo": "일섬"
         },
@@ -1420,7 +1420,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/01_Pulse Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/01_PulseBlade.png",
           "iconAvailable": true,
           "nameKo": "파동인"
         },
@@ -1431,7 +1431,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/02_Triple Thrust.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/02_TripleThrust.png",
           "iconAvailable": true,
           "nameKo": "삼단뚫기"
         },
@@ -1442,7 +1442,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/03_Hasso Happa.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/03_HassoHappa.png",
           "iconAvailable": true,
           "nameKo": "팔상발파"
         },
@@ -1453,7 +1453,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/04_Tenryu Ransei.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/04_TenryuRansei.png",
           "iconAvailable": true,
           "nameKo": "천류난성"
         },
@@ -1464,7 +1464,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/05_Kasumisetsu Getsuka.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/05_KasumisetsuGetsuka.png",
           "iconAvailable": true,
           "nameKo": "하설월화"
         },
@@ -1475,7 +1475,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/06_Garyou Tensei.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/06_GaryouTensei.png",
           "iconAvailable": true,
           "nameKo": "화룡점정"
         },
@@ -1486,7 +1486,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/07_Shadowless Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/07_ShadowlessSlash.png",
           "iconAvailable": true,
           "nameKo": "무영참"
         },
@@ -1497,7 +1497,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/08_Pommel Strike.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/08_PommelStrike.png",
           "iconAvailable": true,
           "nameKo": "칼자루치기"
         },
@@ -1508,7 +1508,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/09_Magadachi.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/09_Magadachi.png",
           "iconAvailable": true,
           "nameKo": "재앙베기"
         },
@@ -1519,7 +1519,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/10_Zantei Settetsu.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/10_ZanteiSettetsu.png",
           "iconAvailable": true,
           "nameKo": "참정절철"
         },
@@ -1530,7 +1530,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/11_Bushido.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/11_Bushido.png",
           "iconAvailable": true,
           "nameKo": "무사도"
         },
@@ -1541,7 +1541,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/12_Shukuchi.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/12_Shukuchi.png",
           "iconAvailable": true,
           "nameKo": "축지법"
         },
@@ -1552,7 +1552,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/13_Nukiuchi Sennosen.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/13_NukiuchiSennosen.png",
           "iconAvailable": true,
           "nameKo": "불시 선의 선"
         },
@@ -1563,7 +1563,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/14_Two-Handed.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/14_Two-Handed.png",
           "iconAvailable": true,
           "nameKo": "양손쥐기"
         },
@@ -1574,7 +1574,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/15_Meikyo Shisui.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/15_MeikyoShisui.png",
           "iconAvailable": true,
           "nameKo": "명경지수"
         },
@@ -1585,7 +1585,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/16_Kairiki Ranshin.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/16_KairikiRanshin.png",
           "iconAvailable": true,
           "nameKo": "괴력난신"
         },
@@ -1596,7 +1596,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/17_Dauntless.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/17_Dauntless.png",
           "iconAvailable": true,
           "nameKo": "불요불굴"
         },
@@ -1607,7 +1607,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/18_Auspicious Wind.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/18_AuspiciousWind.png",
           "iconAvailable": true,
           "nameKo": "서풍"
         },
@@ -1618,7 +1618,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/19_Gust.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/19_Gust.png",
           "iconAvailable": true,
           "nameKo": "일진강풍"
         },
@@ -1629,7 +1629,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/20_Zephyr Rush.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/20_ZephyrRush.png",
           "iconAvailable": true,
           "nameKo": "질풍"
         },
@@ -1640,7 +1640,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/21_Super Gust.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/21_SuperGust.png",
           "iconAvailable": true,
           "nameKo": "일진강풍 • 개정"
         },
@@ -1651,7 +1651,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 10,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Mononofu/22_Bouncing Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Mononofu/22_BouncingBlade.png",
           "iconAvailable": true,
           "nameKo": "칼 튕기기"
         }
@@ -1660,7 +1660,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "DualSword",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 7,
         "rows": 10
@@ -1673,7 +1673,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/00_Dual Sword Mastery.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/00_DualSwordMastery.png",
           "iconAvailable": true,
           "nameKo": "듀얼 마스터리"
         },
@@ -1684,7 +1684,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/01_Twin Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/01_TwinSlash.png",
           "iconAvailable": true,
           "nameKo": "트윈 슬래쉬"
         },
@@ -1695,7 +1695,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/02_Spinning Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/02_SpinningSlash.png",
           "iconAvailable": true,
           "nameKo": "에어 슬라이드"
         },
@@ -1706,7 +1706,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/03_Phantom Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/03_PhantomSlash.png",
           "iconAvailable": true,
           "nameKo": "팬텀 레이브"
         },
@@ -1720,7 +1720,7 @@ window.SKILL_TREE_DATA = {
             2,
             0
           ],
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/04_Aerial Cut.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/04_AerialCut.png",
           "iconAvailable": true,
           "nameKo": "에어 슬라이서"
         },
@@ -1731,7 +1731,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/05_Cross Parry.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/05_CrossParry.png",
           "iconAvailable": true,
           "nameKo": "패링 소드"
         },
@@ -1742,7 +1742,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/06_Charging Slash.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/06_ChargingSlash.png",
           "iconAvailable": true,
           "nameKo": "드래곤 소드"
         },
@@ -1753,7 +1753,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/07_Shadowstep.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/07_Shadowstep.png",
           "iconAvailable": true,
           "nameKo": "돌아 들어가기"
         },
@@ -1764,7 +1764,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/08_Shining Cross.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/08_ShiningCross.png",
           "iconAvailable": true,
           "nameKo": "샤이닝 크로스"
         },
@@ -1775,7 +1775,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/09_Lunar Misfortune.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/09_LunarMisfortune.png",
           "iconAvailable": true,
           "nameKo": "루나 디재스터"
         },
@@ -1786,7 +1786,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/10_Twin Buster Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/10_TwinBusterBlade.png",
           "iconAvailable": true,
           "nameKo": "트윈 버스터 블레이드"
         },
@@ -1797,7 +1797,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/11_Reflex.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/11_Reflex.png",
           "iconAvailable": true,
           "nameKo": "스텝 리액터"
         },
@@ -1808,7 +1808,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/12_Flash Blast.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/12_FlashBlast.png",
           "iconAvailable": true,
           "nameKo": "필로 에클레르"
         },
@@ -1819,7 +1819,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/13_Storm Reaper.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/13_StormReaper.png",
           "iconAvailable": true,
           "nameKo": "스톰 리퍼"
         },
@@ -1830,7 +1830,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/14_Dual Sword Control.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/14_DualSwordControl.png",
           "iconAvailable": true,
           "nameKo": "쌍검 단련"
         },
@@ -1841,7 +1841,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/15_Godspeed.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/15_Godspeed.png",
           "iconAvailable": true,
           "nameKo": "신속의 저력"
         },
@@ -1852,7 +1852,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/16_Saber Aura.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/16_SaberAura.png",
           "iconAvailable": true,
           "nameKo": "세이버 오라"
         },
@@ -1863,7 +1863,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/17_Crescent Saber.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/17_CrescentSaber.png",
           "iconAvailable": true,
           "nameKo": "아크 세이버"
         },
@@ -1877,7 +1877,7 @@ window.SKILL_TREE_DATA = {
             2,
             9
           ],
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/18_Aerial Slay.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/18_AerialSlay.png",
           "iconAvailable": true,
           "nameKo": "에리얼슬레이"
         },
@@ -1888,7 +1888,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 9,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/19_Horizon Cut.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/19_HorizonCut.png",
           "iconAvailable": true,
           "nameKo": "호라이즌탈 것"
         },
@@ -1902,7 +1902,7 @@ window.SKILL_TREE_DATA = {
             4,
             8
           ],
-          "icon": "assets/icons/skills/Weapon Skills/DualSword/20_Sting Blade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/DualSword/20_StingBlade.png",
           "iconAvailable": true,
           "nameKo": "블레이드 스팅거"
         }
@@ -1911,7 +1911,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Crusher",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 4,
         "rows": 5
@@ -1924,7 +1924,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/00_Forefist Punch.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/00_ForefistPunch.png",
           "iconAvailable": true,
           "nameKo": "정권 찌르기"
         },
@@ -1935,7 +1935,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/01_Goliath Punch.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/01_GoliathPunch.png",
           "iconAvailable": true,
           "nameKo": "골리아스테이크 샷"
         },
@@ -1946,7 +1946,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/02_God Hand.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/02_GodHand.png",
           "iconAvailable": true,
           "nameKo": "갓 핸드"
         },
@@ -1957,7 +1957,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/03_Divine Rigid Body.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/03_DivineRigidBody.png",
           "iconAvailable": true,
           "nameKo": "신강체"
         },
@@ -1968,7 +1968,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/04_Breathwork.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/04_Breathwork.png",
           "iconAvailable": true,
           "nameKo": "호흡법"
         },
@@ -1979,7 +1979,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/05_Floating Kick.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/05_FloatingKick.png",
           "iconAvailable": true,
           "nameKo": "플로팅 킥"
         },
@@ -1990,7 +1990,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/06_Geyser Kick.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/06_GeyserKick.png",
           "iconAvailable": true,
           "nameKo": "가이저 슛"
         },
@@ -2001,7 +2001,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/07_Combination.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/07_Combination.png",
           "iconAvailable": true,
           "nameKo": "콤비네이션"
         },
@@ -2012,7 +2012,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/08_Annihilator.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/08_Annihilator.png",
           "iconAvailable": true,
           "nameKo": "파괴자"
         },
@@ -2023,7 +2023,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Crusher/09_Terrablast.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Crusher/09_Terrablast.png",
           "iconAvailable": true,
           "nameKo": "지오크러셔"
         }
@@ -2032,7 +2032,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Sprite",
-      "category": "Weapon Skills",
+      "category": "Weapon_Skills",
       "grid": {
         "columns": 5,
         "rows": 9
@@ -2045,7 +2045,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/00_Auto-Device.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/00_Auto-Device.png",
           "iconAvailable": true,
           "nameKo": "오토 디바이스"
         },
@@ -2056,7 +2056,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/01_Express Aid.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/01_ExpressAid.png",
           "iconAvailable": true,
           "nameKo": "러쉬 에이드"
         },
@@ -2067,7 +2067,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/02_Micro Heal.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/02_MicroHeal.png",
           "iconAvailable": true,
           "nameKo": "클라인 힐"
         },
@@ -2078,7 +2078,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/03_Resurrection.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/03_Resurrection.png",
           "iconAvailable": true,
           "nameKo": "리저렉션"
         },
@@ -2089,7 +2089,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/04_Enhance.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/04_Enhance.png",
           "iconAvailable": true,
           "nameKo": "인핸스"
         },
@@ -2100,7 +2100,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/05_Stabiliz.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/05_Stabiliz.png",
           "iconAvailable": true,
           "nameKo": "스타빌리스"
         },
@@ -2111,7 +2111,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/06_Sprite Upgrade.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/06_SpriteUpgrade.png",
           "iconAvailable": true,
           "nameKo": "스프라이트 강화"
         },
@@ -2122,7 +2122,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/07_Sprite Shield.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/07_SpriteShield.png",
           "iconAvailable": true,
           "nameKo": "스프라이트 실드"
         },
@@ -2133,7 +2133,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/08_Counterforce.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/08_Counterforce.png",
           "iconAvailable": true,
           "nameKo": "카운터포스"
         },
@@ -2144,7 +2144,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/09_Astral Lance.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/09_AstralLance.png",
           "iconAvailable": true,
           "nameKo": "아스트랄 랜스"
         },
@@ -2155,7 +2155,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/10_Magic Vulcan.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/10_MagicVulcan.png",
           "iconAvailable": true,
           "nameKo": "매직 불칸"
         },
@@ -2166,7 +2166,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/11_Cursed Altar.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/11_CursedAltar.png",
           "iconAvailable": true,
           "nameKo": "카타라보모스"
         },
@@ -2177,7 +2177,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/12_Ignition.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/12_Ignition.png",
           "iconAvailable": true,
           "nameKo": "이그니션"
         },
@@ -2188,7 +2188,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/13_Terrawrym.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/13_Terrawrym.png",
           "iconAvailable": true,
           "nameKo": "알데드락"
         },
@@ -2199,7 +2199,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/14_Faux Weapon.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/14_FauxWeapon.png",
           "iconAvailable": true,
           "nameKo": "팍티스악름"
         },
@@ -2210,7 +2210,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/15_Slash Reaper.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/15_SlashReaper.png",
           "iconAvailable": true,
           "nameKo": "슬래시 리퍼"
         },
@@ -2221,7 +2221,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Weapon Skills/Sprite/16_Lebenglanz.png",
+          "icon": "assets/icons/skills/Weapon_Skills/Sprite/16_Lebenglanz.png",
           "iconAvailable": true,
           "nameKo": "레벤그란츠"
         }
@@ -2230,7 +2230,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Shield",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 7
@@ -2243,7 +2243,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/00_Shield Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/00_ShieldMastery.png",
           "iconAvailable": true,
           "nameKo": "실드 마스터리"
         },
@@ -2254,7 +2254,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/01_Shield Bash.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/01_ShieldBash.png",
           "iconAvailable": true,
           "nameKo": "실드 배쉬"
         },
@@ -2265,7 +2265,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/02_Shield Cannon.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/02_ShieldCannon.png",
           "iconAvailable": true,
           "nameKo": "실드 캐논"
         },
@@ -2276,7 +2276,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/03_Guard Strike.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/03_GuardStrike.png",
           "iconAvailable": true,
           "nameKo": "가드 스트라이크"
         },
@@ -2287,7 +2287,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/04_Force Shield.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/04_ForceShield.png",
           "iconAvailable": true,
           "nameKo": "포스 실드"
         },
@@ -2298,7 +2298,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/05_Magical Shield.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/05_MagicalShield.png",
           "iconAvailable": true,
           "nameKo": "매지컬 실드"
         },
@@ -2309,7 +2309,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/06_Shield Uppercut.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/06_ShieldUppercut.png",
           "iconAvailable": true,
           "nameKo": "실드 어퍼컷"
         },
@@ -2320,7 +2320,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/07_Dual Shields.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/07_DualShields.png",
           "iconAvailable": true,
           "nameKo": "듀얼 실드"
         },
@@ -2331,7 +2331,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/08_Shield Repair.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/08_ShieldRepair.png",
           "iconAvailable": true,
           "nameKo": "실드 리페어"
         },
@@ -2342,7 +2342,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/09_Belagerung.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/09_Belagerung.png",
           "iconAvailable": true,
           "nameKo": "벨라겔룸"
         },
@@ -2353,7 +2353,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/10_Protection.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/10_Protection.png",
           "iconAvailable": true,
           "nameKo": "프로텍션"
         },
@@ -2364,7 +2364,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/11_Aegis.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/11_Aegis.png",
           "iconAvailable": true,
           "nameKo": "이지스"
         },
@@ -2375,7 +2375,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Shield/12_Guardian.png",
+          "icon": "assets/icons/skills/Buff_Skills/Shield/12_Guardian.png",
           "iconAvailable": true,
           "nameKo": "가디언"
         }
@@ -2384,7 +2384,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Dagger",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 7
@@ -2397,7 +2397,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/00_Throwing Knife.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/00_ThrowingKnife.png",
           "iconAvailable": true,
           "nameKo": "스로잉"
         },
@@ -2408,7 +2408,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/01_Spike Dart.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/01_SpikeDart.png",
           "iconAvailable": true,
           "nameKo": "스파이크 다트"
         },
@@ -2419,7 +2419,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/02_Gatling Knife.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/02_GatlingKnife.png",
           "iconAvailable": true,
           "nameKo": "개틀링 나이프"
         },
@@ -2430,7 +2430,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/03_Amazing Throw.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/03_AmazingThrow.png",
           "iconAvailable": true,
           "nameKo": "경이의 투척술"
         },
@@ -2441,7 +2441,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/04_Mad Dagger.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/04_MadDagger.png",
           "iconAvailable": true,
           "nameKo": "크레이지 대거"
         },
@@ -2452,7 +2452,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/05_Poison Dagger.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/05_PoisonDagger.png",
           "iconAvailable": true,
           "nameKo": "포이즌대거"
         },
@@ -2463,7 +2463,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/06_Double Stab.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/06_DoubleStab.png",
           "iconAvailable": true,
           "nameKo": "더블 스로"
         },
@@ -2474,7 +2474,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/07_Hidden Arm.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/07_HiddenArm.png",
           "iconAvailable": true,
           "nameKo": "세컨드 암"
         },
@@ -2485,7 +2485,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/08_Intensive Knife.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/08_IntensiveKnife.png",
           "iconAvailable": true,
           "nameKo": "인텐스 나이프"
         },
@@ -2496,7 +2496,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/09_Mail Breaker.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/09_MailBreaker.png",
           "iconAvailable": true,
           "nameKo": "메일 브레이커"
         },
@@ -2507,7 +2507,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/10_Knife Combat.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/10_KnifeCombat.png",
           "iconAvailable": true,
           "nameKo": "나이프 컴뱃"
         },
@@ -2518,7 +2518,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/11_Flincher Knife.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/11_FlincherKnife.png",
           "iconAvailable": true,
           "nameKo": "플린치 나이프"
         },
@@ -2529,7 +2529,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Dagger/12_Rolling Bite.png",
+          "icon": "assets/icons/skills/Buff_Skills/Dagger/12_RollingBite.png",
           "iconAvailable": true,
           "nameKo": "휠 바이트"
         }
@@ -2538,7 +2538,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Knight",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 6
@@ -2551,7 +2551,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/00_Assault Attack.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/00_AssaultAttack.png",
           "iconAvailable": true,
           "nameKo": "어솔트 어택"
         },
@@ -2562,7 +2562,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/01_Parry.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/01_Parry.png",
           "iconAvailable": true,
           "nameKo": "파리"
         },
@@ -2573,7 +2573,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/02_P. Defense.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/02_P.Defense.png",
           "iconAvailable": true,
           "nameKo": "P 디펜스"
         },
@@ -2584,7 +2584,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/03_Fareth.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/03_Fareth.png",
           "iconAvailable": true,
           "nameKo": "파레스"
         },
@@ -2595,7 +2595,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/04_Aftershield.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/04_Aftershield.png",
           "iconAvailable": true,
           "nameKo": "에프터 실드"
         },
@@ -2606,7 +2606,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/05_Provoke.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/05_Provoke.png",
           "iconAvailable": true,
           "nameKo": "프로보크"
         },
@@ -2617,7 +2617,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/06_Rage Sword.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/06_RageSword.png",
           "iconAvailable": true,
           "nameKo": "레이지 소드"
         },
@@ -2628,7 +2628,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/07_Binding Strike.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/07_BindingStrike.png",
           "iconAvailable": true,
           "nameKo": "바인딩 스트라이크"
         },
@@ -2639,7 +2639,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/08_Knight Will.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/08_KnightWill.png",
           "iconAvailable": true,
           "nameKo": "나이트 윌"
         },
@@ -2650,7 +2650,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/09_Blink Sword.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/09_BlinkSword.png",
           "iconAvailable": true,
           "nameKo": "블링크 소드"
         },
@@ -2661,7 +2661,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/10_Sonic Thrust.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/10_SonicThrust.png",
           "iconAvailable": true,
           "nameKo": "소닉 슬라스트"
         },
@@ -2672,7 +2672,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/11_Revenir.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/11_Revenir.png",
           "iconAvailable": true,
           "nameKo": "루브닐"
         },
@@ -2683,7 +2683,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/12_Knight's Stance.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/12_Knight'sStance.png",
           "iconAvailable": true,
           "nameKo": "나이트 스탠스"
         },
@@ -2694,7 +2694,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/13_Knight's Remedy.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/13_Knight'sRemedy.png",
           "iconAvailable": true,
           "nameKo": "나이트 힐"
         },
@@ -2705,7 +2705,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Knight/14_Knight Pledge.png",
+          "icon": "assets/icons/skills/Buff_Skills/Knight/14_KnightPledge.png",
           "iconAvailable": true,
           "nameKo": "나이트 플레지"
         }
@@ -2714,7 +2714,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Priest",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 5
@@ -2727,7 +2727,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/00_Bless.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/00_Bless.png",
           "iconAvailable": true,
           "nameKo": "브레스"
         },
@@ -2738,7 +2738,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/01_Gloria.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/01_Gloria.png",
           "iconAvailable": true,
           "nameKo": "글로리아"
         },
@@ -2749,7 +2749,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/02_Enhanced Bless.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/02_EnhancedBless.png",
           "iconAvailable": true,
           "nameKo": "브레스 강화"
         },
@@ -2760,7 +2760,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/03_Royal Heal.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/03_RoyalHeal.png",
           "iconAvailable": true,
           "nameKo": "하이네스 힐"
         },
@@ -2771,7 +2771,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/04_Sacred Teaching.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/04_SacredTeaching.png",
           "iconAvailable": true,
           "nameKo": "신성한 가르침"
         },
@@ -2782,7 +2782,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/05_Holy Fist.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/05_HolyFist.png",
           "iconAvailable": true,
           "nameKo": "홀리 피스트"
         },
@@ -2793,7 +2793,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/06_Holy Light.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/06_HolyLight.png",
           "iconAvailable": true,
           "nameKo": "홀리 라이트"
         },
@@ -2804,7 +2804,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/07_Ether Barrier.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/07_EtherBarrier.png",
           "iconAvailable": true,
           "nameKo": "에테르 코드"
         },
@@ -2815,7 +2815,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/08_Prayer.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/08_Prayer.png",
           "iconAvailable": true,
           "nameKo": "프리엘"
         },
@@ -2826,7 +2826,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/09_Aspis Soul.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/09_AspisSoul.png",
           "iconAvailable": true,
           "nameKo": "아스피스 소울"
         },
@@ -2837,7 +2837,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/10_Staff Thrust.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/10_StaffThrust.png",
           "iconAvailable": true,
           "nameKo": "로드 스터브"
         },
@@ -2848,7 +2848,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/11_Exorcism.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/11_Exorcism.png",
           "iconAvailable": true,
           "nameKo": "엑소시즘"
         },
@@ -2859,7 +2859,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/12_Holy Book.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/12_HolyBook.png",
           "iconAvailable": true,
           "nameKo": "홀리 바이블"
         },
@@ -2870,7 +2870,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/13_Nemesis.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/13_Nemesis.png",
           "iconAvailable": true,
           "nameKo": "네메시스"
         },
@@ -2881,7 +2881,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Priest/14_Holy Grace.png",
+          "icon": "assets/icons/skills/Buff_Skills/Priest/14_HolyGrace.png",
           "iconAvailable": true,
           "nameKo": "홀리 그레이스"
         }
@@ -2890,7 +2890,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Hunter",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 7
@@ -2903,7 +2903,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/00_Kick.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/00_Kick.png",
           "iconAvailable": true,
           "nameKo": "킥 백"
         },
@@ -2914,7 +2914,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/01_Sunrise Arrow.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/01_SunriseArrow.png",
           "iconAvailable": true,
           "nameKo": "슬리프 애로"
         },
@@ -2925,7 +2925,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/02_Magic Arrow.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/02_MagicArrow.png",
           "iconAvailable": true,
           "nameKo": "선라이즈 애로"
         },
@@ -2936,7 +2936,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/03_Satellite Arrow.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/03_SatelliteArrow.png",
           "iconAvailable": true,
           "nameKo": "새틀라이트 애로"
         },
@@ -2947,7 +2947,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/04_Focus.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/04_Focus.png",
           "iconAvailable": true,
           "nameKo": "포커스"
         },
@@ -2958,7 +2958,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/05_Sleep Trap.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/05_SleepTrap.png",
           "iconAvailable": true,
           "nameKo": "베놈 트랩"
         },
@@ -2969,7 +2969,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/06_Bear Trap.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/06_BearTrap.png",
           "iconAvailable": true,
           "nameKo": "스네아 트랩"
         },
@@ -2980,7 +2980,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/07_Land Mine.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/07_LandMine.png",
           "iconAvailable": true,
           "nameKo": "익스플로시브"
         },
@@ -2991,7 +2991,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/08_Dark Trap.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/08_DarkTrap.png",
           "iconAvailable": true,
           "nameKo": "블랭크 트랩"
         },
@@ -3002,7 +3002,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/09_Camouflage.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/09_Camouflage.png",
           "iconAvailable": true,
           "nameKo": "카무플라주"
         },
@@ -3013,7 +3013,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/10_Homing Shot.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/10_HomingShot.png",
           "iconAvailable": true,
           "nameKo": "호밍 샷"
         },
@@ -3024,7 +3024,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/11_Detection.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/11_Detection.png",
           "iconAvailable": true,
           "nameKo": "디텍션"
         },
@@ -3035,7 +3035,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/12_Cyclon Arrow.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/12_CyclonArrow.png",
           "iconAvailable": true,
           "nameKo": "사이클론 애로우"
         },
@@ -3046,7 +3046,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/13_Vertical Air.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/13_VerticalAir.png",
           "iconAvailable": true,
           "nameKo": "버티컬 에어"
         },
@@ -3057,7 +3057,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/14_Hunter Bowgun.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/14_HunterBowgun.png",
           "iconAvailable": true,
           "nameKo": "보우건 헌터"
         },
@@ -3068,7 +3068,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/15_Multiple Hunt.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/15_MultipleHunt.png",
           "iconAvailable": true,
           "nameKo": "멀티풀 헌터"
         },
@@ -3079,7 +3079,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Hunter/16_Hunter Knowledge.png",
+          "icon": "assets/icons/skills/Buff_Skills/Hunter/16_HunterKnowledge.png",
           "iconAvailable": true,
           "nameKo": "사냥군의 지식"
         }
@@ -3088,7 +3088,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Assassin",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 7
@@ -3101,7 +3101,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/00_Assassin Stab.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/00_AssassinStab.png",
           "iconAvailable": true,
           "nameKo": "어새신 스탭"
         },
@@ -3112,7 +3112,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/01_Backstep.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/01_Backstep.png",
           "iconAvailable": true,
           "nameKo": "백 스텝"
         },
@@ -3123,7 +3123,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/02_Arcane Strike.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/02_ArcaneStrike.png",
           "iconAvailable": true,
           "nameKo": "퓨네빈테"
         },
@@ -3137,7 +3137,7 @@ window.SKILL_TREE_DATA = {
             1,
             0
           ],
-          "icon": "assets/icons/skills/Buff Skills/Assassin/03_Sicarius.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/03_Sicarius.png",
           "iconAvailable": true,
           "nameKo": "시카리우스"
         },
@@ -3148,7 +3148,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/04_Secret Assassin.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/04_SecretAssassin.png",
           "iconAvailable": true,
           "nameKo": "암살의 극의"
         },
@@ -3159,7 +3159,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/05_Evasion.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/05_Evasion.png",
           "iconAvailable": true,
           "nameKo": "이베이션"
         },
@@ -3170,7 +3170,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/06_Serum.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/06_Serum.png",
           "iconAvailable": true,
           "nameKo": "시에라무"
         },
@@ -3181,7 +3181,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/07_Foresight.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/07_Foresight.png",
           "iconAvailable": true,
           "nameKo": "포기"
         },
@@ -3192,7 +3192,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/08_Shadow Walk.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/08_ShadowWalk.png",
           "iconAvailable": true,
           "nameKo": "쉐도우 워크"
         },
@@ -3203,7 +3203,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/09_Assault Chase.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/09_AssaultChase.png",
           "iconAvailable": true,
           "nameKo": "어솔트 체이스"
         },
@@ -3214,7 +3214,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/10_Venom Injection.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/10_VenomInjection.png",
           "iconAvailable": true,
           "nameKo": "베놈 인젝트"
         },
@@ -3225,7 +3225,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/11_Corrosive Poison.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/11_CorrosivePoison.png",
           "iconAvailable": true,
           "nameKo": "갉아먹는 맹독"
         },
@@ -3236,7 +3236,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/12_Venom Thief.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/12_VenomThief.png",
           "iconAvailable": true,
           "nameKo": "베놈 스내치"
         },
@@ -3247,7 +3247,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/13_Death Reception.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/13_DeathReception.png",
           "iconAvailable": true,
           "nameKo": "데스 리셉션"
         },
@@ -3258,7 +3258,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Assassin/14_Poison Master.png",
+          "icon": "assets/icons/skills/Buff_Skills/Assassin/14_PoisonMaster.png",
           "iconAvailable": true,
           "nameKo": "독 조합사"
         }
@@ -3267,7 +3267,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Wizard",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 6,
         "rows": 7
@@ -3280,7 +3280,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/00_Familia.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/00_Familia.png",
           "iconAvailable": true,
           "nameKo": "패밀리어"
         },
@@ -3294,7 +3294,7 @@ window.SKILL_TREE_DATA = {
             0,
             0
           ],
-          "icon": "assets/icons/skills/Buff Skills/Wizard/01_Lightning.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/01_Lightning.png",
           "iconAvailable": true,
           "nameKo": "라이트닝"
         },
@@ -3305,7 +3305,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/02_Blizzard.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/02_Blizzard.png",
           "iconAvailable": true,
           "nameKo": "블리자드"
         },
@@ -3316,7 +3316,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/03_Meteor Strike.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/03_MeteorStrike.png",
           "iconAvailable": true,
           "nameKo": "메테오 스트라이크"
         },
@@ -3327,7 +3327,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/04_Imperial Ray.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/04_ImperialRay.png",
           "iconAvailable": true,
           "nameKo": "임페리얼 레이"
         },
@@ -3338,7 +3338,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/05_Magic Research.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/05_MagicResearch.png",
           "iconAvailable": true,
           "nameKo": "마술 연구"
         },
@@ -3352,7 +3352,7 @@ window.SKILL_TREE_DATA = {
             0,
             4
           ],
-          "icon": "assets/icons/skills/Buff Skills/Wizard/06_Mana Crystal.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/06_ManaCrystal.png",
           "iconAvailable": true,
           "nameKo": "마나 크리스탈"
         },
@@ -3363,7 +3363,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/07_Stone Barrier.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/07_StoneBarrier.png",
           "iconAvailable": true,
           "nameKo": "스톤 스킨"
         },
@@ -3374,7 +3374,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/08_Advanced Familia.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/08_AdvancedFamilia.png",
           "iconAvailable": true,
           "nameKo": "하이 패밀리어"
         },
@@ -3385,7 +3385,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/09_Kitty's Treasure.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/09_Kitty'sTreasure.png",
           "iconAvailable": true,
           "nameKo": "고양이의 분실물"
         },
@@ -3396,7 +3396,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/10_Cast Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/10_CastMastery.png",
           "iconAvailable": true,
           "nameKo": "캐스트 마스터리"
         },
@@ -3407,7 +3407,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/11_Crystal Laser.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/11_CrystalLaser.png",
           "iconAvailable": true,
           "nameKo": "크리스탈 레이저"
         },
@@ -3418,7 +3418,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/12_Overlimit.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/12_Overlimit.png",
           "iconAvailable": true,
           "nameKo": "오버 리미트"
         },
@@ -3429,7 +3429,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/13_Sorcery Guide.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/13_SorceryGuide.png",
           "iconAvailable": true,
           "nameKo": "마술 가이드"
         },
@@ -3440,7 +3440,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Wizard/14_Shift.png",
+          "icon": "assets/icons/skills/Buff_Skills/Wizard/14_Shift.png",
           "iconAvailable": true,
           "nameKo": "시프트"
         }
@@ -3449,7 +3449,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Guard",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 3,
         "rows": 5
@@ -3462,7 +3462,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Guard/00_Heavy Armor Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/00_HeavyArmorMastery.png",
           "iconAvailable": true,
           "nameKo": "중갑옷 마스터리"
         },
@@ -3473,7 +3473,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Guard/01_Advanced Guard.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/01_AdvancedGuard.png",
           "iconAvailable": true,
           "nameKo": "어드밴스 가드"
         },
@@ -3487,7 +3487,7 @@ window.SKILL_TREE_DATA = {
             0,
             0
           ],
-          "icon": "assets/icons/skills/Buff Skills/Guard/02_Physical Guard.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/02_PhysicalGuard.png",
           "iconAvailable": true,
           "nameKo": "피지컬 가드"
         },
@@ -3498,7 +3498,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Guard/03_Light Armor Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/03_LightArmorMastery.png",
           "iconAvailable": true,
           "nameKo": "경갑옷 마스터리"
         },
@@ -3509,7 +3509,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Guard/04_Advanced Evasion.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/04_AdvancedEvasion.png",
           "iconAvailable": true,
           "nameKo": "어드밴스 프리"
         },
@@ -3523,7 +3523,7 @@ window.SKILL_TREE_DATA = {
             0,
             4
           ],
-          "icon": "assets/icons/skills/Buff Skills/Guard/05_Mirage Evasion.png",
+          "icon": "assets/icons/skills/Buff_Skills/Guard/05_MirageEvasion.png",
           "iconAvailable": true,
           "nameKo": "미라쥬 스텝"
         }
@@ -3532,7 +3532,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "DarkPower",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 4,
         "rows": 5
@@ -3545,7 +3545,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/00_Bloody Bite.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/00_BloodyBite.png",
           "iconAvailable": true,
           "nameKo": "블러드 바이트"
         },
@@ -3556,7 +3556,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/01_Dark Stinger.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/01_DarkStinger.png",
           "iconAvailable": true,
           "nameKo": "다크 스팅거"
         },
@@ -3567,7 +3567,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/02_Red Tear.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/02_RedTear.png",
           "iconAvailable": true,
           "nameKo": "레드 티어"
         },
@@ -3578,7 +3578,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/03_Soul Hunter.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/03_SoulHunter.png",
           "iconAvailable": true,
           "nameKo": "소울 헌트"
         },
@@ -3589,7 +3589,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/04_Sacrifice.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/04_Sacrifice.png",
           "iconAvailable": true,
           "nameKo": "새크리파이스"
         },
@@ -3600,7 +3600,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/05_Demon Claw.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/05_DemonClaw.png",
           "iconAvailable": true,
           "nameKo": "데몬 크로우"
         },
@@ -3611,7 +3611,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/06_Regretless.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/06_Regretless.png",
           "iconAvailable": true,
           "nameKo": "리그렛"
         },
@@ -3622,7 +3622,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/07_Eternal Nightmare.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/07_EternalNightmare.png",
           "iconAvailable": true,
           "nameKo": "이터널 나이트메어"
         },
@@ -3633,7 +3633,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/08_Intimidating Evil Eye.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/08_IntimidatingEvilEye.png",
           "iconAvailable": true,
           "nameKo": "위압의 마안"
         },
@@ -3644,7 +3644,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/09_Bewitching Evil Eye.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/09_BewitchingEvilEye.png",
           "iconAvailable": true,
           "nameKo": "매혹의 마안"
         },
@@ -3655,7 +3655,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/10_Black Flame Evil Eye.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/10_BlackFlameEvilEye.png",
           "iconAvailable": true,
           "nameKo": "흑염의 마안"
         },
@@ -3666,7 +3666,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/DarkPower/11_Chaotic Evil Eye.png",
+          "icon": "assets/icons/skills/Buff_Skills/DarkPower/11_ChaoticEvilEye.png",
           "iconAvailable": true,
           "nameKo": "혼돈의 마안"
         }
@@ -3675,7 +3675,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "MagicBlade",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 5,
         "rows": 5
@@ -3688,7 +3688,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/00_Magic Warrior Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/00_MagicWarriorMastery.png",
           "iconAvailable": true,
           "nameKo": "마법전사의 마음가짐"
         },
@@ -3699,7 +3699,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/01_Conversion.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/01_Conversion.png",
           "iconAvailable": true,
           "nameKo": "컨버젼"
         },
@@ -3710,7 +3710,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/02_Resonance.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/02_Resonance.png",
           "iconAvailable": true,
           "nameKo": "레조난스"
         },
@@ -3721,7 +3721,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/03_Enchanted Spell.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/03_EnchantedSpell.png",
           "iconAvailable": true,
           "nameKo": "엔천트 스펠"
         },
@@ -3732,7 +3732,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/04_Dual Bringer.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/04_DualBringer.png",
           "iconAvailable": true,
           "nameKo": "듀얼 브링거"
         },
@@ -3743,7 +3743,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/05_Ether Flare.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/05_EtherFlare.png",
           "iconAvailable": true,
           "nameKo": "에텔 플레아"
         },
@@ -3754,7 +3754,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/06_Element Slash.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/06_ElementSlash.png",
           "iconAvailable": true,
           "nameKo": "엘레멘트 슬래쉬"
         },
@@ -3765,7 +3765,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/07_Enchant Sword.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/07_EnchantSword.png",
           "iconAvailable": true,
           "nameKo": "엔천트 소드"
         },
@@ -3776,7 +3776,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/08_Enchanted Burst.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/08_EnchantedBurst.png",
           "iconAvailable": true,
           "nameKo": "엔천트 버스트"
         },
@@ -3787,7 +3787,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/09_Union Sword.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/09_UnionSword.png",
           "iconAvailable": true,
           "nameKo": "유니온 소드"
         },
@@ -3798,7 +3798,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/10_Siphon Barrier.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/10_SiphonBarrier.png",
           "iconAvailable": true,
           "nameKo": "드레인 배리어"
         },
@@ -3809,7 +3809,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/11_Teleport.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/11_Teleport.png",
           "iconAvailable": true,
           "nameKo": "텔레포트"
         },
@@ -3820,7 +3820,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/12_Siphon Recall.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/12_SiphonRecall.png",
           "iconAvailable": true,
           "nameKo": "드레인 리콜"
         },
@@ -3831,7 +3831,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/13_Float Dash.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/13_FloatDash.png",
           "iconAvailable": true,
           "nameKo": "플로트 대시"
         },
@@ -3842,7 +3842,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/MagicBlade/14_Magic Skin.png",
+          "icon": "assets/icons/skills/Buff_Skills/MagicBlade/14_MagicSkin.png",
           "iconAvailable": true,
           "nameKo": "매직 스킨"
         }
@@ -3851,7 +3851,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Barehand",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 4,
         "rows": 7
@@ -3864,7 +3864,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/00_Unarmed Mastery.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/00_UnarmedMastery.png",
           "iconAvailable": true,
           "nameKo": "맨손 마스터리"
         },
@@ -3875,7 +3875,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/01_Qi Charge.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/01_QiCharge.png",
           "iconAvailable": true,
           "nameKo": "집기공"
         },
@@ -3886,7 +3886,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/02_Lion Rage.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/02_LionRage.png",
           "iconAvailable": true,
           "nameKo": "사자분신"
         },
@@ -3897,7 +3897,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/03_Ultima Lion Rage.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/03_UltimaLionRage.png",
           "iconAvailable": true,
           "nameKo": "사자분신 • 극"
         },
@@ -3908,7 +3908,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/04_Raving Storm.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/04_RavingStorm.png",
           "iconAvailable": true,
           "nameKo": "질풍노도"
         },
@@ -3919,7 +3919,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/05_Ultima Raving Storm.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/05_UltimaRavingStorm.png",
           "iconAvailable": true,
           "nameKo": "질풍노도 • 극"
         },
@@ -3930,7 +3930,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/06_Internal Elixir.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/06_InternalElixir.png",
           "iconAvailable": true,
           "nameKo": "회복기공"
         },
@@ -3941,7 +3941,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/07_Clash of Enmity.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/07_ClashofEnmity.png",
           "iconAvailable": true,
           "nameKo": "투지의 충돌"
         },
@@ -3952,7 +3952,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/08_Miracle Comeback.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/08_MiracleComeback.png",
           "iconAvailable": true,
           "nameKo": "기사회생"
         },
@@ -3966,7 +3966,7 @@ window.SKILL_TREE_DATA = {
             0,
             6
           ],
-          "icon": "assets/icons/skills/Buff Skills/Barehand/09_Ultima Qi Charge.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/09_UltimaQiCharge.png",
           "iconAvailable": true,
           "nameKo": "집기공•극"
         },
@@ -3980,7 +3980,7 @@ window.SKILL_TREE_DATA = {
             0,
             6
           ],
-          "icon": "assets/icons/skills/Buff Skills/Barehand/10_Hidden Talent.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/10_HiddenTalent.png",
           "iconAvailable": true,
           "nameKo": "자기도회"
         },
@@ -3991,7 +3991,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Barehand/11_Earthshaker.png",
+          "icon": "assets/icons/skills/Buff_Skills/Barehand/11_Earthshaker.png",
           "iconAvailable": true,
           "nameKo": "경천동지"
         }
@@ -4000,7 +4000,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Ninja",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 4,
         "rows": 3
@@ -4013,7 +4013,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Ninja/00_Ninjutsu.png",
+          "icon": "assets/icons/skills/Buff_Skills/Ninja/00_Ninjutsu.png",
           "iconAvailable": true,
           "nameKo": "인술"
         },
@@ -4024,7 +4024,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Ninja/01_Ninja Spirit.png",
+          "icon": "assets/icons/skills/Buff_Skills/Ninja/01_NinjaSpirit.png",
           "iconAvailable": true,
           "nameKo": "신념"
         },
@@ -4038,7 +4038,7 @@ window.SKILL_TREE_DATA = {
             0,
             2
           ],
-          "icon": "assets/icons/skills/Buff Skills/Ninja/02_Ninjutsu Drill I.png",
+          "icon": "assets/icons/skills/Buff_Skills/Ninja/02_NinjutsuDrillI.png",
           "iconAvailable": true,
           "nameKo": "인술 단련 I"
         },
@@ -4049,7 +4049,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Ninja/03_Ninjutsu Drill II.png",
+          "icon": "assets/icons/skills/Buff_Skills/Ninja/03_NinjutsuDrillII.png",
           "iconAvailable": true,
           "nameKo": "인술 단련 II"
         }
@@ -4058,7 +4058,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Partisan",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 3,
         "rows": 7
@@ -4071,7 +4071,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/00_L Boomerang.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/00_LBoomerang.png",
           "iconAvailable": true,
           "nameKo": "L 부메랑"
         },
@@ -4082,7 +4082,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/01_L Boomerang II.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/01_LBoomerangII.png",
           "iconAvailable": true,
           "nameKo": "L 부메랑 II"
         },
@@ -4093,7 +4093,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/02_L Boomerang III.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/02_LBoomerangIII.png",
           "iconAvailable": true,
           "nameKo": "L 부메랑 III"
         },
@@ -4104,7 +4104,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/03_N Dragon Tooth.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/03_NDragonTooth.png",
           "iconAvailable": true,
           "nameKo": "N 드래곤 투스"
         },
@@ -4115,7 +4115,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/04_Healing Shot.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/04_HealingShot.png",
           "iconAvailable": true,
           "nameKo": "힐링 샷"
         },
@@ -4126,7 +4126,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/05_Arrow Sharpening.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/05_ArrowSharpening.png",
           "iconAvailable": true,
           "nameKo": "화살 갈기"
         },
@@ -4137,7 +4137,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/06_Survival Instinct.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/06_SurvivalInstinct.png",
           "iconAvailable": true,
           "nameKo": "생존 본능"
         },
@@ -4148,7 +4148,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/07_Frontliner.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/07_Frontliner.png",
           "iconAvailable": true,
           "nameKo": "전선 유지"
         },
@@ -4159,7 +4159,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Partisan/08_Frontliner II.png",
+          "icon": "assets/icons/skills/Buff_Skills/Partisan/08_FrontlinerII.png",
           "iconAvailable": true,
           "nameKo": "전선 유지 II"
         }
@@ -4168,7 +4168,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Necromancer",
-      "category": "Buff Skills",
+      "category": "Buff_Skills",
       "grid": {
         "columns": 4,
         "rows": 7
@@ -4181,7 +4181,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/00_Grave Digger.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/00_GraveDigger.png",
           "iconAvailable": true,
           "nameKo": "그레이브디거"
         },
@@ -4192,7 +4192,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/01_Phantom Missile.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/01_PhantomMissile.png",
           "iconAvailable": true,
           "nameKo": "팬텀 미사일"
         },
@@ -4203,7 +4203,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/02_Blood Siphon.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/02_BloodSiphon.png",
           "iconAvailable": true,
           "nameKo": "블러드 스틸"
         },
@@ -4214,7 +4214,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/03_Soul Stream.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/03_SoulStream.png",
           "iconAvailable": true,
           "nameKo": "소울 스트림"
         },
@@ -4225,7 +4225,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/04_Skeleton Call.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/04_SkeletonCall.png",
           "iconAvailable": true,
           "nameKo": "서몬 스켈레톤"
         },
@@ -4236,7 +4236,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/05_Demonic Pact.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/05_DemonicPact.png",
           "iconAvailable": true,
           "nameKo": "서몬 데모닉"
         },
@@ -4247,7 +4247,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/06_Fine Shovel.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/06_FineShovel.png",
           "iconAvailable": true,
           "nameKo": "양질의 샵"
         },
@@ -4258,7 +4258,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/07_Harvest.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/07_Harvest.png",
           "iconAvailable": true,
           "nameKo": "하베스트"
         },
@@ -4269,7 +4269,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/08_Opportunist.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/08_Opportunist.png",
           "iconAvailable": true,
           "nameKo": "매치 점프"
         },
@@ -4280,7 +4280,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/09_Tomb.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/09_Tomb.png",
           "iconAvailable": true,
           "nameKo": "툼"
         },
@@ -4291,7 +4291,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/10_Skull Shaker.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/10_SkullShaker.png",
           "iconAvailable": true,
           "nameKo": "스컬 셰이커"
         },
@@ -4302,7 +4302,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Buff Skills/Necromancer/11_Hazard Strike.png",
+          "icon": "assets/icons/skills/Buff_Skills/Necromancer/11_HazardStrike.png",
           "iconAvailable": true,
           "nameKo": "데인져 셰이크"
         }
@@ -4311,7 +4311,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Survival",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 3,
         "rows": 7
@@ -4324,7 +4324,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/00_Play Dead.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/00_PlayDead.png",
           "iconAvailable": true,
           "nameKo": "죽은 척"
         },
@@ -4335,7 +4335,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/01_EXP Gain Up.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/01_EXPGainUp.png",
           "iconAvailable": true,
           "nameKo": "경험치 업"
         },
@@ -4346,7 +4346,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/02_Drop Rate Up.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/02_DropRateUp.png",
           "iconAvailable": true,
           "nameKo": "수집률 업"
         },
@@ -4357,7 +4357,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/03_Safe Rest.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/03_SafeRest.png",
           "iconAvailable": true,
           "nameKo": "안전한 휴식"
         },
@@ -4368,7 +4368,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/04_HP Boost.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/04_HPBoost.png",
           "iconAvailable": true,
           "nameKo": "HP 부스트"
         },
@@ -4379,7 +4379,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/05_Fighter's High.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/05_Fighter'sHigh.png",
           "iconAvailable": true,
           "nameKo": "여유있는 전투"
         },
@@ -4390,7 +4390,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/06_Short Rest.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/06_ShortRest.png",
           "iconAvailable": true,
           "nameKo": "작은 휴식"
         },
@@ -4401,7 +4401,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/07_MP Boost.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/07_MPBoost.png",
           "iconAvailable": true,
           "nameKo": "MP 부스트"
         },
@@ -4412,7 +4412,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Survival/08_Sober Analysis.png",
+          "icon": "assets/icons/skills/Assist_Skills/Survival/08_SoberAnalysis.png",
           "iconAvailable": true,
           "nameKo": "냉정한 전술"
         }
@@ -4421,7 +4421,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Support",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 5,
         "rows": 5
@@ -4434,7 +4434,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 1,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/00_First Aid.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/00_FirstAid.png",
           "iconAvailable": true,
           "nameKo": "응급처치"
         },
@@ -4445,7 +4445,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/01_Mini Heal.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/01_MiniHeal.png",
           "iconAvailable": true,
           "nameKo": "작은 힐"
         },
@@ -4456,7 +4456,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/02_Recovery.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/02_Recovery.png",
           "iconAvailable": true,
           "nameKo": "리커버리"
         },
@@ -4467,7 +4467,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/03_Sanctuary.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/03_Sanctuary.png",
           "iconAvailable": true,
           "nameKo": "생츄어리"
         },
@@ -4478,7 +4478,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/04_Heal.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/04_Heal.png",
           "iconAvailable": true,
           "nameKo": "힐"
         },
@@ -4489,7 +4489,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/05_Life Recovery.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/05_LifeRecovery.png",
           "iconAvailable": true,
           "nameKo": "라이프 리커버리"
         },
@@ -4500,7 +4500,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/06_Brave Aura.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/06_BraveAura.png",
           "iconAvailable": true,
           "nameKo": "브레이브 오라"
         },
@@ -4511,7 +4511,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/07_High Cycle.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/07_HighCycle.png",
           "iconAvailable": true,
           "nameKo": "하이 사이클"
         },
@@ -4522,7 +4522,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/08_Quick Motion.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/08_QuickMotion.png",
           "iconAvailable": true,
           "nameKo": "퀵모션"
         },
@@ -4533,7 +4533,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/09_Mana Recharge.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/09_ManaRecharge.png",
           "iconAvailable": true,
           "nameKo": "마나 리차지"
         },
@@ -4544,7 +4544,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/10_Magic Barrier.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/10_MagicBarrier.png",
           "iconAvailable": true,
           "nameKo": "매직 배리어"
         },
@@ -4555,7 +4555,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/11_Immunity.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/11_Immunity.png",
           "iconAvailable": true,
           "nameKo": "디지토실"
         },
@@ -4566,7 +4566,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Support/12_Fast Reaction.png",
+          "icon": "assets/icons/skills/Assist_Skills/Support/12_FastReaction.png",
           "iconAvailable": true,
           "nameKo": "하이 리액션"
         }
@@ -4575,7 +4575,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Battle",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 5,
         "rows": 5
@@ -4588,7 +4588,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/00_Magic UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/00_MagicUP.png",
           "iconAvailable": true,
           "nameKo": "마법력 UP"
         },
@@ -4599,7 +4599,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/01_Concentrate.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/01_Concentrate.png",
           "iconAvailable": true,
           "nameKo": "집중"
         },
@@ -4610,7 +4610,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/02_Attack UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/02_AttackUP.png",
           "iconAvailable": true,
           "nameKo": "공격력 UP"
         },
@@ -4621,7 +4621,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/03_Whack.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/03_Whack.png",
           "iconAvailable": true,
           "nameKo": "강타"
         },
@@ -4632,7 +4632,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/04_Defense UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/04_DefenseUP.png",
           "iconAvailable": true,
           "nameKo": "방어력 UP"
         },
@@ -4643,7 +4643,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/05_Dodge UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/05_DodgeUP.png",
           "iconAvailable": true,
           "nameKo": "회피 UP"
         },
@@ -4654,7 +4654,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/06_Desperate Resist.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/06_DesperateResist.png",
           "iconAvailable": true,
           "nameKo": "필사적인 저항"
         },
@@ -4665,7 +4665,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/07_Critical UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/07_CriticalUP.png",
           "iconAvailable": true,
           "nameKo": "크리티컬 UP"
         },
@@ -4676,7 +4676,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/08_Accuracy UP.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/08_AccuracyUP.png",
           "iconAvailable": true,
           "nameKo": "명중 UP"
         },
@@ -4687,7 +4687,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/09_Increased Energy.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/09_IncreasedEnergy.png",
           "iconAvailable": true,
           "nameKo": "한층 더한 마력"
         },
@@ -4698,7 +4698,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/10_Intimidating Power.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/10_IntimidatingPower.png",
           "iconAvailable": true,
           "nameKo": "위협의 위력"
         },
@@ -4709,7 +4709,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/11_Defense Mastery.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/11_DefenseMastery.png",
           "iconAvailable": true,
           "nameKo": "수비의 마음가짐"
         },
@@ -4720,7 +4720,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/12_Spell Burst.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/12_SpellBurst.png",
           "iconAvailable": true,
           "nameKo": "스펠 버스트"
         },
@@ -4731,7 +4731,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/13_Secret Chase Attack.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/13_SecretChaseAttack.png",
           "iconAvailable": true,
           "nameKo": "추격의 극의"
         },
@@ -4742,7 +4742,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Battle/14_Super Grip.png",
+          "icon": "assets/icons/skills/Assist_Skills/Battle/14_SuperGrip.png",
           "iconAvailable": true,
           "nameKo": "슈퍼그립"
         }
@@ -4751,7 +4751,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Minstrel",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 4,
         "rows": 8
@@ -4764,7 +4764,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/00_Healing Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/00_HealingSong.png",
           "iconAvailable": true,
           "nameKo": "치유의 노래"
         },
@@ -4775,7 +4775,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/01_Fairy Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/01_FairySong.png",
           "iconAvailable": true,
           "nameKo": "요정의 노래"
         },
@@ -4786,7 +4786,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/02_Passion Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/02_PassionSong.png",
           "iconAvailable": true,
           "nameKo": "열정의 노래"
         },
@@ -4797,7 +4797,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/03_Wisdom Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/03_WisdomSong.png",
           "iconAvailable": true,
           "nameKo": "지혜의 노래"
         },
@@ -4808,7 +4808,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/04_Life Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/04_LifeSong.png",
           "iconAvailable": true,
           "nameKo": "생명의 노래"
         },
@@ -4819,7 +4819,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/05_Fantasy Song.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/05_FantasySong.png",
           "iconAvailable": true,
           "nameKo": "몽환의 노래"
         },
@@ -4830,7 +4830,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 5,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/06_Beat Blast.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/06_BeatBlast.png",
           "iconAvailable": true,
           "nameKo": "비트 블래스트"
         },
@@ -4841,7 +4841,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/07_Sound Veil.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/07_SoundVeil.png",
           "iconAvailable": true,
           "nameKo": "사운드 베일"
         },
@@ -4852,7 +4852,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/08_Battle Anthem.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/08_BattleAnthem.png",
           "iconAvailable": true,
           "nameKo": "배틀 노트"
         },
@@ -4863,7 +4863,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Minstrel/09_Ad-lib.png",
+          "icon": "assets/icons/skills/Assist_Skills/Minstrel/09_Ad-lib.png",
           "iconAvailable": true,
           "nameKo": "애드립"
         }
@@ -4872,7 +4872,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Dancer",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 4,
         "rows": 4
@@ -4885,7 +4885,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/00_Fairy Dance.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/00_FairyDance.png",
           "iconAvailable": true,
           "nameKo": "요정의 춤"
         },
@@ -4896,7 +4896,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/01_Frenzy Dance.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/01_FrenzyDance.png",
           "iconAvailable": true,
           "nameKo": "격정의 춤"
         },
@@ -4907,7 +4907,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/02_Spirited Dance.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/02_SpiritedDance.png",
           "iconAvailable": true,
           "nameKo": "예민의 춤"
         },
@@ -4918,7 +4918,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/03_Astute Dance.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/03_AstuteDance.png",
           "iconAvailable": true,
           "nameKo": "매혹의 춤"
         },
@@ -4929,7 +4929,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/04_Charming Dance.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/04_CharmingDance.png",
           "iconAvailable": true,
           "nameKo": "응원의 춤"
         },
@@ -4940,7 +4940,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/05_Elegant Poise.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/05_ElegantPoise.png",
           "iconAvailable": true,
           "nameKo": "우아한 몸가짐"
         },
@@ -4951,7 +4951,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 3,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Dancer/06_Nature's Wonders.png",
+          "icon": "assets/icons/skills/Assist_Skills/Dancer/06_Nature'sWonders.png",
           "iconAvailable": true,
           "nameKo": "화조풍월"
         }
@@ -4960,7 +4960,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Golem",
-      "category": "Assist Skills",
+      "category": "Assist_Skills",
       "grid": {
         "columns": 3,
         "rows": 9
@@ -4973,7 +4973,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/00_Golem Call.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/00_GolemCall.png",
           "iconAvailable": true,
           "nameKo": "골렘 소환"
         },
@@ -4984,7 +4984,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/01_Neo Lancer.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/01_NeoLancer.png",
           "iconAvailable": true,
           "nameKo": "랜서형 개량"
         },
@@ -4995,7 +4995,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/02_Attack Boost.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/02_AttackBoost.png",
           "iconAvailable": true,
           "nameKo": "어택 강화"
         },
@@ -5006,7 +5006,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/03_Neo Shielder.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/03_NeoShielder.png",
           "iconAvailable": true,
           "nameKo": "실드형 개량"
         },
@@ -5017,7 +5017,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/04_Shield Boost.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/04_ShieldBoost.png",
           "iconAvailable": true,
           "nameKo": "실드 강화"
         },
@@ -5028,7 +5028,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/05_Neo Buster.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/05_NeoBuster.png",
           "iconAvailable": true,
           "nameKo": "버스터형 개량"
         },
@@ -5039,7 +5039,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/06_Speed Boost.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/06_SpeedBoost.png",
           "iconAvailable": true,
           "nameKo": "스피드 강화"
         },
@@ -5050,7 +5050,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 7,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/07_Magic Grenade.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/07_MagicGrenade.png",
           "iconAvailable": true,
           "nameKo": "마도 그레네이드"
         },
@@ -5061,7 +5061,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/08_Frost Grenade.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/08_FrostGrenade.png",
           "iconAvailable": true,
           "nameKo": "동결 그레네이드"
         },
@@ -5072,7 +5072,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/09_Flash Grenade.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/09_FlashGrenade.png",
           "iconAvailable": true,
           "nameKo": "섬광 그레네이드"
         },
@@ -5083,7 +5083,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/10_Barrier Screen.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/10_BarrierScreen.png",
           "iconAvailable": true,
           "nameKo": "배리어 스크린"
         },
@@ -5094,7 +5094,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Assist Skills/Golem/11_Barrier Upgrade.png",
+          "icon": "assets/icons/skills/Assist_Skills/Golem/11_BarrierUpgrade.png",
           "iconAvailable": true,
           "nameKo": "배리어 강화"
         }
@@ -5103,7 +5103,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Smith",
-      "category": "Other Skills",
+      "category": "Other_Skills",
       "grid": {
         "columns": 7,
         "rows": 11
@@ -5116,7 +5116,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/00_Refine Equipment.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/00_RefineEquipment.png",
           "iconAvailable": true,
           "nameKo": "장비 제련"
         },
@@ -5127,7 +5127,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/01_Novice's Anvil.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/01_Novice'sAnvil.png",
           "iconAvailable": true,
           "nameKo": "초보의 모루"
         },
@@ -5138,7 +5138,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/02_Craftsman's Anvil.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/02_Craftsman'sAnvil.png",
           "iconAvailable": true,
           "nameKo": "장인의 모루"
         },
@@ -5149,7 +5149,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/03_Blacksmith's Anvil.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/03_Blacksmith'sAnvil.png",
           "iconAvailable": true,
           "nameKo": "대장간의 모루"
         },
@@ -5160,7 +5160,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/04_Master's Anvil.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/04_Master'sAnvil.png",
           "iconAvailable": true,
           "nameKo": "달인의 모루"
         },
@@ -5171,7 +5171,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/05_Master's Anvil II.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/05_Master'sAnvilII.png",
           "iconAvailable": true,
           "nameKo": "달인의 모루 II"
         },
@@ -5182,7 +5182,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/06_Mid-Class Refinement.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/06_Mid-ClassRefinement.png",
           "iconAvailable": true,
           "nameKo": "중급 제련기술"
         },
@@ -5193,7 +5193,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/07_High-Class Refinement.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/07_High-ClassRefinement.png",
           "iconAvailable": true,
           "nameKo": "상급 제련기술"
         },
@@ -5204,7 +5204,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/08_Expert's Refinement.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/08_Expert'sRefinement.png",
           "iconAvailable": true,
           "nameKo": "장인의 제련기술"
         },
@@ -5215,7 +5215,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/09_Create Equipment.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/09_CreateEquipment.png",
           "iconAvailable": true,
           "nameKo": "장비 제작"
         },
@@ -5226,7 +5226,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/10_Careful Creation.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/10_CarefulCreation.png",
           "iconAvailable": true,
           "nameKo": "신중한 제작"
         },
@@ -5237,7 +5237,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/11_Expert's Creation.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/11_Expert'sCreation.png",
           "iconAvailable": true,
           "nameKo": "장인의 제작기술"
         },
@@ -5248,7 +5248,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/12_Customize Equipment.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/12_CustomizeEquipment.png",
           "iconAvailable": true,
           "nameKo": "장비 강화"
         },
@@ -5259,7 +5259,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/13_Accurate Customization.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/13_AccurateCustomization.png",
           "iconAvailable": true,
           "nameKo": "정확한 강화"
         },
@@ -5270,7 +5270,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/14_Expert's Customization.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/14_Expert'sCustomization.png",
           "iconAvailable": true,
           "nameKo": "장인의 강화기술"
         },
@@ -5281,7 +5281,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/15_Expert's Customization II.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/15_Expert'sCustomizationII.png",
           "iconAvailable": true,
           "nameKo": "장인의 강화기술 II"
         },
@@ -5292,7 +5292,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/16_Process Materials.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/16_ProcessMaterials.png",
           "iconAvailable": true,
           "nameKo": "소재 가공"
         },
@@ -5303,7 +5303,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/17_Metal Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/17_MetalCompassion.png",
           "iconAvailable": true,
           "nameKo": "금속 이해"
         },
@@ -5314,7 +5314,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/18_Fabric Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/18_FabricCompassion.png",
           "iconAvailable": true,
           "nameKo": "패브릭 이해"
         },
@@ -5325,7 +5325,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/19_Beast Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/19_BeastCompassion.png",
           "iconAvailable": true,
           "nameKo": "짐승 이해"
         },
@@ -5336,7 +5336,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 6,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/20_Wood Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/20_WoodCompassion.png",
           "iconAvailable": true,
           "nameKo": "목재 이해"
         },
@@ -5347,7 +5347,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 8,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/21_Medicine Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/21_MedicineCompassion.png",
           "iconAvailable": true,
           "nameKo": "약품 이해"
         },
@@ -5358,7 +5358,7 @@ window.SKILL_TREE_DATA = {
           "x": 6,
           "y": 10,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Smith/22_Mana Compassion.png",
+          "icon": "assets/icons/skills/Other_Skills/Smith/22_ManaCompassion.png",
           "iconAvailable": true,
           "nameKo": "마법 이해"
         }
@@ -5367,7 +5367,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Alchemy",
-      "category": "Other Skills",
+      "category": "Other_Skills",
       "grid": {
         "columns": 6,
         "rows": 5
@@ -5380,7 +5380,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/00_Item Synthesis.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/00_ItemSynthesis.png",
           "iconAvailable": true,
           "nameKo": "아이템 합성"
         },
@@ -5391,7 +5391,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/01_Novice's Bottle.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/01_Novice'sBottle.png",
           "iconAvailable": true,
           "nameKo": "초보의 약병"
         },
@@ -5402,7 +5402,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/02_Craftsman's Bottle.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/02_Craftsman'sBottle.png",
           "iconAvailable": true,
           "nameKo": "장인의 약병"
         },
@@ -5413,7 +5413,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/03_Synthesist's Bottle.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/03_Synthesist'sBottle.png",
           "iconAvailable": true,
           "nameKo": "대장간의 약병"
         },
@@ -5424,7 +5424,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/04_Master's Bottle.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/04_Master'sBottle.png",
           "iconAvailable": true,
           "nameKo": "달인의 약병"
         },
@@ -5435,7 +5435,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/05_Master's Bottle II.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/05_Master'sBottleII.png",
           "iconAvailable": true,
           "nameKo": "달인의 약병 II"
         },
@@ -5446,7 +5446,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/06_Mid-Class Synthesis.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/06_Mid-ClassSynthesis.png",
           "iconAvailable": true,
           "nameKo": "중급 합성술"
         },
@@ -5457,7 +5457,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/07_High-Class Synthesis.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/07_High-ClassSynthesis.png",
           "iconAvailable": true,
           "nameKo": "상급 합성술"
         },
@@ -5468,7 +5468,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/08_Expert's Synthesis.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/08_Expert'sSynthesis.png",
           "iconAvailable": true,
           "nameKo": "장인의 합성술"
         },
@@ -5479,7 +5479,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/09_Expert's Synthesis II.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/09_Expert'sSynthesisII.png",
           "iconAvailable": true,
           "nameKo": "장인의 합성술 II"
         },
@@ -5490,7 +5490,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/10_Synthesize Equipment.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/10_SynthesizeEquipment.png",
           "iconAvailable": true,
           "nameKo": "장비 합성"
         },
@@ -5501,7 +5501,7 @@ window.SKILL_TREE_DATA = {
           "x": 3,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/11_Technical Synthesis I.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/11_TechnicalSynthesisI.png",
           "iconAvailable": true,
           "nameKo": "합성기술 향상 I"
         },
@@ -5512,7 +5512,7 @@ window.SKILL_TREE_DATA = {
           "x": 4,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/12_Technical Synthesis II.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/12_TechnicalSynthesisII.png",
           "iconAvailable": true,
           "nameKo": "합성기술 향상 II"
         },
@@ -5523,7 +5523,7 @@ window.SKILL_TREE_DATA = {
           "x": 5,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/13_Technical Synthesis III.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/13_TechnicalSynthesisIII.png",
           "iconAvailable": true,
           "nameKo": "합성기술 향상 III"
         },
@@ -5534,7 +5534,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Alchemy/14_Process Materials.png",
+          "icon": "assets/icons/skills/Other_Skills/Alchemy/14_ProcessMaterials.png",
           "iconAvailable": true,
           "nameKo": "소재 가공"
         }
@@ -5543,7 +5543,7 @@ window.SKILL_TREE_DATA = {
     },
     {
       "id": "Tamer",
-      "category": "Other Skills",
+      "category": "Other_Skills",
       "grid": {
         "columns": 3,
         "rows": 5
@@ -5556,7 +5556,7 @@ window.SKILL_TREE_DATA = {
           "x": 0,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/00_Taming.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/00_Taming.png",
           "iconAvailable": true,
           "nameKo": "테이밍"
         },
@@ -5567,7 +5567,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/01_Capture Technique I.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/01_CaptureTechniqueI.png",
           "iconAvailable": true,
           "nameKo": "포획기술 I"
         },
@@ -5578,7 +5578,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 0,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/02_Capture Technique II.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/02_CaptureTechniqueII.png",
           "iconAvailable": true,
           "nameKo": "포획기술 II"
         },
@@ -5589,7 +5589,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/03_Skillful Capture.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/03_SkillfulCapture.png",
           "iconAvailable": true,
           "nameKo": "굿 테임"
         },
@@ -5600,7 +5600,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 2,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/04_Careful Capture.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/04_CarefulCapture.png",
           "iconAvailable": true,
           "nameKo": "조심조심 포획"
         },
@@ -5611,7 +5611,7 @@ window.SKILL_TREE_DATA = {
           "x": 1,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/05_Pet Heal.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/05_PetHeal.png",
           "iconAvailable": true,
           "nameKo": "펫 힐"
         },
@@ -5622,7 +5622,7 @@ window.SKILL_TREE_DATA = {
           "x": 2,
           "y": 4,
           "via": null,
-          "icon": "assets/icons/skills/Other Skills/Tamer/06_Pet MP Charge.png",
+          "icon": "assets/icons/skills/Other_Skills/Tamer/06_PetMPCharge.png",
           "iconAvailable": true,
           "nameKo": "펫 차지"
         }

@@ -210,6 +210,56 @@ button { font-family: inherit; }
 .final-rec-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 15px; padding-top: 12px; border-top: 1px solid var(--success-border); }
 .total-eff-badge { position: absolute; top: 16px; right: 16px; background: var(--success); color: white; padding: 5px 12px; border-radius: 999px; font-size: 12.5px; font-weight: 700; box-shadow: 0 3px 8px -2px rgba(14,159,110,0.5); }
 
+/* 결과 첫 화면은 교체와 변화량만 보여 주고, 원본 수치와 옵션은 접어서 둔다. */
+.d4-recommendation-overview { display:grid; gap:16px; margin:0 0 16px; padding:20px; border:1px solid var(--success-border); border-radius:var(--radius-lg); background:linear-gradient(135deg,#f0fbf5 0%,#f9fcfa 56%,#f3f8ff 100%); }
+.d4-recommendation-overview[hidden] { display:none; }
+.d4-recommendation-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
+.d4-recommendation-heading h2 { margin:3px 0 0; color:var(--text); font-size:21px; letter-spacing:-.025em; }
+.d4-eyebrow { color:var(--success-dark); font-size:12px; font-weight:800; letter-spacing:.04em; }
+.d4-recommendation-certification { flex:0 0 auto; max-width:310px; padding:7px 11px; border:1px solid #efc77b; border-radius:999px; background:#fff8e8; color:#9a6500; font-size:12px; font-weight:750; line-height:1.35; text-align:center; }
+.d4-recommendation-summary { display:grid; gap:14px; }
+.d4-damage-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:hidden; border:1px solid #b8dfc9; border-radius:12px; background:var(--surface); }
+.d4-damage-card { padding:14px 16px; border-right:1px solid #d5eadf; }
+.d4-damage-card:last-child { border-right:0; }
+.d4-damage-card span { display:block; color:var(--text-secondary); font-size:12px; font-weight:700; }
+.d4-damage-card b { display:block; margin-top:5px; color:var(--text); font-size:22px; line-height:1.1; letter-spacing:-.025em; }
+.d4-damage-card.is-recommended b { color:var(--success-dark); }
+.d4-damage-card.is-gain { background:#e4f7eb; }
+.d4-damage-card.is-gain b { color:var(--success-dark); }
+.d4-comparison-grid { display:grid; grid-template-columns:minmax(0,1.05fr) minmax(290px,.95fr); gap:14px; }
+.d4-comparison-card { min-width:0; padding:15px; border:1px solid var(--border); border-radius:12px; background:var(--surface); }
+.d4-comparison-card h3 { margin:0 0 10px; color:var(--text); font-size:14px; }
+.d4-build-row { display:grid; grid-template-columns:80px minmax(0,1fr) 18px minmax(0,1fr); gap:8px; align-items:center; padding:8px 0; border-top:1px dashed var(--border); font-size:12px; }
+.d4-build-row:first-of-type { border-top:0; padding-top:0; }
+.d4-build-slot { color:var(--text-secondary); font-weight:750; }
+.d4-build-value { min-width:0; overflow:hidden; color:var(--text); font-weight:650; text-overflow:ellipsis; white-space:nowrap; }
+.d4-build-value.is-change { color:var(--success-dark); }
+.d4-build-arrow { color:var(--text-tertiary); text-align:center; }
+.d4-stat-list { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:7px; }
+.d4-stat-change { display:grid; grid-template-columns:minmax(0,1fr) auto; gap:4px 8px; padding:9px 10px; border:1px solid var(--border); border-radius:8px; background:var(--surface-muted); }
+.d4-stat-change span { min-width:0; overflow:hidden; color:var(--text-secondary); font-size:11px; font-weight:700; text-overflow:ellipsis; white-space:nowrap; }
+.d4-stat-change b { color:var(--text); font-size:13px; text-align:right; }
+.d4-stat-change small { grid-column:1 / -1; color:var(--text-tertiary); font-size:11px; }
+.d4-stat-change.is-positive { border-color:#b8dfc9; background:#f1fbf4; }
+.d4-stat-change.is-positive b, .d4-stat-change.is-positive small { color:var(--success-dark); }
+.d4-stat-change.is-negative { border-color:#efc3bf; background:#fff7f6; }
+.d4-stat-change.is-negative b, .d4-stat-change.is-negative small { color:var(--danger-dark); }
+.d4-recommendation-note { margin:0; color:var(--text-secondary); font-size:12.5px; line-height:1.65; }
+.final-rec { margin-top:14px; }
+.final-rec summary, .result-detail-panel > summary { cursor:pointer; color:var(--text); font-size:14px; font-weight:800; list-style:none; }
+.final-rec summary::-webkit-details-marker, .result-detail-panel > summary::-webkit-details-marker { display:none; }
+.final-rec summary::before, .result-detail-panel > summary::before { content:'›'; display:inline-block; margin-right:7px; color:var(--accent); font-size:20px; line-height:12px; transform:translateY(1px); }
+.final-rec[open] summary::before, .result-detail-panel[open] > summary::before { transform:rotate(90deg) translateX(1px); }
+.final-rec summary span { color:var(--text-secondary); font-size:12px; font-weight:600; }
+.final-rec > div:not(.total-eff-badge) { margin-top:13px; }
+.result-detail-panel { margin-top:14px; padding:15px 16px; border:1px solid var(--border); border-radius:var(--radius-md); background:var(--surface); }
+.result-detail-panel[open] { background:var(--surface-muted); }
+.result-detail-panel .res-6grid { margin:15px 0 0; }
+.result-detail-panel .eff-tabs { margin-top:14px; }
+.d4-calculation-detail { margin-top:0; width:100%; box-sizing:border-box; }
+.d4-calculation-detail .top3-row { margin-top:13px; }
+@media (max-width:760px) { .d4-recommendation-heading, .d4-comparison-grid { grid-template-columns:1fr; display:grid; } .d4-recommendation-certification { max-width:none; } .d4-damage-summary { grid-template-columns:1fr; } .d4-damage-card { border-right:0; border-bottom:1px solid #d5eadf; } .d4-damage-card:last-child { border-bottom:0; } .d4-stat-list { grid-template-columns:1fr; } }
+
 .d4-progress-panel { display:grid; gap:9px; margin:0 0 12px; padding:13px 14px; border:1px solid var(--accent-soft-border); border-radius:var(--radius-sm); background:var(--accent-soft); }
 .d4-progress-panel[hidden] { display:none; }
 .d4-progress-head { display:flex; align-items:center; justify-content:space-between; gap:12px; color:var(--accent-dark); font-size:13.5px; }

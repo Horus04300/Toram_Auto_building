@@ -1,7 +1,7 @@
 # D4 전역 최적화 병렬화 계획
 
-- 상태: P0/P1 계약·회귀 완료, P2 JavaScript pool 불승격, P3 Rust summary evaluator 경계 fixture 확장 완료; P4 Rust 단일 exact 동치 완료
-- 기준일: 2026-08-28
+- 상태: P0/P1 계약·회귀 완료, P2 JavaScript pool 불승격, P3~P8 Rust CPU 기본 경로·검증·패키징 완료. 단, native runtime의 deadline·실제 progress·bounded checkpoint/resume·tail·잠금 크리스타 통합 Gate는 미완료이며 `d4-native-runtime-correction-plan.md`의 N0~N6를 따른다.
+- 기준일: 2026-08-30
 - 선행 상태: Gate F 종료, 단일 JavaScript Worker 채택본 exact 1,177,836ms
 - 적용 환경: Tauri v2 Windows 데스크톱을 우선하고 일반 브라우저는 JavaScript fallback으로 유지
 - 참조 문서: `d4-exact-optimization-plan.md`, `d4-build-optimizer-design.md`, `current-development-handoff.md`
@@ -229,6 +229,8 @@ GPU가 이 Gate를 통과하지 못하면 코드는 실험 경로로 격리하�
 - 설치 파일에서 Rust 병렬 엔진·취소·진행 channel·fallback을 실제로 검증한다.
 
 2026-08-30 완료: `d4-native-client.js`의 memory cache key는 계산식(`d4-native-evaluator.v1`), 엔진(`d4-native-solver.v1`), CandidateTree 분할 정책, 감지한 logical thread 수, P7 GPU 정책(`cpu-only.p7`)과 time budget을 모두 포함한다. 따라서 다른 실행 계약의 exact/bounded 결과가 섞이지 않는다. native 결과와 진행 상태는 `engine: rust-native`, `threadsUsed`, GPU 정책을 반환하며, 결과 UI는 Rust CPU/스레드/GPU 미사용·경과·평가·gap을 함께 표시한다. native command 시작·직렬화·실행 실패는 기존 JavaScript Worker로, Worker 실패는 기존 invalid-safe 결과로 귀결되는 fallback 계약을 유지했다. P8 중 Cargo의 개발용 `src/bin/d4_native_exact.rs`가 NSIS 기본 실행 파일로 선택되는 배포 결함을 발견해 `default-run = "toram-online-auto-build-calculator"`로 실제 Tauri 앱을 고정했다. release NSIS build log가 실제 앱 EXE 선택을 확인했고, 새 설치 파일을 격리된 `C:\\Temp\\ToramD4P8-20260830`에 silent 설치한 뒤 3초 실행·silent 제거까지 모두 exit 0으로 통과했으며 임시 설치 폴더도 제거됐다. `test-d4-native-client`의 실제 command bridge/cache 계약, Worker runtime fallback/UI 계약, small native exact와 Rust 37개 단위 회귀도 통과했다.
+
+2026-08-30 runtime 정정: 위 완료는 cache 표시 형식·fallback 연결·패키징 smoke 범위다. 실제 native command에는 5초/30초 deadline이 전달되지 않고, Rust progress channel·bounded checkpoint·resume frontier가 없으며, 고정 shard local heap 때문에 한 코어 tail이 발생한다. 잠금 크리스타도 native 통합 정확성 Gate가 없다. 따라서 native runtime 전체는 완료가 아니며, `d4-native-runtime-correction-plan.md`의 N0~N6를 통과해야 실사용 완료로 다시 승격한다.
 
 ## 6. 필수 회귀
 

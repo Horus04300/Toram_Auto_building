@@ -13,7 +13,7 @@
   function skill(skillId, kind, dataStatus, effects) {
     var source = catalog.skills.find(function (item) { return item.id === 'Battle:' + skillId; });
     if (!source) throw new Error('배틀 스킬을 카탈로그에서 찾지 못했습니다: ' + skillId);
-    return { id:source.id, treeId:'Battle', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'battle', dataStatus:'partial', sourceRef:{file:'docs/sources/skills/Battle.txt',anchor:anchors[skillId]}, notes:'S1~S5 calculator scope; proc, incapacitation and death events remain metadata.', effects:effects };
+    return { id:source.id, treeId:'Battle', skillId:skillId, nameKo:source.nameKo, kind:kind, source:'battle', dataStatus:'partial', sourceRef:{file:'docs/sources/skills/Battle.txt',anchor:anchors[skillId]}, notes:'S1~S5 calculator scope; 집중·강타 확률 배율은 결과 계산에 연결하고 incapacitation/death events remain metadata.', effects:effects };
   }
   registry.register('Battle', [
     skill(0, 'passive', 'verified', [{phase:'build',type:'stat',key:'MATK',value:levelScale()}]),

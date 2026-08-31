@@ -394,7 +394,7 @@
 {"name":"포튬터2","category":"특수","stats":{"MaxMP":400,"MOTIONSPEED":1,"AGGRO":-30,"NEUTRAL_RES":25},"prev":"포튬터"},
 {"name":"포튬터3","category":"특수","stats":{"MaxMP":500,"MOTIONSPEED":2,"AGGRO":-30,"NEUTRAL_RES":30},"prev":"포튬터2"},
 {"name":"폭주 마정의 짐승","category":"무기","stats":{"MaxMP":400,"PHYS_PIERCE":10,"SRW":8},"prev":"염룡 블랑마"},
-{"name":"폴버로스","category":"추가","stats":{"LRW":9,"MaxMP":200,"FLEE":10,"ABS_DODGE":5},"condStats":[{"cond":{"main":"자동활"},"stats":{}}]},
+{"name":"폴버로스","category":"추가","stats":{"LRW":9,"MaxMP":200,"FLEE":10,"ABS_DODGE":5},"condStats":[{"cond":{"main":"자동활"},"stats":{"SRW":9}}]},
 {"name":"푸이에트","category":"방어구","stats":{"MaxHP":-800,"MaxMP":-400,"ATKP":12,"CRIT":12},"condStats":[{"cond":{"sub":"방패"},"stats":{"SRW":6,"STRP":2}}],"prev":"자포"},
 {"name":"프라펜 대디","category":"방어구","stats":{"PHYS_RES":6,"MaxHPP":6,"GUARD_RECHARGE":6},"prev":"툴투가"},
 {"name":"프로토 레온","category":"추가","stats":{"CDMG":3,"CRIT":8},"prev":"워몽가"},

@@ -1,7 +1,7 @@
 # D4 전역 최적화: 10초 exact 구현 계획
 
-- 상태: Gate 0~D 완료, Gate E 상관관계 상한 1~4차 안전 검증 및 성능 Gate 종료(기본 비활성), Gate F 종료(10초 exact 미달), 병렬화 P0/P1 구현 완료·P2 실제 425개 성능 Gate 대기
-- 기준일: 2026-08-25
+- 상태: Gate 0~D 완료, Gate E 상관관계 상한 1~4차 안전 검증 및 성능 Gate 종료(기본 비활성), Gate F 종료(10초 exact 미달). 병렬화는 P0/P1 완료·P2 JavaScript pool 불승격·P3~P8 Rust CPU 기본 경로 및 패키징 완료. 단, native runtime의 deadline·실제 progress·bounded checkpoint/resume·tail·잠금 크리스타 통합 Gate는 미완료이며 `d4-native-runtime-correction-plan.md`의 N0~N6를 따른다.
+- 기준일: 2026-08-30
 - 적용 범위: 현재 지원되는 425개 크리스타, 네 장비 부위, 각 2슬롯, 고정 Build/Scenario
 - 상위 문서: d4-build-optimizer-design.md, d4-build-optimizer-prerequisites.md
 - 참조 의무: D4 정확성·성능·후보 탐색 구현은 이 문서를 먼저 읽고 Gate 결과를 따른다.

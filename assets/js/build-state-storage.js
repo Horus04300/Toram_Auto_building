@@ -22,7 +22,7 @@
   function optionRows(containerId) {
     var container = element(containerId);
     if (!container) return [];
-    return Array.prototype.slice.call(container.children).filter(function (child) { return child.classList && child.classList.contains('opt-row'); }).map(function (row) {
+    return Array.prototype.slice.call(container.children).filter(function (child) { return child.classList && child.classList.contains('opt-row') && !child.classList.contains('combo-transient-option'); }).map(function (row) {
       var type = row.querySelector('.opt-type'), value = row.querySelector('.opt-val');
       return type && value ? { type:type.value, value:value.value } : null;
     }).filter(Boolean);
@@ -50,7 +50,8 @@
       ui.addOptionRow(containerId);
       var row = container.lastElementChild;
       if (!row) return;
-      writeControl(row.querySelector('.opt-type'), saved.type);
+      var optionType = saved.type === 'UNSHEATHE' ? 'UNSHEATHEP' : saved.type;
+      writeControl(row.querySelector('.opt-type'), optionType);
       writeControl(row.querySelector('.opt-val'), saved.value);
       row.querySelector('.opt-type').dispatchEvent(new Event('change', { bubbles:true }));
     });

@@ -4,9 +4,9 @@
         const maxLevel = Number(data.skillMaxLevel) || 10;
         const prerequisiteLevel = Number(data.prerequisiteLevel) || 5;
         const categoryDefinitions = [
-            { id: 'weapon', directory: 'Weapon Skills', display: '무기', icon: 'assets/icons/skills/Weapon Skills/Blade/00_Hammer Slam.png' },
-            { id: 'buff', directory: 'Buff Skills', display: '버프', icon: 'assets/icons/skills/Buff Skills/Assassin/00_Assassin Stab.png' },
-            { id: 'assist', directory: 'Assist Skills', display: '보조', icon: 'assets/icons/skills/Assist Skills/Battle/00_Magic UP.png' }
+            { id: 'weapon', directory: 'Weapon_Skills', display: '무기', icon: 'assets/icons/skills/Weapon_Skills/Blade/00_HammerSlam.png' },
+            { id: 'buff', directory: 'Buff_Skills', display: '버프', icon: 'assets/icons/skills/Buff_Skills/Assassin/00_AssassinStab.png' },
+            { id: 'assist', directory: 'Assist_Skills', display: '보조', icon: 'assets/icons/skills/Assist_Skills/Battle/00_MagicUP.png' }
         ];
         const treesById = new Map(data.trees.map(function (tree) { return [tree.id, tree]; }));
         const state = { step: 1, levels: {} };
@@ -80,7 +80,7 @@ function createSkillSnapshot() {
                     activeCategoryId = categoryDefinitions.some(function (category) { return category.id === ui.activeCategoryId; }) ? ui.activeCategoryId : activeCategoryId;
                     const activeCategory = categoryDefinitions.find(function (category) { return category.id === activeCategoryId; });
                     activeCombatTree = data.trees.some(function (tree) { return tree.category === activeCategory.directory && tree.id === ui.activeCombatTree; }) ? ui.activeCombatTree : activeCombatTree;
-                    activeOtherTree = data.trees.some(function (tree) { return tree.category === 'Other Skills' && tree.id === ui.activeOtherTree; }) ? ui.activeOtherTree : activeOtherTree;
+                    activeOtherTree = data.trees.some(function (tree) { return tree.category === 'Other_Skills' && tree.id === ui.activeOtherTree; }) ? ui.activeOtherTree : activeOtherTree;
                 }
                 if (raw) setStorageStatus('자동 저장 복원됨');
             } catch (error) {
@@ -298,7 +298,7 @@ const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentE
             renderStepControls();
             categoryRail.innerHTML = ''; categoryDefinitions.forEach(function (category) { categoryRail.appendChild(createCategoryButton(category)); });
             combatTreeRail.innerHTML = ''; categoryTrees(activeCategory.directory).forEach(function (tree) { combatTreeRail.appendChild(createTreeButton(tree, tree.id === activeCombatTree, function () { activeCombatTree = tree.id; renderAll(); })); });
-            otherTreeRail.innerHTML = ''; categoryTrees('Other Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
+            otherTreeRail.innerHTML = ''; categoryTrees('Other_Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
             renderStage(combatStage, activeCombatTree); renderStage(otherStage, activeOtherTree);
             document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
         }

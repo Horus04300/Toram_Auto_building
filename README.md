@@ -1,6 +1,6 @@
 # Toram Auto Building 개발 소스
 
-현재 개발·배포 기준은 Tauri v2 데스크톱 앱 `v0.5.0`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
+현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.6.0`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
 
 ## 구조
 

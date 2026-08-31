@@ -125,7 +125,7 @@
       stateTransitions:[{event:'cast',operation:'grant',stateId:'bladeRampage',stacks:v(11),maxStacks:v(11),durationSeconds:v(600),endConditions:['allStacksConsumed','ailmentApplied'],recastAllowed:false}],
       stackModel:{mode:'finite-attacks',hardCap:v(11),endsOnAilment:true,recastAllowed:false,powerWaveDisabled:true,notes:'버서크 활성 중에는 상태이상으로 종료되지 않는다. 통상 공격·상태이상 이벤트 자동 소모는 현재 미지원.'},
       effects:[
-        {phase:'combat',type:'stat',key:'AMPR',value:m(v(2.5),l())},
+        {phase:'combat',type:'normalAttackModifier',key:'AMPR',value:m(v(2.5),l())},
         {phase:'combat',type:'normalAttackModifier',key:'multiplier',value:a(v(.1),m(v(.04),l()),{op:'if',when:oneHandMain,then:m(v(.05),l()),else:v(0)})},
         {phase:'combat',type:'normalAttackModifier',key:'constant',value:m(v(10),l())},
         {phase:'combat',type:'disableSkill',key:'powerWave',value:v(1)}
