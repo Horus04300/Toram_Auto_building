@@ -24,8 +24,6 @@
         let activeCombatTree = 'Blade';
         let activeOtherTree = 'Alchemy';
 
-const skillStorageKey = 'toram-auto-building.skill-tree.v1';
-        const skillUiStorageKey = 'toram-auto-building.skill-tree-ui.v1';
         let storageMessage = '';
         let storageStatus = null;
 
@@ -59,34 +57,11 @@ function createSkillSnapshot() {
                 tree.skills.forEach(function (skill) { if (state.levels[tree.id][skill.id] > 0) ensurePrerequisite(tree, skill.prereq); });
             });
         }function persistSkillState() {
-            try {
-                window.localStorage.setItem(skillStorageKey, JSON.stringify(createSkillSnapshot()));
-                window.localStorage.setItem(skillUiStorageKey, JSON.stringify({ step: state.step, activeCategoryId: activeCategoryId, activeCombatTree: activeCombatTree, activeOtherTree: activeOtherTree }));
-                setStorageStatus('자동 저장됨');
-                return true;
-            } catch (error) {
-                setStorageStatus('자동 저장 불가 · 파일로 보관');
-                return false;
-            }
+            setStorageStatus('자동 저장됨');
+            document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
+            return true;
         }
-        function restoreAutoSavedState() {
-            try {
-                const raw = window.localStorage.getItem(skillStorageKey);
-                if (raw) applySkillSnapshot(JSON.parse(raw));
-                const uiRaw = window.localStorage.getItem(skillUiStorageKey);
-                if (uiRaw) {
-                    const ui = JSON.parse(uiRaw);
-                    state.step = [1, 5, 10].includes(Number(ui.step)) ? Number(ui.step) : state.step;
-                    activeCategoryId = categoryDefinitions.some(function (category) { return category.id === ui.activeCategoryId; }) ? ui.activeCategoryId : activeCategoryId;
-                    const activeCategory = categoryDefinitions.find(function (category) { return category.id === activeCategoryId; });
-                    activeCombatTree = data.trees.some(function (tree) { return tree.category === activeCategory.directory && tree.id === ui.activeCombatTree; }) ? ui.activeCombatTree : activeCombatTree;
-                    activeOtherTree = data.trees.some(function (tree) { return tree.category === 'Other_Skills' && tree.id === ui.activeOtherTree; }) ? ui.activeOtherTree : activeOtherTree;
-                }
-                if (raw) setStorageStatus('자동 저장 복원됨');
-            } catch (error) {
-                setStorageStatus('자동 저장을 읽지 못함');
-            }
-        }        function exportSkillState() {
+        function exportSkillState() {
             const snapshot = createSkillSnapshot();
             const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
             const link = document.createElement('a');
@@ -116,8 +91,6 @@ function createSkillSnapshot() {
             data.trees.forEach(function (tree) { tree.skills.forEach(function (skill) { state.levels[tree.id][skill.id] = 0; }); });
             persistSkillState(); setStorageStatus('스킬 포인트를 초기화함'); renderAll();
         }
-        restoreAutoSavedState();
-
         function treeLabel(tree) { return tree.nameKo || tree.id; }
         function skillLabel(skill) { return skill.nameKo || skill.name; }
 
@@ -303,6 +276,7 @@ const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentE
             document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
         }
         window.skillSimulatorState = { data: data, levels: state.levels, getInvestments: function () { return JSON.parse(JSON.stringify(state.levels)); } };
+        window.ToramSkillUi = Object.freeze({ refresh:renderAll, restore:function (snapshot) { applySkillSnapshot(snapshot); renderAll(); }, getInvestments:window.skillSimulatorState.getInvestments });
         const charLevelInput = document.getElementById('charLevel');
         if (charLevelInput) charLevelInput.addEventListener('input', renderAll);
         renderAll();

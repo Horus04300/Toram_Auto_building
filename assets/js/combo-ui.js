@@ -1,7 +1,6 @@
 /* 콤보 탭 UI: 인게임식 아이콘 체인과 선택 순번 편집기를 제공한다. */
 (function () {
   'use strict';
-  var storageKey = 'toram.combo-sequence.v1';
   var maxEntries = 8;
   var calculationInputIds = [
     'charLevel','strBase','intBase','vitBase','agiBase','dexBase','crtBase','bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist',
@@ -14,6 +13,8 @@
   var dragState = { index:null, target:null, after:false, touch:null };
 
   function definitions() {
+    var policies = window.ToramCalculationPolicies;
+    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions();
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
     return root.concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
@@ -37,18 +38,9 @@
     var node = tree && tree.skills.find(function (item) { return item.id === skill.skillId; });
     return node ? node.icon : '';
   }
-  function load() {
-    try {
-      var saved = JSON.parse(window.localStorage.getItem(storageKey) || 'null');
-      if (saved && Array.isArray(saved.entries)) {
-        state.entries = saved.entries.slice(0, maxEntries).map(function (entry) {
-          return { skillId:String(entry.skillId || ''), tag:String(entry.tag || 'none'), includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:entry.inputs && typeof entry.inputs === 'object' ? Object.assign({}, entry.inputs) : {} };
-        });
-      }
-    } catch (error) { state.entries = []; }
-  }
+  function load() { return state.entries; }
   function save() {
-    try { window.localStorage.setItem(storageKey, JSON.stringify({ entries:state.entries })); } catch (error) { /* 저장 불가 환경 */ }
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') { document.dispatchEvent(new CustomEvent('toram:combo-changed')); document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }
   }
   function ensureEntries(skills) {
     var ids = new Set(skills.map(function (skill) { return skill.id; }));
@@ -81,10 +73,10 @@
     return parts.join(', ') || '없음';
   }
   function currentContexts() {
-    if (typeof window.getBaseContext !== 'function' || typeof window.simulateWithCrystas !== 'function' || typeof window.getCurrentCrystas !== 'function') throw new Error('기본 계산기가 준비되지 않았습니다.');
-    var base = window.getBaseContext();
-    if (typeof window.applyPassiveSkillStats === 'function') window.applyPassiveSkillStats(base);
-    var calculated = window.simulateWithCrystas(base, window.getCurrentCrystas());
+    if (!window.ToramApplication || typeof window.ToramApplication.CalculateBuild !== 'function') throw new Error('기본 계산기가 준비되지 않았습니다.');
+    var result = window.ToramApplication.CalculateBuild();
+    var base = result.snapshot.baseContext;
+    var calculated = result.calculation;
     return {
       base:base,
       combat:{ STR:calculated.finalSTR, INT:calculated.finalINT, VIT:calculated.finalVIT, AGI:calculated.finalAGI, DEX:calculated.finalDEX, CRT:base.crtBase, ATK:calculated.finalATK, MATK:calculated.finalMATK, ASPD:calculated.finalASPD, CSPD:calculated.finalCSPD, STABILITY:calculated.finalStab, WEAPON_ATK:calculated.finalWeaponAttack },
@@ -106,29 +98,13 @@
   function invalidateAppliedHit() {
     appliedHit = null;
     applyOneShotStats(null);
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') document.dispatchEvent(new CustomEvent('toram:combo-hit-selected', { detail:null }));
   }
   function applyHit(hit, damageMultiplier, modifiers, skill) {
     applyOneShotStats(modifiers);
-    var mult = hit.effectiveMultiplier === undefined ? hit.multiplier * damageMultiplier : hit.effectiveMultiplier;
-    var damageMultiplierLayers = hit.damageMultiplierLayers ? Object.assign({}, hit.damageMultiplierLayers) : { skill:Number.isFinite(Number(hit.baseMultiplier)) ? Number(hit.baseMultiplier) : Number(hit.multiplier) || 1, passive:Number.isFinite(Number(hit.passiveMultiplier)) ? Number(hit.passiveMultiplier) : 1, active:Number.isFinite(Number(hit.activeMultiplier)) ? Number(hit.activeMultiplier) : 1, combo:hit.effectiveMultiplier === undefined ? damageMultiplier : 1 };
-    var flags = Object.assign({}, hit.resolvedFlags || hit.flags || {});
-    appliedHit = {
-      skillMult:mult,
-      damageMultiplierLayers:damageMultiplierLayers,
-      skillConst:hit.constant,
-      skillId:skill && skill.id || '',
-      skillName:skill && skill.nameKo || '선택 공격',
-      hitId:hit.id || '',
-      hitProfile:{ damageType:hit.damageType, count:Number(hit.count) || 1, multiplier:mult, constant:Number(hit.constant) || 0, flags:flags },
-      atkType:hit.damageType === 'magic' ? 'MAG' : 'PHYS',
-      rangeType:flags.longRange || flags.forceLongRange ? 'LONG' : 'SHORT',
-      unsheathe:Boolean(flags.unsheathe),
-      guaranteedCritical:Boolean(flags.guaranteedCritical),
-      guaranteedHit:Boolean(flags.guaranteedHit),
-      hitBonus:Number(flags.hitBonus) || 0,
-      embeddedActiveGlobalDamagePercent:Number(((hit.passiveDamageModifiers || []).filter(function (item) { return item.stackGroup === 'activeGlobalDamage'; }).reduce(function (sum, item) { return sum + (Number(item.value) - 1) * 100; }, 0)).toFixed(6)),
-      procDamageModifiers:Array.isArray(hit.procDamageModifiers) ? hit.procDamageModifiers.map(function (item) { return Object.assign({}, item); }) : []
-    };
+    if (!window.ToramApplication || typeof window.ToramApplication.ApplyComboHit !== 'function') throw new Error('콤보 계산 유스케이스가 준비되지 않았습니다.');
+    appliedHit = window.ToramApplication.ApplyComboHit(hit, damageMultiplier, modifiers, skill);
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') document.dispatchEvent(new CustomEvent('toram:combo-hit-selected', { detail:appliedHit }));
     status.textContent = '선택한 타격의 계수·상수·공격 유형·발도/치명타·명중 판정을 결과 계산에 반영했습니다.';
   }
   function hitRow(hit, damageMultiplier, label, modifiers, skill) {
@@ -372,6 +348,8 @@
   window.ToramComboUi = Object.freeze({
     refresh:function () { if (chain) renderWorkspace(); },
     getAppliedHit:function () { return appliedHit ? Object.assign({}, appliedHit) : null; },
+    getEntries:function () { return state.entries.map(function (entry) { return { skillId:entry.skillId, tag:entry.tag, includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:Object.assign({}, entry.inputs || {}) }; }); },
+    restore:function (entries) { state.entries = Array.isArray(entries) ? entries.slice(0, maxEntries).map(function (entry) { return { skillId:String(entry.skillId || ''), tag:String(entry.tag || 'none'), includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:entry.inputs && typeof entry.inputs === 'object' ? Object.assign({}, entry.inputs) : {} }; }) : []; if (chain) renderWorkspace(); },
     getAvailableSkills:availableSkills
   });
 }());

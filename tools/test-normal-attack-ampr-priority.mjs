@@ -21,6 +21,7 @@ for (const path of [
 ]) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
 context.BASE_ASPD_MAP = { '한손검':100, '자동활':30 };
+for (const path of ['assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'assets/js/calculator.js' });
 
 const effects = context.window.ToramSkillEffects;

@@ -8,6 +8,7 @@ const BASE_ASPD_MAP = {
 
 importScripts(
   'stat-registry.js',
+  'calculation-policies.js',
   'calculator.js',
   'build-evaluator.js',
   'd4-source-profile.js',

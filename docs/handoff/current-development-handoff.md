@@ -11,7 +11,7 @@
 1. 기존 브라우저 계산기는 Tauri v2 기반 Windows 데스크톱 앱으로 전환되었다.
 2. 현재 개발 버전은 0.6.0이다. 공개된 Windows NSIS 설치 파일은 이전 v0.5.0 GitHub Pre-release이며, v0.6.0 설치 파일은 아직 생성·공개하지 않았다.
 3. 이름을 붙인 세팅 JSON은 정확히 %LOCALAPPDATA%\ToramOnlineAutoBuildCalculator 에 저장한다. settings 하위 폴더를 추가하지 않는다.
-4. localStorage는 마지막 작업 상태 자동 복원용이고, 네이티브 JSON은 저장·불러오기·덮어쓰기·삭제용이다.
+4. 마지막 세션은 Settings Repository가 관리하는 단일 application-state 문서로 자동 복원하고, 이름 있는 빌드는 같은 Repository의 네이티브 JSON 파일로 저장한다. 베타 시기 저장 데이터는 읽지 않는다.
 5. 전역 S1 출처 연결 감사 결과는 427/427이다. 이것은 모든 스킬의 S2~S5 계산과 모든 전투 상태 시뮬레이션이 완전하다는 뜻이 아니다.
 6. 피격 시뮬레이션은 이 계산기의 우선 목표가 아니므로 사용자가 보류했다. 다음 스킬 한정 효과, 사용 후 소멸, MP 흐름, 직접 피해와 버프 계산이 우선이다.
 7. 과거 인계 문서의 Blade 9/24, Martial 1/22 같은 수치는 초기 감사 당시 기록이다. 현재 상태 판단에 그대로 사용하지 않는다.
@@ -24,6 +24,79 @@
 4. docs/verification/unimplemented.md의 항목별 후속 목록
 
 숫자와 완료 상태가 충돌하면 최신 코드와 실행 결과를 우선한다. 초기 S1 누락 수치를 담았던 두 과거 인계 문서는 2026-08-22 저장소 정리에서 제거했다.
+
+### 리팩토링 R0 기준선 (2026-08-31)
+
+- 구조·계산식·저장 구현을 바꾸지 않고 기준 커밋 `37dae51`의 회귀 계약을 `docs/verification/refactoring-r0-baseline.md`와 `tools/r0-baseline-fixtures.mjs`로 분류했다.
+- 정상값 fixture 48개는 출처·계산식·명시적 불변식으로 검증하고, characterization fixture 17개는 UI·IPC·D4 실행 경계의 현재 관찰 동작을 보존한다. R6에서 폐기한 베타 localStorage/legacy JSON 계약은 기준선으로 보존하지 않는다.
+- 최초 기준선은 65/65 프로세스 성공이었다. R7 실행 Adapter fixture를 추가한 현재 `npm run test:r0`은 66/66을 통과했다. `test-tauri-native-storage-e2e.mjs`는 `TORAM_E2E_CDP`가 없어 `SKIP`했으므로 실제 데스크톱 저장 E2E 통과로 해석하지 않는다.
+- `src-tauri`에서 `cargo test`는 72개 테스트(19+19+5+29)를 통과했다. Cargo는 비ASCII 사용자 경로 canonicalize 경고를 한 번 출력했지만 테스트 결과에는 영향을 주지 않았다.
+
+### 리팩토링 R1a ES Module 진입점 (2026-08-31)
+
+- `index.html`은 이제 단일 `assets/js/app-entry.mjs` ES Module을 로드한다. entry는 `legacy-script-manifest.mjs`의 classic script를 의존 순서대로 하나씩 로드해 `window` 전역 계약을 보존한다. 이 단계에서 TypeScript 변환·대규모 파일 이동·UI/계산 구조 변경은 하지 않았다.
+- D4 Worker는 `d4-optimizer-worker.js`의 기존 `importScripts` 경계와 `assets/js/d4-optimizer-worker.js` 경로를 유지한다. Tauri frontend 준비는 `.mjs`를 포함한 assets를 `dist`로 복사한다.
+- 상세 경계·남은 전역·검증은 `docs/verification/refactoring-r1a-es-module-entry.md`를 기준으로 한다. source/dist entry 검증, R0 65/65 회귀, D4 stat registry 감사, Tauri no-bundle 빌드가 통과했다.
+
+### 리팩토링 R1b TypeScript 점진 도입 (2026-08-31)
+
+- TypeScript 5.9.3을 개발 의존성으로 추가하고 새 `frontend/**/*.ts`만 strict 검사한다. 기존 classic JavaScript 전체를 무리하게 `checkJs`로 검사하지 않으며 새 타입 코드의 명시적 `any`는 검증에서 차단한다.
+- 현재 legacy Build·계산·저장·D4 경계 DTO를 `frontend/contracts/boundary-dtos.d.ts`로 정의했다. 이것은 R2의 최종 Domain/Application 계약이 아니라 현 경계의 타입 안전장치다.
+- 실제 런타임 전환은 `frontend/runtime/tauri-build-storage-adapter.ts` 한 파일이다. `types:emit`이 동일한 classic `assets/js/tauri-build-storage-adapter.js`를 만들고, `desktop:prepare`가 이를 먼저 실행한다. Tauri 명령·브라우저 fallback·전역 adapter API는 유지했다.
+- `types:check`, `verify:r1b`, 저장 회귀, R0 65/65, Rust 72 테스트, Tauri no-bundle 빌드가 통과했다. 상세는 `docs/verification/refactoring-r1b-typescript.md`를 따른다.
+
+### 리팩토링 R2 계산 계약과 Port (2026-08-31)
+
+- `frontend/domain/calculation-contracts.ts`에 순수 `BuildDraft`, `CalculationSnapshot`, `CalculationResult` 계약을 추가했다. BuildDraft는 영속 가능한 빌드 구성만 보유하며 탭·드래그·자동완성·D4 진행/취소/캐시 같은 UI·runtime 상태와 일회성 계산 조건은 넣지 않는다. 일회성 값은 `CalculationRequest`와 `ScenarioContext`로 분리한다.
+- `frontend/application/ports.ts`에는 실제 외부 교체 경계인 `SettingsRepository`, `OptimizationRunner`만 정의했다. `CalculationGateway`는 추가하지 않았고 계산 커널은 Domain 내부 직접 호출 대상으로 남긴다.
+- 계약은 현 localStorage/legacy JSON/Tauri/DOM/Worker 형식과 독립적이며 이 단계에서 기존 구현을 Port로 이동·통합하지 않았다. `verify:r2`, R0 65/65, Rust 72 테스트, Tauri no-bundle 빌드가 통과했다. 상세는 `docs/verification/refactoring-r2-calculation-contracts.md`를 따른다.
+
+### 리팩토링 R3 Application / 계산 정책 추출 (2026-08-31)
+
+- `assets/js/application-use-cases.js`에 `CaptureCurrentInput` → `CreateCalculationSnapshot` → `CalculateBuild`의 기존 계산 조립 흐름과 `ResolveActiveBuffs`, `ApplyComboHit`를 모았다. R4 전까지 DOM을 읽는 레거시 입력 어댑터는 `CaptureCurrentInput` 한 곳에만 남긴다.
+- 최적화 UI는 Snapshot 생성만 호출하며, 액티브 버프·콤보 UI는 `CalculateBuild`로 기존의 입력→패시브→크리스타 계산 중복을 제거했다. 선택한 콤보 타격의 전체 프로필 조립은 `ApplyComboHit`으로 이동했다.
+- `assets/js/calculation-policies.js`가 StatRegistry 적용, 크리스타 `main/sub/armor` 조건, 스킬 정의 선택을 단일 정책으로 제공한다. 효과 엔진·콤보는 기존 첫 등록 정의를, 버프 카드만 명시적 `preferStackControl`로 기존 스택 보강 정의 우선 표시를 유지한다.
+- D4 후보 공간·안전 상한·정확성/`bounded` 의미·동점 순서와 계산식은 변경하지 않았다. `verify:r3`, R0 65/65, Rust 72개 테스트, Tauri no-bundle 빌드를 통과했다. 상세는 `docs/verification/refactoring-r3-application-usecases.md`를 따른다.
+
+### 리팩토링 R4 계산 상태 단일 출처 (2026-08-31)
+
+- `assets/js/build-draft-store.js`가 계산 가능한 영속 상태를 `BuildDraft` 하나로 보유한다. 캐릭터·장비/옵션/크리스타 잠금·스킬 투자·활성 버프·콤보 구성만 Draft에 포함한다.
+- 보스 수치·조건은 `ScenarioContext`, 선택 타격과 일회성 콤보 효과는 `CalculationRequest`로 분리한다. 탭/콤보 선택 같은 UI 상태는 `ToramUiState`, D4 실행 버전·이어하기 요청·마지막 결과는 `ToramRuntimeState`에만 둔다.
+- Application은 Store에서 받은 Draft/Context/Request로만 Snapshot을 만들며 DOM·콤보·버프 전역값을 직접 읽지 않는다. 기존 classic 계산 엔진의 전역 의존은 호출 동안만 존재하는 Draft 기반 explicit 입력 스코프로 격리하고 계산 뒤 제거한다.
+- D4 후보·상한·`exact`/`bounded` 의미·동점 규칙과 계산식은 변경하지 않았다. `verify:r4`, R0 65/65, Rust 72개 테스트, Tauri no-bundle 빌드를 통과했다. 상세 검증은 `docs/verification/refactoring-r4-build-draft-state.md`를 따른다.
+
+### 리팩토링 R5 UI 기능별 분리 (2026-09-01)
+
+- UI 진입점을 build, skills, buffs, combo, optimizer, settings로 명시했다. `build-ui-controller.js`가 장비·크리스타 입력 이벤트를, `optimizer-ui-controller.js`가 D4 취소·일시정지·정밀 재개와 효율 탭의 비동기 화면 제어를 소유한다. `ui-feature-registry.js`는 여섯 기능의 공개 UI 진입점만 제공한다.
+- 최적화 계산 조립은 기존처럼 `ToramApplication.CreateCalculationSnapshot`을 통해 진행하며, UI는 계산 커널을 직접 호출하지 않는다. 저장 오버레이도 `ToramApplication.Settings`만 호출하고 저장 계약·Tauri 어댑터를 직접 참조하지 않는다.
+- 탭 재배치의 `스테이터스`·`타겟`·`장비` 제목 문자열 탐색을 `data-ui-section` 식별자로 교체했다. 화면 디자인·UI 프레임워크·D4 후보/상한/`exact`·`bounded` 의미와 계산식은 변경하지 않았다.
+- `verify:r5`, `verify:r1a`, `types:check`, R0 65/65를 통과했다. 네이티브 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 기존과 같이 skip이며, 상세 검증은 `docs/verification/refactoring-r5-ui-features.md`를 따른다.
+
+### 리팩토링 R6 저장 계약 재설계 (2026-09-01)
+
+- 베타의 다섯 localStorage 키와 `toram-auto-build-setting` JSON 계약을 폐기했다. migration·기존 JSON 읽기·legacy 저장 경로는 구현하지 않는다.
+- `settings-repository.js`가 `schemaVersion: 1`의 `saved-build`(이름 있는 BuildDraft+Scenario)와 `application-state`(appSettings+마지막 세션)를 단일 경계에서 관리한다. 자동 복원은 application-state 하나만 사용하며 UI/D4 runtime 상태는 저장하지 않는다.
+- build, skills, buffs, combo UI는 localStorage를 직접 다루지 않고 Repository의 세션 복원/변경 알림을 사용한다. 저장 UI는 Application Settings API를 거쳐 저장·불러오기·덮어쓰기·삭제·내보내기·가져오기를 수행한다.
+- Rust는 새 saved-build 문서만 파일 목록과 읽기/쓰기에 허용하며 기존 JSON은 목록에서 제외한다. `verify:r6`, Rust 72개 테스트, 새 Repository 계약 테스트를 통과했다. 실제 Tauri WebView2 E2E는 `TORAM_E2E_CDP` 미설정으로 skip이며, 상세는 `docs/verification/refactoring-r6-storage-contract.md`를 따른다.
+
+### 리팩토링 R7 D4 / Worker / Native 실행 경계 (2026-09-01)
+
+- `frontend/application/ports.ts`에 `OptimizationProblem`·진행·결과·제어 계약을 명시하고, `assets/js/d4-execution-adapter.js`가 Native 우선/Worker fallback, 취소, 일시정지, 재개, continuation 폐기를 한 경계에서 위임한다. 계산 커널 Gateway는 추가하지 않았다.
+- `optimizer.js`와 `optimizer-ui-controller.js`는 구체 Worker/Native 클라이언트를 직접 참조하지 않는다. Adapter는 문제 컴파일·후보 삭제·Pair 정책·상한·탐색·결과 정렬을 하지 않아 기존 `exact`/`bounded` 의미와 관찰 가능한 tie-break 순서를 보존한다.
+- `verify:r7`, R0 66/66, D4 evaluator/oracle/property/Worker·Native 회귀, JS/Rust parity 1,488건, 실제 425개 5초 gate와 Tauri no-bundle 빌드가 통과했다. 425개 결과는 `bounded`, 하한 14,089·상한 20,371·gap 44.588%·5,002ms였으며 새 exact 주장으로 바꾸지 않았다. Rust 72개 테스트도 통과했다. 상세는 `docs/verification/refactoring-r7-d4-execution-boundary.md`를 따른다.
+
+### 리팩토링 R8 Rust / Tauri 모듈화 (2026-09-01)
+
+- `src-tauri/src/main.rs`는 Tauri Builder 조립, `D4OptimizationService` managed state 등록, 기존 IPC 명령 등록만 담당한다. 명령 입구는 `tauri_commands.rs`, D4 장시간 작업과 job/session 수명은 `d4_service.rs`, 저장 검증·파일 접근은 `settings_repository.rs`, 저장 유스케이스 위임은 `settings_service.rs`로 분리했다.
+- 기존 명령 이름과 요청/응답 DTO·직렬화 계약은 유지했다. D4의 `spawn_blocking` 실행, cancel/pause/resume/dispose 의미, 최대 4개 continuation session 및 oldest eviction, 진행 channel과 bounded/exact 결과 의미는 바꾸지 않았다.
+- `verify:r8`, `cargo fmt --check`, Rust 72개 테스트, `cargo clippy --all-targets -- -D warnings`, Native client/N0/N5 회귀가 통과했다. 실제 Tauri WebView2 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 skip이며, 상세는 `docs/verification/refactoring-r8-rust-tauri-modules.md`를 따른다.
+
+### 리팩토링 R9 Legacy 제거 (2026-09-01)
+
+- 계산기의 구형 stat 적용과 크리스타 조건 fallback, 크리스타 UI의 중복 조건 fallback을 삭제했다. 계산기·UI·D4 Worker와 독립 계산 회귀는 `stat-registry.js → calculation-policies.js → calculator.js`의 단일 정책 경계를 사용한다.
+- Application의 임시 입력 이름은 `legacyInput`에서 `kernelInput`으로 바꿨다. `ToramCalculationInputScope`는 BuildDraft/Scenario/Request를 기존 계산 커널에 명시적으로 전달하고 호출 뒤 제거하는 현재 실행 경계라 유지한다.
+- `ToramD4ExecutionAdapter`와 Native/Worker client, `ToramSettingsFileRepositoryAdapter`, classic script manifest는 실제 제품 경로가 참조하는 Port/로더 계약이므로 삭제하지 않았다. 베타 저장 경로·`toram-auto-build-setting`·File System Access API·IndexedDB 경로는 여전히 범위 밖이다.
+- `verify:r9`, R0 66/66, Rust 72개 테스트·clippy·Tauri no-bundle 빌드를 통과했다. 실제 Tauri WebView2 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 skip이며, 상세는 `docs/verification/refactoring-r9-legacy-removal.md`를 따른다.
 
 ## 3. Git, 버전, 배포 상태
 
@@ -44,12 +117,16 @@
 
 주요 파일:
 
-- src-tauri/src/main.rs: 네이티브 세팅 저장 명령과 검증
+- src-tauri/src/main.rs: Tauri 앱 조립, managed D4 state 및 IPC 명령 등록
+- src-tauri/src/tauri_commands.rs: Tauri IPC 명령 입구와 DTO 전달
+- src-tauri/src/d4_service.rs: D4 job/session 수명, 병렬 slice 실행과 진행 channel
+- src-tauri/src/settings_service.rs: 저장 유스케이스 위임
+- src-tauri/src/settings_repository.rs: 저장 문서 검증, 파일 접근과 이름 안전성
 - src-tauri/tauri.conf.json: 창, 번들, NSIS 설정
 - src-tauri/Cargo.toml: Rust 패키지
 - tools/prepare-tauri-frontend.mjs: 기존 웹 프론트엔드를 dist로 준비
 - assets/js/tauri-build-storage-adapter.js: 프론트와 Rust 명령 연결
-- assets/js/build-setting-snapshot.js: 전체 세팅 스냅샷 형식
+- assets/js/settings-repository.js: saved-build/application-state 저장 계약과 세션 복원
 - assets/js/build-file-storage.js: 저장 오버레이 UI와 백업 입출력
 - assets/source-data/skill-registration/: 427개 등록 메타데이터를 생성하는 동료 견본 원본
 - tools/generate-skill-registration.mjs: 위 원본에서 등록 메타데이터 재생성
@@ -77,7 +154,7 @@ NSIS는 currentUser 설치이며 WebView2 downloadBootstrapper를 사용한다. 
 
 ### Rust 명령
 
-src-tauri/src/main.rs에 다음 명령이 등록되어 있다.
+`src-tauri/src/tauri_commands.rs`의 다음 명령이 `main.rs`에서 등록되어 있다.
 
 - settings_directory
 - list_settings
@@ -88,19 +165,12 @@ src-tauri/src/main.rs에 다음 명령이 등록되어 있다.
 
 앱이 저장소에 접근하면 세팅 폴더를 자동 생성한다. 파일명은 빈 값, 80자 초과, 제어 문자, Windows 금지 문자, 끝의 점·공백, 예약 장치명, 경로 이동을 차단한다. 기존 파일도 JSON이 아니거나 심볼릭 링크·비정규 파일이면 거부한다.
 
-### 스냅샷 범위
+### R6 저장 문서 범위
 
-- toram-auto-building.build-state.v1
-- toram-auto-building.skill-tree.v1
-- toram-auto-building.skill-tree-ui.v1
-- toram-auto-active-buffs-v1
-- toram.combo-sequence.v1
-
-JSON은 format toram-auto-build-setting, schema 1을 검증한다.
-
-- localStorage: 마지막 작업 상태 자동 복원
-- 네이티브 JSON: 이름을 붙인 저장, 목록, 불러오기, 덮어쓰기, 삭제
-- JSON 내보내기·불러오기: PC 이전과 수동 백업
+- 이름 있는 JSON은 `format: toram-auto-build-document`, `documentType: saved-build`, `schemaVersion: 1`이며 BuildDraft·Scenario·생성/수정 시각을 가진다.
+- 자동 복원은 localStorage의 단 하나의 `toram.auto-build.application-state.v1` 문서로만 수행한다. 이 문서는 appSettings와 마지막 BuildDraft·Scenario만 보유한다.
+- 네이티브 JSON은 이름 있는 저장, 목록, 불러오기, 덮어쓰기, 삭제에 사용한다. 내보내기·가져오기도 saved-build 문서만 사용한다.
+- 이전 localStorage 키, `toram-auto-build-setting` JSON, migration 및 legacy backup 호환은 범위 밖이다.
 
 기존 File System Access API, showDirectoryPicker, IndexedDB 폴더 핸들 방식은 제거됐다.
 
@@ -123,7 +193,7 @@ JSON은 format toram-auto-build-setting, schema 1을 검증한다.
   - 마력 속성은 약점 속성 공격 자체를 만들지 않는다.
   - 둘 다 INT 비례 속성 보너스 계산 대상이다.
 - 명칭 속성데미지를 속성에 유리로 변경했다.
-- 장비·외부 버프 옵션 선택에는 VIT/VIT%, 최대 HP/%, 최대 MP, 공격 MP 회복/%, 물리/마법 내성, DEF/MDEF·회피/명중·HP/MP 자연회복의 고정/% 값을 포함한다. 이 값은 기존 스냅샷 저장 계약으로 그대로 저장·복원된다.
+- 장비·외부 버프 옵션 선택에는 VIT/VIT%, 최대 HP/%, 최대 MP, 공격 MP 회복/%, 물리/마법 내성, DEF/MDEF·회피/명중·HP/MP 자연회복의 고정/% 값을 포함한다. 이 값은 R6 saved-build/last-session 계약으로 저장·복원된다.
 - 설치본의 Tauri 리소스 로더가 공백 포함 스킬 아이콘 경로를 불러오지 못하므로, 아이콘 디렉터리와 모든 참조에 공백 없는 `*_Skills` 경로를 사용한다. 스킬 트리·버프·콤보가 같은 아이콘 데이터를 사용한다.
 - 최대 MP 공식: floor(100 + 레벨 + 총 INT × 0.1 + 고정 최대 MP 보정)
 - 스테이터스 포인트는 현재 캐릭터 레벨의 레벨업분(레벨당 2pt)과 계정 공유 플레이어 레벨 훈장분을 분리한다. 훈장은 최고 패러미터가 공식 최대 레벨을 달성했다고 보고 Lv.5부터 10레벨마다 +5pt를 적용한다. 현재 공식 상한 Lv.325에서는 훈장 +165pt이며, 낮은 레벨 캐릭터 설계에도 이 분량을 반영한다.

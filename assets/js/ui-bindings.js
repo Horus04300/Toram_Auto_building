@@ -2,22 +2,10 @@
     'use strict';
 
     function bindUiEvents() {
-        var crystaUi = app.crystaUi;
-        var optimizer = app.optimizer;
-        if (!crystaUi || !optimizer) throw new Error('UI modules were not initialized.');
-
-        document.querySelectorAll('[data-add-option]').forEach(function (button) {
-            button.addEventListener('click', function () { crystaUi.addOptionRow(button.dataset.addOption); });
-        });
-        document.querySelector('[data-action="add-ban"]').addEventListener('click', crystaUi.addBanTag);
-        document.addEventListener('toram:calculate', optimizer.runCalculationSafe);
-        document.querySelector('[data-action="main-weapon-change"]').addEventListener('change', function () {
-            crystaUi.updateSubWeaponList();
-            crystaUi.refreshAllCrystaInfo();
-        });
-        document.querySelector('[data-action="sub-weapon-change"]').addEventListener('change', crystaUi.onSubWeaponChange);
-        document.querySelector('[data-action="armor-change"]').addEventListener('change', crystaUi.refreshAllCrystaInfo);
-        optimizer.initialize();
+        if (!app.buildUi || !app.optimizerUi || !app.optimizer) throw new Error('UI 기능 컨트롤러가 준비되지 않았습니다.');
+        app.buildUi.bind();
+        document.addEventListener('toram:calculate', app.optimizer.runCalculationSafe);
+        app.optimizerUi.initialize();
     }
 
     if (document.readyState === 'loading') {

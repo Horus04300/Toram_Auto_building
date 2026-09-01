@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "noEmitOnError": true,
+    "module": "none",
+    "outFile": "./assets/js/tauri-build-storage-adapter.js"
+  },
+  "files": [
+    "./frontend/contracts/boundary-dtos.d.ts",
+    "./frontend/runtime/tauri-build-storage-adapter.ts"
+  ],
+  "include": []
+}

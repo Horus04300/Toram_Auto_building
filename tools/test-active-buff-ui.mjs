@@ -3,11 +3,10 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { LEGACY_SCRIPT_PATHS } from '../assets/js/legacy-script-manifest.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const dataScripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map((match) => match[1])
+const dataScripts = LEGACY_SCRIPT_PATHS
   .filter((path) => path.startsWith('assets/js/data/'));
 const investmentLevels = new Proxy({}, { get: () => new Proxy({}, { get: () => 10 }) });
 const document = {

@@ -3,18 +3,16 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { LEGACY_SCRIPT_PATHS } from '../assets/js/legacy-script-manifest.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const dataScripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map(match => match[1])
-  .filter(path => path.startsWith('assets/js/data/'));
+const dataScripts = LEGACY_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
 let investments = {};
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
 context.window.window = context.window;
 vm.createContext(context);
 for (const path of dataScripts) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-for (const path of ['assets/js/skill-effect-engine.js', 'assets/js/combo-sequence-engine.js']) {
+for (const path of ['assets/js/skill-effect-engine.js', 'assets/js/combo-sequence-engine.js', 'assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) {
   vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 }
 
@@ -85,11 +83,13 @@ assert.equal(context.calculateEffectiveResistance([50, 50]), 100, '같은 적용
 const resistanceProfile = context.calculateResistanceProfile([50, 20]);
 assert.deepEqual(JSON.parse(JSON.stringify(resistanceProfile)), { components:[50, 20], raw:70, effective:70, multiplier:.3 }, '내성 프로필은 원합계와 1-내성/100 배율을 보존해야 합니다.');
 assert.doesNotMatch(calculatorSource, /Math\.max\(0,\s*finalStab\)/, '음수 안정률은 남용 입력으로 보고 별도 보정하지 않아야 합니다.');
-assert.match(calculatorSource, /k === 'VITP'[\s\S]*ctx\.vitP \+= val/, 'VIT% 옵션 적용 분기가 있어야 합니다.');
+const statContext = { vitP:0 };
+context.window.ToramCalculationPolicies.applyStat(statContext, 'VITP', 12);
+assert.equal(statContext.vitP, 12, 'VIT% 옵션 적용은 단일 계산 정책으로 위임해야 합니다.');
 assert.match(calculatorSource, /if \(ctx\.conversionLevel > 0[\s\S]*conversionIntMatk = Math\.floor\(totalINT/, '컨버전 패시브 MATK는 액티브 토글과 분리하고 곱셈 뒤 내림해야 합니다.');
 assert.match(calculatorSource, /conversionFlatMatk = Math\.floor\(conversionAddMatk\) \+ Math\.floor\(conversionIntMatk\)[\s\S]*finalMATK = Math\.floor\(preFinalMatk[\s\S]*\+ conversionFlatMatk/, '컨버전 무기·INT 보정은 MATK% 계산 뒤 MATK(+)로 적용되어야 합니다.');
 const storageSource = await readFile(resolve(root, 'assets/js/build-state-storage.js'), 'utf8');
-assert.match(storageSource, /!child\.classList\.contains\('combo-transient-option'\)/, '다음 스킬 1회 옵션은 자동 저장에서 제외해야 합니다.');
+assert.doesNotMatch(storageSource, /localStorage/, 'R6 이후 빌드 UI 어댑터는 localStorage를 직접 읽거나 쓰면 안 됩니다.');
 const optimizerSource = await readFile(resolve(root, 'assets/js/optimizer.js'), 'utf8');
 assert.match(optimizerSource, /totalActSpeed = Math\.min\(50, baseActSpeed \+ equipMotionSpeed\)/, '최종 행동속도는 50%를 넘지 않아야 합니다.');
 

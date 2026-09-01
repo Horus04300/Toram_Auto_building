@@ -149,21 +149,10 @@
             }
         }
 
-        function checkCondition(ctx, cnd) {
-            if(!cnd) return true;
-            if(cnd.sub) {
-                var subs = cnd.sub.split('/');
-                if(subs.indexOf(ctx.subType) === -1) return false;
-            }
-            if(cnd.armor) {
-                var armors = cnd.armor.split('/');
-                if(armors.indexOf(ctx.armorType) === -1) return false;
-            }
-            if(cnd.main) {
-                var mains = cnd.main.split('/');
-                if(mains.indexOf(ctx.mainType) === -1) return false;
-            }
-            return true;
+        function matchesCrystaCondition(ctx, cnd) {
+            var policies = window.ToramCalculationPolicies;
+            if (!policies || typeof policies.matchesCrystaCondition !== 'function') throw new Error('크리스타 조건 정책이 준비되지 않았습니다.');
+            return policies.matchesCrystaCondition(ctx, cnd);
         }
 
         function renderCrystaInfo(inputEl) {
@@ -196,7 +185,7 @@
             };
 
             var html = "";
-            var isRootActive = checkCondition(ctx, c.cond);
+            var isRootActive = matchesCrystaCondition(ctx, c.cond);
 
             if(c.stats) {
                 for(var k in c.stats) {
@@ -216,7 +205,7 @@
             if (c.condStats) {
                 for (var i = 0; i < c.condStats.length; i++) {
                     var cItem = c.condStats[i];
-                    if (checkCondition(ctx, cItem.cond)) {
+                    if (matchesCrystaCondition(ctx, cItem.cond)) {
                         for(var k in cItem.stats) {
                             var v = cItem.stats[k];
                             var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";

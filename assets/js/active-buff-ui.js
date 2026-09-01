@@ -1,11 +1,13 @@
 (function () {
   'use strict';
-  var storageKey = 'toram-auto-active-buffs-v1';
-  function savedState() { try { return JSON.parse(window.localStorage.getItem(storageKey) || '{}'); } catch (_) { return {}; } }
+  var persistedState = {};
+  function clone(value) { return JSON.parse(JSON.stringify(value || {})); }
+  function savedState() { return clone(persistedState); }
   function saveState(state) {
-    window.localStorage.setItem(storageKey, JSON.stringify(state));
+    persistedState = clone(state);
     if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
       document.dispatchEvent(new CustomEvent('toram:active-buffs-changed'));
+      document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
     }
   }
   function displayNumber(value) {
@@ -23,6 +25,8 @@
     return Number(levels[skill.treeId] && levels[skill.treeId][skill.skillId]) || 0;
   }
   function effectSkills() {
+    var policies = window.ToramCalculationPolicies;
+    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions({ preferStackControl:true });
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
     var byId = Object.create(null);
@@ -78,11 +82,11 @@
   }
   function engineMainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
   function currentCalculationContext() {
-    if (typeof window.getBaseContext !== 'function' || typeof window.simulateWithCrystas !== 'function' || typeof window.getCurrentCrystas !== 'function') return null;
+    if (!window.ToramApplication || typeof window.ToramApplication.CalculateBuild !== 'function') return null;
     try {
-      var base = window.getBaseContext();
-      if (typeof window.applyPassiveSkillStats === 'function') window.applyPassiveSkillStats(base);
-      var calculated = window.simulateWithCrystas(base, window.getCurrentCrystas());
+      var result = window.ToramApplication.CalculateBuild();
+      var base = result.snapshot.baseContext;
+      var calculated = result.calculation;
       var combat = { STR:calculated.finalSTR, INT:calculated.finalINT, VIT:calculated.finalVIT, AGI:calculated.finalAGI, DEX:calculated.finalDEX, CRT:base.crtBase, ATK:calculated.finalATK, MATK:calculated.finalMATK, ASPD:calculated.finalASPD, CSPD:calculated.finalCSPD, STABILITY:calculated.finalStab, WEAPON_ATK:calculated.finalWeaponAttack, MAXMP:calculated.finalMaxMP };
       return {
         baseStats:{ STR:base.strBase, INT:base.intBase, VIT:base.vitBase, AGI:base.agiBase, DEX:base.dexBase, CRT:base.crtBase },
@@ -172,6 +176,7 @@
         row.append(type, amount); proxy.appendChild(row);
       });
     });
+    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') document.dispatchEvent(new CustomEvent('toram:build-options-changed'));
   }
   function render() {
     var panel = document.getElementById('appTabPanel-buffs');
@@ -224,6 +229,14 @@
     });
     return result;
   }
-  window.ToramActiveBuffs = Object.freeze({ render:render, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections, getDisplaySkills:displayableBuffSkills });
+  function restore(selections) {
+    persistedState = Object.keys(selections || {}).reduce(function (result, id) {
+      var value = selections[id];
+      result[id] = { enabled:Boolean(value === true || value && (value.active === true || value.enabled === true)), stacks:Number(value && value.stacks) || 0 };
+      return result;
+    }, {});
+    render();
+  }
+  window.ToramActiveBuffs = Object.freeze({ render:render, restore:restore, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections, getDisplaySkills:displayableBuffSkills });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, { once:true }); else render();
 }());

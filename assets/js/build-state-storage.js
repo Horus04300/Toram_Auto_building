@@ -1,96 +1,61 @@
-/* 스테이터스·장비 입력 자동 저장/복원. 브라우저별 localStorage만 사용한다. */
-(function () {
+/* R6 빌드 UI 어댑터. 저장은 ToramSettingsRepository만 담당한다. */
+(function (root) {
   'use strict';
-  var storageKey = 'toram-auto-building.build-state.v1';
-  var staticIds = [
-    'charLevel', 'strBase', 'intBase', 'vitBase', 'agiBase', 'dexBase', 'crtBase',
-    'bossLevel', 'bossDef', 'bossMdef', 'bossPhysResist', 'bossMagResist', 'bossCritResist',
-    'mainWeaponType', 'wpnAtk', 'wpnRefine', 'wpnStab', 'subWeaponType', 'subAtk', 'subRefine', 'subStab', 'armorType',
-    'cr_wpn_1', 'cr_wpn_2', 'cr_arm_1', 'cr_arm_2', 'cr_add_1', 'cr_add_2', 'cr_spc_1', 'cr_spc_2',
-    'lock_wpn_1', 'lock_wpn_2', 'lock_arm_1', 'lock_arm_2', 'lock_add_1', 'lock_add_2', 'lock_spc_1', 'lock_spc_2'
-  ];
-  var optionContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
-  var restoring = false, pendingSave = null;
-
+  var staticIds = ['charLevel','strBase','intBase','vitBase','agiBase','dexBase','crtBase','bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist','mainWeaponType','wpnAtk','wpnRefine','wpnStab','subWeaponType','subAtk','subRefine','subStab','armorType','cr_wpn_1','cr_wpn_2','cr_arm_1','cr_arm_2','cr_add_1','cr_add_2','cr_spc_1','cr_spc_2','lock_wpn_1','lock_wpn_2','lock_arm_1','lock_arm_2','lock_add_1','lock_add_2','lock_spc_1','lock_spc_2'];
+  var slotSpecs = {
+    mainWeapon:{ type:'mainWeaponType', attack:'wpnAtk', refinement:'wpnRefine', stability:'wpnStab', options:'wpnOpts', crystas:['cr_wpn_1','cr_wpn_2'], locks:['lock_wpn_1','lock_wpn_2'] },
+    subWeapon:{ type:'subWeaponType', attack:'subAtk', refinement:'subRefine', stability:'subStab', options:'subOpts' },
+    armor:{ type:'armorType', options:'armOpts', crystas:['cr_arm_1','cr_arm_2'], locks:['lock_arm_1','lock_arm_2'] },
+    additional:{ options:'addOpts', crystas:['cr_add_1','cr_add_2'], locks:['lock_add_1','lock_add_2'] },
+    special:{ options:'spcOpts', crystas:['cr_spc_1','cr_spc_2'], locks:['lock_spc_1','lock_spc_2'] }
+  };
+  var restoring = false, pending = null;
   function element(id) { return document.getElementById(id); }
-  function readControl(control) { return control && control.type === 'checkbox' ? Boolean(control.checked) : (control ? control.value : undefined); }
-  function writeControl(control, value) {
-    if (!control || value === undefined || value === null) return;
-    if (control.type === 'checkbox') control.checked = Boolean(value);
-    else control.value = String(value);
-  }
-  function optionRows(containerId) {
-    var container = element(containerId);
-    if (!container) return [];
-    return Array.prototype.slice.call(container.children).filter(function (child) { return child.classList && child.classList.contains('opt-row') && !child.classList.contains('combo-transient-option'); }).map(function (row) {
-      var type = row.querySelector('.opt-type'), value = row.querySelector('.opt-val');
-      return type && value ? { type:type.value, value:value.value } : null;
-    }).filter(Boolean);
-  }
-  function snapshot() {
-    var controls = {};
-    staticIds.forEach(function (id) { controls[id] = readControl(element(id)); });
-    var options = {};
-    optionContainers.forEach(function (id) { options[id] = optionRows(id); });
-    return { controls:controls, options:options, banned:window.bannedCrystas ? Object.keys(window.bannedCrystas) : [] };
-  }
-  function save() {
-    if (restoring) return;
-    try { window.localStorage.setItem(storageKey, JSON.stringify(snapshot())); } catch (_) { /* 저장 불가 환경 */ }
-  }
-  function queueSave() {
-    if (restoring || pendingSave !== null) return;
-    pendingSave = window.setTimeout(function () { pendingSave = null; save(); }, 0);
-  }
-  function restoreOptionRows(containerId, rows) {
-    var container = element(containerId), ui = window.ToramApp && window.ToramApp.crystaUi;
-    if (!container || !ui || !Array.isArray(rows)) return;
-    Array.prototype.slice.call(container.children).filter(function (child) { return child.classList && child.classList.contains('opt-row'); }).forEach(function (row) { row.remove(); });
-    rows.forEach(function (saved) {
-      ui.addOptionRow(containerId);
-      var row = container.lastElementChild;
-      if (!row) return;
-      var optionType = saved.type === 'UNSHEATHE' ? 'UNSHEATHEP' : saved.type;
-      writeControl(row.querySelector('.opt-type'), optionType);
-      writeControl(row.querySelector('.opt-val'), saved.value);
-      row.querySelector('.opt-type').dispatchEvent(new Event('change', { bubbles:true }));
+  function write(id, value) { var node = element(id); if (!node || value === undefined || value === null) return; if (node.type === 'checkbox') node.checked = Boolean(value); else node.value = String(value); }
+  function restoreOptions(id, options) {
+    var container = element(id), ui = root.ToramApp && root.ToramApp.crystaUi;
+    if (!container || !ui) return;
+    Array.prototype.slice.call(container.querySelectorAll('.opt-row')).forEach(function (row) { row.remove(); });
+    (options || []).forEach(function (option) {
+      ui.addOptionRow(id);
+      var row = container.lastElementChild, type = row && row.querySelector('.opt-type'), value = row && row.querySelector('.opt-val');
+      if (type) type.value = option.key === 'UNSHEATHE' ? 'UNSHEATHEP' : String(option.key || '');
+      if (value) value.value = String(option.value === undefined ? 0 : option.value);
+      if (type) type.dispatchEvent(new Event('change', { bubbles:true }));
     });
   }
-  function restoreBanned(values) {
-    if (!Array.isArray(values) || !window.bannedCrystas) return;
-    Object.keys(window.bannedCrystas).forEach(function (name) { delete window.bannedCrystas[name]; });
-    values.forEach(function (name) { if (typeof name === 'string' && name) window.bannedCrystas[name] = true; });
-    if (typeof window.renderBanTags === 'function') window.renderBanTags();
+  function restoreSlot(name, piece) {
+    var spec = slotSpecs[name], data = piece || {};
+    if (!spec) return;
+    if (spec.type) write(spec.type, data.type);
+    if (spec.attack) write(spec.attack, data.attack);
+    if (spec.refinement) write(spec.refinement, data.refinement);
+    if (spec.stability) write(spec.stability, data.stability);
+    (spec.crystas || []).forEach(function (id, index) { write(id, data.crystas && data.crystas[index]); });
+    (spec.locks || []).forEach(function (id, index) { write(id, data.lockedCrystaSlots && data.lockedCrystaSlots[index]); });
+    restoreOptions(spec.options, data.options);
   }
-  function restore() {
-    var saved;
-    try { saved = JSON.parse(window.localStorage.getItem(storageKey) || 'null'); } catch (_) { return; }
-    if (!saved || typeof saved !== 'object') return;
+  function restoreSession(session) {
+    if (!session || !session.build) return;
+    var build = session.build, target = session.scenario && session.scenario.target || {}, attributes = build.character && build.character.attributes || {};
     restoring = true;
     try {
-      var controls = saved.controls || {}, ui = window.ToramApp && window.ToramApp.crystaUi;
-      ['charLevel', 'strBase', 'intBase', 'vitBase', 'agiBase', 'dexBase', 'crtBase', 'bossLevel', 'bossDef', 'bossMdef', 'bossPhysResist', 'bossMagResist', 'bossCritResist', 'mainWeaponType', 'wpnAtk', 'wpnRefine', 'wpnStab', 'armorType'].forEach(function (id) { writeControl(element(id), controls[id]); });
-      if (ui) ui.updateSubWeaponList();
-      ['subWeaponType', 'subAtk', 'subRefine', 'subStab'].forEach(function (id) { writeControl(element(id), controls[id]); });
-      if (ui) ui.onSubWeaponChange();
-      ['cr_wpn_1', 'cr_wpn_2', 'cr_arm_1', 'cr_arm_2', 'cr_add_1', 'cr_add_2', 'cr_spc_1', 'cr_spc_2', 'lock_wpn_1', 'lock_wpn_2', 'lock_arm_1', 'lock_arm_2', 'lock_add_1', 'lock_add_2', 'lock_spc_1', 'lock_spc_2'].forEach(function (id) { writeControl(element(id), controls[id]); });
-      optionContainers.forEach(function (id) { restoreOptionRows(id, saved.options && saved.options[id]); });
-      restoreBanned(saved.banned);
-      if (ui) ui.refreshAllCrystaInfo();
+      write('charLevel', build.character && build.character.level);
+      ['STR','INT','VIT','AGI','DEX','CRT'].forEach(function (name) { write(name.toLowerCase() + 'Base', attributes[name]); });
+      ['bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist'].forEach(function (id) { write(id, target[id]); });
+      restoreSlot('mainWeapon', build.equipment && build.equipment.mainWeapon);
+      var ui = root.ToramApp && root.ToramApp.crystaUi; if (ui) ui.updateSubWeaponList();
+      restoreSlot('subWeapon', build.equipment && build.equipment.subWeapon); restoreSlot('armor', build.equipment && build.equipment.armor); restoreSlot('additional', build.equipment && build.equipment.additional); restoreSlot('special', build.equipment && build.equipment.special); restoreOptions('buffOpts', build.externalOptions);
+      if (root.ToramSkillUi && root.ToramSkillUi.restore) root.ToramSkillUi.restore(build.skillLevels || {});
+      if (root.ToramActiveBuffs && root.ToramActiveBuffs.restore) root.ToramActiveBuffs.restore(build.activeBuffs || {});
+      if (root.ToramComboUi && root.ToramComboUi.restore) root.ToramComboUi.restore(build.combo || []);
+      if (ui) { ui.onSubWeaponChange(); ui.refreshAllCrystaInfo(); }
       var level = element('charLevel'); if (level) level.dispatchEvent(new Event('input', { bubbles:true }));
-    } finally { restoring = false; }
+    } finally { restoring = false; if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi(); }
   }
-  function isRelevant(target) {
-    if (!target || target.nodeType !== 1) return false;
-    if (staticIds.indexOf(target.id) >= 0 || target.closest('.opt-row') || target.closest('.autocomplete-items')) return true;
-    return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn'));
-  }
-  function initialize() {
-    restore();
-    document.addEventListener('input', function (event) { if (isRelevant(event.target)) queueSave(); });
-    document.addEventListener('change', function (event) { if (isRelevant(event.target)) queueSave(); });
-    document.addEventListener('click', function (event) { if (isRelevant(event.target)) queueSave(); });
-  }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true });
-  else initialize();
-}());
+  function relevant(target) { if (!target || target.nodeType !== 1) return false; if (staticIds.indexOf(target.id) >= 0 || target.closest('.opt-row') || target.closest('.autocomplete-items')) return true; return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn')); }
+  function notify() { if (restoring || pending !== null) return; pending = root.setTimeout(function () { pending = null; document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }, 0); }
+  function initialize() { ['input','change','click'].forEach(function (type) { document.addEventListener(type, function (event) { if (relevant(event.target)) notify(); }); }); }
+  root.ToramBuildStateUi = Object.freeze({ restoreSession:restoreSession });
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
+}(window));

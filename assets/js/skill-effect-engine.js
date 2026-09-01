@@ -49,7 +49,7 @@
     throw new Error('지원하지 않는 스킬 조건: ' + node.op);
   }
   function mainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
-  function investments() { var simulator = window.skillSimulatorState; return simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {}; }
+  function investments() { var scoped = window.ToramCalculationInputScope && window.ToramCalculationInputScope.skillLevels; if (scoped) return scoped; var simulator = window.skillSimulatorState; return simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {}; }
   function investmentSummary(levels, predicate) {
     return Object.keys(levels).reduce(function (totals, treeId) {
       totals[treeId] = Object.keys(levels[treeId] || {}).reduce(function (sum, skillId) {
@@ -69,6 +69,8 @@
     }, {});
   }
   function definitions() {
+    var policies = window.ToramCalculationPolicies;
+    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions();
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
     var seen = Object.create(null);

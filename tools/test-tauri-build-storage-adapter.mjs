@@ -18,7 +18,7 @@ const context = {
 vm.createContext(context);
 vm.runInContext(fs.readFileSync('assets/js/tauri-build-storage-adapter.js', 'utf8'), context);
 
-const adapter = context.window.ToramBuildStorageAdapter;
+const adapter = context.window.ToramSettingsFileRepositoryAdapter;
 assert.ok(adapter, 'Tauri API가 있으면 저장 어댑터를 노출해야 한다.');
 await adapter.directory();
 await adapter.list();
@@ -39,6 +39,6 @@ assert.deepEqual(JSON.parse(JSON.stringify(calls)), [
 const browserContext = { window:{} };
 vm.createContext(browserContext);
 vm.runInContext(fs.readFileSync('assets/js/tauri-build-storage-adapter.js', 'utf8'), browserContext);
-assert.equal(browserContext.window.ToramBuildStorageAdapter, undefined, '브라우저에서는 네이티브 어댑터를 노출하지 않아야 한다.');
+assert.equal(browserContext.window.ToramSettingsFileRepositoryAdapter, undefined, '브라우저에서는 네이티브 어댑터를 노출하지 않아야 한다.');
 
 console.log('Tauri build storage adapter tests passed');

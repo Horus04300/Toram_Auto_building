@@ -2,13 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
+import { LEGACY_SCRIPT_PATHS } from '../assets/js/legacy-script-manifest.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const require = createRequire(import.meta.url);
 const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const dataScripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map(match => match[1]).filter(path => path.startsWith('assets/js/data/'));
+const dataScripts = LEGACY_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
 const context = { window:{ skillSimulatorState:{ getInvestments:() => ({}) } }, console };
 context.window.window = context.window;
 vm.createContext(context);

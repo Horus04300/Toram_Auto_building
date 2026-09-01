@@ -106,16 +106,15 @@ if (document.readyState === 'loading') {
 } else {
     initCrystaEvents();
 }
-        var calculationQueued = false;
-        var d4UiRunVersion = 0;
-        var d4LastOptimizationRequest = null;
+        function runtimeState() { return window.ToramRuntimeState && window.ToramRuntimeState.get ? window.ToramRuntimeState.get() : { d4:{ runVersion:0, lastOptimizationRequest:null, lastOutcome:null }, calculationQueued:false }; }
+        function d4Runtime() { return runtimeState().d4; }
         function runCalculationSafe() {
             if (typeof validateCrystaInputs === 'function' && !validateCrystaInputs()) return;
             if (typeof revealResultTab === 'function') revealResultTab();
-            if (calculationQueued) return;
-            calculationQueued = true;
+            if (runtimeState().calculationQueued) return;
+            runtimeState().calculationQueued = true;
             var execute = function () {
-                calculationQueued = false;
+                runtimeState().calculationQueued = false;
                 try { runCalculation(); }
                 catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
             };
@@ -127,23 +126,25 @@ if (document.readyState === 'loading') {
         function resultDamageScore(result) { return result.optimizationDamageFactor === undefined ? result.damageFactor : result.optimizationDamageFactor; }
         function evaluateD4Build(baseCtx, crystas, scenarioSnapshot) {
             if (!window.ToramBuildEvaluator) {
-                return { calculation:simulateWithCrystas(baseCtx, crystas), constraints:{ feasible:true, violations:[] }, diagnostics:[] };
+                var applicationResult = window.ToramApplication.CalculateBuild({ baseContext:baseCtx, crystas:crystas });
+                return { calculation:applicationResult.calculation, constraints:{ feasible:true, violations:[] }, diagnostics:[] };
             }
             var buildSnapshot = window.ToramBuildEvaluator.createBuildSnapshot(baseCtx, crystas, { source:'current-ui' });
             var scenario = scenarioSnapshot || window.ToramBuildEvaluator.createScenarioSnapshot(baseCtx);
             return window.ToramBuildEvaluator.evaluate(buildSnapshot, scenario);
         }
         function runCalculation() {
-            var baseCtx = getBaseContext();
-            applyPassiveSkillStats(baseCtx);   // ← 추가: 패시브 스킬 스탯을 딱 1번만 계산해서 baseCtx에 미리 반영
+            if (!window.ToramApplication || typeof window.ToramApplication.CreateCalculationSnapshot !== 'function') throw new Error('계산 유스케이스가 준비되지 않았습니다.');
+            var calculationSnapshot = window.ToramApplication.CreateCalculationSnapshot();
+            var baseCtx = calculationSnapshot.baseContext;
             var scenarioSnapshot = window.ToramBuildEvaluator ? window.ToramBuildEvaluator.createScenarioSnapshot(baseCtx) : null;
             var basisLabel = document.getElementById('optimizationBasisLabel');
             if (basisLabel) basisLabel.textContent = '[' + (baseCtx.optimizationBasisName || '평타') + '] 기준 최적화됨';
 
-            var currentCrystas = getCurrentCrystas();
+            var currentCrystas = calculationSnapshot.crystas;
             var curEvaluation = evaluateD4Build(baseCtx, currentCrystas, scenarioSnapshot);
             var curRes = curEvaluation.calculation;
-            window.lastD4Outcome = curEvaluation;
+            d4Runtime().lastOutcome = curEvaluation;
 
             var locks = [
                 document.getElementById('lock_wpn_1').checked, document.getElementById('lock_wpn_2').checked,
@@ -494,7 +495,7 @@ if (document.readyState === 'loading') {
             var relativeGain = Number(currentScore) > 0 ? absoluteGain / Number(currentScore) * 100 : 0;
             var scoreLabel = recommendedOutcome.calculation && recommendedOutcome.calculation.procDamageProfile && recommendedOutcome.calculation.procDamageProfile.sources.length ? '기대 대미지' : '대미지';
             var packages = result.bestBuild.packages || [];
-            var currentCrystas = d4LastOptimizationRequest && d4LastOptimizationRequest.currentCrystas || [];
+            var currentCrystas = d4Runtime().lastOptimizationRequest && d4Runtime().lastOptimizationRequest.currentCrystas || [];
             var slots = ['무기', '방어구', '추가 장비', '특수 장비'];
             var buildRows = '';
             for (var groupIndex = 0; groupIndex < 4; groupIndex++) {
@@ -653,38 +654,30 @@ if (document.readyState === 'loading') {
 
         function launchD4Worker(problem, currentEvaluation, locks, version, timeLimitMs) {
             var callbacks = {
-                onProgress:function (progress) { if (version === d4UiRunVersion) updateD4Progress(progress, 'running', false); },
-                onComplete:function (result, metadata) { if (version === d4UiRunVersion) renderD4GlobalResult(result, currentEvaluation, locks, metadata); }
+                onProgress:function (progress) { if (version === d4Runtime().runVersion) updateD4Progress(progress, 'running', false); },
+                onComplete:function (result, metadata) { if (version === d4Runtime().runVersion) renderD4GlobalResult(result, currentEvaluation, locks, metadata); }
             };
-            var options = { timeLimitMs:timeLimitMs, progressIntervalMs:32, maxParetoComparisons:1000000 };
-            // Desktop uses the Rust shared-memory engine.  If an invocation
-            // cannot start, retain the browser-compatible Worker path instead
-            // of exposing a partial native result as an exact recommendation.
-            if (window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable()) {
-                return window.ToramD4NativeClient.optimize(problem, callbacks, options).catch(function () {
-                    if (version === d4UiRunVersion && window.ToramD4WorkerClient) return window.ToramD4WorkerClient.optimize(problem, callbacks, options);
-                    return null;
-                });
-            }
-            return window.ToramD4WorkerClient.optimize(problem, callbacks, options);
+            var options = { timeLimitMs:timeLimitMs, progressIntervalMs:32, maxParetoComparisons:1000000, canFallback:function () { return version === d4Runtime().runVersion; } };
+            return window.ToramD4ExecutionAdapter.execute(problem, callbacks, options);
         }
 
         function startD4GlobalOptimization(baseCtx, scenarioSnapshot, currentCrystas, locks, currentEvaluation) {
-            var version = ++d4UiRunVersion;
-            if (window.ToramD4NativeClient) window.ToramD4NativeClient.cancel('입력이 변경되어 다시 계산합니다.');
-            if (window.ToramD4NativeClient) window.ToramD4NativeClient.disposeContinuation();
-            if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('입력이 변경되어 다시 계산합니다.');
+            var version = ++d4Runtime().runVersion;
+            if (window.ToramD4ExecutionAdapter) {
+                window.ToramD4ExecutionAdapter.cancel('입력이 변경되어 다시 계산합니다.');
+                window.ToramD4ExecutionAdapter.disposeContinuation();
+            }
             var overview = document.getElementById('d4RecommendationOverview');
             if (overview) overview.hidden = true;
             updateD4Progress({ stage:'preparing', status:'running', elapsedMs:0, evaluations:0, visitedNodes:0, optimalityGap:null }, 'running', false);
             document.getElementById('top3ListContainer').innerHTML = '<div class="top3-row">각 부위를 따로 고르지 않고 8개 슬롯 전체를 하나의 빌드로 계산합니다.</div>';
             document.getElementById('globalEffTextBadge').textContent = '전역 계산 중…';
             window.setTimeout(function () {
-                if (version !== d4UiRunVersion) return;
+                if (version !== d4Runtime().runVersion) return;
                 try {
-                    if (!window.ToramD4WorkerClient && !(window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable())) throw new Error('D4 최적화 클라이언트가 연결되지 않았습니다.');
+                    if (!window.ToramD4ExecutionAdapter || !window.ToramD4ExecutionAdapter.isAvailable()) throw new Error('D4 최적화 실행기가 연결되지 않았습니다.');
                     var problem = compileD4GlobalCrystaProblem(baseCtx, scenarioSnapshot, currentCrystas, locks);
-                    d4LastOptimizationRequest = { problem:problem, currentEvaluation:currentEvaluation, currentCrystas:currentCrystas.slice(), locks:locks.slice() };
+                    d4Runtime().lastOptimizationRequest = { problem:problem, currentEvaluation:currentEvaluation, currentCrystas:currentCrystas.slice(), locks:locks.slice() };
                     launchD4Worker(problem, currentEvaluation, locks, version, 30000);
                 } catch (error) {
                     renderD4GlobalResult({ status:'invalid', diagnostics:[{ code:'START_FAILED', message:error.message }] }, currentEvaluation, locks, {});
@@ -769,100 +762,6 @@ if (document.readyState === 'loading') {
             document.getElementById('effBars').innerHTML = barsHtml;
         }
 
-function initializeOptimizerUi() {
-    populateRefineSelects();
-    updateSubWeaponList();
-    initAutocomplete();
-    renderBanTags();
-    addDefaultOptions('wpnOpts');
-    addDefaultOptions('armOpts');
-    var effTabs = document.getElementById('effTabs');
-    if (effTabs) {
-        effTabs.addEventListener('click', function(e) {
-            if (e.target.classList.contains('eff-tab-btn')) {
-                var btns = effTabs.querySelectorAll('.eff-tab-btn');
-                btns.forEach(function(btn) { btn.classList.remove('active'); });
-                e.target.classList.add('active');
-                renderMarginalUtility(parseInt(e.target.getAttribute('data-unit'), 10));
-            }
-        });
-    }
-    var d4Cancel = document.getElementById('d4OptimizationCancel');
-    if (d4Cancel) {
-        d4Cancel.addEventListener('click', function() {
-            if (window.ToramD4NativeClient) window.ToramD4NativeClient.cancel('사용자가 계산을 취소했습니다.');
-            if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('사용자가 계산을 취소했습니다.');
-        });
-    }
-    var d4Pause = document.getElementById('d4OptimizationPause');
-    if (d4Pause) {
-        d4Pause.addEventListener('click', function() {
-            if (window.ToramD4NativeClient && window.ToramD4NativeClient.pause()) {
-                d4Pause.disabled = true;
-                d4Pause.textContent = '정지 중…';
-            }
-        });
-    }
-    var d4Continue = document.getElementById('d4OptimizationContinue');
-    if (d4Continue) {
-        d4Continue.addEventListener('click', function() {
-            if (!d4LastOptimizationRequest || !(window.ToramD4NativeClient && window.ToramD4NativeClient.isAvailable() && window.ToramD4NativeClient.hasContinuation())) return;
-            var version = ++d4UiRunVersion;
-            updateD4Progress({ stage:'native-resume', status:'running', optimalityGap:null, native:true }, 'running', false);
-            document.getElementById('globalEffTextBadge').textContent = '정밀 전역 계산 중…';
-            function resumeUntilExact() {
-                return window.ToramD4NativeClient.resume({
-                    onProgress:function(progress) {
-                        if (version === d4UiRunVersion) {
-                            if (d4Pause) { d4Pause.disabled = false; d4Pause.textContent = '일시정지'; }
-                            updateD4Progress(progress, 'running', false);
-                        }
-                    },
-                    onComplete:function(result, metadata) {
-                        if (version === d4UiRunVersion) renderD4GlobalResult(result, d4LastOptimizationRequest.currentEvaluation, d4LastOptimizationRequest.locks, metadata);
-                    }
-                }, { timeLimitMs:30000, progressIntervalMs:32 }).then(function(result) {
-                    if (version !== d4UiRunVersion || !result || !result.continuationId || !window.ToramD4NativeClient.hasContinuation()) return result;
-                    if (result.status === 'bounded' || result.status === 'no-incumbent-yet') {
-                        return new Promise(function(resolve) { window.setTimeout(resolve, 0); }).then(resumeUntilExact);
-                    }
-                    return result;
-                });
-            }
-            resumeUntilExact().catch(function(error) {
-                if (version !== d4UiRunVersion) return;
-                renderD4GlobalResult({ status:'invalid', diagnostics:[{ code:error.code || 'D4_RESUME_FAILED', message:error.message || '정밀 계산을 이어가지 못했습니다. 새 전역 계산을 시작해 주세요.' }] }, d4LastOptimizationRequest.currentEvaluation, d4LastOptimizationRequest.locks, { native:true });
-            });
-        });
-    }
-    // A continuation represents exactly one frozen input snapshot.  Any user
-    // edit invalidates it; this also prevents a later button click from
-    // silently applying an old result to new equipment or skill inputs.
-    function discardD4ContinuationForInputChange() {
-        if (!d4LastOptimizationRequest) return;
-        var hadContinuation = Boolean(window.ToramD4NativeClient && window.ToramD4NativeClient.hasContinuation && window.ToramD4NativeClient.hasContinuation());
-        d4LastOptimizationRequest = null;
-        d4UiRunVersion++;
-        if (window.ToramD4NativeClient) {
-            window.ToramD4NativeClient.cancel('입력이 변경되어 보존된 정밀 계산을 폐기합니다.');
-            window.ToramD4NativeClient.disposeContinuation();
-        }
-        if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('입력이 변경되어 계산을 취소합니다.');
-        if (hadContinuation) {
-            updateD4Progress({ status:'invalid', diagnostics:[{ code:'D4_CONTINUATION_DISCARDED', message:'입력이 변경되어 이전 정밀 계산 세션을 폐기했습니다. 새 전역 계산을 시작해 주세요.' }] }, 'invalid', false);
-            document.getElementById('globalEffTextBadge').textContent = '입력 변경됨';
-        }
-    }
-    document.addEventListener('input', discardD4ContinuationForInputChange, true);
-    document.addEventListener('change', discardD4ContinuationForInputChange, true);
-    window.addEventListener('pagehide', function() {
-        if (window.ToramD4NativeClient) {
-            window.ToramD4NativeClient.cancel('창이 닫혀 계산을 취소합니다.');
-            window.ToramD4NativeClient.disposeContinuation();
-        }
-        if (window.ToramD4WorkerClient) window.ToramD4WorkerClient.cancel('창이 닫혀 계산을 취소합니다.');
-    });
-}
 function compileD4GlobalCrystaProblem(baseContext, scenarioSnapshot, currentCrystas, locks, options) {
     if (!window.ToramD4ProblemCompiler) throw new Error('D4 전역 후보 컴파일러가 연결되지 않았습니다.');
     var settings = options || {};
@@ -886,8 +785,8 @@ function solveD4GlobalCrystaProblem(problem, options) {
 
 window.ToramApp = window.ToramApp || {};
 window.ToramApp.optimizer = Object.freeze({
-    initialize: initializeOptimizerUi,
     runCalculationSafe: runCalculationSafe,
     compileGlobalCrystaProblem: compileD4GlobalCrystaProblem,
-    solveGlobalCrystaProblem: solveD4GlobalCrystaProblem
+    solveGlobalCrystaProblem: solveD4GlobalCrystaProblem,
+    uiSupport:Object.freeze({ runtime:d4Runtime, updateProgress:updateD4Progress, renderGlobalResult:renderD4GlobalResult, renderMarginalUtility:renderMarginalUtility })
 });

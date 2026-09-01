@@ -4,12 +4,29 @@
   "private": true,
   "description": "Toram Online auto build calculator desktop shell",
   "scripts": {
-    "desktop:prepare": "node tools/prepare-tauri-frontend.mjs",
+    "types:check": "tsc -p tsconfig.json",
+    "types:emit": "tsc -p tsconfig.runtime.json",
+    "verify:r1b": "npm run types:check && node tools/verify-typescript-boundaries.mjs",
+    "verify:r2": "npm run types:check && node tools/verify-calculation-contracts.mjs",
+    "verify:r3": "npm run verify:r2 && node tools/verify-r3-application-usecases.mjs",
+    "verify:r4": "npm run verify:r3 && node tools/verify-r4-build-draft-state.mjs",
+    "verify:r5": "npm run verify:r4 && node tools/verify-r5-ui-features.mjs",
+    "verify:r6": "npm run verify:r5 && node tools/test-build-setting-snapshot.mjs && node tools/test-tauri-build-storage-adapter.mjs && node tools/verify-r6-storage-contract.mjs",
+    "verify:r7": "npm run verify:r6 && node tools/verify-r7-d4-execution-boundary.mjs && node tools/test-d4-execution-adapter.mjs",
+    "verify:r8": "npm run verify:r7 && node tools/verify-r8-rust-modules.mjs",
+    "verify:r9": "npm run verify:r8 && node tools/verify-r9-legacy-removal.mjs",
+    "desktop:prepare": "npm run types:emit && node tools/prepare-tauri-frontend.mjs",
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build --bundles nsis",
-    "desktop:build:exe": "tauri build --no-bundle"
+    "desktop:build:exe": "tauri build --no-bundle",
+    "test:r0": "node tools/test-r0-baseline.mjs",
+    "test:r0:normal": "node tools/test-r0-baseline.mjs normal",
+    "test:r0:characterization": "node tools/test-r0-baseline.mjs characterization",
+    "verify:r1a": "node tools/verify-es-module-entry.mjs",
+    "verify:r1a:dist": "node tools/verify-es-module-entry.mjs --dist"
   },
   "devDependencies": {
-    "@tauri-apps/cli": "2.11.4"
+    "@tauri-apps/cli": "2.11.4",
+    "typescript": "^5.9.3"
   }
 }

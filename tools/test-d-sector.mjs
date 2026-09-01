@@ -2,17 +2,18 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
+import { LEGACY_SCRIPT_PATHS } from '../assets/js/legacy-script-manifest.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const dataScripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map(match => match[1]).filter(path => path.startsWith('assets/js/data/'));
+const dataScripts = LEGACY_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
 let investments = { Battle:{ 12:10 }, MagicBlade:{ 6:10 }, Dagger:{ 5:10 } };
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
 context.window.window = context.window;
 vm.createContext(context);
 for (const path of dataScripts) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 vm.runInContext(await readFile(resolve(root, 'assets/js/skill-effect-engine.js'), 'utf8'), context, { filename:'skill-effect-engine.js' });
+for (const path of ['assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
 vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
 
@@ -20,7 +21,9 @@ const calculatorSource = await readFile(resolve(root, 'assets/js/calculator.js')
 assert.match(calculatorSource, /skillConst:\s*appliedComboHit\s*\?\s*appliedComboHit\.skillConst\s*:\s*0/, 'D1 기본 공격 상수는 0이어야 합니다.');
 assert.match(await readFile(resolve(root, 'index.html'), 'utf8'), /\[평타\] 기준 최적화됨/, 'D1 결과 최상단에 평타 최적화 기준을 표시해야 합니다.');
 const comboUiSource = await readFile(resolve(root, 'assets/js/combo-ui.js'), 'utf8');
-assert.match(comboUiSource, /hitProfile:\{\s*damageType:hit\.damageType[\s\S]*flags:flags\s*\}/, 'D3 콤보에서 결과 계산기로 타격 객체 전체를 전달해야 합니다.');
+const applicationUseCasesSource = await readFile(resolve(root, 'assets/js/application-use-cases.js'), 'utf8');
+assert.match(comboUiSource, /ToramApplication\.ApplyComboHit/, 'D3 콤보 UI는 Application 유스케이스를 통해 타격을 전달해야 합니다.');
+assert.match(applicationUseCasesSource, /hitProfile:\{\s*damageType:selected\.damageType[\s\S]*flags:flags\s*\}/, 'D3 Application 유스케이스는 결과 계산기로 타격 객체 전체를 전달해야 합니다.');
 const crystaUiSource = await readFile(resolve(root, 'assets/js/crysta-ui.js'), 'utf8');
 const optimizerSource = await readFile(resolve(root, 'assets/js/optimizer.js'), 'utf8');
 assert.match(crystaUiSource, /function validateCrystaInputs\(\)[\s\S]*!getCrystaByName\(value\)/, 'D6 목록에 없는 크리스타 이름을 검사해야 합니다.');

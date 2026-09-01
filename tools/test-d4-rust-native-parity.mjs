@@ -73,6 +73,7 @@ const calculatorContext = { window:{ ToramStatRegistry:registry }, console };
 calculatorContext.window.window = calculatorContext.window;
 vm.createContext(calculatorContext);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', calculatorContext);
+vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), calculatorContext, { filename:'calculation-policies.js' });
 vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), calculatorContext, { filename:'calculator.js' });
 const dataContext = {};
 vm.createContext(dataContext);

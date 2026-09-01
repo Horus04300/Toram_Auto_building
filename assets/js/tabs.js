@@ -54,10 +54,10 @@
         const firstChild = container.firstChild;
         container.insertBefore(navigation, firstChild);
         container.insertBefore(panelHost, firstChild);
-        const sectionTitles = Array.from(container.querySelectorAll(':scope > .section-title'));
-        const findSectionTitle = function (text) { return sectionTitles.find(function (title) { return title.textContent.trim() === text; }); };
-        const equipmentStart = findSectionTitle('장비');
-        const blacklistStart = container.querySelector(':scope > .equipment-blacklist');
+        const statsStart = container.querySelector(':scope > [data-ui-section="stats"]');
+        const targetTitle = container.querySelector(':scope > [data-ui-section="target"]');
+        const equipmentStart = container.querySelector(':scope > [data-ui-section="equipment"]');
+        const blacklistStart = container.querySelector(':scope > [data-ui-section="crysta-blacklist"]');
         function moveUntil(start, stop, destination) {
             let node = start;
             while (node && node !== stop) {
@@ -66,7 +66,7 @@
                 node = next;
             }
         }
-        moveUntil(sectionTitles[0], equipmentStart, panels['stats-target']);
+        moveUntil(statsStart, equipmentStart, panels['stats-target']);
         const statusLayout = document.createElement('div');
         statusLayout.className = 'status-tab-layout';
         const investmentPane = document.createElement('section');
@@ -75,8 +75,7 @@
         targetPane.className = 'status-target-pane';
         statusLayout.append(investmentPane, targetPane);
         panels['stats-target'].append(statusLayout);
-        const statTitle = sectionTitles[0];
-        const targetTitle = findSectionTitle('타겟');
+        const statTitle = statsStart;
         const levelGroup = document.getElementById('charLevel').closest('.form-group');
         const investmentHeader = panels['stats-target'].querySelector('.status-investment-header');
         const statsGrid = panels['stats-target'].querySelector('.stats-grid');
@@ -86,9 +85,7 @@
         investmentPane.append(statTitle, investmentBody);
         investmentBody.append(levelGroup, investmentHeader, statsGrid);
         targetPane.append(targetTitle, targetCard);
-        const externalBuffCard = Array.from(container.children).find(function (element) {
-            return element.classList && element.classList.contains('equip-card') && element.querySelector('#buffOpts');
-        });
+        const externalBuffCard = container.querySelector(':scope > [data-ui-section="external-buffs"]');
         moveUntil(equipmentStart, externalBuffCard, panels.equipment);
         if (externalBuffCard) panels.buffs.appendChild(externalBuffCard);
         const comboIntro = document.createElement('section');

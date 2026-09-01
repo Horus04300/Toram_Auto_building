@@ -1,71 +1,43 @@
+import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
 
 const root = resolve(import.meta.dirname, '..');
-const values = new Map([
-  ['toram-auto-building.build-state.v1', '{"level":300}'],
-  ['toram.combo-sequence.v1', '["Blade:0"]']
-]);
-let reloadCount = 0;
-const localStorage = {
-  getItem:key => values.has(key) ? values.get(key) : null,
-  setItem:(key, value) => values.set(key, String(value)),
-  removeItem:key => values.delete(key)
+const local = new Map();
+const files = new Map();
+let restored = null;
+let build = { character:{ level:325, attributes:{ STR:510, INT:1, VIT:1, AGI:1, DEX:1, CRT:0 } }, equipment:{ mainWeapon:{}, subWeapon:{}, armor:{}, additional:{}, special:{} }, skillLevels:{ Blade:{ 0:10 } }, activeBuffs:{}, externalOptions:[], combo:[] };
+const scenario = { target:{ bossLevel:300, bossDef:100, bossMdef:100, bossPhysResist:0, bossMagResist:0, bossCritResist:0 }, conditions:{} };
+const document = { readyState:'loading', addEventListener() {}, createElement() { return { click() {}, remove() {}, href:'', download:'' }; }, body:{ appendChild() {} } };
+const window = {
+  localStorage:{ getItem:key => local.get(key) ?? null, setItem:(key, value) => local.set(key, String(value)) }, setTimeout:callback => callback(),
+  ToramBuildDraftStore:{ read:() => ({ build, scenario }) }, ToramBuildStateUi:{ restoreSession:value => { restored = value; build = value.build; } },
+  ToramSettingsFileRepositoryAdapter:{ directory:async () => 'C:\\Settings', list:async () => [...files.keys()].map(name => ({ name, lastModified:1 })), save:async (name, content) => { if (files.has(name + '.json')) throw new Error('duplicate'); files.set(name + '.json', content); }, load:async name => files.get(name), overwrite:async (name, content) => files.set(name, content), delete:async name => files.delete(name) }
 };
-const context = {
-  window:{ localStorage, location:{ reload:() => { reloadCount += 1; } } },
-  console,
-  Date,
-  JSON,
-  Object,
-  Array,
-  String
-};
-context.window.window = context.window;
+window.window = window;
+const context = { window, document, console, JSON, Date, Blob, URL:{ createObjectURL:() => '', revokeObjectURL() {} } };
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/build-setting-snapshot.js'), 'utf8'), context, {
-  filename:'assets/js/build-setting-snapshot.js'
-});
+vm.runInContext(await readFile(resolve(root, 'assets/js/settings-repository.js'), 'utf8'), context, { filename:'settings-repository.js' });
+const repository = window.ToramSettingsRepository;
 
-const settings = context.window.ToramBuildSettings;
-const ok = (condition, message) => { if (!condition) throw new Error(message); };
-const snapshot = settings.capture('  테스트:/세팅...  ');
-ok(snapshot.name === '테스트--세팅', '파일명 정규화');
-ok(snapshot.storage['toram-auto-building.build-state.v1'] === '{"level":300}', '스테이터스 캡처');
-ok(snapshot.storage['toram.combo-sequence.v1'] === '["Blade:0"]', '콤보 캡처');
-ok(settings.validate(snapshot), '정상 스냅샷 검증');
-ok(!settings.validate({ format:settings.format, schemaVersion:99, storage:{} }), '다른 스키마 차단');
-
-const serialized = settings.serialize('백업');
-values.clear();
-settings.apply(settings.parse(serialized), { reload:false });
-ok(values.get('toram-auto-building.build-state.v1') === '{"level":300}', '스테이터스 복원');
-ok(values.get('toram.combo-sequence.v1') === '["Blade:0"]', '콤보 복원');
-ok(reloadCount === 0, '테스트 복원 시 새로고침 억제');
-
-settings.apply(settings.parse(serialized));
-ok(reloadCount === 1, '일반 복원 시 새로고침');
-
-let downloadedBlob = null;
-let clicked = false;
-let removed = false;
-let revokedUrl = null;
-context.Blob = class BlobMock {
-  constructor(parts, options) { this.parts = parts; this.type = options && options.type; downloadedBlob = this; }
-};
-context.URL = {
-  createObjectURL:() => 'blob:setting-backup',
-  revokeObjectURL:url => { revokedUrl = url; }
-};
-context.document = {
-  createElement:() => ({ href:'', download:'', click:() => { clicked = true; }, remove:() => { removed = true; } }),
-  body:{ appendChild:() => {} }
-};
-context.window.setTimeout = callback => callback();
-const downloadName = settings.download('백업:/파일');
-ok(downloadName === '백업--파일.json', '백업 파일명 정규화');
-ok(clicked && removed, 'JSON 내보내기 링크 실행 및 정리');
-ok(downloadedBlob && downloadedBlob.type === 'application/json', 'JSON MIME 형식');
-ok(revokedUrl === 'blob:setting-backup', '백업 Blob URL 해제');
-console.log('Build setting snapshot regressions: PASS');
+assert.equal(repository.format, 'toram-auto-build-document');
+assert.equal(repository.schemaVersion, 1);
+const saved = await repository.save('  R6:/빌드... ');
+assert.equal(saved.name, 'R6--빌드');
+assert.equal(files.size, 1);
+const stored = repository.parseSavedBuild(files.get('R6--빌드.json'));
+assert.equal(stored.documentType, 'saved-build');
+assert.equal(stored.build.character.level, 325);
+assert.ok(!files.get('R6--빌드.json').includes('"storage"'), 'legacy storage 래퍼를 쓰면 안 됩니다.');
+build = { ...build, character:{ ...build.character, level:1 } };
+await repository.overwrite('R6--빌드.json');
+assert.equal(repository.parseSavedBuild(files.get('R6--빌드.json')).build.character.level, 1);
+build = { ...build, character:{ ...build.character, level:999 } };
+await repository.load('R6--빌드.json');
+assert.equal(restored.build.character.level, 1);
+assert.equal(JSON.parse(local.get(repository.sessionStorageKey)).lastSession.build.character.level, 1);
+assert.throws(() => repository.parseSavedBuild(JSON.stringify({ format:repository.format, schemaVersion:1, documentType:'saved-build', storage:{} })), /새 저장 계약/);
+await repository.remove('R6--빌드.json');
+assert.equal(files.size, 0);
+console.log('R6 settings repository contract: PASS');

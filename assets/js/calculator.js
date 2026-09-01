@@ -1,61 +1,7 @@
-        function applyStatLegacy(ctx, key, val) {
-            if(!key || isNaN(val)) return;
-            var k = key.toUpperCase().trim();
-            if (k === 'ATKP' || k === 'ATK%' || k === 'ATK_P') ctx.atkP += val;
-            else if (k === 'ATK' || k === 'ATK+') ctx.atkF += val;
-            else if (k === 'MATKP' || k === 'MATK%' || k === 'MATK_P') ctx.matkP += val;
-            else if (k === 'MATK' || k === 'MATK+') ctx.matkF += val;
-            else if (k === 'STRP' || k === 'STR%' || k === 'STR_P') ctx.strP += val;
-            else if (k === 'STR' || k === 'STR+') ctx.strF += val;
-            else if (k === 'DEXP' || k === 'DEX%' || k === 'DEX_P') ctx.dexP += val;
-            else if (k === 'DEX' || k === 'DEX+') ctx.dexF += val;
-            else if (k === 'AGIP' || k === 'AGI%' || k === 'AGI_P') ctx.agiP += val;
-            else if (k === 'AGI' || k === 'AGI+') ctx.agiF += val;
-            else if (k === 'INTP' || k === 'INT%' || k === 'INT_P') ctx.intP += val;
-            else if (k === 'INT' || k === 'INT+') ctx.intF += val;
-            else if (k === 'CDMG_P' || k === 'CDMG%' || k === 'CDMG_PCT' || k === 'CDMGP') ctx.cdmgP += val;
-            else if (k === 'VITP' || k === 'VIT%' || k === 'VIT_P') ctx.vitP += val;
-            else if (k === 'VIT' || k === 'VIT+') ctx.vitF += val;
-            else if (k === 'CDMG' || k === 'CDMG+') ctx.cdmgF += val;
-            else if (k === 'CRIT_P' || k === 'CRIT%' || k === 'CRITP') ctx.critP += val;
-            else if (k === 'CRIT' || k === 'CRIT+') ctx.critF += val;
-            else if (k === 'SRW' || k === '근거리위력') ctx.srw += val;
-            else if (k === 'LRW' || k === '원거리위력') ctx.lrw += val;
-            else if (k === 'UNSHEATHEP' || k === '발도위력%' || k === '발도공격%') ctx.unsheatheP += val;
-            else if (k === 'UNSHEATHE' || k === '발도위력' || k === '발도공격' || k === '발도위력+' || k === '발도공격+') ctx.unsheatheF += val;
-            else if (k === 'PHYS_PIERCE' || k === '물리관통') ctx.physPierce += val;
-            else if (k === 'MAG_PIERCE' || k === '마법관통') ctx.magPierce += val;
-            else if (k === 'ELEM_P' || k === '속성데미지' || k === '속성에유리') ctx.elemP += val;
-            else if (k === 'ELEM_AWAKENING') ctx.elementAwakening = ctx.elementAwakening || val > 0;
-            else if (k === 'MAGIC_ELEMENT') ctx.magicElement = ctx.magicElement || val > 0;
-            else if (k === 'DAMAGE_P' || k === 'DAMAGE%' || k === '스킬데미지') ctx.damageP += val;
-            else if (k === 'MAXMP' || k === 'MAX_MP' || k === '최대MP') ctx.maxMpF += val;
-            else if (k === 'WATKP' || k === '무기ATK%') ctx.watkP += val;
-            else if (k === 'WATK' || k === '무기ATK+') ctx.watkF += val;
-            else if (k === 'ASPD') ctx.aspdF += val;
-            else if (k === 'ASPD_P' || k === 'ASPD%') ctx.aspdP += val;
-            else if (k === 'CSPD') ctx.cspdF += val;
-            else if (k === 'CSPD_P' || k === 'CSPD%') ctx.cspdP += val;
-            else if (k === 'STABILITY' || k === '안정률') ctx.stability += val;
-            else if (k === 'MOTIONSPEED' || k === 'MOTION_SPEED' || k === 'MS' || k === '행동속도') ctx.motionSpeed += val;
-            else if (k === 'CAST_RED' || k === 'CHARGE_RED' || k === 'LINE_RED' || k === 'CAST_TIME' || k === 'CHARGE_TIME' || k === '영창' || k === '시전시간' || k === '영창감소' || k === '시전감소') ctx.castRed += val;
-            else if (k === 'ATK_UP_STR') ctx.atkUpSTR += val;
-            else if (k === 'ATK_UP_DEX') ctx.atkUpDEX += val;
-            else if (k === 'ATK_UP_INT') ctx.atkUpINT += val;
-            else if (k === 'ATK_UP_AGI') ctx.atkUpAGI += val;
-            else if (k === 'ATK_UP_VIT') ctx.atkUpVIT += val;
-            else if (k === 'MATK_UP_STR') ctx.matkUpSTR += val;
-            else if (k === 'MATK_UP_DEX') ctx.matkUpDEX += val;
-            else if (k === 'MATK_UP_INT') ctx.matkUpINT += val;
-            else if (k === 'MATK_UP_AGI') ctx.matkUpAGI += val;
-            else if (k === 'MATK_UP_VIT') ctx.matkUpVIT += val;
-        }
-
         function applyStat(ctx, key, val) {
-            if (window.ToramStatRegistry && typeof window.ToramStatRegistry.apply === 'function') {
-                return window.ToramStatRegistry.apply(ctx, key, val);
-            }
-            return applyStatLegacy(ctx, key, val);
+            var policies = window.ToramCalculationPolicies;
+            if (!policies || typeof policies.applyStat !== 'function') throw new Error('계산 정책이 준비되지 않았습니다.');
+            return policies.applyStat(ctx, key, val);
         }
 
 
@@ -156,50 +102,54 @@
             return ctx;
         }
         function skillInvestment(treeId, skillId) {
+            var scoped = window.ToramCalculationInputScope && window.ToramCalculationInputScope.skillLevels;
+            if (scoped) return Math.max(0, Number(scoped[treeId] && scoped[treeId][skillId]) || 0);
             var simulator = window.skillSimulatorState;
             var investments = simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {};
             return Math.max(0, Number(investments[treeId] && investments[treeId][skillId]) || 0);
         }
         function activeBuffIsEnabled(skillId) {
-            var selections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
-                ? window.ToramActiveBuffs.getSelections() : {};
+            var selections = window.ToramCalculationInputScope && window.ToramCalculationInputScope.activeBuffs ||
+                (window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function' ? window.ToramActiveBuffs.getSelections() : {});
             var setting = selections[skillId];
             return setting === true || Boolean(setting && setting.active);
         }
         function getBaseContext() {
-            var appliedComboHit = window.ToramComboUi && typeof window.ToramComboUi.getAppliedHit === 'function'
-                ? window.ToramComboUi.getAppliedHit() : null;
+            var scopedInput = window.ToramCalculationInputScope && window.ToramCalculationInputScope.kernelInput;
+            var controlValue = function (id) { var node = document.getElementById(id); return scopedInput && scopedInput.controls && scopedInput.controls[id] !== undefined ? scopedInput.controls[id] : (node ? node.value : ''); };
+            var appliedComboHit = scopedInput && scopedInput.appliedComboHit !== undefined ? scopedInput.appliedComboHit :
+                (window.ToramComboUi && typeof window.ToramComboUi.getAppliedHit === 'function' ? window.ToramComboUi.getAppliedHit() : null);
             var poisonSources = window.ToramSkillEffects && typeof window.ToramSkillEffects.learnedAilmentSources === 'function'
                 ? window.ToramSkillEffects.learnedAilmentSources('poison') : [];
             var weakenSources = window.ToramSkillEffects && typeof window.ToramSkillEffects.learnedAilmentSources === 'function'
                 ? window.ToramSkillEffects.learnedAilmentSources('weaken') : [];
             var ctx = {
-                level: parseFloat(document.getElementById('charLevel').value) || 0,
-                strBase: parseFloat(document.getElementById('strBase').value) || 0,
-                intBase: parseFloat(document.getElementById('intBase').value) || 0,
-                vitBase: parseFloat(document.getElementById('vitBase').value) || 0,
-                agiBase: parseFloat(document.getElementById('agiBase').value) || 0,
-                dexBase: parseFloat(document.getElementById('dexBase').value) || 0,
-                crtBase: parseFloat(document.getElementById('crtBase').value) || 0,
+                level: parseFloat(controlValue('charLevel')) || 0,
+                strBase: parseFloat(controlValue('strBase')) || 0,
+                intBase: parseFloat(controlValue('intBase')) || 0,
+                vitBase: parseFloat(controlValue('vitBase')) || 0,
+                agiBase: parseFloat(controlValue('agiBase')) || 0,
+                dexBase: parseFloat(controlValue('dexBase')) || 0,
+                crtBase: parseFloat(controlValue('crtBase')) || 0,
 
                 atkType: appliedComboHit ? appliedComboHit.atkType : 'PHYS',
                 rangeType: appliedComboHit ? appliedComboHit.rangeType : 'SHORT',
-                mainType: document.getElementById('mainWeaponType').value,
-                wpnAtk: document.getElementById('mainWeaponType').value === '맨손' ? 0 : (parseFloat(document.getElementById('wpnAtk').value) || 0),
-                wpnRefine: document.getElementById('mainWeaponType').value === '맨손' ? 0 : (parseFloat(document.getElementById('wpnRefine').value) || 0),
-                wpnStab: document.getElementById('mainWeaponType').value === '맨손' ? 1 : (parseFloat(document.getElementById('wpnStab').value) || 80),
-                subType: document.getElementById('subWeaponType').value,
-                subAtk: parseFloat(document.getElementById('subAtk').value) || 0,
-                subRefine: parseFloat(document.getElementById('subRefine').value) || 0,
-                subStab: parseFloat(document.getElementById('subStab').value) || 0,
-                armorType: document.getElementById('armorType').value,
+                mainType: controlValue('mainWeaponType'),
+                wpnAtk: controlValue('mainWeaponType') === '맨손' ? 0 : (parseFloat(controlValue('wpnAtk')) || 0),
+                wpnRefine: controlValue('mainWeaponType') === '맨손' ? 0 : (parseFloat(controlValue('wpnRefine')) || 0),
+                wpnStab: controlValue('mainWeaponType') === '맨손' ? 1 : (parseFloat(controlValue('wpnStab')) || 80),
+                subType: controlValue('subWeaponType'),
+                subAtk: parseFloat(controlValue('subAtk')) || 0,
+                subRefine: parseFloat(controlValue('subRefine')) || 0,
+                subStab: parseFloat(controlValue('subStab')) || 0,
+                armorType: controlValue('armorType'),
 
-                bossLevel: parseFloat(document.getElementById('bossLevel').value) || 0,
-                bossDef: parseFloat(document.getElementById('bossDef').value) || 0,
-                bossMdef: parseFloat(document.getElementById('bossMdef').value) || 0,
-                bossCritResist: parseFloat(document.getElementById('bossCritResist').value) || 0,
-                bossPhysResist: parseFloat(document.getElementById('bossPhysResist').value) || 0,
-                bossMagResist: parseFloat(document.getElementById('bossMagResist').value) || 0,
+                bossLevel: parseFloat(controlValue('bossLevel')) || 0,
+                bossDef: parseFloat(controlValue('bossDef')) || 0,
+                bossMdef: parseFloat(controlValue('bossMdef')) || 0,
+                bossCritResist: parseFloat(controlValue('bossCritResist')) || 0,
+                bossPhysResist: parseFloat(controlValue('bossPhysResist')) || 0,
+                bossMagResist: parseFloat(controlValue('bossMagResist')) || 0,
                 skillMult: appliedComboHit ? appliedComboHit.skillMult : 1,
                 damageMultiplierLayers: appliedComboHit && appliedComboHit.damageMultiplierLayers ? Object.assign({}, appliedComboHit.damageMultiplierLayers) : null,
                 skillConst: appliedComboHit ? appliedComboHit.skillConst : 0,
@@ -235,6 +185,9 @@
             };
             var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
             applyAttackProfileToContext(ctx, appliedComboHit);
+            if (scopedInput && Array.isArray(scopedInput.options)) {
+                scopedInput.options.forEach(function (option) { applyStat(ctx, option.key, parseFloat(option.value) || 0); });
+            } else {
             for(var i=0; i<optContainers.length; i++) {
                 var container = document.getElementById(optContainers[i]);
                 if(!container) continue;
@@ -245,11 +198,12 @@
                     applyStat(ctx, key, val);
                 } // <-- 첫 번째 누락된 중괄호 복구
             } // <-- 두 번째 누락된 중괄호 복구
+            }
             removeEmbeddedActiveGlobalDamage(ctx, appliedComboHit);
             // 스킬별 계수·상수는 콤보 탭에서 선택한 타격을 통해 주입한다.
             ctx.skillStats = [];
-            var activeSelections = window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function'
-                ? window.ToramActiveBuffs.getSelections() : {};
+            var activeSelections = window.ToramCalculationInputScope && window.ToramCalculationInputScope.activeBuffs ||
+                (window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function' ? window.ToramActiveBuffs.getSelections() : {});
             ctx.activeBuildConversions = window.ToramSkillEffects && typeof window.ToramSkillEffects.activeBuildConversions === 'function'
                 ? window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:activeSelections }).map(function (effect) { return Object.assign({}, effect); })
                 : [];
@@ -295,6 +249,9 @@
 
         function simulateWithCrystas(baseCtx, crystas, snapshotOnly, summaryOnly) {
             var ctx = cloneCtx(baseCtx);
+            var policies = window.ToramCalculationPolicies;
+            if (!policies || typeof policies.matchesCrystaCondition !== 'function') throw new Error('크리스타 조건 정책이 준비되지 않았습니다.');
+            var matchesCrystaCondition = policies.matchesCrystaCondition;
             var legacySelections = null;
             if ((!Array.isArray(ctx.activeBuildConversions) || !ctx.normalAttackAmprProfile) && !snapshotOnly && window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function') {
                 legacySelections = window.ToramActiveBuffs.getSelections();
@@ -310,7 +267,7 @@
                 if(!c) continue;
                 
                 if(c.stats) {
-                    if(!c.cond || checkCondition(ctx, c.cond)) {
+                    if(!c.cond || matchesCrystaCondition(ctx, c.cond)) {
                         for(var key in c.stats) applyStat(ctx, key, parseFloat(c.stats[key]) || 0);
                     }
                 }
@@ -318,7 +275,7 @@
                 if (c.condStats) {
                     for(var k=0; k<c.condStats.length; k++) {
                         var cItem = c.condStats[k];
-                        if (checkCondition(ctx, cItem.cond)) {
+                        if (matchesCrystaCondition(ctx, cItem.cond)) {
                             for(var key in cItem.stats) applyStat(ctx, key, parseFloat(cItem.stats[key]) || 0);
                         }
                     }

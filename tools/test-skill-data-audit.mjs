@@ -3,12 +3,10 @@ import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
+import { LEGACY_SCRIPT_PATHS } from '../assets/js/legacy-script-manifest.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const scripts = [...html.matchAll(/<script src="([^"]+)"><\/script>/g)]
-  .map(match => match[1])
-  .filter(path => path.startsWith('assets/js/data/'));
+const scripts = LEGACY_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
 const context = { window:{}, console };
 context.window.window = context.window;
 vm.createContext(context);

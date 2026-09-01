@@ -56,10 +56,16 @@ const window = {
   getCurrentCrystas:() => [],
   simulateWithCrystas:() => ({ finalSTR:110, finalINT:120, finalVIT:450, finalAGI:130, finalDEX:140, finalATK:1000, finalMATK:800, finalASPD:1200, finalCSPD:1000, finalStab:80, finalWeaponAttack:300, finalMaxMP:1000 })
 };
+window.ToramBuildDraftStore = { read:() => ({
+  build:{ character:{ level:300, attributes:{ STR:100, INT:100, VIT:100, AGI:100, DEX:100, CRT:50 } }, equipment:{ mainWeapon:{ crystas:[] }, armor:{ crystas:[] }, additional:{ crystas:[] }, special:{ crystas:[] } }, externalOptions:[], skillLevels:{ Demo:{ 0:10 } }, activeBuffs:{ 'Demo:0':{ active:true, stacks:0 } }, combo:[] },
+  scenario:{ target:{}, conditions:{} }, request:{ selectedSkillId:null, selectedHitId:null, overrides:{} }
+}) };
 window.window = window;
 const context = { window, document, console };
 vm.createContext(context);
+vm.runInContext(await readFile(resolve(root, 'assets/js/application-use-cases.js'), 'utf8'), context, { filename:'assets/js/application-use-cases.js' });
 vm.runInContext(await readFile(resolve(root, 'assets/js/active-buff-ui.js'), 'utf8'), context, { filename:'assets/js/active-buff-ui.js' });
+window.ToramActiveBuffs.restore({ 'Demo:0':{ active:true, stacks:0 } });
 
 for (const callback of listeners['toram:calculate'] || []) callback();
 assert.ok(proxy, '액티브 버프 옵션 프록시를 생성해야 합니다.');

@@ -7,7 +7,10 @@ import vm from 'node:vm';
 const root = resolve(import.meta.dirname, '..');
 const fixture = JSON.parse(await readFile(resolve(root, 'tools/fixtures/d4-native-runtime-26min-revenir.json'), 'utf8'));
 const nativeClientSource = await readFile(resolve(root, 'assets/js/d4-native-client.js'), 'utf8');
-const nativeCommandSource = await readFile(resolve(root, 'src-tauri/src/main.rs'), 'utf8');
+const nativeCommandSource = (await Promise.all([
+  readFile(resolve(root, 'src-tauri/src/tauri_commands.rs'), 'utf8'),
+  readFile(resolve(root, 'src-tauri/src/d4_service.rs'), 'utf8')
+])).join('\n');
 const require = createRequire(import.meta.url);
 const registry = require(resolve(root, 'assets/js/stat-registry.js'));
 const evaluator = require(resolve(root, 'assets/js/build-evaluator.js'));
@@ -18,6 +21,7 @@ const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
 vm.createContext(context);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
+vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), context, { filename:'calculation-policies.js' });
 vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
 const kernel = context.window.ToramCalculationKernel.evaluateContext;
 
@@ -37,7 +41,7 @@ assert.deepEqual(lockedEtowalMeasurement.locks, [false, false, false, false, fal
 assert.equal(lockedEtowalMeasurement.reportedWallTimeMs, 118830);
 assert.match(nativeClientSource, /remainingBudgetMs:remainingBudget/, 'native bridge must pass the UI-preparation-adjusted deadline budget to Tauri');
 assert.match(nativeClientSource, /progressChannel\(/, 'native bridge must create a Tauri progress channel when the runtime exposes Channel');
-assert.match(nativeCommandSource, /run_d4_session_budget/, 'native command must coordinate bounded session slices instead of an unbounded terminal-only solve');
+assert.match(nativeCommandSource, /run_budget/, 'native command service must coordinate bounded session slices instead of an unbounded terminal-only solve');
 assert.match(nativeCommandSource, /resume_d4_optimization/, 'native command must expose a continuation resume entry point');
 
 const input = fixture.resolvedExecutionContext;
