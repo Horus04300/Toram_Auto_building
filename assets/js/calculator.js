@@ -165,6 +165,7 @@
                 dualBringerActive: activeBuffIsEnabled('MagicBlade:4'),
                 spellBurstLevel: skillInvestment('Battle', 12),
                 godspeedWieldLevel: skillInvestment('Halberd', 19),
+                maximizerLevel: skillInvestment('Magic', 20),
                 poisonSources: poisonSources,
                 weakenSources: weakenSources,
                 targetWeakened: weakenSources.length > 0,

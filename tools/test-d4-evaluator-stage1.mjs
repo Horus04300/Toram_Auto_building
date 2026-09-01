@@ -33,7 +33,7 @@ function base(overrides={}) {
     mainType:'한손검', wpnAtk:100, wpnRefine:0, wpnStab:100, subType:'한손검(듀얼소드)', subAtk:0, subRefine:0, subStab:0, armorType:'일반옷',
     bossLevel:100, bossDef:0, bossMdef:0, bossCritResist:0, bossPhysResist:0, bossMagResist:0,
     skillMult:1, skillConst:0, procDamageModifiers:[], atkType:'PHYS', rangeType:'SHORT', optimizationBasisName:'테스트 스킬',
-    chkIsUnsheathe:false, chkGuaranteedCrit:true, conversionLevel:0, conversionActive:false, dualBringerLevel:0, dualBringerActive:false, spellBurstLevel:0, godspeedWieldLevel:0,
+    chkIsUnsheathe:false, chkGuaranteedCrit:true, conversionLevel:0, conversionActive:false, dualBringerLevel:0, dualBringerActive:false, spellBurstLevel:0, godspeedWieldLevel:0, maximizerLevel:0,
     poisonSources:[], weakenSources:[], targetWeakened:false, attackElement:'none', attackPowerMode:'default', useHigherRangeDamage:false,
     noCritical:false, criticalChanceBonus:0, criticalChanceMultiplier:1, fixedCriticalChance:null, minimumCriticalDamage:0,
     stabilityBonus:0, physicalPierceSkillBonus:0, magicPierceSkillBonus:0, ignoreDefense:false, ignoreMdef:false, halfMdefIgnored:false,
@@ -79,6 +79,8 @@ assert.equal(JSON.stringify(baseInput), original, '경량 상한 평가도 호�
 const longRangeDefaults = evaluator.defaultRequirements(base({ rangeType:'LONG', godspeedWieldLevel:10 }));
 assert.equal(longRangeDefaults.maxHp, null, '원거리 기본 빌드는 MAXHP 최소 조건이 없어야 합니다.');
 assert.equal(longRangeDefaults.maxMp, 2300, '신속의 수도 Lv.10은 버프 전 MAXMP 2300을 요구해야 합니다.');
+assert.equal(evaluator.defaultRequirements(base({ maximizerLevel:10 })).amprBeforeDual, 0, '맥시마이저 Lv.10은 AMPR 최소 조건을 면제해야 합니다.');
+assert.equal(evaluator.defaultRequirements(base({ maximizerLevel:9 })).amprBeforeDual, 100, '맥시마이저 Lv.9 이하는 AMPR 최소 조건 100을 유지해야 합니다.');
 
 const invalidBuild = evaluator.createBuildSnapshot(base(), [{ name:'unknown', stats:{ NOT_A_REAL_STAT:1 } }]);
 const invalid = evaluator.evaluate(invalidBuild, evaluator.createScenarioSnapshot(base(), { requirements:{ maxHp:null, maxMp:null, amprBeforeDual:null, normalAttackCrit:null, aspd:null } }), context.window.ToramCalculationKernel.evaluateContext);

@@ -51,7 +51,7 @@ windows sandbox failed: helper_unknown_error: setup refresh had errors
 
 - 대상: 실제 크리스타 425개, 장비 네 부위·각 2슬롯의 전역 8슬롯 추천.
 - 구현: 구조 조건 사전 물질화, 잠금·금지·부위·같은 장비 중복·강화 계보 제약, 완결 Pareto, Utility hard constraint, 전수조사 oracle, 안전 상한, JavaScript Worker 취소·진행·캐시, 결과 탭 `exact`/`bounded`/gap 표시.
-- Utility 기본 요구: 근거리 MAXHP 10,000(원거리는 없음), MAXMP 2,000 또는 신속의 수도 Lv.10이면 2,300, 듀얼소드 2배 전 AMPR 100, ASPD 1,000. 현재 활성화된 입력만 반영하며 자동 고정 획득처는 없다.
+- Utility 기본 요구: 근거리 MAXHP 10,000(원거리는 없음), MAXMP 2,000 또는 신속의 수도 Lv.10이면 2,300, 맥시마이저 Lv.10이면 듀얼소드 2배 전 AMPR 0·그 외 100, ASPD 1,000. 현재 활성화된 입력만 반영하며 자동 고정 획득처는 없다.
 - AMPR: 램페이지·괴력난신·트윈 스톰은 각각 단독으로 평가해 가장 큰 하나만 적용하고, 축지법의 1회성 AMPR은 지속 Utility에서 제외한다.
 - 성능 개선: 집계 평가, 상한 경량 결과, 두 부위 동시 분할, 64조합 이하 직접 전수조사.
 - 최신 실측: 5초 약 9.2만 평가, 하한 14,090.0409, 인증 gap 약 44.7%. 30초 약 69.6만 평가, gap 24.604%. 따라서 실제 결과는 아직 `bounded`이며 exact로 표현하면 안 된다.
