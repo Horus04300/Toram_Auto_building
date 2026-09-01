@@ -64,6 +64,7 @@ export const LEGACY_SCRIPT_PATHS = Object.freeze([
   'assets/js/d4-worker-client.js',
   'assets/js/d4-native-client.js',
   'assets/js/d4-execution-adapter.js',
+  'assets/js/d4-recommendation-apply.js',
   'assets/js/optimizer.js',
   'assets/js/build-ui-controller.js',
   'assets/js/optimizer-ui-controller.js',

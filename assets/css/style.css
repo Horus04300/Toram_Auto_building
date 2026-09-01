@@ -215,8 +215,12 @@ button { font-family: inherit; }
 .d4-recommendation-overview[hidden] { display:none; }
 .d4-recommendation-heading { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; }
 .d4-recommendation-heading h2 { margin:3px 0 0; color:var(--text); font-size:21px; letter-spacing:-.025em; }
+.d4-recommendation-actions { display:grid; justify-items:end; gap:8px; }
 .d4-eyebrow { color:var(--success-dark); font-size:12px; font-weight:800; letter-spacing:.04em; }
 .d4-recommendation-certification { flex:0 0 auto; max-width:310px; padding:7px 11px; border:1px solid #efc77b; border-radius:999px; background:#fff8e8; color:#9a6500; font-size:12px; font-weight:750; line-height:1.35; text-align:center; }
+.d4-apply-button { min-height:34px; padding:7px 11px; border:1px solid var(--success-border); border-radius:8px; background:var(--success); color:white; font:inherit; font-size:12.5px; font-weight:800; cursor:pointer; }
+.d4-apply-button:hover { background:var(--success-dark); }
+.d4-apply-button[hidden], .d4-apply-button:disabled { display:none; }
 .d4-recommendation-summary { display:grid; gap:14px; }
 .d4-damage-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); overflow:hidden; border:1px solid #b8dfc9; border-radius:12px; background:var(--surface); }
 .d4-damage-card { padding:14px 16px; border-right:1px solid #d5eadf; }
@@ -258,7 +262,7 @@ button { font-family: inherit; }
 .result-detail-panel .eff-tabs { margin-top:14px; }
 .d4-calculation-detail { margin-top:0; width:100%; box-sizing:border-box; }
 .d4-calculation-detail .top3-row { margin-top:13px; }
-@media (max-width:760px) { .d4-recommendation-heading, .d4-comparison-grid { grid-template-columns:1fr; display:grid; } .d4-recommendation-certification { max-width:none; } .d4-damage-summary { grid-template-columns:1fr; } .d4-damage-card { border-right:0; border-bottom:1px solid #d5eadf; } .d4-damage-card:last-child { border-bottom:0; } .d4-stat-list { grid-template-columns:1fr; } }
+@media (max-width:760px) { .d4-recommendation-heading, .d4-comparison-grid { grid-template-columns:1fr; display:grid; } .d4-recommendation-actions { justify-items:stretch; } .d4-recommendation-certification { max-width:none; } .d4-damage-summary { grid-template-columns:1fr; } .d4-damage-card { border-right:0; border-bottom:1px solid #d5eadf; } .d4-damage-card:last-child { border-bottom:0; } .d4-stat-list { grid-template-columns:1fr; } }
 
 .d4-progress-panel { display:grid; gap:9px; margin:0 0 12px; padding:13px 14px; border:1px solid var(--accent-soft-border); border-radius:var(--radius-sm); background:var(--accent-soft); }
 .d4-progress-panel[hidden] { display:none; }

@@ -1,6 +1,6 @@
 {
   "name": "toram-online-auto-build-calculator",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "description": "Toram Online auto build calculator desktop shell",
   "scripts": {
@@ -12,7 +12,7 @@
     "verify:r4": "npm run verify:r3 && node tools/verify-r4-build-draft-state.mjs",
     "verify:r5": "npm run verify:r4 && node tools/verify-r5-ui-features.mjs",
     "verify:r6": "npm run verify:r5 && node tools/test-build-setting-snapshot.mjs && node tools/test-tauri-build-storage-adapter.mjs && node tools/verify-r6-storage-contract.mjs",
-    "verify:r7": "npm run verify:r6 && node tools/verify-r7-d4-execution-boundary.mjs && node tools/test-d4-execution-adapter.mjs",
+    "verify:r7": "npm run verify:r6 && node tools/verify-r7-d4-execution-boundary.mjs && node tools/test-d4-execution-adapter.mjs && node tools/test-d4-recommendation-apply.mjs",
     "verify:r8": "npm run verify:r7 && node tools/verify-r8-rust-modules.mjs",
     "verify:r9": "npm run verify:r8 && node tools/verify-r9-legacy-removal.mjs",
     "desktop:prepare": "npm run types:emit && node tools/prepare-tauri-frontend.mjs",

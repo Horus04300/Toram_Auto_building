@@ -6,7 +6,8 @@ use std::path::{Path, PathBuf};
 use std::time::UNIX_EPOCH;
 
 pub const SETTING_FORMAT: &str = "toram-auto-build-document";
-pub const SETTING_SCHEMA_VERSION: u64 = 1;
+pub const SETTING_SCHEMA_VERSION: u64 = 2;
+const LEGACY_SETTING_SCHEMA_VERSION: u64 = 1;
 const APP_STORAGE_DIRECTORY: &str = "ToramOnlineAutoBuildCalculator";
 
 #[derive(Serialize)]
@@ -78,14 +79,16 @@ impl SettingsRepository {
         Self::stem(stem)?;
         Ok(directory.join(format!("{stem}.json")))
     }
-    pub fn validate(content: &str) -> Result<(), String> {
+    fn validate_with_schema(content: &str, allow_legacy_schema: bool) -> Result<(), String> {
         let value: Value = serde_json::from_str(content)
             .map_err(|error| format!("세팅 JSON을 해석할 수 없습니다: {error}"))?;
         let root = value
             .as_object()
             .ok_or_else(|| "세팅 JSON의 최상위 값은 객체여야 합니다.".to_string())?;
+        let schema_version = root.get("schemaVersion").and_then(Value::as_u64);
         if root.get("format").and_then(Value::as_str) != Some(SETTING_FORMAT)
-            || root.get("schemaVersion").and_then(Value::as_u64) != Some(SETTING_SCHEMA_VERSION)
+            || (schema_version != Some(SETTING_SCHEMA_VERSION)
+                && (!allow_legacy_schema || schema_version != Some(LEGACY_SETTING_SCHEMA_VERSION)))
         {
             return Err("이 계산기의 세팅 JSON 형식이 아닙니다.".to_string());
         }
@@ -118,6 +121,12 @@ impl SettingsRepository {
             .ok_or_else(|| "세팅 JSON에 scenario.target 객체가 없습니다.".to_string())?;
         Ok(())
     }
+    pub fn validate(content: &str) -> Result<(), String> {
+        Self::validate_with_schema(content, false)
+    }
+    fn validate_for_load(content: &str) -> Result<(), String> {
+        Self::validate_with_schema(content, true)
+    }
     fn reject_link(path: &Path) -> Result<(), String> {
         let metadata = fs::symlink_metadata(path)
             .map_err(|error| format!("세팅 파일 정보를 읽을 수 없습니다: {error}"))?;
@@ -147,7 +156,7 @@ impl SettingsRepository {
             let Ok(content) = fs::read_to_string(path) else {
                 continue;
             };
-            if Self::validate(&content).is_err() {
+            if Self::validate_for_load(&content).is_err() {
                 continue;
             }
             let last_modified = metadata
@@ -191,7 +200,7 @@ impl SettingsRepository {
         Self::reject_link(&path)?;
         let content = fs::read_to_string(&path)
             .map_err(|error| format!("세팅 파일을 읽을 수 없습니다: {error}"))?;
-        Self::validate(&content)?;
+        Self::validate_for_load(&content)?;
         Ok(content)
     }
     pub fn overwrite(name: String, content: String) -> Result<(), String> {

@@ -24,34 +24,6 @@
       if (type) type.dispatchEvent(new Event('change', { bubbles:true }));
     });
   }
-  function activeBuffOptionSignature() {
-    var application = root.ToramApplication, effects = root.ToramSkillEffects, store = root.ToramBuildDraftStore;
-    if (!application || !effects || typeof application.CalculateBuild !== 'function' || typeof effects.activeStatChanges !== 'function' || !store || typeof store.syncFromUi !== 'function') return [];
-    try {
-      store.syncFromUi();
-      var result = application.CalculateBuild();
-      var activeBuffs = result.snapshot && result.snapshot.build && result.snapshot.build.activeBuffs || {};
-      return effects.activeStatChanges(result.snapshot.baseContext, result.combat, {}, { activeBuffs:activeBuffs }).map(function (change) {
-        return { key:String(change.key || ''), value:Number(change.value) || 0 };
-      });
-    } catch (_) { return []; }
-  }
-  function sameLegacyOption(actual, expected) {
-    var actualKey = String(actual && actual.key || ''), expectedKey = String(expected && expected.key || '');
-    // 구형 프록시의 지원되지 않는 stat key는 복원 뒤 select 값이 빈 문자열이 된다.
-    return (actualKey === expectedKey || actualKey === '') && Math.abs((Number(actual && actual.value) || 0) - (Number(expected && expected.value) || 0)) < 0.000001;
-  }
-  function removeLegacyActiveBuffOptionSuffix(options) {
-    var repaired = (options || []).map(function (option) { return { key:String(option && option.key || ''), value:Number(option && option.value) || 0 }; });
-    var signature = activeBuffOptionSignature();
-    if (!signature.length) return { options:repaired, removed:false };
-    var removed = false;
-    while (repaired.length >= signature.length && signature.every(function (expected, index) { return sameLegacyOption(repaired[repaired.length - signature.length + index], expected); })) {
-      repaired.splice(repaired.length - signature.length, signature.length);
-      removed = true;
-    }
-    return { options:repaired, removed:removed };
-  }
   function restoreSlot(name, piece) {
     var spec = slotSpecs[name], data = piece || {};
     if (!spec) return;
@@ -65,7 +37,7 @@
   }
   function restoreSession(session) {
     if (!session || !session.build) return;
-    var build = session.build, target = session.scenario && session.scenario.target || {}, attributes = build.character && build.character.attributes || {}, repairedLegacyBuffOptions = false;
+    var build = session.build, target = session.scenario && session.scenario.target || {}, attributes = build.character && build.character.attributes || {};
     restoring = true;
     try {
       write('charLevel', build.character && build.character.level);
@@ -76,17 +48,11 @@
       restoreSlot('subWeapon', build.equipment && build.equipment.subWeapon); restoreSlot('armor', build.equipment && build.equipment.armor); restoreSlot('additional', build.equipment && build.equipment.additional); restoreSlot('special', build.equipment && build.equipment.special);
       if (root.ToramSkillUi && root.ToramSkillUi.restore) root.ToramSkillUi.restore(build.skillLevels || {});
       if (root.ToramActiveBuffs && root.ToramActiveBuffs.restore) root.ToramActiveBuffs.restore(build.activeBuffs || {});
-      var repairedOptions = removeLegacyActiveBuffOptionSuffix(build.externalOptions);
-      repairedLegacyBuffOptions = repairedOptions.removed;
-      restoreOptions('buffOpts', repairedOptions.options);
+      restoreOptions('buffOpts', build.externalOptions);
       if (root.ToramComboUi && root.ToramComboUi.restore) root.ToramComboUi.restore(build.combo || []);
       if (ui) { ui.onSubWeaponChange(); ui.refreshAllCrystaInfo(); }
       var level = element('charLevel'); if (level) level.dispatchEvent(new Event('input', { bubbles:true }));
-    } finally {
-      restoring = false;
-      if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi();
-      if (repairedLegacyBuffOptions) document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
-    }
+    } finally { restoring = false; if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi(); }
   }
   function relevant(target) { if (!target || target.nodeType !== 1) return false; if (staticIds.indexOf(target.id) >= 0 || target.closest('.opt-row') || target.closest('.autocomplete-items')) return true; return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn')); }
   function notify() { if (restoring || pending !== null) return; pending = root.setTimeout(function () { pending = null; document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }, 0); }

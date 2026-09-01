@@ -28,8 +28,8 @@
 ### 리팩토링 R0 기준선 (2026-08-31)
 
 - 구조·계산식·저장 구현을 바꾸지 않고 기준 커밋 `37dae51`의 회귀 계약을 `docs/verification/refactoring-r0-baseline.md`와 `tools/r0-baseline-fixtures.mjs`로 분류했다.
-- 정상값 fixture 48개는 출처·계산식·명시적 불변식으로 검증하고, characterization fixture 17개는 UI·IPC·D4 실행 경계의 현재 관찰 동작을 보존한다. R6에서 폐기한 베타 localStorage/legacy JSON 계약은 기준선으로 보존하지 않는다.
-- 최초 기준선은 65/65 프로세스 성공이었다. 활성 버프 세션 복구 fixture를 추가한 현재 `npm run test:r0`은 67/67을 통과했다. `test-tauri-native-storage-e2e.mjs`는 `TORAM_E2E_CDP`가 없어 `SKIP`했으므로 실제 데스크톱 저장 E2E 통과로 해석하지 않는다.
+- 정상값 fixture 49개는 출처·계산식·명시적 불변식으로 검증하고, characterization fixture 18개는 UI·IPC·D4 실행 경계의 현재 관찰 동작을 보존한다. `test-d4-recommendation-apply.mjs`는 추천 결과 반영이 잠금 상태를 바꾸지 않는다는 명시적 불변식을 검증한다. R6에서 폐기한 베타 localStorage/legacy JSON 계약은 기준선으로 보존하지 않는다.
+- 최초 기준선은 65/65 프로세스 성공이었다. 현재 `npm run test:r0`은 67/67을 통과했다. `test-tauri-native-storage-e2e.mjs`는 `TORAM_E2E_CDP`가 없어 `SKIP`했으므로 실제 데스크톱 저장 E2E 통과로 해석하지 않는다.
 - `src-tauri`에서 `cargo test`는 72개 테스트(19+19+5+29)를 통과했다. Cargo는 비ASCII 사용자 경로 canonicalize 경고를 한 번 출력했지만 테스트 결과에는 영향을 주지 않았다.
 
 ### 리팩토링 R1a ES Module 진입점 (2026-08-31)
@@ -75,7 +75,7 @@
 ### 리팩토링 R6 저장 계약 재설계 (2026-09-01)
 
 - 베타의 다섯 localStorage 키와 `toram-auto-build-setting` JSON 계약을 폐기했다. migration·기존 JSON 읽기·legacy 저장 경로는 구현하지 않는다.
-- `settings-repository.js`가 `schemaVersion: 1`의 `saved-build`(이름 있는 BuildDraft+Scenario)와 `application-state`(appSettings+마지막 세션)를 단일 경계에서 관리한다. 자동 복원은 application-state 하나만 사용하며 UI/D4 runtime 상태는 저장하지 않는다.
+- `settings-repository.js`가 `schemaVersion: 2`의 `saved-build`(이름 있는 BuildDraft+Scenario)와 `application-state`(appSettings+마지막 세션)를 단일 경계에서 관리한다. 자동 복원은 application-state 하나만 사용하며 UI/D4 runtime 상태는 저장하지 않는다.
 - build, skills, buffs, combo UI는 localStorage를 직접 다루지 않고 Repository의 세션 복원/변경 알림을 사용한다. 저장 UI는 Application Settings API를 거쳐 저장·불러오기·덮어쓰기·삭제·내보내기·가져오기를 수행한다.
 - Rust는 새 saved-build 문서만 파일 목록과 읽기/쓰기에 허용하며 기존 JSON은 목록에서 제외한다. `verify:r6`, Rust 72개 테스트, 새 Repository 계약 테스트를 통과했다. 실제 Tauri WebView2 E2E는 `TORAM_E2E_CDP` 미설정으로 skip이며, 상세는 `docs/verification/refactoring-r6-storage-contract.md`를 따른다.
 
@@ -83,6 +83,7 @@
 
 - `frontend/application/ports.ts`에 `OptimizationProblem`·진행·결과·제어 계약을 명시하고, `assets/js/d4-execution-adapter.js`가 Native 우선/Worker fallback, 취소, 일시정지, 재개, continuation 폐기를 한 경계에서 위임한다. 계산 커널 Gateway는 추가하지 않았다.
 - `optimizer.js`와 `optimizer-ui-controller.js`는 구체 Worker/Native 클라이언트를 직접 참조하지 않는다. Adapter는 문제 컴파일·후보 삭제·Pair 정책·상한·탐색·결과 정렬을 하지 않아 기존 `exact`/`bounded` 의미와 관찰 가능한 tie-break 순서를 보존한다.
+- 결과 화면의 “추천 크리스타를 장비에 적용”은 이미 계산된 네 부위 추천의 잠기지 않은 크리스타 입력만 바꾼다. 잠금 체크와 잠긴 값은 덮어쓰지 않으며, 입력이 바뀌면 이전 추천 결과와 continuation을 함께 폐기한다. 후보·상한·Pair 정책·결과 순서·`exact`/`bounded` 의미는 바꾸지 않는다.
 - `verify:r7`, R0 66/66, D4 evaluator/oracle/property/Worker·Native 회귀, JS/Rust parity 1,488건, 실제 425개 5초 gate와 Tauri no-bundle 빌드가 통과했다. 425개 결과는 `bounded`, 하한 14,089·상한 20,371·gap 44.588%·5,002ms였으며 새 exact 주장으로 바꾸지 않았다. Rust 72개 테스트도 통과했다. 상세는 `docs/verification/refactoring-r7-d4-execution-boundary.md`를 따른다.
 
 ### 리팩토링 R8 Rust / Tauri 모듈화 (2026-09-01)
@@ -110,6 +111,7 @@
 - 자산: Toram Online Auto Build Calculator_0.6.2_x64-setup.exe
 - 설치 파일 SHA-256: 0A8C0669AECC27A60182F11F4CA60F4466142ABF4E346899A16847461902D4F3
 - 현재 설치 파일은 코드 서명이 없다. 서명 배포에는 별도 인증서가 필요하다.
+- 로컬 작업 트리에 0.6.3 예정 수정이 있으나 사용자의 배포 보류 지시로 커밋·push·태그·릴리스는 하지 않는다.
 
 이 인계 문서는 릴리스 태그 이후 main에 추가되는 문서다. v0.6.2 태그를 이 문서 커밋으로 이동하지 않는다.
 
@@ -167,8 +169,8 @@ NSIS는 currentUser 설치이며 WebView2 downloadBootstrapper를 사용한다. 
 
 ### R6 저장 문서 범위
 
-- 이름 있는 JSON은 `format: toram-auto-build-document`, `documentType: saved-build`, `schemaVersion: 1`이며 BuildDraft·Scenario·생성/수정 시각을 가진다.
-- 자동 복원은 localStorage의 단 하나의 `toram.auto-build.application-state.v1` 문서로만 수행한다. 이 문서는 appSettings와 마지막 BuildDraft·Scenario만 보유한다.
+- 이름 있는 JSON은 `format: toram-auto-build-document`, `documentType: saved-build`, `schemaVersion: 2`이며 BuildDraft·Scenario·생성/수정 시각을 가진다.
+- 자동 복원은 localStorage의 단 하나의 `toram.auto-build.application-state.v2` 문서로만 수행한다. 이 문서는 appSettings와 마지막 BuildDraft·Scenario만 보유한다. 구형 v1을 최초로 읽을 때는 버프 파생값이 섞인 `externalOptions`를 폐기하고 새 v2 문서로 다시 쓴다.
 - 네이티브 JSON은 이름 있는 저장, 목록, 불러오기, 덮어쓰기, 삭제에 사용한다. 내보내기·가져오기도 saved-build 문서만 사용한다.
 - 이전 localStorage 키, `toram-auto-build-setting` JSON, migration 및 legacy backup 호환은 범위 밖이다.
 
@@ -203,7 +205,7 @@ NSIS는 currentUser 설치이며 WebView2 downloadBootstrapper를 사용한다. 
 
 - 양손검 오라 블레이드는 지속 버프가 아니라 일회성 다음 공격 효과라 액티브 지속 버프 목록에 표시하지 않는다.
 - 스택형 버프의 기본 정의와 스택 보강 정의가 같은 ID를 공유해도, 버프 UI는 스택 보강 정의를 우선해 카드 하나만 표시한다.
-- 활성 버프의 stat/전역 피해 효과는 더 이상 버프 탭의 외부 옵션 행으로 복제하지 않고 계산 엔진이 `activeBuffs` 입력에서 직접 해석한다. 따라서 새 세션에서는 버프 효과가 저장·복원된 외부 옵션과 중복 합산되지 않는다. 이전 0.6.1 세션에서 이미 보이는 중복 행은 정상 사용자 옵션과 저장 형식이 같아 자동 삭제하지 않으므로, 확인된 중복 행은 한 번만 수동으로 삭제한다.
+- 활성 버프의 stat/전역 피해 효과는 버프 탭의 외부 옵션 행으로 복제하지 않고 계산 엔진이 `activeBuffs` 입력에서 직접 해석한다. 저장은 스킬별 on/off·스택만 보존한다. 오염된 v1 파일·마지막 세션을 열면 외부 옵션만 비우고 스킬 투자·버프 상태·장비·콤보는 복원해 중복 합산을 차단한다.
 - 다음 스킬에만 적용되는 효과와 사용 후 소멸을 중요 상태로 취급한다.
 - 듀얼 브링어 자체는 대상 쇠약과 무관하다. 둘은 마법 크리티컬 계산의 독립 요소다.
 - 일진강풍 활성 시 발도위력%는 ATK%와 기본 무기 공격력으로, 발도위력+는 ATK로 각각 변환하며, 기본 무기 공격력 증가는 무기 ATK%·재련 보정 전에 적용한다. 발도검·선풍창의 소수 스탯 계수와 원문 대미지식의 각 곱연산은 단계마다 내림한다. 활성 중 재시전 무풍은 콤보·결과 탭에서 공격으로 계산한다.

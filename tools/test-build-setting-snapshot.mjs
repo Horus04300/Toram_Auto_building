@@ -22,7 +22,7 @@ vm.runInContext(await readFile(resolve(root, 'assets/js/settings-repository.js')
 const repository = window.ToramSettingsRepository;
 
 assert.equal(repository.format, 'toram-auto-build-document');
-assert.equal(repository.schemaVersion, 1);
+assert.equal(repository.schemaVersion, 2);
 const saved = await repository.save('  R6:/빌드... ');
 assert.equal(saved.name, 'R6--빌드');
 assert.equal(files.size, 1);
@@ -38,6 +38,17 @@ await repository.load('R6--빌드.json');
 assert.equal(restored.build.character.level, 1);
 assert.equal(JSON.parse(local.get(repository.sessionStorageKey)).lastSession.build.character.level, 1);
 assert.throws(() => repository.parseSavedBuild(JSON.stringify({ format:repository.format, schemaVersion:1, documentType:'saved-build', storage:{} })), /새 저장 계약/);
+const legacyBuild = { ...build, activeBuffs:{ 'Knight:0':{ active:true, stacks:3 } }, externalOptions:[{ key:'ATK_P', value:10 }, { key:'DAMAGE_P', value:-45 }] };
+const legacyDocument = { format:repository.format, schemaVersion:1, documentType:'saved-build', name:'legacy', createdAt:'2026-09-01T00:00:00.000Z', updatedAt:'2026-09-01T00:00:00.000Z', build:legacyBuild, scenario };
+const recoveredDocument = repository.parseSavedBuild(JSON.stringify(legacyDocument));
+assert.equal(recoveredDocument.schemaVersion, 2, '새 저장은 v2 계약을 사용해야 합니다.');
+assert.deepEqual(JSON.parse(JSON.stringify(recoveredDocument.build.activeBuffs)), JSON.parse(JSON.stringify(legacyBuild.activeBuffs)), '버프 on/off와 스택은 legacy 저장에서도 보존해야 합니다.');
+assert.deepEqual(JSON.parse(JSON.stringify(recoveredDocument.build.externalOptions)), [], 'v1 버프 프록시 옵션은 파일 불러오기에서 복원하면 안 됩니다.');
+local.delete(repository.sessionStorageKey);
+local.set('toram.auto-build.application-state.v1', JSON.stringify({ format:repository.format, schemaVersion:1, documentType:'application-state', appSettings:{}, lastSession:{ build:legacyBuild, scenario }, updatedAt:'2026-09-01T00:00:00.000Z' }));
+repository.restoreLastSession();
+assert.deepEqual(JSON.parse(JSON.stringify(restored.build.activeBuffs)), JSON.parse(JSON.stringify(legacyBuild.activeBuffs)), '마지막 세션도 버프 상태를 복원해야 합니다.');
+assert.deepEqual(JSON.parse(JSON.stringify(restored.build.externalOptions)), [], '마지막 세션은 구형 버프 파생 옵션을 복원하면 안 됩니다.');
 await repository.remove('R6--빌드.json');
 assert.equal(files.size, 0);
 console.log('R6 settings repository contract: PASS');

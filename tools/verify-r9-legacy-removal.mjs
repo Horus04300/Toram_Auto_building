@@ -33,7 +33,7 @@ assert.match(worker, /'stat-registry\.js',[\s\S]*'calculation-policies\.js',[\s\
 for (const forbidden of ['toram-auto-build-setting', 'showDirectoryPicker', 'indexedDB']) {
   assert.doesNotMatch(`${settings}\n${storageAdapter}`, new RegExp(forbidden, 'u'), `${forbidden} legacy 저장 경로를 다시 도입하면 안 됩니다.`);
 }
-assert.match(settings, /SESSION_STORAGE_KEY = 'toram\.auto-build\.application-state\.v1'/u, '마지막 세션은 R6 단일 저장 키만 사용해야 합니다.');
+assert.match(settings, /SESSION_STORAGE_KEY = 'toram\.auto-build\.application-state\.v2'/u, '마지막 세션은 v2 단일 저장 키만 사용해야 합니다.');
 assert.match(settings, /fileAdapter\(\)/u, 'named build는 파일 Repository 경계를 통해야 합니다.');
 
 assert.match(storageAdapter, /ToramSettingsFileRepositoryAdapter/u, 'Tauri 저장 Adapter는 Settings Repository의 실제 파일 Port입니다.');

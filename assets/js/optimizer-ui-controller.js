@@ -34,6 +34,8 @@
     });
     var continueButton = document.getElementById('d4OptimizationContinue');
     if (continueButton) continueButton.addEventListener('click', function () { resumeD4(support, pause); });
+    var applyRecommendation = document.getElementById('d4ApplyRecommendedCrystas');
+    if (applyRecommendation) applyRecommendation.addEventListener('click', function () { applyRecommendedCrystas(support, applyRecommendation); });
     document.addEventListener('input', function () { discardD4ContinuationForInputChange(support); }, true);
     document.addEventListener('change', function () { discardD4ContinuationForInputChange(support); }, true);
     root.addEventListener('pagehide', disposeD4Work);
@@ -75,11 +77,28 @@
     if (!state.lastOptimizationRequest) return;
     var hadContinuation = Boolean(root.ToramD4ExecutionAdapter && root.ToramD4ExecutionAdapter.hasContinuation && root.ToramD4ExecutionAdapter.hasContinuation());
     state.lastOptimizationRequest = null;
+    state.lastOptimizationResult = null;
+    var applyRecommendation = document.getElementById('d4ApplyRecommendedCrystas');
+    if (applyRecommendation) { applyRecommendation.hidden = true; applyRecommendation.disabled = true; }
     state.runVersion++;
     if (root.ToramD4ExecutionAdapter) { root.ToramD4ExecutionAdapter.cancel('입력이 변경되어 보존된 정밀 계산을 폐기합니다.'); root.ToramD4ExecutionAdapter.disposeContinuation(); }
     if (hadContinuation) {
       support.updateProgress({ status:'invalid', diagnostics:[{ code:'D4_CONTINUATION_DISCARDED', message:'입력이 변경되어 이전 정밀 계산 세션을 폐기했습니다. 새 전역 계산을 시작해 주세요.' }] }, 'invalid', false);
       document.getElementById('globalEffTextBadge').textContent = '입력 변경됨';
+    }
+  }
+
+  function applyRecommendedCrystas(support, button) {
+    var state = support.runtime();
+    try {
+      if (!root.ToramD4RecommendationApply) throw new Error('추천 크리스타 적용 기능이 준비되지 않았습니다.');
+      var applied = root.ToramD4RecommendationApply.apply(state.lastOptimizationResult);
+      button.hidden = true;
+      button.disabled = true;
+      state.lastOptimizationResult = null;
+      window.alert(applied.changed ? '추천 크리스타를 장비에 적용했습니다. 잠금은 그대로 유지됩니다.' : '변경할 수 있는 추천 크리스타가 없습니다. 잠금은 그대로 유지됩니다.');
+    } catch (error) {
+      window.alert(error && error.message ? error.message : '추천 크리스타를 장비에 적용하지 못했습니다.');
     }
   }
 

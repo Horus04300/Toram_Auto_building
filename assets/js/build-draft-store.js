@@ -10,7 +10,7 @@
   };
   var state = { build:null, scenario:null, request:{ selectedSkillId:null, selectedHitId:null, overrides:{} } };
   var uiState = { combo:{ selectedIndex:0 } };
-  var runtimeState = { d4:{ runVersion:0, lastOptimizationRequest:null, lastOutcome:null }, calculationQueued:false };
+  var runtimeState = { d4:{ runVersion:0, lastOptimizationRequest:null, lastOptimizationResult:null, lastOutcome:null }, calculationQueued:false };
 
   function clone(value) { if (value === null || value === undefined || typeof value !== 'object') return value; if (Array.isArray(value)) return value.map(clone); return Object.keys(value).reduce(function (result, key) { result[key] = clone(value[key]); return result; }, {}); }
   function freeze(value) { if (!value || typeof value !== 'object' || Object.isFrozen(value)) return value; Object.keys(value).forEach(function (key) { freeze(value[key]); }); return Object.freeze(value); }

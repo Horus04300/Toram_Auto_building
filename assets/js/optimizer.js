@@ -114,7 +114,7 @@ if (document.readyState === 'loading') {
 } else {
     initCrystaEvents();
 }
-        function runtimeState() { return window.ToramRuntimeState && window.ToramRuntimeState.get ? window.ToramRuntimeState.get() : { d4:{ runVersion:0, lastOptimizationRequest:null, lastOutcome:null }, calculationQueued:false }; }
+        function runtimeState() { return window.ToramRuntimeState && window.ToramRuntimeState.get ? window.ToramRuntimeState.get() : { d4:{ runVersion:0, lastOptimizationRequest:null, lastOptimizationResult:null, lastOutcome:null }, calculationQueued:false }; }
         function d4Runtime() { return runtimeState().d4; }
         function runCalculationSafe() {
             if (typeof validateCrystaInputs === 'function' && !validateCrystaInputs()) return;
@@ -547,6 +547,13 @@ if (document.readyState === 'loading') {
             overview.hidden = false;
         }
 
+        function setD4RecommendationApplyAvailability(available) {
+            var button = document.getElementById('d4ApplyRecommendedCrystas');
+            if (!button) return;
+            button.hidden = !available;
+            button.disabled = !available;
+        }
+
         function d4GapText(value) {
             var gap = Number(value);
             return Number.isFinite(gap) ? (gap * 100).toFixed(gap < 0.001 ? 3 : 2) + '%' : '계산 중';
@@ -618,12 +625,16 @@ if (document.readyState === 'loading') {
             var badge = document.getElementById('globalEffTextBadge');
             var tags = document.getElementById('finalRecTags');
             if (status === 'cancelled') {
+                d4Runtime().lastOptimizationResult = null;
+                setD4RecommendationApplyAvailability(false);
                 if (overview) overview.hidden = true;
                 if (list) list.innerHTML = '<div class="top3-row"><b>계산이 취소되어 현재 세팅을 유지합니다.</b></div>';
                 if (badge) badge.textContent = '계산 취소됨';
                 return;
             }
             if (!result || !result.bestBuild || !result.outcomes) {
+                d4Runtime().lastOptimizationResult = null;
+                setD4RecommendationApplyAvailability(false);
                 if (overview) overview.hidden = true;
                 var diagnostic = result && result.diagnostics && result.diagnostics[0];
                 var message = diagnostic && (diagnostic.message || diagnostic.code) || (status === 'cancelled' ? '계산이 취소되어 현재 세팅을 유지합니다.' : 'Utility 요구치와 후보 제한을 만족하는 조합이 없습니다.');
@@ -632,6 +643,8 @@ if (document.readyState === 'loading') {
                 return;
             }
             var packages = result.bestBuild.packages || [];
+            d4Runtime().lastOptimizationResult = result;
+            setD4RecommendationApplyAvailability(true);
             renderD4RecommendationOverview(result, currentEvaluation, locks);
             var labels = {weapon:'무기', armor:'방어구', additional:'추가', special:'특수'};
             var recommendation = '';
@@ -677,6 +690,8 @@ if (document.readyState === 'loading') {
             }
             var overview = document.getElementById('d4RecommendationOverview');
             if (overview) overview.hidden = true;
+            d4Runtime().lastOptimizationResult = null;
+            setD4RecommendationApplyAvailability(false);
             updateD4Progress({ stage:'preparing', status:'running', elapsedMs:0, evaluations:0, visitedNodes:0, optimalityGap:null }, 'running', false);
             document.getElementById('top3ListContainer').innerHTML = '<div class="top3-row">각 부위를 따로 고르지 않고 8개 슬롯 전체를 하나의 빌드로 계산합니다.</div>';
             document.getElementById('globalEffTextBadge').textContent = '전역 계산 중…';

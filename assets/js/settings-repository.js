@@ -2,8 +2,10 @@
 (function (root) {
   'use strict';
   var FORMAT = 'toram-auto-build-document';
-  var SCHEMA_VERSION = 1;
-  var SESSION_STORAGE_KEY = 'toram.auto-build.application-state.v1';
+  var SCHEMA_VERSION = 2;
+  var LEGACY_SCHEMA_VERSION = 1;
+  var SESSION_STORAGE_KEY = 'toram.auto-build.application-state.v2';
+  var LEGACY_SESSION_STORAGE_KEY = 'toram.auto-build.application-state.v1';
   var restoring = false, pendingSave = null;
 
   function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }
@@ -16,11 +18,19 @@
   function storage() { try { return root.localStorage || null; } catch (_) { return null; } }
   function buildShape(value) { return Boolean(value && typeof value === 'object' && value.character && value.equipment && value.skillLevels && value.activeBuffs && Array.isArray(value.externalOptions) && Array.isArray(value.combo)); }
   function scenarioShape(value) { return Boolean(value && typeof value === 'object' && value.target && typeof value.target === 'object'); }
+  function documentShape(document, documentType, schemaVersion) { return Boolean(document && document.format === FORMAT && document.schemaVersion === schemaVersion && document.documentType === documentType); }
   function validateSavedBuild(document) {
-    return Boolean(document && document.format === FORMAT && document.schemaVersion === SCHEMA_VERSION && document.documentType === 'saved-build' && typeof document.name === 'string' && typeof document.createdAt === 'string' && typeof document.updatedAt === 'string' && buildShape(document.build) && scenarioShape(document.scenario));
+    return Boolean(documentShape(document, 'saved-build', SCHEMA_VERSION) && typeof document.name === 'string' && typeof document.createdAt === 'string' && typeof document.updatedAt === 'string' && buildShape(document.build) && scenarioShape(document.scenario));
   }
+  function validateLegacySavedBuild(document) { return Boolean(documentShape(document, 'saved-build', LEGACY_SCHEMA_VERSION) && typeof document.name === 'string' && typeof document.createdAt === 'string' && typeof document.updatedAt === 'string' && buildShape(document.build) && scenarioShape(document.scenario)); }
   function validateApplicationState(document) {
-    return Boolean(document && document.format === FORMAT && document.schemaVersion === SCHEMA_VERSION && document.documentType === 'application-state' && document.appSettings && typeof document.appSettings === 'object' && (!document.lastSession || (buildShape(document.lastSession.build) && scenarioShape(document.lastSession.scenario))));
+    return Boolean(documentShape(document, 'application-state', SCHEMA_VERSION) && document.appSettings && typeof document.appSettings === 'object' && (!document.lastSession || (buildShape(document.lastSession.build) && scenarioShape(document.lastSession.scenario))));
+  }
+  function validateLegacyApplicationState(document) { return Boolean(documentShape(document, 'application-state', LEGACY_SCHEMA_VERSION) && document.appSettings && typeof document.appSettings === 'object' && (!document.lastSession || (buildShape(document.lastSession.build) && scenarioShape(document.lastSession.scenario)))); }
+  function discardLegacyBuffOptionProxy(build) { return Object.assign({}, build || {}, { externalOptions:[] }); }
+  function recoverLegacySession(session) {
+    if (!session) return null;
+    return { build:discardLegacyBuffOptionProxy(session.build), scenario:clone(session.scenario), savedAt:session.savedAt || now() };
   }
   function currentSession() {
     var store = root.ToramBuildDraftStore;
@@ -34,7 +44,15 @@
   function readApplicationState() {
     var local = storage();
     if (!local) return applicationState(null, null);
-    try { var parsed = JSON.parse(local.getItem(SESSION_STORAGE_KEY) || 'null'); return validateApplicationState(parsed) ? parsed : applicationState(null, null); } catch (_) { return applicationState(null, null); }
+    try {
+      var parsed = JSON.parse(local.getItem(SESSION_STORAGE_KEY) || 'null');
+      if (validateApplicationState(parsed)) return parsed;
+      var legacy = JSON.parse(local.getItem(LEGACY_SESSION_STORAGE_KEY) || 'null');
+      if (!validateLegacyApplicationState(legacy)) return applicationState(null, null);
+      var recovered = applicationState(recoverLegacySession(legacy.lastSession), legacy);
+      writeApplicationState(recovered);
+      return recovered;
+    } catch (_) { return applicationState(null, null); }
   }
   function writeApplicationState(next) {
     var local = storage();
@@ -63,7 +81,12 @@
     return { format:FORMAT, schemaVersion:SCHEMA_VERSION, documentType:'saved-build', name:safeName(name), createdAt:existing && existing.createdAt || timestamp, updatedAt:timestamp, build:session.build, scenario:session.scenario };
   }
   function serializeSavedBuild(name) { return JSON.stringify(savedBuild(name), null, 2); }
-  function parseSavedBuild(text) { var parsed = JSON.parse(text); if (!validateSavedBuild(parsed)) throw new Error('새 저장 계약의 빌드 JSON이 아닙니다.'); return parsed; }
+  function parseSavedBuild(text) {
+    var parsed = JSON.parse(text);
+    if (validateSavedBuild(parsed)) return parsed;
+    if (!validateLegacySavedBuild(parsed)) throw new Error('새 저장 계약의 빌드 JSON이 아닙니다.');
+    return Object.assign({}, parsed, { schemaVersion:SCHEMA_VERSION, build:discardLegacyBuffOptionProxy(parsed.build) });
+  }
   async function list() { var adapter = fileAdapter(); return adapter ? adapter.list() : []; }
   async function directory() { var adapter = fileAdapter(); return adapter && adapter.directory ? adapter.directory() : ''; }
   async function save(name) { var adapter = fileAdapter(); if (!adapter) throw new Error('데스크톱 저장 기능이 아직 연결되지 않았습니다.'); var document = savedBuild(name); await adapter.save(document.name, JSON.stringify(document, null, 2)); return document; }

@@ -27,7 +27,7 @@ try {
   assert.ok(page, 'Tauri WebView2 browser context was not found.');
   await page.waitForLoadState('domcontentloaded');
   await page.waitForFunction(() => Boolean(window.ToramSettingsRepository && window.ToramSettingsFileRepositoryAdapter));
-  assert.equal(await page.evaluate(() => window.ToramSettingsRepository.schemaVersion), 1);
+  assert.equal(await page.evaluate(() => window.ToramSettingsRepository.schemaVersion), 2);
   await setLevel(page, 111);
   await page.locator('#appBuildStorageButton').click();
   await page.locator('#buildNativeFileFunctions').waitFor({ state:'visible' });
@@ -55,7 +55,7 @@ try {
   await page.locator('#buildSettingDelete').click();
   await page.waitForFunction(name => document.querySelector('#buildFileStorageStatus')?.textContent?.includes(name + '.json 삭제 완료'), testName);
   assert.equal(await page.locator('#buildSettingList option', { hasText:testName + '.json' }).count(), 0);
-  console.log(JSON.stringify({ directory:expectedDirectory, fileName:testName + '.json', schemaVersion:1, duplicateBlocked:true, overwrittenLevel:222, deleted:true }));
+  console.log(JSON.stringify({ directory:expectedDirectory, fileName:testName + '.json', schemaVersion:2, duplicateBlocked:true, overwrittenLevel:222, deleted:true }));
 } finally {
   if (browser) await browser.close().catch(() => {});
 }
