@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 기준일: 2026-08-31
+- 기준일: 2026-09-01
 - 저장소: Horus04300/Toram_Auto_building
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터
 - 현재 브랜치: main
@@ -9,7 +9,7 @@
 ## 1. 반드시 먼저 이해할 결론
 
 1. 기존 브라우저 계산기는 Tauri v2 기반 Windows 데스크톱 앱으로 전환되었다.
-2. 현재 개발 버전은 0.6.0이다. 공개된 Windows NSIS 설치 파일은 이전 v0.5.0 GitHub Pre-release이며, v0.6.0 설치 파일은 아직 생성·공개하지 않았다.
+2. 현재 개발 버전은 0.6.0이며, Windows NSIS 설치 파일은 v0.6.0 GitHub Pre-release로 공개되어 있다.
 3. 이름을 붙인 세팅 JSON은 정확히 %LOCALAPPDATA%\ToramOnlineAutoBuildCalculator 에 저장한다. settings 하위 폴더를 추가하지 않는다.
 4. 마지막 세션은 Settings Repository가 관리하는 단일 application-state 문서로 자동 복원하고, 이름 있는 빌드는 같은 Repository의 네이티브 JSON 파일로 저장한다. 베타 시기 저장 데이터는 읽지 않는다.
 5. 전역 S1 출처 연결 감사 결과는 427/427이다. 이것은 모든 스킬의 S2~S5 계산과 모든 전투 상태 시뮬레이션이 완전하다는 뜻이 아니다.
@@ -100,18 +100,18 @@
 
 ## 3. Git, 버전, 배포 상태
 
-- 릴리스 구현 커밋: 046ea64 release: Tauri Windows app v0.5.0
-- 태그: v0.5.0, 대상 커밋 046ea64
+- 릴리스 구현 커밋: ba3cca2 refactor: complete R0-R9 architecture migration
+- 태그: v0.6.0, 대상 커밋 ba3cca2
 - package.json, package-lock.json, src-tauri/Cargo.toml, src-tauri/Cargo.lock, src-tauri/tauri.conf.json 버전: 0.6.0
 - 제품명: Toram Online Auto Build Calculator
 - 앱 식별자: com.toramonline.autobuildcalculator
-- Release: https://github.com/Horus04300/Toram_Auto_building/releases/tag/v0.5.0
+- Release: https://github.com/Horus04300/Toram_Auto_building/releases/tag/v0.6.0
 - 상태: Draft 아님, Pre-release
-- 자산: Toram.Online.Auto.Build.Calculator_0.5.0_x64-setup.exe 및 SHA-256 파일
-- 설치 파일 SHA-256: 49FF2632623146B20C9C92212EEBD2C04FD856AD2F0BD22A56291BC68179E3C5
+- 자산: Toram Online Auto Build Calculator_0.6.0_x64-setup.exe
+- 설치 파일 SHA-256: 73A9AF6C5CB61E95256AD714831D25A691C32199A57C25C7EEAB6DA022C10125
 - 현재 설치 파일은 코드 서명이 없다. 서명 배포에는 별도 인증서가 필요하다.
 
-이 인계 문서는 릴리스 태그 이후 main에 추가되는 문서다. v0.5.0 태그를 이 문서 커밋으로 이동하지 않는다.
+이 인계 문서는 릴리스 태그 이후 main에 추가되는 문서다. v0.6.0 태그를 이 문서 커밋으로 이동하지 않는다.
 
 ## 4. Tauri 데스크톱 구조
 
