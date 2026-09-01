@@ -68,9 +68,9 @@
       return result;
     }, {});
   }
-  function definitions() {
+  function definitions(options) {
     var policies = window.ToramCalculationPolicies;
-    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions();
+    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions(options);
     var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
     var registry = window.ToramSkillEffectRegistry;
     var seen = Object.create(null);
@@ -255,6 +255,31 @@
     });
     return modifier.flat || modifier.percent || modifier.multiplier !== 1 ? modifier : null;
   }
+
+  function activeStatChanges(base, combat, inputs, runtime) {
+    var cappedTotals = {};
+    return definitions({ preferStackControl:true }).filter(function (candidate) { return candidate.kind === 'buff' || candidate.activeBuff === true; }).reduce(function (changes, candidate) {
+      var setting = activeBuffSetting(runtime, candidate.id);
+      var appliesWhileInactive = Boolean(candidate.stackControl && candidate.stackControl.applyWhenDisabled);
+      if ((!setting.active && !appliesWhileInactive) || skillLevel(candidate) <= 0) return changes;
+      var candidateRuntime = Object.assign({}, runtime || {}, { buff:{ active:setting.active, stacks:setting.stacks } });
+      var candidateState = context(base, candidate, combat, inputs, candidateRuntime);
+      if (!test(candidate.requirements && candidate.requirements.when, candidateState)) return changes;
+      (setting.active ? (candidate.effects || []) : (candidate.inactiveEffects || [])).forEach(function (effect) {
+        var isGlobalDamageBuff = effect.type === 'damageMultiplier' && effect.target === 'attack';
+        if ((effect.type !== 'stat' && !isGlobalDamageBuff) || !test(effect.when, candidateState)) return;
+        var value = num(expr(effect.value, candidateState));
+        if (effect.capGroup) {
+          var cap = effect.cap === undefined ? Infinity : num(expr(effect.cap, candidateState));
+          var used = num(cappedTotals[effect.capGroup]);
+          value = Math.max(0, Math.min(value, cap - used));
+          cappedTotals[effect.capGroup] = used + value;
+        }
+        changes.push({ key:isGlobalDamageBuff ? 'DAMAGE_P' : effect.key, value:isGlobalDamageBuff ? (value - 1) * 100 : value, source:candidate });
+      });
+      return changes;
+    }, []);
+  }
   function normalAttackAmprModifiers(base, combat, inputs, runtime) {
     var passive = [], activeCandidates = [];
     definitions().forEach(function (candidate) {
@@ -341,5 +366,5 @@
       }) : []
     };
   }
-  window.ToramSkillEffects = Object.freeze({ expression:expr, condition:test, find:find, learnedAilmentSources:learnedAilmentSources, passiveStatChanges:passiveStatChanges, activeBuildConversions:activeBuildConversions, normalAttackAmprModifiers:normalAttackAmprModifiers, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });
+  window.ToramSkillEffects = Object.freeze({ expression:expr, condition:test, find:find, learnedAilmentSources:learnedAilmentSources, passiveStatChanges:passiveStatChanges, activeStatChanges:activeStatChanges, activeBuildConversions:activeBuildConversions, normalAttackAmprModifiers:normalAttackAmprModifiers, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });
 }());

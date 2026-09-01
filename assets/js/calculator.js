@@ -200,11 +200,16 @@
                 } // <-- 첫 번째 누락된 중괄호 복구
             } // <-- 두 번째 누락된 중괄호 복구
             }
-            removeEmbeddedActiveGlobalDamage(ctx, appliedComboHit);
             // 스킬별 계수·상수는 콤보 탭에서 선택한 타격을 통해 주입한다.
             ctx.skillStats = [];
             var activeSelections = window.ToramCalculationInputScope && window.ToramCalculationInputScope.activeBuffs ||
                 (window.ToramActiveBuffs && typeof window.ToramActiveBuffs.getSelections === 'function' ? window.ToramActiveBuffs.getSelections() : {});
+            if (window.ToramSkillEffects && typeof window.ToramSkillEffects.activeStatChanges === 'function') {
+                window.ToramSkillEffects.activeStatChanges(ctx, ctx, {}, { activeBuffs:activeSelections }).forEach(function (change) {
+                    applyStat(ctx, change.key, change.value);
+                });
+            }
+            removeEmbeddedActiveGlobalDamage(ctx, appliedComboHit);
             ctx.activeBuildConversions = window.ToramSkillEffects && typeof window.ToramSkillEffects.activeBuildConversions === 'function'
                 ? window.ToramSkillEffects.activeBuildConversions(ctx, {}, {}, { activeBuffs:activeSelections }).map(function (effect) { return Object.assign({}, effect); })
                 : [];

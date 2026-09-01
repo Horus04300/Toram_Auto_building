@@ -20,7 +20,7 @@
   function checked(id) { var node = element(id); return Boolean(node && node.checked); }
   function options(id) {
     var container = element(id); if (!container) return [];
-    return Array.prototype.slice.call(container.querySelectorAll('.opt-row')).filter(function (row) { return !row.classList.contains('combo-transient-option'); }).map(function (row) {
+    return Array.prototype.slice.call(container.querySelectorAll('.opt-row')).filter(function (row) { return !row.classList.contains('combo-transient-option') && !row.closest('#activeSkillBuffOptions'); }).map(function (row) {
       var key = row.querySelector('.opt-type'), amount = row.querySelector('.opt-val');
       return key && amount ? { key:String(key.value || ''), value:number(amount.value) } : null;
     }).filter(Boolean);

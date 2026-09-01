@@ -5,71 +5,31 @@ import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const listeners = {};
-const controls = {
-  mainWeaponType:{ value:'한손검' }, subWeaponType:{ value:'방패' }, subRefine:{ value:'15' }, subAtk:{ value:'300' }, subStab:{ value:'80' }, charLevel:{ value:'300' },
-  strBase:{ value:'100' }, intBase:{ value:'100' }, vitBase:{ value:'100' }, agiBase:{ value:'100' }, dexBase:{ value:'100' }, crtBase:{ value:'50' }
-};
-let proxy = null;
-const buffOpts = {
-  querySelector(selector) { return selector === '#activeSkillBuffOptions' ? proxy : null; },
-  appendChild(node) { proxy = node; }
-};
-function element(tag) {
-  return {
-    tagName:tag.toUpperCase(), className:'', children:[], hidden:false, value:'',
-    append(...nodes) { this.children.push(...nodes); },
-    appendChild(node) { this.children.push(node); return node; },
-    set innerHTML(value) { this.children = []; this._innerHTML = value; },
-    get innerHTML() { return this._innerHTML || ''; }
-  };
-}
-const document = {
-  readyState:'loading',
-  addEventListener(type, callback) { (listeners[type] ||= []).push(callback); },
-  getElementById(id) { return id === 'buffOpts' ? buffOpts : (controls[id] || null); },
-  createElement:element
-};
 const skill = {
   id:'Demo:0', treeId:'Demo', skillId:0, nameKo:'컨텍스트 검증', kind:'buff', activeBuff:true,
   effects:[
-    { type:'stat', key:'REFINE_TEST', value:{ test:'refine' } },
-    { type:'stat', key:'BASE_CRT_TEST', value:{ test:'baseCrt' } },
-    { type:'stat', key:'TOTAL_VIT_TEST', value:{ test:'totalVit' } }
+    { type:'stat', key:'REFINE_TEST', value:{ op:'ref', path:'equipment.subWeaponRefinement' } },
+    { type:'stat', key:'BASE_CRT_TEST', value:{ op:'ref', path:'baseStats.CRT' } },
+    { type:'stat', key:'TOTAL_VIT_TEST', value:{ op:'ref', path:'combatStats.VIT' } }
   ]
 };
 const window = {
   TORAM_SKILL_EFFECT_DATA:{ skills:[skill] },
-  localStorage:{ getItem:() => JSON.stringify({ 'Demo:0':true }), setItem() {} },
-  skillSimulatorState:{ getInvestments:() => ({ Demo:{ 0:10 } }) },
-  ToramSkillEffects:{
-    condition:() => true,
-    expression(value, context) {
-      if (value.test === 'refine') return context.equipment.subWeaponRefinement;
-      if (value.test === 'baseCrt') return context.baseStats.CRT;
-      if (value.test === 'totalVit') return context.combatStats.VIT;
-      return 0;
-    }
-  },
-  getBaseContext:() => ({ strBase:100, intBase:100, vitBase:100, agiBase:100, dexBase:100, crtBase:50 }),
-  applyPassiveSkillStats() {},
-  getCurrentCrystas:() => [],
-  simulateWithCrystas:() => ({ finalSTR:110, finalINT:120, finalVIT:450, finalAGI:130, finalDEX:140, finalATK:1000, finalMATK:800, finalASPD:1200, finalCSPD:1000, finalStab:80, finalWeaponAttack:300, finalMaxMP:1000 })
+  skillSimulatorState:{ getInvestments:() => ({ Demo:{ 0:10 } }) }
 };
-window.ToramBuildDraftStore = { read:() => ({
-  build:{ character:{ level:300, attributes:{ STR:100, INT:100, VIT:100, AGI:100, DEX:100, CRT:50 } }, equipment:{ mainWeapon:{ crystas:[] }, armor:{ crystas:[] }, additional:{ crystas:[] }, special:{ crystas:[] } }, externalOptions:[], skillLevels:{ Demo:{ 0:10 } }, activeBuffs:{ 'Demo:0':{ active:true, stacks:0 } }, combo:[] },
-  scenario:{ target:{}, conditions:{} }, request:{ selectedSkillId:null, selectedHitId:null, overrides:{} }
-}) };
 window.window = window;
-const context = { window, document, console };
+const context = { window, console };
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/application-use-cases.js'), 'utf8'), context, { filename:'assets/js/application-use-cases.js' });
-vm.runInContext(await readFile(resolve(root, 'assets/js/active-buff-ui.js'), 'utf8'), context, { filename:'assets/js/active-buff-ui.js' });
-window.ToramActiveBuffs.restore({ 'Demo:0':{ active:true, stacks:0 } });
+vm.runInContext(await readFile(resolve(root, 'assets/js/skill-effect-engine.js'), 'utf8'), context, { filename:'assets/js/skill-effect-engine.js' });
 
-for (const callback of listeners['toram:calculate'] || []) callback();
-assert.ok(proxy, '액티브 버프 옵션 프록시를 생성해야 합니다.');
-const values = proxy.children.map(row => Number(row.children[1].value));
-assert.deepEqual(values, [15, 50, 450], '방패 제련치·기본 CRT·최종 VIT를 기존 계산 입력에서 가져와야 합니다.');
+const changes = window.ToramSkillEffects.activeStatChanges(
+  { level:300, mainType:'한손검', subType:'방패', subRefine:15, strBase:100, intBase:100, vitBase:100, agiBase:100, dexBase:100, crtBase:50 },
+  { VIT:450 }, {}, { activeBuffs:{ 'Demo:0':{ active:true, stacks:0 } } }
+);
+assert.equal(JSON.stringify(changes.map(change => [change.key, change.value])), JSON.stringify([['REFINE_TEST', 15], ['BASE_CRT_TEST', 50], ['TOTAL_VIT_TEST', 450]]), '활성 버프는 계산 엔진이 현재 입력 컨텍스트에서 직접 해석해야 합니다.');
+assert.equal(JSON.stringify(window.ToramSkillEffects.activeStatChanges({}, {}, {}, { activeBuffs:{ 'Demo:0':{ active:false, stacks:0 } } })), '[]', '비활성 버프는 외부 옵션으로 남거나 계산에 적용되면 안 됩니다.');
 
-console.log('Active buff calculation-context regression: PASS');
+const activeBuffUi = await readFile(resolve(root, 'assets/js/active-buff-ui.js'), 'utf8');
+assert.doesNotMatch(activeBuffUi, /container\.appendChild\(proxy\)|proxy\.appendChild\(/u, '활성 버프 효과를 외부 옵션 행으로 복제하면 안 됩니다.');
+
+console.log('Active buff calculation-context regression: PASS (engine-owned effects, no option proxy)');

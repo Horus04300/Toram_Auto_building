@@ -82,6 +82,14 @@ function getCurrentCrystas() {
     return results;
 }
 
+function matchesCrystaCondition(ctx, condition) {
+    var policies = window.ToramCalculationPolicies;
+    if (!policies || typeof policies.matchesCrystaCondition !== 'function') {
+        throw new Error('크리스타 조건 정책이 준비되지 않았습니다.');
+    }
+    return policies.matchesCrystaCondition(ctx, condition);
+}
+
 // 실시간 이벤트 리스너 등록 함수
 function initCrystaEvents() {
     crystaMapCache = null; // 캐시 초기화
@@ -234,12 +242,12 @@ if (document.readyState === 'loading') {
             for(var x=0; x<currentCrystas.length; x++) {
                 var c = currentCrystas[x];
                 if(c) {
-                    if(c.stats && (!c.cond || checkCondition(tCtx, c.cond))) {
+                    if(c.stats && matchesCrystaCondition(tCtx, c.cond)) {
                         for(var k in c.stats) totalCombinedStats[k] = (totalCombinedStats[k] || 0) + c.stats[k];
                     }
                     if(c.condStats) {
                         for(var k=0; k<c.condStats.length; k++) {
-                            if(checkCondition(tCtx, c.condStats[k].cond)) {
+                            if(matchesCrystaCondition(tCtx, c.condStats[k].cond)) {
                                 for(var sk in c.condStats[k].stats) totalCombinedStats[sk] = (totalCombinedStats[sk] || 0) + c.condStats[k].stats[sk];
                             }
                         }
@@ -389,12 +397,12 @@ if (document.readyState === 'loading') {
             for(var x=0; x<bestCrystas.length; x++) {
                 var c = bestCrystas[x];
                 if(c) {
-                    if(c.stats && (!c.cond || checkCondition(optRes.ctx, c.cond))) {
+                    if(c.stats && matchesCrystaCondition(optRes.ctx, c.cond)) {
                         for(var k in c.stats) sumStats[k] = (sumStats[k] || 0) + c.stats[k];
                     }
                     if(c.condStats) {
                         for(var k=0; k<c.condStats.length; k++) {
-                            if(checkCondition(optRes.ctx, c.condStats[k].cond)) {
+                            if(matchesCrystaCondition(optRes.ctx, c.condStats[k].cond)) {
                                 for(var sk in c.condStats[k].stats) sumStats[sk] = (sumStats[sk] || 0) + c.condStats[k].stats[sk];
                             }
                         }

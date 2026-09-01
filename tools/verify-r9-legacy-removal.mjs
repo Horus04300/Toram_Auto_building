@@ -21,6 +21,8 @@ assert.match(calculator, /ToramCalculationPolicies[\s\S]*applyStat/u, '계산기
 assert.match(calculator, /matchesCrystaCondition/u, '계산기의 크리스타 조건 판정은 단일 정책을 사용해야 합니다.');
 assert.doesNotMatch(crystaUi, /function checkCondition/u, '크리스타 UI의 중복 조건 fallback을 제거해야 합니다.');
 assert.match(crystaUi, /ToramCalculationPolicies[\s\S]*matchesCrystaCondition/u, '크리스타 UI는 계산 정책의 조건 판정을 사용해야 합니다.');
+assert.doesNotMatch(optimizer, /\bcheckCondition\(/u, '최적화 결과 표시도 제거된 checkCondition fallback을 호출하면 안 됩니다.');
+assert.match(optimizer, /ToramCalculationPolicies[\s\S]*matchesCrystaCondition/u, '최적화 결과 표시는 계산 정책의 크리스타 조건 판정을 사용해야 합니다.');
 assert.doesNotMatch(application, /legacyInput/u, 'Application의 입력 어댑터는 legacy 이름을 남기면 안 됩니다.');
 assert.match(application, /kernelInput/u, 'Application은 명시적인 kernel 입력 어댑터를 유지해야 합니다.');
 assert.match(policies, /function applyStat/u, '계산 정책은 stat 적용의 유일한 진입점이어야 합니다.');

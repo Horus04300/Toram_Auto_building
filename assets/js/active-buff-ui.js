@@ -144,39 +144,9 @@
   }
   function syncOptions(active) {
     var container = document.getElementById('buffOpts');
-    if (!container || !window.TORAM_SKILL_EFFECT_DATA || !window.ToramSkillEffects) return;
+    if (!container) return;
     var proxy = container.querySelector('#activeSkillBuffOptions');
-    if (!proxy) { proxy = document.createElement('div'); proxy.id = 'activeSkillBuffOptions'; proxy.hidden = true; container.appendChild(proxy); }
-    proxy.innerHTML = '';
-    var calculated = currentCalculationContext();
-    var states = runtimeStates(active);
-    var cappedTotals = {};
-    effectSkills().filter(function (skill) {
-      return isDisplayableActiveBuff(skill) && levelFor(skill) > 0 && (enabledFor(active, skill.id) || (skill.stackControl && skill.stackControl.applyWhenDisabled));
-    }).forEach(function (skill) {
-      var enabled = enabledFor(active, skill.id);
-      var config = stackConfig(skill, contextFor(skill, enabled, 0, states, calculated), active, true);
-      var stacks = config ? stackFor(active, skill, config) : 0;
-      var context = contextFor(skill, enabled, stacks, states, calculated);
-      (enabled ? (skill.effects || []) : (skill.inactiveEffects || [])).forEach(function (effect) {
-        var isGlobalDamageBuff = effect.type === 'damageMultiplier' && effect.target === 'attack';
-        if ((effect.type !== 'stat' && !isGlobalDamageBuff) || !window.ToramSkillEffects.condition(effect.when, context)) return;
-        var row = document.createElement('div'); row.className = 'opt-row';
-        var type = document.createElement('select'); type.className = 'opt-type';
-        var option = document.createElement('option'); option.value = isGlobalDamageBuff ? 'DAMAGE_P' : effect.key; option.selected = true; type.appendChild(option);
-        var amount = document.createElement('input'); amount.className = 'opt-val';
-        var resolvedValue = window.ToramSkillEffects.expression(effect.value, context);
-        if (effect.capGroup) {
-          var cap = effect.cap === undefined ? Infinity : Number(window.ToramSkillEffects.expression(effect.cap, context));
-          var used = Number(cappedTotals[effect.capGroup]) || 0;
-          resolvedValue = Math.max(0, Math.min(resolvedValue, cap - used));
-          cappedTotals[effect.capGroup] = used + resolvedValue;
-        }
-        amount.value = String(displayNumber(isGlobalDamageBuff ? (resolvedValue - 1) * 100 : resolvedValue));
-        row.append(type, amount); proxy.appendChild(row);
-      });
-    });
-    if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') document.dispatchEvent(new CustomEvent('toram:build-options-changed'));
+    if (proxy) proxy.remove();
   }
   function render() {
     var panel = document.getElementById('appTabPanel-buffs');
