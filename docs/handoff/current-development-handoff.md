@@ -9,7 +9,7 @@
 ## 1. 반드시 먼저 이해할 결론
 
 1. 기존 브라우저 계산기는 Tauri v2 기반 Windows 데스크톱 앱으로 전환되었다.
-2. 현재 개발 버전은 0.6.0이며, Windows NSIS 설치 파일은 v0.6.0 GitHub Pre-release로 공개되어 있다.
+2. 현재 개발 버전은 0.6.1이며, Windows NSIS 설치 파일은 v0.6.1 GitHub Pre-release로 공개되어 있다.
 3. 이름을 붙인 세팅 JSON은 정확히 %LOCALAPPDATA%\ToramOnlineAutoBuildCalculator 에 저장한다. settings 하위 폴더를 추가하지 않는다.
 4. 마지막 세션은 Settings Repository가 관리하는 단일 application-state 문서로 자동 복원하고, 이름 있는 빌드는 같은 Repository의 네이티브 JSON 파일로 저장한다. 베타 시기 저장 데이터는 읽지 않는다.
 5. 전역 S1 출처 연결 감사 결과는 427/427이다. 이것은 모든 스킬의 S2~S5 계산과 모든 전투 상태 시뮬레이션이 완전하다는 뜻이 아니다.
@@ -100,18 +100,18 @@
 
 ## 3. Git, 버전, 배포 상태
 
-- 릴리스 구현 커밋: ba3cca2 refactor: complete R0-R9 architecture migration
-- 태그: v0.6.0, 대상 커밋 ba3cca2
-- package.json, package-lock.json, src-tauri/Cargo.toml, src-tauri/Cargo.lock, src-tauri/tauri.conf.json 버전: 0.6.0
+- 릴리스 구현 커밋: 7ac0f4b release: v0.6.1
+- 태그: v0.6.1, 대상 커밋 7ac0f4b
+- package.json, package-lock.json, src-tauri/Cargo.toml, src-tauri/Cargo.lock, src-tauri/tauri.conf.json 버전: 0.6.1
 - 제품명: Toram Online Auto Build Calculator
 - 앱 식별자: com.toramonline.autobuildcalculator
-- Release: https://github.com/Horus04300/Toram_Auto_building/releases/tag/v0.6.0
+- Release: https://github.com/Horus04300/Toram_Auto_building/releases/tag/v0.6.1
 - 상태: Draft 아님, Pre-release
-- 자산: Toram Online Auto Build Calculator_0.6.0_x64-setup.exe
-- 설치 파일 SHA-256: 73A9AF6C5CB61E95256AD714831D25A691C32199A57C25C7EEAB6DA022C10125
+- 자산: Toram Online Auto Build Calculator_0.6.1_x64-setup.exe
+- 설치 파일 SHA-256: BD5C23EFC9E52726A1C382AEED19965D2CB42E497136DAF41141BDB332098B9A
 - 현재 설치 파일은 코드 서명이 없다. 서명 배포에는 별도 인증서가 필요하다.
 
-이 인계 문서는 릴리스 태그 이후 main에 추가되는 문서다. v0.6.0 태그를 이 문서 커밋으로 이동하지 않는다.
+이 인계 문서는 릴리스 태그 이후 main에 추가되는 문서다. v0.6.1 태그를 이 문서 커밋으로 이동하지 않는다.
 
 ## 4. Tauri 데스크톱 구조
 
@@ -139,7 +139,7 @@
 
 산출물:
 
-- NSIS: src-tauri/target/release/bundle/nsis/Toram Online Auto Build Calculator_0.5.0_x64-setup.exe
+- NSIS: src-tauri/target/release/bundle/nsis/Toram Online Auto Build Calculator_0.6.1_x64-setup.exe
 - 실행 파일: src-tauri/target/release/toram-online-auto-build-calculator.exe
 
 NSIS는 currentUser 설치이며 WebView2 downloadBootstrapper를 사용한다. 실제 무인 설치·실행·제거를 검증했고 제거 뒤에도 사용자 세팅 폴더가 보존되는 것을 확인했다.
