@@ -1,3 +1,4 @@
+        var DEFAULT_BANNED_CRYSTAS = ["오로로 콜론"];
         var bannedCrystas = {"오로로 콜론": true};
 
         var subWeaponRules = {
@@ -289,9 +290,23 @@
                 bannedCrystas[val] = true;
                 document.getElementById('banInput').value = ''; 
                 renderBanTags(); 
+                notifyOptimizationPreferencesChanged();
             }
         }
-        function removeBanTag(val) { delete bannedCrystas[val]; renderBanTags(); }
+        function removeBanTag(val) { delete bannedCrystas[val]; renderBanTags(); notifyOptimizationPreferencesChanged(); }
+        function notifyOptimizationPreferencesChanged() {
+            document.dispatchEvent(new CustomEvent('toram:optimization-preferences-changed'));
+            document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
+        }
+        function getBannedCrystas() { return Object.keys(bannedCrystas).sort(); }
+        function restoreBannedCrystas(values) {
+            bannedCrystas = {};
+            (Array.isArray(values) ? values : DEFAULT_BANNED_CRYSTAS).forEach(function (value) {
+                var name = String(value || '').trim();
+                if (name) bannedCrystas[name] = true;
+            });
+            renderBanTags();
+        }
         function renderBanTags() {
             var container = document.getElementById('banTagContainer');
             var count = document.getElementById('blacklistCount');
@@ -643,6 +658,8 @@ window.ToramApp.crystaUi = Object.freeze({
     addBanTag: addBanTag,
     addOptionRow: addOptionRow,
     addSkillStatRow: addSkillStatRow,
+    getBannedCrystas: getBannedCrystas,
+    restoreBannedCrystas: restoreBannedCrystas,
     onSubWeaponChange: onSubWeaponChange,
     refreshAllCrystaInfo: refreshAllCrystaInfo,
     updateSubWeaponList: updateSubWeaponList

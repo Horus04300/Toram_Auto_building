@@ -61,6 +61,11 @@ function createSkillSnapshot() {
             document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
             return true;
         }
+        function commitSkillChange() {
+            persistSkillState();
+            document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
+            renderAll();
+        }
         function exportSkillState() {
             const snapshot = createSkillSnapshot();
             const blob = new Blob([JSON.stringify(snapshot, null, 2)], { type: 'application/json' });
@@ -78,7 +83,7 @@ function createSkillSnapshot() {
                 try {
                     const snapshot = JSON.parse(String(reader.result));
                     if (snapshot.format && snapshot.format !== 'toram-auto-skill-tree') throw new Error('다른 형식의 파일입니다.');
-                    applySkillSnapshot(snapshot); persistSkillState(); setStorageStatus('저장 파일을 불러옴'); renderAll();
+                    applySkillSnapshot(snapshot); commitSkillChange(); setStorageStatus('저장 파일을 불러옴');
                 } catch (error) {
                     setStorageStatus('불러오기 실패: 스킬 저장 JSON만 사용할 수 있습니다.');
                 }
@@ -89,7 +94,7 @@ function createSkillSnapshot() {
         function resetSkillState() {
             if (!window.confirm('모든 스킬 투자 포인트를 초기화할까요?')) return;
             data.trees.forEach(function (tree) { tree.skills.forEach(function (skill) { state.levels[tree.id][skill.id] = 0; }); });
-            persistSkillState(); setStorageStatus('스킬 포인트를 초기화함'); renderAll();
+            commitSkillChange(); setStorageStatus('스킬 포인트를 초기화함');
         }
         function treeLabel(tree) { return tree.nameKo || tree.id; }
         function skillLabel(skill) { return skill.nameKo || skill.name; }
@@ -131,7 +136,7 @@ function createSkillSnapshot() {
             if (next === current) return;
             ensurePrerequisite(tree, skill.prereq);
             state.levels[treeId][skillId] = next;
-            renderAll();
+            commitSkillChange();
         }
         function removeDescendants(tree, skillId) {
             tree.skills.filter(function (candidate) { return candidate.prereq === skillId; }).forEach(function (child) {
@@ -146,7 +151,7 @@ function createSkillSnapshot() {
             if (next === current) return;
             state.levels[treeId][skillId] = next;
             if (next < prerequisiteLevel) removeDescendants(tree, skillId);
-            renderAll();
+            commitSkillChange();
         }
         function createCategoryButton(category) {
             const total = categoryTotal(category.directory);
@@ -266,14 +271,12 @@ const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentE
             });
         }        function renderAll() {
             const activeCategory = categoryDefinitions.find(function (category) { return category.id === activeCategoryId; });
-            persistSkillState();
             skillTotalSummary.textContent = '전체 (' + totalInvestedSkillPoints() + '/' + availableSkillPoints() + ')';
             renderStepControls();
             categoryRail.innerHTML = ''; categoryDefinitions.forEach(function (category) { categoryRail.appendChild(createCategoryButton(category)); });
             combatTreeRail.innerHTML = ''; categoryTrees(activeCategory.directory).forEach(function (tree) { combatTreeRail.appendChild(createTreeButton(tree, tree.id === activeCombatTree, function () { activeCombatTree = tree.id; renderAll(); })); });
             otherTreeRail.innerHTML = ''; categoryTrees('Other_Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
             renderStage(combatStage, activeCombatTree); renderStage(otherStage, activeOtherTree);
-            document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
         }
         window.skillSimulatorState = { data: data, levels: state.levels, getInvestments: function () { return JSON.parse(JSON.stringify(state.levels)); } };
         window.ToramSkillUi = Object.freeze({ refresh:renderAll, restore:function (snapshot) { applySkillSnapshot(snapshot); renderAll(); }, getInvestments:window.skillSimulatorState.getInvestments });

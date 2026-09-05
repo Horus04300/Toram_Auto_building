@@ -4,6 +4,9 @@
   "private": true,
   "description": "Toram Online auto build calculator desktop shell",
   "scripts": {
+    "ai:files": "rg --files --hidden --ignore-file .aiignore",
+    "ai:search": "rg -n --hidden --ignore-file .aiignore",
+    "ai:audit": "node tools/audit-ai-context.mjs",
     "types:check": "tsc -p tsconfig.json",
     "types:emit": "tsc -p tsconfig.runtime.json",
     "verify:r1b": "npm run types:check && node tools/verify-typescript-boundaries.mjs",

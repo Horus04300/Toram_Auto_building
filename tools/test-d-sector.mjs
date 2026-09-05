@@ -19,7 +19,8 @@ vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8')
 
 const calculatorSource = await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8');
 assert.match(calculatorSource, /skillConst:\s*appliedComboHit\s*\?\s*appliedComboHit\.skillConst\s*:\s*0/, 'D1 기본 공격 상수는 0이어야 합니다.');
-assert.match(await readFile(resolve(root, 'index.html'), 'utf8'), /\[평타\] 기준 최적화됨/, 'D1 결과 최상단에 평타 최적화 기준을 표시해야 합니다.');
+assert.match(await readFile(resolve(root, 'index.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, 'D1 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
+assert.match(calculatorSource, /scopedInput\.rangeOverride[\s\S]*ctx\.rangeType\s*=\s*scopedInput\.rangeOverride/, '사용자 거리 선택은 스킬 기본 거리 판정 뒤에 최종 적용돼야 합니다.');
 const comboUiSource = await readFile(resolve(root, 'assets/js/combo-ui.js'), 'utf8');
 const applicationUseCasesSource = await readFile(resolve(root, 'assets/js/application-use-cases.js'), 'utf8');
 assert.match(comboUiSource, /ToramApplication\.ApplyComboHit/, 'D3 콤보 UI는 Application 유스케이스를 통해 타격을 전달해야 합니다.');

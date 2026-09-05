@@ -7,6 +7,33 @@
     font-display: swap;
 }
 
+.result-action-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; padding:12px 14px; border:1px solid #dce6ef; border-radius:10px; background:#f8fbfd; }
+.result-action-bar > div:first-child { display:flex; flex-direction:column; gap:3px; }
+.result-action-bar strong { color:#24384a; }
+.result-action-bar span { color:#647789; font-size:12px; }
+.result-action-buttons { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
+.result-secondary-button { border:1px solid #b9c8d5; border-radius:7px; background:#fff; color:#34495e; padding:8px 12px; font-weight:bold; cursor:pointer; }
+.combo-range-choice { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 12px; padding:7px 10px; border:1px solid #dce6ef; border-radius:8px; background:#f8fbfd; font-size:12px; }
+.combo-range-choice > span { font-weight:bold; color:#34495e; }
+.combo-range-choice label { display:inline-flex; align-items:center; gap:4px; cursor:pointer; }
+.combo-range-choice input { margin:0; }
+.combo-range-choice small { color:#657786; }
+.optimization-requirements-dialog { max-width:560px; }
+.optimization-requirement-list { display:grid; gap:8px; margin:16px 0 10px; }
+.optimization-requirement-list > label { display:grid; grid-template-columns:auto minmax(130px, 1fr) 120px minmax(90px, auto); align-items:center; gap:10px; padding:9px 10px; border-bottom:1px solid #edf1f4; }
+.optimization-requirement-value { width:100%; box-sizing:border-box; padding:7px 8px; }
+.optimization-requirement-default { color:#738394; text-align:right; }
+.optimization-requirement-help { margin:8px 0; color:#5d6d7e; font-size:12px; }
+.optimization-requirement-actions { display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:8px; margin-top:12px; }
+
+@media (max-width: 620px) {
+    .result-action-bar { align-items:flex-start; flex-direction:column; }
+    .result-action-buttons { width:100%; justify-content:stretch; }
+    .result-action-buttons button { flex:1; }
+    .optimization-requirement-list > label { grid-template-columns:auto 1fr 110px; }
+    .optimization-requirement-default { grid-column:2 / 4; text-align:left; }
+}
+
 :root {
     --bg: #f6f6f8;
     --surface: #ffffff;

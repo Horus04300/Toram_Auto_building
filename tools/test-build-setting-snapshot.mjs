@@ -8,7 +8,7 @@ const local = new Map();
 const files = new Map();
 let restored = null;
 let build = { character:{ level:325, attributes:{ STR:510, INT:1, VIT:1, AGI:1, DEX:1, CRT:0 } }, equipment:{ mainWeapon:{}, subWeapon:{}, armor:{}, additional:{}, special:{} }, skillLevels:{ Blade:{ 0:10 } }, activeBuffs:{}, externalOptions:[], combo:[] };
-const scenario = { target:{ bossLevel:300, bossDef:100, bossMdef:100, bossPhysResist:0, bossMagResist:0, bossCritResist:0 }, conditions:{} };
+const scenario = { target:{ bossLevel:300, bossDef:100, bossMdef:100, bossPhysResist:0, bossMagResist:0, bossCritResist:0 }, conditions:{}, optimizationPreferences:{ rangeOverride:'LONG', requirements:{ maxHp:null, maxMp:2500 }, bannedCrystas:['저장 제외 크리스타'] } };
 const document = { readyState:'loading', addEventListener() {}, createElement() { return { click() {}, remove() {}, href:'', download:'' }; }, body:{ appendChild() {} } };
 const window = {
   localStorage:{ getItem:key => local.get(key) ?? null, setItem:(key, value) => local.set(key, String(value)) }, setTimeout:callback => callback(),
@@ -29,6 +29,7 @@ assert.equal(files.size, 1);
 const stored = repository.parseSavedBuild(files.get('R6--빌드.json'));
 assert.equal(stored.documentType, 'saved-build');
 assert.equal(stored.build.character.level, 325);
+assert.deepEqual(JSON.parse(JSON.stringify(stored.scenario.optimizationPreferences)), scenario.optimizationPreferences, '거리·요구조건·금지 크리스타 설정을 빌드 문서에 저장해야 합니다.');
 assert.ok(!files.get('R6--빌드.json').includes('"storage"'), 'legacy storage 래퍼를 쓰면 안 됩니다.');
 build = { ...build, character:{ ...build.character, level:1 } };
 await repository.overwrite('R6--빌드.json');
@@ -36,6 +37,7 @@ assert.equal(repository.parseSavedBuild(files.get('R6--빌드.json')).build.char
 build = { ...build, character:{ ...build.character, level:999 } };
 await repository.load('R6--빌드.json');
 assert.equal(restored.build.character.level, 1);
+assert.deepEqual(JSON.parse(JSON.stringify(restored.scenario.optimizationPreferences)), scenario.optimizationPreferences, '빌드 문서에서 최적화 사용자 설정을 복원해야 합니다.');
 assert.equal(JSON.parse(local.get(repository.sessionStorageKey)).lastSession.build.character.level, 1);
 assert.throws(() => repository.parseSavedBuild(JSON.stringify({ format:repository.format, schemaVersion:1, documentType:'saved-build', storage:{} })), /새 저장 계약/);
 const legacyBuild = { ...build, activeBuffs:{ 'Knight:0':{ active:true, stacks:3 } }, externalOptions:[{ key:'ATK_P', value:10 }, { key:'DAMAGE_P', value:-45 }] };

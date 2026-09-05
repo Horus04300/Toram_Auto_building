@@ -1,6 +1,6 @@
 # D4 빌드 최적화 구현 선행조건
 
-- 상태: 선행조건 정리 완료, 크리스타 전역 탐색·Worker·계층형 안전 상한 성능 개선까지 구현 완료
+- 문서 역할: 기능 확장 전의 데이터·정확성 선행조건. 단계별 구현 기록은 작성 당시 정보이며 현재 완료 판정은 `docs/handoff/current-development-handoff.md`를 따른다.
 - 기준일: 2026-08-24
 - 상위 설계: `docs/architecture/d4-build-optimizer-design.md`
 

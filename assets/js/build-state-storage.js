@@ -50,6 +50,7 @@
       if (root.ToramActiveBuffs && root.ToramActiveBuffs.restore) root.ToramActiveBuffs.restore(build.activeBuffs || {});
       restoreOptions('buffOpts', build.externalOptions);
       if (root.ToramComboUi && root.ToramComboUi.restore) root.ToramComboUi.restore(build.combo || []);
+      if (root.ToramOptimizationPreferences && root.ToramOptimizationPreferences.restore) root.ToramOptimizationPreferences.restore(session.scenario && session.scenario.optimizationPreferences);
       if (ui) { ui.onSubWeaponChange(); ui.refreshAllCrystaInfo(); }
       var level = element('charLevel'); if (level) level.dispatchEvent(new Event('input', { bubbles:true }));
     } finally { restoring = false; if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi(); }

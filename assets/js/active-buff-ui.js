@@ -188,6 +188,7 @@
     section.appendChild(grid); syncOptions(state);
   }
   document.addEventListener('toram:calculate', function () { syncOptions(savedState()); });
+  document.addEventListener('toram:preview', function () { syncOptions(savedState()); });
   document.addEventListener('change', function (event) { if (event.target && (event.target.id === 'mainWeaponType' || event.target.id === 'subWeaponType')) render(); });
   function activeSelections() {
     var state = savedState(), states = runtimeStates(state), result = {};

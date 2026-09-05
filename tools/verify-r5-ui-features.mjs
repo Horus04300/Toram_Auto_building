@@ -14,6 +14,8 @@ const optimizerUi = await read('assets/js/optimizer-ui-controller.js');
 const settingsUi = await read('assets/js/build-file-storage.js');
 const application = await read('assets/js/application-use-cases.js');
 const features = await read('assets/js/ui-feature-registry.js');
+const comboUi = await read('assets/js/combo-ui.js');
+const skillUi = await read('assets/js/skill-tree.js');
 
 for (const id of ['stats', 'target', 'equipment', 'external-buffs', 'crysta-blacklist']) {
   assert.match(html, new RegExp(`data-ui-section="${id}"`), `탭 이동 대상 ${id}는 명시적 식별자가 있어야 합니다.`);
@@ -26,6 +28,17 @@ assert.match(bindings, /app\.buildUi\.bind\(\)/, '공통 UI 부트스트랩은 B
 assert.match(bindings, /app\.optimizerUi\.initialize\(\)/, '공통 UI 부트스트랩은 Optimizer UI 컨트롤러를 호출해야 합니다.');
 assert.doesNotMatch(bindings, /addOptionRow|updateSubWeaponList/, '공통 UI 부트스트랩은 세부 빌드 입력 이벤트를 직접 소유하면 안 됩니다.');
 assert.match(optimizer, /ToramApplication\.CreateCalculationSnapshot/, '최적화 계산 조립은 Application API를 통해야 합니다.');
+assert.match(optimizer, /runPreviewSafe/, '결과 탭용 Greedy 빠른 추천 진입점이 있어야 합니다.');
+assert.match(optimizer, /findD4GreedyInitialSolution/, '빠른 추천은 정밀 전역 탐색과 별도 경로를 사용해야 합니다.');
+assert.match(tabs, /buttons\.results[\s\S]*toram:preview/, '결과 탭은 정밀 계산 대신 빠른 추천만 요청해야 합니다.');
+assert.match(bindings, /toram:preview[\s\S]*runPreviewSafe/, '빠른 추천 UI 이벤트를 최적화 진입점에 연결해야 합니다.');
+assert.match(html, /id="d4RunPreciseOptimization"/, '결과 탭에 명시적인 정밀 계산 버튼이 있어야 합니다.');
+assert.match(html, /id="optimizationRequirementsButton"/, '결과 탭에 요구조건 편집 버튼이 있어야 합니다.');
+assert.match(html, /id="optimizationRequirementsOverlay"[\s\S]*aria-modal="true"/, '요구조건은 결과 탭의 모달에서 편집할 수 있어야 합니다.');
+assert.match(comboUi, /id="comboRangeShort"[\s\S]*id="comboRangeLong"/, '콤보 화면에 근거리·원거리 선택 UI가 있어야 합니다.');
+assert.match(skillUi, /function commitSkillChange\(\)[\s\S]*toram:skill-investments-changed/, '실제 스킬 투자 변경만 계산 기준 무효화 이벤트를 내야 합니다.');
+const renderAllBody = skillUi.slice(skillUi.indexOf('function renderAll()'), skillUi.indexOf('window.skillSimulatorState'));
+assert.doesNotMatch(renderAllBody, /toram:skill-investments-changed|persistSkillState/, '스킬 화면 재렌더만으로 계산 기준을 해제하거나 저장하면 안 됩니다.');
 assert.match(optimizerUi, /ToramD4ExecutionAdapter\.resume[\s\S]*timeLimitMs:30000/u, 'D4 비동기 재개 제어는 Optimizer UI 컨트롤러에 있어야 합니다.');
 assert.match(optimizerUi, /discardD4ContinuationForInputChange/, 'D4 실행 상태 폐기는 Optimizer UI 컨트롤러에 있어야 합니다.');
 assert.match(application, /Settings:settings/, '저장 UI는 Application Settings API를 통해야 합니다.');
@@ -35,6 +48,7 @@ for (const feature of ['build:app.buildUi', 'skills:root.ToramSkillUi', 'buffs:r
   assert.ok(features.includes(feature), `UI feature registry에 ${feature}가 있어야 합니다.`);
 }
 assert.ok(LEGACY_SCRIPT_PATHS.indexOf('assets/js/optimizer.js') < LEGACY_SCRIPT_PATHS.indexOf('assets/js/optimizer-ui-controller.js'), '최적화 UI 컨트롤러는 core 뒤에 로드돼야 합니다.');
+assert.ok(LEGACY_SCRIPT_PATHS.includes('assets/js/optimization-preferences.js'), '거리·요구조건 저장 모듈이 앱에 포함돼야 합니다.');
 assert.ok(LEGACY_SCRIPT_PATHS.indexOf('assets/js/build-ui-controller.js') < LEGACY_SCRIPT_PATHS.indexOf('assets/js/ui-bindings.js'), 'Build UI 컨트롤러는 공통 부트스트랩 전에 로드돼야 합니다.');
 
 console.log('R5 UI feature boundary verification: PASS');

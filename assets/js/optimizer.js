@@ -116,20 +116,22 @@ if (document.readyState === 'loading') {
 }
         function runtimeState() { return window.ToramRuntimeState && window.ToramRuntimeState.get ? window.ToramRuntimeState.get() : { d4:{ runVersion:0, lastOptimizationRequest:null, lastOptimizationResult:null, lastOutcome:null }, calculationQueued:false }; }
         function d4Runtime() { return runtimeState().d4; }
-        function runCalculationSafe() {
+        function queueCalculation(mode) {
             if (typeof validateCrystaInputs === 'function' && !validateCrystaInputs()) return;
             if (typeof revealResultTab === 'function') revealResultTab();
             if (runtimeState().calculationQueued) return;
             runtimeState().calculationQueued = true;
             var execute = function () {
                 runtimeState().calculationQueued = false;
-                try { runCalculation(); }
+                try { runCalculation(mode); }
                 catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
             };
             // 탭 전환을 먼저 그린 다음 비용이 큰 크리스타 최적화를 수행한다.
             if (typeof window.requestAnimationFrame === 'function') window.requestAnimationFrame(execute);
             else window.setTimeout(execute, 0);
         }
+        function runCalculationSafe() { queueCalculation('precise'); }
+        function runPreviewSafe() { queueCalculation('preview'); }
 
         function resultDamageScore(result) { return result.optimizationDamageFactor === undefined ? result.damageFactor : result.optimizationDamageFactor; }
         function evaluateD4Build(baseCtx, crystas, scenarioSnapshot) {
@@ -141,13 +143,15 @@ if (document.readyState === 'loading') {
             var scenario = scenarioSnapshot || window.ToramBuildEvaluator.createScenarioSnapshot(baseCtx);
             return window.ToramBuildEvaluator.evaluate(buildSnapshot, scenario);
         }
-        function runCalculation() {
+        function runCalculation(mode) {
             if (!window.ToramApplication || typeof window.ToramApplication.CreateCalculationSnapshot !== 'function') throw new Error('계산 유스케이스가 준비되지 않았습니다.');
             var calculationSnapshot = window.ToramApplication.CreateCalculationSnapshot();
             var baseCtx = calculationSnapshot.baseContext;
-            var scenarioSnapshot = window.ToramBuildEvaluator ? window.ToramBuildEvaluator.createScenarioSnapshot(baseCtx) : null;
+            var preferences = window.ToramOptimizationPreferences;
+            var requirements = preferences && typeof preferences.effectiveRequirements === 'function' ? preferences.effectiveRequirements(baseCtx) : undefined;
+            var scenarioSnapshot = window.ToramBuildEvaluator ? window.ToramBuildEvaluator.createScenarioSnapshot(baseCtx, { requirements:requirements }) : null;
             var basisLabel = document.getElementById('optimizationBasisLabel');
-            if (basisLabel) basisLabel.textContent = '[' + (baseCtx.optimizationBasisName || '평타') + '] 기준 최적화됨';
+            if (basisLabel) basisLabel.textContent = '[' + (baseCtx.optimizationBasisName || '평타') + '] 기준 ' + (mode === 'precise' ? '정밀 검사' : '빠른 추천');
 
             var currentCrystas = calculationSnapshot.crystas;
             var curEvaluation = evaluateD4Build(baseCtx, currentCrystas, scenarioSnapshot);
@@ -431,7 +435,8 @@ if (document.readyState === 'loading') {
                 var activeTab = document.querySelector('.eff-tab-btn.active');
                 var activeUnit = activeTab ? parseInt(activeTab.getAttribute('data-unit'), 10) : 1;
                 renderMarginalUtility(activeUnit);
-                startD4GlobalOptimization(baseCtx, scenarioSnapshot, currentCrystas, locks, curEvaluation);
+                if (mode === 'precise') startD4GlobalOptimization(baseCtx, scenarioSnapshot, currentCrystas, locks, curEvaluation);
+                else startD4GreedyPreview(baseCtx, scenarioSnapshot, currentCrystas, locks, curEvaluation);
             }
 
         function d4Escape(value) {
@@ -555,6 +560,7 @@ if (document.readyState === 'loading') {
         }
 
         function d4GapText(value) {
+            if (value === null || value === undefined || value === '') return '계산 중';
             var gap = Number(value);
             return Number.isFinite(gap) ? (gap * 100).toFixed(gap < 0.001 ? 3 : 2) + '%' : '계산 중';
         }
@@ -594,7 +600,7 @@ if (document.readyState === 'loading') {
             pause.hidden = status !== 'running' || !state.native;
             continueButton.hidden = !((status === 'bounded' || status === 'no-incumbent-yet' || status === 'paused') && state.continuationId);
             continueButton.textContent = status === 'paused' ? '계산 재개' : '정밀 계산 계속';
-            var gap = Number(state.optimalityGap);
+            var gap = state.optimalityGap === null || state.optimalityGap === undefined || state.optimalityGap === '' ? NaN : Number(state.optimalityGap);
             var determinate = status !== 'running' || (Number.isFinite(gap) && state.lowerBound !== null && state.lowerBound !== undefined);
             track.classList.toggle('is-indeterminate', !determinate);
             var percent = status === 'exact' ? 100 : Number.isFinite(gap) ? Math.max(5, Math.min(status === 'running' ? 99 : 100, (1 - Math.min(1, gap)) * 100)) : (status === 'running' ? 8 : 100);
@@ -618,7 +624,12 @@ if (document.readyState === 'loading') {
 
         function renderD4GlobalResult(result, currentEvaluation, locks, metadata) {
             var status = result && result.status || 'invalid';
-            updateD4Progress(result, status, metadata && metadata.cached);
+            var isPreview = Boolean(metadata && metadata.preview);
+            var progressPanel = document.getElementById('d4OptimizationProgress');
+            if (isPreview) { if (progressPanel) progressPanel.hidden = true; }
+            else updateD4Progress(result, status, metadata && metadata.cached);
+            var preciseButton = document.getElementById('d4RunPreciseOptimization');
+            if (preciseButton) preciseButton.disabled = false;
             var overview = document.getElementById('d4RecommendationOverview');
             var list = document.getElementById('top3ListContainer');
             var finalText = document.getElementById('finalRecText');
@@ -646,6 +657,8 @@ if (document.readyState === 'loading') {
             d4Runtime().lastOptimizationResult = result;
             setD4RecommendationApplyAvailability(true);
             renderD4RecommendationOverview(result, currentEvaluation, locks);
+            var eyebrow = document.getElementById('d4RecommendationEyebrow');
+            if (eyebrow) eyebrow.textContent = status === 'heuristic' ? '빠른 크리스타 추천' : '전역 최적 크리스타 추천';
             var labels = {weapon:'무기', armor:'방어구', additional:'추가', special:'특수'};
             var recommendation = '';
             packages.forEach(function (item, groupIndex) {
@@ -658,18 +671,18 @@ if (document.readyState === 'loading') {
             var finalScore = Number(result.score);
             var gain = currentScore > 0 ? (finalScore - currentScore) / currentScore * 100 : 0;
             var scoreLabel = result.outcomes.calculation && result.outcomes.calculation.procDamageProfile && result.outcomes.calculation.procDamageProfile.sources.length ? '최종 기대 데미지: ' : '최종 데미지: ';
-            var certification = status === 'exact' ? ' · 전역 최적 증명' : status === 'bounded' ? ' · 보장 오차 ≤ ' + d4GapText(result.optimalityGap) : '';
+            var certification = status === 'exact' ? ' · 전역 최적 증명' : status === 'bounded' ? ' · 보장 오차 ≤ ' + d4GapText(result.optimalityGap) : status === 'heuristic' ? ' · Greedy 빠른 추천 · 최적성 미검사' : '';
             badge.textContent = scoreLabel + d4FormatNumber(finalScore) + ' / 현재 대비 ' + (gain > 0 ? '+' : '') + gain.toFixed(2) + '%' + certification;
             tags.style.display = 'block';
-            tags.innerHTML = '<span style="display:block; font-size:14px; color:#27ae60; font-weight:bold; margin-bottom:4px; padding-bottom:4px;">[전역 추천 크리스타 옵션 합산]</span>' + buildGroupedTagsHtml(result.bestBuild.statDelta || {});
+            tags.innerHTML = '<span style="display:block; font-size:14px; color:#27ae60; font-weight:bold; margin-bottom:4px; padding-bottom:4px;">[' + (status === 'heuristic' ? '빠른 추천' : '전역 추천') + ' 크리스타 옵션 합산]</span>' + buildGroupedTagsHtml(result.bestBuild.statDelta || {});
             var optionCount = document.getElementById('d4RecommendationOptionCount');
             if (optionCount) optionCount.textContent = '· 적용 옵션 ' + Object.keys(result.bestBuild.statDelta || {}).filter(function(key) { return Number(result.bestBuild.statDelta[key]) !== 0; }).length + '개';
-            var summaryLabel = status === 'exact' ? '모든 남은 가지의 상한을 넘어 전역 최적임을 증명했습니다.' : status === 'paused' ? '계산을 일시 정지했습니다. 같은 탐색 상태에서 재개할 수 있습니다.' : '시간 제한에서 찾은 최선해입니다. 표시된 gap보다 실제 최적해와의 차이가 클 수 없습니다.';
+            var summaryLabel = status === 'exact' ? '모든 남은 가지의 상한을 넘어 전역 최적임을 증명했습니다.' : status === 'paused' ? '계산을 일시 정지했습니다. 같은 탐색 상태에서 재개할 수 있습니다.' : status === 'heuristic' ? 'Greedy와 좌표 개선으로 빠르게 찾은 초기해입니다. 전역 최적성은 아직 검사하지 않았습니다.' : '시간 제한에서 찾은 최선해입니다. 표시된 gap보다 실제 최적해와의 차이가 클 수 없습니다.';
             var runtimeSummary = '';
             if (d4EngineText(result)) runtimeSummary += '<span>엔진 <b>' + d4Escape(d4EngineText(result)) + '</b></span>';
             if (Number.isFinite(Number(result.threadsUsed))) runtimeSummary += '<span>스레드 <b>' + Math.max(1, Math.floor(Number(result.threadsUsed))) + '개</b></span>';
             if (result.gpuPolicy) runtimeSummary += '<span>GPU <b>' + d4Escape(result.gpuPolicy === 'cpu-only.p7' ? '미사용' : String(result.gpuPolicy)) + '</b></span>';
-            list.innerHTML = '<details class="result-detail-panel d4-calculation-detail"><summary>계산 상세 및 최적화 검증</summary><div class="top3-row d4-global-summary"><b>' + d4Escape(summaryLabel) + '</b><div class="d4-global-summary-grid"><span>상태 <b>' + d4Escape(status) + '</b></span><span>대미지 <b>' + d4FormatNumber(finalScore) + '</b></span><span>평가 <b>' + Number(result.evaluations || 0).toLocaleString() + '회</b></span><span>보장 오차 <b>' + d4GapText(result.optimalityGap) + '</b></span>' + runtimeSummary + '</div></div></details>';
+            list.innerHTML = '<details class="result-detail-panel d4-calculation-detail"><summary>계산 상세 및 최적화 검증</summary><div class="top3-row d4-global-summary"><b>' + d4Escape(summaryLabel) + '</b><div class="d4-global-summary-grid"><span>상태 <b>' + d4Escape(status) + '</b></span><span>대미지 <b>' + d4FormatNumber(finalScore) + '</b></span><span>평가 <b>' + Number(result.evaluations || 0).toLocaleString() + '회</b></span><span>보장 오차 <b>' + (status === 'heuristic' ? '미검사' : d4GapText(result.optimalityGap)) + '</b></span>' + runtimeSummary + '</div></div></details>';
             if (window.lastEffData) window.lastEffData.optimizedOutcome = result.outcomes;
         }
 
@@ -682,6 +695,29 @@ if (document.readyState === 'loading') {
             return window.ToramD4ExecutionAdapter.execute(problem, callbacks, options);
         }
 
+        function startD4GreedyPreview(baseCtx, scenarioSnapshot, currentCrystas, locks, currentEvaluation) {
+            var version = ++d4Runtime().runVersion;
+            if (window.ToramD4ExecutionAdapter) {
+                window.ToramD4ExecutionAdapter.cancel('빠른 추천으로 전환합니다.');
+                window.ToramD4ExecutionAdapter.disposeContinuation();
+            }
+            d4Runtime().lastOptimizationResult = null;
+            setD4RecommendationApplyAvailability(false);
+            document.getElementById('top3ListContainer').innerHTML = '<div class="top3-row">Greedy 기반 초기해를 빠르게 찾고 있습니다.</div>';
+            document.getElementById('globalEffTextBadge').textContent = '빠른 추천 계산 중…';
+            window.setTimeout(function () {
+                if (version !== d4Runtime().runVersion) return;
+                try {
+                    var problem = compileD4GlobalCrystaProblem(baseCtx, scenarioSnapshot, currentCrystas, locks);
+                    d4Runtime().lastOptimizationRequest = { mode:'preview', problem:problem, currentEvaluation:currentEvaluation, currentCrystas:currentCrystas.slice(), locks:locks.slice() };
+                    var result = findD4GreedyInitialSolution(problem, { heuristicCandidateLimit:96, heuristicPasses:2, skipParetoPreparation:true });
+                    if (version === d4Runtime().runVersion) renderD4GlobalResult(result, currentEvaluation, locks, { preview:true });
+                } catch (error) {
+                    renderD4GlobalResult({ status:'invalid', diagnostics:[{ code:'PREVIEW_FAILED', message:error.message }] }, currentEvaluation, locks, { preview:true });
+                }
+            }, 0);
+        }
+
         function startD4GlobalOptimization(baseCtx, scenarioSnapshot, currentCrystas, locks, currentEvaluation) {
             var version = ++d4Runtime().runVersion;
             if (window.ToramD4ExecutionAdapter) {
@@ -692,6 +728,8 @@ if (document.readyState === 'loading') {
             if (overview) overview.hidden = true;
             d4Runtime().lastOptimizationResult = null;
             setD4RecommendationApplyAvailability(false);
+            var preciseButton = document.getElementById('d4RunPreciseOptimization');
+            if (preciseButton) preciseButton.disabled = true;
             updateD4Progress({ stage:'preparing', status:'running', elapsedMs:0, evaluations:0, visitedNodes:0, optimalityGap:null }, 'running', false);
             document.getElementById('top3ListContainer').innerHTML = '<div class="top3-row">각 부위를 따로 고르지 않고 8개 슬롯 전체를 하나의 빌드로 계산합니다.</div>';
             document.getElementById('globalEffTextBadge').textContent = '전역 계산 중…';
@@ -805,10 +843,20 @@ function solveD4GlobalCrystaProblem(problem, options) {
     }, options || {}));
 }
 
+function findD4GreedyInitialSolution(problem, options) {
+    if (!window.ToramD4GlobalOptimizer || typeof window.ToramD4GlobalOptimizer.findGreedyInitialSolution !== 'function') throw new Error('D4 빠른 추천기가 연결되지 않았습니다.');
+    return window.ToramD4GlobalOptimizer.findGreedyInitialSolution(problem, Object.assign({
+        registry:window.ToramStatRegistry,
+        evaluator:window.ToramBuildEvaluator,
+        sourceProfile:window.ToramD4SourceProfile
+    }, options || {}));
+}
+
 
 window.ToramApp = window.ToramApp || {};
 window.ToramApp.optimizer = Object.freeze({
     runCalculationSafe: runCalculationSafe,
+    runPreviewSafe: runPreviewSafe,
     compileGlobalCrystaProblem: compileD4GlobalCrystaProblem,
     solveGlobalCrystaProblem: solveD4GlobalCrystaProblem,
     uiSupport:Object.freeze({ runtime:d4Runtime, updateProgress:updateD4Progress, renderGlobalResult:renderD4GlobalResult, renderMarginalUtility:renderMarginalUtility })

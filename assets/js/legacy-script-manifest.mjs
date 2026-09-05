@@ -57,6 +57,7 @@ export const LEGACY_SCRIPT_PATHS = Object.freeze([
   'assets/js/build-draft-store.js',
   'assets/js/application-use-cases.js',
   'assets/js/build-evaluator.js',
+  'assets/js/optimization-preferences.js',
   'assets/js/d4-source-profile.js',
   'assets/js/d4-pair-partition.js',
   'assets/js/d4-problem-compiler.js',

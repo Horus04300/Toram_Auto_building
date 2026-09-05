@@ -1,0 +1,35 @@
+# Repository AI search profile (gitignore syntax).
+# Not a universal AI access control. Apply explicitly: rg --ignore-file .aiignore
+# Keep source code, source evidence, tests and fixtures searchable.
+.git/
+node_modules/
+dist/
+src-tauri/target/
+src-tauri/gen/schemas/
+coverage/
+.cache/
+*.log
+*.tsbuildinfo
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*.ico
+*.woff
+*.woff2
+*.ttf
+*.exe
+*.dll
+*.pdb
+*.zip
+*.7z
+# Read explicitly for dependency work.
+/package-lock.json
+/src-tauri/Cargo.lock
+# Bulk icon matching output; read explicitly for icon/source matching work.
+/assets/source-data/game-icon-skill-match-candidates.json
+/assets/source-data/game-icon-skill-duplicates.json
+/assets/source-data/coryn-skill-simulator/skill_icons_manifest.csv
+/assets/source-data/coryn-skill-simulator/title_icons_manifest.csv
+/assets/game-data/ui/manifest.csv

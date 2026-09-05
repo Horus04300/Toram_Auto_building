@@ -49,6 +49,12 @@ export interface BuildDraft {
 export interface ScenarioContext {
   readonly target: Readonly<Record<string, number | boolean | string>>;
   readonly conditions: Readonly<Record<string, BuildValue>>;
+  readonly optimizationPreferences?: {
+    readonly rangeOverride: 'SHORT' | 'LONG' | null;
+    /** null disables the corresponding hard constraint; an omitted key follows the dynamic default. */
+    readonly requirements: Readonly<Record<string, number | null>>;
+    readonly bannedCrystas: readonly string[];
+  };
 }
 
 /** Conditions for one calculation only; they must not be persisted in BuildDraft. */

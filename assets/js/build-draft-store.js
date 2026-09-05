@@ -48,7 +48,10 @@
       skillLevels:skillLevels(), activeBuffs:activeBuffs(), combo:comboEntries()
     };
   }
-  function scenarioFromUi() { return { target:{ bossLevel:number(value('bossLevel')), bossDef:number(value('bossDef')), bossMdef:number(value('bossMdef')), bossCritResist:number(value('bossCritResist')), bossPhysResist:number(value('bossPhysResist')), bossMagResist:number(value('bossMagResist')) }, conditions:{} }; }
+  function scenarioFromUi() {
+    var preferences = root.ToramOptimizationPreferences && typeof root.ToramOptimizationPreferences.read === 'function' ? root.ToramOptimizationPreferences.read() : { rangeOverride:null, requirements:{}, bannedCrystas:[] };
+    return { target:{ bossLevel:number(value('bossLevel')), bossDef:number(value('bossDef')), bossMdef:number(value('bossMdef')), bossCritResist:number(value('bossCritResist')), bossPhysResist:number(value('bossPhysResist')), bossMagResist:number(value('bossMagResist')) }, conditions:{}, optimizationPreferences:clone(preferences) };
+  }
   function setBuild(build) { state.build = freeze(clone(build)); return state.build; }
   function setScenario(scenario) { state.scenario = freeze(clone(scenario)); return state.scenario; }
   function setRequest(request) { state.request = freeze(clone(request || { selectedSkillId:null, selectedHitId:null, overrides:{} })); return state.request; }
@@ -66,6 +69,7 @@
     document.addEventListener('toram:active-buffs-changed', syncFromUi);
     document.addEventListener('toram:combo-changed', syncFromUi);
     document.addEventListener('toram:build-options-changed', syncFromUi);
+    document.addEventListener('toram:optimization-preferences-changed', syncFromUi);
     document.addEventListener('toram:combo-hit-selected', function (event) { applyComboHit(event.detail || null); });
   }
   root.ToramBuildDraftStore = Object.freeze({ read:read, syncFromUi:syncFromUi, setBuild:setBuild, setScenario:setScenario, setRequest:setRequest });

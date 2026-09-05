@@ -1,6 +1,7 @@
-# D4 전역 최적화 병렬화 계획
+# D4 병렬화 설계·실험 기록
 
-- 상태: P0/P1 계약·회귀 완료, P2 JavaScript pool 불승격, P3~P8 Rust CPU 기본 경로·검증·패키징 완료. 단, native runtime의 deadline·실제 progress·bounded checkpoint/resume·tail·잠금 크리스타 통합 Gate는 미완료이며 `d4-native-runtime-correction-plan.md`의 N0~N6를 따른다.
+- 문서 역할: P0~P8 당시 설계·실험의 근거. 아래 단계별 현재/아직/미완료 표현과 수치는 각 실험 시점 기록이며 제품의 현재 상태가 아니다.
+- 현재 상태는 `docs/handoff/current-development-handoff.md`, 유지할 실행 계약은 `docs/architecture/d4-native-runtime-correction-plan.md`를 따른다. Native deadline/progress/pause/resume을 아래 초기 계획에 따라 다시 구현하지 않는다.
 - 기준일: 2026-08-30
 - 선행 상태: Gate F 종료, 단일 JavaScript Worker 채택본 exact 1,177,836ms
 - 적용 환경: Tauri v2 Windows 데스크톱을 우선하고 일반 브라우저는 JavaScript fallback으로 유지

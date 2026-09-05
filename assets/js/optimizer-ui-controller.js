@@ -36,8 +36,11 @@
     if (continueButton) continueButton.addEventListener('click', function () { resumeD4(support, pause); });
     var applyRecommendation = document.getElementById('d4ApplyRecommendedCrystas');
     if (applyRecommendation) applyRecommendation.addEventListener('click', function () { applyRecommendedCrystas(support, applyRecommendation); });
-    document.addEventListener('input', function () { discardD4ContinuationForInputChange(support); }, true);
-    document.addEventListener('change', function () { discardD4ContinuationForInputChange(support); }, true);
+    var preciseButton = document.getElementById('d4RunPreciseOptimization');
+    if (preciseButton) preciseButton.addEventListener('click', function () { document.dispatchEvent(new Event('toram:calculate')); });
+    document.addEventListener('input', function (event) { if (!(event.target && event.target.closest && event.target.closest('#optimizationRequirementsOverlay'))) discardD4ContinuationForInputChange(support); }, true);
+    document.addEventListener('change', function (event) { if (!(event.target && event.target.closest && event.target.closest('#optimizationRequirementsOverlay'))) discardD4ContinuationForInputChange(support); }, true);
+    document.addEventListener('toram:optimization-preferences-changed', function () { discardD4ContinuationForInputChange(support); });
     root.addEventListener('pagehide', disposeD4Work);
   }
 
@@ -76,13 +79,14 @@
     var state = support.runtime();
     if (!state.lastOptimizationRequest) return;
     var hadContinuation = Boolean(root.ToramD4ExecutionAdapter && root.ToramD4ExecutionAdapter.hasContinuation && root.ToramD4ExecutionAdapter.hasContinuation());
+    var hadResult = Boolean(state.lastOptimizationResult);
     state.lastOptimizationRequest = null;
     state.lastOptimizationResult = null;
     var applyRecommendation = document.getElementById('d4ApplyRecommendedCrystas');
     if (applyRecommendation) { applyRecommendation.hidden = true; applyRecommendation.disabled = true; }
     state.runVersion++;
     if (root.ToramD4ExecutionAdapter) { root.ToramD4ExecutionAdapter.cancel('입력이 변경되어 보존된 정밀 계산을 폐기합니다.'); root.ToramD4ExecutionAdapter.disposeContinuation(); }
-    if (hadContinuation) {
+    if (hadContinuation || hadResult) {
       support.updateProgress({ status:'invalid', diagnostics:[{ code:'D4_CONTINUATION_DISCARDED', message:'입력이 변경되어 이전 정밀 계산 세션을 폐기했습니다. 새 전역 계산을 시작해 주세요.' }] }, 'invalid', false);
       document.getElementById('globalEffTextBadge').textContent = '입력 변경됨';
     }

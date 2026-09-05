@@ -186,6 +186,7 @@
             };
             var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
             applyAttackProfileToContext(ctx, appliedComboHit);
+            if (scopedInput && (scopedInput.rangeOverride === 'SHORT' || scopedInput.rangeOverride === 'LONG')) ctx.rangeType = scopedInput.rangeOverride;
             if (scopedInput && Array.isArray(scopedInput.options)) {
                 scopedInput.options.forEach(function (option) { applyStat(ctx, option.key, parseFloat(option.value) || 0); });
             } else {

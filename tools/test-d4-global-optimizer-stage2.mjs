@@ -84,6 +84,13 @@ const commonOptions = {
   pareto:{ maxComparisons:500000 }
 };
 const oracle = optimizer.exhaustiveSearch(compiled, commonOptions);
+const greedy = optimizer.findGreedyInitialSolution(compiled, Object.assign({}, commonOptions, { skipParetoPreparation:true }));
+assert.equal(greedy.status, 'heuristic', '결과 탭의 빠른 추천은 Greedy 초기해 상태를 반환해야 합니다.');
+assert.ok(greedy.bestBuild && greedy.outcomes?.constraints?.feasible, 'Greedy 초기해도 하드 요구조건을 만족해야 합니다.');
+assert.equal(greedy.upperBound, null, '빠른 추천은 전역 상한을 계산한 것처럼 표시하면 안 됩니다.');
+assert.equal(greedy.optimalityGap, null, '빠른 추천은 최적성 오차를 계산한 것처럼 표시하면 안 됩니다.');
+assert.equal(greedy.visitedNodes, 0, '빠른 추천은 branch-and-bound 노드를 방문하지 않아야 합니다.');
+assert.ok(greedy.score <= oracle.score, 'Greedy 초기해는 전수조사 최적값을 초과할 수 없습니다.');
 const solved = optimizer.optimize(compiled, commonOptions);
 assert.equal(solved.status, 'exact', '소형 8슬롯 문제는 전역 최적임을 증명해야 합니다.');
 assert.equal(solved.score, oracle.score, '전역 탐색 결과는 원시 전수조사 최적값과 같아야 합니다.');

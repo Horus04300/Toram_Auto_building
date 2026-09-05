@@ -1,6 +1,6 @@
 # Toram Auto Building 개발 소스
 
-현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.6.0`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
+현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.6.3`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
 
 ## 구조
 
@@ -32,6 +32,7 @@
 - `docs/skill-data-schema.md`: 전투 스킬 데이터 계약
 - `docs/skill-tree-verification-standard.md`: S1~S5 검증 기준
 - `docs/handoff/current-development-handoff.md`: 현재 구현·검증·배포 상태의 단일 인계 기준
+- `docs/ai-context-guide.md`: AI 작업별 진입점·검색 제외·토큰 소모 구조 감사 (`npm run ai:audit`로 검증)
 
 ## 브라우저 프론트엔드 개발
 

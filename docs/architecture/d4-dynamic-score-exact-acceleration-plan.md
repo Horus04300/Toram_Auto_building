@@ -1,6 +1,6 @@
 # D4 동적 점수 기반 강한 초기해 및 exact 가속 계획
 
-- 상태: S0·S1·S2·S3·S4·S5·S6·S7 완료. S7 승인한 dynamic seed+ordering은 Worker 기본 경로에 연결했고 Replacement Proof 축소는 감사 전용이다.
+- 문서 역할: S0~S7 초기해·탐색 순서·증명 감사의 설계 및 실험 기록. 아래 완료/미연결 표현과 수치는 각 단계 당시 기록이다. 현재 상태는 `docs/handoff/current-development-handoff.md`, 변경 Gate는 `docs/architecture/d4-exact-optimization-plan.md`를 따른다.
 - 기준일: 2026-08-28
 - 목표: 물리 대미지 요소와 Utility의 현재 한계가치를 이용해 빠르게 강한 **실제 완성 빌드**를 만들고, 이를 D4 branch-and-bound의 하한으로 사용하여 `exact` 증명 시간을 줄인다.
 - 상위 계약: `d4-exact-optimization-plan.md`, `d4-crysta-supply-reduction-plan.md`

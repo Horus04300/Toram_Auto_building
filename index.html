@@ -144,7 +144,17 @@
 
         <div id="resultArea" class="result-box" style="display: none;">
 
-            <p id="optimizationBasisLabel" class="optimization-basis-label">[평타] 기준 최적화됨</p>
+            <div class="result-action-bar">
+                <div>
+                    <strong>크리스타 추천</strong>
+                    <span>탭을 열면 빠른 추천만 표시합니다. 정밀 계산은 버튼을 눌러 시작합니다.</span>
+                </div>
+                <div class="result-action-buttons">
+                    <button type="button" id="optimizationRequirementsButton" class="result-secondary-button">요구조건</button>
+                    <button type="button" id="d4RunPreciseOptimization" class="d4-apply-button">정밀 계산 시작</button>
+                </div>
+            </div>
+            <p id="optimizationBasisLabel" class="optimization-basis-label">[평타] 기준 빠른 추천</p>
             <div id="defWarning" class="def-warning" style="display:none;">
                  [방어력 초과 경고]<br>현재 공격력과 스킬 상수의 합이 적의 실방어력을 뚫지 못해 기본 타격 데미지가 바닥(1)을 친 상태입니다!<br>
                 <span style="font-weight:normal; font-size:13px;">이 상태에서는 공격력이나 관통력이 아주 조금만 올라도 데미지가 수백%씩 폭증하는 수학적 착시 현상(효율 과표집)이 발생합니다. 정확한 효율을 보시려면 스킬 상수를 높은 값으로 조정하거나, 적 방어력을 낮춰주세요.</span>
@@ -152,7 +162,7 @@
 
             <section id="d4RecommendationOverview" class="d4-recommendation-overview" hidden aria-live="polite">
                 <div class="d4-recommendation-heading">
-                    <div><span class="d4-eyebrow">전역 최적 크리스타 추천</span><h2>현재 빌드에서 무엇이 달라지는지</h2></div>
+                    <div><span id="d4RecommendationEyebrow" class="d4-eyebrow">빠른 크리스타 추천</span><h2>현재 빌드에서 무엇이 달라지는지</h2></div>
                     <div class="d4-recommendation-actions">
                         <span id="top3CurrentDmgBadge" class="d4-recommendation-certification"></span>
                         <button type="button" id="d4ApplyRecommendedCrystas" class="d4-apply-button" hidden>추천 크리스타를 장비에 적용</button>
@@ -215,6 +225,30 @@
             </details>
         </div>
 
+    </div>
+
+    <div id="optimizationRequirementsOverlay" class="build-file-overlay" hidden>
+        <section class="build-file-dialog optimization-requirements-dialog" role="dialog" aria-modal="true" aria-labelledby="optimizationRequirementsTitle">
+            <header class="build-file-dialog-header">
+                <div><h2 id="optimizationRequirementsTitle">최적화 요구조건</h2><p>체크한 조건을 만족하는 크리스타 조합만 추천합니다.</p></div>
+                <button type="button" id="optimizationRequirementsClose" class="build-file-dialog-close" aria-label="요구조건 닫기">×</button>
+            </header>
+            <div class="optimization-requirement-list">
+                <label data-optimization-requirement="maxHp" data-fallback="10000"><input class="optimization-requirement-enabled" type="checkbox"><span>최대 HP</span><input class="optimization-requirement-value" type="number" min="0" step="100"><small class="optimization-requirement-default"></small></label>
+                <label data-optimization-requirement="maxMp" data-fallback="2000"><input class="optimization-requirement-enabled" type="checkbox"><span>최대 MP</span><input class="optimization-requirement-value" type="number" min="0" step="100"><small class="optimization-requirement-default"></small></label>
+                <label data-optimization-requirement="amprBeforeDual" data-fallback="100"><input class="optimization-requirement-enabled" type="checkbox"><span>듀얼 적용 전 AMPR</span><input class="optimization-requirement-value" type="number" min="0" step="1"><small class="optimization-requirement-default"></small></label>
+                <label data-optimization-requirement="normalAttackCrit" data-fallback="100"><input class="optimization-requirement-enabled" type="checkbox"><span>평타 크리티컬</span><input class="optimization-requirement-value" type="number" min="0" step="1"><small class="optimization-requirement-default"></small></label>
+                <label data-optimization-requirement="aspd" data-fallback="1000"><input class="optimization-requirement-enabled" type="checkbox"><span>ASPD</span><input class="optimization-requirement-value" type="number" min="0" step="100"><small class="optimization-requirement-default"></small></label>
+            </div>
+            <p class="optimization-requirement-help">조건을 끄면 해당 수치는 추천 제한에 사용하지 않습니다. 기본값은 선택한 거리와 습득 스킬에 따라 달라질 수 있습니다.</p>
+            <p id="optimizationRequirementsStatus" class="build-file-storage-status" role="status"></p>
+            <div class="optimization-requirement-actions">
+                <button type="button" id="optimizationRequirementsReset" class="result-secondary-button">기본값 복원</button>
+                <span></span>
+                <button type="button" id="optimizationRequirementsCancel" class="result-secondary-button">취소</button>
+                <button type="button" id="optimizationRequirementsApply" class="d4-apply-button">적용</button>
+            </div>
+        </section>
     </div>
 
     <script type="module" src="assets/js/app-entry.mjs"></script>

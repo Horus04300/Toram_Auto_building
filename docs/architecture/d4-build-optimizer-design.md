@@ -1,8 +1,8 @@
 # D4 빌드 최적화 알고리즘 설계
 
-- 상태: 설계 완료, 2단계 크리스타 전역 탐색 엔진 구현 완료(실사용 UI 연결 전)
+- 문서 역할: 초기 알고리즘 설계와 확장 가설. 구현 현황은 `docs/handoff/current-development-handoff.md`, 변경 Gate는 `docs/architecture/d4-exact-optimization-plan.md`를 따른다.
 - 기준일: 2026-08-24
-- 범위: 크리스타 전역 조합, 고정 장비 후보, 유저 제작 장비 8옵션 자동 설계, 대미지 외 Utility
+- 설계 범위: 크리스타 전역 조합, 고정 장비 후보, 유저 제작 장비 8옵션 자동 설계, 대미지 외 Utility. 이 목록은 현재 구현/승인 범위가 아니며 자동 옵션 부여는 사용자 보류다.
 - 선택 알고리즘: **전역 제약 기반 Anytime Pareto Branch-and-Bound**
 - 구현 선행조건: `docs/architecture/d4-build-optimizer-prerequisites.md`
 

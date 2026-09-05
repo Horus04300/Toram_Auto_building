@@ -1,6 +1,6 @@
 # D4 실제 최종 강화 크리스타 전수 분석 기반 사전 축소 계획
 
-- 상태: 구현 전 계획 골격
+- 문서 역할: 공급 구조 기반 축소의 설계 가설. 아래 단계는 구현 여부나 새 구현 승인을 뜻하지 않는다. 실제 채택은 코드와 `docs/architecture/d4-exact-optimization-plan.md`의 증명 Gate로 확인한다.
 - 기준일: 2026-08-26
 - 목표: 실제 사용 가능한 최종 강화 크리스타의 공급 구조를 전수 분석해, `exact`를 훼손하지 않는 `Proven Drop`만 D4 후보 컴파일 단계에 연결한다.
 - 상위 계약: `d4-exact-optimization-plan.md`, `d4-build-optimizer-design.md`, `d4-build-optimizer-prerequisites.md`

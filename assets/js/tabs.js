@@ -48,7 +48,7 @@
             selectTab(id);
             if (id === 'buffs' && window.ToramActiveBuffs) window.ToramActiveBuffs.render();
         }); });
-        buttons.results.addEventListener('click', function () { document.dispatchEvent(new Event('toram:calculate')); });
+        buttons.results.addEventListener('click', function () { document.dispatchEvent(new Event('toram:preview')); });
         window.revealResultTab = function () { selectTab('results'); };
 
         const firstChild = container.firstChild;

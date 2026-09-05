@@ -11,7 +11,7 @@ const draft = {
   equipment:{ mainWeapon:{ type:'한손검', attack:500, refinement:15, stability:80, options:[{ key:'ATK', value:10 }], crystas:['fixture', ''], lockedCrystaSlots:[true, false] }, subWeapon:{ type:'방패', attack:0, refinement:15, stability:0, options:[], crystas:[], lockedCrystaSlots:[] }, armor:{ type:'일반', attack:null, refinement:null, stability:null, options:[], crystas:[], lockedCrystaSlots:[] }, additional:{ type:null, attack:null, refinement:null, stability:null, options:[], crystas:[], lockedCrystaSlots:[] }, special:{ type:null, attack:null, refinement:null, stability:null, options:[], crystas:[], lockedCrystaSlots:[] } },
   externalOptions:[{ key:'MAXMP', value:100 }], skillLevels:{ Blade:{ 0:10 } }, activeBuffs:{ 'Blade:16':{ active:true, stacks:3 } }, combo:[{ skillId:'Blade:0', tag:'none', includeSpecialAttack:false, inputs:{} }]
 };
-const captured = { build:draft, scenario:{ target:{ bossLevel:300, bossDef:1000, bossMdef:500, bossCritResist:10, bossPhysResist:20, bossMagResist:30 }, conditions:{} }, request:{ selectedSkillId:'Blade:0', selectedHitId:'main', overrides:{ appliedComboHit:{ skillId:'Blade:0', hitId:'main', skillMult:2, skillConst:100, atkType:'PHYS', rangeType:'SHORT' } } } };
+const captured = { build:draft, scenario:{ target:{ bossLevel:300, bossDef:1000, bossMdef:500, bossCritResist:10, bossPhysResist:20, bossMagResist:30 }, conditions:{}, optimizationPreferences:{ rangeOverride:'LONG', requirements:{ maxHp:null }, bannedCrystas:['fixture-ban'] } }, request:{ selectedSkillId:'Blade:0', selectedHitId:'main', overrides:{ appliedComboHit:{ skillId:'Blade:0', hitId:'main', skillMult:2, skillConst:100, atkType:'PHYS', rangeType:'SHORT' } } } };
 let passiveCalls = 0;
 const window = {
   ToramBuildDraftStore:{ read:() => captured },
@@ -26,6 +26,7 @@ const window = {
     assert.equal(scope.kernelInput.options.length, 2);
     assert.equal(scope.skillLevels.Blade[0], 10);
     assert.equal(scope.activeBuffs['Blade:16'].stacks, 3);
+    assert.equal(scope.kernelInput.rangeOverride, 'LONG', '사용자가 고른 거리 판정은 계산 커널 입력으로 전달돼야 합니다.');
     return { level:scope.kernelInput.controls.charLevel, strBase:scope.kernelInput.controls.strBase, crtBase:scope.kernelInput.controls.crtBase, scopedOptions:scope.kernelInput.options.length };
   },
   simulateWithCrystas:(base, crystas) => ({ finalSTR:base.strBase, finalINT:0, finalVIT:0, finalAGI:0, finalDEX:0, finalATK:base.scopedOptions, finalMATK:0, finalASPD:0, finalCSPD:0, finalStab:0, finalWeaponAttack:0, crystas })
@@ -45,6 +46,7 @@ assert.equal(result.snapshot.build.character.attributes.STR, 100, 'Snapshot은 �
 const contracts = await read('frontend/domain/calculation-contracts.ts');
 assert.match(contracts, /externalOptions: readonly StatOptionDraft\[\]/);
 assert.match(contracts, /includeSpecialAttack: boolean/);
+assert.match(contracts, /optimizationPreferences\?/);
 const storeSource = await read('assets/js/build-draft-store.js');
 assert.match(storeSource, /ToramUiState/);
 assert.match(storeSource, /ToramRuntimeState/);
