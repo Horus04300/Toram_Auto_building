@@ -50,6 +50,10 @@ jobs:
           rustup component add rustfmt clippy
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: G2 - Web regressions
+        env:
+          # GitHub's shared Windows runner can need more time than the local
+          # performance fixture. The correctness assertions remain unchanged.
+          D4_TIME_LIMIT_MS: '10000'
         run: |
           npm run verify:r9
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
