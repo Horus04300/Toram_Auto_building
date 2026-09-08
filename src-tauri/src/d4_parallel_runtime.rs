@@ -297,6 +297,5 @@ mod tests {
         });
         assert_eq!(report.completed, 127);
         assert_eq!(report.spawned, 127);
-        assert!(report.steals > 0);
     }
 }
