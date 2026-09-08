@@ -117,12 +117,16 @@ if (document.readyState === 'loading') {
         function runtimeState() { return window.ToramRuntimeState && window.ToramRuntimeState.get ? window.ToramRuntimeState.get() : { d4:{ runVersion:0, lastOptimizationRequest:null, lastOptimizationResult:null, lastOutcome:null }, calculationQueued:false }; }
         function d4Runtime() { return runtimeState().d4; }
         function queueCalculation(mode) {
+            var updateCoordinator = window.ToramUpdateInstallCoordinator;
+            if (updateCoordinator && updateCoordinator.isLocked()) return;
+            var updateEpoch = updateCoordinator ? updateCoordinator.epoch() : 0;
             if (typeof validateCrystaInputs === 'function' && !validateCrystaInputs()) return;
             if (typeof revealResultTab === 'function') revealResultTab();
             if (runtimeState().calculationQueued) return;
             runtimeState().calculationQueued = true;
             var execute = function () {
                 runtimeState().calculationQueued = false;
+                if (updateCoordinator && (updateCoordinator.isLocked() || updateEpoch !== updateCoordinator.epoch())) return;
                 try { runCalculation(mode); }
                 catch(e) { console.error(e); alert('계산 실행 중 오류가 발생했습니다.\n\n(내부 에러: ' + e.message + ')'); }
             };
@@ -574,6 +578,7 @@ if (document.readyState === 'loading') {
         function updateD4Progress(progress, statusOverride, fromCache) {
             var state = progress || {};
             var status = statusOverride || state.status || 'running';
+            d4Runtime().executionStatus = status;
             var panel = document.getElementById('d4OptimizationProgress');
             var statusEl = document.getElementById('d4OptimizationStatus');
             var metaEl = document.getElementById('d4OptimizationMeta');

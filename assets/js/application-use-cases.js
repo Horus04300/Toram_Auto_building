@@ -40,6 +40,9 @@
   }
   function settingsRepository() { var repository = root.ToramSettingsRepository; if (!repository) throw new Error('Settings Repository가 준비되지 않았습니다.'); return repository; }
   var settings = Object.freeze({
+    flush:function () { return settingsRepository().flushApplicationState(); },
+    getUpdateSettings:function () { return settingsRepository().getUpdateSettings(); },
+    setUpdateSettings:function (value) { return settingsRepository().setUpdateSettings(value); },
     list:function () { return settingsRepository().list(); },
     directory:function () { return settingsRepository().directory(); },
     save:function (name) { return settingsRepository().save(name); },

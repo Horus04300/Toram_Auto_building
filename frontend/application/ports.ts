@@ -18,6 +18,26 @@ export interface SettingsRepository {
   delete(id: string): Promise<void>;
 }
 
+export interface UpdateInfo {
+  readonly currentVersion: string;
+  readonly version: string;
+  readonly notes: string | null;
+  readonly publishedAt: string | null;
+}
+
+export interface UpdateProgress {
+  readonly downloaded: number;
+  readonly total: number | null;
+}
+
+/** Desktop updates are independent of calculation inputs and results. */
+export interface UpdateService {
+  isAvailable(): boolean;
+  check(): Promise<UpdateInfo | null>;
+  install(version: string, onProgress: (progress: UpdateProgress) => void,
+    beforeInstall: () => Promise<void>): Promise<void>;
+}
+
 /** A compiled D4 request. It contains calculation inputs, never DOM or execution details. */
 export interface OptimizationProblem {
   readonly snapshot: CalculationSnapshot;

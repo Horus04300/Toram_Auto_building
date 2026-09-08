@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-09-05 — AI 컨텍스트 정리. 앱 동작 변경 없음.
+- 갱신: 2026-09-08 — 업데이트 알림·설치 및 서명 배포 코드를 0.6.4 일반 릴리스 절차에 포함.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태 판단은 이 문서, 실제 코드, 이번에 실행한 테스트를 함께 사용한다.
 - 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다. 과거 테스트 결과를 이번 실행 결과로 보고하지 않는다.
@@ -13,6 +13,7 @@
 - UI 기능은 build/skills/buffs/combo/optimizer/settings로 분리했다. 전체 기능 지도는 `docs/architecture/current-webapp-feature-map.md`, 최근 감사와 A-01~A-04 처리는 `docs/verification/current-webapp-feature-audit.md`다.
 - 결과 탭은 raw 후보의 Greedy/좌표 개선 초기해를 `heuristic`·최적성 미검사로 표시한다. 자동 결과 표시에서 Pareto 준비·branch-and-bound를 실행하지 않는다. 사용자가 정밀 계산 시작을 누르면 Rust 우선/Worker fallback으로 탐색한다.
 - Native 정밀 계산은 30초 slice의 continuation을 자동 연결한다. 일시정지·재개를 지원하고, 대기 시간을 실행 시간에 넣지 않는다. 입력 변경 시 이전 추천·continuation을 폐기한다. `exact`, `bounded`, `heuristic`, `cancelled`, `invalid`의 의미를 섞지 않는다.
+- 최적화 취소는 빌드 UI의 계산 입력 분류와 확정 변경 이벤트를 사용한다. 세팅/백업 이름·파일 선택·검색어·미적용 요구조건 편집은 결과/continuation을 유지한다. 화면 재렌더의 중복 알림은 Build/Scenario/Request 서명이 같으면 무시한다. 장비·스탯 입력과 실제 스킬/버프/콤보/요구조건 변경, 저장 빌드 복원은 이전 계산을 무효화한다.
 - 추천 적용은 잠기지 않은 크리스타 값만 바꾸며 잠금 상태와 잠긴 값은 보존한다. 후보/상한/동점 변경에는 D4 정확성 Gate가 필요하다. 모든 입력의 10초 exact 달성을 주장하지 않는다.
 - 정밀 Worker의 dynamic seed+ordering은 기본 연결, Replacement Proof 축소는 감사 전용이다. 데스크톱은 Rust CPU 우선이며 JavaScript 병렬 pool과 GPU는 기본 제품 경로로 승격하지 않았다.
 - 콤보의 근거리/원거리 override는 상호 배타적이며 둘 다 해제하면 스킬 기본 판정이다. 트리 탐색·증감 단위·resize는 투자 변경 이벤트를 내지 않는다.
@@ -20,7 +21,10 @@
 
 ## 2. 저장 및 배포
 
-- 소스 패키지 버전은 0.6.3이다. 공개 릴리스 기록은 v0.6.2 Pre-release, 태그/구현 커밋 `dd446e0`이다. 사용자 배포 보류에 따라 커밋·push·태그·릴리스하지 않는다.
+- 소스 패키지 버전은 0.6.4다. 기존 v0.6.3 일반 Latest의 공개 태그 Cargo 버전은 0.6.2여서 태그와 소스가 불일치한다. 새 배포는 package/Cargo/Tauri/두 lockfile/태그의 0.6.4 일치를 검사하고, `release.yml`이 draft 자산 검증 후 Latest로 공개한다.
+- 업데이트: Tauri updater 2.11.0, GitHub Latest 단일 endpoint, 자동 확인 기본 true, 동의 후 다운로드·서명 검증·설치. 별도 UpdateService Port/adapter/controller와 Rust service를 사용한다. 저장 추가값은 schema v2 `appSettings.update.checkOnStartup`뿐이다.
+- 설치 전 실행·일시정지·대기 계산을 확인하고 승인 시 cancel/dispose한다. 다운로드 중 새 계산은 다시 동의를 받고 최신 입력을 재저장한다. 종료/저장 실패 시 설치를 차단한다. 진입점/운영 계약은 `docs/architecture/app-update-release.md`다.
+- 0.6.4 서명 NSIS·`.sig`·`latest.json`을 로컬 생성·검증했다. 키는 저장소 밖에 생성했지만 GitHub Secret 업로드는 자동 승인 검토가 명시 승인/소유 확인 부족으로 거절하여 미등록이다. workflow 실행·공개·vN→vN+1 설치 E2E는 미실행이며 전체 업데이트 완료로 판정하지 않는다. updater 없는 공개본은 첫 지원 버전을 수동 설치해야 한다.
 - 앱 식별자는 `com.toramonline.autobuildcalculator`, 제품명은 `Toram Online Auto Build Calculator`다.
 - 설치 폴더는 LocalAppData 아래 공백 포함 제품명 폴더다. 사용자 세팅은 정확히 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`이며 `settings` 하위 폴더를 추가하지 않는다. 설치 제거와 사용자 데이터 삭제를 혼동하지 않는다.
 - `SettingsRepository`가 `format: toram-auto-build-document`, `schemaVersion: 2`의 `saved-build`와 `application-state`를 관리한다. 이름 있는 빌드는 native JSON, 자동 복원은 단일 `toram.auto-build.application-state.v2` 문서다. UI/D4 runtime 상태는 저장하지 않는다.
@@ -49,6 +53,9 @@
 
 ## 5. 검증 기록과 문서 유지
 
+- 2026-09-07 업데이트: R9, R0 69개 프로세스 종료 성공(native 저장 E2E SKIP 포함), Rust 75개·fmt·clippy, updater 단위/동의/재저장 회귀, 실제 Edge 화면 검증(native install mock), 0.6.4 서명 빌드·공개키 검증·변조 파일 거부, actionlint 통과. 실제 업그레이드·설치 후 사용자 데이터 보존 검증과 구분한다.
+
+- 2026-09-06 입력 무효화 수정: `npm run verify:r9`, Native N5 UI 이벤트/재개·Native client·저장 snapshot·Browser Worker 회귀, S1 427/427, `npm run ai:audit`, `git diff --check` 통과. 세팅 이름 입력의 취소 문제를 수정 전 실패/수정 후 통과로 재현했다. 실제 데스크톱 화면 E2E·Rust 전체·성능 계측은 이번 UI 수정에서 실행하지 않았다.
 - 이전 세션 기록(2026-09-04): `npm run verify:r9`, R0 67개 프로세스 종료 성공, `node tools/test-d-sector.mjs`, `node tools/test-d4-global-optimizer-stage2.mjs`, `npm run desktop:prepare`, Rust 72개 테스트 통과. R0 성공 집계에는 데스크톱 저장 E2E의 `TORAM_E2E_CDP` 미설정 SKIP이 포함되므로 67개 모두 실제 실행 통과로 해석하지 않는다.
 - 2026-09-05 문서 상태 정리 검증: Native client·N5 UI 연결·Blade S4/S5 모델 범위·콤보 태그 회귀가 통과했다. 앞선 구조 감사의 `npm run verify:r9`도 통과했다. 실제 화면 E2E·Rust 전체·성능 P95는 이 문서 정리에서 재실행하지 않았다.
 - 2026-09-05 AI 컨텍스트 정리: `.aiignore`를 `ai:files`/`ai:search` 명령에 명시 연결하고 현재 handoff를 축약했다. 원문·계산·회귀 fixture는 검색에 남겼다. 후속 사용자 요청으로 오래된 AI 전달문·전체 이력 복사본·R1~R9 단계 보고서 12개를 삭제하고 유효한 경계는 현재 안내에 통합했다. 앱 동작과 테스트 코드는 변경하지 않았다. 문서 검증은 `npm run ai:audit`와 `git diff --check`로 재현한다.

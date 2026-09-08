@@ -9,6 +9,8 @@
 export const BASELINE_COMMIT = '37dae51';
 
 export const NORMAL_VALUE_FIXTURES = Object.freeze([
+  'test-updates.mjs',
+  'test-update-release.mjs',
   'test-active-buff-context.mjs',
   'test-assassin-s5.mjs',
   'test-barehand-s5.mjs',

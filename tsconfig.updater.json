@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.runtime.json",
+  "compilerOptions": { "outFile": "./assets/js/tauri-update-adapter.js" },
+  "files": ["./frontend/contracts/update-boundary.d.ts", "./frontend/runtime/tauri-update-adapter.ts"],
+  "include": []
+}

@@ -17,4 +17,5 @@ assert.match(ports, /interface SettingsRepository\b/u, 'SettingsRepository Port�
 assert.match(ports, /interface OptimizationRunner\b/u, 'OptimizationRunner Port가 필요합니다.');
 assert.doesNotMatch(ports, /CalculationGateway/u, '계산 커널을 위한 Gateway를 추가하면 안 됩니다.');
 
-console.log('R2 calculation contracts: PASS (pure contracts, SettingsRepository + OptimizationRunner only)');
+assert.match(ports, /interface UpdateService\b/u, 'UpdateService는 계산 입력과 분리된 외부 Port여야 합니다.');
+console.log('R2 calculation contracts: PASS (pure contracts, SettingsRepository, OptimizationRunner, UpdateService)');

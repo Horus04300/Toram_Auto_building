@@ -80,5 +80,9 @@ export const LEGACY_SCRIPT_PATHS = Object.freeze([
   'assets/js/tauri-build-storage-adapter.js',
   'assets/js/settings-repository.js',
   'assets/js/build-file-storage.js',
+  'assets/js/tauri-update-adapter.js',
+  'assets/js/update-controller.js',
+  'assets/js/update-install-coordinator.js',
+  'assets/js/update-ui-controller.js',
   'assets/js/ui-feature-registry.js'
 ]);

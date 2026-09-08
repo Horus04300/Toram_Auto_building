@@ -8,6 +8,7 @@
     buffs:root.ToramActiveBuffs,
     combo:root.ToramComboUi,
     optimizer:app.optimizerUi,
-    settings:root.ToramBuildFileUi
+    settings:root.ToramBuildFileUi,
+    updates:root.ToramUpdateUi
   });
 }(window));

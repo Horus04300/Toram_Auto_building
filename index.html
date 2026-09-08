@@ -6,6 +6,7 @@
     <meta name="application-version" content="{{APP_VERSION}}">
     <title>토람 온라인 자동 빌드 계산기 {{APP_VERSION}}</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/update.css">
 </head>
 <body>
 
@@ -13,6 +14,31 @@
         <h1>🗡️ 토람 온라인 자동 빌드 계산기 {{APP_VERSION}}</h1>
         <button type="button" id="appBuildStorageButton" class="app-build-storage-button" aria-label="세팅 파일 열기" title="세팅 파일">💾</button>
     </header>
+    <div class="update-toolbar">
+        <label><input type="checkbox" id="updateCheckOnStartup" checked> 시작 시 업데이트 확인</label>
+        <button type="button" id="updateCheck" class="result-secondary-button">업데이트 확인</button>
+        <span id="updateAvailability"></span>
+    </div>
+    <section id="updatePanel" class="update-panel" aria-labelledby="updateTitle" hidden>
+        <h2 id="updateTitle">앱 업데이트</h2>
+        <p id="updateStatus" role="status" aria-live="polite"></p>
+        <pre id="updateNotes"></pre>
+        <progress id="updateProgress" max="100" aria-label="업데이트 다운로드 진행률" hidden></progress>
+        <p id="updateInstallNotice">설치하면 앱이 종료된 뒤 다시 실행됩니다. 현재 세팅은 설치 전에 저장합니다.</p>
+        <div class="update-actions">
+            <button type="button" id="updateInstall" class="d4-apply-button">업데이트</button>
+            <button type="button" id="updateRetryCheck" class="result-secondary-button" hidden>다시 확인</button>
+            <button type="button" id="updateLater" class="result-secondary-button">나중에</button>
+        </div>
+    </section>
+    <dialog id="updateConfirm" class="update-confirm" aria-labelledby="updateConfirmTitle">
+        <h2 id="updateConfirmTitle">업데이트 설치</h2>
+        <p id="updateConfirmMessage"></p>
+        <form method="dialog" class="update-actions">
+            <button value="cancel" class="result-secondary-button" autofocus>취소</button>
+            <button id="updateConfirmAccept" value="approve" class="d4-apply-button">업데이트</button>
+        </form>
+    </dialog>
     <section class="skill-bookmark-section" aria-labelledby="combatSkillBookmarkTitle">
         <div class="skill-bookmark-heading"><h2 id="combatSkillBookmarkTitle">전투스킬</h2><span>무기 · 버프 · 보조</span></div>
         <div class="skill-bookmark-layout"><nav class="skill-category-rail" id="combatCategoryRail" aria-label="스킬 분류"></nav><nav class="skill-tree-rail" id="combatTreeRail" aria-label="스킬트리"></nav><div class="skill-bookmark-stage" id="combatSkillStage" aria-live="polite"></div></div>

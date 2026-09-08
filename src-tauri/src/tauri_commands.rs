@@ -5,6 +5,30 @@ use crate::d4_service::{
 };
 use crate::settings_repository::SettingFile;
 use crate::settings_service::SettingsService;
+use crate::update_service::{UpdateFailure, UpdateInfo, UpdateProgress, UpdateService};
+
+#[tauri::command]
+pub async fn check_for_update(
+    app: tauri::AppHandle,
+    service: tauri::State<'_, UpdateService>,
+) -> Result<Option<UpdateInfo>, UpdateFailure> {
+    service.check(app).await
+}
+#[tauri::command]
+pub async fn download_update(
+    version: String,
+    progress: tauri::ipc::Channel<UpdateProgress>,
+    service: tauri::State<'_, UpdateService>,
+) -> Result<(), UpdateFailure> {
+    service.download(version, progress).await
+}
+#[tauri::command]
+pub async fn install_update(
+    version: String,
+    service: tauri::State<'_, UpdateService>,
+) -> Result<(), UpdateFailure> {
+    service.install(version)
+}
 
 #[tauri::command]
 pub fn settings_directory() -> Result<String, String> {

@@ -32,6 +32,7 @@ rg -n "version" package-lock.json
 ## 생성물의 수정 위치
 
 - `assets/js/tauri-build-storage-adapter.js`는 `frontend/runtime/tauri-build-storage-adapter.ts`에서 `npm run types:emit`으로 생성한다.
+- `assets/js/tauri-update-adapter.js`도 `frontend/runtime/tauri-update-adapter.ts`에서 같은 명령으로 생성한다. 업데이트/배포 진입점은 `docs/architecture/app-update-release.md`다.
 - `assets/js/data/skill-registration-metadata.js`의 원본은 `assets/source-data/skill-registration/`이고 생성기는 `tools/generate-skill-registration.mjs`다.
 - `dist/`는 `npm run desktop:prepare`의 복사 산출물이다. 원본 `index.html`과 `assets/`를 수정한다.
 - 다른 데이터는 생성물이라고 추정하지 않는다. 원문/런타임 데이터 중복은 출처 추적과 회귀에 필요할 수 있다.
@@ -50,7 +51,7 @@ rg -n "version" package-lock.json
 
 ## 유지할 구현 경계
 
-- TypeScript는 `frontend/`를 strict 검사하고 명시적 `any`를 금지한다. 기존 JS 전체를 임의로 `checkJs`에 편입하지 않는다. 외부 Port는 SettingsRepository·OptimizationRunner이며 계산 커널용 Gateway를 추가하지 않는다.
+- TypeScript는 `frontend/`를 strict 검사하고 명시적 `any`를 금지한다. 기존 JS 전체를 임의로 `checkJs`에 편입하지 않는다. 외부 Port는 SettingsRepository·OptimizationRunner·UpdateService이며 계산 커널용 Gateway를 추가하지 않는다.
 - Application은 Store에서 계산 입력을 읽는다. `ToramCalculationInputScope`는 명시 입력을 기존 커널에 전달하는 호출 중 스코프이며 호출 뒤 복원/제거한다. 이름만 보고 legacy로 삭제하지 않는다.
 - 효과 엔진·콤보는 첫 유효 스킬 정의를, 버프 카드만 명시적 `preferStackControl` 정책으로 스택 보강 정의를 선택한다.
 - UI 계산·저장은 Application을 거친다. 탭 재배치는 제목 문자열 대신 `data-ui-section`을 사용한다.

@@ -1,0 +1,13 @@
+.update-toolbar { display:flex; justify-content:flex-end; align-items:center; gap:12px; flex-wrap:wrap; margin:8px 20px; font-size:13px; }
+.update-toolbar label { display:inline-flex; align-items:center; gap:6px; }
+.update-toolbar input { width:auto; margin:0; }
+.update-panel { position:fixed; right:20px; bottom:20px; z-index:1500; width:min(420px, calc(100vw - 40px)); max-height:80vh; overflow:auto; box-sizing:border-box; padding:22px; border:1px solid #b9c8d5; border-radius:12px; background:#fff; color:#24384a; box-shadow:0 8px 36px #132c4933; }
+.update-panel[hidden] { display:none; }
+.update-panel h2, .update-confirm h2 { font-size:18px; margin:0 0 12px; }
+.update-panel pre { font:inherit; white-space:pre-wrap; overflow-wrap:anywhere; max-height:30vh; overflow:auto; }
+.update-panel progress { width:100%; accent-color:#2980b9; }
+.update-panel p, .update-confirm p { line-height:1.6; }
+.update-actions { display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap; }
+.update-confirm { max-width:420px; border:1px solid #b9c8d5; border-radius:12px; padding:24px; color:#24384a; }
+.update-confirm::backdrop { background:#142b4566; }
+#updateInstallNotice { font-size:13px; color:#647789; }

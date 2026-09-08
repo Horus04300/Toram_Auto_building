@@ -12,13 +12,16 @@ mod d4_service;
 mod settings_repository;
 mod settings_service;
 mod tauri_commands;
+mod update_service;
 
 use d4_service::D4OptimizationService;
 use tauri_commands::*;
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_updater::Builder::new().build())
         .manage(D4OptimizationService::default())
+        .manage(update_service::UpdateService::default())
         .invoke_handler(tauri::generate_handler![
             settings_directory,
             d4_hardware_profile,
@@ -31,7 +34,10 @@ fn main() {
             save_setting,
             load_setting,
             overwrite_setting,
-            delete_setting
+            delete_setting,
+            check_for_update,
+            download_update,
+            install_update
         ])
         .run(tauri::generate_context!())
         .expect("failed to run Toram Online Auto Build Calculator");

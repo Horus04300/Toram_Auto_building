@@ -68,6 +68,23 @@
     if (restoring || pendingSave !== null) return;
     pendingSave = root.setTimeout(function () { pendingSave = null; try { saveLastSession(); } catch (error) { console.warn('마지막 세션 저장 실패', error); } }, 0);
   }
+  function getUpdateSettings() {
+    var update = readApplicationState().appSettings.update;
+    return { checkOnStartup:!update || update.checkOnStartup !== false };
+  }
+  function flushApplicationState() {
+    if (restoring || !storage()) throw new Error('현재 세팅을 저장할 수 없어 업데이트를 중단했습니다.');
+    if (pendingSave !== null) { root.clearTimeout(pendingSave); pendingSave = null; }
+    root.ToramBuildDraftStore.syncFromUi();
+    saveLastSession();
+  }
+  function setUpdateSettings(settings) {
+    if (!settings || typeof settings.checkOnStartup !== 'boolean') throw new Error('업데이트 설정이 올바르지 않습니다.');
+    if (!storage()) throw new Error('설정 저장소를 사용할 수 없습니다.');
+    var state = readApplicationState();
+    state.appSettings.update = { checkOnStartup:settings.checkOnStartup };
+    writeApplicationState(applicationState(state.lastSession, state));
+  }
   function restoreSession(session) {
     if (!session || !buildShape(session.build) || !scenarioShape(session.scenario)) return;
     var ui = root.ToramBuildStateUi;
@@ -103,6 +120,6 @@
     restoreLastSession();
     ['toram:persistent-state-changed','toram:skill-investments-changed','toram:active-buffs-changed','toram:combo-changed','toram:build-options-changed'].forEach(function (eventName) { document.addEventListener(eventName, scheduleLastSessionSave); });
   }
-  root.ToramSettingsRepository = Object.freeze({ format:FORMAT, schemaVersion:SCHEMA_VERSION, sessionStorageKey:SESSION_STORAGE_KEY, safeName:safeName, validateSavedBuild:validateSavedBuild, validateApplicationState:validateApplicationState, serializeSavedBuild:serializeSavedBuild, parseSavedBuild:parseSavedBuild, list:list, directory:directory, save:save, overwrite:overwrite, load:load, remove:remove, exportCurrent:exportCurrent, importSavedBuild:importSavedBuild, restoreLastSession:restoreLastSession, saveLastSession:saveLastSession, isNativeAvailable:function () { return Boolean(fileAdapter()); } });
+  root.ToramSettingsRepository = Object.freeze({ flushApplicationState:flushApplicationState, getUpdateSettings:getUpdateSettings, setUpdateSettings:setUpdateSettings, format:FORMAT, schemaVersion:SCHEMA_VERSION, sessionStorageKey:SESSION_STORAGE_KEY, safeName:safeName, validateSavedBuild:validateSavedBuild, validateApplicationState:validateApplicationState, serializeSavedBuild:serializeSavedBuild, parseSavedBuild:parseSavedBuild, list:list, directory:directory, save:save, overwrite:overwrite, load:load, remove:remove, exportCurrent:exportCurrent, importSavedBuild:importSavedBuild, restoreLastSession:restoreLastSession, saveLastSession:saveLastSession, isNativeAvailable:function () { return Boolean(fileAdapter()); } });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
 }(window));

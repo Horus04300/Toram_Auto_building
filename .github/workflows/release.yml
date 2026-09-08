@@ -1,0 +1,106 @@
+name: Windows release
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing release tag, e.g. v0.6.4'
+        required: true
+        type: string
+permissions:
+  contents: write
+concurrency:
+  group: windows-release
+  cancel-in-progress: false
+jobs:
+  release:
+    runs-on: windows-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        shell: pwsh
+    env:
+      RELEASE_TAG: ${{ inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ inputs.tag || github.ref_name }}
+          fetch-depth: 0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22'
+          cache: npm
+      - name: G1 - Version and tag
+        run: |
+          node tools/release-version.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          git merge-base --is-ancestor HEAD origin/main
+          if ($LASTEXITCODE -ne 0) { throw 'Release must come from main.' }
+          $existing = gh release view $env:RELEASE_TAG --json isDraft 2>$null
+          if ($LASTEXITCODE -eq 0 -and -not ($existing | ConvertFrom-Json).isDraft) { throw 'Published releases must not be overwritten.' }
+          exit 0
+      - run: npm ci
+      - name: Rust toolchain
+        run: |
+          rustup update stable
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          rustup default stable
+          rustup component add rustfmt clippy
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: G2 - Web regressions
+        run: |
+          npm run verify:r9
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          npm run test:r0
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: G3 - Rust regressions
+        run: |
+          cargo fmt --manifest-path src-tauri/Cargo.toml --check
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo test --locked --manifest-path src-tauri/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: G4 - Signed Windows installer
+        env:
+          TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+          TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+        run: |
+          if (-not $env:TAURI_SIGNING_PRIVATE_KEY) { throw 'Set the updater signing Secret before release.' }
+          npm run desktop:build -- --target x86_64-pc-windows-msvc
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: G5 - Verify signature and build manifest
+        run: |
+          # Keep the common release tooling path independent of Cargo's target-specific output.
+          New-Item -ItemType Directory -Force src-tauri/target/release/bundle/nsis | Out-Null
+          Copy-Item src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/* src-tauri/target/release/bundle/nsis/
+          $env:RELEASE_NOTES_PATH = Join-Path $env:RUNNER_TEMP 'release-notes.md'
+          gh api "repos/$env:GITHUB_REPOSITORY/releases/generate-notes" -f "tag_name=$env:RELEASE_TAG" --jq .body | Set-Content -Encoding utf8 $env:RELEASE_NOTES_PATH
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node tools/prepare-update-release.mjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: G6 - Upload all assets before publishing Latest
+        run: |
+          gh release view $env:RELEASE_TAG --json isDraft 2>$null | Out-Null
+          if ($LASTEXITCODE -ne 0) {
+            gh release create $env:RELEASE_TAG --verify-tag --draft --title $env:RELEASE_TAG --notes-file (Join-Path $env:RUNNER_TEMP 'release-notes.md')
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $release = gh release view $env:RELEASE_TAG --json isDraft | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0 -or -not $release.isDraft) { throw 'Only draft release assets may be uploaded.' }
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          $installerName = "ToramOnlineAutoBuildCalculator_${version}_x64-setup.exe"
+          $assets = @($installerName, "$installerName.sig", 'latest.json') | ForEach-Object { Get-Item -LiteralPath (Join-Path 'release-assets' $_) -ErrorAction Stop }
+          foreach ($asset in $assets) {
+            gh release upload $env:RELEASE_TAG $asset.FullName --clobber
+            if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          }
+          $remote = gh release view $env:RELEASE_TAG --json assets | ConvertFrom-Json
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          foreach ($asset in $assets) {
+            if (-not ($remote.assets | Where-Object { $_.name -eq $asset.Name -and $_.size -eq $asset.Length })) { throw 'Remote asset verification failed.' }
+          }
+          gh release edit $env:RELEASE_TAG --draft=false --prerelease=false --latest --notes-file (Join-Path $env:RUNNER_TEMP 'release-notes.md')
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

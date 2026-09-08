@@ -55,9 +55,10 @@
       var level = element('charLevel'); if (level) level.dispatchEvent(new Event('input', { bubbles:true }));
     } finally { restoring = false; if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi(); }
   }
-  function relevant(target) { if (!target || target.nodeType !== 1) return false; if (staticIds.indexOf(target.id) >= 0 || target.closest('.opt-row') || target.closest('.autocomplete-items')) return true; return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn')); }
+  function isCalculationInput(target) { return Boolean(target && target.nodeType === 1 && (staticIds.indexOf(target.id) >= 0 || target.closest && target.closest('.opt-row'))); }
+  function relevant(target) { if (!target || target.nodeType !== 1) return false; if (isCalculationInput(target) || target.closest('.autocomplete-items')) return true; return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn')); }
   function notify() { if (restoring || pending !== null) return; pending = root.setTimeout(function () { pending = null; document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }, 0); }
   function initialize() { ['input','change','click'].forEach(function (type) { document.addEventListener(type, function (event) { if (relevant(event.target)) notify(); }); }); }
-  root.ToramBuildStateUi = Object.freeze({ restoreSession:restoreSession });
+  root.ToramBuildStateUi = Object.freeze({ restoreSession:restoreSession, isCalculationInput:isCalculationInput });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
 }(window));
