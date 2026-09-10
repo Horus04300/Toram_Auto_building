@@ -42,7 +42,7 @@ try {
   page.once('dialog', dialog => dialog.accept());
   await page.locator('#buildSettingOverwrite').click();
   await page.waitForFunction(name => document.querySelector('#buildFileStorageStatus')?.textContent?.includes(name + '.json 덮어쓰기 완료'), testName);
-  await setLevel(page, 333);
+  await setLevel(page, 300);
   await page.locator('#buildSettingList').selectOption(testName + '.json');
   await page.locator('#buildSettingLoad').click();
   await page.waitForFunction(() => Number(document.querySelector('#charLevel')?.value) === 222);

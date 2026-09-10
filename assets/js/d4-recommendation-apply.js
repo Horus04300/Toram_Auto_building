@@ -36,8 +36,8 @@
         var lockInput = input(documentRef, group.lockIds[index]);
         if (lockInput.checked) {
           var lockedName = String(valueInput.value || '').trim();
-          if (!lockedName) throw new Error('잠긴 크리스타 슬롯이 비어 있습니다. 잠금을 해제하거나 값을 입력해 주세요.');
-          removeLockedName(names, lockedName, group.slot);
+          // Empty locked slots occupy capacity but have no candidate name to remove.
+          if (lockedName) removeLockedName(names, lockedName, group.slot);
         } else {
           writable.push(valueInput);
         }

@@ -5,7 +5,7 @@
   // These identifiers are deliberately part of the cache contract.  A formula,
   // tree-splitting, runtime or GPU-policy change must not reuse a result made
   // under a different exact-search contract.
-  var CALCULATION_VERSION = 'd4-native-evaluator.v1';
+  var CALCULATION_VERSION = 'd4-native-evaluator.v2';
   var ENGINE_VERSION = 'd4-native-solver.v1';
   var SPLIT_POLICY = 'candidate-tree-2axis-smallbox64.v1';
   var GPU_POLICY = 'cpu-only.p7';

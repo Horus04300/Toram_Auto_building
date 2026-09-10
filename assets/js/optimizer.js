@@ -640,6 +640,16 @@ if (document.readyState === 'loading') {
             var finalText = document.getElementById('finalRecText');
             var badge = document.getElementById('globalEffTextBadge');
             var tags = document.getElementById('finalRecTags');
+            var finalContainer = document.getElementById('finalRecContainer');
+            var optionCount = document.getElementById('d4RecommendationOptionCount');
+            var hasRecommendation = status !== 'cancelled' && result && result.bestBuild && result.outcomes;
+            if (finalContainer) finalContainer.hidden = !hasRecommendation;
+            if (!hasRecommendation) {
+                if (finalText) finalText.textContent = '';
+                if (tags) tags.textContent = '';
+                if (optionCount) optionCount.textContent = '';
+                if (window.lastEffData) window.lastEffData.optimizedOutcome = null;
+            }
             if (status === 'cancelled') {
                 d4Runtime().lastOptimizationResult = null;
                 setD4RecommendationApplyAvailability(false);
@@ -653,7 +663,9 @@ if (document.readyState === 'loading') {
                 setD4RecommendationApplyAvailability(false);
                 if (overview) overview.hidden = true;
                 var diagnostic = result && result.diagnostics && result.diagnostics[0];
-                var message = diagnostic && (diagnostic.message || diagnostic.code) || (status === 'cancelled' ? '계산이 취소되어 현재 세팅을 유지합니다.' : 'Utility 요구치와 후보 제한을 만족하는 조합이 없습니다.');
+                var message = diagnostic && diagnostic.code === 'NO_FEASIBLE_GREEDY_BUILD'
+                    ? '빠른 추천에서 요구조건을 만족하는 조합을 찾지 못했습니다. 정밀 계산을 시작하거나 요구조건·잠금·추천 제외 설정을 조정해 주세요. 가능한 조합이 없는 것으로 확정된 것은 아닙니다.'
+                    : diagnostic && diagnostic.message || '추천 결과를 만들지 못했습니다. 요구조건·잠금·추천 제외 설정을 확인하고 다시 계산해 주세요.';
                 if (list) list.innerHTML = '<div class="top3-row"><b>' + d4Escape(message) + '</b></div>';
                 if (badge) badge.textContent = status === 'cancelled' ? '계산 취소됨' : '추천 불가';
                 return;
@@ -680,7 +692,6 @@ if (document.readyState === 'loading') {
             badge.textContent = scoreLabel + d4FormatNumber(finalScore) + ' / 현재 대비 ' + (gain > 0 ? '+' : '') + gain.toFixed(2) + '%' + certification;
             tags.style.display = 'block';
             tags.innerHTML = '<span style="display:block; font-size:14px; color:#27ae60; font-weight:bold; margin-bottom:4px; padding-bottom:4px;">[' + (status === 'heuristic' ? '빠른 추천' : '전역 추천') + ' 크리스타 옵션 합산]</span>' + buildGroupedTagsHtml(result.bestBuild.statDelta || {});
-            var optionCount = document.getElementById('d4RecommendationOptionCount');
             if (optionCount) optionCount.textContent = '· 적용 옵션 ' + Object.keys(result.bestBuild.statDelta || {}).filter(function(key) { return Number(result.bestBuild.statDelta[key]) !== 0; }).length + '개';
             var summaryLabel = status === 'exact' ? '모든 남은 가지의 상한을 넘어 전역 최적임을 증명했습니다.' : status === 'paused' ? '계산을 일시 정지했습니다. 같은 탐색 상태에서 재개할 수 있습니다.' : status === 'heuristic' ? 'Greedy와 좌표 개선으로 빠르게 찾은 초기해입니다. 전역 최적성은 아직 검사하지 않았습니다.' : '시간 제한에서 찾은 최선해입니다. 표시된 gap보다 실제 최적해와의 차이가 클 수 없습니다.';
             var runtimeSummary = '';

@@ -174,9 +174,14 @@ fn atk_stat(main: &str, sub: &str, str_: f64, int_: f64, agi: f64, dex: f64) -> 
         "자동활" => (dex * 4.0, int_ * 3.0 + dex, 0.0),
         "지팡이" => (str_ * 3.0 + int_, int_ * 4.0 + dex, 1.0),
         "마도구" => (int_ * 2.0 + agi * 2.0, int_ * 4.0 + dex, 1.0),
-        "권갑" => (agi * 2.0 + dex * 0.5 + str_ * 0.5, int_ * 4.0 + dex, 0.5),
-        "선풍창" => (floor(str_ * 2.5) + floor(agi * 1.5), int_ * 3.0 + dex, 0.0),
-        "발도검" => (floor(dex * 2.5) + floor(str_ * 1.5), int_ * 3.0 + dex, 0.0),
+        // External evidence: docs/verification/weapon-stat-recommendation-audit-2026-09-09.md
+        "권갑" => (agi * 2.0 + dex * 0.5, int_ * 4.0 + dex, 0.5),
+        "선풍창" => (
+            floor(str_ * 2.5) + floor(agi * 1.5),
+            int_ * 2.0 + agi + dex,
+            0.0,
+        ),
+        "발도검" => (floor(dex * 2.5) + floor(str_ * 1.5), int_ * 1.5 + dex, 0.0),
         _ => (str_, int_ * 3.0 + dex, 0.0),
     }
 }
@@ -552,6 +557,19 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn weapon_stat_coefficients_match_external_evidence() {
+        assert_eq!(
+            atk_stat("권갑", "없음", 100.0, 0.0, 0.0, 0.0),
+            (0.0, 0.0, 0.5)
+        );
+        assert_eq!(atk_stat("선풍창", "없음", 0.0, 100.0, 0.0, 0.0).1, 200.0);
+        assert_eq!(atk_stat("선풍창", "없음", 0.0, 0.0, 100.0, 0.0).1, 100.0);
+        for (int, expected) in [(1.0, 1.5), (2.0, 3.0), (255.0, 382.5), (500.0, 750.0)] {
+            assert_eq!(atk_stat("발도검", "없음", 0.0, int, 0.0, 0.0).1, expected);
+        }
+    }
 
     fn base() -> Value {
         json!({"level":325,"strBase":255,"dexBase":500,"wpnAtk":600,"wpnRefine":15,"wpnStab":80,"mainType":"한손검","subType":"없음","armorType":"경량옷","bossLevel":325,"bossDef":2000,"bossMdef":2000,"critF":200,"aspdF":3000,"maxHpF":20000,"maxMpF":3000,"amprF":200,"skillMult":1,"atkType":"PHYS","rangeType":"SHORT"})

@@ -21,9 +21,17 @@ const gustWeaponBase=context.simulateWithCrystas(Object.assign({},gustCalculator
 const flatUnsheathe=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[]}),[{stats:{UNSHEATHE:100}}]);ok(flatUnsheathe.finalATK===200 && flatUnsheathe.rawAtkBase===400,'일진강풍 미활성 발도위력+는 발도 공격의 기본 대미지 항에만 더함');
 const flatUnsheatheResistance=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],bossPhysResist:50,bossDef:20,skillConst:30}),[{stats:{UNSHEATHE:100}}]);ok(flatUnsheatheResistance.rawAtkBase===260,'내성은 ATK·레벨 차에만 먼저 적용하고 발도공격+·상수·방어력은 이후 계산');
 const statUpAtk=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],mainType:'한손검',strBase:100,strF:100,atkUpSTR:10}),[]);ok(statUpAtk.finalATK===610,'ATK 업(STR%)은 장비·스킬로 오른 STR이 아닌 기본 STR만 적용');
-const statUpMatk=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],intBase:100,intF:100,matkUpINT:10}),[]);ok(statUpMatk.finalMATK===710,'MATK 업(INT%)은 장비·스킬로 오른 INT가 아닌 기본 INT만 적용');
+const statUpMatk=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],intBase:100,intF:100,matkUpINT:10}),[]);ok(statUpMatk.finalMATK===410,'MATK 업(INT%)은 장비·스킬로 오른 INT가 아닌 기본 INT만 적용');
 const decimalKatanaStat=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],level:0,wpnAtk:0,strBase:1,dexBase:1}),[]);ok(decimalKatanaStat.finalATK===3,'발도검 스탯 ATK의 2.5배·1.5배 항은 각각 곱셈 후 내림');
 const statRegistry=context.window.ToramStatRegistry;ok(statRegistry.get('UNSHEATHEP').target==='unsheatheP' && statRegistry.get('UNSHEATHE').target==='unsheatheF','발도위력%·발도위력+ 스탯 레지스트리 분리');
 let gustCombo=Q.evaluate([{skillId:'Mononofu:0',tag:'none'},{skillId:'Mononofu:19',tag:'smite'}],base(),combat,Object.assign({maxMp:1000},gustRuntime));ok(gustCombo.entries[1].hits.length===1 && gustCombo.entries[1].damageMultiplier===1.5,'활성 일진강풍 무풍은 콤보 공격 스킬·강타 대상으로 판정');
 levels(0,{2:10,0:10});let result=Q.evaluate([{skillId:'Mononofu:2',tag:'none'},{skillId:'Mononofu:0',tag:'none'}],base(),combat,{maxMp:1000});ok(result.entries[1].hits[0].constant===300 && result.entries[1].hits[1].constant===400,'삼단뚫기 다음 스킬 상수 증가 1회 적용');
+
+
+// External Katana INT coefficient 1.5: level 100 + INT contribution, then final floor.
+for (const [intBase, expected] of [[1,101],[2,103],[255,482],[500,850]]) {
+ const result=context.simulateWithCrystas(Object.assign({},gustCalculatorBase,{activeBuildConversions:[],intBase}),[]);
+ ok(result.finalMATK===expected, `발도검 INT ${intBase} MATK 경계: ${result.finalMATK}`);
+}
+
 console.log('Mononofu S1-S5 calculator-scope regressions: PASS');

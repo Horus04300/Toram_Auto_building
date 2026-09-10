@@ -556,6 +556,10 @@ button { font-family: inherit; }
 .crysta-input-row { display: grid; grid-template-columns: 38px minmax(0, 1fr) 28px; align-items: center; gap: 4px; }
 .crysta-input-row .lock-label { position: relative; display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-height: 28px; padding: 0; border-radius: var(--radius-sm); font-size: 12px; line-height: 1; }
 .crysta-input-row .lock-label input { position: absolute; inline-size: 1px; block-size: 1px; opacity: 0; }
+.crysta-input-row .lock-icon { width: 18px; height: 18px; object-fit: contain; }
+.crysta-input-row .lock-icon-locked { display: none; }
+.crysta-input-row .lock-label input:checked ~ .lock-icon-unlocked { display: none; }
+.crysta-input-row .lock-label input:checked ~ .lock-icon-locked { display: block; }
 .crysta-input-row .lock-label:has(input:checked) { background: #fbdfe4; border-color: var(--danger); box-shadow: 0 0 0 2px var(--danger-soft); }
 .equipment-slot .crysta-info { display: flex; width: 100%; min-height: 0; margin: 4px 0 0; padding: 0; gap: 4px; }
 .equipment-slot .crysta-info:empty { display: none; }

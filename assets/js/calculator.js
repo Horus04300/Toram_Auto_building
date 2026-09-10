@@ -350,9 +350,10 @@
             else if (m === '자동활') { statAtk = totalDEX*4; statMatk = totalINT*3 + totalDEX*1; }
             else if (m === '지팡이') { statAtk = totalSTR*3 + totalINT*1; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
             else if (m === '마도구') { statAtk = totalINT*2 + totalAGI*2; statMatk = totalINT*4 + totalDEX*1; matkRatio = 1.0; }
-            else if (m === '권갑') { statAtk = totalAGI*2 + totalDEX*0.5 + totalSTR*0.5; statMatk = totalINT*4 + totalDEX*1; matkRatio = 0.5; }
-            else if (m === '선풍창') { statAtk = Math.floor(totalSTR * 2.5) + Math.floor(totalAGI * 1.5); statMatk = totalINT*3 + totalDEX*1; }
-            else if (m === '발도검') { statAtk = Math.floor(totalDEX * 2.5) + Math.floor(totalSTR * 1.5); statMatk = totalINT*3 + totalDEX*1; }
+    // External coefficient evidence: docs/verification/weapon-stat-recommendation-audit-2026-09-09.md
+    else if (m === '권갑') { statAtk = totalAGI*2 + totalDEX*0.5; statMatk = totalINT*4 + totalDEX*1; matkRatio = 0.5; }
+    else if (m === '선풍창') { statAtk = Math.floor(totalSTR * 2.5) + Math.floor(totalAGI * 1.5); statMatk = totalINT*2 + totalAGI + totalDEX; }
+    else if (m === '발도검') { statAtk = Math.floor(totalDEX * 2.5) + Math.floor(totalSTR * 1.5); statMatk = totalINT*1.5 + totalDEX; }
             else { statAtk = totalSTR*1; statMatk = totalINT*3 + totalDEX*1; }
 
             var conversionAddMatk = 0;
