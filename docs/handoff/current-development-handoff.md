@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-09-10 — 0.6.5 릴리스 준비 및 실제 자동 업데이트 검증 진행.
+- 갱신: 2026-09-10 — 0.6.5 Latest 공개 및 실제 0.6.4→0.6.5 자동 업데이트 통과.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태 판단은 이 문서, 실제 코드, 이번에 실행한 테스트를 함께 사용한다.
 - 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다. 과거 테스트 결과를 이번 실행 결과로 보고하지 않는다.
@@ -21,10 +21,10 @@
 
 ## 2. 저장 및 배포
 
-- 소스 버전은 0.6.5다. package/Cargo/Tauri/두 lockfile/태그를 일치시킨다. `release.yml`이 회귀·서명·draft 자산 검증 후 Latest로 공개한다. 0.6.5 공개와 0.6.4→0.6.5 실제 설치 검증은 진행 중이다.
+- 소스·공개 Latest는 0.6.5다. 릴리스 커밋 `217b46d`, 태그 `v0.6.5`; package/Cargo/Tauri/두 lockfile 버전 일치. `release.yml` 회귀·서명·draft 자산 검증 후 일반 Latest 공개 완료.
 - 업데이트: Tauri updater 2.11.0, GitHub Latest 단일 endpoint, 자동 확인 기본 true, 동의 후 다운로드·서명 검증·설치. 별도 UpdateService Port/adapter/controller와 Rust service를 사용한다. 저장 추가값은 schema v2 `appSettings.update.checkOnStartup`뿐이다.
 - 설치 전 실행·일시정지·대기 계산을 확인하고 승인 시 cancel/dispose한다. 다운로드 중 새 계산은 다시 동의를 받고 최신 입력을 재저장한다. 종료/저장 실패 시 설치를 차단한다. 진입점/운영 계약은 `docs/architecture/app-update-release.md`다.
-- 0.6.4 서명 NSIS·`.sig`·`latest.json`을 로컬 생성·검증했다. 2026-09-09 공개 Latest manifest는 HTTP 200·0.6.4로 확인했다. 과거 Secret 업로드 거절 기록으로 현재 공개 여부를 판단하지 않는다. Secret 설정은 재확인하지 않았다. vN→vN+1 설치 E2E는 미실행이며 전체 업데이트 완료로 판정하지 않는다. updater 없는 공개본은 첫 지원 버전을 수동 설치해야 한다.
+- 실제 공개 0.6.4 설치본에서 0.6.5 자동 감지·동의 취소/재승인·다운로드·서명 검증·NSIS 설치·자동 재시작 통과. Build/Scenario·checkOnStartup·named build 보존 확인. 격리 설치 제거 후 기존 사용자 설치·세팅·등록 복원 확인. updater 없는 공개본은 첫 지원 버전을 수동 설치해야 한다. `docs/verification/release-0.6.5-upgrade.md` 참조.
 - 앱 식별자는 `com.toramonline.autobuildcalculator`, 제품명은 `Toram Online Auto Build Calculator`다.
 - 설치 폴더는 LocalAppData 아래 공백 포함 제품명 폴더다. 사용자 세팅은 정확히 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`이며 `settings` 하위 폴더를 추가하지 않는다. 설치 제거와 사용자 데이터 삭제를 혼동하지 않는다.
 - `SettingsRepository`가 `format: toram-auto-build-document`, `schemaVersion: 2`의 `saved-build`와 `application-state`를 관리한다. 이름 있는 빌드는 native JSON, 자동 복원은 단일 `toram.auto-build.application-state.v2` 문서다. UI/D4 runtime 상태는 저장하지 않는다.
@@ -53,7 +53,7 @@
 
 ## 5. 검증 기록과 문서 유지
 
-- 2026-09-10 자동 업데이트: updater JS·배포/저장 계약·Rust 3개·실제 Edge 화면(native install mock) 통과. 공개 Latest 0.6.4 설치 파일의 앱 공개키 서명 검증 및 변조 거부 통과. 실제 버전 상승 설치·재시작·설치 후 데이터 보존은 미실행. `docs/verification/auto-update-audit-2026-09-10.md` 참조.
+- 2026-09-10 릴리스: R9, R0 68개 통과/저장 E2E 1개 SKIP, Rust 79개·fmt·clippy·S1 427건·브라우저 15개 통과. 공개 후 실제 0.6.4→0.6.5 설치·자동 재시작·데이터 보존 및 0.6.5 native 저장 E2E(SKIP 없음) 통과. `docs/verification/release-0.6.5-upgrade.md` 참조.
 
 - 2026-09-10 외부 계수 반영: JS·Rust 권갑 STR→ATK=0, 선풍창 MATK=INT×2+AGI+DEX, 발도검 MATK=INT×1.5+DEX(스탯 항). Native 계산 v2. 110개 exact·상한·전체 빠른 추천 재평가, Native 10,010건·S1 427건·Rust 79건 통과. R0 68개 통과/저장 E2E 1개 SKIP; 수정 후 WebView·설치 빌드 미실행. `docs/verification/weapon-stat-recommendation-audit-2026-09-09.md` 참조.
 
