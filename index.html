@@ -149,10 +149,17 @@
         </div>
 
         <div class="equip-card" data-ui-section="external-buffs" style="background:#f4f6f7;">
-            <h3>🥘 외부 버프 / 요리 / 범용 옵션</h3>
+            <h3>✨ 외부 버프 / 범용 옵션</h3>
             <div class="form-group">
                 <label class="title-label">추가 보정 <button type="button" class="add-opt-btn" data-add-option="buffOpts" style="background:#fff;">+ 옵션 추가</button></label>
                 <div id="buffOpts" style="flex: 1; display: flex; flex-direction: column;"></div>
+            </div>
+        </div>
+        <div class="equip-card" data-ui-section="my-room-food" style="background:#f4f6f7;">
+            <div class="food-heading"><h3>🥘 마이룸 요리</h3><label class="guild-food-toggle"><input type="checkbox" id="guildFoodBuff" checked> 길드 요리 버프 <small>HP +1000, MP +100</small></label></div>
+            <div class="form-group">
+                <div class="title-label food-shortcuts-label">빠른 선택 <div id="myRoomFoodShortcuts" class="food-shortcuts"></div></div>
+                <div id="myRoomFoodSlots"></div>
             </div>
         </div>
         <details class="equipment-blacklist" data-ui-section="crysta-blacklist">

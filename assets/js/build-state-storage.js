@@ -49,6 +49,7 @@
       if (root.ToramSkillUi && root.ToramSkillUi.restore) root.ToramSkillUi.restore(build.skillLevels || {});
       if (root.ToramActiveBuffs && root.ToramActiveBuffs.restore) root.ToramActiveBuffs.restore(build.activeBuffs || {});
       restoreOptions('buffOpts', build.externalOptions);
+      if (root.ToramMyRoomFood) root.ToramMyRoomFood.restore(build.myRoomFood, build.guildFoodBuff);
       if (root.ToramComboUi && root.ToramComboUi.restore) root.ToramComboUi.restore(build.combo || []);
       if (root.ToramOptimizationPreferences && root.ToramOptimizationPreferences.restore) root.ToramOptimizationPreferences.restore(session.scenario && session.scenario.optimizationPreferences);
       if (ui) { ui.onSubWeaponChange(); ui.refreshAllCrystaInfo(); }

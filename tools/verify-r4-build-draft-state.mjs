@@ -12,6 +12,7 @@ const draft = {
   externalOptions:[{ key:'MAXMP', value:100 }], skillLevels:{ Blade:{ 0:10 } }, activeBuffs:{ 'Blade:16':{ active:true, stacks:3 } }, combo:[{ skillId:'Blade:0', tag:'none', includeSpecialAttack:false, inputs:{} }]
 };
 const captured = { build:draft, scenario:{ target:{ bossLevel:300, bossDef:1000, bossMdef:500, bossCritResist:10, bossPhysResist:20, bossMagResist:30 }, conditions:{}, optimizationPreferences:{ rangeOverride:'LONG', requirements:{ maxHp:null }, bannedCrystas:['fixture-ban'] } }, request:{ selectedSkillId:'Blade:0', selectedHitId:'main', overrides:{ appliedComboHit:{ skillId:'Blade:0', hitId:'main', skillMult:2, skillConst:100, atkType:'PHYS', rangeType:'SHORT' } } } };
+draft.guildFoodBuff = false;
 let passiveCalls = 0;
 const window = {
   ToramBuildDraftStore:{ read:() => captured },

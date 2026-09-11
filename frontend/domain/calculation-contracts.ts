@@ -38,6 +38,8 @@ export interface BuildDraft {
   readonly skillLevels: Readonly<Record<string, number>>;
   readonly activeBuffs: Readonly<Record<string, { readonly active: boolean; readonly stacks: number }>>;
   readonly externalOptions: readonly StatOptionDraft[];
+  readonly myRoomFood?: readonly ({ readonly id: string; readonly level: number } | null)[];
+  readonly guildFoodBuff?: boolean;
   readonly combo: readonly {
     readonly skillId: string;
     readonly tag: string;

@@ -87,6 +87,8 @@
         targetPane.append(targetTitle, targetCard);
         const externalBuffCard = container.querySelector(':scope > [data-ui-section="external-buffs"]');
         moveUntil(equipmentStart, externalBuffCard, panels.equipment);
+        const foodCard = container.querySelector(':scope > [data-ui-section="my-room-food"]');
+        if (foodCard) panels.buffs.appendChild(foodCard);
         if (externalBuffCard) panels.buffs.appendChild(externalBuffCard);
         const comboIntro = document.createElement('section');
         comboIntro.className = 'equip-card';

@@ -9,6 +9,7 @@
 export const BASELINE_COMMIT = '37dae51';
 
 export const NORMAL_VALUE_FIXTURES = Object.freeze([
+  'test-my-room-food.mjs',
   'test-updates.mjs',
   'test-update-release.mjs',
   'test-active-buff-context.mjs',

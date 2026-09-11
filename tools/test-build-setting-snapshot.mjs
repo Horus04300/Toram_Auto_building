@@ -20,6 +20,9 @@ const context = { window, document, console, JSON, Date, Blob, URL:{ createObjec
 vm.createContext(context);
 vm.runInContext(await readFile(resolve(root, 'assets/js/settings-repository.js'), 'utf8'), context, { filename:'settings-repository.js' });
 const repository = window.ToramSettingsRepository;
+build.myRoomFood = [{id:'STR',level:10},null,{id:'ELEM_P',level:6},{id:'PHYS_RES',level:10},null];
+const expectedFood = JSON.parse(JSON.stringify(build.myRoomFood));
+build.guildFoodBuff = false;
 
 assert.equal(repository.format, 'toram-auto-build-document');
 assert.equal(repository.schemaVersion, 2);
@@ -29,6 +32,8 @@ assert.equal(files.size, 1);
 const stored = repository.parseSavedBuild(files.get('R6--빌드.json'));
 assert.equal(stored.documentType, 'saved-build');
 assert.equal(stored.build.character.level, 325);
+assert.deepEqual(JSON.parse(JSON.stringify(stored.build.myRoomFood)), expectedFood);
+assert.equal(stored.build.guildFoodBuff, false);
 assert.deepEqual(JSON.parse(JSON.stringify(stored.scenario.optimizationPreferences)), scenario.optimizationPreferences, '거리·요구조건·금지 크리스타 설정을 빌드 문서에 저장해야 합니다.');
 assert.ok(!files.get('R6--빌드.json').includes('"storage"'), 'legacy storage 래퍼를 쓰면 안 됩니다.');
 build = { ...build, character:{ ...build.character, level:1 } };
@@ -37,6 +42,8 @@ assert.equal(repository.parseSavedBuild(files.get('R6--빌드.json')).build.char
 build = { ...build, character:{ ...build.character, level:999 } };
 await repository.load('R6--빌드.json');
 assert.equal(restored.build.character.level, 1);
+assert.deepEqual(JSON.parse(JSON.stringify(restored.build.myRoomFood)), expectedFood);
+assert.equal(restored.build.guildFoodBuff, false);
 assert.deepEqual(JSON.parse(JSON.stringify(restored.scenario.optimizationPreferences)), scenario.optimizationPreferences, '빌드 문서에서 최적화 사용자 설정을 복원해야 합니다.');
 assert.equal(JSON.parse(local.get(repository.sessionStorageKey)).lastSession.build.character.level, 1);
 assert.throws(() => repository.parseSavedBuild(JSON.stringify({ format:repository.format, schemaVersion:1, documentType:'saved-build', storage:{} })), /새 저장 계약/);

@@ -18,6 +18,8 @@
   function kernelInput(build, scenario, request) {
     var equipment = build.equipment || {}, main = equipment.mainWeapon || {}, sub = equipment.subWeapon || {}, armor = equipment.armor || {}, target = scenario && scenario.target || {}, attributes = build.character && build.character.attributes || {};
     var allOptions = Object.keys(equipment).reduce(function (items, slot) { return items.concat(equipment[slot].options || []); }, []).concat(build.externalOptions || []);
+    if (root.ToramFoodCatalog) allOptions = allOptions.concat(root.ToramFoodCatalog.options(build.myRoomFood));
+    if (build.guildFoodBuff !== false) allOptions = allOptions.concat([{key:'MAXHP',value:1000},{key:'MAXMP',value:100}]);
     var optimizationPreferences = scenario && scenario.optimizationPreferences || {};
     return { controls:{ charLevel:build.character && build.character.level, strBase:attributes.STR, intBase:attributes.INT, vitBase:attributes.VIT, agiBase:attributes.AGI, dexBase:attributes.DEX, crtBase:attributes.CRT, mainWeaponType:main.type || '', wpnAtk:main.attack, wpnRefine:main.refinement, wpnStab:main.stability, subWeaponType:sub.type || '', subAtk:sub.attack, subRefine:sub.refinement, subStab:sub.stability, armorType:armor.type || '', bossLevel:target.bossLevel, bossDef:target.bossDef, bossMdef:target.bossMdef, bossCritResist:target.bossCritResist, bossPhysResist:target.bossPhysResist, bossMagResist:target.bossMagResist }, options:allOptions, appliedComboHit:request && request.overrides && request.overrides.appliedComboHit || null, rangeOverride:optimizationPreferences.rangeOverride || null };
   }

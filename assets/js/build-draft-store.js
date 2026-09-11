@@ -45,6 +45,8 @@
       character:{ level:number(value('charLevel')), attributes:{ STR:number(value('strBase')), INT:number(value('intBase')), VIT:number(value('vitBase')), AGI:number(value('agiBase')), DEX:number(value('dexBase')), CRT:number(value('crtBase')) } },
       equipment:{ mainWeapon:equipment('mainWeapon'), subWeapon:equipment('subWeapon'), armor:equipment('armor'), additional:equipment('additional'), special:equipment('special') },
       externalOptions:options('buffOpts'),
+      myRoomFood:root.ToramMyRoomFood ? root.ToramMyRoomFood.getSelections() : [null,null,null,null,null],
+      guildFoodBuff:root.ToramMyRoomFood ? root.ToramMyRoomFood.isGuildEnabled() : true,
       skillLevels:skillLevels(), activeBuffs:activeBuffs(), combo:comboEntries()
     };
   }
