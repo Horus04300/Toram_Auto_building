@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-09-12 — v0.6.6 마이룸 요리 편의성 업데이트 릴리스 준비.
+- 갱신: 2026-09-12 — v0.6.6 마이룸 요리 편의성 업데이트 Latest 공개.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태 판단은 이 문서, 실제 코드, 이번에 실행한 테스트를 함께 사용한다.
 - 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다. 과거 테스트 결과를 이번 실행 결과로 보고하지 않는다.
@@ -22,7 +22,7 @@
 
 ## 2. 저장 및 배포
 
-- 소스는 v0.6.6이며 마이룸 요리 편의성 업데이트를 포함한다. 공개 Latest는 v0.6.5이며, v0.6.6 태그의 `release.yml` 회귀·서명·draft 자산 검증 후 일반 Latest 공개를 대기한다. package/Cargo/Tauri/두 lockfile 버전은 일치해야 한다.
+- 소스·공개 Latest는 v0.6.6이며 마이룸 요리 편의성 업데이트를 포함한다. 릴리스 커밋 `b6ae445`, 태그 `v0.6.6`; [Windows release 실행 34615917240](https://github.com/Horus04300/Toram_Auto_building/actions/runs/34615917240)의 G1~G6가 성공해 일반 Latest로 공개됐다. NSIS 설치 파일·`.sig`·`latest.json` 업로드와 updater manifest version `0.6.6`을 확인했다. package/Cargo/Tauri/두 lockfile 버전은 일치한다. 실제 0.6.5→0.6.6 설치 업데이트·사용자 데이터 보존 Gate는 아직 실행하지 않았다.
 - 업데이트: Tauri updater 2.11.0, GitHub Latest 단일 endpoint, 자동 확인 기본 true, 동의 후 다운로드·서명 검증·설치. 별도 UpdateService Port/adapter/controller와 Rust service를 사용한다. 저장 추가값은 schema v2 `appSettings.update.checkOnStartup`뿐이다.
 - 설치 전 실행·일시정지·대기 계산을 확인하고 승인 시 cancel/dispose한다. 다운로드 중 새 계산은 다시 동의를 받고 최신 입력을 재저장한다. 종료/저장 실패 시 설치를 차단한다. 진입점/운영 계약은 `docs/architecture/app-update-release.md`다.
 - 실제 공개 0.6.4 설치본에서 0.6.5 자동 감지·동의 취소/재승인·다운로드·서명 검증·NSIS 설치·자동 재시작 통과. Build/Scenario·checkOnStartup·named build 보존 확인. 격리 설치 제거 후 기존 사용자 설치·세팅·등록 복원 확인. updater 없는 공개본은 첫 지원 버전을 수동 설치해야 한다. `docs/verification/release-0.6.5-upgrade.md` 참조.
@@ -54,7 +54,7 @@
 
 ## 5. 검증 기록과 문서 유지
 
-- 2026-09-12 v0.6.6 릴리스 준비: `node tools/release-version.mjs`, R9, R0 70/70 통과(실제 Native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정 SKIP), Rust 79개·fmt·clippy, S1 427/427, `git diff --check` 통과. 이번 환경의 `CODEX_PLAYWRIGHT_PATH` 미설정으로 요리 Edge 재실행은 SKIP; 2026-09-11 Edge 검증 결과는 `docs/verification/my-room-food.md`에 있다. 서명 NSIS 빌드·업로더 공개는 v0.6.6 태그의 GitHub Actions에서 실행한다.
+- 2026-09-12 v0.6.6 릴리스: `node tools/release-version.mjs`, R9, R0 70/70 통과(실제 Native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정 SKIP), Rust 79개·fmt·clippy, S1 427/427, `git diff --check` 통과. 이번 환경의 `CODEX_PLAYWRIGHT_PATH` 미설정으로 요리 Edge 재실행은 SKIP; 2026-09-11 Edge 검증 결과는 `docs/verification/my-room-food.md`에 있다. Actions G1~G6이 통과해 서명 NSIS·`.sig`·`latest.json`을 일반 Latest로 공개했다. 실제 0.6.5→0.6.6 설치 업데이트는 미실행이다.
 - 2026-09-11 요리 후속 UI/길드: R6·요리 단위·S1 427건·Edge UI/계산/복원 통과. 최초 R0/Rust 결과는 요리 검증 문서 참조. 빌드/배포 미실행.
 - 2026-09-10 릴리스: R9, R0 68개 통과/저장 E2E 1개 SKIP, Rust 79개·fmt·clippy·S1 427건·브라우저 15개 통과. 공개 후 실제 0.6.4→0.6.5 설치·자동 재시작·데이터 보존 및 0.6.5 native 저장 E2E(SKIP 없음) 통과. `docs/verification/release-0.6.5-upgrade.md` 참조.
 
