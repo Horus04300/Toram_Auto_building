@@ -14,14 +14,18 @@ use std::time::{Duration, Instant};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-use crate::d4_native_evaluator::{evaluate_summary_from_map, D4NativeSummary};
+use crate::d4_native_evaluator::{
+    evaluate_summary_from_native_stats as evaluate_summary_from_map, D4NativeSummary, NativeStats,
+    PreparedContext,
+};
 
 const EPSILON: f64 = 1e-9;
 const GROUP_COUNT: usize = 4;
 const SMALL_BOX_LIMIT: usize = 64;
+pub const SESSION_NODES_PER_WORKER: usize = 32;
 const HEURISTIC_CANDIDATE_LIMIT: usize = 192;
 const HEURISTIC_PASSES: usize = 2;
-type Stats = BTreeMap<String, f64>;
+type Stats = NativeStats;
 
 #[derive(Clone, Serialize, Deserialize)]
 pub struct NativePackage {
@@ -40,7 +44,7 @@ pub struct NativeGroup {
 #[derive(Clone, Serialize, Deserialize)]
 pub struct NativeProblem {
     #[serde(rename = "baseContext")]
-    pub base_context: Value,
+    pub base_context: PreparedContext,
     #[serde(rename = "scenarioSnapshot", default)]
     pub scenario_snapshot: Value,
     #[serde(default)]
@@ -120,6 +124,7 @@ struct TreeNode {
     path: String,
     size: usize,
     envelope: Stats,
+    split_score: f64,
     package: Option<usize>,
     left: Option<Arc<TreeNode>>,
     right: Option<Arc<TreeNode>>,
@@ -161,11 +166,134 @@ struct NativeCheckpointWorkItem {
     paths: [String; GROUP_COUNT],
 }
 
+type NodeOutcome = Result<Option<Vec<WorkItem>>, String>;
+struct NodeBatch {
+    nodes: Vec<WorkItem>,
+    next: AtomicUsize,
+    incumbent: Arc<SharedIncumbent>,
+    counters: Arc<ParallelCounters>,
+    cancel: Option<Arc<AtomicBool>>,
+    deadline: Option<Instant>,
+}
+struct NodeJob {
+    batch: Arc<NodeBatch>,
+    output: std::sync::mpsc::Sender<Vec<(usize, NodeOutcome)>>,
+}
+struct NodePool {
+    input: Option<std::sync::mpsc::Sender<NodeJob>>,
+    workers: Vec<std::thread::JoinHandle<()>>,
+}
+impl NodePool {
+    fn new(
+        problem: &NativeProblem,
+        requirements: Requirements,
+        count: usize,
+    ) -> Result<Self, String> {
+        let (input, receiver) = std::sync::mpsc::channel::<NodeJob>();
+        let receiver = Arc::new(Mutex::new(receiver));
+        let problem = Arc::new(problem.clone());
+        let mut pool = Self {
+            input: Some(input),
+            workers: Vec::new(),
+        };
+        for _ in 0..count.max(1) {
+            let receiver = Arc::clone(&receiver);
+            let problem = Arc::clone(&problem);
+            let worker = std::thread::Builder::new()
+                .name("d4-search".into())
+                .spawn(move || loop {
+                    let job = receiver.lock().expect("D4 job receiver poisoned").recv();
+                    let Ok(job) = job else {
+                        break;
+                    };
+                    let batch = &job.batch;
+                    let mut outcomes = Vec::new();
+                    loop {
+                        // The message shares a batch, but claims stay node-sized
+                        // so expensive nodes do not strand a fixed-size chunk.
+                        let index = batch.next.fetch_add(1, AtomicOrdering::Relaxed);
+                        let Some(node) = batch.nodes.get(index) else {
+                            break;
+                        };
+                        let outcome =
+                            std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+                                expand_parallel_node(
+                                    node.clone(),
+                                    &problem,
+                                    &requirements,
+                                    &batch.incumbent,
+                                    &batch.counters,
+                                    batch.cancel.as_deref(),
+                                    batch.deadline,
+                                )
+                            }))
+                            .unwrap_or_else(|_| Err("D4 search worker panicked".into()));
+                        outcomes.push((index, outcome));
+                    }
+                    if job.output.send(outcomes).is_err() {
+                        break;
+                    }
+                })
+                .map_err(|error| format!("D4 worker creation failed: {error}"))?;
+            pool.workers.push(worker);
+        }
+        Ok(pool)
+    }
+    fn run(
+        &self,
+        nodes: &[WorkItem],
+        incumbent: &Arc<SharedIncumbent>,
+        counters: &Arc<ParallelCounters>,
+        cancel: Option<&Arc<AtomicBool>>,
+        deadline: Option<Instant>,
+    ) -> Result<Vec<NodeOutcome>, String> {
+        let (output, receiver) = std::sync::mpsc::channel();
+        let batch = Arc::new(NodeBatch {
+            nodes: nodes.to_vec(),
+            next: AtomicUsize::new(0),
+            incumbent: Arc::clone(incumbent),
+            counters: Arc::clone(counters),
+            cancel: cancel.cloned(),
+            deadline,
+        });
+        for _ in 0..self.workers.len().min(nodes.len()) {
+            self.input
+                .as_ref()
+                .expect("live pool")
+                .send(NodeJob {
+                    batch: Arc::clone(&batch),
+                    output: output.clone(),
+                })
+                .map_err(|_| "D4 pool stopped".to_string())?;
+        }
+        drop(output);
+        let mut results = (0..nodes.len()).map(|_| None).collect::<Vec<_>>();
+        for outcomes in receiver {
+            for (index, outcome) in outcomes {
+                results[index] = Some(outcome);
+            }
+        }
+        results
+            .into_iter()
+            .map(|result| result.ok_or_else(|| "D4 worker result missing".to_string()))
+            .collect()
+    }
+}
+impl Drop for NodePool {
+    fn drop(&mut self) {
+        self.input.take();
+        for worker in self.workers.drain(..) {
+            let _ = worker.join();
+        }
+    }
+}
+
 struct SharedIncumbent {
     score_bits: AtomicU64,
     record: Mutex<SearchState>,
 }
 
+#[derive(Default)]
 struct ParallelCounters {
     evaluations: AtomicU64,
     visited: AtomicU64,
@@ -212,9 +340,7 @@ impl Ord for WorkItem {
 }
 
 fn add_stats(mut left: Stats, right: &Stats) -> Stats {
-    for (key, value) in right {
-        *left.entry(key.clone()).or_default() += value;
-    }
+    left.add_assign(right);
     left
 }
 
@@ -309,7 +435,10 @@ fn group_envelope(packages: &[NativePackage], indices: &[usize], keys: &[String]
         let maximum = indices
             .iter()
             .map(|index| packages[*index].stat_delta.get(key).copied().unwrap_or(0.0))
-            .fold(0.0_f64, f64::max);
+            // Every completion selects one package, including its penalties.
+            // An absent coordinate is zero; an absent zero-valued package is not.
+            .reduce(f64::max)
+            .unwrap_or(0.0);
         if maximum != 0.0 {
             result.insert(key.clone(), maximum);
         }
@@ -341,11 +470,19 @@ fn build_tree(
     path: String,
 ) -> Arc<TreeNode> {
     let envelope = group_envelope(packages, &indices, keys);
+    // Keep the established split ordering independent of tighter signed bounds.
+    // Cache it once: each node participates in many Cartesian search boxes.
+    let ordering_envelope = envelope
+        .iter()
+        .map(|(key, value)| (key.to_owned(), value.max(0.0)))
+        .collect();
+    let split_score = heuristic_score(&ordering_envelope, "damage");
     if indices.len() <= 1 {
         return Arc::new(TreeNode {
             path,
             size: indices.len(),
             envelope,
+            split_score,
             package: indices.first().copied(),
             left: None,
             right: None,
@@ -402,6 +539,7 @@ fn build_tree(
         path: path.clone(),
         size: sorted.len() + right.len(),
         envelope,
+        split_score,
         package: None,
         left: Some(build_tree(
             packages,
@@ -422,19 +560,42 @@ fn build_tree(
     })
 }
 
-fn requirement(requirements: &Value, key: &str) -> Option<f64> {
-    requirements.get(key).and_then(Value::as_f64)
+#[derive(Clone, Copy, Default)]
+struct Requirements {
+    max_hp: Option<f64>,
+    max_mp: Option<f64>,
+    ampr: Option<f64>,
+    crit: Option<f64>,
+    aspd: Option<f64>,
 }
-
-fn feasible(summary: &D4NativeSummary, requirements: &Value) -> bool {
-    requirement(requirements, "maxHp").is_none_or(|value| summary.final_max_hp as f64 >= value)
-        && requirement(requirements, "maxMp")
-            .is_none_or(|value| summary.final_max_mp as f64 >= value)
-        && requirement(requirements, "amprBeforeDual")
-            .is_none_or(|value| summary.ampr_before_dual as f64 >= value)
-        && requirement(requirements, "normalAttackCrit")
-            .is_none_or(|value| summary.normal_attack_crit as f64 >= value)
-        && requirement(requirements, "aspd").is_none_or(|value| summary.final_aspd as f64 >= value)
+impl Requirements {
+    fn new(value: &Value) -> Self {
+        let read = |key| value.get(key).and_then(Value::as_f64);
+        Self {
+            max_hp: read("maxHp"),
+            max_mp: read("maxMp"),
+            ampr: read("amprBeforeDual"),
+            crit: read("normalAttackCrit"),
+            aspd: read("aspd"),
+        }
+    }
+}
+fn feasible(summary: &D4NativeSummary, requirements: &Requirements) -> bool {
+    requirements
+        .max_hp
+        .is_none_or(|v| summary.final_max_hp as f64 >= v)
+        && requirements
+            .max_mp
+            .is_none_or(|v| summary.final_max_mp as f64 >= v)
+        && requirements
+            .ampr
+            .is_none_or(|v| summary.ampr_before_dual as f64 >= v)
+        && requirements
+            .crit
+            .is_none_or(|v| summary.normal_attack_crit as f64 >= v)
+        && requirements
+            .aspd
+            .is_none_or(|v| summary.final_aspd as f64 >= v)
 }
 
 fn build_id(groups: &[NativeGroup], selected: &[usize; GROUP_COUNT]) -> String {
@@ -459,7 +620,10 @@ fn selection_stats(problem: &NativeProblem, selected: &[usize; GROUP_COUNT]) -> 
 fn box_stats(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> Stats {
     clusters
         .iter()
-        .fold(Stats::new(), |stats, node| add_stats(stats, &node.envelope))
+        .skip(1)
+        .fold(clusters[0].envelope.clone(), |stats, node| {
+            add_stats(stats, &node.envelope)
+        })
 }
 
 fn box_combinations(clusters: &[Arc<TreeNode>; GROUP_COUNT], limit: usize) -> usize {
@@ -472,26 +636,100 @@ fn split_slack(node: &TreeNode) -> f64 {
     let (Some(left), Some(right)) = (&node.left, &node.right) else {
         return f64::NEG_INFINITY;
     };
-    heuristic_score(&node.envelope, "damage")
-        - heuristic_score(&left.envelope, "damage").max(heuristic_score(&right.envelope, "damage"))
+    node.split_score - left.split_score.max(right.split_score)
 }
 
-fn split_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> Vec<usize> {
-    let mut available = clusters
-        .iter()
-        .enumerate()
-        .filter(|(_, node)| node.left.is_some() || node.right.is_some())
-        .map(|(index, node)| (index, split_slack(node), node.size))
-        .collect::<Vec<_>>();
-    available.sort_by(|left, right| {
-        right
+fn split_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> [Option<usize>; 2] {
+    let mut available: [Option<(usize, f64, usize)>; GROUP_COUNT] = std::array::from_fn(|index| {
+        let node = &clusters[index];
+        (node.left.is_some() || node.right.is_some()).then(|| (index, split_slack(node), node.size))
+    });
+    available.sort_by(|left, right| match (left, right) {
+        (Some(left), Some(right)) => right
             .1
             .total_cmp(&left.1)
             .then_with(|| right.2.cmp(&left.2))
-            .then_with(|| left.0.cmp(&right.0))
+            .then_with(|| left.0.cmp(&right.0)),
+        (Some(_), None) => Ordering::Less,
+        (None, Some(_)) => Ordering::Greater,
+        (None, None) => Ordering::Equal,
     });
-    available.into_iter().take(2).map(|entry| entry.0).collect()
+    [
+        available[0].map(|entry| entry.0),
+        available[1].map(|entry| entry.0),
+    ]
 }
+
+/// At most two binary dimensions: produce LL, LR, RL, RR without temporary
+/// vectors or cloning parent handles that would immediately be replaced.
+struct ChildBoxes<'a> {
+    clusters: &'a [Arc<TreeNode>; GROUP_COUNT],
+    splits: [Option<usize>; 2],
+    next: usize,
+}
+
+impl<'a> ChildBoxes<'a> {
+    fn new(clusters: &'a [Arc<TreeNode>; GROUP_COUNT]) -> Self {
+        Self {
+            clusters,
+            splits: split_indices(clusters),
+            next: 0,
+        }
+    }
+
+    fn count_total(&self) -> usize {
+        match self.splits {
+            [None, _] => 0,
+            [Some(_), None] => 2,
+            [Some(_), Some(_)] => 4,
+        }
+    }
+}
+
+impl Iterator for ChildBoxes<'_> {
+    type Item = [Arc<TreeNode>; GROUP_COUNT];
+
+    fn next(&mut self) -> Option<Self::Item> {
+        if self.next >= self.count_total() {
+            return None;
+        }
+        let ordinal = self.next;
+        self.next += 1;
+        let first = self.splits[0].expect("nonempty child iterator has a split");
+        let second = self.splits[1];
+        let first_right = ordinal / if second.is_some() { 2 } else { 1 } != 0;
+        Some(std::array::from_fn(|index| {
+            let node = &self.clusters[index];
+            let selected = if index == first {
+                if first_right {
+                    &node.right
+                } else {
+                    &node.left
+                }
+            } else if Some(index) == second {
+                if ordinal % 2 == 1 {
+                    &node.right
+                } else {
+                    &node.left
+                }
+            } else {
+                return Arc::clone(node);
+            };
+            Arc::clone(
+                selected
+                    .as_ref()
+                    .expect("CandidateTree branches are binary"),
+            )
+        }))
+    }
+
+    fn size_hint(&self) -> (usize, Option<usize>) {
+        let remaining = self.count_total() - self.next;
+        (remaining, Some(remaining))
+    }
+}
+
+impl ExactSizeIterator for ChildBoxes<'_> {}
 
 fn better(score: f64, id: &str, best_score: f64, best_id: &str) -> bool {
     score > best_score + EPSILON || ((score - best_score).abs() <= EPSILON && id < best_id)
@@ -499,7 +737,7 @@ fn better(score: f64, id: &str, best_score: f64, best_id: &str) -> bool {
 
 fn consider(
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
     state: &mut SearchState,
     selected: &[usize; GROUP_COUNT],
     stats: &Stats,
@@ -541,7 +779,7 @@ fn enumerate_box(
     index: usize,
     clusters: &[Arc<TreeNode>; GROUP_COUNT],
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
     selected: &mut [usize; GROUP_COUNT],
     stats: &Stats,
     state: &mut SearchState,
@@ -644,7 +882,7 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
             .groups
             .iter()
             .flat_map(|group| group.packages.iter())
-            .flat_map(|package| package.stat_delta.keys().cloned())
+            .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
             .collect();
     }
     keys.sort();
@@ -666,10 +904,12 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
     let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
         .try_into()
         .map_err(|_| "D4 native solver expected four trees".to_string())?;
-    let requirements = problem
-        .scenario_snapshot
-        .get("requirements")
-        .unwrap_or(&Value::Null);
+    let requirements = &Requirements::new(
+        problem
+            .scenario_snapshot
+            .get("requirements")
+            .unwrap_or(&Value::Null),
+    );
     let mut state = SearchState {
         best_score: f64::NEG_INFINITY,
         ..SearchState::default()
@@ -750,27 +990,9 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
             )?;
             continue;
         }
-        let splits = split_indices(&node.clusters);
-        if splits.is_empty() {
+        let child_boxes = ChildBoxes::new(&node.clusters);
+        if child_boxes.len() == 0 {
             continue;
-        }
-        let mut child_boxes = vec![node.clusters.clone()];
-        for split in splits {
-            let mut expanded = Vec::with_capacity(child_boxes.len() * 2);
-            for box_clusters in child_boxes {
-                for child in [
-                    box_clusters[split].left.clone(),
-                    box_clusters[split].right.clone(),
-                ]
-                .into_iter()
-                .flatten()
-                {
-                    let mut next = box_clusters.clone();
-                    next[split] = child;
-                    expanded.push(next);
-                }
-            }
-            child_boxes = expanded;
         }
         for child_clusters in child_boxes {
             let stats = box_stats(&child_clusters);
@@ -820,8 +1042,9 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
 /// the P5 shard scheduler: N3 will decide how ready work is shared by workers,
 /// while this type owns the complete checkpointable search state.
 pub struct NativeSearchSession {
+    pool: Option<NodePool>,
     problem: NativeProblem,
-    requirements: Value,
+    requirements: Requirements,
     heap: BinaryHeap<WorkItem>,
     state: SearchState,
     visited: u64,
@@ -850,7 +1073,7 @@ impl NativeSearchSession {
                 .groups
                 .iter()
                 .flat_map(|group| group.packages.iter())
-                .flat_map(|package| package.stat_delta.keys().cloned())
+                .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
                 .collect();
         }
         keys.sort();
@@ -872,11 +1095,12 @@ impl NativeSearchSession {
         let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
             .try_into()
             .map_err(|_| "D4 native solver expected four trees".to_string())?;
-        let requirements = problem
-            .scenario_snapshot
-            .get("requirements")
-            .cloned()
-            .unwrap_or(Value::Null);
+        let requirements = Requirements::new(
+            problem
+                .scenario_snapshot
+                .get("requirements")
+                .unwrap_or(&Value::Null),
+        );
         let mut state = SearchState {
             best_score: f64::NEG_INFINITY,
             ..SearchState::default()
@@ -929,6 +1153,7 @@ impl NativeSearchSession {
             Some(root.optimization_damage_factor)
         };
         Ok(Self {
+            pool: None,
             problem,
             requirements,
             heap,
@@ -962,7 +1187,7 @@ impl NativeSearchSession {
             .collect::<Vec<_>>();
         Self::audit_frontier(&frontier)?;
         Ok(NativeSearchCheckpoint {
-            schema: "toram.d4-native-search-checkpoint.v1".to_string(),
+            schema: "toram.d4-native-search-checkpoint.v4".to_string(),
             problem: self.problem.clone(),
             state: self.state.clone(),
             frontier,
@@ -976,7 +1201,7 @@ impl NativeSearchSession {
     }
 
     pub fn from_checkpoint(checkpoint: NativeSearchCheckpoint) -> Result<Self, String> {
-        if checkpoint.schema != "toram.d4-native-search-checkpoint.v1" {
+        if checkpoint.schema != "toram.d4-native-search-checkpoint.v4" {
             return Err("D4 native checkpoint schema is invalid".to_string());
         }
         Self::audit_frontier(&checkpoint.frontier)?;
@@ -1056,27 +1281,9 @@ impl NativeSearchSession {
                     )?;
                     continue;
                 }
-                let splits = split_indices(&node.clusters);
-                if splits.is_empty() {
+                let child_boxes = ChildBoxes::new(&node.clusters);
+                if child_boxes.len() == 0 {
                     continue;
-                }
-                let mut child_boxes = vec![node.clusters.clone()];
-                for split in splits {
-                    let mut expanded = Vec::with_capacity(child_boxes.len() * 2);
-                    for box_clusters in child_boxes {
-                        for child in [
-                            box_clusters[split].left.clone(),
-                            box_clusters[split].right.clone(),
-                        ]
-                        .into_iter()
-                        .flatten()
-                        {
-                            let mut next = box_clusters.clone();
-                            next[split] = child;
-                            expanded.push(next);
-                        }
-                    }
-                    child_boxes = expanded;
                 }
                 for child_clusters in child_boxes {
                     let stats = box_stats(&child_clusters);
@@ -1121,7 +1328,7 @@ impl NativeSearchSession {
         &mut self,
         node_budget: usize,
         requested_threads: usize,
-        cancel: Option<&AtomicBool>,
+        cancel: Option<&Arc<AtomicBool>>,
         deadline: Option<Instant>,
     ) -> Result<NativeSolveResult, String> {
         if self.terminal_invalid_upper.is_some() || self.heap.is_empty() {
@@ -1148,19 +1355,37 @@ impl NativeSearchSession {
             work_busy_micros: AtomicU64::new(0),
             longest_work_item_micros: AtomicU64::new(0),
         });
-        let problem = &self.problem;
-        let requirements = &self.requirements;
-        let outcomes = crate::d4_parallel_runtime::run_shared_tasks(&nodes, workers, |node| {
-            expand_parallel_node(
-                node.clone(),
-                problem,
-                requirements,
-                &incumbent,
-                &counters,
-                cancel,
-                deadline,
-            )
-        });
+        if self
+            .pool
+            .as_ref()
+            .is_none_or(|pool| pool.workers.len() != workers)
+        {
+            // Construct before dispatch; on any pool failure the parent frontier survives.
+            match NodePool::new(&self.problem, self.requirements, workers) {
+                Ok(pool) => self.pool = Some(pool),
+                Err(error) => {
+                    self.heap.extend(nodes);
+                    return Err(error);
+                }
+            }
+        }
+        let outcomes = match self
+            .pool
+            .as_ref()
+            .unwrap()
+            .run(&nodes, &incumbent, &counters, cancel, deadline)
+        {
+            Ok(outcomes) => outcomes,
+            Err(error) => {
+                self.heap.extend(nodes);
+                self.pool = None;
+                return Err(error);
+            }
+        };
+        if let Some(error) = outcomes.iter().find_map(|result| result.as_ref().err()) {
+            self.heap.extend(nodes);
+            return Err(error.clone());
+        }
         let outcome = (|| -> Result<(), String> {
             for (node, outcome) in nodes.into_iter().zip(outcomes) {
                 match outcome? {
@@ -1267,7 +1492,7 @@ fn shared_best_score(incumbent: &SharedIncumbent) -> f64 {
 
 fn consider_parallel(
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
     incumbent: &SharedIncumbent,
     counters: &ParallelCounters,
     selected: &[usize; GROUP_COUNT],
@@ -1312,7 +1537,7 @@ fn enumerate_box_parallel(
     index: usize,
     clusters: &[Arc<TreeNode>; GROUP_COUNT],
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
     incumbent: &SharedIncumbent,
     counters: &ParallelCounters,
     cancel: Option<&AtomicBool>,
@@ -1360,7 +1585,30 @@ fn enumerate_box_parallel(
 fn expand_parallel_node(
     node: WorkItem,
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
+    incumbent: &SharedIncumbent,
+    counters: &ParallelCounters,
+    cancel: Option<&AtomicBool>,
+    deadline: Option<Instant>,
+) -> Result<Option<Vec<WorkItem>>, String> {
+    expand_parallel_node_inner(
+        node,
+        0,
+        problem,
+        requirements,
+        incumbent,
+        counters,
+        cancel,
+        deadline,
+    )
+}
+
+#[allow(clippy::too_many_arguments)]
+fn expand_parallel_node_inner(
+    node: WorkItem,
+    depth: usize,
+    problem: &NativeProblem,
+    requirements: &Requirements,
     incumbent: &SharedIncumbent,
     counters: &ParallelCounters,
     cancel: Option<&AtomicBool>,
@@ -1391,32 +1639,11 @@ fn expand_parallel_node(
         )
         .map(|completed| completed.then(Vec::new));
     }
-    let splits = split_indices(&node.clusters);
-    if splits.is_empty() {
+    let child_boxes = ChildBoxes::new(&node.clusters);
+    if child_boxes.len() == 0 {
         return Ok(Some(Vec::new()));
     }
     counters.splits.fetch_add(1, AtomicOrdering::Relaxed);
-    let mut child_boxes = vec![node.clusters.clone()];
-    for split in splits {
-        if should_stop_parallel_work(cancel, deadline) {
-            return Ok(None);
-        }
-        let mut expanded = Vec::with_capacity(child_boxes.len() * 2);
-        for box_clusters in child_boxes {
-            for child in [
-                box_clusters[split].left.clone(),
-                box_clusters[split].right.clone(),
-            ]
-            .into_iter()
-            .flatten()
-            {
-                let mut next = box_clusters.clone();
-                next[split] = child;
-                expanded.push(next);
-            }
-        }
-        child_boxes = expanded;
-    }
     let mut children = Vec::with_capacity(child_boxes.len());
     for child_clusters in child_boxes {
         if should_stop_parallel_work(cancel, deadline) {
@@ -1434,10 +1661,35 @@ fn expand_parallel_node(
                 .pruned_by_bound
                 .fetch_add(1, AtomicOrdering::Relaxed);
         } else {
-            children.push(WorkItem {
+            let child = WorkItem {
                 upper: bound.optimization_damage_factor,
                 clusters: child_clusters,
-            });
+            };
+            let best = shared_best_score(incumbent);
+            // The 2% window only chooses where to spend extra evaluation work.
+            // Removal still requires each sub-box's ordinary safe bound; keep
+            // all surviving sub-boxes, or requeue the original parent on stop.
+            if depth == 0
+                && best.is_finite()
+                && child.upper <= best + best.abs() * 0.02
+                && box_combinations(&child.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
+            {
+                match expand_parallel_node_inner(
+                    child,
+                    depth + 1,
+                    problem,
+                    requirements,
+                    incumbent,
+                    counters,
+                    cancel,
+                    deadline,
+                )? {
+                    Some(grandchildren) => children.extend(grandchildren),
+                    None => return Ok(None),
+                }
+            } else {
+                children.push(child);
+            }
         }
     }
     Ok(Some(children))
@@ -1447,7 +1699,7 @@ fn create_parallel_shards(
     root: WorkItem,
     target: usize,
     problem: &NativeProblem,
-    requirements: &Value,
+    requirements: &Requirements,
     state: &mut SearchState,
 ) -> Result<Vec<WorkItem>, String> {
     let mut frontier = BinaryHeap::new();
@@ -1463,28 +1715,10 @@ fn create_parallel_shards(
             frontier.push(node);
             break;
         }
-        let splits = split_indices(&node.clusters);
-        if splits.is_empty() {
+        let child_boxes = ChildBoxes::new(&node.clusters);
+        if child_boxes.len() == 0 {
             frontier.push(node);
             break;
-        }
-        let mut child_boxes = vec![node.clusters.clone()];
-        for split in splits {
-            let mut expanded = Vec::with_capacity(child_boxes.len() * 2);
-            for box_clusters in child_boxes {
-                for child in [
-                    box_clusters[split].left.clone(),
-                    box_clusters[split].right.clone(),
-                ]
-                .into_iter()
-                .flatten()
-                {
-                    let mut next = box_clusters.clone();
-                    next[split] = child;
-                    expanded.push(next);
-                }
-            }
-            child_boxes = expanded;
         }
         for child_clusters in child_boxes {
             let stats = box_stats(&child_clusters);
@@ -1542,7 +1776,7 @@ fn solve_exact_parallel_with_control(
             .groups
             .iter()
             .flat_map(|group| group.packages.iter())
-            .flat_map(|package| package.stat_delta.keys().cloned())
+            .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
             .collect();
     }
     keys.sort();
@@ -1564,10 +1798,12 @@ fn solve_exact_parallel_with_control(
     let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
         .try_into()
         .map_err(|_| "D4 native solver expected four trees".to_string())?;
-    let requirements = problem
-        .scenario_snapshot
-        .get("requirements")
-        .unwrap_or(&Value::Null);
+    let requirements = &Requirements::new(
+        problem
+            .scenario_snapshot
+            .get("requirements")
+            .unwrap_or(&Value::Null),
+    );
     let mut seed = SearchState {
         best_score: f64::NEG_INFINITY,
         ..SearchState::default()
@@ -1855,6 +2091,45 @@ mod tests {
     use super::*;
     use serde_json::json;
 
+    #[test]
+    fn prepared_requirements_preserve_missing_invalid_and_boundary_values() {
+        let summary = D4NativeSummary {
+            optimization_damage_factor: 1.0,
+            final_max_hp: 100,
+            final_max_mp: 200,
+            ampr_before_dual: 30,
+            normal_attack_crit: 40,
+            final_aspd: 500,
+        };
+        let keys = [
+            "maxHp",
+            "maxMp",
+            "amprBeforeDual",
+            "normalAttackCrit",
+            "aspd",
+        ];
+        let values = [100., 200., 30., 40., 500.];
+        for (key, limit) in keys.iter().zip(values) {
+            for value in [
+                Value::Null,
+                json!("100"),
+                json!(false),
+                json!(limit - 0.5),
+                json!(limit),
+                json!(limit + 0.5),
+            ] {
+                let input = json!({*key: value});
+                let expected = keys.iter().zip(values).all(|(key, actual)| {
+                    input
+                        .get(key)
+                        .and_then(Value::as_f64)
+                        .is_none_or(|required| actual >= required)
+                });
+                assert_eq!(feasible(&summary, &Requirements::new(&input)), expected);
+            }
+        }
+    }
+
     fn small_problem() -> NativeProblem {
         serde_json::from_value(json!({
             "baseContext":{"level":100,"mainType":"한손검","subType":"없음","armorType":"일반옷","wpnAtk":100,"wpnRefine":0,"wpnStab":100,"strBase":0,"dexBase":0,"intBase":0,"agiBase":0,"vitBase":100,"critF":100,"atkType":"PHYS","rangeType":"SHORT","bossLevel":100,"bossDef":0,"bossMdef":0,"aspdF":1000,"maxHpF":10000,"maxMpF":2000,"amprF":100},
@@ -1883,11 +2158,274 @@ mod tests {
     }
 
     #[test]
+    fn persistent_pool_reuses_workers_and_rebuilds_after_checkpoint() {
+        let mut session = NativeSearchSession::new(wide_problem()).unwrap();
+        session.run_parallel_slice(1, 2).unwrap();
+        let ids = session
+            .pool
+            .as_ref()
+            .unwrap()
+            .workers
+            .iter()
+            .map(|worker| worker.thread().id())
+            .collect::<Vec<_>>();
+        session.run_parallel_slice(1, 2).unwrap();
+        assert_eq!(
+            ids,
+            session
+                .pool
+                .as_ref()
+                .unwrap()
+                .workers
+                .iter()
+                .map(|worker| worker.thread().id())
+                .collect::<Vec<_>>()
+        );
+        let checkpoint = session.checkpoint().unwrap();
+        let mut restored = NativeSearchSession::from_checkpoint(checkpoint).unwrap();
+        assert!(restored.pool.is_none());
+        while !restored.is_complete() {
+            restored.run_parallel_slice(128, 4).unwrap();
+        }
+        let expected = solve_exact(&wide_problem()).unwrap();
+        assert_eq!(restored.snapshot().score, expected.score);
+        assert_eq!(
+            restored.snapshot().best_build.unwrap().id,
+            expected.best_build.unwrap().id
+        );
+    }
+
+    #[test]
+    fn shared_messages_cover_ragged_batches_in_input_order() {
+        let problem = wide_problem();
+        let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+        let root = session.heap.pop().unwrap();
+        let incumbent = Arc::new(SharedIncumbent {
+            score_bits: AtomicU64::new(session.state.best_score.to_bits()),
+            record: Mutex::new(session.state.clone()),
+        });
+        for workers in [1, 2, 8, 16, 64] {
+            let pool = NodePool::new(&problem, session.requirements, workers).unwrap();
+            for count in [0, 1, 7, 31, 33, 65, 257] {
+                let nodes = (0..count)
+                    .map(|index| {
+                        let mut node = root.clone();
+                        if index % 3 != 0 {
+                            node.upper = f64::NEG_INFINITY;
+                        }
+                        node
+                    })
+                    .collect::<Vec<_>>();
+                let counters = Arc::new(ParallelCounters::default());
+                let outcomes = pool.run(&nodes, &incumbent, &counters, None, None).unwrap();
+                assert_eq!(outcomes.len(), count);
+                for (index, outcome) in outcomes.into_iter().enumerate() {
+                    assert_eq!(
+                        outcome.unwrap().unwrap().len(),
+                        if index % 3 == 0 { 16 } else { 0 }
+                    );
+                }
+                // One root visit per input plus four lookahead visits for each
+                // unpruned root: detects duplicated or omitted execution too.
+                assert_eq!(
+                    counters.visited.load(AtomicOrdering::Relaxed),
+                    (count + count.div_ceil(3) * 4) as u64
+                );
+                let cancelled = Arc::new(AtomicBool::new(true));
+                for (signal, deadline) in [(Some(&cancelled), None), (None, Some(Instant::now()))] {
+                    let stopped = pool
+                        .run(&nodes, &incumbent, &counters, signal, deadline)
+                        .unwrap();
+                    assert_eq!(stopped.len(), count);
+                    assert!(stopped.into_iter().all(|result| result.unwrap().is_none()));
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn worker_errors_preserve_parent_frontier() {
+        let mut session = NativeSearchSession::new(wide_problem()).unwrap();
+        let ready = session.ready_work_count();
+        session.problem.base_context = PreparedContext::from(Value::Null);
+        assert!(session.run_parallel_slice(8, 2).is_err());
+        assert_eq!(session.ready_work_count(), ready);
+        assert!(!session.snapshot().exact);
+    }
+
+    #[test]
+    fn selective_lookahead_covers_equal_bound_space_without_duplicates() {
+        let problem = wide_problem();
+        let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+        let root = session.heap.pop().unwrap();
+        let incumbent = SharedIncumbent {
+            score_bits: AtomicU64::new(session.state.best_score.to_bits()),
+            record: Mutex::new(session.state.clone()),
+        };
+        let children = expand_parallel_node(
+            root,
+            &problem,
+            &session.requirements,
+            &incumbent,
+            &ParallelCounters::default(),
+            None,
+            None,
+        )
+        .unwrap()
+        .unwrap();
+        assert_eq!(children.len(), 16);
+        let mut covered = HashSet::new();
+        for child in children {
+            assert!(child.upper >= session.state.best_score);
+            let indices: [Vec<usize>; 4] = std::array::from_fn(|i| {
+                let mut list = Vec::new();
+                cluster_indices(&child.clusters[i], &mut list);
+                list
+            });
+            for a in &indices[0] {
+                for b in &indices[1] {
+                    for c in &indices[2] {
+                        for d in &indices[3] {
+                            assert!(covered.insert([*a, *b, *c, *d]));
+                        }
+                    }
+                }
+            }
+        }
+        assert_eq!(covered.len(), 8_usize.pow(4));
+    }
+
+    #[test]
     fn solves_small_problem_exactly_with_lexical_tie() {
         let problem = small_problem();
         let result = solve_exact(&problem).unwrap();
         assert!(result.exact);
         assert_eq!(result.best_build.unwrap().id, "a||b||c||d");
+    }
+
+    #[test]
+    fn envelope_preserves_forced_penalties_and_missing_coordinate_zero() {
+        let packages: Vec<NativePackage> = serde_json::from_value(json!([
+            {"id":"a","statDelta":{"ATKP":-10,"MAXMP":-200}},
+            {"id":"b","statDelta":{"ATKP":-5}},
+            {"id":"c","statDelta":{"ATKP":-5,"MAXMP":-100}}
+        ]))
+        .unwrap();
+        let keys = vec!["ATKP".into(), "MAXMP".into()];
+        let envelope = group_envelope(&packages, &[0, 1, 2], &keys);
+        assert_eq!(envelope.get("ATKP"), Some(&-5.0));
+        assert_eq!(envelope.get("MAXMP").copied().unwrap_or(0.0), 0.0);
+        assert_eq!(
+            group_envelope(&packages, &[0], &keys),
+            packages[0].stat_delta
+        );
+        assert!(group_envelope(&packages, &[], &keys).is_empty());
+    }
+
+    #[test]
+    fn bound_merge_preserves_group_order_and_sparse_penalties() {
+        let mut problem = small_problem();
+        for (group, atk) in problem.groups.iter_mut().zip([1e16, -1e16, 1.0, 0.0]) {
+            group.packages = vec![NativePackage {
+                id: group._id.clone(),
+                stat_delta: Stats::from([("ATK".into(), atk)]),
+            }];
+        }
+        problem.groups[2].packages[0]
+            .stat_delta
+            .insert("MAXMP".into(), -100.0);
+        let keys = vec!["ATK".into(), "MAXMP".into()];
+        let trees = std::array::from_fn(|index| {
+            build_tree(
+                &problem.groups[index].packages,
+                vec![0],
+                &keys,
+                &BTreeMap::new(),
+                &problem.base_context,
+                "r".into(),
+            )
+        });
+        // ATK order matters: (1e16 + -1e16) + 1 is 1, not 0.
+        let stats = box_stats(&trees);
+        assert_eq!(stats["ATK"], 1.0);
+        assert_eq!(stats["MAXMP"], -100.0);
+        assert_eq!(
+            add_stats(Stats::new(), &Stats::from([("ATK".into(), -0.0)]))["ATK"].to_bits(),
+            0.0_f64.to_bits()
+        );
+    }
+
+    #[test]
+    fn lazy_children_preserve_order_and_cover_each_binary_split_once() {
+        // All 16 leaf/branch patterns across the four equipment groups.
+        for mask in 0_u32..16 {
+            let mut problem = small_problem();
+            for (index, group) in problem.groups.iter_mut().enumerate() {
+                group.packages = (0..if mask & (1 << index) != 0 { 2 } else { 1 })
+                    .map(|value| NativePackage {
+                        id: value.to_string(),
+                        stat_delta: Stats::new(),
+                    })
+                    .collect();
+            }
+            let roots = std::array::from_fn(|index| {
+                build_tree(
+                    &problem.groups[index].packages,
+                    (0..problem.groups[index].packages.len()).collect(),
+                    &[],
+                    &BTreeMap::new(),
+                    &problem.base_context,
+                    "r".into(),
+                )
+            });
+            let selected: Vec<_> = (0..GROUP_COUNT)
+                .filter(|index| mask & (1 << index) != 0)
+                .take(2)
+                .collect();
+            let count = if selected.is_empty() {
+                0
+            } else {
+                1 << selected.len()
+            };
+            let mut children = ChildBoxes::new(&roots);
+            assert_eq!(children.len(), count);
+            let mut covered = 0;
+            for ordinal in 0..count {
+                let child = children.next().unwrap();
+                assert_eq!(children.len(), count - ordinal - 1);
+                covered += child.iter().map(|node| node.size).product::<usize>();
+                for index in 0..GROUP_COUNT {
+                    let expected = match selected.iter().position(|split| *split == index) {
+                        None => &roots[index],
+                        Some(position) => {
+                            let right = (ordinal >> (selected.len() - position - 1)) & 1 != 0;
+                            if right {
+                                roots[index].right.as_ref().unwrap()
+                            } else {
+                                roots[index].left.as_ref().unwrap()
+                            }
+                        }
+                    };
+                    assert!(Arc::ptr_eq(&child[index], expected));
+                }
+            }
+            assert!(children.next().is_none());
+            assert!(children.next().is_none());
+            if count > 0 {
+                assert_eq!(
+                    covered,
+                    roots.iter().map(|node| node.size).product::<usize>()
+                );
+            }
+        }
+    }
+
+    #[test]
+    fn old_bound_policy_checkpoint_is_rejected() {
+        let session = NativeSearchSession::new(small_problem()).unwrap();
+        let mut checkpoint = session.checkpoint().unwrap();
+        checkpoint.schema = "toram.d4-native-search-checkpoint.v3".into();
+        assert!(NativeSearchSession::from_checkpoint(checkpoint).is_err());
     }
 
     #[test]
@@ -2048,7 +2586,7 @@ mod tests {
         for (cancelled, deadline) in [(true, None), (false, Some(Instant::now()))] {
             let mut session = NativeSearchSession::new(wide_problem()).unwrap();
             let ready_before = session.ready_work_count();
-            let cancel = AtomicBool::new(cancelled);
+            let cancel = Arc::new(AtomicBool::new(cancelled));
             let result = session
                 .run_parallel_slice_with_control(8, 8, Some(&cancel), deadline)
                 .unwrap();

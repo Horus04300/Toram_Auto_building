@@ -59,6 +59,16 @@ for (const threads of [1, 2, 16, 64]) {
 }
 
 if (process.env.D4_P4_REAL !== '1') {
+  for (const contextOverrides of [{}, {atkType:'MAG',mainType:'지팡이',intBase:200}, {mainType:'발도검',chkIsUnsheathe:true}, {subType:'한손검',subAtk:100,subStab:80}]) {
+    const signed = {...small,baseContext:{...small.baseContext,...contextOverrides},groups:small.groups.map((group,index) => ({...group,packages:Array.from({length:4},(_,i) => ({id:`${index}-${i}`,statDelta:{ATKP:-12+i*3,MATKP:-12+i*3,SRW:6-i*3,MAXMP:-100-i*20,ASPD:-50-i*10}}))}))};
+    const signedOracle = optimizer.exhaustiveSearch(signed,{prepared:signed,evaluateStats:stats => evaluator.evaluateAggregate(signed.baseContext,signed.scenarioSnapshot,stats,kernel)});
+    for (const threads of [1,8,64]) {
+      const native = await runNative({...signed,threads},'d4_native_parallel');
+      assert.equal(native.status,'exact');
+      assert.equal(native.score,signedOracle.score);
+      assert.equal(native.bestBuild.id,signedOracle.bestBuild.id);
+    }
+  }
   console.log(`D4 P5 small native exact: PASS (${smallNative.evaluations} evaluations)`);
   process.exit(0);
 }

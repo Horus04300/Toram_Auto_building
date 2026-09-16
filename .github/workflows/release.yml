@@ -83,7 +83,12 @@ jobs:
           New-Item -ItemType Directory -Force src-tauri/target/release/bundle/nsis | Out-Null
           Copy-Item src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/* src-tauri/target/release/bundle/nsis/
           $env:RELEASE_NOTES_PATH = Join-Path $env:RUNNER_TEMP 'release-notes.md'
-          gh api "repos/$env:GITHUB_REPOSITORY/releases/generate-notes" -f "tag_name=$env:RELEASE_TAG" --jq .body | Set-Content -Encoding utf8 $env:RELEASE_NOTES_PATH
+          $customNotes = Join-Path $env:GITHUB_WORKSPACE "docs/release-notes/$env:RELEASE_TAG.md"
+          if (Test-Path -LiteralPath $customNotes) {
+            Get-Content -LiteralPath $customNotes | Set-Content -Encoding utf8 $env:RELEASE_NOTES_PATH
+            Add-Content -Encoding utf8 $env:RELEASE_NOTES_PATH ''
+          }
+          gh api "repos/$env:GITHUB_REPOSITORY/releases/generate-notes" -f "tag_name=$env:RELEASE_TAG" --jq .body | Add-Content -Encoding utf8 $env:RELEASE_NOTES_PATH
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           node tools/prepare-update-release.mjs
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

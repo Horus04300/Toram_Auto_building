@@ -1,0 +1,644 @@
+{
+  "policy": "d4-reachable-utility-dominance.v1",
+  "evaluations": 500000,
+  "comparisons": 2173651,
+  "elapsedMs": 36541,
+  "removedCount": 0,
+  "groups": [
+    {
+      "groupId": "weapon",
+      "inputCount": 1141,
+      "outputCount": 1141,
+      "states": [
+        {
+          "metric": "maxMp",
+          "count": 945
+        },
+        {
+          "metric": "amprBeforeDual",
+          "count": null
+        },
+        {
+          "metric": "aspd",
+          "count": null
+        }
+      ]
+    },
+    {
+      "groupId": "armor",
+      "inputCount": 1017,
+      "outputCount": 1017,
+      "states": [
+        {
+          "metric": "maxMp",
+          "count": 1245
+        },
+        {
+          "metric": "amprBeforeDual",
+          "count": null
+        },
+        {
+          "metric": "aspd",
+          "count": null
+        }
+      ]
+    },
+    {
+      "groupId": "additional",
+      "inputCount": 871,
+      "outputCount": 871,
+      "states": [
+        {
+          "metric": "maxMp",
+          "count": 1636
+        },
+        {
+          "metric": "amprBeforeDual",
+          "count": null
+        },
+        {
+          "metric": "aspd",
+          "count": null
+        }
+      ]
+    },
+    {
+      "groupId": "special",
+      "inputCount": 1121,
+      "outputCount": 1121,
+      "states": [
+        {
+          "metric": "maxMp",
+          "count": 2351
+        },
+        {
+          "metric": "amprBeforeDual",
+          "count": null
+        },
+        {
+          "metric": "aspd",
+          "count": null
+        }
+      ]
+    }
+  ],
+  "certificates": [],
+  "retainedExamples": [
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+누토레스",
+      "replacementId": "weapon:고블린 형님+광폭 짐승화 리그시",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+누토레스",
+      "replacementId": "weapon:고블린 형님+그리시아",
+      "metric": "aspd",
+      "reason": "reachable-requirement-counterexample",
+      "required": 1000,
+      "candidateUtility": {
+        "ASPD": 150,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "ASPD": 0,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "ASPD": 0,
+        "ASPD_P": 20,
+        "STR": 15,
+        "STRP": 0,
+        "DEX": 3,
+        "DEXP": 0,
+        "AGI": 3,
+        "AGIP": 0,
+        "INT": 3,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+누토레스",
+      "replacementId": "weapon:고블린 형님+그와이몰",
+      "metric": "aspd",
+      "reason": "reachable-requirement-counterexample",
+      "required": 1000,
+      "candidateUtility": {
+        "ASPD": 150,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "ASPD": 0,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 5,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "ASPD": 0,
+        "ASPD_P": 20,
+        "STR": 20,
+        "STRP": 0,
+        "DEX": 2,
+        "DEXP": 0,
+        "AGI": 2,
+        "AGIP": 0,
+        "INT": 2,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+누토레스",
+      "replacementId": "weapon:고블린 형님+네오 마기 피레시아",
+      "metric": "aspd",
+      "reason": "reachable-requirement-counterexample",
+      "required": 1000,
+      "candidateUtility": {
+        "ASPD": 150,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "ASPD": 0,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 4,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "ASPD": 0,
+        "ASPD_P": 20,
+        "STR": 15,
+        "STRP": 0,
+        "DEX": 3,
+        "DEXP": 0,
+        "AGI": 3,
+        "AGIP": 0,
+        "INT": 3,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+데포미스",
+      "replacementId": "weapon:고블린 형님+네오 마기 피레시아",
+      "metric": "amprBeforeDual",
+      "reason": "reachable-requirement-counterexample",
+      "required": 100,
+      "candidateUtility": {
+        "MAXMP": -200,
+        "AMPR": 8,
+        "AMPRP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 0,
+        "AMPR": 4,
+        "AMPRP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -150,
+        "AMPR": 31,
+        "AMPRP": 10,
+        "INT": 1,
+        "INTP": 6
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+데포미스",
+      "replacementId": "weapon:고블린 형님+데스타레스",
+      "metric": "amprBeforeDual",
+      "reason": "reachable-requirement-counterexample",
+      "required": 100,
+      "candidateUtility": {
+        "MAXMP": -200,
+        "AMPR": 8,
+        "AMPRP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -200,
+        "AMPR": 0,
+        "AMPRP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": 50,
+        "AMPR": 35,
+        "AMPRP": 10,
+        "INT": 1,
+        "INTP": 6
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+드레미나렐",
+      "replacementId": "weapon:고블린 형님+광폭 짐승화 리그시",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+드레미나렐",
+      "replacementId": "weapon:고블린 형님+네오 마기 피레시아",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -300,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+드레미나렐",
+      "replacementId": "weapon:고블린 형님+데스타레스",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -300,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+광폭 짐승화 리그시",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+그레이트 키지무",
+      "metric": "aspd",
+      "reason": "reachable-requirement-counterexample",
+      "required": 1000,
+      "candidateUtility": {
+        "ASPD": 250,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "ASPD": 0,
+        "ASPD_P": 0,
+        "STR": 0,
+        "STRP": 0,
+        "DEX": 0,
+        "DEXP": 0,
+        "AGI": 0,
+        "AGIP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "ASPD": 0,
+        "ASPD_P": 20,
+        "STR": 15,
+        "STRP": 0,
+        "DEX": 3,
+        "DEXP": 0,
+        "AGI": 3,
+        "AGIP": 0,
+        "INT": 3,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+데스타레스",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+드레미나렐",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -400,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+마우에즈",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 150,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -500,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+멘티",
+      "replacementId": "weapon:고블린 형님+메기 스톤",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 50,
+        "INT": 1,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -400,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+브라마",
+      "replacementId": "weapon:고블린 형님",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 400,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 0,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -300,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+브라마",
+      "replacementId": "weapon:고블린 형님+광폭 짐승화 리그시",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 400,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+브라마",
+      "replacementId": "weapon:고블린 형님+그레이트 키지무",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 400,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": 300,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -600,
+        "INT": 0,
+        "INTP": 0
+      }
+    },
+    {
+      "groupId": "weapon",
+      "candidateId": "weapon:고블린 형님+브라마",
+      "replacementId": "weapon:고블린 형님+데스타레스",
+      "metric": "maxMp",
+      "reason": "reachable-requirement-counterexample",
+      "required": 2000,
+      "candidateUtility": {
+        "MAXMP": 400,
+        "INT": 0,
+        "INTP": 0
+      },
+      "replacementUtility": {
+        "MAXMP": -200,
+        "INT": 0,
+        "INTP": 0
+      },
+      "remainingStats": {
+        "MAXMP": -100,
+        "INT": 0,
+        "INTP": 0
+      }
+    }
+  ]
+}

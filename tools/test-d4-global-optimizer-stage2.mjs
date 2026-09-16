@@ -217,6 +217,69 @@ assert.equal(negativeSolved.score, negativeOracle.score, '음수 옵션이 섞�
 assert.equal(negativeSolved.bestBuild.id, negativeOracle.bestBuild.id, '음수 옵션 문제의 동점 순서도 전수조사와 같아야 합니다.');
 assert.equal(optimizer.verifyCandidateTreeUpperBounds(negativeProblem, commonOptions).violations.length, 0, '음수 옵션 후보 상자의 안전 상한 위반은 0건이어야 합니다.');
 
+// Every package in a subtree can share a penalty. Do not invent a zero package.
+for (const overrides of [{}, {atkType:'MAG',mainType:'지팡이',intBase:200}, {mainType:'발도검',chkIsUnsheathe:true}, {subType:'한손검',subAtk:100,subStab:80}]) {
+  const ctx = base({...overrides, maxHpF:10000,maxMpF:1800,amprF:70,aspdF:1000,critF:100});
+  const problem = {baseContext:ctx,scenarioSnapshot:scenario(ctx),metadata:{},groups:['weapon','armor','additional','special'].map(group => ({id:group,packages:[
+    pkg(group+'a',group,{ATKP:-12,MATKP:-12,SRW:5,MAXMP:-100,ASPD:-100}),
+    pkg(group+'b',group,{ATKP:-3,MATKP:-3,SRW:-5,MAXMP:-200,ASPD:-50}),
+    pkg(group+'c',group,{ATKP:-3,MATKP:-3,SRW:-5,MAXMP:-200,ASPD:-50})
+  ]}))};
+  const options = {...commonOptions,prepared:problem,smallBoxEnumerationLimit:1};
+  const expected = optimizer.exhaustiveSearch(problem,options);
+  const actual = optimizer.optimize(problem,options);
+  assert.equal(actual.score,expected.score);
+  assert.equal(actual.bestBuild.id,expected.bestBuild.id);
+  assert.equal(optimizer.verifyCandidateTreeUpperBounds(problem,options).violations.length,0);
+  assert.equal(optimizer.verifyEnvelopeMonotonicity(problem,options).violations.length,0);
+  const reversed = {...problem,groups:problem.groups.map(group => ({...group,packages:group.packages.toReversed()}))};
+  assert.equal(optimizer.optimize(reversed,{...options,prepared:reversed}).bestBuild.id,expected.bestBuild.id);
+}
+
+const penaltyOnly = {baseContext:negativeBase,metadata:{modeledKeys:['ATKP']},scenarioSnapshot:scenario(negativeBase),groups:[{id:'weapon',packages:[pkg('penalty','weapon',{ATKP:-10})]}]};
+let observedPenalty = false;
+optimizer.verifyCandidateTreeUpperBounds(penaltyOnly,{prepared:penaltyOnly,evaluateStats:stats => {
+  assert.equal(stats.ATKP,-10,'singleton bounds must retain unavoidable negative ATK');
+  observedPenalty = true;
+  return {optimizationDamageFactor:100+stats.ATKP};
+}});
+assert.ok(observedPenalty);
+
+// A tiny Utility advantage cannot save a package when every reachable context
+// that satisfies its requirements also satisfies the stronger replacement.
+for (const requiredMp of [null, 2000, 99999]) {
+  const ctx=base({critF:100,maxHpF:10000,maxMpF:1800,amprF:100,aspdF:1000});
+  const proofProblem={baseContext:ctx,scenarioSnapshot:scenario(ctx,{maxHp:null,maxMp:requiredMp,amprBeforeDual:null,normalAttackCrit:null,aspd:null}),metadata:{},groups:['weapon','armor','additional','special'].map(group=>({id:group,packages:[
+    pkg(group+'a-strong',group,{ATKP:40}),
+    pkg(group+'b-utility',group,{ATKP:1,MAXMP:10,AMPR:1,ASPD:1,MAXHP:10}),
+    pkg(group+'c-mp',group,{ATKP:10,MAXMP:500}),
+    pkg(group+'z-tie',group,{ATKP:40})
+  ]}))};
+  const expected=optimizer.exhaustiveSearch(proofProblem,commonOptions);
+  const keys=optimizer.modeledKeys(registry);
+  for (const limit of [1,8,64]) {
+    const reduced=optimizer.prepareProblem(proofProblem,{...commonOptions,relevantKeys:keys,enableUtilityDominanceAudit:true,utilityProofNodeLimit:limit,utilityProofStateLimit:limit===1?1:4096});
+    const result=optimizer.exhaustiveSearch(reduced,{...commonOptions,prepared:true});
+    assert.equal(result.score,expected.score);
+    assert.equal(result.bestBuild?.id,expected.bestBuild?.id);
+    if(requiredMp===null) assert.ok(reduced.metadata.utilityDominanceAudit.removedCount>0,'tiny utility candidates must receive completion proofs');
+    if(requiredMp===99999) assert.equal(result.bestBuild,null,'dominance must not invent feasibility');
+  }
+}
+
+for(let trial=0;trial<20;trial++){
+  const ctx=base({maxHpF:5000,maxMpF:1800,amprF:60,aspdF:500,critF:100,...(trial%4===1?{atkType:'MAG',mainType:'지팡이',intBase:200}:trial%4===2?{mainType:'발도검',chkIsUnsheathe:true}:trial%4===3?{subType:'한손검(듀얼소드)',subAtk:100,subStab:80}:{})});
+  const problem={baseContext:ctx,metadata:{},scenarioSnapshot:scenario(ctx,{maxHp:5000+trial*10,maxMp:2000,amprBeforeDual:100,normalAttackCrit:100,aspd:1000}),groups:['weapon','armor','additional','special'].map((id,g)=>({id,packages:Array.from({length:4},(_,i)=>pkg(id+i,id,{ATKP:20-i*3,MATKP:20-i*3,MAXHP:(i+g)%3*100,MAXMP:((trial+i+g)%5-2)*100,AMPR:i*10,AMPRP:g*5,ASPD:i*100,ASPD_P:g*10,INT:i%2,VIT:g%2,AGI:i%2}))}))};
+  const expected=optimizer.exhaustiveSearch(problem,commonOptions);
+  for(const settings of [{utilityProofStateLimit:4096},{utilityProofStateLimit:1,utilityProofNodeLimit:1},{utilityProofEvaluationLimit:1}]){
+    const reduced=optimizer.prepareProblem(problem,{...commonOptions,...settings,enableUtilityDominanceAudit:true});
+    const actual=optimizer.exhaustiveSearch(reduced,{...commonOptions,prepared:true});
+    assert.equal(actual.score,expected.score);assert.equal(actual.bestBuild?.id,expected.bestBuild?.id);
+  }
+  const disabled=optimizer.prepareProblem({...problem,baseContext:{...ctx,activeBuildConversions:[{conversion:'unknown'}]}},{...commonOptions,enableUtilityDominanceAudit:true});
+  assert.equal(disabled.metadata.utilityDominanceAudit,undefined);
+}
+
 const fixedResourceBase = base({ maxHpF:10000, maxMpF:1800, amprF:70, aspdF:900, critF:75 });
 const fixedResourceProblem = Object.freeze({
   schema:compiler.schema, baseContext:fixedResourceBase, scenarioSnapshot:evaluator.createScenarioSnapshot(fixedResourceBase), diagnostics:[], metadata:{},

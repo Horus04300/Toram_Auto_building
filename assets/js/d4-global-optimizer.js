@@ -82,11 +82,138 @@
       reports.push({groupId:group.id,inputCount:result.inputCount,outputCount:result.outputCount,duplicateCount:result.duplicateCount,comparisons:result.comparisons,complete:result.complete,relevantKeyCount:groupKeys.length});
       return Object.freeze({id:group.id,label:group.label,slots:clone(group.slots||[]),packages:result.packages});
     });
-    return Object.freeze({schema:problem.schema,baseContext:clone(problem.baseContext||{}),scenarioSnapshot:clone(problem.scenarioSnapshot||null),structure:clone(problem.structure||{}),groups:Object.freeze(groups),diagnostics:clone(problem.diagnostics||[]),metadata:Object.assign({},clone(problem.metadata||{}),{paretoReports:reports,modeledKeys:keys})});
+    var prepared=Object.freeze({schema:problem.schema,baseContext:clone(problem.baseContext||{}),scenarioSnapshot:clone(problem.scenarioSnapshot||null),structure:clone(problem.structure||{}),groups:Object.freeze(groups),diagnostics:clone(problem.diagnostics||[]),metadata:Object.assign({},clone(problem.metadata||{}),{paretoReports:reports,modeledKeys:keys})});
+    return options&&options.enableUtilityDominanceAudit===true&&!options.disablePareto?pruneUtilityDominance(prepared,options):prepared;
+  }
+
+  // Exact implication over reachable raw Utility sums. No residual cap, score
+  // exchange rate, or heuristic can authorize a drop. Overflow keeps candidates.
+  function pruneUtilityDominance(problem,options){
+    var settings=options||{},started=Date.now(),context=problem.baseContext||{},scenario=problem.scenarioSnapshot||{};
+    if((context.activeBuildConversions||[]).length||Object.keys(scenario.metadata&&scenario.metadata.utilityDependencyOverrides||{}).length)return problem;
+    if((problem.diagnostics||[]).length||problem.groups.some(function(group){return !group.packages.length;}))return problem;
+    var minimum=problem.groups.reduce(function(sum,group){return addStats(sum,groupMinimum(group,['MAXHPP','AMPRP','ASPD_P']));},{});
+    var armorAspd=context.armorType==='경량옷'?50:context.armorType==='중량옷'?-50:0;
+    if((Number(context.maxHpP)||0)+(minimum.MAXHPP||0)<-100||(Number(context.amprP)||0)+(minimum.AMPRP||0)<-100||(Number(context.aspdP)||0)+armorAspd+(minimum.ASPD_P||0)<-100)return problem;
+    var evaluateStats=settings.evaluateStats||createDefaultAdapter(problem,settings),keys=problem.metadata.modeledKeys;
+    var requirements=scenario.requirements||{},stateLimit=Math.max(1,Math.floor(Number(settings.utilityProofStateLimit)||4096)),evaluationLimit=Math.max(1,Math.floor(Number(settings.utilityProofEvaluationLimit)||50000)),evaluations=0,comparisons=0,certificates=[],reports=[],retainedExamples=[];
+    var definitions=[
+      {id:'maxHp',field:'maxHp',utility:['MAXHP','MAXHPP'],keys:['MAXHP','MAXHPP','VIT','VITP']},
+      {id:'maxMp',field:'maxMpBeforeBuff',utility:['MAXMP'],keys:['MAXMP','INT','INTP']},
+      {id:'amprBeforeDual',field:'amprBeforeDual',utility:['MAXMP','AMPR','AMPRP'],keys:['MAXMP','AMPR','AMPRP','INT','INTP']},
+      {id:'aspd',field:'aspd',utility:['ASPD','ASPD_P'],keys:['ASPD','ASPD_P','STR','STRP','DEX','DEXP','AGI','AGIP','INT','INTP']}
+    ];
+    function project(stats,dimensions){var result={};dimensions.forEach(function(key){result[key]=Number(stats&&stats[key])||0;});return result;}
+    function reachable(groupIndex,dimensions){
+      var states=[{}];
+      for(var index=0;index<problem.groups.length;index++){
+        if(index===groupIndex)continue;
+        var vectors=new Map();problem.groups[index].packages.forEach(function(item){var vector=project(item.statDelta,dimensions);vectors.set(statKey(vector,dimensions),vector);});
+        var next=new Map();
+        for(var state of states){for(var vector of vectors.values()){var sum=addStats(state,vector);next.set(statKey(sum,dimensions),sum);if(next.size>stateLimit)return null;}}
+        states=Array.from(next.values());
+      }
+      return states;
+    }
+    var groups=problem.groups.map(function(group,groupIndex){
+      var metrics=definitions.filter(function(definition){return requirements[definition.id]!==null&&requirements[definition.id]!==undefined;}).map(function(definition){
+        var metric=Object.assign({},definition,{states:reachable(groupIndex,definition.keys),outcomes:new Map(),implications:new Map()});
+        if(!metric.states){
+          metric.trees=problem.groups.filter(function(_,index){return index!==groupIndex;}).map(function(other){
+            var unique=new Map();other.packages.forEach(function(item){var vector=project(item.statDelta,metric.keys);unique.set(statKey(vector,metric.keys),{id:statKey(vector,metric.keys),statDelta:vector});});
+            var tree=buildCandidateTree({packages:Array.from(unique.values())},metric.keys,context);
+            function minima(node){node.minimum={};metric.keys.forEach(function(key){node.minimum[key]=Math.min.apply(null,node.packages.map(function(item){return Number(item.statDelta[key])||0;}));});if(node.left)minima(node.left);if(node.right)minima(node.right);}
+            minima(tree);return tree;
+          });
+        }
+        return metric;
+      });
+      // A shared coordinate (MAXMP -> AMPR) must pass every affected metric.
+      var relaxed=['MAXHP','MAXHPP','MAXMP','AMPR','AMPRP','ASPD','ASPD_P'].filter(function(key){return keys.includes(key);});
+      var ordinary=keys.filter(function(key){return !relaxed.includes(key);});
+      var jointTrees=null,jointOutcomes=new Map();
+      var constraintKeys=Array.from(new Set(definitions.flatMap(function(metric){return metric.keys;}).concat(['CRIT','CRITP'])));
+      function jointFeasible(stats){
+        var signature=statKey(stats,constraintKeys);if(jointOutcomes.has(signature))return jointOutcomes.get(signature);
+        if(evaluations>=evaluationLimit)return null;
+        var outcome=evaluateStats(stats,{utilityDominance:true,summaryOnly:true});evaluations++;
+        var value=outcome&&outcome.constraints&&outcome.constraints.feasible;if(typeof value!=='boolean')return null;
+        jointOutcomes.set(signature,value);return value;
+      }
+      function jointImplies(left,right){
+        if(!jointTrees)jointTrees=problem.groups.filter(function(_,index){return index!==groupIndex;}).map(function(other){
+          var unique=new Map();other.packages.forEach(function(item){var vector=project(item.statDelta,constraintKeys);unique.set(statKey(vector,constraintKeys),{id:statKey(vector,constraintKeys),statDelta:vector});});
+          var tree=buildCandidateTree({packages:Array.from(unique.values())},constraintKeys,context);
+          function minima(node){node.minimum={};constraintKeys.forEach(function(key){node.minimum[key]=Math.min.apply(null,node.packages.map(function(item){return Number(item.statDelta[key])||0;}));});if(node.left)minima(node.left);if(node.right)minima(node.right);}
+          minima(tree);return tree;
+        });
+        var pending=[jointTrees],visited=0,a=project(left.statDelta,constraintKeys),b=project(right.statDelta,constraintKeys);
+        while(pending.length&&visited++<Math.max(1,Number(settings.utilityProofNodeLimit)||256)){
+          var box=pending.pop(),high=box.reduce(function(sum,node){return addStats(sum,node.envelope);},b),before=jointFeasible(high);
+          if(before===null)return false;if(!before)continue;
+          var low=box.reduce(function(sum,node){return addStats(sum,node.minimum);},a),after=jointFeasible(low);
+          if(after===null)return false;if(after)continue;
+          var split=-1;box.forEach(function(node,index){if(node.left&&node.right&&(split<0||node.size>box[split].size))split=index;});
+          if(split<0)return false;
+          [box[split].left,box[split].right].forEach(function(child){var next=box.slice();next[split]=child;pending.push(next);});
+        }
+        return !pending.length;
+      }
+      function retained(metric,left,right,reason,state){
+        if(retainedExamples.length<20)retainedExamples.push({groupId:group.id,candidateId:right.id,replacementId:left.id,metric:metric.id,reason:reason,required:requirements[metric.id],candidateUtility:project(right.statDelta,metric.keys),replacementUtility:project(left.statDelta,metric.keys),remainingStats:state||null});
+        return false;
+      }
+      function satisfies(metric,stats){
+        var signature=statKey(stats,metric.keys);
+        if(metric.outcomes.has(signature))return metric.outcomes.get(signature);
+        if(evaluations>=evaluationLimit)return null;
+        var outcome=evaluateStats(stats,{utilityDominance:true});evaluations++;
+        var actual=outcome&&outcome.utility&&outcome.utility[metric.field];
+        if(!Number.isFinite(actual))return null;
+        var value=actual>=Number(requirements[metric.id]);metric.outcomes.set(signature,value);return value;
+      }
+      function implies(metric,left,right){
+        if(!metric.utility.some(function(key){return (Number(left.statDelta[key])||0)<(Number(right.statDelta[key])||0);}))return true;
+        var a=project(left.statDelta,metric.keys),b=project(right.statDelta,metric.keys),pair=statKey(a,metric.keys)+'>'+statKey(b,metric.keys);
+        if(metric.implications.has(pair))return metric.implications.get(pair);
+        if(!metric.states){
+          var pending=[metric.trees],visited=0;
+          while(pending.length&&visited++<Math.max(1,Number(settings.utilityProofNodeLimit)||256)){
+            var box=pending.pop(),low=box.reduce(function(sum,node){return addStats(sum,node.minimum);},a),high=box.reduce(function(sum,node){return addStats(sum,node.envelope);},b);
+            var lower=satisfies(metric,low);if(lower===null)return false;if(lower)continue;
+            var upper=satisfies(metric,high);if(upper===null)return false;if(!upper)continue;
+            var split=-1;box.forEach(function(node,index){if(node.left&&node.right&&(split<0||node.size>box[split].size))split=index;});
+            if(split<0){metric.implications.set(pair,false);return retained(metric,left,right,'reachable-requirement-counterexample',box.reduce(function(sum,node){return addStats(sum,node.minimum);},{}));}
+            [box[split].left,box[split].right].forEach(function(child){var next=box.slice();next[split]=child;pending.push(next);});
+          }
+          var proven=!pending.length;if(proven)metric.implications.set(pair,true);else retained(metric,left,right,'proof-node-budget',null);return proven;
+        }
+        for(var state of metric.states){
+          var before=satisfies(metric,addStats(state,b));if(before===null)return false;
+          if(before){var after=satisfies(metric,addStats(state,a));if(after!==true){if(after===false){metric.implications.set(pair,false);return retained(metric,left,right,'reachable-requirement-counterexample',state);}return false;}}
+        }
+        metric.implications.set(pair,true);return true;
+      }
+      var kept=[],comparisonLimit=comparisons+Math.max(1,Number(settings.utilityProofComparisonLimit)||250000);
+      group.packages.slice().sort(function(a,b){return String(a.id)<String(b.id)?-1:String(a.id)>String(b.id)?1:0;}).forEach(function(candidate){
+        if(comparisons>=comparisonLimit){kept.push(candidate);return;}
+        var witness=kept.find(function(item){
+          if(++comparisons>comparisonLimit)return false;
+          if(ordinary.some(function(key){return (Number(item.statDelta[key])||0)<(Number(candidate.statDelta[key])||0);}))return false;
+          return metrics.every(function(metric){return implies(metric,item,candidate);})||jointImplies(item,candidate);
+        });
+        if(witness)certificates.push({groupId:group.id,removedId:candidate.id,witnessId:witness.id});else kept.push(candidate);
+      });
+      reports.push({groupId:group.id,inputCount:group.packages.length,outputCount:kept.length,states:metrics.map(function(metric){return {metric:metric.id,count:metric.states?metric.states.length:null};})});
+      return Object.freeze(Object.assign({},group,{packages:Object.freeze(kept)}));
+    });
+    return Object.freeze(Object.assign({},problem,{groups:Object.freeze(groups),metadata:Object.assign({},problem.metadata,{utilityDominanceAudit:{policy:'d4-reachable-utility-dominance.v1',evaluations:evaluations,comparisons:comparisons,elapsedMs:Date.now()-started,removedCount:certificates.length,groups:reports,certificates:certificates,retainedExamples:retainedExamples}})}));
   }
 
   function groupMaximum(group,keys){
-    var result={};keys.forEach(function(key){result[key]=0;});
+    // A nonempty cluster must select a package: shared penalties are unavoidable.
+    // Missing coordinates still contribute zero, but zero is not a spare package.
+    var result={};keys.forEach(function(key){result[key]=(group.packages||[]).length?-Infinity:0;});
     (group.packages||[]).forEach(function(item){keys.forEach(function(key){result[key]=Math.max(result[key],Number(item.statDelta&&item.statDelta[key])||0);});});
     return result;
   }
@@ -125,13 +252,16 @@
     var packages=(group&&group.packages||[]).slice(),rankById=dynamicCandidateOrderRanks(candidateOrder,group&&group.id);var ranges={};
     keys.forEach(function(key){var low=Infinity,high=-Infinity;packages.forEach(function(item){var value=Number(item.statDelta&&item.statDelta[key])||0;low=Math.min(low,value);high=Math.max(high,value);});ranges[key]=Math.max(0,high-low);});
     function build(items,depth,path){
-      var envelope=groupMaximum({packages:items},keys);
-      if(items.length<=1)return{path:path,size:items.length,envelope:envelope,packages:items,package:items[0]||null,left:null,right:null};
+      var envelope=groupMaximum({packages:items},keys),orderingEnvelope={};
+      // Preserve split ordering while tightening bounds; reuse the score per box.
+      keys.forEach(function(key){orderingEnvelope[key]=Math.max(0,envelope[key]);});
+      var splitScore=heuristicPackageScore({statDelta:orderingEnvelope},'damage');
+      if(items.length<=1)return{path:path,size:items.length,envelope:envelope,splitScore:splitScore,packages:items,package:items[0]||null,left:null,right:null};
       var splitKey=null,bestSpread=-Infinity;
       keys.forEach(function(key){var globalRange=ranges[key]||0;if(globalRange<=EPSILON)return;var low=Infinity,high=-Infinity;items.forEach(function(item){var value=Number(item.statDelta&&item.statDelta[key])||0;low=Math.min(low,value);high=Math.max(high,value);});var spread=(high-low)/globalRange*splitImportance(key,context);if(spread>bestSpread+EPSILON||(Math.abs(spread-bestSpread)<=EPSILON&&String(key)<String(splitKey||'\uffff'))){bestSpread=spread;splitKey=key;}});
       var sorted=items.slice().sort(function(a,b){if(splitKey){var av=Number(a.statDelta&&a.statDelta[splitKey])||0;var bv=Number(b.statDelta&&b.statDelta[splitKey])||0;if(Math.abs(av-bv)>EPSILON)return av-bv;}if(rankById){var rankA=Object.prototype.hasOwnProperty.call(rankById,String(a.id))?rankById[String(a.id)]:Infinity,rankB=Object.prototype.hasOwnProperty.call(rankById,String(b.id))?rankById[String(b.id)]:Infinity;if(rankA!==rankB)return rankA-rankB;}var scoreDiff=heuristicPackageScore(a,'damage')-heuristicPackageScore(b,'damage');if(Math.abs(scoreDiff)>EPSILON)return scoreDiff;return String(a.id)<String(b.id)?-1:String(a.id)>String(b.id)?1:0;});
       var middle=Math.floor(sorted.length/2);if(middle<=0)middle=1;
-      return{path:path,size:items.length,envelope:envelope,packages:items,package:null,left:build(sorted.slice(0,middle),depth+1,path+'0'),right:build(sorted.slice(middle),depth+1,path+'1')};
+      return{path:path,size:items.length,envelope:envelope,splitScore:splitScore,packages:items,package:null,left:build(sorted.slice(0,middle),depth+1,path+'0'),right:build(sorted.slice(middle),depth+1,path+'1')};
     }
     return build(packages,0,'r');
   }
@@ -144,7 +274,7 @@
   function parallelBoxCombinationCount(clusters){var count=1;for(var i=0;i<(clusters||[]).length;i++)count=safeMultiply(count,clusters[i]&&clusters[i].size||0);return count;}
   function parallelBoxPathId(groups,clusters){return(clusters||[]).map(function(cluster,index){return String(groups[index]&&groups[index].id||index)+'@'+String(cluster&&cluster.path||'');}).join('|');}
   function parallelBoxStats(clusters){return(clusters||[]).reduce(function(total,cluster){return addStats(total,cluster&&cluster.envelope||{});},{});}
-  function parallelSplitSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=heuristicPackageScore({statDelta:cluster.envelope},'damage');var child=Math.max(cluster.left?heuristicPackageScore({statDelta:cluster.left.envelope},'damage'):-Infinity,cluster.right?heuristicPackageScore({statDelta:cluster.right.envelope},'damage'):-Infinity);return parent-child;}
+  function parallelSplitSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=cluster.splitScore;var child=Math.max(cluster.left?cluster.left.splitScore:-Infinity,cluster.right?cluster.right.splitScore:-Infinity);return parent-child;}
   function chooseParallelSplitIndex(clusters){var selected=-1,bestSlack=-Infinity,bestSize=-1;(clusters||[]).forEach(function(cluster,index){var slack=parallelSplitSlack(cluster);if(!Number.isFinite(slack))return;if(slack>bestSlack+EPSILON||(Math.abs(slack-bestSlack)<=EPSILON&&(cluster.size>bestSize||(cluster.size===bestSize&&index<selected)))){selected=index;bestSlack=slack;bestSize=cluster.size;}});return selected;}
   function candidateTreeNodeAtPath(tree,path){var node=tree,requested=String(path||'');if(!node||requested.charAt(0)!=='r')return null;for(var index=1;index<requested.length;index++){var step=requested.charAt(index);node=step==='0'?node&&node.left:step==='1'?node&&node.right:null;if(!node)return null;}return node&&node.path===requested?node:null;}
   function parallelPreparation(problem,options){var settings=options||{},registry=settings.registry||root.ToramStatRegistry,evaluateStats=settings.evaluateStats||createDefaultAdapter(problem,settings),relevant=settings.relevantKeys||deriveRelevantKeys(problem,registry,evaluateStats),prepared=settings.prepared?problem:prepareProblem(problem,Object.assign({},settings,{relevantKeys:relevant})),keys=prepared.metadata&&prepared.metadata.modeledKeys||relevant;return{prepared:prepared,keys:keys,evaluateStats:evaluateStats};}
@@ -303,7 +433,7 @@
     return reports;
   }
 
-  function candidateClusterSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=heuristicPackageScore({statDelta:cluster.envelope},'damage');var child=Math.max(cluster.left?heuristicPackageScore({statDelta:cluster.left.envelope},'damage'):-Infinity,cluster.right?heuristicPackageScore({statDelta:cluster.right.envelope},'damage'):-Infinity);return parent-child;}
+  function candidateClusterSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=cluster.splitScore;var child=Math.max(cluster.left?cluster.left.splitScore:-Infinity,cluster.right?cluster.right.splitScore:-Infinity);return parent-child;}
 
   function splitTreeToClusterCount(tree,count){var clusters=[tree];var target=Math.max(1,Math.floor(Number(count)||1));while(clusters.length<target){var chosen=-1,bestSlack=-Infinity,bestSize=-1;clusters.forEach(function(cluster,index){var slack=candidateClusterSlack(cluster);if(slack>bestSlack+EPSILON||(Math.abs(slack-bestSlack)<=EPSILON&&(cluster.size>bestSize||(cluster.size===bestSize&&String(cluster.path)<String(chosen>=0&&clusters[chosen].path||'\uffff'))))){chosen=index;bestSlack=slack;bestSize=cluster.size;}});if(chosen<0)break;var parent=clusters[chosen];clusters.splice.apply(clusters,[chosen,1].concat([parent.left,parent.right].filter(Boolean)));}return clusters.sort(function(a,b){return String(a.path)<String(b.path)?-1:String(a.path)>String(b.path)?1:0;});}
 
@@ -405,7 +535,7 @@
     var treeStarted=searchProfile&&searchProfile.now();trees=prepared.groups.map(function(group){return buildCandidateTree(group,keys,prepared.baseContext,dynamicCandidateOrder);});if(searchProfile)searchProfile.time('treeBuild',treeStarted);treeNodes=trees.reduce(function(total,tree){return total+candidateTreeNodeCount(tree);},0);
     function boxStats(clusters){var profileStarted=searchProfile&&searchProfile.now(),stats=clusters.reduce(function(total,cluster){return addStats(total,cluster.envelope);},{});if(searchProfile)searchProfile.time('boxStats',profileStarted);return stats;}
     function boundForBox(clusters,metadata,full){if(searchProfile)searchProfile.count('boundCalls');var details=Object.assign({},metadata||{},full?{}:{summaryOnly:true});var outcome=evaluate(boxStats(clusters),details);return{upper:scoreOf(outcome),outcome:outcome,feasible:isOutcomeFeasible(outcome)};}
-    function splitSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=heuristicPackageScore({statDelta:cluster.envelope},'damage');var child=Math.max(cluster.left?heuristicPackageScore({statDelta:cluster.left.envelope},'damage'):-Infinity,cluster.right?heuristicPackageScore({statDelta:cluster.right.envelope},'damage'):-Infinity);return parent-child;}
+    function splitSlack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=cluster.splitScore;var child=Math.max(cluster.left?cluster.left.splitScore:-Infinity,cluster.right?cluster.right.splitScore:-Infinity);return parent-child;}
     function chooseSplitIndices(clusters,count){
       var profileStarted=searchProfile&&searchProfile.now(),indices=clusters.map(function(cluster,index){return{index:index,cluster:cluster,slack:splitSlack(cluster)};}).filter(function(entry){return entry.cluster&&(entry.cluster.left||entry.cluster.right);}).sort(function(a,b){if(Math.abs(a.slack-b.slack)>EPSILON)return b.slack-a.slack;if(a.cluster.size!==b.cluster.size)return b.cluster.size-a.cluster.size;return a.index-b.index;}).slice(0,Math.max(1,count||1)).map(function(entry){return entry.index;});
       if(searchProfile)searchProfile.time('splitSelection',profileStarted);return indices;
@@ -450,7 +580,7 @@
   function verifyCandidateTreeUpperBounds(problem,options){
     var settings=options||{};var prepared=settings.prepared?problem:prepareProblem(problem,settings);var registry=settings.registry||root.ToramStatRegistry;var keys=prepared.metadata.modeledKeys||modeledKeys(registry);var evaluateStats=settings.evaluateStats||createDefaultAdapter(prepared,settings);var trees=prepared.groups.map(function(group){return buildCandidateTree(group,keys,prepared.baseContext,settings.dynamicCandidateOrder);});var checked=0,completions=0,violations=[];
     function combinedEnvelope(clusters){return clusters.reduce(function(total,cluster){return addStats(total,cluster.envelope);},{});}
-    function slack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=heuristicPackageScore({statDelta:cluster.envelope},'damage');var child=Math.max(cluster.left?heuristicPackageScore({statDelta:cluster.left.envelope},'damage'):-Infinity,cluster.right?heuristicPackageScore({statDelta:cluster.right.envelope},'damage'):-Infinity);return parent-child;}
+    function slack(cluster){if(!cluster||(!cluster.left&&!cluster.right))return-Infinity;var parent=cluster.splitScore;var child=Math.max(cluster.left?cluster.left.splitScore:-Infinity,cluster.right?cluster.right.splitScore:-Infinity);return parent-child;}
     function splitIndex(clusters){var selected=-1,bestSlack=-Infinity,bestSize=-1;clusters.forEach(function(cluster,index){if(!cluster||(!cluster.left&&!cluster.right))return;var value=slack(cluster);if(value>bestSlack+EPSILON||(Math.abs(value-bestSlack)<=EPSILON&&(cluster.size>bestSize||(cluster.size===bestSize&&index<selected)))){selected=index;bestSlack=value;bestSize=cluster.size;}});return selected;}
     function audit(clusters){var upper=scoreOf(evaluateStats(combinedEnvelope(clusters),{verifyCandidateTreeBound:true}));checked++;var index=splitIndex(clusters);var actual=-Infinity;if(index<0){var stats=clusters.reduce(function(total,cluster){return addStats(total,cluster.package.statDelta);},{});actual=scoreOf(evaluateStats(stats,{verifyCandidateTreeComplete:true}));completions++;}else{[clusters[index].left,clusters[index].right].forEach(function(child){if(!child)return;var next=clusters.slice();next[index]=child;actual=Math.max(actual,audit(next));});}if(actual>upper+EPSILON)violations.push({box:clusters.map(function(cluster){return cluster.path;}),upper:upper,actual:actual});return actual;}
     if(trees.length)audit(trees);return Object.freeze({checked:checked,completions:completions,violations:Object.freeze(violations)});

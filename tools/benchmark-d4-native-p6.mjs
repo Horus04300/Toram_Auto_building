@@ -32,6 +32,7 @@ function run(command, args) {
 const calculationContext = { window:{ ToramStatRegistry:registry }, console };
 calculationContext.window.window = calculationContext.window;
 vm.createContext(calculationContext);
+vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), calculationContext, { filename:'calculation-policies.js' });
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', calculationContext);
 vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), calculationContext, { filename:'calculator.js' });
 const kernel = calculationContext.window.ToramCalculationKernel.evaluateContext;
@@ -49,12 +50,33 @@ const baseContext = {
 const dataContext = {};
 vm.createContext(dataContext);
 vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8')}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
-const scenario = evaluator.createScenarioSnapshot(baseContext);
-const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:[], locks:[], banned:{'오로로 콜론':true} });
+const runtimeFixture=process.env.D4_P6_REVENIR==='1'?JSON.parse(await readFile(resolve(root,'tools/fixtures/d4-native-runtime-26min-revenir.json'),'utf8')).resolvedExecutionContext:null;
+if(runtimeFixture)assert.equal(process.env.D4_PROOF_ONLY,'1','Revenir currently supports preparation/proof auditing only; the P6 exact-score oracle is a different fixture');
+if(runtimeFixture)Object.assign(baseContext,runtimeFixture.baseContext);
+const scenario = evaluator.createScenarioSnapshot(baseContext,runtimeFixture?{requirements:runtimeFixture.scenarioRequirements}:undefined);
+const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:runtimeFixture?runtimeFixture.currentCrystas:[], locks:runtimeFixture?runtimeFixture.locks:[], banned:runtimeFixture?runtimeFixture.banned:{'오로로 콜론':true} });
 const adapter = stats => evaluator.evaluateAggregate(baseContext, scenario, stats, kernel);
 const relevantKeys = optimizer.deriveRelevantKeys(compiled, registry, adapter);
-const prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, pareto:{maxComparisons:1000000} });
+const preparationStarted = performance.now();
+let prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, evaluateStats:(stats,meta) => meta?.summaryOnly ? evaluator.evaluateAggregateSummary(baseContext,scenario,stats,kernel) : adapter(stats), enableUtilityDominanceAudit:process.env.D4_UTILITY_DOMINANCE_AUDIT === '1', utilityProofNodeLimit:process.env.D4_PROOF_NODES,utilityProofEvaluationLimit:process.env.D4_PROOF_EVALUATIONS,utilityProofComparisonLimit:process.env.D4_PROOF_COMPARISONS, pareto:{maxComparisons:1000000} });
+const preparationMs = performance.now()-preparationStarted;
+if (prepared.metadata.utilityDominanceAudit) {
+  console.log('Utility dominance audit: '+JSON.stringify({...prepared.metadata.utilityDominanceAudit,certificates:undefined,retainedExamples:undefined}));
+  if(process.env.D4_PROOF_REPORT)await writeFile(resolve(root,process.env.D4_PROOF_REPORT),JSON.stringify(prepared.metadata.utilityDominanceAudit,null,2));
+}
+if(process.env.D4_PROOF_ONLY==='1'){console.log(JSON.stringify({preparationMs,packages:prepared.groups.map(group=>group.packages.length)}));process.exit(0);}
 assert.ok(prepared.metadata.paretoReports.every(report => report.complete), 'P6 requires a complete prepared fixture');
+const packageLimit = Math.floor(Number(process.env.D4_P6_PACKAGE_LIMIT) || 0);
+if (packageLimit > 0) {
+  assert.ok(process.env.D4_P6_THREAD, 'sampled fixtures require the single measurement/oracle path');
+  prepared = {
+    ...prepared,
+    groups:prepared.groups.map(group => ({
+      ...group,
+      packages:group.packages.filter((_,index) => index % Math.max(1,Math.floor(group.packages.length/packageLimit)) === 0).slice(0,packageLimit)
+    }))
+  };
+}
 
 const temp = await mkdtemp(join(tmpdir(), 'toram-d4-p6-'));
 async function measuredRun(threads, cancelAfterMs) {
@@ -66,7 +88,7 @@ async function measuredRun(threads, cancelAfterMs) {
   const resultText = await readFile(output, 'utf8');
   let result;
   try { result = JSON.parse(resultText); } catch (error) { throw new Error(`native ${tag} returned invalid JSON: ${stderr || resultText || error.message}`); }
-  if (measure.exitCode !== 0 && result.status !== 'exact' && result.status !== 'cancelled') throw new Error(`native ${tag} failed: ${stderr || resultText}`);
+  if (measure.exitCode !== 0 && result.status !== 'exact' && result.status !== 'cancelled' && !(process.env.D4_SESSION_BENCH_MS && result.status === 'bounded')) throw new Error(`native ${tag} failed: ${stderr || resultText}`);
   return { threads, cancelAfterMs, ...measure, result };
 }
 
@@ -75,9 +97,17 @@ try {
     const threads = Number(process.env.D4_P6_THREAD);
     assert.ok(Number.isInteger(threads) && threads > 0, 'D4_P6_THREAD must be a positive integer');
     const entry = await measuredRun(threads, null);
-    assert.equal(entry.result.status, 'exact', 'single P6 measurement must finish exactly');
-    assert.equal(entry.result.score, 14097, 'single P6 measurement must match the oracle');
-    const summary = { schema:'toram.d4-native-p6-single.v1', threads, exitCode:entry.exitCode, solverMs:entry.result.elapsedMs, wallMs:entry.wallMs, cpuMs:entry.cpuMs, peakWorkingSetBytes:entry.peakWorkingSetBytes, score:entry.result.score, id:entry.result.bestBuild.id, scheduledShards:entry.result.scheduledShards, completedShards:entry.result.completedShards };
+    if (process.env.D4_SESSION_BENCH_MS && entry.result.status === 'bounded') {
+      assert.ok(entry.result.upperBound >= 14097);
+      assert.ok(entry.result.score === null || entry.result.score <= 14097);
+    } else assert.equal(entry.result.status, 'exact', 'single P6 measurement must finish exactly');
+    if (!packageLimit) { if (entry.result.status === 'exact') assert.equal(entry.result.score, 14097, 'single P6 measurement must match the oracle'); }
+    else {
+      const oracle = optimizer.exhaustiveSearch(prepared,{prepared,evaluateStats:adapter});
+      assert.equal(entry.result.score,oracle.score);
+      assert.equal(entry.result.bestBuild.id,oracle.bestBuild.id);
+    }
+    const summary = { schema:'toram.d4-native-p6-single.v1', packageLimit, packages:prepared.groups.map(group => group.packages.length), threads, status:entry.result.status, upperBound:entry.result.upperBound, sessionPreparationMs:entry.result.sessionPreparationMs, sessionWallMs:entry.result.sessionWallMs, sessionBatches:entry.result.sessionBatches, exitCode:entry.exitCode, solverMs:entry.result.elapsedMs, wallMs:entry.wallMs, cpuMs:entry.cpuMs, peakWorkingSetBytes:entry.peakWorkingSetBytes, score:entry.result.score, id:entry.result.bestBuild.id, visitedNodes:entry.result.visitedNodes, evaluations:entry.result.evaluations, prunedByBound:entry.result.prunedByBound, prunedByConstraint:entry.result.prunedByConstraint, scheduledShards:entry.result.scheduledShards, completedShards:entry.result.completedShards };
     if (process.env.D4_P6_REPORT) await writeFile(resolve(root, process.env.D4_P6_REPORT), JSON.stringify(summary, null, 2));
     console.log(JSON.stringify(summary));
     process.exit(0);

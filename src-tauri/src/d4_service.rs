@@ -11,7 +11,7 @@ const QUEUE_SAFETY_RESERVE_BYTES: u64 = 512 * 1024 * 1024;
 const INITIAL_BUDGET_MS: u64 = 30_000;
 const PROGRESS_INTERVAL_MS: u64 = 100;
 const MAX_RESUMABLE_SESSIONS: usize = 4;
-const NODES_PER_WORKER_BATCH: usize = 1;
+const NODES_PER_WORKER_BATCH: usize = d4_native_solver::SESSION_NODES_PER_WORKER;
 static NEXT_CONTINUATION_ID: AtomicU64 = AtomicU64::new(1);
 
 #[derive(Serialize)]
@@ -64,7 +64,7 @@ pub struct D4NativeRuntimeResult {
 
 #[derive(Default)]
 struct JobControl {
-    cancel: AtomicBool,
+    cancel: Arc<AtomicBool>,
     pause: AtomicBool,
 }
 struct StoredSession {
@@ -600,7 +600,7 @@ mod tests {
     fn cancellation_discards_the_resumable_frontier() {
         let channel = tauri::ipc::Channel::<D4NativeProgress>::new(|_| Ok(()));
         let control = Arc::new(JobControl {
-            cancel: AtomicBool::new(true),
+            cancel: Arc::new(AtomicBool::new(true)),
             pause: AtomicBool::new(false),
         });
         let (result, preserved) = run_budget(
@@ -623,7 +623,7 @@ mod tests {
     fn pause_keeps_the_resumable_frontier() {
         let channel = tauri::ipc::Channel::<D4NativeProgress>::new(|_| Ok(()));
         let control = Arc::new(JobControl {
-            cancel: AtomicBool::new(false),
+            cancel: Arc::new(AtomicBool::new(false)),
             pause: AtomicBool::new(true),
         });
         let (paused, preserved) = run_budget(

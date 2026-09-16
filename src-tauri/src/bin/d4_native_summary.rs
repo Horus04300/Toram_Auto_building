@@ -36,6 +36,17 @@ fn main() -> Result<(), String> {
     for case in request.cases {
         let summary = d4_native_evaluator::evaluate_summary(&case.base_context, &case.stats)
             .map_err(|error| format!("D4 parity case {} failed: {error}", case.id))?;
+        let prepared = d4_native_evaluator::PreparedContext::from(case.base_context.clone());
+        let stats = serde_json::from_value(case.stats.clone())
+            .map_err(|error| format!("D4 parity stats failed: {error}"))?;
+        let cached = d4_native_evaluator::evaluate_summary_from_map(&prepared, &stats)?;
+        let native_stats = serde_json::from_value(case.stats.clone())
+            .map_err(|error| format!("Native stats: {error}"))?;
+        let native =
+            d4_native_evaluator::evaluate_summary_from_native_stats(&prepared, &native_stats)?;
+        if summary != cached || summary != native {
+            return Err(format!("D4 prepared context mismatch in {}", case.id));
+        }
         results.push(json!({ "id": case.id, "summary": summary }));
     }
     println!(

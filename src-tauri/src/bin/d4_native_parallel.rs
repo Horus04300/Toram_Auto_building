@@ -13,7 +13,7 @@ use serde::Deserialize;
 use std::io::{self, Read};
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
-use std::time::Duration;
+use std::time::{Duration, Instant};
 
 #[derive(Deserialize)]
 struct ParallelRequest {
@@ -46,6 +46,44 @@ fn main() -> Result<(), String> {
         });
         signal
     });
+    if let Ok(budget) = std::env::var("D4_SESSION_BENCH_MS") {
+        let budget = budget.parse::<u64>().map_err(|error| error.to_string())?;
+        let started = Instant::now();
+        let mut session = d4_native_solver::NativeSearchSession::new(request.problem)?;
+        let preparation_ms = started.elapsed().as_secs_f64() * 1000.0;
+        let deadline = started + Duration::from_millis(budget);
+        let mut batches = 0_u64;
+        while !session.is_complete() && Instant::now() < deadline {
+            session.run_parallel_slice_with_control(
+                threads.saturating_mul(d4_native_solver::SESSION_NODES_PER_WORKER),
+                threads,
+                cancel.as_ref(),
+                Some(deadline),
+            )?;
+            batches += 1;
+            if cancel
+                .as_ref()
+                .is_some_and(|signal| signal.load(std::sync::atomic::Ordering::Acquire))
+            {
+                break;
+            }
+        }
+        let mut snapshot = session.snapshot();
+        if cancel
+            .as_ref()
+            .is_some_and(|signal| signal.load(std::sync::atomic::Ordering::Acquire))
+        {
+            snapshot.status = "cancelled".into();
+            snapshot.exact = false;
+            snapshot.upper_bound = None;
+        }
+        let mut output = serde_json::to_value(snapshot).map_err(|error| error.to_string())?;
+        output["sessionPreparationMs"] = preparation_ms.into();
+        output["sessionWallMs"] = (started.elapsed().as_secs_f64() * 1000.0).into();
+        output["sessionBatches"] = batches.into();
+        println!("{}", output);
+        return Ok(());
+    }
     let result = match cancel.as_deref() {
         Some(signal) => {
             d4_native_solver::solve_exact_parallel_cancellable(&request.problem, threads, signal)?

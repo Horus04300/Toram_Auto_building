@@ -8,6 +8,207 @@ use std::collections::BTreeMap;
 
 use serde::Serialize;
 use serde_json::Value;
+#[path = "d4_native_stats.rs"]
+#[allow(dead_code)] // The summary bridge does not link search-only operations.
+mod native_stats;
+pub use native_stats::NativeStats;
+
+/// Immutable lookup cache. JSON remains the serialization contract; cached
+/// fields preserve missing/null/type semantics and are rebuilt on deserialize.
+pub trait ContextLookup {
+    fn context_get(&self, key: &str) -> Option<&Value>;
+    fn invariant(&self, kind: Invariant) -> f64;
+    fn is_object(&self) -> bool;
+}
+
+impl ContextLookup for Value {
+    fn invariant(&self, kind: Invariant) -> f64 {
+        compute_invariant(self, kind)
+    }
+    #[inline]
+    fn context_get(&self, key: &str) -> Option<&Value> {
+        self.get(key)
+    }
+    fn is_object(&self) -> bool {
+        Value::is_object(self)
+    }
+}
+
+#[derive(Clone, Copy)]
+pub enum Invariant {
+    AtkUp,
+    MatkUp,
+    PhysResistance,
+    MagicResistance,
+    Proc,
+}
+
+// Only base-context expressions belong here; no candidate stats are cached.
+fn compute_invariant(base: &Value, kind: Invariant) -> f64 {
+    match kind {
+        Invariant::AtkUp => {
+            floor(number(base, "strBase") * number(base, "atkUpSTR") / 100.0)
+                + floor(number(base, "dexBase") * number(base, "atkUpDEX") / 100.0)
+                + floor(number(base, "intBase") * number(base, "atkUpINT") / 100.0)
+                + floor(number(base, "agiBase") * number(base, "atkUpAGI") / 100.0)
+                + floor(number(base, "vitBase") * number(base, "atkUpVIT") / 100.0)
+        }
+        Invariant::MatkUp => {
+            floor(number(base, "strBase") * number(base, "matkUpSTR") / 100.0)
+                + floor(number(base, "dexBase") * number(base, "matkUpDEX") / 100.0)
+                + floor(number(base, "intBase") * number(base, "matkUpINT") / 100.0)
+                + floor(number(base, "agiBase") * number(base, "matkUpAGI") / 100.0)
+                + floor(number(base, "vitBase") * number(base, "matkUpVIT") / 100.0)
+        }
+        Invariant::PhysResistance => resistance_multiplier(base, false),
+        Invariant::MagicResistance => resistance_multiplier(base, true),
+        Invariant::Proc => expected_proc_multiplier(base),
+    }
+}
+
+macro_rules! prepared_context {
+    ($($field:ident => $key:literal),* $(,)?) => {
+        #[derive(Clone, Debug, Serialize)]
+        #[serde(transparent)]
+        pub struct PreparedContext {
+            original: Value,
+            #[serde(skip)] invariants: [f64; 5],
+            $(#[serde(skip)] $field: Option<Value>,)*
+        }
+        impl From<Value> for PreparedContext {
+            fn from(original: Value) -> Self {
+                Self { $($field: original.get($key).cloned(),)*
+                    invariants: [Invariant::AtkUp, Invariant::MatkUp, Invariant::PhysResistance, Invariant::MagicResistance, Invariant::Proc].map(|kind| compute_invariant(&original, kind)), original }
+            }
+        }
+        impl<'de> serde::Deserialize<'de> for PreparedContext {
+            fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
+                <Value as serde::Deserialize>::deserialize(deserializer).map(Self::from)
+            }
+        }
+        impl std::ops::Deref for PreparedContext {
+            type Target = Value;
+            fn deref(&self) -> &Value { &self.original }
+        }
+        impl ContextLookup for PreparedContext {
+            #[inline]
+            fn invariant(&self, kind: Invariant) -> f64 { self.invariants[kind as usize] }
+            #[inline]
+            fn context_get(&self, key: &str) -> Option<&Value> {
+                match key {
+                    $($key => self.$field.as_ref(),)*
+                    _ => self.original.get(key),
+                }
+            }
+            fn is_object(&self) -> bool { self.original.is_object() }
+        }
+    };
+}
+
+prepared_context! {
+    field_active_build_conversions => "activeBuildConversions",
+    field_additional_target_resistances => "additionalTargetResistances",
+    field_agi_base => "agiBase",
+    field_agi_f => "agiF",
+    field_agi_p => "agiP",
+    field_ampr_f => "amprF",
+    field_ampr_p => "amprP",
+    field_armor_type => "armorType",
+    field_aspd_f => "aspdF",
+    field_aspd_p => "aspdP",
+    field_atk_f => "atkF",
+    field_atk_p => "atkP",
+    field_atk_type => "atkType",
+    field_atk_up_a_g_i => "atkUpAGI",
+    field_atk_up_d_e_x => "atkUpDEX",
+    field_atk_up_i_n_t => "atkUpINT",
+    field_atk_up_s_t_r => "atkUpSTR",
+    field_atk_up_v_i_t => "atkUpVIT",
+    field_attack_element => "attackElement",
+    field_attack_power_mode => "attackPowerMode",
+    field_base_wpn_atk_f => "baseWpnAtkF",
+    field_boss_crit_resist => "bossCritResist",
+    field_boss_def => "bossDef",
+    field_boss_level => "bossLevel",
+    field_boss_mag_resist => "bossMagResist",
+    field_boss_mdef => "bossMdef",
+    field_boss_phys_resist => "bossPhysResist",
+    field_cdmg_f => "cdmgF",
+    field_cdmg_p => "cdmgP",
+    field_chk_guaranteed_crit => "chkGuaranteedCrit",
+    field_chk_is_unsheathe => "chkIsUnsheathe",
+    field_conversion_level => "conversionLevel",
+    field_crit_f => "critF",
+    field_crit_p => "critP",
+    field_critical_chance_bonus => "criticalChanceBonus",
+    field_critical_chance_multiplier => "criticalChanceMultiplier",
+    field_crt_base => "crtBase",
+    field_damage_multiplier_layers => "damageMultiplierLayers",
+    field_damage_p => "damageP",
+    field_dex_base => "dexBase",
+    field_dex_f => "dexF",
+    field_dex_p => "dexP",
+    field_dual_bringer_active => "dualBringerActive",
+    field_dual_bringer_level => "dualBringerLevel",
+    field_elem_p => "elemP",
+    field_element_awakening => "elementAwakening",
+    field_fixed_critical_chance => "fixedCriticalChance",
+    field_half_mdef_ignored => "halfMdefIgnored",
+    field_ignore_defense => "ignoreDefense",
+    field_ignore_mdef => "ignoreMdef",
+    field_int_base => "intBase",
+    field_int_f => "intF",
+    field_int_p => "intP",
+    field_level => "level",
+    field_lrw => "lrw",
+    field_mag_pierce => "magPierce",
+    field_magic_element => "magicElement",
+    field_magic_pierce_skill_bonus => "magicPierceSkillBonus",
+    field_main_type => "mainType",
+    field_matk_f => "matkF",
+    field_matk_p => "matkP",
+    field_matk_up_a_g_i => "matkUpAGI",
+    field_matk_up_d_e_x => "matkUpDEX",
+    field_matk_up_i_n_t => "matkUpINT",
+    field_matk_up_s_t_r => "matkUpSTR",
+    field_matk_up_v_i_t => "matkUpVIT",
+    field_max_hp_f => "maxHpF",
+    field_max_hp_p => "maxHpP",
+    field_max_mp_f => "maxMpF",
+    field_minimum_critical_damage => "minimumCriticalDamage",
+    field_no_critical => "noCritical",
+    field_normal_attack_ampr_profile => "normalAttackAmprProfile",
+    field_phys_pierce => "physPierce",
+    field_physical_pierce_skill_bonus => "physicalPierceSkillBonus",
+    field_proc_damage_modifiers => "procDamageModifiers",
+    field_range_type => "rangeType",
+    field_skill_const => "skillConst",
+    field_skill_mult => "skillMult",
+    field_skill_stats => "skillStats",
+    field_spell_burst_level => "spellBurstLevel",
+    field_srw => "srw",
+    field_stability => "stability",
+    field_stability_bonus => "stabilityBonus",
+    field_str_base => "strBase",
+    field_str_f => "strF",
+    field_str_p => "strP",
+    field_sub_atk => "subAtk",
+    field_sub_refine => "subRefine",
+    field_sub_stab => "subStab",
+    field_sub_type => "subType",
+    field_target_weakened => "targetWeakened",
+    field_unsheathe_f => "unsheatheF",
+    field_unsheathe_p => "unsheatheP",
+    field_use_higher_range_damage => "useHigherRangeDamage",
+    field_vit_base => "vitBase",
+    field_vit_f => "vitF",
+    field_vit_p => "vitP",
+    field_watk_f => "watkF",
+    field_watk_p => "watkP",
+    field_wpn_atk => "wpnAtk",
+    field_wpn_refine => "wpnRefine",
+    field_wpn_stab => "wpnStab",
+}
 
 #[derive(Clone, Debug, PartialEq, Serialize)]
 pub struct D4NativeSummary {
@@ -25,29 +226,35 @@ pub struct D4NativeSummary {
     pub final_aspd: i64,
 }
 
-fn number(value: &Value, key: &str) -> f64 {
-    value.get(key).and_then(Value::as_f64).unwrap_or(0.0)
-}
-
-fn flag(value: &Value, key: &str) -> bool {
-    value.get(key).and_then(Value::as_bool).unwrap_or(false)
-}
-
-fn text<'a>(value: &'a Value, key: &str) -> &'a str {
-    value.get(key).and_then(Value::as_str).unwrap_or("")
-}
-
-fn finite_number(value: &Value, key: &str, default: f64) -> f64 {
+fn number<C: ContextLookup>(value: &C, key: &str) -> f64 {
     value
-        .get(key)
+        .context_get(key)
+        .and_then(Value::as_f64)
+        .unwrap_or(0.0)
+}
+
+fn flag<C: ContextLookup>(value: &C, key: &str) -> bool {
+    value
+        .context_get(key)
+        .and_then(Value::as_bool)
+        .unwrap_or(false)
+}
+
+fn text<'a, C: ContextLookup>(value: &'a C, key: &str) -> &'a str {
+    value.context_get(key).and_then(Value::as_str).unwrap_or("")
+}
+
+fn finite_number<C: ContextLookup>(value: &C, key: &str, default: f64) -> f64 {
+    value
+        .context_get(key)
         .and_then(Value::as_f64)
         .filter(|number| number.is_finite())
         .unwrap_or(default)
 }
 
-fn array<'a>(value: &'a Value, key: &str) -> &'a [Value] {
+fn array<'a, C: ContextLookup>(value: &'a C, key: &str) -> &'a [Value] {
     value
-        .get(key)
+        .context_get(key)
         .and_then(Value::as_array)
         .map(Vec::as_slice)
         .unwrap_or(&[])
@@ -96,7 +303,7 @@ fn resolve_normal_attack_ampr(value: f64, profile: Option<&Value>) -> f64 {
         .unwrap_or(after_passive)
 }
 
-fn resistance_multiplier(base: &Value, is_magic: bool) -> f64 {
+fn resistance_multiplier<C: ContextLookup>(base: &C, is_magic: bool) -> f64 {
     let resistance_key = if is_magic {
         "bossMagResist"
     } else {
@@ -112,7 +319,7 @@ fn resistance_multiplier(base: &Value, is_magic: bool) -> f64 {
     ((1.0 - total / 100.0) * 1e12).round() / 1e12
 }
 
-fn expected_proc_multiplier(base: &Value) -> f64 {
+fn expected_proc_multiplier<C: ContextLookup>(base: &C) -> f64 {
     array(base, "procDamageModifiers")
         .iter()
         .fold(1.0, |expected, item| {
@@ -138,6 +345,96 @@ impl StatLookup for BTreeMap<String, f64> {
     }
 }
 
+// Per-evaluation numeric view: one map traversal, then direct field reads.
+// Keep the source map for future/dynamic keys that are not cached here.
+macro_rules! dense_stats {
+    ($($field:ident => $key:literal),* $(,)?) => {
+        #[cfg(test)]
+        const DENSE_STAT_KEYS: &[&str] = &[$($key,)*];
+        struct DenseStats<'a> {
+            source: &'a BTreeMap<String, f64>,
+            $($field: f64,)*
+        }
+        impl<'a> DenseStats<'a> {
+            fn new(source: &'a BTreeMap<String, f64>) -> Self {
+                let mut result = Self { source, $($field: 0.0,)* };
+                for (key, value) in source {
+                    match key.as_str() {
+                        $($key => result.$field = *value,)*
+                        _ => {},
+                    }
+                }
+                result
+            }
+        }
+        impl StatLookup for DenseStats<'_> {
+            #[inline]
+            fn stat_number(&self, key: &str) -> f64 {
+                match key {
+                    $($key => self.$field,)*
+                    _ => self.source.stat_number(key),
+                }
+            }
+        }
+    };
+}
+
+dense_stats! {
+    agi => "AGI",
+    agip => "AGIP",
+    ampr => "AMPR",
+    amprp => "AMPRP",
+    aspd => "ASPD",
+    aspd_p => "ASPD_P",
+    atk => "ATK",
+    atkp => "ATKP",
+    cdmg => "CDMG",
+    cdmgp => "CDMGP",
+    crit => "CRIT",
+    critp => "CRITP",
+    damage_p => "DAMAGE_P",
+    dex => "DEX",
+    dexp => "DEXP",
+    elem_p => "ELEM_P",
+    int => "INT",
+    intp => "INTP",
+    lrw => "LRW",
+    mag_pierce => "MAG_PIERCE",
+    matk => "MATK",
+    matkp => "MATKP",
+    maxhp => "MAXHP",
+    maxhpp => "MAXHPP",
+    maxmp => "MAXMP",
+    phys_pierce => "PHYS_PIERCE",
+    srw => "SRW",
+    stability => "STABILITY",
+    str => "STR",
+    strp => "STRP",
+    unsheathe => "UNSHEATHE",
+    unsheathep => "UNSHEATHEP",
+    vit => "VIT",
+    vitp => "VITP",
+    watk => "WATK",
+    watkp => "WATKP",
+}
+
+impl StatLookup for NativeStats {
+    #[inline]
+    fn stat_number(&self, key: &str) -> f64 {
+        self.get(key).copied().unwrap_or(0.0)
+    }
+}
+#[allow(dead_code)]
+pub fn evaluate_summary_from_native_stats<C: ContextLookup>(
+    base: &C,
+    stats: &NativeStats,
+) -> Result<D4NativeSummary, String> {
+    if !base.is_object() {
+        return Err("D4 native summary requires an object base context".into());
+    }
+    evaluate_summary_from_lookup(base, stats)
+}
+
 fn stat<T: StatLookup>(stats: &T, key: &str) -> f64 {
     stats.stat_number(key)
 }
@@ -146,8 +443,8 @@ fn floor(value: f64) -> f64 {
     value.floor()
 }
 
-fn stat_total<T: StatLookup>(
-    base: &Value,
+fn stat_total<T: StatLookup, C: ContextLookup>(
+    base: &C,
     stats: &T,
     base_key: &str,
     percent_key: &str,
@@ -244,18 +541,18 @@ pub fn evaluate_summary(base: &Value, stats: &Value) -> Result<D4NativeSummary, 
 /// entry point deliberately avoids constructing a serde_json object for every
 /// bound and leaf evaluation.
 #[allow(dead_code)] // The summary bridge intentionally does not link the solver.
-pub fn evaluate_summary_from_map(
-    base: &Value,
+pub fn evaluate_summary_from_map<C: ContextLookup>(
+    base: &C,
     stats: &BTreeMap<String, f64>,
 ) -> Result<D4NativeSummary, String> {
     if !base.is_object() {
         return Err("D4 native summary requires an object base context".to_string());
     }
-    evaluate_summary_from_lookup(base, stats)
+    evaluate_summary_from_lookup(base, &DenseStats::new(stats))
 }
 
-fn evaluate_summary_from_lookup<T: StatLookup>(
-    base: &Value,
+fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
+    base: &C,
     stats: &T,
 ) -> Result<D4NativeSummary, String> {
     let mut atk_p = number(base, "atkP") + stat(stats, "ATKP");
@@ -296,7 +593,7 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
         + number(base, "amprF")
         + stat(stats, "AMPR");
     let ampr_before_dual =
-        resolve_normal_attack_ampr(ampr, base.get("normalAttackAmprProfile")) as i64;
+        resolve_normal_attack_ampr(ampr, base.context_get("normalAttackAmprProfile")) as i64;
 
     let main = text(base, "mainType");
     let sub = text(base, "subType");
@@ -311,16 +608,8 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
         weapon += floor(number(base, "subAtk"));
     }
     let (stat_atk, stat_matk, matk_ratio) = atk_stat(main, sub, str_, int_, agi, dex);
-    let atk_up = floor(number(base, "strBase") * number(base, "atkUpSTR") / 100.0)
-        + floor(number(base, "dexBase") * number(base, "atkUpDEX") / 100.0)
-        + floor(number(base, "intBase") * number(base, "atkUpINT") / 100.0)
-        + floor(number(base, "agiBase") * number(base, "atkUpAGI") / 100.0)
-        + floor(number(base, "vitBase") * number(base, "atkUpVIT") / 100.0);
-    let matk_up = floor(number(base, "strBase") * number(base, "matkUpSTR") / 100.0)
-        + floor(number(base, "dexBase") * number(base, "matkUpDEX") / 100.0)
-        + floor(number(base, "intBase") * number(base, "matkUpINT") / 100.0)
-        + floor(number(base, "agiBase") * number(base, "matkUpAGI") / 100.0)
-        + floor(number(base, "vitBase") * number(base, "matkUpVIT") / 100.0);
+    let atk_up = base.invariant(Invariant::AtkUp);
+    let matk_up = base.invariant(Invariant::MatkUp);
     if sub == "마도구" {
         atk_p -= 15.0;
     }
@@ -377,12 +666,15 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
             + stat(stats, "CRIT");
     let normal_attack_crit = (normal_raw - number(base, "bossCritResist")) as i64;
     let critical_multiplier = base
-        .get("criticalChanceMultiplier")
+        .context_get("criticalChanceMultiplier")
         .and_then(Value::as_f64)
         .unwrap_or(1.0);
     let mut final_crit =
         floor((normal_raw + number(base, "criticalChanceBonus")) * critical_multiplier);
-    if let Some(fixed) = base.get("fixedCriticalChance").and_then(Value::as_f64) {
+    if let Some(fixed) = base
+        .context_get("fixedCriticalChance")
+        .and_then(Value::as_f64)
+    {
         if fixed.is_finite() {
             final_crit = fixed;
         }
@@ -475,7 +767,9 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
         effective_def = floor(effective_def / 2.0);
     }
     effective_def = effective_def.max(0.0);
-    let layers = base.get("damageMultiplierLayers").unwrap_or(&Value::Null);
+    let layers = base
+        .context_get("damageMultiplierLayers")
+        .unwrap_or(&Value::Null);
     let mut final_skill_mult = finite_number(layers, "skill", number(base, "skillMult"));
     let passive_damage_mult = finite_number(layers, "passive", 1.0);
     let active_damage_mult = finite_number(layers, "active", 1.0);
@@ -510,7 +804,12 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
         _ => final_atk,
     };
     let mut raw = floor(
-        (base_power + level - number(base, "bossLevel")) * resistance_multiplier(base, is_magic),
+        (base_power + level - number(base, "bossLevel"))
+            * base.invariant(if is_magic {
+                Invariant::MagicResistance
+            } else {
+                Invariant::PhysResistance
+            }),
     );
     if flag(base, "chkIsUnsheathe") {
         raw += unsheathe_f;
@@ -544,7 +843,7 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
         damage = floor(damage * multiplier);
     }
     Ok(D4NativeSummary {
-        optimization_damage_factor: damage * expected_proc_multiplier(base),
+        optimization_damage_factor: damage * base.invariant(Invariant::Proc),
         final_max_hp: max_hp,
         final_max_mp: max_mp,
         ampr_before_dual,
@@ -557,6 +856,105 @@ fn evaluate_summary_from_lookup<T: StatLookup>(
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn dense_stats_preserve_sparse_values_and_future_keys_bit_for_bit() {
+        let keys = DENSE_STAT_KEYS
+            .iter()
+            .copied()
+            .chain(["FUTURE_STAT"])
+            .collect::<Vec<_>>();
+        for value in [
+            -0.0,
+            0.0,
+            -123.25,
+            1e16,
+            f64::MIN_POSITIVE,
+            f64::INFINITY,
+            f64::NAN,
+        ] {
+            for selected in &keys {
+                let source = BTreeMap::from([(selected.to_string(), value)]);
+                let dense = DenseStats::new(&source);
+                for key in &keys {
+                    assert_eq!(
+                        dense.stat_number(key).to_bits(),
+                        source.stat_number(key).to_bits()
+                    );
+                }
+            }
+        }
+        let source = keys
+            .iter()
+            .enumerate()
+            .map(|(index, key)| (key.to_string(), index as f64 - 20.5))
+            .collect::<BTreeMap<_, _>>();
+        let dense = DenseStats::new(&source);
+        for key in keys {
+            assert_eq!(
+                dense.stat_number(key).to_bits(),
+                source.stat_number(key).to_bits()
+            );
+        }
+    }
+
+    #[test]
+    fn prepared_context_preserves_json_types_defaults_and_roundtrip() {
+        for original in [
+            json!({}),
+            json!({"level": null, "noCritical": 1, "mainType": false}),
+            json!({"level": "325", "noCritical": true, "mainType": "한손검",
+                "criticalChanceMultiplier": 0, "normalAttackAmprProfile": {"passive": []},
+                "unknownFutureField": {"nested": [1, null, "x"]}}),
+            json!({"level": -0.0, "skillMult": 1.25, "additionalTargetResistances": [1, 2]}),
+            json!({"strBase": 255, "dexBase": 500, "atkUpSTR": -1.25, "matkUpDEX": 2.75,
+                "bossPhysResist": 10, "bossMagResist": -25,
+                "additionalTargetResistances": [0.125, null, "10", -2],
+                "procDamageModifiers": [{"chancePercent": 125, "multiplier": 1.3},
+                    {"chancePercent": -10}, {"chancePercent": 35, "multiplier": 2}]}),
+        ] {
+            let prepared = PreparedContext::from(original.clone());
+            let encoded = serde_json::to_value(&prepared).unwrap();
+            assert_eq!(encoded, original);
+            let restored: PreparedContext = serde_json::from_value(encoded).unwrap();
+            for kind in [
+                Invariant::AtkUp,
+                Invariant::MatkUp,
+                Invariant::PhysResistance,
+                Invariant::MagicResistance,
+                Invariant::Proc,
+            ] {
+                assert_eq!(
+                    restored.invariant(kind).to_bits(),
+                    original.invariant(kind).to_bits()
+                );
+            }
+            for key in original
+                .as_object()
+                .unwrap()
+                .keys()
+                .map(String::as_str)
+                .chain(["level", "noCritical", "mainType", "missing", "skillMult"])
+            {
+                assert_eq!(restored.context_get(key), original.get(key));
+                assert_eq!(
+                    number(&restored, key).to_bits(),
+                    number(&original, key).to_bits()
+                );
+                assert_eq!(flag(&restored, key), flag(&original, key));
+                assert_eq!(text(&restored, key), text(&original, key));
+                assert_eq!(
+                    finite_number(&restored, key, 1.0),
+                    finite_number(&original, key, 1.0)
+                );
+                assert_eq!(array(&restored, key), array(&original, key));
+            }
+        }
+        for invalid in [Value::Null, json!([]), json!(1), json!(false)] {
+            let prepared = PreparedContext::from(invalid);
+            assert!(evaluate_summary_from_map(&prepared, &BTreeMap::new()).is_err());
+        }
+    }
 
     #[test]
     fn weapon_stat_coefficients_match_external_evidence() {
