@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-09-16 — v0.7.0 탐색 알고리즘 성능 개선 릴리스 준비. 공개 Latest는 v0.6.6.
+- 갱신: 2026-09-21 — v0.7.1 알고리즘 성능 개선 릴리스 준비.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태 판단은 이 문서, 실제 코드, 이번에 실행한 테스트를 함께 사용한다.
 - 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다. 과거 테스트 결과를 이번 실행 결과로 보고하지 않는다.
@@ -22,7 +22,7 @@
 
 ## 2. 저장 및 배포
 
-- 소스는 v0.7.0이며 탐색 알고리즘 성능 개선을 포함한다. 공개 Latest는 v0.6.6이며, v0.7.0 태그의 `release.yml` 회귀·서명·draft 자산 검증 후 일반 Latest 공개를 대기한다. package/Cargo/Tauri/두 lockfile 버전은 일치해야 한다. 버전별 `docs/release-notes/vX.Y.Z.md`가 있으면 자동 생성 변경 로그 앞에 표시한다.
+- 소스는 v0.7.1이며 알고리즘 성능 개선을 포함한다. 공개 Latest는 v0.7.0이며, v0.7.1 태그의 `release.yml` 회귀·서명·draft 자산 검증 후 일반 Latest 공개를 대기한다. package/Cargo/Tauri/두 lockfile 버전은 일치해야 한다. 버전별 `docs/release-notes/vX.Y.Z.md`가 있으면 자동 생성 변경 로그 앞에 표시한다.
 - 업데이트: Tauri updater 2.11.0, GitHub Latest 단일 endpoint, 자동 확인 기본 true, 동의 후 다운로드·서명 검증·설치. 별도 UpdateService Port/adapter/controller와 Rust service를 사용한다. 저장 추가값은 schema v2 `appSettings.update.checkOnStartup`뿐이다.
 - 설치 전 실행·일시정지·대기 계산을 확인하고 승인 시 cancel/dispose한다. 다운로드 중 새 계산은 다시 동의를 받고 최신 입력을 재저장한다. 종료/저장 실패 시 설치를 차단한다. 진입점/운영 계약은 `docs/architecture/app-update-release.md`다.
 - 실제 공개 0.6.4 설치본에서 0.6.5 자동 감지·동의 취소/재승인·다운로드·서명 검증·NSIS 설치·자동 재시작 통과. Build/Scenario·checkOnStartup·named build 보존 확인. 격리 설치 제거 후 기존 사용자 설치·세팅·등록 복원 확인. updater 없는 공개본은 첫 지원 버전을 수동 설치해야 한다. `docs/verification/release-0.6.5-upgrade.md` 참조.
@@ -55,7 +55,7 @@
 ## 5. 검증 기록과 문서 유지
 
 - 2026-09-16 v0.7.0 릴리스 준비: `node tools/release-version.mjs`, R9, R0 70/70 통과(실제 Native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정 SKIP), Rust 118개·fmt·clippy, S1 427/427, `git diff --check` 통과. `docs/release-notes/v0.7.0.md`의 **탐색 알고리즘 성능 개선**을 자동 변경 로그 앞에 넣는 Actions 경로를 추가했다. 서명 NSIS 빌드·업로더 Latest 공개는 v0.7.0 태그의 GitHub Actions에서 실행한다.
-- D4 최신: `docs/verification/d4-shared-batch-messages.md`. 공유 묶음·노드별 atomic 배분으로 메시지 비용 감소, Native/checkpoint v4. Rust 118개·parity 1,488개·R9/R0·S1 PASS(저장 E2E SKIP). P6 세션 반복 비교는 8스레드 3.6~4.9%/16스레드 1.2~1.7% 단축, 모두 exact 14,097. UI E2E·배포 미실행. 앞선 합산 배열화·세션 풀·선택적 추가 분할은 `docs/verification/d4-session-optimization.md` 참조. 유틸리티 하위호환 감사는 보류/기본 비활성(`docs/verification/d4-utility-dominance.md`).
+- D4 최신: `docs/verification/d4-nested-effects.md`. 13번: 중첩 효과 사전 준비. Native/checkpoint v5, split v3 유지. 기본 P6 평균 8스레드 0.7% 증가/16스레드 1.8% 단축(각 2회), exact 점수·ID 유지. Rust 156개·parity 1,938개·R9/R0·S1 PASS, 저장 E2E SKIP. 취소/deadline 확인. UI E2E·배포 미실행. 1~7·9~13번 구현, 8번 미착수. 6·7·12번 성능 한계 유지. 유틸리티 하위호환 감사는 보류/기본 비활성(`docs/verification/d4-utility-dominance.md`).
 - 2026-09-12 v0.6.6: 버전 검사·R9·R0 70개·Rust 79개·fmt·clippy·S1 427개·diff 검사 통과. R0 Native 저장 E2E는 CDP 미설정으로 SKIP, Edge 요리 재실행은 Playwright 미설정으로 SKIP. Actions G1~G6 통과 후 Latest 공개. 실제 0.6.5→0.6.6 설치 업데이트는 미실행이다.
 - 요리 UI/계산/복원: `docs/verification/my-room-food.md`. 0.6.4→0.6.5 실제 설치·데이터 보존: `docs/verification/release-0.6.5-upgrade.md`.
 - 2026-09-10 외부 무기 계수·Native 계산 v2 검증: `docs/verification/weapon-stat-recommendation-audit-2026-09-09.md`. 당시 변경 후 WebView·설치 빌드는 미실행이다.

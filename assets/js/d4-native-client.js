@@ -6,8 +6,8 @@
   // tree-splitting, runtime or GPU-policy change must not reuse a result made
   // under a different exact-search contract.
   var CALCULATION_VERSION = 'd4-native-evaluator.v2';
-  var ENGINE_VERSION = 'd4-native-solver.v4';
-  var SPLIT_POLICY = 'candidate-tree-2axis-smallbox64-lookahead.v2';
+  var ENGINE_VERSION = 'd4-native-solver.v5';
+  var SPLIT_POLICY = 'candidate-tree-2axis-smallbox64-lookahead.v3';
   var GPU_POLICY = 'cpu-only.p7';
 
   function invoke() {

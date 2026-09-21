@@ -17,8 +17,114 @@ pub use native_stats::NativeStats;
 /// fields preserve missing/null/type semantics and are rebuilt on deserialize.
 pub trait ContextLookup {
     fn context_get(&self, key: &str) -> Option<&Value>;
+    fn context_number(&self, key: &str) -> f64 {
+        self.context_get(key).and_then(Value::as_f64).unwrap_or(0.0)
+    }
+    fn context_flag(&self, key: &str) -> bool {
+        self.context_get(key)
+            .and_then(Value::as_bool)
+            .unwrap_or(false)
+    }
+    fn prepared_effects(&self) -> Option<&PreparedEffects> {
+        None
+    }
     fn invariant(&self, kind: Invariant) -> f64;
     fn is_object(&self) -> bool;
+    fn evaluation_plan(&self) -> Option<EvaluationPlan> {
+        None
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum WeaponKind {
+    Sword,
+    TwoHand,
+    Bow,
+    Bowgun,
+    Staff,
+    Device,
+    Knuckle,
+    Halberd,
+    Katana,
+    Barehand,
+    Other,
+}
+impl WeaponKind {
+    fn from_name(name: &str) -> Self {
+        match name {
+            "한손검" => Self::Sword,
+            "양손검" => Self::TwoHand,
+            "활" => Self::Bow,
+            "자동활" => Self::Bowgun,
+            "지팡이" => Self::Staff,
+            "마도구" => Self::Device,
+            "권갑" => Self::Knuckle,
+            "선풍창" => Self::Halberd,
+            "발도검" => Self::Katana,
+            "맨손" => Self::Barehand,
+            _ => Self::Other,
+        }
+    }
+}
+
+#[derive(Clone, Copy, Debug)]
+enum PowerMode {
+    Atk,
+    Matk,
+    Sum,
+    Higher,
+    WizardBlend,
+}
+
+#[derive(Clone, Copy, Debug)]
+pub struct EvaluationPlan {
+    weapon: WeaponKind,
+    sub_dual: bool,
+    power: PowerMode,
+    is_magic: bool,
+    need_atk: bool,
+    need_matk: bool,
+    arrow: bool,
+    dual: bool,
+    sub_device: bool,
+    conversion: bool,
+    armor_aspd: f64,
+    weapon_aspd: f64,
+}
+
+impl EvaluationPlan {
+    fn new<C: ContextLookup>(base: &C) -> Self {
+        let main = text(base, "mainType");
+        let sub = text(base, "subType");
+        let is_magic = text(base, "atkType") == "MAG";
+        let power = match text(base, "attackPowerMode") {
+            "sum" => PowerMode::Sum,
+            "higher" => PowerMode::Higher,
+            "atk" => PowerMode::Atk,
+            "wizardBlend" => PowerMode::WizardBlend,
+            _ if is_magic => PowerMode::Matk,
+            _ => PowerMode::Atk,
+        };
+        Self {
+            weapon: WeaponKind::from_name(main),
+            sub_dual: sub == "한손검(듀얼소드)",
+            power,
+            is_magic,
+            need_atk: !matches!(power, PowerMode::Matk),
+            need_matk: !matches!(power, PowerMode::Atk),
+            arrow: sub == "화살" && matches!(main, "활" | "자동활"),
+            dual: main == "한손검" && sub == "한손검(듀얼소드)",
+            sub_device: sub == "마도구",
+            conversion: number(base, "conversionLevel") > 0.0
+                && matches!(main, "한손검" | "양손검" | "자동활" | "권갑"),
+            armor_aspd: match text(base, "armorType") {
+                "경량옷" => 50.0,
+                "중량옷" => -50.0,
+                _ => 0.0,
+            },
+            weapon_aspd: base_aspd(main),
+        }
+    }
 }
 
 impl ContextLookup for Value {
@@ -66,18 +172,40 @@ fn compute_invariant(base: &Value, kind: Invariant) -> f64 {
     }
 }
 
+#[derive(Clone, Debug)]
+struct PreparedField {
+    original: Option<Value>,
+    number: f64,
+    flag: bool,
+}
+impl PreparedField {
+    fn new(value: Option<&Value>) -> Self {
+        Self {
+            original: value.cloned(),
+            number: value.and_then(Value::as_f64).unwrap_or(0.0),
+            flag: value.and_then(Value::as_bool).unwrap_or(false),
+        }
+    }
+}
+
 macro_rules! prepared_context {
     ($($field:ident => $key:literal),* $(,)?) => {
+        #[cfg(test)]
+        const PREPARED_KEYS: &[&str] = &[$($key,)*];
         #[derive(Clone, Debug, Serialize)]
         #[serde(transparent)]
         pub struct PreparedContext {
             original: Value,
             #[serde(skip)] invariants: [f64; 5],
-            $(#[serde(skip)] $field: Option<Value>,)*
+            #[serde(skip)] plan: EvaluationPlan,
+            #[serde(skip)] effects: PreparedEffects,
+            $(#[serde(skip)] $field: PreparedField,)*
         }
         impl From<Value> for PreparedContext {
             fn from(original: Value) -> Self {
-                Self { $($field: original.get($key).cloned(),)*
+                Self { $($field: PreparedField::new(original.get($key)),)*
+                    plan: EvaluationPlan::new(&original),
+                    effects: PreparedEffects::new(&original),
                     invariants: [Invariant::AtkUp, Invariant::MatkUp, Invariant::PhysResistance, Invariant::MagicResistance, Invariant::Proc].map(|kind| compute_invariant(&original, kind)), original }
             }
         }
@@ -92,11 +220,28 @@ macro_rules! prepared_context {
         }
         impl ContextLookup for PreparedContext {
             #[inline]
+            fn context_number(&self, key: &str) -> f64 {
+                match key {
+                    $($key => self.$field.number,)*
+                    _ => self.original.context_number(key),
+                }
+            }
+            #[inline]
+            fn context_flag(&self, key: &str) -> bool {
+                match key {
+                    $($key => self.$field.flag,)*
+                    _ => self.original.context_flag(key),
+                }
+            }
+            #[inline]
+            fn evaluation_plan(&self) -> Option<EvaluationPlan> { Some(self.plan) }
+            fn prepared_effects(&self) -> Option<&PreparedEffects> { Some(&self.effects) }
+            #[inline]
             fn invariant(&self, kind: Invariant) -> f64 { self.invariants[kind as usize] }
             #[inline]
             fn context_get(&self, key: &str) -> Option<&Value> {
                 match key {
-                    $($key => self.$field.as_ref(),)*
+                    $($key => self.$field.original.as_ref(),)*
                     _ => self.original.get(key),
                 }
             }
@@ -227,17 +372,11 @@ pub struct D4NativeSummary {
 }
 
 fn number<C: ContextLookup>(value: &C, key: &str) -> f64 {
-    value
-        .context_get(key)
-        .and_then(Value::as_f64)
-        .unwrap_or(0.0)
+    value.context_number(key)
 }
 
 fn flag<C: ContextLookup>(value: &C, key: &str) -> bool {
-    value
-        .context_get(key)
-        .and_then(Value::as_bool)
-        .unwrap_or(false)
+    value.context_flag(key)
 }
 
 fn text<'a, C: ContextLookup>(value: &'a C, key: &str) -> &'a str {
@@ -258,6 +397,126 @@ fn array<'a, C: ContextLookup>(value: &'a C, key: &str) -> &'a [Value] {
         .and_then(Value::as_array)
         .map(Vec::as_slice)
         .unwrap_or(&[])
+}
+
+#[derive(Clone, Debug)]
+struct AmprModifier {
+    percent: f64,
+    multiplier: f64,
+    flat: f64,
+    id: String,
+}
+impl AmprModifier {
+    fn new(value: &Value) -> Self {
+        Self {
+            percent: number(value, "percent"),
+            multiplier: finite_number(value, "multiplier", 1.0),
+            flat: number(value, "flat"),
+            id: value.get("id").map(Value::to_string).unwrap_or_default(),
+        }
+    }
+    fn apply(&self, value: f64) -> f64 {
+        let mut result = floor(value);
+        if self.percent != 0.0 {
+            result = floor(result * (100.0 + self.percent) / 100.0);
+        }
+        if self.multiplier != 1.0 {
+            result = floor(result * self.multiplier);
+        }
+        floor(result + self.flat)
+    }
+}
+#[derive(Clone, Debug)]
+enum SkillSource {
+    Fixed(f64),
+    Total(usize),
+}
+#[derive(Clone, Debug)]
+struct SkillTerm {
+    source: SkillSource,
+    ratio: f64,
+    to_mult: bool,
+}
+/// Derived only from immutable input; rebuilt from original JSON on restore.
+#[derive(Clone, Debug)]
+pub struct PreparedEffects {
+    passive_ampr: Vec<AmprModifier>,
+    active_ampr: Vec<AmprModifier>,
+    conversions: Vec<f64>,
+    layers: [f64; 4],
+    skill_terms: Vec<SkillTerm>,
+}
+impl PreparedEffects {
+    fn new(base: &Value) -> Self {
+        let profile = base.get("normalAttackAmprProfile").unwrap_or(&Value::Null);
+        let layers = base.get("damageMultiplierLayers").unwrap_or(&Value::Null);
+        let skill_terms = array(base, "skillStats")
+            .iter()
+            .filter_map(|item| {
+                let to_mult = match text(item, "target") {
+                    "mult" => true,
+                    "const" => false,
+                    _ => return None,
+                };
+                let source = match text(item, "stat") {
+                    "STR" => SkillSource::Fixed(number(base, "strBase")),
+                    "INT" => SkillSource::Fixed(number(base, "intBase")),
+                    "VIT" => SkillSource::Fixed(number(base, "vitBase")),
+                    "AGI" => SkillSource::Fixed(number(base, "agiBase")),
+                    "DEX" => SkillSource::Fixed(number(base, "dexBase")),
+                    "totalSTR" => SkillSource::Total(0),
+                    "totalINT" => SkillSource::Total(1),
+                    "totalVIT" => SkillSource::Total(2),
+                    "totalAGI" => SkillSource::Total(3),
+                    "totalDEX" => SkillSource::Total(4),
+                    _ => SkillSource::Fixed(0.0),
+                };
+                Some(SkillTerm {
+                    source,
+                    ratio: number(item, "ratio"),
+                    to_mult,
+                })
+            })
+            .collect();
+        Self {
+            passive_ampr: array(profile, "passive")
+                .iter()
+                .map(AmprModifier::new)
+                .collect(),
+            active_ampr: array(profile, "activeCandidates")
+                .iter()
+                .map(AmprModifier::new)
+                .collect(),
+            conversions: array(base, "activeBuildConversions")
+                .iter()
+                .filter(|v| text(*v, "conversion") == "unsheatheToAtk")
+                .map(|v| number(v, "value"))
+                .collect(),
+            layers: [
+                finite_number(layers, "skill", number(base, "skillMult")),
+                finite_number(layers, "passive", 1.0),
+                finite_number(layers, "active", 1.0),
+                finite_number(layers, "combo", 1.0),
+            ],
+            skill_terms,
+        }
+    }
+    fn ampr(&self, value: f64) -> f64 {
+        let passive = self
+            .passive_ampr
+            .iter()
+            .fold(floor(value), |v, m| m.apply(v));
+        self.active_ampr
+            .iter()
+            .map(|m| (m.apply(passive), &m.id))
+            .min_by(|a, b| {
+                b.0.partial_cmp(&a.0)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+                    .then_with(|| a.1.cmp(b.1))
+            })
+            .map(|v| v.0)
+            .unwrap_or(passive)
+    }
 }
 
 fn modifier_ampr(value: f64, modifier: &Value) -> f64 {
@@ -460,29 +719,17 @@ fn stat_total<T: StatLookup, C: ContextLookup>(
     )
 }
 
+#[cfg(test)]
 fn atk_stat(main: &str, sub: &str, str_: f64, int_: f64, agi: f64, dex: f64) -> (f64, f64, f64) {
-    match main {
-        "한손검" if sub == "한손검(듀얼소드)" => {
-            (str_ + agi + dex * 2.0, int_ * 3.0 + dex, 0.0)
-        }
-        "한손검" => (str_ * 2.0 + dex * 2.0, int_ * 3.0 + dex, 0.0),
-        "양손검" => (str_ * 3.0 + dex, int_ * 3.0 + dex, 0.0),
-        "활" => (str_ + dex * 3.0, int_ * 3.0 + dex, 0.0),
-        "자동활" => (dex * 4.0, int_ * 3.0 + dex, 0.0),
-        "지팡이" => (str_ * 3.0 + int_, int_ * 4.0 + dex, 1.0),
-        "마도구" => (int_ * 2.0 + agi * 2.0, int_ * 4.0 + dex, 1.0),
-        // External evidence: docs/verification/weapon-stat-recommendation-audit-2026-09-09.md
-        "권갑" => (agi * 2.0 + dex * 0.5, int_ * 4.0 + dex, 0.5),
-        "선풍창" => (
-            floor(str_ * 2.5) + floor(agi * 1.5),
-            int_ * 2.0 + agi + dex,
-            0.0,
-        ),
-        "발도검" => (floor(dex * 2.5) + floor(str_ * 1.5), int_ * 1.5 + dex, 0.0),
-        _ => (str_, int_ * 3.0 + dex, 0.0),
-    }
+    atk_stat_prepared(
+        WeaponKind::from_name(main),
+        sub == "한손검(듀얼소드)",
+        str_,
+        int_,
+        agi,
+        dex,
+    )
 }
-
 fn base_aspd(main: &str) -> f64 {
     match main {
         "한손검" => 100.0,
@@ -499,32 +746,67 @@ fn base_aspd(main: &str) -> f64 {
     }
 }
 
-fn stat_aspd(main: &str, sub: &str, str_: f64, int_: f64, agi: f64, dex: f64) -> f64 {
-    if main == "한손검" || sub == "한손검(듀얼소드)" {
+fn atk_stat_prepared(
+    main: WeaponKind,
+    sub_dual: bool,
+    str_: f64,
+    int_: f64,
+    agi: f64,
+    dex: f64,
+) -> (f64, f64, f64) {
+    match main {
+        WeaponKind::Sword if sub_dual => (str_ + agi + dex * 2.0, int_ * 3.0 + dex, 0.0),
+        WeaponKind::Sword => (str_ * 2.0 + dex * 2.0, int_ * 3.0 + dex, 0.0),
+        WeaponKind::TwoHand => (str_ * 3.0 + dex, int_ * 3.0 + dex, 0.0),
+        WeaponKind::Bow => (str_ + dex * 3.0, int_ * 3.0 + dex, 0.0),
+        WeaponKind::Bowgun => (dex * 4.0, int_ * 3.0 + dex, 0.0),
+        WeaponKind::Staff => (str_ * 3.0 + int_, int_ * 4.0 + dex, 1.0),
+        WeaponKind::Device => (int_ * 2.0 + agi * 2.0, int_ * 4.0 + dex, 1.0),
+        // External evidence: docs/verification/weapon-stat-recommendation-audit-2026-09-09.md
+        WeaponKind::Knuckle => (agi * 2.0 + dex * 0.5, int_ * 4.0 + dex, 0.5),
+        WeaponKind::Halberd => (
+            floor(str_ * 2.5) + floor(agi * 1.5),
+            int_ * 2.0 + agi + dex,
+            0.0,
+        ),
+        WeaponKind::Katana => (floor(dex * 2.5) + floor(str_ * 1.5), int_ * 1.5 + dex, 0.0),
+        _ => (str_, int_ * 3.0 + dex, 0.0),
+    }
+}
+
+fn stat_aspd_prepared(
+    main: WeaponKind,
+    sub_dual: bool,
+    str_: f64,
+    int_: f64,
+    agi: f64,
+    dex: f64,
+) -> f64 {
+    if main == WeaponKind::Sword || sub_dual {
         agi * 4.2 + str_ * 0.2
     } else {
         match main {
-            "양손검" => agi * 2.1 + str_ * 0.2,
-            "활" => agi * 3.1 + dex * 0.2,
-            "자동활" => agi * 2.2 + dex * 0.2,
-            "지팡이" => agi * 1.8 + int_ * 0.2,
-            "마도구" => agi * 4.0 + int_ * 0.2,
-            "권갑" => agi * 4.6 + dex * 0.1 + str_ * 0.1,
-            "선풍창" => agi * 3.5 + str_ * 0.2,
-            "발도검" => agi * 3.9 + dex * 0.3,
+            WeaponKind::TwoHand => agi * 2.1 + str_ * 0.2,
+            WeaponKind::Bow => agi * 3.1 + dex * 0.2,
+            WeaponKind::Bowgun => agi * 2.2 + dex * 0.2,
+            WeaponKind::Staff => agi * 1.8 + int_ * 0.2,
+            WeaponKind::Device => agi * 4.0 + int_ * 0.2,
+            WeaponKind::Knuckle => agi * 4.6 + dex * 0.1 + str_ * 0.1,
+            WeaponKind::Halberd => agi * 3.5 + str_ * 0.2,
+            WeaponKind::Katana => agi * 3.9 + dex * 0.3,
             _ => agi * 9.6,
         }
     }
 }
 
-fn physical_stability(main: &str, str_: f64, dex: f64) -> f64 {
+fn physical_stability_prepared(main: WeaponKind, str_: f64, dex: f64) -> f64 {
     match main {
-        "한손검" | "활" => (str_ + dex * 3.0) / 40.0,
-        "양손검" | "마도구" => dex / 10.0,
-        "자동활" | "지팡이" => str_ / 20.0,
-        "권갑" => dex / 40.0,
-        "선풍창" => (str_ + dex) / 40.0,
-        "발도검" => (str_ * 3.0 + dex) / 40.0,
+        WeaponKind::Sword | WeaponKind::Bow => (str_ + dex * 3.0) / 40.0,
+        WeaponKind::TwoHand | WeaponKind::Device => dex / 10.0,
+        WeaponKind::Bowgun | WeaponKind::Staff => str_ / 20.0,
+        WeaponKind::Knuckle => dex / 40.0,
+        WeaponKind::Halberd => (str_ + dex) / 40.0,
+        WeaponKind::Katana => (str_ * 3.0 + dex) / 40.0,
         _ => 0.0,
     }
 }
@@ -555,16 +837,114 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
     base: &C,
     stats: &T,
 ) -> Result<D4NativeSummary, String> {
+    Ok(evaluate_filtered_summary(base, stats, |_, _| true)?.expect("unfiltered summary"))
+}
+
+/// Reject utility-infeasible leaves/envelopes before damage evaluation.
+/// Calls the predicate as each value is ready, in order: HP, MP, AMPR before
+/// dual, normal-attack critical rate, ASPD. Rejection skips subsequent stages.
+#[allow(dead_code)] // The summary-only bridge does not link the solver.
+pub fn evaluate_feasible_summary<C: ContextLookup>(
+    base: &C,
+    stats: &NativeStats,
+    accepts: impl FnMut(usize, i64) -> bool,
+) -> Result<Option<D4NativeSummary>, String> {
+    if !base.is_object() {
+        return Err("D4 native summary requires an object base context".into());
+    }
+    evaluate_filtered_summary(base, stats, accepts)
+}
+
+fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
+    base: &C,
+    stats: &T,
+    mut accepts: impl FnMut(usize, i64) -> bool,
+) -> Result<Option<D4NativeSummary>, String> {
+    let plan = base.evaluation_plan().unwrap_or_else(|| {
+        let mut plan = EvaluationPlan::new(base);
+        // Keep the uncached Value path as a full-computation reference.
+        plan.need_atk = true;
+        plan.need_matk = true;
+        plan
+    });
+    let vit = stat_total(base, stats, "vitBase", "vitP", "vitF", "VITP", "VIT");
+    let level = number(base, "level");
+    let base_max_hp = floor((vit + 22.41) * level / 3.0 + 93.0);
+    let max_hp = (floor(
+        base_max_hp * (1.0 + (number(base, "maxHpP") + stat(stats, "MAXHPP")) / 100.0)
+            + number(base, "maxHpF")
+            + stat(stats, "MAXHP"),
+    ))
+    .clamp(0.0, 99999.0) as i64;
+    if !accepts(0, max_hp) {
+        return Ok(None);
+    }
+    let int_ = stat_total(base, stats, "intBase", "intP", "intF", "INTP", "INT");
+    let max_mp = floor(100.0 + level + int_ * 0.1 + number(base, "maxMpF") + stat(stats, "MAXMP"))
+        .max(0.0) as i64;
+    if !accepts(1, max_mp) {
+        return Ok(None);
+    }
+    let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
+    let ampr = floor(base_ampr * (100.0 + number(base, "amprP") + stat(stats, "AMPRP")) / 100.0)
+        + number(base, "amprF")
+        + stat(stats, "AMPR");
+    let ampr_before_dual = match base.prepared_effects() {
+        Some(effects) => effects.ampr(ampr),
+        None => resolve_normal_attack_ampr(ampr, base.context_get("normalAttackAmprProfile")),
+    } as i64;
+
+    if !accepts(2, ampr_before_dual) {
+        return Ok(None);
+    }
+
+    let base_crit = 25.0 + floor(number(base, "crtBase") / 3.4);
+    let normal_raw =
+        floor(base_crit * (1.0 + (number(base, "critP") + stat(stats, "CRITP")) / 100.0))
+            + number(base, "critF")
+            + stat(stats, "CRIT");
+    let normal_attack_crit = (normal_raw - number(base, "bossCritResist")) as i64;
+    if !accepts(3, normal_attack_crit) {
+        return Ok(None);
+    }
+    let str_ = stat_total(base, stats, "strBase", "strP", "strF", "STRP", "STR");
+    let dex = stat_total(base, stats, "dexBase", "dexP", "dexF", "DEXP", "DEX");
+    let agi = stat_total(base, stats, "agiBase", "agiP", "agiF", "AGIP", "AGI");
+    let armor_aspd = plan.armor_aspd;
+    let final_aspd = (floor(
+        (plan.weapon_aspd
+            + floor(stat_aspd_prepared(
+                plan.weapon,
+                plan.sub_dual,
+                str_,
+                int_,
+                agi,
+                dex,
+            ))
+            + level)
+            * (1.0 + (number(base, "aspdP") + stat(stats, "ASPD_P") + armor_aspd) / 100.0),
+    ) + number(base, "aspdF")
+        + stat(stats, "ASPD")) as i64;
+    if !accepts(4, final_aspd) {
+        return Ok(None);
+    }
+
     let mut atk_p = number(base, "atkP") + stat(stats, "ATKP");
     let mut atk_f = number(base, "atkF") + stat(stats, "ATK");
     let mut base_wpn_atk_f = number(base, "baseWpnAtkF");
     let mut unsheathe_p = number(base, "unsheatheP") + stat(stats, "UNSHEATHEP");
     let mut unsheathe_f = number(base, "unsheatheF") + stat(stats, "UNSHEATHE");
-    for effect in array(base, "activeBuildConversions") {
-        if text(effect, "conversion") != "unsheatheToAtk" {
-            continue;
-        }
-        let rate = number(effect, "value");
+    let rates: std::borrow::Cow<'_, [f64]> = match base.prepared_effects() {
+        Some(effects) => std::borrow::Cow::Borrowed(&effects.conversions),
+        None => std::borrow::Cow::Owned(
+            array(base, "activeBuildConversions")
+                .iter()
+                .filter(|v| text(*v, "conversion") == "unsheatheToAtk")
+                .map(|v| number(v, "value"))
+                .collect(),
+        ),
+    };
+    for &rate in rates.iter() {
         let converted_p = floor(rate * unsheathe_p);
         let converted_f = floor(rate * unsheathe_f);
         unsheathe_p = 0.0;
@@ -573,28 +953,6 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
         base_wpn_atk_f += converted_p;
         atk_f += converted_f;
     }
-    let str_ = stat_total(base, stats, "strBase", "strP", "strF", "STRP", "STR");
-    let dex = stat_total(base, stats, "dexBase", "dexP", "dexF", "DEXP", "DEX");
-    let int_ = stat_total(base, stats, "intBase", "intP", "intF", "INTP", "INT");
-    let agi = stat_total(base, stats, "agiBase", "agiP", "agiF", "AGIP", "AGI");
-    let vit = stat_total(base, stats, "vitBase", "vitP", "vitF", "VITP", "VIT");
-    let level = number(base, "level");
-    let max_mp = floor(100.0 + level + int_ * 0.1 + number(base, "maxMpF") + stat(stats, "MAXMP"))
-        .max(0.0) as i64;
-    let base_max_hp = floor((vit + 22.41) * level / 3.0 + 93.0);
-    let max_hp = (floor(
-        base_max_hp * (1.0 + (number(base, "maxHpP") + stat(stats, "MAXHPP")) / 100.0)
-            + number(base, "maxHpF")
-            + stat(stats, "MAXHP"),
-    ))
-    .clamp(0.0, 99999.0) as i64;
-    let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
-    let ampr = floor(base_ampr * (100.0 + number(base, "amprP") + stat(stats, "AMPRP")) / 100.0)
-        + number(base, "amprF")
-        + stat(stats, "AMPR");
-    let ampr_before_dual =
-        resolve_normal_attack_ampr(ampr, base.context_get("normalAttackAmprProfile")) as i64;
-
     let main = text(base, "mainType");
     let sub = text(base, "subType");
     let watkp = number(base, "watkP") + stat(stats, "WATKP");
@@ -604,24 +962,32 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
     let mut weapon = main_weapon
         + floor(effective_weapon * number(base, "wpnRefine").powi(2) / 100.0)
         + number(base, "wpnRefine");
-    if sub == "화살" && (main == "활" || main == "자동활") {
+    if plan.arrow {
         weapon += floor(number(base, "subAtk"));
     }
-    let (stat_atk, stat_matk, matk_ratio) = atk_stat(main, sub, str_, int_, agi, dex);
+    let (stat_atk, stat_matk, matk_ratio) =
+        atk_stat_prepared(plan.weapon, plan.sub_dual, str_, int_, agi, dex);
     let atk_up = base.invariant(Invariant::AtkUp);
     let matk_up = base.invariant(Invariant::MatkUp);
-    if sub == "마도구" {
+    if plan.sub_device {
         atk_p -= 15.0;
     }
-    let mut final_atk = floor((weapon + stat_atk + level + atk_up) * (1.0 + atk_p / 100.0)) + atk_f;
-    let mut final_matk = floor(
-        (floor(weapon * matk_ratio) + stat_matk + level + matk_up)
-            * (1.0 + (number(base, "matkP") + stat(stats, "MATKP")) / 100.0),
-    ) + number(base, "matkF")
-        + stat(stats, "MATK");
+    let mut final_atk = if plan.need_atk {
+        floor((weapon + stat_atk + level + atk_up) * (1.0 + atk_p / 100.0)) + atk_f
+    } else {
+        0.0
+    };
+    let mut final_matk = if plan.need_matk {
+        floor(
+            (floor(weapon * matk_ratio) + stat_matk + level + matk_up)
+                * (1.0 + (number(base, "matkP") + stat(stats, "MATKP")) / 100.0),
+        ) + number(base, "matkF")
+            + stat(stats, "MATK")
+    } else {
+        0.0
+    };
     let conversion_level = number(base, "conversionLevel");
-    if conversion_level > 0.0 && matches!(main, "한손검" | "양손검" | "자동활" | "권갑")
-    {
+    if plan.need_matk && plan.conversion {
         let mut conversion_add = floor(weapon * conversion_level.powi(2) / 100.0);
         let mut conversion_int = 0.0;
         if main == "권갑" {
@@ -631,8 +997,7 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
         }
         final_matk += floor(conversion_add) + floor(conversion_int);
     }
-    let dual = main == "한손검" && sub == "한손검(듀얼소드)";
-    if dual {
+    if plan.need_atk && plan.dual {
         let sub_weapon = number(base, "subAtk")
             + floor(number(base, "subAtk") * watkp / 100.0)
             + floor(number(base, "subAtk") * number(base, "subRefine").powi(2) / 200.0)
@@ -659,12 +1024,6 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
     if cdmg > 300.0 {
         cdmg = 300.0 + floor((cdmg - 300.0) / 2.0);
     }
-    let base_crit = 25.0 + floor(number(base, "crtBase") / 3.4);
-    let normal_raw =
-        floor(base_crit * (1.0 + (number(base, "critP") + stat(stats, "CRITP")) / 100.0))
-            + number(base, "critF")
-            + stat(stats, "CRIT");
-    let normal_attack_crit = (normal_raw - number(base, "bossCritResist")) as i64;
     let critical_multiplier = base
         .context_get("criticalChanceMultiplier")
         .and_then(Value::as_f64)
@@ -682,26 +1041,16 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
     if number(base, "minimumCriticalDamage") != 0.0 {
         cdmg = cdmg.max(number(base, "minimumCriticalDamage"));
     }
-    let armor_aspd = match text(base, "armorType") {
-        "경량옷" => 50.0,
-        "중량옷" => -50.0,
-        _ => 0.0,
-    };
-    let final_aspd = (floor(
-        (base_aspd(main) + floor(stat_aspd(main, sub, str_, int_, agi, dex)) + level)
-            * (1.0 + (number(base, "aspdP") + stat(stats, "ASPD_P") + armor_aspd) / 100.0),
-    ) + number(base, "aspdF")
-        + stat(stats, "ASPD")) as i64;
     let mut stab = (number(base, "wpnStab")
         + number(base, "stability")
         + stat(stats, "STABILITY")
         + number(base, "stabilityBonus")
-        + floor(physical_stability(main, str_, dex)))
+        + floor(physical_stability_prepared(plan.weapon, str_, dex)))
     .min(100.0);
-    if sub == "화살" && (main == "활" || main == "자동활") {
+    if plan.arrow {
         stab = (stab + number(base, "subStab")).min(100.0);
     }
-    let is_magic = text(base, "atkType") == "MAG";
+    let is_magic = plan.is_magic;
     let attacks_weakness =
         flag(base, "elementAwakening") || text(base, "attackElement") == "weakness";
     let mut elem = number(base, "elemP") + stat(stats, "ELEM_P");
@@ -767,41 +1116,63 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
         effective_def = floor(effective_def / 2.0);
     }
     effective_def = effective_def.max(0.0);
-    let layers = base
-        .context_get("damageMultiplierLayers")
-        .unwrap_or(&Value::Null);
-    let mut final_skill_mult = finite_number(layers, "skill", number(base, "skillMult"));
-    let passive_damage_mult = finite_number(layers, "passive", 1.0);
-    let active_damage_mult = finite_number(layers, "active", 1.0);
-    let combo_damage_mult = finite_number(layers, "combo", 1.0);
-    let mut final_skill_const = number(base, "skillConst");
-    for skill_stat in array(base, "skillStats") {
-        let value = match text(skill_stat, "stat") {
-            "STR" => number(base, "strBase"),
-            "INT" => number(base, "intBase"),
-            "VIT" => number(base, "vitBase"),
-            "AGI" => number(base, "agiBase"),
-            "DEX" => number(base, "dexBase"),
-            "totalSTR" => str_,
-            "totalINT" => int_,
-            "totalVIT" => vit,
-            "totalAGI" => agi,
-            "totalDEX" => dex,
-            _ => 0.0,
+    let [mut final_skill_mult, passive_damage_mult, active_damage_mult, combo_damage_mult] =
+        match base.prepared_effects() {
+            Some(effects) => effects.layers,
+            None => {
+                let layers = base
+                    .context_get("damageMultiplierLayers")
+                    .unwrap_or(&Value::Null);
+                [
+                    finite_number(layers, "skill", number(base, "skillMult")),
+                    finite_number(layers, "passive", 1.0),
+                    finite_number(layers, "active", 1.0),
+                    finite_number(layers, "combo", 1.0),
+                ]
+            }
         };
-        if text(skill_stat, "target") == "mult" {
-            final_skill_mult += value * number(skill_stat, "ratio");
-        } else if text(skill_stat, "target") == "const" {
-            final_skill_const += value * number(skill_stat, "ratio");
+    let mut final_skill_const = number(base, "skillConst");
+    if let Some(effects) = base.prepared_effects() {
+        let totals = [str_, int_, vit, agi, dex];
+        for term in &effects.skill_terms {
+            let value = match term.source {
+                SkillSource::Fixed(value) => value,
+                SkillSource::Total(index) => totals[index],
+            };
+            if term.to_mult {
+                final_skill_mult += value * term.ratio;
+            } else {
+                final_skill_const += value * term.ratio;
+            }
+        }
+    } else {
+        for skill_stat in array(base, "skillStats") {
+            let value = match text(skill_stat, "stat") {
+                "STR" => number(base, "strBase"),
+                "INT" => number(base, "intBase"),
+                "VIT" => number(base, "vitBase"),
+                "AGI" => number(base, "agiBase"),
+                "DEX" => number(base, "dexBase"),
+                "totalSTR" => str_,
+                "totalINT" => int_,
+                "totalVIT" => vit,
+                "totalAGI" => agi,
+                "totalDEX" => dex,
+                _ => 0.0,
+            };
+            if text(skill_stat, "target") == "mult" {
+                final_skill_mult += value * number(skill_stat, "ratio");
+            } else if text(skill_stat, "target") == "const" {
+                final_skill_const += value * number(skill_stat, "ratio");
+            }
         }
     }
-    let base_power = match text(base, "attackPowerMode") {
-        "sum" => final_atk + final_matk,
-        "higher" => final_atk.max(final_matk),
-        "atk" => final_atk,
-        "wizardBlend" => final_atk * 0.25 + final_matk * 0.75,
-        _ if is_magic => final_matk,
-        _ => final_atk,
+    let base_power = match plan.power {
+        PowerMode::Sum => final_atk + final_matk,
+        PowerMode::Higher => final_atk.max(final_matk),
+        PowerMode::Atk => final_atk,
+        PowerMode::WizardBlend => final_atk * 0.25 + final_matk * 0.75,
+        PowerMode::Matk => final_matk,
     };
     let mut raw = floor(
         (base_power + level - number(base, "bossLevel"))
@@ -842,20 +1213,178 @@ fn evaluate_summary_from_lookup<T: StatLookup, C: ContextLookup>(
     ] {
         damage = floor(damage * multiplier);
     }
-    Ok(D4NativeSummary {
+    Ok(Some(D4NativeSummary {
         optimization_damage_factor: damage * base.invariant(Invariant::Proc),
         final_max_hp: max_hp,
         final_max_mp: max_mp,
         ampr_before_dual,
         normal_attack_crit,
         final_aspd,
-    })
+    }))
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
     use serde_json::json;
+
+    #[test]
+    fn nested_effects_match_raw_json_and_restore() {
+        let stats = json!({"STR":17.5,"INT":-3.0,"VIT":21,"DEXP":7.5,"AGI":11,"UNSHEATHEP":17.0,"UNSHEATHE":33.0,"MAXMP":-21,"AMPRP":13});
+        for nested in [
+            json!({}),
+            json!({"normalAttackAmprProfile":null,"damageMultiplierLayers":false,"skillStats":{},"activeBuildConversions":7}),
+            json!({
+                "normalAttackAmprProfile":{"passive":[null,{"percent":13.7,"multiplier":1.2,"flat":-2.5},{"percent":-17,"multiplier":"bad","flat":3.1}],"activeCandidates":[{"id":"z","multiplier":1.2,"flat":0.5},{"id":"a","multiplier":1.2,"flat":0.5},{"id":null,"percent":11},{}]},
+                "damageMultiplierLayers":{"skill":null,"passive":1.13,"active":0.97,"combo":"bad"},
+                "activeBuildConversions":[null,{"conversion":"other","value":99},{"conversion":"unsheatheToAtk","value":0.3},{"conversion":"unsheatheToAtk","value":0.7}],
+                "skillStats":[{"stat":"STR","target":"mult","ratio":0.001},{"stat":"totalINT","target":"const","ratio":1.3},{"stat":"totalSTR","target":"mult","ratio":0.0007},{"stat":"totalDEX","target":"const","ratio":0.15},{"stat":"totalVIT","target":"const","ratio":-0.2},{"stat":"totalAGI","target":"mult","ratio":0.002},{"stat":"unknown","target":"mult","ratio":12},{"stat":"STR","target":"ignored","ratio":99},null]
+            }),
+        ] {
+            let raw = extend(base(), nested);
+            let prepared = PreparedContext::from(raw.clone());
+            let restored: PreparedContext =
+                serde_json::from_value(serde_json::to_value(&prepared).unwrap()).unwrap();
+            assert_eq!(serde_json::to_value(&restored).unwrap(), raw);
+            let expected = evaluate_summary(&raw, &stats).unwrap();
+            for cached in [&prepared, &restored] {
+                assert_summary(
+                    evaluate_summary_from_lookup(cached, &stats).unwrap(),
+                    expected.clone(),
+                );
+                for value in [-0.0, -13.7, 0.5, 177.9, 1e100] {
+                    assert_eq!(
+                        cached.effects.ampr(value).to_bits(),
+                        resolve_normal_attack_ampr(value, raw.get("normalAttackAmprProfile"))
+                            .to_bits()
+                    );
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn staged_rejection_skips_later_utility_stat_reads() {
+        struct StageOnly(usize);
+        impl StatLookup for StageOnly {
+            fn stat_number(&self, key: &str) -> f64 {
+                let stage = match key {
+                    "VITP" | "VIT" | "MAXHPP" | "MAXHP" => 0,
+                    "INTP" | "INT" | "MAXMP" => 1,
+                    "AMPRP" | "AMPR" => 2,
+                    "CRITP" | "CRIT" => 3,
+                    "STRP" | "STR" | "DEXP" | "DEX" | "AGIP" | "AGI" | "ASPD_P" | "ASPD" => 4,
+                    _ => panic!("damage stat read after utility rejection: {key}"),
+                };
+                assert!(stage <= self.0, "later utility read: {key}");
+                0.0
+            }
+        }
+        let base = PreparedContext::from(json!({"level":325,"mainType":"한손검"}));
+        for stop in 0..5 {
+            let mut calls = 0;
+            let result = evaluate_filtered_summary(&base, &StageOnly(stop), |index, _| {
+                assert_eq!(index, calls);
+                calls += 1;
+                index != stop
+            })
+            .unwrap();
+            assert!(result.is_none());
+            assert_eq!(calls, stop + 1);
+        }
+    }
+
+    #[test]
+    fn utility_rejection_skips_damage_stat_reads() {
+        struct UtilityOnly;
+        impl StatLookup for UtilityOnly {
+            fn stat_number(&self, key: &str) -> f64 {
+                assert!(
+                    matches!(
+                        key,
+                        "STRP"
+                            | "STR"
+                            | "DEXP"
+                            | "DEX"
+                            | "INTP"
+                            | "INT"
+                            | "AGIP"
+                            | "AGI"
+                            | "VITP"
+                            | "VIT"
+                            | "MAXMP"
+                            | "MAXHPP"
+                            | "MAXHP"
+                            | "AMPRP"
+                            | "AMPR"
+                            | "CRITP"
+                            | "CRIT"
+                            | "ASPD_P"
+                            | "ASPD"
+                    ),
+                    "damage stat read before rejection: {key}"
+                );
+                0.0
+            }
+        }
+        let base = PreparedContext::from(json!({"level":325,"mainType":"한손검"}));
+        assert!(evaluate_filtered_summary(&base, &UtilityOnly, |_, _| false)
+            .unwrap()
+            .is_none());
+        assert!(
+            evaluate_feasible_summary(&json!(null), &NativeStats::default(), |_, _| false).is_err()
+        );
+    }
+
+    #[test]
+    fn prepared_scalars_preserve_types_defaults_bits_and_roundtrip() {
+        let keys = PREPARED_KEYS
+            .iter()
+            .copied()
+            .chain(["futureField"])
+            .collect::<Vec<_>>();
+        for value in [
+            None,
+            Some(Value::Null),
+            Some(json!(false)),
+            Some(json!(true)),
+            Some(json!(0)),
+            Some(json!(-0.0)),
+            Some(json!(-123.25)),
+            Some(json!(u64::MAX)),
+            Some(json!("42")),
+            Some(json!([1])),
+            Some(json!({"x":1})),
+        ] {
+            let mut raw = json!({});
+            if let Some(value) = value {
+                for key in &keys {
+                    raw[*key] = value.clone();
+                }
+            }
+            let prepared = PreparedContext::from(raw.clone());
+            let serialized = serde_json::to_value(&prepared).unwrap();
+            assert_eq!(serialized, raw);
+            let restored: PreparedContext = serde_json::from_value(serialized).unwrap();
+            for cached in [&prepared, &restored] {
+                for key in &keys {
+                    assert_eq!(
+                        number(cached, key).to_bits(),
+                        number(&raw, key).to_bits(),
+                        "{key}"
+                    );
+                    assert_eq!(flag(cached, key), flag(&raw, key), "{key}");
+                    assert_eq!(
+                        finite_number(cached, key, 7.0).to_bits(),
+                        finite_number(&raw, key, 7.0).to_bits()
+                    );
+                    assert_eq!(text(cached, key), text(&raw, key));
+                    assert_eq!(array(cached, key), array(&raw, key));
+                    assert_eq!(cached.context_get(key), raw.get(key));
+                }
+            }
+        }
+    }
 
     #[test]
     fn dense_stats_preserve_sparse_values_and_future_keys_bit_for_bit() {
@@ -953,6 +1482,53 @@ mod tests {
         for invalid in [Value::Null, json!([]), json!(1), json!(false)] {
             let prepared = PreparedContext::from(invalid);
             assert!(evaluate_summary_from_map(&prepared, &BTreeMap::new()).is_err());
+        }
+    }
+
+    #[test]
+    fn evaluation_plan_roundtrip_preserves_fallbacks_and_candidate_boundaries() {
+        for main in [json!("한손검"), json!("unknown"), Value::Null, json!(42)] {
+            for mode in [
+                json!("atk"),
+                json!("sum"),
+                json!("higher"),
+                json!("wizardBlend"),
+                Value::Null,
+                json!(false),
+            ] {
+                for kind in ["PHYS", "MAG"] {
+                    let context = extend(
+                        base(),
+                        json!({
+                            "mainType": main, "subType":"마도구", "atkType":kind,
+                            "attackPowerMode":mode, "strBase":250, "intBase":250,
+                            "conversionLevel":10, "dualBringerActive":true,
+                            "dualBringerLevel":10, "targetWeakened":true
+                        }),
+                    );
+                    let prepared = PreparedContext::from(context.clone());
+                    let encoded = serde_json::to_value(&prepared).unwrap();
+                    assert_eq!(encoded, context);
+                    let restored: PreparedContext = serde_json::from_value(encoded).unwrap();
+                    for offset in [-1.0, 0.0, 1.0] {
+                        let stats = BTreeMap::from([
+                            ("STR".into(), offset),
+                            ("INT".into(), -offset),
+                            ("ATK".into(), -25.0),
+                            ("MATK".into(), 100.0),
+                        ]);
+                        let expected = evaluate_summary_from_map(&context, &stats).unwrap();
+                        assert_eq!(
+                            evaluate_summary_from_map(&prepared, &stats).unwrap(),
+                            expected
+                        );
+                        assert_eq!(
+                            evaluate_summary_from_map(&restored, &stats).unwrap(),
+                            expected
+                        );
+                    }
+                }
+            }
         }
     }
 

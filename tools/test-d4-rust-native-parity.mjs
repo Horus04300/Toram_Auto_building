@@ -115,6 +115,43 @@ for (const scenario of scenarios) for (let sample = 0; sample < aggregateCasesPe
   expected.set(id, kernel(scenario.baseContext, [{ name:'D4 deterministic aggregate', stats }], true));
   cases.push({ id, baseContext:scenario.baseContext, stats });
 }
+const originalCaseCount = cases.length;
+// Cross power selection with conversion and STR/INT-dependent Dual Bringer.
+// The prepared Native path may skip unused ATK/MATK; JS remains the oracle.
+const planWeapons = [
+  ['한손검','없음'], ['한손검','한손검(듀얼소드)'], ['한손검','마도구'],
+  ['양손검','없음'], ['활','화살'], ['자동활','화살'], ['지팡이','마도구'],
+  ['마도구','없음'], ['권갑','없음'], ['선풍창','없음'], ['발도검','없음'], ['맨손','없음']
+];
+for (const [mainType, subType] of planWeapons) for (const atkType of ['PHYS','MAG']) {
+  for (const attackPowerMode of ['default','atk','sum','higher','wizardBlend','unknown']) {
+    for (const offset of [-1,0,1]) {
+      const baseContext = base({mainType,subType,atkType,attackPowerMode,
+        strBase:250,intBase:250,agiBase:150,dexBase:200,subAtk:420,subStab:70,subRefine:12,
+        conversionLevel:10,dualBringerActive:true,dualBringerLevel:10,targetWeakened:true,
+        spellBurstLevel:10,chkIsUnsheathe:true,
+        activeBuildConversions:[{conversion:'unsheatheToAtk',value:0.5}]});
+      const stats = {STR:offset,INT:-offset,ATK:-25,ATKP:13,MATK:37,MATKP:17,
+        UNSHEATHE:41,UNSHEATHEP:23,WATK:19,WATKP:11,STABILITY:7};
+      const id = `plan:${mainType}:${subType}:${atkType}:${attackPowerMode}:${offset}`;
+      expected.set(id, kernel(baseContext, [{name:'D4 evaluation plan boundary',stats}], true));
+      cases.push({id,baseContext,stats});
+    }
+  }
+}
+const planCaseCount = cases.length - originalCaseCount;
+for (const scenario of scenarios) for (const offset of [-1, 0, 1]) {
+  const baseContext = {...scenario.baseContext,
+    normalAttackAmprProfile:{passive:[{percent:13.7,multiplier:1.2,flat:-2.5},{percent:-17,flat:3.1}],activeCandidates:[{id:'z',multiplier:1.2,flat:0.5},{id:'a',multiplier:1.2,flat:0.5},{id:'b',percent:11}]},
+    damageMultiplierLayers:{skill:1.17,passive:1.13,active:0.97,combo:1.23},
+    activeBuildConversions:[{conversion:'unsheatheToAtk',value:0.3},{conversion:'unsheatheToAtk',value:0.7}],
+    skillStats:[{stat:'STR',target:'mult',ratio:0.001},{stat:'totalINT',target:'const',ratio:1.3},{stat:'totalSTR',target:'mult',ratio:0.0007},{stat:'totalDEX',target:'const',ratio:0.15},{stat:'totalVIT',target:'const',ratio:-0.2},{stat:'totalAGI',target:'mult',ratio:0.002}]
+  };
+  const stats = {STR:17+offset,INT:-3-offset,VIT:21,DEXP:7.5,AGI:11,UNSHEATHEP:17,UNSHEATHE:33,MAXMP:-21,AMPRP:13};
+  const id = 'nested:'+scenario.id+':'+offset;
+  expected.set(id,kernel(baseContext,[{name:'D4 nested effect boundary',stats}],true));
+  cases.push({id,baseContext,stats});
+}
 const response = await runNative(cases);
 assert.equal(response.schema, 'toram.d4-native-summary.v1');
 assert.equal(response.results.length, cases.length, 'native evaluator가 모든 실제 최종 크리스타 사례를 반환해야 합니다.');
@@ -128,4 +165,4 @@ for (const result of response.results) {
   const baseContext = cases.find(item => item.id === result.id).baseContext;
   assert.equal(isDefaultD4Feasible(native, baseContext), isDefaultD4Feasible(js, baseContext), `${result.id} default D4 feasibility must match JavaScript`);
 }
-console.log(`D4 Rust native parity: PASS (${finalCrystas.length} final crystas × ${scenarios.length} scenarios + ${aggregateCasesPerScenario * scenarios.length} deterministic aggregates = ${cases.length} cases)`);
+console.log(`D4 Rust native parity: PASS (${originalCaseCount} existing cases + ${planCaseCount} evaluation-plan boundaries + ${cases.length-originalCaseCount-planCaseCount} nested-effect boundaries = ${cases.length} cases)`);

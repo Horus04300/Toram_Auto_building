@@ -53,7 +53,10 @@ vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js')
 const runtimeFixture=process.env.D4_P6_REVENIR==='1'?JSON.parse(await readFile(resolve(root,'tools/fixtures/d4-native-runtime-26min-revenir.json'),'utf8')).resolvedExecutionContext:null;
 if(runtimeFixture)assert.equal(process.env.D4_PROOF_ONLY,'1','Revenir currently supports preparation/proof auditing only; the P6 exact-score oracle is a different fixture');
 if(runtimeFixture)Object.assign(baseContext,runtimeFixture.baseContext);
-const scenario = evaluator.createScenarioSnapshot(baseContext,runtimeFixture?{requirements:runtimeFixture.scenarioRequirements}:undefined);
+const utilityRequirements = process.env.D4_P6_REQUIREMENTS ? JSON.parse(process.env.D4_P6_REQUIREMENTS) : null;
+if (utilityRequirements) assert.ok(process.env.D4_P6_THREAD && (Number(process.env.D4_P6_PACKAGE_LIMIT) > 0 || process.env.D4_P6_REFERENCE_BINARY),
+  'custom requirements require sampled exhaustive oracle or a reference binary');
+const scenario = evaluator.createScenarioSnapshot(baseContext,utilityRequirements?{requirements:utilityRequirements}:runtimeFixture?{requirements:runtimeFixture.scenarioRequirements}:undefined);
 const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:runtimeFixture?runtimeFixture.currentCrystas:[], locks:runtimeFixture?runtimeFixture.locks:[], banned:runtimeFixture?runtimeFixture.banned:{'오로로 콜론':true} });
 const adapter = stats => evaluator.evaluateAggregate(baseContext, scenario, stats, kernel);
 const relevantKeys = optimizer.deriveRelevantKeys(compiled, registry, adapter);
@@ -79,11 +82,11 @@ if (packageLimit > 0) {
 }
 
 const temp = await mkdtemp(join(tmpdir(), 'toram-d4-p6-'));
-async function measuredRun(threads, cancelAfterMs) {
+async function measuredRun(threads, cancelAfterMs, selectedBinary = binary) {
   const tag = cancelAfterMs === null ? `exact-${threads}` : `cancel-${threads}`;
   const input = join(temp, `${tag}.json`), output = join(temp, `${tag}.out`), errorOutput = join(temp, `${tag}.err`);
   await writeFile(input, JSON.stringify({ ...prepared, threads, ...(cancelAfterMs === null ? {} : { cancelAfterMs }) }));
-  const measure = JSON.parse(await run('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', resolve(root, 'tools/measure-d4-native-p6.ps1'), '-Binary', binary, '-InputPath', input, '-Output', output, '-ErrorOutput', errorOutput]));
+  const measure = JSON.parse(await run('powershell.exe', ['-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-File', resolve(root, 'tools/measure-d4-native-p6.ps1'), '-Binary', selectedBinary, '-InputPath', input, '-Output', output, '-ErrorOutput', errorOutput]));
   const stderr = await readFile(errorOutput, 'utf8').catch(error => error && error.code === 'ENOENT' ? '' : Promise.reject(error));
   const resultText = await readFile(output, 'utf8');
   let result;
@@ -97,17 +100,26 @@ try {
     const threads = Number(process.env.D4_P6_THREAD);
     assert.ok(Number.isInteger(threads) && threads > 0, 'D4_P6_THREAD must be a positive integer');
     const entry = await measuredRun(threads, null);
+    const reference = utilityRequirements && !packageLimit
+      ? await measuredRun(threads, null, process.env.D4_P6_REFERENCE_BINARY) : null;
+    if (reference) {
+      assert.equal(entry.result.status, 'exact', 'custom full fixture must finish exactly');
+      assert.equal(reference.result.status, 'exact', 'reference must finish exactly');
+      assert.equal(entry.result.score, reference.result.score);
+      assert.equal(entry.result.bestBuild?.id, reference.result.bestBuild?.id);
+      assert.equal(entry.result.upperBound, reference.result.upperBound);
+    }
     if (process.env.D4_SESSION_BENCH_MS && entry.result.status === 'bounded') {
       assert.ok(entry.result.upperBound >= 14097);
       assert.ok(entry.result.score === null || entry.result.score <= 14097);
     } else assert.equal(entry.result.status, 'exact', 'single P6 measurement must finish exactly');
-    if (!packageLimit) { if (entry.result.status === 'exact') assert.equal(entry.result.score, 14097, 'single P6 measurement must match the oracle'); }
+    if (!packageLimit) { if (!reference && entry.result.status === 'exact') assert.equal(entry.result.score, 14097, 'single P6 measurement must match the oracle'); }
     else {
       const oracle = optimizer.exhaustiveSearch(prepared,{prepared,evaluateStats:adapter});
       assert.equal(entry.result.score,oracle.score);
-      assert.equal(entry.result.bestBuild.id,oracle.bestBuild.id);
+      assert.equal(entry.result.bestBuild?.id,oracle.bestBuild?.id);
     }
-    const summary = { schema:'toram.d4-native-p6-single.v1', packageLimit, packages:prepared.groups.map(group => group.packages.length), threads, status:entry.result.status, upperBound:entry.result.upperBound, sessionPreparationMs:entry.result.sessionPreparationMs, sessionWallMs:entry.result.sessionWallMs, sessionBatches:entry.result.sessionBatches, exitCode:entry.exitCode, solverMs:entry.result.elapsedMs, wallMs:entry.wallMs, cpuMs:entry.cpuMs, peakWorkingSetBytes:entry.peakWorkingSetBytes, score:entry.result.score, id:entry.result.bestBuild.id, visitedNodes:entry.result.visitedNodes, evaluations:entry.result.evaluations, prunedByBound:entry.result.prunedByBound, prunedByConstraint:entry.result.prunedByConstraint, scheduledShards:entry.result.scheduledShards, completedShards:entry.result.completedShards };
+    const summary = { schema:'toram.d4-native-p6-single.v1', ...(utilityRequirements ? {utilityRequirements, reference} : {}), packageLimit, packages:prepared.groups.map(group => group.packages.length), threads, status:entry.result.status, upperBound:entry.result.upperBound, sessionPreparationMs:entry.result.sessionPreparationMs, sessionWallMs:entry.result.sessionWallMs, sessionBatches:entry.result.sessionBatches, exitCode:entry.exitCode, solverMs:entry.result.elapsedMs, wallMs:entry.wallMs, cpuMs:entry.cpuMs, peakWorkingSetBytes:entry.peakWorkingSetBytes, score:entry.result.score, id:entry.result.bestBuild?.id, visitedNodes:entry.result.visitedNodes, evaluations:entry.result.evaluations, prunedByBound:entry.result.prunedByBound, prunedByConstraint:entry.result.prunedByConstraint, scheduledShards:entry.result.scheduledShards, completedShards:entry.result.completedShards };
     if (process.env.D4_P6_REPORT) await writeFile(resolve(root, process.env.D4_P6_REPORT), JSON.stringify(summary, null, 2));
     console.log(JSON.stringify(summary));
     process.exit(0);

@@ -1,0 +1,263 @@
+{
+  "schema": "toram.d4-local-counters.v1",
+  "date": "2026-09-17",
+  "order": "repeat 1 before-after; repeat 2 after-before",
+  "runs": [
+    {
+      "threads": 8,
+      "repeat": 1,
+      "variant": "before",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 8,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 65.8045,
+        "sessionWallMs": 7033.4535000000005,
+        "sessionBatches": 13769,
+        "exitCode": null,
+        "solverMs": 6995,
+        "wallMs": 7303.567,
+        "cpuMs": 0,
+        "peakWorkingSetBytes": 76771328,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457001,
+        "evaluations": 25932301,
+        "prunedByBound": 12638307,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 8,
+      "repeat": 1,
+      "variant": "after",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 8,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 51.5881,
+        "sessionWallMs": 6763.838500000001,
+        "sessionBatches": 13769,
+        "exitCode": null,
+        "solverMs": 6729,
+        "wallMs": 6977.426,
+        "cpuMs": 28796.875,
+        "peakWorkingSetBytes": 76935168,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457001,
+        "evaluations": 25932301,
+        "prunedByBound": 12638307,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 8,
+      "repeat": 2,
+      "variant": "before",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 8,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 52.3881,
+        "sessionWallMs": 6632.9585,
+        "sessionBatches": 13769,
+        "exitCode": null,
+        "solverMs": 6601,
+        "wallMs": 6816.781,
+        "cpuMs": 28671.875,
+        "peakWorkingSetBytes": 77352960,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457001,
+        "evaluations": 25932301,
+        "prunedByBound": 12638307,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 8,
+      "repeat": 2,
+      "variant": "after",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 8,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 50.4255,
+        "sessionWallMs": 6419.755300000001,
+        "sessionBatches": 13769,
+        "exitCode": null,
+        "solverMs": 6386,
+        "wallMs": 6597.804,
+        "cpuMs": 27312.5,
+        "peakWorkingSetBytes": 76582912,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457001,
+        "evaluations": 25932301,
+        "prunedByBound": 12638307,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 16,
+      "repeat": 1,
+      "variant": "before",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 16,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 52.062200000000004,
+        "sessionWallMs": 4911.2381000000005,
+        "sessionBatches": 6887,
+        "exitCode": null,
+        "solverMs": 4892,
+        "wallMs": 5094.509,
+        "cpuMs": 28640.625,
+        "peakWorkingSetBytes": 77287424,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457002,
+        "evaluations": 25932305,
+        "prunedByBound": 12638310,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 16,
+      "repeat": 1,
+      "variant": "after",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 16,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 51.0254,
+        "sessionWallMs": 4748.4509,
+        "sessionBatches": 6887,
+        "exitCode": null,
+        "solverMs": 4730,
+        "wallMs": 4922.447,
+        "cpuMs": 30984.375,
+        "peakWorkingSetBytes": 77627392,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457002,
+        "evaluations": 25932305,
+        "prunedByBound": 12638310,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 16,
+      "repeat": 2,
+      "variant": "before",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 16,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 51.637299999999996,
+        "sessionWallMs": 5101.019499999999,
+        "sessionBatches": 6887,
+        "exitCode": null,
+        "solverMs": 5082,
+        "wallMs": 5288.485,
+        "cpuMs": 31312.5,
+        "peakWorkingSetBytes": 77676544,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457002,
+        "evaluations": 25932305,
+        "prunedByBound": 12638310,
+        "prunedByConstraint": 0
+      }
+    },
+    {
+      "threads": 16,
+      "repeat": 2,
+      "variant": "after",
+      "measurement": {
+        "schema": "toram.d4-native-p6-single.v1",
+        "packageLimit": 0,
+        "packages": [
+          992,
+          844,
+          724,
+          929
+        ],
+        "threads": 16,
+        "status": "exact",
+        "upperBound": 14097,
+        "sessionPreparationMs": 51.1404,
+        "sessionWallMs": 5061.0866000000005,
+        "sessionBatches": 6887,
+        "exitCode": null,
+        "solverMs": 5042,
+        "wallMs": 5235.301,
+        "cpuMs": 27218.75,
+        "peakWorkingSetBytes": 77713408,
+        "score": 14097,
+        "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+        "visitedNodes": 4457002,
+        "evaluations": 25932305,
+        "prunedByBound": 12638310,
+        "prunedByConstraint": 0
+      }
+    }
+  ]
+}

@@ -288,7 +288,7 @@ fn run_budget(
             });
             return Ok((result, (!session.is_complete()).then_some(session)));
         }
-        let result = session.run_parallel_slice_with_control(
+        session.advance_parallel_slice_with_control(
             threads.saturating_mul(NODES_PER_WORKER_BATCH),
             threads,
             Some(&control.cancel),
@@ -298,6 +298,7 @@ fn run_budget(
             continue;
         }
         if last_progress.elapsed() >= interval || session.is_complete() {
+            let result = session.snapshot();
             let status = if session.is_complete() {
                 result.status.clone()
             } else {
@@ -315,9 +316,9 @@ fn run_budget(
                 )
             });
             last_progress = Instant::now();
-        }
-        if session.is_complete() {
-            return Ok((result, None));
+            if session.is_complete() {
+                return Ok((result, None));
+            }
         }
     }
 }

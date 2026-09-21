@@ -47,6 +47,30 @@ fn main() -> Result<(), String> {
         if summary != cached || summary != native {
             return Err(format!("D4 prepared context mismatch in {}", case.id));
         }
+        let utility = [
+            summary.final_max_hp,
+            summary.final_max_mp,
+            summary.ampr_before_dual,
+            summary.normal_attack_crit,
+            summary.final_aspd,
+        ];
+        for coordinate in 0..5 {
+            for offset in [-0.5, 0.0, 0.5] {
+                let minimum = utility[coordinate] as f64 + offset;
+                let filtered = d4_native_evaluator::evaluate_feasible_summary(
+                    &prepared,
+                    &native_stats,
+                    |index, value| {
+                        assert_eq!(value, utility[index], "utility mismatch in {}", case.id);
+                        index != coordinate || value as f64 >= minimum
+                    },
+                )?;
+                let expected = (utility[coordinate] as f64 >= minimum).then_some(&summary);
+                if filtered.as_ref() != expected {
+                    return Err(format!("D4 utility precheck mismatch in {}", case.id));
+                }
+            }
+        }
         results.push(json!({ "id": case.id, "summary": summary }));
     }
     println!(

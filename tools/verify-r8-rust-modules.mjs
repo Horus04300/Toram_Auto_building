@@ -21,7 +21,8 @@ for (const name of ['settings_directory', 'd4_hardware_profile', 'd4_optimize_pa
 assert.match(commands, /service\.optimize\(/u, 'D4 command는 service에 위임해야 합니다.');
 assert.match(commands, /SettingsService::save/u, '저장 command는 SettingsService에 위임해야 합니다.');
 assert.match(d4Service, /spawn_blocking[\s\S]*NativeSearchSession::new/u, '새 D4 실행은 기존 blocking runtime 경계 안에서 준비·실행해야 합니다.');
-assert.match(d4Service, /run_parallel_slice_with_control/u, 'D4 취소·일시정지 협력 실행 방식을 유지해야 합니다.');
+assert.match(d4Service, /advance_parallel_slice_with_control\([\s\S]*?Some\(&control.cancel\),\s*Some\(deadline\)/u, 'D4 실행에 취소 신호와 deadline을 전달해야 합니다.');
+assert.match(d4Service, /if last_progress.elapsed\(\) >= interval \|\| session.is_complete\(\) \{\s*let result = session.snapshot\(\);/u, '진행 알림이나 완료 시점에만 중간 결과를 생성해야 합니다.');
 assert.match(d4Service, /MAX_RESUMABLE_SESSIONS: usize = 4/u, 'continuation 수명 한도를 변경하면 안 됩니다.');
 assert.match(d4Service, /pub async fn resume/u, '기존 재개 명령은 service에서 유지해야 합니다.');
 assert.match(settingsService, /SettingsRepository::/u, 'SettingsService는 파일 구현을 Repository에 위임해야 합니다.');

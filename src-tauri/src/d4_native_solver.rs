@@ -15,13 +15,15 @@ use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
 use crate::d4_native_evaluator::{
-    evaluate_summary_from_native_stats as evaluate_summary_from_map, D4NativeSummary, NativeStats,
-    PreparedContext,
+    evaluate_feasible_summary, evaluate_summary_from_native_stats as evaluate_summary_from_map,
+    D4NativeSummary, NativeStats, PreparedContext,
 };
 
 const EPSILON: f64 = 1e-9;
 const GROUP_COUNT: usize = 4;
 const SMALL_BOX_LIMIT: usize = 64;
+const LOOKAHEAD_RELATIVE_GAP: f64 = 0.05;
+const LOOKAHEAD_MAX_DEPTH: usize = 2;
 pub const SESSION_NODES_PER_WORKER: usize = 32;
 const HEURISTIC_CANDIDATE_LIMIT: usize = 192;
 const HEURISTIC_PASSES: usize = 2;
@@ -122,6 +124,7 @@ pub struct NativeSchedulerTelemetry {
 #[derive(Clone)]
 struct TreeNode {
     path: String,
+    path_rank: usize,
     size: usize,
     envelope: Stats,
     split_score: f64,
@@ -168,7 +171,7 @@ struct NativeCheckpointWorkItem {
 
 type NodeOutcome = Result<Option<Vec<WorkItem>>, String>;
 struct NodeBatch {
-    nodes: Vec<WorkItem>,
+    nodes: Arc<Vec<WorkItem>>,
     next: AtomicUsize,
     incumbent: Arc<SharedIncumbent>,
     counters: Arc<ParallelCounters>,
@@ -207,6 +210,9 @@ impl NodePool {
                         break;
                     };
                     let batch = &job.batch;
+                    // Progress is published after the batch joins. Keep hot
+                    // counter writes private instead of bouncing shared cache lines.
+                    let mut local_counters = LocalSearchCounters::default();
                     let mut outcomes = Vec::new();
                     loop {
                         // The message shares a batch, but claims stay node-sized
@@ -218,11 +224,11 @@ impl NodePool {
                         let outcome =
                             std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
                                 expand_parallel_node(
-                                    node.clone(),
+                                    node,
                                     &problem,
                                     &requirements,
                                     &batch.incumbent,
-                                    &batch.counters,
+                                    &mut local_counters,
                                     batch.cancel.as_deref(),
                                     batch.deadline,
                                 )
@@ -230,6 +236,9 @@ impl NodePool {
                             .unwrap_or_else(|_| Err("D4 search worker panicked".into()));
                         outcomes.push((index, outcome));
                     }
+                    batch.counters.merge_search_counts(local_counters);
+                    // Release shared input before announcing completion.
+                    drop(job.batch);
                     if job.output.send(outcomes).is_err() {
                         break;
                     }
@@ -241,15 +250,18 @@ impl NodePool {
     }
     fn run(
         &self,
-        nodes: &[WorkItem],
+        nodes: &Arc<Vec<WorkItem>>,
+        results: &mut Vec<Option<NodeOutcome>>,
         incumbent: &Arc<SharedIncumbent>,
         counters: &Arc<ParallelCounters>,
         cancel: Option<&Arc<AtomicBool>>,
         deadline: Option<Instant>,
-    ) -> Result<Vec<NodeOutcome>, String> {
+    ) -> Result<(), String> {
+        results.clear();
+        results.resize_with(nodes.len(), || None);
         let (output, receiver) = std::sync::mpsc::channel();
         let batch = Arc::new(NodeBatch {
-            nodes: nodes.to_vec(),
+            nodes: Arc::clone(nodes),
             next: AtomicUsize::new(0),
             incumbent: Arc::clone(incumbent),
             counters: Arc::clone(counters),
@@ -267,16 +279,15 @@ impl NodePool {
                 .map_err(|_| "D4 pool stopped".to_string())?;
         }
         drop(output);
-        let mut results = (0..nodes.len()).map(|_| None).collect::<Vec<_>>();
         for outcomes in receiver {
             for (index, outcome) in outcomes {
                 results[index] = Some(outcome);
             }
         }
-        results
-            .into_iter()
-            .map(|result| result.ok_or_else(|| "D4 worker result missing".to_string()))
-            .collect()
+        if results.iter().any(Option::is_none) {
+            return Err("D4 worker result missing".into());
+        }
+        Ok(())
     }
 }
 impl Drop for NodePool {
@@ -306,6 +317,96 @@ struct ParallelCounters {
     longest_work_item_micros: AtomicU64,
 }
 
+// Owned exclusively by one worker message; recursive calls borrow mutably.
+#[derive(Default)]
+struct LocalSearchCounters {
+    evaluations: u64,
+    visited: u64,
+    pruned_by_bound: u64,
+    pruned_by_constraint: u64,
+    enumerated: u64,
+    splits: u64,
+}
+trait SearchCounters {
+    fn count_evaluations(&mut self);
+    fn count_visited(&mut self);
+    fn count_pruned_by_bound(&mut self);
+    fn count_pruned_by_constraint(&mut self);
+    fn count_enumerated(&mut self);
+    fn count_splits(&mut self);
+}
+impl SearchCounters for LocalSearchCounters {
+    #[inline]
+    fn count_evaluations(&mut self) {
+        self.evaluations = self.evaluations.wrapping_add(1);
+    }
+    #[inline]
+    fn count_visited(&mut self) {
+        self.visited = self.visited.wrapping_add(1);
+    }
+    #[inline]
+    fn count_pruned_by_bound(&mut self) {
+        self.pruned_by_bound = self.pruned_by_bound.wrapping_add(1);
+    }
+    #[inline]
+    fn count_pruned_by_constraint(&mut self) {
+        self.pruned_by_constraint = self.pruned_by_constraint.wrapping_add(1);
+    }
+    #[inline]
+    fn count_enumerated(&mut self) {
+        self.enumerated = self.enumerated.wrapping_add(1);
+    }
+    #[inline]
+    fn count_splits(&mut self) {
+        self.splits = self.splits.wrapping_add(1);
+    }
+}
+// The standalone scheduler still shares these counters across workers.
+impl SearchCounters for &ParallelCounters {
+    #[inline]
+    fn count_evaluations(&mut self) {
+        self.evaluations.fetch_add(1, AtomicOrdering::Relaxed);
+    }
+    #[inline]
+    fn count_visited(&mut self) {
+        self.visited.fetch_add(1, AtomicOrdering::Relaxed);
+    }
+    #[inline]
+    fn count_pruned_by_bound(&mut self) {
+        self.pruned_by_bound.fetch_add(1, AtomicOrdering::Relaxed);
+    }
+    #[inline]
+    fn count_pruned_by_constraint(&mut self) {
+        self.pruned_by_constraint
+            .fetch_add(1, AtomicOrdering::Relaxed);
+    }
+    #[inline]
+    fn count_enumerated(&mut self) {
+        self.enumerated.fetch_add(1, AtomicOrdering::Relaxed);
+    }
+    #[inline]
+    fn count_splits(&mut self) {
+        self.splits.fetch_add(1, AtomicOrdering::Relaxed);
+    }
+}
+
+impl ParallelCounters {
+    fn merge_search_counts(&self, local: LocalSearchCounters) {
+        for (target, value) in [
+            (&self.evaluations, local.evaluations),
+            (&self.visited, local.visited),
+            (&self.pruned_by_bound, local.pruned_by_bound),
+            (&self.pruned_by_constraint, local.pruned_by_constraint),
+            (&self.enumerated, local.enumerated),
+            (&self.splits, local.splits),
+        ] {
+            target.fetch_add(value, AtomicOrdering::Relaxed);
+        }
+        // Scheduler timing/steal counters belong to the standalone scheduler,
+        // not expand_parallel_node, and are not collected by the session pool.
+    }
+}
+
 impl PartialEq for WorkItem {
     fn eq(&self, other: &Self) -> bool {
         self.upper.total_cmp(&other.upper) == Ordering::Equal
@@ -313,7 +414,7 @@ impl PartialEq for WorkItem {
                 .clusters
                 .iter()
                 .zip(other.clusters.iter())
-                .all(|(left, right)| left.path == right.path)
+                .all(|(left, right)| left.path_rank == right.path_rank)
     }
 }
 impl Eq for WorkItem {}
@@ -330,7 +431,7 @@ impl Ord for WorkItem {
         }
         // JS MaxHeap prefers lexical-smaller boxPathId when upper bounds tie.
         for (left, right) in self.clusters.iter().zip(other.clusters.iter()) {
-            let comparison = right.path.cmp(&left.path);
+            let comparison = right.path_rank.cmp(&left.path_rank);
             if comparison != Ordering::Equal {
                 return comparison;
             }
@@ -469,6 +570,18 @@ fn build_tree(
     context: &Value,
     path: String,
 ) -> Arc<TreeNode> {
+    build_tree_ranked(packages, indices, keys, ranges, context, path, 0)
+}
+
+fn build_tree_ranked(
+    packages: &[NativePackage],
+    indices: Vec<usize>,
+    keys: &[String],
+    ranges: &BTreeMap<String, f64>,
+    context: &Value,
+    path: String,
+    path_rank: usize,
+) -> Arc<TreeNode> {
     let envelope = group_envelope(packages, &indices, keys);
     // Keep the established split ordering independent of tighter signed bounds.
     // Cache it once: each node participates in many Cartesian search boxes.
@@ -480,6 +593,7 @@ fn build_tree(
     if indices.len() <= 1 {
         return Arc::new(TreeNode {
             path,
+            path_rank,
             size: indices.len(),
             envelope,
             split_score,
@@ -537,25 +651,30 @@ fn build_tree(
     let right = sorted.split_off(middle);
     Arc::new(TreeNode {
         path: path.clone(),
+        path_rank,
         size: sorted.len() + right.len(),
         envelope,
         split_score,
         package: None,
-        left: Some(build_tree(
+        // Prefix < prefix0... < prefix1...: preorder is lexical path order.
+        // A full binary subtree with middle leaves has 2*middle-1 nodes.
+        left: Some(build_tree_ranked(
             packages,
             sorted,
             keys,
             ranges,
             context,
             format!("{path}0"),
+            path_rank + 1,
         )),
-        right: Some(build_tree(
+        right: Some(build_tree_ranked(
             packages,
             right,
             keys,
             ranges,
             context,
             format!("{path}1"),
+            path_rank + 2 * middle,
         )),
     })
 }
@@ -580,22 +699,26 @@ impl Requirements {
         }
     }
 }
+impl Requirements {
+    fn accepts_value(&self, index: usize, value: i64) -> bool {
+        [self.max_hp, self.max_mp, self.ampr, self.crit, self.aspd][index]
+            .is_none_or(|minimum| value as f64 >= minimum)
+    }
+    fn accepts(&self, values: [i64; 5]) -> bool {
+        [self.max_hp, self.max_mp, self.ampr, self.crit, self.aspd]
+            .into_iter()
+            .zip(values)
+            .all(|(minimum, value)| minimum.is_none_or(|v| value as f64 >= v))
+    }
+}
 fn feasible(summary: &D4NativeSummary, requirements: &Requirements) -> bool {
-    requirements
-        .max_hp
-        .is_none_or(|v| summary.final_max_hp as f64 >= v)
-        && requirements
-            .max_mp
-            .is_none_or(|v| summary.final_max_mp as f64 >= v)
-        && requirements
-            .ampr
-            .is_none_or(|v| summary.ampr_before_dual as f64 >= v)
-        && requirements
-            .crit
-            .is_none_or(|v| summary.normal_attack_crit as f64 >= v)
-        && requirements
-            .aspd
-            .is_none_or(|v| summary.final_aspd as f64 >= v)
+    requirements.accepts([
+        summary.final_max_hp,
+        summary.final_max_mp,
+        summary.ampr_before_dual,
+        summary.normal_attack_crit,
+        summary.final_aspd,
+    ])
 }
 
 fn build_id(groups: &[NativeGroup], selected: &[usize; GROUP_COUNT]) -> String {
@@ -743,10 +866,12 @@ fn consider(
     stats: &Stats,
 ) -> Result<(), String> {
     state.evaluations += 1;
-    let summary = evaluate_summary_from_map(&problem.base_context, stats)?;
-    if !feasible(&summary, requirements) {
+    let Some(summary) = evaluate_feasible_summary(&problem.base_context, stats, |i, v| {
+        requirements.accepts_value(i, v)
+    })?
+    else {
         return Ok(());
-    }
+    };
     let id = build_id(&problem.groups, selected);
     if better(
         summary.optimization_damage_factor,
@@ -774,10 +899,20 @@ fn cluster_indices(node: &TreeNode, output: &mut Vec<usize>) {
     }
 }
 
+// Preserve each tree's left-to-right package order. Small boxes contain at
+// most 64 combinations, so preparation remains bounded before cancellation checks.
+fn box_candidate_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> [Vec<usize>; GROUP_COUNT] {
+    std::array::from_fn(|group| {
+        let mut indices = Vec::with_capacity(clusters[group].size);
+        cluster_indices(&clusters[group], &mut indices);
+        indices
+    })
+}
+
 #[allow(clippy::too_many_arguments)] // Recursive complete enumeration shares its immutable search inputs.
 fn enumerate_box(
     index: usize,
-    clusters: &[Arc<TreeNode>; GROUP_COUNT],
+    candidates: &[Vec<usize>; GROUP_COUNT],
     problem: &NativeProblem,
     requirements: &Requirements,
     selected: &mut [usize; GROUP_COUNT],
@@ -789,9 +924,7 @@ fn enumerate_box(
         *enumerated += 1;
         return consider(problem, requirements, state, selected, stats);
     }
-    let mut indices = Vec::with_capacity(clusters[index].size);
-    cluster_indices(&clusters[index], &mut indices);
-    for package_index in indices {
+    for &package_index in &candidates[index] {
         selected[index] = package_index;
         let next = add_stats(
             stats.clone(),
@@ -799,7 +932,7 @@ fn enumerate_box(
         );
         enumerate_box(
             index + 1,
-            clusters,
+            candidates,
             problem,
             requirements,
             selected,
@@ -980,7 +1113,7 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
         if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
             enumerate_box(
                 0,
-                &node.clusters,
+                &box_candidate_indices(&node.clusters),
                 problem,
                 requirements,
                 &mut [0; GROUP_COUNT],
@@ -997,10 +1130,14 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
         for child_clusters in child_boxes {
             let stats = box_stats(&child_clusters);
             state.evaluations += 1;
-            let bound = evaluate_summary_from_map(&problem.base_context, &stats)?;
-            if !feasible(&bound, requirements) {
+            let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+                requirements.accepts_value(i, v)
+            })?
+            else {
                 pruned_by_constraint += 1;
-            } else if bound.optimization_damage_factor < state.best_score - EPSILON {
+                continue;
+            };
+            if bound.optimization_damage_factor < state.best_score - EPSILON {
                 pruned_by_bound += 1;
             } else {
                 heap.push(WorkItem {
@@ -1043,6 +1180,8 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
 /// while this type owns the complete checkpointable search state.
 pub struct NativeSearchSession {
     pool: Option<NodePool>,
+    batch_nodes: Arc<Vec<WorkItem>>,
+    batch_outcomes: Vec<Option<NodeOutcome>>,
     problem: NativeProblem,
     requirements: Requirements,
     heap: BinaryHeap<WorkItem>,
@@ -1154,6 +1293,8 @@ impl NativeSearchSession {
         };
         Ok(Self {
             pool: None,
+            batch_nodes: Arc::new(Vec::new()),
+            batch_outcomes: Vec::new(),
             problem,
             requirements,
             heap,
@@ -1187,7 +1328,7 @@ impl NativeSearchSession {
             .collect::<Vec<_>>();
         Self::audit_frontier(&frontier)?;
         Ok(NativeSearchCheckpoint {
-            schema: "toram.d4-native-search-checkpoint.v4".to_string(),
+            schema: "toram.d4-native-search-checkpoint.v5".to_string(),
             problem: self.problem.clone(),
             state: self.state.clone(),
             frontier,
@@ -1201,7 +1342,7 @@ impl NativeSearchSession {
     }
 
     pub fn from_checkpoint(checkpoint: NativeSearchCheckpoint) -> Result<Self, String> {
-        if checkpoint.schema != "toram.d4-native-search-checkpoint.v4" {
+        if checkpoint.schema != "toram.d4-native-search-checkpoint.v5" {
             return Err("D4 native checkpoint schema is invalid".to_string());
         }
         Self::audit_frontier(&checkpoint.frontier)?;
@@ -1271,7 +1412,7 @@ impl NativeSearchSession {
                 if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
                     enumerate_box(
                         0,
-                        &node.clusters,
+                        &box_candidate_indices(&node.clusters),
                         &self.problem,
                         &self.requirements,
                         &mut [0; GROUP_COUNT],
@@ -1288,10 +1429,15 @@ impl NativeSearchSession {
                 for child_clusters in child_boxes {
                     let stats = box_stats(&child_clusters);
                     self.state.evaluations += 1;
-                    let bound = evaluate_summary_from_map(&self.problem.base_context, &stats)?;
-                    if !feasible(&bound, &self.requirements) {
+                    let Some(bound) =
+                        evaluate_feasible_summary(&self.problem.base_context, &stats, |i, v| {
+                            self.requirements.accepts_value(i, v)
+                        })?
+                    else {
                         self.pruned_by_constraint += 1;
-                    } else if bound.optimization_damage_factor < self.state.best_score - EPSILON {
+                        continue;
+                    };
+                    if bound.optimization_damage_factor < self.state.best_score - EPSILON {
                         self.pruned_by_bound += 1;
                     } else {
                         self.heap.push(WorkItem {
@@ -1331,15 +1477,28 @@ impl NativeSearchSession {
         cancel: Option<&Arc<AtomicBool>>,
         deadline: Option<Instant>,
     ) -> Result<NativeSolveResult, String> {
+        self.advance_parallel_slice_with_control(node_budget, requested_threads, cancel, deadline)?;
+        Ok(self.result())
+    }
+
+    /// Advance the same safe batch without materializing a build snapshot.
+    /// Coordinators request `snapshot` only when publishing or returning a result.
+    pub fn advance_parallel_slice_with_control(
+        &mut self,
+        node_budget: usize,
+        requested_threads: usize,
+        cancel: Option<&Arc<AtomicBool>>,
+        deadline: Option<Instant>,
+    ) -> Result<(), String> {
         if self.terminal_invalid_upper.is_some() || self.heap.is_empty() {
-            return Ok(self.result());
+            return Ok(());
         }
         let started = Instant::now();
         let workers = requested_threads.max(1);
         let batch_size = self.heap.len().min(node_budget.max(workers));
-        let nodes = (0..batch_size)
-            .filter_map(|_| self.heap.pop())
-            .collect::<Vec<_>>();
+        let nodes = Arc::make_mut(&mut self.batch_nodes);
+        nodes.clear();
+        nodes.extend((0..batch_size).filter_map(|_| self.heap.pop()));
         let incumbent = Arc::new(SharedIncumbent {
             score_bits: AtomicU64::new(self.state.best_score.to_bits()),
             record: Mutex::new(self.state.clone()),
@@ -1364,36 +1523,41 @@ impl NativeSearchSession {
             match NodePool::new(&self.problem, self.requirements, workers) {
                 Ok(pool) => self.pool = Some(pool),
                 Err(error) => {
-                    self.heap.extend(nodes);
+                    self.heap.extend(nodes.drain(..));
                     return Err(error);
                 }
             }
         }
-        let outcomes = match self
-            .pool
-            .as_ref()
-            .unwrap()
-            .run(&nodes, &incumbent, &counters, cancel, deadline)
+        if let Err(error) = self.pool.as_ref().unwrap().run(
+            &self.batch_nodes,
+            &mut self.batch_outcomes,
+            &incumbent,
+            &counters,
+            cancel,
+            deadline,
+        ) {
+            // Join outstanding jobs before reclaiming shared input on failure.
+            self.pool = None;
+            self.heap
+                .extend(Arc::make_mut(&mut self.batch_nodes).drain(..));
+            self.batch_outcomes.clear();
+            return Err(error);
+        }
+        let nodes = Arc::get_mut(&mut self.batch_nodes).expect("completed batch releases input");
+        if let Some(error) = self
+            .batch_outcomes
+            .iter()
+            .find_map(|result| result.as_ref().and_then(|outcome| outcome.as_ref().err()))
         {
-            Ok(outcomes) => outcomes,
-            Err(error) => {
-                self.heap.extend(nodes);
-                self.pool = None;
-                return Err(error);
-            }
-        };
-        if let Some(error) = outcomes.iter().find_map(|result| result.as_ref().err()) {
-            self.heap.extend(nodes);
-            return Err(error.clone());
+            let error = error.clone();
+            self.heap.extend(nodes.drain(..));
+            self.batch_outcomes.clear();
+            return Err(error);
         }
         let outcome = (|| -> Result<(), String> {
-            for (node, outcome) in nodes.into_iter().zip(outcomes) {
-                match outcome? {
-                    Some(children) => {
-                        for child in children {
-                            self.heap.push(child);
-                        }
-                    }
+            for (node, outcome) in nodes.drain(..).zip(self.batch_outcomes.drain(..)) {
+                match outcome.expect("validated worker result")? {
+                    Some(children) => self.heap.extend(children),
                     None => self.heap.push(node),
                 }
             }
@@ -1412,8 +1576,7 @@ impl NativeSearchSession {
             Ok(())
         })();
         self.elapsed += started.elapsed();
-        outcome?;
-        Ok(self.result())
+        outcome
     }
 
     pub fn snapshot(&self) -> NativeSolveResult {
@@ -1494,15 +1657,17 @@ fn consider_parallel(
     problem: &NativeProblem,
     requirements: &Requirements,
     incumbent: &SharedIncumbent,
-    counters: &ParallelCounters,
+    counters: &mut impl SearchCounters,
     selected: &[usize; GROUP_COUNT],
     stats: &Stats,
 ) -> Result<(), String> {
-    counters.evaluations.fetch_add(1, AtomicOrdering::Relaxed);
-    let summary = evaluate_summary_from_map(&problem.base_context, stats)?;
-    if !feasible(&summary, requirements) {
+    counters.count_evaluations();
+    let Some(summary) = evaluate_feasible_summary(&problem.base_context, stats, |i, v| {
+        requirements.accepts_value(i, v)
+    })?
+    else {
         return Ok(());
-    }
+    };
     let score = summary.optimization_damage_factor;
     // Most completed candidates are below the current lower bound. Avoid a
     // mutex acquisition for that common case; equality still takes the lock
@@ -1535,11 +1700,11 @@ fn should_stop_parallel_work(cancel: Option<&AtomicBool>, deadline: Option<Insta
 #[allow(clippy::too_many_arguments)]
 fn enumerate_box_parallel(
     index: usize,
-    clusters: &[Arc<TreeNode>; GROUP_COUNT],
+    candidates: &[Vec<usize>; GROUP_COUNT],
     problem: &NativeProblem,
     requirements: &Requirements,
     incumbent: &SharedIncumbent,
-    counters: &ParallelCounters,
+    counters: &mut impl SearchCounters,
     cancel: Option<&AtomicBool>,
     deadline: Option<Instant>,
     selected: &mut [usize; GROUP_COUNT],
@@ -1549,13 +1714,11 @@ fn enumerate_box_parallel(
         return Ok(false);
     }
     if index == GROUP_COUNT {
-        counters.enumerated.fetch_add(1, AtomicOrdering::Relaxed);
+        counters.count_enumerated();
         consider_parallel(problem, requirements, incumbent, counters, selected, stats)?;
         return Ok(true);
     }
-    let mut indices = Vec::with_capacity(clusters[index].size);
-    cluster_indices(&clusters[index], &mut indices);
-    for package_index in indices {
+    for &package_index in &candidates[index] {
         selected[index] = package_index;
         let next = add_stats(
             stats.clone(),
@@ -1563,7 +1726,7 @@ fn enumerate_box_parallel(
         );
         if !enumerate_box_parallel(
             index + 1,
-            clusters,
+            candidates,
             problem,
             requirements,
             incumbent,
@@ -1582,12 +1745,19 @@ fn enumerate_box_parallel(
 /// Process one shared-frontier node.  Children are returned to the caller so
 /// the parallel coordinator can put them back onto the common priority queue;
 /// this is what lets an idle worker take work created by another worker.
+fn should_look_ahead(node: &WorkItem, best: f64, depth: usize) -> bool {
+    depth < LOOKAHEAD_MAX_DEPTH
+        && best.is_finite()
+        && node.upper <= best + best.abs() * LOOKAHEAD_RELATIVE_GAP
+        && box_combinations(&node.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
+}
+
 fn expand_parallel_node(
-    node: WorkItem,
+    node: &WorkItem,
     problem: &NativeProblem,
     requirements: &Requirements,
     incumbent: &SharedIncumbent,
-    counters: &ParallelCounters,
+    counters: &mut impl SearchCounters,
     cancel: Option<&AtomicBool>,
     deadline: Option<Instant>,
 ) -> Result<Option<Vec<WorkItem>>, String> {
@@ -1605,29 +1775,27 @@ fn expand_parallel_node(
 
 #[allow(clippy::too_many_arguments)]
 fn expand_parallel_node_inner(
-    node: WorkItem,
+    node: &WorkItem,
     depth: usize,
     problem: &NativeProblem,
     requirements: &Requirements,
     incumbent: &SharedIncumbent,
-    counters: &ParallelCounters,
+    counters: &mut impl SearchCounters,
     cancel: Option<&AtomicBool>,
     deadline: Option<Instant>,
 ) -> Result<Option<Vec<WorkItem>>, String> {
     if should_stop_parallel_work(cancel, deadline) {
         return Ok(None);
     }
-    counters.visited.fetch_add(1, AtomicOrdering::Relaxed);
+    counters.count_visited();
     if node.upper < shared_best_score(incumbent) - EPSILON {
-        counters
-            .pruned_by_bound
-            .fetch_add(1, AtomicOrdering::Relaxed);
+        counters.count_pruned_by_bound();
         return Ok(Some(Vec::new()));
     }
     if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
         return enumerate_box_parallel(
             0,
-            &node.clusters,
+            &box_candidate_indices(&node.clusters),
             problem,
             requirements,
             incumbent,
@@ -1643,39 +1811,36 @@ fn expand_parallel_node_inner(
     if child_boxes.len() == 0 {
         return Ok(Some(Vec::new()));
     }
-    counters.splits.fetch_add(1, AtomicOrdering::Relaxed);
-    let mut children = Vec::with_capacity(child_boxes.len());
+    counters.count_splits();
+    // Most bounded children can be discarded; allocate only for survivors.
+    let mut children = Vec::new();
     for child_clusters in child_boxes {
         if should_stop_parallel_work(cancel, deadline) {
             return Ok(None);
         }
         let stats = box_stats(&child_clusters);
-        counters.evaluations.fetch_add(1, AtomicOrdering::Relaxed);
-        let bound = evaluate_summary_from_map(&problem.base_context, &stats)?;
-        if !feasible(&bound, requirements) {
-            counters
-                .pruned_by_constraint
-                .fetch_add(1, AtomicOrdering::Relaxed);
-        } else if bound.optimization_damage_factor < shared_best_score(incumbent) - EPSILON {
-            counters
-                .pruned_by_bound
-                .fetch_add(1, AtomicOrdering::Relaxed);
+        counters.count_evaluations();
+        let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+            requirements.accepts_value(i, v)
+        })?
+        else {
+            counters.count_pruned_by_constraint();
+            continue;
+        };
+        if bound.optimization_damage_factor < shared_best_score(incumbent) - EPSILON {
+            counters.count_pruned_by_bound();
         } else {
             let child = WorkItem {
                 upper: bound.optimization_damage_factor,
                 clusters: child_clusters,
             };
             let best = shared_best_score(incumbent);
-            // The 2% window only chooses where to spend extra evaluation work.
+            // The relative window only chooses where to spend extra evaluation work.
             // Removal still requires each sub-box's ordinary safe bound; keep
             // all surviving sub-boxes, or requeue the original parent on stop.
-            if depth == 0
-                && best.is_finite()
-                && child.upper <= best + best.abs() * 0.02
-                && box_combinations(&child.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
-            {
+            if should_look_ahead(&child, best, depth) {
                 match expand_parallel_node_inner(
-                    child,
+                    &child,
                     depth + 1,
                     problem,
                     requirements,
@@ -1723,10 +1888,12 @@ fn create_parallel_shards(
         for child_clusters in child_boxes {
             let stats = box_stats(&child_clusters);
             state.evaluations += 1;
-            let bound = evaluate_summary_from_map(&problem.base_context, &stats)?;
-            if !feasible(&bound, requirements) {
+            let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+                requirements.accepts_value(i, v)
+            })?
+            else {
                 continue;
-            }
+            };
             if bound.optimization_damage_factor >= state.best_score - EPSILON {
                 frontier.push(WorkItem {
                     upper: bound.optimization_damage_factor,
@@ -1975,11 +2142,11 @@ fn solve_exact_parallel_with_control(
                 };
                 let work_started = Instant::now();
                 let outcome = expand_parallel_node(
-                    node,
+                    &node,
                     problem,
                     requirements,
                     &incumbent,
-                    &counters,
+                    &mut counters.as_ref(),
                     cancel,
                     None,
                 );
@@ -2092,6 +2259,41 @@ mod tests {
     use serde_json::json;
 
     #[test]
+    fn local_counter_overflow_and_merge_match_atomic_counts() {
+        let mut local = LocalSearchCounters::default();
+        let shared = ParallelCounters::default();
+        macro_rules! check {
+            ($field:ident, $increment:ident) => {
+                local.$field = u64::MAX;
+                shared.$field.store(u64::MAX, AtomicOrdering::Relaxed);
+                local.$increment();
+                (&shared).$increment();
+                assert_eq!(local.$field, shared.$field.load(AtomicOrdering::Relaxed));
+                assert_eq!(local.$field, 0);
+                local.$increment();
+            };
+        }
+        check!(evaluations, count_evaluations);
+        check!(visited, count_visited);
+        check!(pruned_by_bound, count_pruned_by_bound);
+        check!(pruned_by_constraint, count_pruned_by_constraint);
+        check!(enumerated, count_enumerated);
+        check!(splits, count_splits);
+        shared.merge_search_counts(local);
+        for counter in [
+            &shared.evaluations,
+            &shared.visited,
+            &shared.pruned_by_bound,
+            &shared.pruned_by_constraint,
+            &shared.enumerated,
+            &shared.splits,
+        ] {
+            assert_eq!(counter.load(AtomicOrdering::Relaxed), 1);
+        }
+        assert_eq!(shared.steals.load(AtomicOrdering::Relaxed), 0);
+    }
+
+    #[test]
     fn prepared_requirements_preserve_missing_invalid_and_boundary_values() {
         let summary = D4NativeSummary {
             optimization_damage_factor: 1.0,
@@ -2144,6 +2346,105 @@ mod tests {
         .unwrap()
     }
 
+    #[allow(clippy::too_many_arguments)] // Recursive complete enumeration shares its immutable search inputs.
+    fn enumerate_box_reference(
+        index: usize,
+        clusters: &[Arc<TreeNode>; GROUP_COUNT],
+        problem: &NativeProblem,
+        requirements: &Requirements,
+        selected: &mut [usize; GROUP_COUNT],
+        stats: &Stats,
+        state: &mut SearchState,
+        enumerated: &mut u64,
+    ) -> Result<(), String> {
+        if index == GROUP_COUNT {
+            *enumerated += 1;
+            return consider(problem, requirements, state, selected, stats);
+        }
+        let mut indices = Vec::with_capacity(clusters[index].size);
+        cluster_indices(&clusters[index], &mut indices);
+        for package_index in indices {
+            selected[index] = package_index;
+            let next = add_stats(
+                stats.clone(),
+                &problem.groups[index].packages[package_index].stat_delta,
+            );
+            enumerate_box_reference(
+                index + 1,
+                clusters,
+                problem,
+                requirements,
+                selected,
+                &next,
+                state,
+                enumerated,
+            )?;
+        }
+        Ok(())
+    }
+
+    #[test]
+    fn prepared_small_box_lists_match_tree_walking_enumeration() {
+        for sizes in [
+            [1, 1, 1, 1],
+            [1, 1, 1, 64],
+            [64, 1, 1, 1],
+            [2, 2, 2, 8],
+            [4, 4, 2, 2],
+            [3, 1, 7, 3],
+        ] {
+            let mut problem = small_problem();
+            for (group_index, group) in problem.groups.iter_mut().enumerate() {
+                group.packages = (0..sizes[group_index])
+                    .rev()
+                    .map(|index| NativePackage {
+                        id: format!("{group_index}-{index}"),
+                        stat_delta: Stats::from([
+                            ("ATKP".into(), (index % 3) as f64 * 0.25),
+                            ("MAXHP".into(), -(index as f64) * 200.0),
+                        ]),
+                    })
+                    .collect();
+            }
+            let session = NativeSearchSession::new(problem.clone()).unwrap();
+            let clusters = &session.heap.peek().unwrap().clusters;
+            let mut actual = SearchState {
+                best_score: f64::NEG_INFINITY,
+                ..SearchState::default()
+            };
+            let mut expected = actual.clone();
+            let (mut count, mut reference_count) = (0, 0);
+            enumerate_box(
+                0,
+                &box_candidate_indices(clusters),
+                &problem,
+                &session.requirements,
+                &mut [0; GROUP_COUNT],
+                &Stats::new(),
+                &mut actual,
+                &mut count,
+            )
+            .unwrap();
+            enumerate_box_reference(
+                0,
+                clusters,
+                &problem,
+                &session.requirements,
+                &mut [0; GROUP_COUNT],
+                &Stats::new(),
+                &mut expected,
+                &mut reference_count,
+            )
+            .unwrap();
+            assert_eq!(count, sizes.iter().product::<usize>() as u64);
+            assert_eq!(count, reference_count);
+            assert_eq!(
+                serde_json::to_value(actual).unwrap(),
+                serde_json::to_value(expected).unwrap()
+            );
+        }
+    }
+
     fn wide_problem() -> NativeProblem {
         let mut problem = small_problem();
         for (group_index, group) in problem.groups.iter_mut().enumerate() {
@@ -2155,6 +2456,50 @@ mod tests {
                 .collect();
         }
         problem
+    }
+
+    #[test]
+    fn deferred_snapshots_preserve_frontier_counters_and_control() {
+        let mut eager = NativeSearchSession::new(wide_problem()).unwrap();
+        let mut deferred = NativeSearchSession::new(wide_problem()).unwrap();
+        let cancel = Arc::new(AtomicBool::new(true));
+        for mode in 0..3 {
+            let signal = (mode == 0).then_some(&cancel);
+            let deadline = (mode == 1).then(Instant::now);
+            let result = eager
+                .run_parallel_slice_with_control(8, 1, signal, deadline)
+                .unwrap();
+            deferred
+                .advance_parallel_slice_with_control(8, 1, signal, deadline)
+                .unwrap();
+            let mut expected = serde_json::to_value(result).unwrap();
+            let mut actual = serde_json::to_value(deferred.snapshot()).unwrap();
+            expected["elapsedMs"] = 0.into();
+            actual["elapsedMs"] = 0.into();
+            assert_eq!(actual, expected);
+            let mut expected = serde_json::to_value(eager.checkpoint().unwrap()).unwrap();
+            let mut actual = serde_json::to_value(deferred.checkpoint().unwrap()).unwrap();
+            expected["elapsed_ms"] = 0.into();
+            actual["elapsed_ms"] = 0.into();
+            assert_eq!(actual, expected);
+        }
+        while !deferred.is_complete() {
+            deferred
+                .advance_parallel_slice_with_control(64, 1, None, None)
+                .unwrap();
+        }
+        while !eager.is_complete() {
+            eager.run_parallel_slice(64, 1).unwrap();
+        }
+        let mut expected = serde_json::to_value(eager.snapshot()).unwrap();
+        let mut actual = serde_json::to_value(deferred.snapshot()).unwrap();
+        expected["elapsedMs"] = 0.into();
+        actual["elapsedMs"] = 0.into();
+        assert_eq!(actual, expected);
+        deferred
+            .advance_parallel_slice_with_control(64, 1, None, None)
+            .unwrap();
+        assert!(deferred.snapshot().exact);
     }
 
     #[test]
@@ -2206,6 +2551,7 @@ mod tests {
         });
         for workers in [1, 2, 8, 16, 64] {
             let pool = NodePool::new(&problem, session.requirements, workers).unwrap();
+            let mut outcomes = Vec::new();
             for count in [0, 1, 7, 31, 33, 65, 257] {
                 let nodes = (0..count)
                     .map(|index| {
@@ -2216,30 +2562,101 @@ mod tests {
                         node
                     })
                     .collect::<Vec<_>>();
+                let nodes = Arc::new(nodes);
                 let counters = Arc::new(ParallelCounters::default());
-                let outcomes = pool.run(&nodes, &incumbent, &counters, None, None).unwrap();
-                assert_eq!(outcomes.len(), count);
-                for (index, outcome) in outcomes.into_iter().enumerate() {
+                pool.run(&nodes, &mut outcomes, &incumbent, &counters, None, None)
+                    .unwrap();
+                assert_eq!(Arc::strong_count(&nodes), 1);
+                let expected = ParallelCounters::default();
+                for node in nodes.iter() {
+                    expand_parallel_node(
+                        node,
+                        &problem,
+                        &session.requirements,
+                        &incumbent,
+                        &mut &expected,
+                        None,
+                        None,
+                    )
+                    .unwrap();
+                }
+                for (actual, reference) in [
+                    (&counters.evaluations, &expected.evaluations),
+                    (&counters.visited, &expected.visited),
+                    (&counters.pruned_by_bound, &expected.pruned_by_bound),
+                    (
+                        &counters.pruned_by_constraint,
+                        &expected.pruned_by_constraint,
+                    ),
+                    (&counters.enumerated, &expected.enumerated),
+                    (&counters.splits, &expected.splits),
+                ] {
                     assert_eq!(
-                        outcome.unwrap().unwrap().len(),
-                        if index % 3 == 0 { 16 } else { 0 }
+                        actual.load(AtomicOrdering::Relaxed),
+                        reference.load(AtomicOrdering::Relaxed)
                     );
                 }
-                // One root visit per input plus four lookahead visits for each
+                assert_eq!(outcomes.len(), count);
+                for (index, outcome) in outcomes.drain(..).enumerate() {
+                    assert_eq!(
+                        outcome.unwrap().unwrap().unwrap().len(),
+                        if index % 3 == 0 { 64 } else { 0 }
+                    );
+                }
+                // One root visit per input plus 4+16 lookahead visits for each
                 // unpruned root: detects duplicated or omitted execution too.
                 assert_eq!(
                     counters.visited.load(AtomicOrdering::Relaxed),
-                    (count + count.div_ceil(3) * 4) as u64
+                    (count + count.div_ceil(3) * 20) as u64
                 );
                 let cancelled = Arc::new(AtomicBool::new(true));
                 for (signal, deadline) in [(Some(&cancelled), None), (None, Some(Instant::now()))] {
-                    let stopped = pool
-                        .run(&nodes, &incumbent, &counters, signal, deadline)
-                        .unwrap();
-                    assert_eq!(stopped.len(), count);
-                    assert!(stopped.into_iter().all(|result| result.unwrap().is_none()));
+                    pool.run(
+                        &nodes,
+                        &mut outcomes,
+                        &incumbent,
+                        &counters,
+                        signal,
+                        deadline,
+                    )
+                    .unwrap();
+                    assert_eq!(Arc::strong_count(&nodes), 1);
+                    assert_eq!(outcomes.len(), count);
+                    assert!(outcomes
+                        .drain(..)
+                        .all(|result| result.unwrap().unwrap().is_none()));
                 }
             }
+        }
+    }
+
+    #[test]
+    fn cancelled_batches_reuse_buffers_and_preserve_checkpoint() {
+        let mut session = NativeSearchSession::new(wide_problem()).unwrap();
+        let before = session.checkpoint().unwrap();
+        let cancel = Arc::new(AtomicBool::new(true));
+        session
+            .advance_parallel_slice_with_control(64, 2, Some(&cancel), None)
+            .unwrap();
+        let nodes_ptr = session.batch_nodes.as_ptr();
+        let results_ptr = session.batch_outcomes.as_ptr();
+        for workers in [2, 8, 1, 16, 64, 2] {
+            session
+                .advance_parallel_slice_with_control(64, workers, Some(&cancel), None)
+                .unwrap();
+            assert!(session.batch_nodes.is_empty());
+            assert!(session.batch_outcomes.is_empty());
+            assert_eq!(session.batch_nodes.as_ptr(), nodes_ptr);
+            assert_eq!(session.batch_outcomes.as_ptr(), results_ptr);
+            let after = session.checkpoint().unwrap();
+            assert_eq!(
+                serde_json::to_value(&after.frontier).unwrap(),
+                serde_json::to_value(&before.frontier).unwrap()
+            );
+            assert_eq!(
+                serde_json::to_value(&after.state).unwrap(),
+                serde_json::to_value(&before.state).unwrap()
+            );
         }
     }
 
@@ -2263,17 +2680,17 @@ mod tests {
             record: Mutex::new(session.state.clone()),
         };
         let children = expand_parallel_node(
-            root,
+            &root,
             &problem,
             &session.requirements,
             &incumbent,
-            &ParallelCounters::default(),
+            &mut &ParallelCounters::default(),
             None,
             None,
         )
         .unwrap()
         .unwrap();
-        assert_eq!(children.len(), 16);
+        assert_eq!(children.len(), 64);
         let mut covered = HashSet::new();
         for child in children {
             assert!(child.upper >= session.state.best_score);
@@ -2293,6 +2710,26 @@ mod tests {
             }
         }
         assert_eq!(covered.len(), 8_usize.pow(4));
+    }
+
+    #[test]
+    fn lookahead_window_depth_and_small_box_boundaries() {
+        let mut session = NativeSearchSession::new(wide_problem()).unwrap();
+        let mut root = session.heap.pop().unwrap();
+        for best in [-100.0_f64, 0.0, 100.0] {
+            root.upper = best + best.abs() * LOOKAHEAD_RELATIVE_GAP;
+            assert!(should_look_ahead(&root, best, 0));
+            assert!(should_look_ahead(&root, best, 1));
+            assert!(!should_look_ahead(&root, best, 2));
+            root.upper += 0.0001;
+            assert!(!should_look_ahead(&root, best, 0));
+        }
+        for best in [f64::INFINITY, f64::NEG_INFINITY, f64::NAN] {
+            assert!(!should_look_ahead(&root, best, 0));
+        }
+        let mut small = NativeSearchSession::new(small_problem()).unwrap();
+        let node = small.heap.pop().unwrap();
+        assert!(!should_look_ahead(&node, node.upper, 0));
     }
 
     #[test]
@@ -2353,6 +2790,87 @@ mod tests {
             add_stats(Stats::new(), &Stats::from([("ATK".into(), -0.0)]))["ATK"].to_bits(),
             0.0_f64.to_bits()
         );
+    }
+
+    #[test]
+    fn numeric_path_order_matches_lexical_heap_order() {
+        fn collect(node: &Arc<TreeNode>, nodes: &mut Vec<Arc<TreeNode>>) {
+            nodes.push(Arc::clone(node));
+            if let Some(left) = &node.left {
+                collect(left, nodes);
+            }
+            if let Some(right) = &node.right {
+                collect(right, nodes);
+            }
+        }
+        fn old_cmp(left: &WorkItem, right: &WorkItem) -> Ordering {
+            left.upper.total_cmp(&right.upper).then_with(|| {
+                for (a, b) in left.clusters.iter().zip(&right.clusters) {
+                    let order = b.path.cmp(&a.path);
+                    if order != Ordering::Equal {
+                        return order;
+                    }
+                }
+                Ordering::Equal
+            })
+        }
+        // Include uneven trees, prefix/descendant pairs and empty/single roots.
+        for count in 0..=65 {
+            let packages = (0..count)
+                .map(|index| NativePackage {
+                    id: index.to_string(),
+                    stat_delta: Stats::new(),
+                })
+                .collect::<Vec<_>>();
+            let root = build_tree(
+                &packages,
+                (0..count).collect(),
+                &[],
+                &BTreeMap::new(),
+                &serde_json::json!({}),
+                "r".into(),
+            );
+            let mut nodes = Vec::new();
+            collect(&root, &mut nodes);
+            for (rank, node) in nodes.iter().enumerate() {
+                assert_eq!(node.path_rank, rank);
+                for other in &nodes {
+                    assert_eq!(
+                        node.path_rank.cmp(&other.path_rank),
+                        node.path.cmp(&other.path)
+                    );
+                }
+            }
+            let uppers = [
+                0.0,
+                -0.0,
+                1.0,
+                1.0,
+                f64::INFINITY,
+                f64::NEG_INFINITY,
+                f64::NAN,
+            ];
+            let boxes = (0..128)
+                .map(|index| WorkItem {
+                    upper: uppers[index % uppers.len()],
+                    clusters: std::array::from_fn(|group| {
+                        Arc::clone(&nodes[(index * (group * 2 + 1) + group) % nodes.len()])
+                    }),
+                })
+                .collect::<Vec<_>>();
+            for a in &boxes {
+                for b in &boxes {
+                    assert_eq!(a.cmp(b), old_cmp(a, b));
+                    assert_eq!(a == b, old_cmp(a, b) == Ordering::Equal);
+                }
+            }
+            let mut expected = boxes.clone();
+            expected.sort_by(old_cmp);
+            let mut heap = BinaryHeap::from(boxes);
+            while let Some(actual) = heap.pop() {
+                assert_eq!(old_cmp(&actual, &expected.pop().unwrap()), Ordering::Equal);
+            }
+        }
     }
 
     #[test]
@@ -2424,7 +2942,7 @@ mod tests {
     fn old_bound_policy_checkpoint_is_rejected() {
         let session = NativeSearchSession::new(small_problem()).unwrap();
         let mut checkpoint = session.checkpoint().unwrap();
-        checkpoint.schema = "toram.d4-native-search-checkpoint.v3".into();
+        checkpoint.schema = "toram.d4-native-search-checkpoint.v4".into();
         assert!(NativeSearchSession::from_checkpoint(checkpoint).is_err());
     }
 

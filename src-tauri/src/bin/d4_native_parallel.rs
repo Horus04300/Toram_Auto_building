@@ -54,7 +54,7 @@ fn main() -> Result<(), String> {
         let deadline = started + Duration::from_millis(budget);
         let mut batches = 0_u64;
         while !session.is_complete() && Instant::now() < deadline {
-            session.run_parallel_slice_with_control(
+            session.advance_parallel_slice_with_control(
                 threads.saturating_mul(d4_native_solver::SESSION_NODES_PER_WORKER),
                 threads,
                 cancel.as_ref(),
