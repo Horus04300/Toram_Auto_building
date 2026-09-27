@@ -462,6 +462,14 @@
             var aspdMotionBonus = finalASPD >= 1000 ? (finalASPD - 1000) / 180 : 0;
             var aspdMotionFloor = Math.min(50, Math.floor(aspdMotionBonus));
             var finalMotionSpeed = Math.min(50, aspdMotionFloor + (ctx.motionSpeed || 0));
+            // D4 utility goals saturate independently of raw combat stats.
+            // MP includes the three-stack Godspeed reserve; AMPR% is deliberately
+            // excluded from this goal metric, while passive/active AMPR remains.
+            var d4UtilityValues = [finalMaxHP,
+                Math.min(Number(ctx.godspeedWieldLevel) > 0 ? 2300 : 2000, finalMaxMP),
+                resolveNormalAttackAmpr(Math.floor(10 + Math.min(2000, finalMaxMP) / 100) + ctx.amprF, ctx.normalAttackAmprProfile).final,
+                Math.max(0, Math.min(100, normalAttackCrit)),
+                finalASPD < 1000 ? finalASPD : 1000 + 180 * Math.max(0, finalMotionSpeed)];
 
             var cspdCastRed = finalCSPD <= 1000 ? (finalCSPD / 20) : (50 + (finalCSPD - 1000) / 180);
             cspdCastRed = Math.min(100, cspdCastRed);
@@ -654,7 +662,7 @@
             var procDamage = calculateProcDamageProfile(ctx.procDamageModifiers);
             var procTriggeredDamageFactor = damageFactor * procDamage.triggeredMultiplier;
             var procExpectedDamageFactor = damageFactor * procDamage.expectedMultiplier;
-            if (summaryOnly) return { ctx:{ statDiagnostics:ctx.statDiagnostics || [] }, finalMaxHP:finalMaxHP, finalMaxMP:finalMaxMP, amprBeforeDual:amprBeforeDual, normalAttackCrit:normalAttackCrit, finalASPD:finalASPD, optimizationDamageFactor:procExpectedDamageFactor };
+            if (summaryOnly) return { ctx:{ statDiagnostics:ctx.statDiagnostics || [] }, d4UtilityValues:d4UtilityValues, finalMaxHP:finalMaxHP, finalMaxMP:finalMaxMP, amprBeforeDual:amprBeforeDual, normalAttackCrit:normalAttackCrit, finalASPD:finalASPD, optimizationDamageFactor:procExpectedDamageFactor };
             var poisonDefenseAverage = (Number(ctx.bossDef) + Number(ctx.bossMdef)) / 2;
             var poisonDefenseRatio = Number(ctx.bossLevel) > 0 ? Math.min(.5, poisonDefenseAverage / (Number(ctx.bossLevel) * 6)) : 0;
             var poisonResistanceAverage = (Number(ctx.bossPhysResist) + Number(ctx.bossMagResist)) / 2;
@@ -675,6 +683,7 @@
                 finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
                 finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: ctx.chkGuaranteedCrit ? "확정치명타" : finalCritRate,
                 normalAttackCrit: normalAttackCrit,
+                d4UtilityValues:d4UtilityValues,
                 finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab,
                 finalMaxHP: finalMaxHP, finalMaxMP: finalMaxMP, finalMaxMPAfterBuff: finalMaxMPAfterBuff,
                 baseAMPR: baseAMPR, equipmentAndBuffAMPR: equipmentAndBuffAMPR,

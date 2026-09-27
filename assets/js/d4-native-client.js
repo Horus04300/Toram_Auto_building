@@ -6,7 +6,7 @@
   // tree-splitting, runtime or GPU-policy change must not reuse a result made
   // under a different exact-search contract.
   var CALCULATION_VERSION = 'd4-native-evaluator.v2';
-  var ENGINE_VERSION = 'd4-native-solver.v5';
+  var ENGINE_VERSION = 'd4-native-solver.v8';
   var SPLIT_POLICY = 'candidate-tree-2axis-smallbox64-lookahead.v3';
   var GPU_POLICY = 'cpu-only.p7';
 
@@ -85,6 +85,26 @@
     });
     if (packages.some(function (candidate) { return !candidate; })) return null;
     return { id:nativeBuild.id, packages:packages, statDelta:nativeBuild.statDelta || {} };
+  }
+
+  // Match Rust NativeProblem/NativeMetadata/NativeGroup/NativePackage.
+  // Keep full raw options: modeledKeys describes search bounds, not the
+  // complete evaluator dependencies or the options returned to the user.
+  function nativeProblem(prepared) {
+    var metadata = prepared.metadata || {};
+    return {
+      baseContext:prepared.baseContext,
+      scenarioSnapshot:prepared.scenarioSnapshot,
+      metadata:{ modeledKeys:metadata.modeledKeys, initialPackageIds:metadata.initialPackageIds },
+      groups:prepared.groups.map(function (group) {
+        return {
+          id:group.id,
+          packages:group.packages.map(function (candidate) {
+            return { id:candidate.id, statDelta:candidate.statDelta };
+          })
+        };
+      })
+    };
   }
 
   function optimalityGap(lower, upper, exact) {
@@ -177,6 +197,7 @@
         return cached;
       }
       if (typeof handlers.onProgress === 'function') handlers.onProgress({ stage:'native-prepared', status:'running', elapsedMs:0, visitedNodes:0, evaluations:0, engine:'rust-native', engineVersion:ENGINE_VERSION, calculationVersion:CALCULATION_VERSION, splitPolicy:SPLIT_POLICY, gpuPolicy:GPU_POLICY, threadsUsed:profile && profile.logicalThreads || null, native:true });
+      var requestProblem = nativeProblem(setup.problem);
       var remainingBudget = Math.max(1, requestedBudget - (Date.now() - startedAt));
       var progress = progressChannel(function (event) {
         if (self.active !== active || active.cancelled || typeof handlers.onProgress !== 'function') return;
@@ -187,7 +208,7 @@
       });
       return Promise.resolve(run('d4_optimize_parallel', {
         jobId:jobId,
-        problem:setup.problem,
+        problem:requestProblem,
         options:{ remainingBudgetMs:remainingBudget, progressIntervalMs:Math.max(50, Number(options && options.progressIntervalMs) || 100) },
         progress:progress
       })).then(function (nativeResult) {

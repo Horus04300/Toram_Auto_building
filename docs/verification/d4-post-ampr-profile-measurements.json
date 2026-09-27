@@ -1,0 +1,2098 @@
+{
+  "date": "2026-09-26T10:26:46.107Z",
+  "budgetMs": 120000,
+  "sourceHashes": {
+    "d4_native_evaluator.rs": "89500cff5ead808af626ad64a57519ca55561ff1d43e68ba961f363caeca9838",
+    "d4_native_solver.rs": "0bb93422c445a3423b43c43bbb351ee9bde8c3e5f7a3f7608c7ba317faf5b45b",
+    "d4_native_stats.rs": "dba2c696d693aa904ab9c3e0dc6231c8d35d825d1c4d68b18ed0b29eadaed148",
+    "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e",
+    "bin/d4_native_parallel.rs": "891eed209bb3b1813e92445790f333c5fce400c7c793cd1d3bfddbb80992bf35"
+  },
+  "inputHashes": {
+    "revenir": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+    "dual": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+    "utility-tight": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f"
+  },
+  "certificateIssues": [],
+  "notes": "Two sequential fresh-process control/profile repeats per input, current utility policy. Inclusive worker timings are not additive with evaluator/boxStats or wall time. Prepared inputs; excludes JS candidate preparation and app UI.",
+  "runs": [
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "control",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 8844.811,
+        "cpuMs": 43000,
+        "peakWorkingSetBytes": 141651968,
+        "averageCpuCores": 4.861607557244581
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 8588,
+        "enumeratedCompletions": 3185400,
+        "evaluations": 60498654,
+        "exact": true,
+        "peakReadyWork": 2938687,
+        "prunedByBound": 6861236,
+        "prunedByConstraint": 35875790,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 47.424099999999996,
+        "sessionWallMs": 8596.9289,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625696
+      },
+      "trace": [
+        {
+          "ms": 49.2053,
+          "ready": 4,
+          "score": null,
+          "upperBound": 3701100.6
+        },
+        {
+          "ms": 1049.2585000000001,
+          "ready": 1614444,
+          "score": null,
+          "upperBound": 1401299.46
+        },
+        {
+          "ms": 2049.4898,
+          "ready": 2528907,
+          "score": 1064809.62,
+          "upperBound": 1325496.12
+        },
+        {
+          "ms": 3049.8717,
+          "ready": 2924393,
+          "score": 1108923.6,
+          "upperBound": 1281317.8800000001
+        },
+        {
+          "ms": 4050.007,
+          "ready": 2875978,
+          "score": 1123905.36,
+          "upperBound": 1250223.18
+        },
+        {
+          "ms": 5050.0897,
+          "ready": 2603583,
+          "score": 1123905.36,
+          "upperBound": 1225956.36
+        },
+        {
+          "ms": 6050.0995,
+          "ready": 2106655,
+          "score": 1123905.36,
+          "upperBound": 1205277.9
+        },
+        {
+          "ms": 7050.4496,
+          "ready": 1383811,
+          "score": 1123905.36,
+          "upperBound": 1187628.84
+        },
+        {
+          "ms": 8050.875,
+          "ready": 540209,
+          "score": 1123905.36,
+          "upperBound": 1148035.5
+        }
+      ]
+    },
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "profile",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 10676.618,
+        "cpuMs": 45468.75,
+        "peakWorkingSetBytes": 141541376,
+        "averageCpuCores": 4.258722190866059
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 10289,
+        "enumeratedCompletions": 3180240,
+        "evaluations": 60494452,
+        "exact": true,
+        "peakReadyWork": 2938672,
+        "prunedByBound": 6861257,
+        "prunedByConstraint": 35876299,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 59.698800000000006,
+        "sessionWallMs": 10298.407,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625707
+      },
+      "trace": [
+        {
+          "ms": 61.476000000000006,
+          "ready": 4,
+          "score": null,
+          "upperBound": 3701100.6
+        },
+        {
+          "ms": 1061.4777,
+          "ready": 1387532,
+          "score": null,
+          "upperBound": 1424775.78
+        },
+        {
+          "ms": 2061.6235,
+          "ready": 2261937,
+          "score": null,
+          "upperBound": 1346269.44
+        },
+        {
+          "ms": 3061.6551,
+          "ready": 2802419,
+          "score": 1106912.16,
+          "upperBound": 1299585.06
+        },
+        {
+          "ms": 4062.0026,
+          "ready": 2937003,
+          "score": 1123905.36,
+          "upperBound": 1268354.7
+        },
+        {
+          "ms": 5062.240400000001,
+          "ready": 2826947,
+          "score": 1123905.36,
+          "upperBound": 1243574.82
+        },
+        {
+          "ms": 6062.5981,
+          "ready": 2554392,
+          "score": 1123905.36,
+          "upperBound": 1223249.28
+        },
+        {
+          "ms": 7063.1107999999995,
+          "ready": 2136180,
+          "score": 1123905.36,
+          "upperBound": 1206216.3
+        },
+        {
+          "ms": 8063.3722,
+          "ready": 1613240,
+          "score": 1123905.36,
+          "upperBound": 1192262.7
+        },
+        {
+          "ms": 9063.4285,
+          "ready": 876507,
+          "score": 1123905.36,
+          "upperBound": 1173687.48
+        },
+        {
+          "ms": 10063.6721,
+          "ready": 252111,
+          "score": 1123905.36,
+          "upperBound": 1130649.6
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 60494452,
+            "samples": 59088,
+            "nanos": 30911100,
+            "estimatedMs": 31646.866626340376
+          },
+          {
+            "name": "boxStats",
+            "calls": 57153410,
+            "samples": 55822,
+            "nanos": 9967600,
+            "estimatedMs": 10205.337134391457
+          },
+          {
+            "name": "workerJob",
+            "calls": 329621,
+            "samples": 329621,
+            "nanos": 42904545100,
+            "estimatedMs": 42904.5451
+          },
+          {
+            "name": "poolRun",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 6062983300,
+            "estimatedMs": 6062.9833
+          },
+          {
+            "name": "frontierPop",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 3532209500,
+            "estimatedMs": 3532.2095
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 607670600,
+            "estimatedMs": 607.6706
+          },
+          {
+            "name": "leafRejected",
+            "calls": 3177534,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 2706,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 60494452,
+            "samples": 59088,
+            "nanos": 17407300,
+            "estimatedMs": 17821.640168893853
+          },
+          {
+            "name": "damageStage",
+            "calls": 21371847,
+            "samples": 20879,
+            "nanos": 6050100,
+            "estimatedMs": 6192.912090363523
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "profile",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 10293.036,
+        "cpuMs": 45140.625,
+        "peakWorkingSetBytes": 177401856,
+        "averageCpuCores": 4.385550094257904
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 10054,
+        "enumeratedCompletions": 3179849,
+        "evaluations": 60493700,
+        "exact": true,
+        "peakReadyWork": 2938690,
+        "prunedByBound": 6861246,
+        "prunedByConstraint": 35876262,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 58.3677,
+        "sessionWallMs": 10062.5149,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625705
+      },
+      "trace": [
+        {
+          "ms": 60.3787,
+          "ready": 4,
+          "score": null,
+          "upperBound": 3701100.6
+        },
+        {
+          "ms": 1060.7207,
+          "ready": 1446632,
+          "score": null,
+          "upperBound": 1418369.16
+        },
+        {
+          "ms": 2060.9201000000003,
+          "ready": 2338831,
+          "score": 1064809.62,
+          "upperBound": 1340487.06
+        },
+        {
+          "ms": 3061.224,
+          "ready": 2838828,
+          "score": 1108923.6,
+          "upperBound": 1294847.16
+        },
+        {
+          "ms": 4061.2839999999997,
+          "ready": 2930286,
+          "score": 1123905.36,
+          "upperBound": 1263143.52
+        },
+        {
+          "ms": 5061.4507,
+          "ready": 2771962,
+          "score": 1123905.36,
+          "upperBound": 1238041.32
+        },
+        {
+          "ms": 6061.7914,
+          "ready": 2456953,
+          "score": 1123905.36,
+          "upperBound": 1218391.02
+        },
+        {
+          "ms": 7062.1968,
+          "ready": 1999531,
+          "score": 1123905.36,
+          "upperBound": 1202019
+        },
+        {
+          "ms": 8062.4123,
+          "ready": 1402753,
+          "score": 1123905.36,
+          "upperBound": 1188005.22
+        },
+        {
+          "ms": 9062.7011,
+          "ready": 673671,
+          "score": 1123905.36,
+          "upperBound": 1158623.1
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 60493700,
+            "samples": 59086,
+            "nanos": 27788500,
+            "estimatedMs": 28450.54974867143
+          },
+          {
+            "name": "boxStats",
+            "calls": 57153386,
+            "samples": 55824,
+            "nanos": 9210600,
+            "estimatedMs": 9429.940117003438
+          },
+          {
+            "name": "workerJob",
+            "calls": 329621,
+            "samples": 329621,
+            "nanos": 40741728200,
+            "estimatedMs": 40741.7282
+          },
+          {
+            "name": "poolRun",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 5863727700,
+            "estimatedMs": 5863.7277
+          },
+          {
+            "name": "frontierPop",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 3498926400,
+            "estimatedMs": 3498.9263999999994
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 20603,
+            "samples": 20603,
+            "nanos": 606377300,
+            "estimatedMs": 606.3773
+          },
+          {
+            "name": "leafRejected",
+            "calls": 3177143,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 2706,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 60493700,
+            "samples": 59086,
+            "nanos": 16186700,
+            "estimatedMs": 16572.341566360894
+          },
+          {
+            "name": "damageStage",
+            "calls": 21371830,
+            "samples": 20882,
+            "nanos": 5913000,
+            "estimatedMs": 6051.7015032085055
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "control",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 10463.49,
+        "cpuMs": 42343.75,
+        "peakWorkingSetBytes": 140840960,
+        "averageCpuCores": 4.046809429740938
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 10202,
+        "enumeratedCompletions": 3181419,
+        "evaluations": 60494961,
+        "exact": true,
+        "peakReadyWork": 2938680,
+        "prunedByBound": 6861239,
+        "prunedByConstraint": 35876201,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 67.71090000000001,
+        "sessionWallMs": 10212.7839,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625692
+      },
+      "trace": [
+        {
+          "ms": 69.6926,
+          "ready": 4,
+          "score": null,
+          "upperBound": 3701100.6
+        },
+        {
+          "ms": 1070.2438000000002,
+          "ready": 1257120,
+          "score": null,
+          "upperBound": 1439615.76
+        },
+        {
+          "ms": 2070.3842,
+          "ready": 2154164,
+          "score": null,
+          "upperBound": 1354443.72
+        },
+        {
+          "ms": 3070.5298000000003,
+          "ready": 2753403,
+          "score": 1106912.16,
+          "upperBound": 1305586.74
+        },
+        {
+          "ms": 4070.9905,
+          "ready": 2937497,
+          "score": 1123905.36,
+          "upperBound": 1272958.98
+        },
+        {
+          "ms": 5071.1057,
+          "ready": 2858899,
+          "score": 1123905.36,
+          "upperBound": 1247585.46
+        },
+        {
+          "ms": 6071.1716,
+          "ready": 2616670,
+          "score": 1123905.36,
+          "upperBound": 1226743.8
+        },
+        {
+          "ms": 7071.6974,
+          "ready": 2228359,
+          "score": 1123905.36,
+          "upperBound": 1209278.34
+        },
+        {
+          "ms": 8071.8931999999995,
+          "ready": 1658545,
+          "score": 1123905.36,
+          "upperBound": 1193272.5
+        },
+        {
+          "ms": 9072.297,
+          "ready": 909693,
+          "score": 1123905.36,
+          "upperBound": 1176114.06
+        },
+        {
+          "ms": 10072.4696,
+          "ready": 205139,
+          "score": 1123905.36,
+          "upperBound": 1128201.6
+        }
+      ]
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "control",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 19208.741,
+        "cpuMs": 141968.75,
+        "peakWorkingSetBytes": 172077056,
+        "averageCpuCores": 7.390840971826315
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 18996,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950590,
+        "exact": true,
+        "peakReadyWork": 3766634,
+        "prunedByBound": 43200131,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 58.5981,
+        "sessionWallMs": 19006.1784,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872890
+      },
+      "trace": [
+        {
+          "ms": 59.8472,
+          "ready": 4,
+          "score": 21246,
+          "upperBound": 75380
+        },
+        {
+          "ms": 1060.1036,
+          "ready": 2292155,
+          "score": 21325,
+          "upperBound": 26178
+        },
+        {
+          "ms": 2060.4371,
+          "ready": 3162931,
+          "score": 21440,
+          "upperBound": 25156
+        },
+        {
+          "ms": 3060.4907,
+          "ready": 3607394,
+          "score": 21440,
+          "upperBound": 24520
+        },
+        {
+          "ms": 4060.5358,
+          "ready": 3759150,
+          "score": 21440,
+          "upperBound": 24105
+        },
+        {
+          "ms": 5060.862,
+          "ready": 3731310,
+          "score": 21440,
+          "upperBound": 23784
+        },
+        {
+          "ms": 6061.2841,
+          "ready": 3570791,
+          "score": 21440,
+          "upperBound": 23520
+        },
+        {
+          "ms": 7061.5163,
+          "ready": 3305554,
+          "score": 21440,
+          "upperBound": 23298
+        },
+        {
+          "ms": 8062.3045999999995,
+          "ready": 2945920,
+          "score": 21440,
+          "upperBound": 23100
+        },
+        {
+          "ms": 9062.7651,
+          "ready": 2520014,
+          "score": 21440,
+          "upperBound": 22927
+        },
+        {
+          "ms": 10063.192799999999,
+          "ready": 2033862,
+          "score": 21440,
+          "upperBound": 22771
+        },
+        {
+          "ms": 11063.5736,
+          "ready": 1524223,
+          "score": 21440,
+          "upperBound": 22632
+        },
+        {
+          "ms": 12064.3341,
+          "ready": 1009222,
+          "score": 21458,
+          "upperBound": 22500
+        },
+        {
+          "ms": 13065.2698,
+          "ready": 823949,
+          "score": 21458,
+          "upperBound": 22253
+        },
+        {
+          "ms": 14065.736499999999,
+          "ready": 700987,
+          "score": 21458,
+          "upperBound": 22045
+        },
+        {
+          "ms": 15067.140300000001,
+          "ready": 572464,
+          "score": 21458,
+          "upperBound": 21879
+        },
+        {
+          "ms": 16068.076399999998,
+          "ready": 438108,
+          "score": 21458,
+          "upperBound": 21742
+        },
+        {
+          "ms": 17069.2065,
+          "ready": 305641,
+          "score": 21458,
+          "upperBound": 21631
+        },
+        {
+          "ms": 18072.132,
+          "ready": 174140,
+          "score": 21458,
+          "upperBound": 21537
+        }
+      ]
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "profile",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 19322.247,
+        "cpuMs": 141906.25,
+        "peakWorkingSetBytes": 172314624,
+        "averageCpuCores": 7.344189834650184
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 19100,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950590,
+        "exact": true,
+        "peakReadyWork": 3766634,
+        "prunedByBound": 43200131,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 53.6287,
+        "sessionWallMs": 19109.4856,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872890
+      },
+      "trace": [
+        {
+          "ms": 54.9446,
+          "ready": 4,
+          "score": 21246,
+          "upperBound": 75380
+        },
+        {
+          "ms": 1055.4707,
+          "ready": 2233569,
+          "score": 21325,
+          "upperBound": 26249
+        },
+        {
+          "ms": 2055.6954,
+          "ready": 3170353,
+          "score": 21440,
+          "upperBound": 25147
+        },
+        {
+          "ms": 3055.9177,
+          "ready": 3615552,
+          "score": 21440,
+          "upperBound": 24505
+        },
+        {
+          "ms": 4056.2679,
+          "ready": 3761748,
+          "score": 21440,
+          "upperBound": 24085
+        },
+        {
+          "ms": 5056.464,
+          "ready": 3721427,
+          "score": 21440,
+          "upperBound": 23757
+        },
+        {
+          "ms": 6057.1355,
+          "ready": 3543217,
+          "score": 21440,
+          "upperBound": 23490
+        },
+        {
+          "ms": 7057.663500000001,
+          "ready": 3258830,
+          "score": 21440,
+          "upperBound": 23268
+        },
+        {
+          "ms": 8057.918199999999,
+          "ready": 2906005,
+          "score": 21440,
+          "upperBound": 23081
+        },
+        {
+          "ms": 9057.9266,
+          "ready": 2501550,
+          "score": 21440,
+          "upperBound": 22921
+        },
+        {
+          "ms": 10058.4797,
+          "ready": 2056440,
+          "score": 21440,
+          "upperBound": 22778
+        },
+        {
+          "ms": 11059.7698,
+          "ready": 1564617,
+          "score": 21440,
+          "upperBound": 22643
+        },
+        {
+          "ms": 12060.2898,
+          "ready": 1037319,
+          "score": 21458,
+          "upperBound": 22515
+        },
+        {
+          "ms": 13063.4947,
+          "ready": 827016,
+          "score": 21458,
+          "upperBound": 22259
+        },
+        {
+          "ms": 14065.0568,
+          "ready": 706076,
+          "score": 21458,
+          "upperBound": 22052
+        },
+        {
+          "ms": 15067.525,
+          "ready": 584709,
+          "score": 21458,
+          "upperBound": 21892
+        },
+        {
+          "ms": 16069.313000000002,
+          "ready": 462140,
+          "score": 21458,
+          "upperBound": 21764
+        },
+        {
+          "ms": 17069.5186,
+          "ready": 330706,
+          "score": 21458,
+          "upperBound": 21650
+        },
+        {
+          "ms": 18072.0996,
+          "ready": 191542,
+          "score": 21458,
+          "upperBound": 21548
+        },
+        {
+          "ms": 19074.2363,
+          "ready": 50828,
+          "score": 21458,
+          "upperBound": 21459
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 109950590,
+            "samples": 107381,
+            "nanos": 99544000,
+            "estimatedMs": 101926.05331445971
+          },
+          {
+            "name": "boxStats",
+            "calls": 59024682,
+            "samples": 57648,
+            "nanos": 9085700,
+            "estimatedMs": 9302.674043286843
+          },
+          {
+            "name": "workerJob",
+            "calls": 277189,
+            "samples": 277189,
+            "nanos": 156413949400,
+            "estimatedMs": 156413.9494
+          },
+          {
+            "name": "poolRun",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 15056225400,
+            "estimatedMs": 15056.2254
+          },
+          {
+            "name": "frontierPop",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 3473832300,
+            "estimatedMs": 3473.8323
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 490769600,
+            "estimatedMs": 490.7696
+          },
+          {
+            "name": "leafRejected",
+            "calls": 3,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 50924395,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 109950590,
+            "samples": 107381,
+            "nanos": 45089200,
+            "estimatedMs": 46168.16888116147
+          },
+          {
+            "name": "damageStage",
+            "calls": 109950586,
+            "samples": 107381,
+            "nanos": 34391300,
+            "estimatedMs": 35214.2705720919
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "profile",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 19277.622,
+        "cpuMs": 143578.125,
+        "peakWorkingSetBytes": 171966464,
+        "averageCpuCores": 7.447916812561218
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 19064,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950586,
+        "exact": true,
+        "peakReadyWork": 3766629,
+        "prunedByBound": 43200128,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 61.2591,
+        "sessionWallMs": 19072.749000000003,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872889
+      },
+      "trace": [
+        {
+          "ms": 63.3616,
+          "ready": 4,
+          "score": 21246,
+          "upperBound": 75380
+        },
+        {
+          "ms": 1064.0211,
+          "ready": 2248325,
+          "score": 21325,
+          "upperBound": 26231
+        },
+        {
+          "ms": 2064.3959999999997,
+          "ready": 3175890,
+          "score": 21440,
+          "upperBound": 25140
+        },
+        {
+          "ms": 3065.1757000000002,
+          "ready": 3619313,
+          "score": 21440,
+          "upperBound": 24498
+        },
+        {
+          "ms": 4065.3546,
+          "ready": 3763556,
+          "score": 21440,
+          "upperBound": 24071
+        },
+        {
+          "ms": 5065.4982,
+          "ready": 3718293,
+          "score": 21440,
+          "upperBound": 23749
+        },
+        {
+          "ms": 6066.3269,
+          "ready": 3542533,
+          "score": 21440,
+          "upperBound": 23490
+        },
+        {
+          "ms": 7066.8651,
+          "ready": 3257680,
+          "score": 21440,
+          "upperBound": 23267
+        },
+        {
+          "ms": 8067.7782,
+          "ready": 2891705,
+          "score": 21440,
+          "upperBound": 23075
+        },
+        {
+          "ms": 9067.8187,
+          "ready": 2469585,
+          "score": 21440,
+          "upperBound": 22909
+        },
+        {
+          "ms": 10068.0954,
+          "ready": 2007152,
+          "score": 21440,
+          "upperBound": 22763
+        },
+        {
+          "ms": 11068.814400000001,
+          "ready": 1502302,
+          "score": 21440,
+          "upperBound": 22627
+        },
+        {
+          "ms": 12069.39,
+          "ready": 998121,
+          "score": 21458,
+          "upperBound": 22491
+        },
+        {
+          "ms": 13071.902,
+          "ready": 819355,
+          "score": 21458,
+          "upperBound": 22245
+        },
+        {
+          "ms": 14076.2576,
+          "ready": 699960,
+          "score": 21458,
+          "upperBound": 22044
+        },
+        {
+          "ms": 15080.7231,
+          "ready": 578580,
+          "score": 21458,
+          "upperBound": 21886
+        },
+        {
+          "ms": 16085.6678,
+          "ready": 457024,
+          "score": 21458,
+          "upperBound": 21760
+        },
+        {
+          "ms": 17085.7664,
+          "ready": 319449,
+          "score": 21458,
+          "upperBound": 21642
+        },
+        {
+          "ms": 18086.257,
+          "ready": 178231,
+          "score": 21458,
+          "upperBound": 21539
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 109950586,
+            "samples": 107383,
+            "nanos": 101789900,
+            "estimatedMs": 104223.75193355932
+          },
+          {
+            "name": "boxStats",
+            "calls": 59024678,
+            "samples": 57650,
+            "nanos": 9325700,
+            "estimatedMs": 9548.073540756286
+          },
+          {
+            "name": "workerJob",
+            "calls": 277189,
+            "samples": 277189,
+            "nanos": 156801036200,
+            "estimatedMs": 156801.0362
+          },
+          {
+            "name": "poolRun",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 15031248300,
+            "estimatedMs": 15031.2483
+          },
+          {
+            "name": "frontierPop",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 3457451500,
+            "estimatedMs": 3457.4515
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 17326,
+            "samples": 17326,
+            "nanos": 487018900,
+            "estimatedMs": 487.01890000000003
+          },
+          {
+            "name": "leafRejected",
+            "calls": 3,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 50924395,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 109950586,
+            "samples": 107383,
+            "nanos": 46525700,
+            "estimatedMs": 47638.1548202248
+          },
+          {
+            "name": "damageStage",
+            "calls": 109950582,
+            "samples": 107383,
+            "nanos": 34507200,
+            "estimatedMs": 35332.2846557686
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "control",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 18756.521,
+        "cpuMs": 143078.125,
+        "peakWorkingSetBytes": 172060672,
+        "averageCpuCores": 7.628180353915313
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 18529,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950594,
+        "exact": true,
+        "peakReadyWork": 3766634,
+        "prunedByBound": 43200134,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 71.59100000000001,
+        "sessionWallMs": 18539.1234,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872891
+      },
+      "trace": [
+        {
+          "ms": 73.3241,
+          "ready": 4,
+          "score": 21246,
+          "upperBound": 75380
+        },
+        {
+          "ms": 1073.4669999999999,
+          "ready": 2163394,
+          "score": 21325,
+          "upperBound": 26336
+        },
+        {
+          "ms": 2073.7114,
+          "ready": 3149251,
+          "score": 21440,
+          "upperBound": 25173
+        },
+        {
+          "ms": 3073.7651,
+          "ready": 3594298,
+          "score": 21440,
+          "upperBound": 24544
+        },
+        {
+          "ms": 4074.4806999999996,
+          "ready": 3758928,
+          "score": 21440,
+          "upperBound": 24107
+        },
+        {
+          "ms": 5074.6699,
+          "ready": 3730029,
+          "score": 21440,
+          "upperBound": 23780
+        },
+        {
+          "ms": 6075.1359999999995,
+          "ready": 3561427,
+          "score": 21440,
+          "upperBound": 23510
+        },
+        {
+          "ms": 7075.7696000000005,
+          "ready": 3268643,
+          "score": 21440,
+          "upperBound": 23274
+        },
+        {
+          "ms": 8076.102199999999,
+          "ready": 2891037,
+          "score": 21440,
+          "upperBound": 23075
+        },
+        {
+          "ms": 9076.5124,
+          "ready": 2452257,
+          "score": 21440,
+          "upperBound": 22904
+        },
+        {
+          "ms": 10076.8249,
+          "ready": 1957087,
+          "score": 21440,
+          "upperBound": 22749
+        },
+        {
+          "ms": 11077.7898,
+          "ready": 1454029,
+          "score": 21440,
+          "upperBound": 22615
+        },
+        {
+          "ms": 12078.9015,
+          "ready": 977729,
+          "score": 21458,
+          "upperBound": 22475
+        },
+        {
+          "ms": 13079.4604,
+          "ready": 812211,
+          "score": 21458,
+          "upperBound": 22231
+        },
+        {
+          "ms": 14083.6111,
+          "ready": 690278,
+          "score": 21458,
+          "upperBound": 22029
+        },
+        {
+          "ms": 15085.3184,
+          "ready": 560225,
+          "score": 21458,
+          "upperBound": 21864
+        },
+        {
+          "ms": 16088.377,
+          "ready": 419189,
+          "score": 21458,
+          "upperBound": 21725
+        },
+        {
+          "ms": 17090.6267,
+          "ready": 271876,
+          "score": 21458,
+          "upperBound": 21606
+        },
+        {
+          "ms": 18090.8742,
+          "ready": 117341,
+          "score": 21458,
+          "upperBound": 21500
+        }
+      ]
+    },
+    {
+      "fixture": "utility-tight",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "control",
+      "packages": [
+        445,
+        448,
+        446,
+        449
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 5587.127,
+        "cpuMs": 31187.5,
+        "peakWorkingSetBytes": 162201600,
+        "averageCpuCores": 5.582028115702399
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 5392,
+        "enumeratedCompletions": 32666947,
+        "evaluations": 63292390,
+        "exact": true,
+        "peakReadyWork": 2912696,
+        "prunedByBound": 14598202,
+        "prunedByConstraint": 7514579,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 9.4051,
+        "sessionWallMs": 5397.179,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9866891
+      },
+      "trace": [
+        {
+          "ms": 10.0563,
+          "ready": 4,
+          "score": null,
+          "upperBound": 52934
+        },
+        {
+          "ms": 1010.6111,
+          "ready": 1818348,
+          "score": 42389,
+          "upperBound": 45345
+        },
+        {
+          "ms": 2010.6635,
+          "ready": 2632878,
+          "score": 42435,
+          "upperBound": 44752
+        },
+        {
+          "ms": 3011.2527999999998,
+          "ready": 2773248,
+          "score": 43247,
+          "upperBound": 44112
+        },
+        {
+          "ms": 4011.8162,
+          "ready": 2144048,
+          "score": 43247,
+          "upperBound": 43539
+        },
+        {
+          "ms": 5011.8423999999995,
+          "ready": 974542,
+          "score": 43247,
+          "upperBound": 43247
+        }
+      ]
+    },
+    {
+      "fixture": "utility-tight",
+      "threads": 16,
+      "repeat": 1,
+      "variant": "profile",
+      "packages": [
+        445,
+        448,
+        446,
+        449
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 5743.002,
+        "cpuMs": 29468.75,
+        "peakWorkingSetBytes": 130793472,
+        "averageCpuCores": 5.131244948199565
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 5541,
+        "enumeratedCompletions": 32697098,
+        "evaluations": 63313684,
+        "exact": true,
+        "peakReadyWork": 2912692,
+        "prunedByBound": 14598173,
+        "prunedByConstraint": 7510224,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 13.435,
+        "sessionWallMs": 5545.5446,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9866868
+      },
+      "trace": [
+        {
+          "ms": 14.0381,
+          "ready": 4,
+          "score": null,
+          "upperBound": 52934
+        },
+        {
+          "ms": 1014.2062000000001,
+          "ready": 1798930,
+          "score": 42389,
+          "upperBound": 45368
+        },
+        {
+          "ms": 2014.2673000000002,
+          "ready": 2589065,
+          "score": 42435,
+          "upperBound": 44779
+        },
+        {
+          "ms": 3014.5615000000003,
+          "ready": 2793924,
+          "score": 43247,
+          "upperBound": 44148
+        },
+        {
+          "ms": 4014.9044,
+          "ready": 2228716,
+          "score": 43247,
+          "upperBound": 43594
+        },
+        {
+          "ms": 5015.0875,
+          "ready": 1308357,
+          "score": 43247,
+          "upperBound": 43247
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 63313684,
+            "samples": 61838,
+            "nanos": 28603600,
+            "estimatedMs": 29286.187969572107
+          },
+          {
+            "name": "boxStats",
+            "calls": 29969830,
+            "samples": 29277,
+            "nanos": 4220800,
+            "estimatedMs": 4320.683760767838
+          },
+          {
+            "name": "workerJob",
+            "calls": 168933,
+            "samples": 168933,
+            "nanos": 30505681900,
+            "estimatedMs": 30505.6819
+          },
+          {
+            "name": "poolRun",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 3509438500,
+            "estimatedMs": 3509.4385
+          },
+          {
+            "name": "frontierPop",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 1701911400,
+            "estimatedMs": 1701.9114
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 302359800,
+            "estimatedMs": 302.3598
+          },
+          {
+            "name": "leafRejected",
+            "calls": 31476442,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 1220656,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 63313684,
+            "samples": 61838,
+            "nanos": 16262700,
+            "estimatedMs": 16650.78833058637
+          },
+          {
+            "name": "damageStage",
+            "calls": 24061153,
+            "samples": 23505,
+            "nanos": 5939400,
+            "estimatedMs": 6079.932445360561
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "profile",
+      "packages": [
+        445,
+        448,
+        446,
+        449
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 5539.379,
+        "cpuMs": 31765.625,
+        "peakWorkingSetBytes": 180862976,
+        "averageCpuCores": 5.7345101319118985
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 5333,
+        "enumeratedCompletions": 32646896,
+        "evaluations": 63275977,
+        "exact": true,
+        "peakReadyWork": 2912686,
+        "prunedByBound": 14598184,
+        "prunedByConstraint": 7517529,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 9.0624,
+        "sessionWallMs": 5337.4082,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9866864
+      },
+      "trace": [
+        {
+          "ms": 9.6563,
+          "ready": 4,
+          "score": null,
+          "upperBound": 52934
+        },
+        {
+          "ms": 1009.8797,
+          "ready": 1809998,
+          "score": 42389,
+          "upperBound": 45345
+        },
+        {
+          "ms": 2010.2169000000001,
+          "ready": 2607514,
+          "score": 42435,
+          "upperBound": 44764
+        },
+        {
+          "ms": 3010.6014,
+          "ready": 2770502,
+          "score": 43247,
+          "upperBound": 44109
+        },
+        {
+          "ms": 4010.9566,
+          "ready": 2113184,
+          "score": 43247,
+          "upperBound": 43524
+        },
+        {
+          "ms": 5011.1408,
+          "ready": 863425,
+          "score": 43247,
+          "upperBound": 43247
+        }
+      ],
+      "profile": {
+        "sampleEvery": 1024,
+        "categories": [
+          {
+            "name": "evaluator",
+            "calls": 63275977,
+            "samples": 61802,
+            "nanos": 28848900,
+            "estimatedMs": 29536.945938243098
+          },
+          {
+            "name": "boxStats",
+            "calls": 29969834,
+            "samples": 29277,
+            "nanos": 4040600,
+            "estimatedMs": 4136.219942630734
+          },
+          {
+            "name": "workerJob",
+            "calls": 168933,
+            "samples": 168933,
+            "nanos": 29946551000,
+            "estimatedMs": 29946.551
+          },
+          {
+            "name": "poolRun",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 3359965600,
+            "estimatedMs": 3359.9656
+          },
+          {
+            "name": "frontierPop",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 1646134200,
+            "estimatedMs": 1646.1342
+          },
+          {
+            "name": "frontierMerge",
+            "calls": 10560,
+            "samples": 10560,
+            "nanos": 304895700,
+            "estimatedMs": 304.8957
+          },
+          {
+            "name": "leafRejected",
+            "calls": 31426240,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "leafAccepted",
+            "calls": 1220656,
+            "samples": 0,
+            "nanos": 0,
+            "estimatedMs": 0
+          },
+          {
+            "name": "utilityStage",
+            "calls": 63275977,
+            "samples": 61802,
+            "nanos": 16291400,
+            "estimatedMs": 16679.94970547555
+          },
+          {
+            "name": "damageStage",
+            "calls": 24061165,
+            "samples": 23504,
+            "nanos": 6142200,
+            "estimatedMs": 6287.801551352961
+          }
+        ]
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "threads": 16,
+      "repeat": 2,
+      "variant": "control",
+      "packages": [
+        445,
+        448,
+        446,
+        449
+      ],
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 5511.181,
+        "cpuMs": 32062.5,
+        "peakWorkingSetBytes": 130797568,
+        "averageCpuCores": 5.817718561593241
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 5312,
+        "enumeratedCompletions": 32646877,
+        "evaluations": 63276036,
+        "exact": true,
+        "peakReadyWork": 2912720,
+        "prunedByBound": 14598201,
+        "prunedByConstraint": 7517584,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 9.0534,
+        "sessionWallMs": 5317.0481,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9866905
+      },
+      "trace": [
+        {
+          "ms": 9.6569,
+          "ready": 4,
+          "score": null,
+          "upperBound": 52934
+        },
+        {
+          "ms": 1009.9184000000001,
+          "ready": 1829042,
+          "score": 42389,
+          "upperBound": 45341
+        },
+        {
+          "ms": 2010.3808999999999,
+          "ready": 2638625,
+          "score": 42435,
+          "upperBound": 44752
+        },
+        {
+          "ms": 3010.637,
+          "ready": 2751564,
+          "score": 43247,
+          "upperBound": 44081
+        },
+        {
+          "ms": 4011.0822,
+          "ready": 2096545,
+          "score": 43247,
+          "upperBound": 43516
+        },
+        {
+          "ms": 5011.088400000001,
+          "ready": 811746,
+          "score": 43247,
+          "upperBound": 43247
+        }
+      ]
+    }
+  ]
+}

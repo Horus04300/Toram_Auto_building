@@ -18,7 +18,7 @@ const context = {
     },
     ToramD4GlobalOptimizer:{
       deriveRelevantKeys:() => ['DMG'],
-      prepareProblem:(problem, options) => Object.assign({}, problem, { metadata:{ modeledKeys:options.relevantKeys } })
+      prepareProblem:(problem, options) => Object.assign({}, problem, { metadata:Object.assign({}, problem.metadata, { modeledKeys:options.relevantKeys }) })
     },
     __TAURI__:{ core:{ Channel:function Channel() { this.onmessage = null; }, invoke:(command, input) => {
       calls.push({ command, input });
@@ -45,15 +45,30 @@ vm.createContext(context);
 vm.runInContext(await readFile(resolve(root, 'assets/js/d4-native-client.js'), 'utf8'), context, { filename:'d4-native-client.js' });
 
 const problem = {
-  baseContext:{}, scenarioSnapshot:{ requirements:{} },
-  groups:['a','b','c','d'].map(id => ({ id, packages:[{ id, statDelta:{ DMG:3 }, candidateNames:[id], slot:id }] }))
+  baseContext:{ activeBuildConversions:[{ source:'STR', target:'ATK', rate:1 }] },
+  scenarioSnapshot:{ requirements:{ maxHp:null, maxMp:2000 }, utilityPolicyVersion:2 },
+  metadata:{ initialPackageIds:['a','b','c','d'], diagnostic:'display only' },
+  diagnostics:[{ code:'display-only' }],
+  groups:['a','b','c','d'].map(id => ({ id, displayName:id, packages:[{
+    id, statDelta:{ DMG:3, MAXMP:-100, PHYS_RES:0, FUTURE_RAW_OPTION:7 },
+    candidateNames:[id], slot:id, candidates:[{ name:id, options:{ DMG:3 } }],
+    lineage:['base', id], conditionSignature:'fixed-main'
+  }] }))
 };
+const originalJson = JSON.stringify(problem);
 let completed = null;
 let progress = null;
 const result = await context.window.ToramD4NativeClient.optimize(problem, { onComplete:value => { completed = value; }, onProgress:value => { progress = value; } });
 assert.equal(calls[0].command, 'd4_hardware_profile');
 assert.equal(calls[1].command, 'd4_optimize_parallel');
 assert.deepEqual(calls[1].input.problem.metadata.modeledKeys, ['DMG']);
+const wire = JSON.parse(JSON.stringify(calls[1].input.problem));
+assert.deepEqual(Object.keys(wire).sort(), ['baseContext','groups','metadata','scenarioSnapshot']);
+assert.deepEqual(wire.baseContext, problem.baseContext);
+assert.deepEqual(wire.scenarioSnapshot, problem.scenarioSnapshot);
+assert.deepEqual(wire.metadata, { modeledKeys:['DMG'], initialPackageIds:['a','b','c','d'] });
+assert.deepEqual(wire.groups, problem.groups.map(group => ({ id:group.id, packages:group.packages.map(p => ({ id:p.id, statDelta:p.statDelta })) })));
+assert.equal(JSON.stringify(problem), originalJson, '전송 객체 준비는 표시·추천 적용용 원본을 수정하면 안 됩니다.');
 assert.equal(calls[1].input.options.progressIntervalMs, 100);
 assert.ok(calls[1].input.options.remainingBudgetMs > 0 && calls[1].input.options.remainingBudgetMs <= 30000);
 assert.equal(typeof calls[1].input.progress.onmessage, 'function');
@@ -62,6 +77,7 @@ assert.equal(progress.threadsUsed, 8);
 assert.equal(progress.optimalityGap, 0.2);
 assert.equal(result.status, 'exact');
 assert.equal(result.bestBuild.packages.length, 4);
+for (let i = 0; i < 4; i++) assert.equal(result.bestBuild.packages[i], problem.groups[i].packages[0]);
 assert.equal(result.outcomes.calculation.damageFactor, 12);
 assert.equal(result.engine, 'rust-native');
 assert.equal(result.threadsUsed, 8);
@@ -79,11 +95,13 @@ const continuationProblem = { ...problem, continuationMarker:'n5-resume' };
 const bounded = await context.window.ToramD4NativeClient.optimize(continuationProblem, {});
 assert.equal(bounded.status, 'bounded');
 assert.equal(bounded.continuationId, 'd4c-test');
+assert.equal(bounded.bestBuild.packages[0], continuationProblem.groups[0].packages[0]);
 assert.equal(context.window.ToramD4NativeClient.hasContinuation(), true, 'bounded native result must retain its frontier token');
 const nativeCallsBeforeResume = calls.filter(call => call.command === 'd4_optimize_parallel').length;
 const resumeProgress = [];
 const resumed = await context.window.ToramD4NativeClient.resume({ onProgress:value => resumeProgress.push(value) }, { timeLimitMs:30000 });
 assert.equal(resumed.status, 'exact');
+assert.equal(resumed.bestBuild.packages[0], continuationProblem.groups[0].packages[0]);
 assert.equal(resumeProgress[0].evaluations, 100, '정밀 계산 첫 화면은 이전 bounded의 누적 evaluation을 유지해야 합니다.');
 assert.equal(resumeProgress.at(-1).evaluations, 120, 'native resume progress는 같은 누적 counter를 이어야 합니다.');
 assert.equal(calls.filter(call => call.command === 'd4_optimize_parallel').length, nativeCallsBeforeResume, '정밀 계산은 새 optimize command를 호출하면 안 됩니다.');
@@ -102,4 +120,32 @@ await assert.rejects(
 );
 assert.equal(context.window.ToramD4NativeClient.hasContinuation(), false);
 
-console.log('D4 native client: PASS (prepare, cache, native result restoration, continuation resume, expiry handling)');
+// Native-irrelevant metadata still participates in the existing cache key:
+// otherwise cached normalized results could contain stale display/apply objects.
+boundedMode = false;
+const renamed = JSON.parse(originalJson);
+renamed.groups[0].packages[0].candidateNames = ['new label'];
+const beforeRenameCalls = calls.filter(call => call.command === 'd4_optimize_parallel').length;
+const renamedResult = await context.window.ToramD4NativeClient.optimize(renamed, {});
+assert.equal(calls.filter(call => call.command === 'd4_optimize_parallel').length, beforeRenameCalls + 1);
+assert.deepEqual(renamedResult.bestBuild.packages[0].candidateNames, ['new label']);
+assert.deepEqual(JSON.parse(JSON.stringify(calls.at(-1).input.problem)), wire);
+assert.equal(await context.window.ToramD4NativeClient.optimize(renamed, {}), renamedResult);
+
+// Omitted optional fields retain serde defaults; no narrowed stat allowlist.
+const minimal = { baseContext:{}, groups:problem.groups };
+await context.window.ToramD4NativeClient.optimize(minimal, {});
+const minimalWire = JSON.parse(JSON.stringify(calls.at(-1).input.problem));
+assert.equal(Object.hasOwn(minimalWire, 'scenarioSnapshot'), false);
+assert.deepEqual(minimalWire.metadata, { modeledKeys:['DMG'] });
+assert.equal(minimalWire.groups[0].packages[0].statDelta.FUTURE_RAW_OPTION, 7);
+
+const originalPrepare = context.window.ToramD4GlobalOptimizer.prepareProblem;
+const diagnostic = new Error('unknown locked crysta');
+context.window.ToramD4GlobalOptimizer.prepareProblem = () => { throw diagnostic; };
+const callsBeforeInvalid = calls.filter(call => call.command === 'd4_optimize_parallel').length;
+await assert.rejects(() => context.window.ToramD4NativeClient.optimize(problem, {}), error => error === diagnostic);
+assert.equal(calls.filter(call => call.command === 'd4_optimize_parallel').length, callsBeforeInvalid);
+context.window.ToramD4GlobalOptimizer.prepareProblem = originalPrepare;
+
+console.log('D4 native client: PASS (compact payload, raw options, original restoration, cache metadata isolation, continuation resume, expiry handling)');

@@ -1,0 +1,666 @@
+{
+  "date": "2026-09-27T01:30:15.642Z",
+  "hashes": {
+    "before": {
+      "d4_native_evaluator.rs": "697d70e45909838eb188850e056a7da7265d46424472949d838b127adfe77617",
+      "d4_native_solver.rs": "8377ef4dcf941bb608aec20408afc43f0ad6de90212d0c6b8938a30300bc87c5",
+      "d4_native_stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+      "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e"
+    },
+    "after": {
+      "d4_native_evaluator.rs": "697d70e45909838eb188850e056a7da7265d46424472949d838b127adfe77617",
+      "d4_native_solver.rs": "16e820bece040dadd1071f4e8ce365e0314cc53a1c7e75289ee586d26cf59e8e",
+      "d4_native_stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+      "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e"
+    }
+  },
+  "checkpoint": {
+    "schema": "toram.d4-native-search-checkpoint.v8",
+    "problem": {
+      "baseContext": {
+        "activeBuildConversions": [],
+        "agiBase": 1,
+        "agiF": 0,
+        "agiP": 0,
+        "amprF": 30,
+        "amprP": 0,
+        "appliedSkillId": "Knight:11",
+        "armorType": "경량옷",
+        "aspdF": 0,
+        "aspdP": 25,
+        "atkF": 0,
+        "atkP": 20,
+        "atkType": "PHYS",
+        "atkUpAGI": 0,
+        "atkUpDEX": 0,
+        "atkUpINT": 0,
+        "atkUpSTR": 0,
+        "atkUpVIT": 0,
+        "attackElement": "none",
+        "attackPowerMode": "default",
+        "baseWpnAtkF": 0,
+        "bossCritResist": 70,
+        "bossDef": 1950,
+        "bossLevel": 300,
+        "bossMagResist": 0,
+        "bossMdef": 1950,
+        "bossPhysResist": 0,
+        "castRed": 0,
+        "cdmgF": 43,
+        "cdmgP": 11,
+        "chkGuaranteedCrit": false,
+        "chkIsUnsheathe": false,
+        "conversionActive": false,
+        "conversionLevel": 0,
+        "critF": 90,
+        "critP": -50,
+        "criticalChanceBonus": 0,
+        "criticalChanceMultiplier": 1,
+        "crtBase": 0,
+        "cspdF": 0,
+        "cspdP": 0,
+        "damageP": 0,
+        "dexBase": 510,
+        "dexF": 0,
+        "dexP": 0,
+        "dualBringerActive": false,
+        "dualBringerLevel": 0,
+        "elemP": 46,
+        "elementAwakening": true,
+        "fixedCriticalChance": null,
+        "godspeedWieldLevel": 0,
+        "halfMdefIgnored": false,
+        "ignoreDefense": false,
+        "ignoreMdef": false,
+        "intBase": 1,
+        "intF": 0,
+        "intP": 0,
+        "level": 325,
+        "lrw": 0,
+        "magPierce": 0,
+        "magicElement": false,
+        "magicPierceSkillBonus": 0,
+        "mainType": "한손검",
+        "matkF": 0,
+        "matkP": 0,
+        "matkUpAGI": 0,
+        "matkUpDEX": 0,
+        "matkUpINT": 0,
+        "matkUpSTR": 0,
+        "matkUpVIT": 0,
+        "maxHpF": 0,
+        "maxHpP": 0,
+        "maxMpF": 1850,
+        "minimumCriticalDamage": 0,
+        "motionSpeed": 10,
+        "noCritical": false,
+        "normalAttackAmprProfile": {
+          "activeCandidates": [],
+          "passive": []
+        },
+        "optimizationBasisName": "루브닐",
+        "physPierce": 0,
+        "physicalPierceSkillBonus": 0,
+        "poisonSources": [],
+        "preservedStats": {},
+        "procDamageModifiers": [
+          {
+            "chancePercent": 10,
+            "level": 10,
+            "multiplier": 1.2,
+            "source": "강타",
+            "target": "physical"
+          }
+        ],
+        "rangeType": "SHORT",
+        "skillConst": 400,
+        "skillMult": 32.805,
+        "spellBurstLevel": 0,
+        "srw": 0,
+        "stability": 0,
+        "stabilityBonus": 0,
+        "statDiagnostics": [],
+        "strBase": 327,
+        "strF": 0,
+        "strP": 0,
+        "subAtk": 0,
+        "subRefine": 15,
+        "subStab": 0,
+        "subType": "방패",
+        "targetWeakened": false,
+        "unsheatheF": 0,
+        "unsheatheP": 0,
+        "useHigherRangeDamage": false,
+        "vitBase": 1,
+        "vitF": 0,
+        "vitP": 0,
+        "watkF": 0,
+        "watkP": 0,
+        "weakenSources": [],
+        "wpnAtk": 625,
+        "wpnRefine": 15,
+        "wpnStab": 80
+      },
+      "scenarioSnapshot": {
+        "requirements": {
+          "amprBeforeDual": null,
+          "aspd": null,
+          "maxHp": null,
+          "maxMp": null,
+          "normalAttackCrit": null
+        }
+      },
+      "metadata": {
+        "modeledKeys": [
+          "ATKP"
+        ],
+        "initialPackageIds": []
+      },
+      "groups": [
+        {
+          "id": "weapon",
+          "packages": [
+            {
+              "id": "0:0",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 0,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:1",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 1,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:2",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 2,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:3",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 3,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:4",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 4,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:5",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 5,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:6",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 6,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "0:7",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 7,
+                "PHYS_RES": -2
+              }
+            }
+          ]
+        },
+        {
+          "id": "armor",
+          "packages": [
+            {
+              "id": "1:0",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 0,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:1",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 1,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:2",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 2,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:3",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 3,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:4",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 4,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:5",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 5,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:6",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 6,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "1:7",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 7,
+                "PHYS_RES": -2
+              }
+            }
+          ]
+        },
+        {
+          "id": "additional",
+          "packages": [
+            {
+              "id": "2:0",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 0,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:1",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 1,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:2",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 2,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:3",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 3,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:4",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 4,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:5",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 5,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:6",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 6,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "2:7",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 7,
+                "PHYS_RES": -2
+              }
+            }
+          ]
+        },
+        {
+          "id": "special",
+          "packages": [
+            {
+              "id": "3:0",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 0,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:1",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 1,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:2",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 2,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:3",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 3,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:4",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 4,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:5",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 5,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:6",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 6,
+                "PHYS_RES": -2
+              }
+            },
+            {
+              "id": "3:7",
+              "statDelta": {
+                "ATKP": 1,
+                "DROP_RATE": 7,
+                "PHYS_RES": -2
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "state": {
+      "evaluations": 48,
+      "best_score": 315303.42,
+      "best_id": "0:0||1:0||2:0||3:0",
+      "best_selected": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    "frontier": [
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r0",
+          "r0",
+          "r0",
+          "r1"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r0",
+          "r0",
+          "r1",
+          "r0"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r01",
+          "r01",
+          "r0",
+          "r0"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r0",
+          "r1",
+          "r",
+          "r"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r0",
+          "r0",
+          "r1",
+          "r1"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r1",
+          "r1",
+          "r",
+          "r"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r00",
+          "r00",
+          "r0",
+          "r0"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r00",
+          "r01",
+          "r0",
+          "r0"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r01",
+          "r00",
+          "r0",
+          "r0"
+        ]
+      },
+      {
+        "upper": 315303.42,
+        "paths": [
+          "r1",
+          "r0",
+          "r",
+          "r"
+        ]
+      }
+    ],
+    "visited": 3,
+    "pruned_by_bound": 0,
+    "pruned_by_constraint": 0,
+    "enumerated": 0,
+    "terminal_invalid_upper": null,
+    "elapsed_ms": 0
+  },
+  "results": [
+    {
+      "source": "before",
+      "destination": "before",
+      "result": {
+        "status": "exact",
+        "exact": true,
+        "score": 315303.42,
+        "bestBuild": {
+          "id": "0:0||1:0||2:0||3:0",
+          "packageIds": [
+            "0:0",
+            "1:0",
+            "2:0",
+            "3:0"
+          ],
+          "statDelta": {
+            "ATKP": 4,
+            "DROP_RATE": 0,
+            "PHYS_RES": -8
+          }
+        },
+        "upperBound": 315303.42,
+        "visitedNodes": 85,
+        "evaluations": 4216,
+        "prunedByBound": 0,
+        "prunedByConstraint": 0,
+        "enumeratedCompletions": 4096
+      }
+    },
+    {
+      "source": "before",
+      "destination": "after",
+      "result": {
+        "status": "exact",
+        "exact": true,
+        "score": 315303.42,
+        "bestBuild": {
+          "id": "0:0||1:0||2:0||3:0",
+          "packageIds": [
+            "0:0",
+            "1:0",
+            "2:0",
+            "3:0"
+          ],
+          "statDelta": {
+            "ATKP": 4,
+            "DROP_RATE": 0,
+            "PHYS_RES": -8
+          }
+        },
+        "upperBound": 315303.42,
+        "visitedNodes": 85,
+        "evaluations": 4216,
+        "prunedByBound": 0,
+        "prunedByConstraint": 0,
+        "enumeratedCompletions": 4096
+      }
+    },
+    {
+      "source": "after",
+      "destination": "before",
+      "result": {
+        "status": "exact",
+        "exact": true,
+        "score": 315303.42,
+        "bestBuild": {
+          "id": "0:0||1:0||2:0||3:0",
+          "packageIds": [
+            "0:0",
+            "1:0",
+            "2:0",
+            "3:0"
+          ],
+          "statDelta": {
+            "ATKP": 4,
+            "DROP_RATE": 0,
+            "PHYS_RES": -8
+          }
+        },
+        "upperBound": 315303.42,
+        "visitedNodes": 85,
+        "evaluations": 4216,
+        "prunedByBound": 0,
+        "prunedByConstraint": 0,
+        "enumeratedCompletions": 4096
+      }
+    },
+    {
+      "source": "after",
+      "destination": "after",
+      "result": {
+        "status": "exact",
+        "exact": true,
+        "score": 315303.42,
+        "bestBuild": {
+          "id": "0:0||1:0||2:0||3:0",
+          "packageIds": [
+            "0:0",
+            "1:0",
+            "2:0",
+            "3:0"
+          ],
+          "statDelta": {
+            "ATKP": 4,
+            "DROP_RATE": 0,
+            "PHYS_RES": -8
+          }
+        },
+        "upperBound": 315303.42,
+        "visitedNodes": 85,
+        "evaluations": 4216,
+        "prunedByBound": 0,
+        "prunedByConstraint": 0,
+        "enumeratedCompletions": 4096
+      }
+    }
+  ]
+}

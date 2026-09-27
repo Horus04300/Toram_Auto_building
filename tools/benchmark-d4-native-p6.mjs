@@ -47,14 +47,19 @@ const baseContext = {
   strP:0,strF:0,dexP:0,dexF:0,intP:0,intF:0,agiP:0,agiF:0,vitP:0,vitF:0,atkP:0,atkF:0,matkP:0,matkF:0,cdmgP:0,cdmgF:0,critP:0,critF:200,srw:0,lrw:0,unsheatheP:0,unsheatheF:0,elemP:0,damageP:0,watkP:0,watkF:0,baseWpnAtkF:0,physPierce:0,magPierce:0,aspdF:3000,aspdP:0,cspdF:0,cspdP:0,stability:0,motionSpeed:0,castRed:0,maxHpF:20000,maxHpP:0,maxMpF:3000,amprF:200,amprP:0,elementAwakening:false,magicElement:false,
   atkUpSTR:0,atkUpDEX:0,atkUpINT:0,atkUpAGI:0,atkUpVIT:0,matkUpSTR:0,matkUpDEX:0,matkUpINT:0,matkUpAGI:0,matkUpVIT:0,preservedStats:{},statDiagnostics:[],activeBuildConversions:[]
 };
+// Export-only context variants let audits reuse exactly the P6 preparation path.
+if (process.env.D4_P6_CONTEXT_PATCH) {
+  assert.ok(process.env.D4_P6_EXPORT_INPUT, 'context patches are export-only');
+  Object.assign(baseContext, JSON.parse(process.env.D4_P6_CONTEXT_PATCH));
+}
 const dataContext = {};
 vm.createContext(dataContext);
 vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8')}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
 const runtimeFixture=process.env.D4_P6_REVENIR==='1'?JSON.parse(await readFile(resolve(root,'tools/fixtures/d4-native-runtime-26min-revenir.json'),'utf8')).resolvedExecutionContext:null;
-if(runtimeFixture)assert.equal(process.env.D4_PROOF_ONLY,'1','Revenir currently supports preparation/proof auditing only; the P6 exact-score oracle is a different fixture');
+if(runtimeFixture)assert.ok(process.env.D4_PROOF_ONLY==='1' || process.env.D4_P6_EXPORT_INPUT,'Revenir requires proof auditing or export; the P6 exact-score oracle is a different fixture');
 if(runtimeFixture)Object.assign(baseContext,runtimeFixture.baseContext);
 const utilityRequirements = process.env.D4_P6_REQUIREMENTS ? JSON.parse(process.env.D4_P6_REQUIREMENTS) : null;
-if (utilityRequirements) assert.ok(process.env.D4_P6_THREAD && (Number(process.env.D4_P6_PACKAGE_LIMIT) > 0 || process.env.D4_P6_REFERENCE_BINARY),
+if (utilityRequirements) assert.ok(process.env.D4_P6_THREAD && (Number(process.env.D4_P6_PACKAGE_LIMIT) > 0 || process.env.D4_P6_REFERENCE_BINARY || process.env.D4_P6_EXPORT_INPUT),
   'custom requirements require sampled exhaustive oracle or a reference binary');
 const scenario = evaluator.createScenarioSnapshot(baseContext,utilityRequirements?{requirements:utilityRequirements}:runtimeFixture?{requirements:runtimeFixture.scenarioRequirements}:undefined);
 const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:runtimeFixture?runtimeFixture.currentCrystas:[], locks:runtimeFixture?runtimeFixture.locks:[], banned:runtimeFixture?runtimeFixture.banned:{'오로로 콜론':true} });
@@ -79,6 +84,14 @@ if (packageLimit > 0) {
       packages:group.packages.filter((_,index) => index % Math.max(1,Math.floor(group.packages.length/packageLimit)) === 0).slice(0,packageLimit)
     }))
   };
+}
+
+if (process.env.D4_P6_EXPORT_INPUT) {
+  const oracle = packageLimit > 0 ? optimizer.exhaustiveSearch(prepared, {prepared,evaluateStats:adapter}) : null;
+  await writeFile(resolve(root, process.env.D4_P6_EXPORT_INPUT), JSON.stringify({ ...prepared,
+    ...(oracle ? {auditOracle:{score:oracle.score,id:oracle.bestBuild?.id}} : {}) }));
+  console.log(JSON.stringify({exported:process.env.D4_P6_EXPORT_INPUT,preparationMs,packages:prepared.groups.map(g=>g.packages.length)}));
+  process.exit(0);
 }
 
 const temp = await mkdtemp(join(tmpdir(), 'toram-d4-p6-'));

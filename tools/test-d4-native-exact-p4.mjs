@@ -4,6 +4,7 @@ import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import vm from 'node:vm';
+import { projectNativeProblem } from './d4-native-payload-helper.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const require = createRequire(import.meta.url);
@@ -12,9 +13,9 @@ const evaluator = require(resolve(root, 'assets/js/build-evaluator.js'));
 const compiler = require(resolve(root, 'assets/js/d4-problem-compiler.js'));
 const optimizer = require(resolve(root, 'assets/js/d4-global-optimizer.js'));
 
-function runNative(problem, binary='d4_native_exact') {
+function runNative(problem, binary='d4_native_exact', session=false) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'src-tauri/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'] });
+    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'src-tauri/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'], env:{...process.env, ...(session ? {D4_SESSION_BENCH_MS:'30000'} : {})} });
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += chunk; });
     child.stderr.on('data', chunk => { stderr += chunk; });
@@ -47,6 +48,10 @@ const small = {
 };
 const smallJs = optimizer.exhaustiveSearch(small, { prepared:small, evaluateStats:stats => evaluator.evaluateAggregate(small.baseContext, small.scenarioSnapshot, stats, kernel) });
 const smallNative = await runNative(small);
+const smallCompact = await runNative(projectNativeProblem(small));
+assert.equal(smallCompact.status, smallNative.status);
+assert.equal(smallCompact.score, smallNative.score);
+assert.deepEqual(smallCompact.bestBuild, smallNative.bestBuild);
 assert.equal(smallNative.status, 'exact');
 assert.equal(smallNative.score, smallJs.score, 'small native exact score must equal JS oracle');
 assert.equal(smallNative.bestBuild.id, smallJs.bestBuild.id, 'small native exact tie must equal JS oracle');
@@ -67,6 +72,32 @@ if (process.env.D4_P4_REAL !== '1') {
       assert.equal(native.status,'exact');
       assert.equal(native.score,signedOracle.score);
       assert.equal(native.bestBuild.id,signedOracle.bestBuild.id);
+    }
+  }
+  // Search vectors may omit these extras, but every selected raw option must
+  // survive serial, parallel and resumable result construction unchanged.
+  for (const patch of [{}, {atkType:'MAG',mainType:'지팡이',intBase:200,conversionActive:true,conversionLevel:10,dualBringerActive:true,dualBringerLevel:10}, {subType:'한손검(듀얼소드)',subAtk:100,subStab:80,skillStats:[{stat:'totalVIT',target:'const',ratio:0.5}]}]) {
+    const problem = {...small,baseContext:{...small.baseContext,...patch},
+      scenarioSnapshot:{requirements:{maxHp:10000,maxMp:2000,amprBeforeDual:100,normalAttackCrit:100,aspd:10000}},
+      groups:small.groups.map((group,index)=>({...group,packages:Array.from({length:4},(_,i)=>({id:`${index}-${i}`,statDelta:{ATKP:i*3,MATKP:i*3,MAXHP:-i*100,MAXMP:-i*20,VITP:i,MOTIONSPEED:15-i,DROP_RATE:2+i,PHYS_RES:-3.25,EXP:37+i}}))}))};
+    const evaluateStats=stats=>evaluator.evaluateAggregate(problem.baseContext,problem.scenarioSnapshot,stats,kernel);
+    const oracle=optimizer.exhaustiveSearch(problem,{prepared:problem,evaluateStats});
+    assert.ok(oracle.bestBuild);
+    for (const [binary,session] of [['d4_native_exact',false],['d4_native_parallel',false],['d4_native_parallel',true]]) {
+      const native=await runNative({...problem,threads:4},binary,session);
+      assert.equal(native.status,'exact');
+      assert.equal(native.score,oracle.score);
+      assert.equal(native.bestBuild.id,oracle.bestBuild.id);
+      const expected={};
+      for(let group=0;group<4;group++) {
+        const selected=problem.groups[group].packages.find(p=>p.id===native.bestBuild.packageIds[group]);
+        assert.ok(selected);
+        for(const [key,value] of Object.entries(selected.statDelta))expected[key]=(expected[key]??0)+value;
+      }
+      assert.deepEqual(native.bestBuild.statDelta,expected);
+      const reevaluated=evaluateStats(native.bestBuild.statDelta);
+      assert.equal(reevaluated.constraints.feasible,true);
+      assert.equal(reevaluated.damage.expected,native.score);
     }
   }
   console.log(`D4 P5 small native exact: PASS (${smallNative.evaluations} evaluations)`);
@@ -94,6 +125,11 @@ const relevantKeys = optimizer.deriveRelevantKeys(compiled, registry, adapter);
 const prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, pareto:{maxComparisons:1000000} });
 assert.ok(prepared.metadata.paretoReports.every(report => report.complete), 'P4 real fixture requires completed Pareto preparation');
 const native = await runNative(prepared);
+const compactNative = await runNative(projectNativeProblem(prepared));
+assert.equal(compactNative.status, native.status);
+assert.equal(compactNative.score, native.score);
+assert.equal(compactNative.upperBound, native.upperBound);
+assert.deepEqual(compactNative.bestBuild, native.bestBuild, 'compact IPC must preserve the complete selected raw options and lexical tie');
 assert.equal(native.status, 'exact', 'P4 real native solver must exhaust its candidate tree');
 assert.equal(native.score, 14097, 'P4 real native exact score must match the established JS exact fixture');
 const requestedThreads = Number(process.env.D4_P5_THREADS) || undefined;

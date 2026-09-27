@@ -14,9 +14,12 @@ use std::time::{Duration, Instant};
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[cfg(test)]
+use crate::d4_native_evaluator::D4NativeSummary;
 use crate::d4_native_evaluator::{
-    evaluate_feasible_summary, evaluate_summary_from_native_stats as evaluate_summary_from_map,
-    D4NativeSummary, NativeStats, PreparedContext,
+    evaluate_summary_from_native_stats as evaluate_summary_from_map,
+    evaluate_utility_feasible_score as evaluate_feasible_summary, utility_values, NativeStats,
+    PreparedContext,
 };
 
 const EPSILON: f64 = 1e-9;
@@ -34,6 +37,16 @@ pub struct NativePackage {
     pub id: String,
     #[serde(rename = "statDelta", default)]
     pub stat_delta: Stats,
+    /// Derived for search; never replaces or serializes over the original options.
+    #[serde(skip)]
+    evaluation_delta: Option<Stats>,
+}
+
+impl NativePackage {
+    fn evaluation_stats(&self) -> &Stats {
+        // Unprepared callers (including tree/oracle helpers) retain full semantics.
+        self.evaluation_delta.as_ref().unwrap_or(&self.stat_delta)
+    }
 }
 
 #[derive(Clone, Serialize, Deserialize)]
@@ -52,6 +65,52 @@ pub struct NativeProblem {
     #[serde(default)]
     pub metadata: NativeMetadata,
     pub groups: Vec<NativeGroup>,
+    #[serde(skip)]
+    trees: Arc<TreeArena>,
+}
+
+impl NativeProblem {
+    fn prepare_trees(&mut self) -> Result<[NodeId; GROUP_COUNT], String> {
+        let mut keys = self.metadata.modeled_keys.clone();
+        if keys.is_empty() {
+            keys = self
+                .groups
+                .iter()
+                .flat_map(|g| &g.packages)
+                .flat_map(|p| p.stat_delta.keys().map(str::to_owned))
+                .collect();
+        }
+        keys.sort();
+        keys.dedup();
+        let capacity = tree_capacity(self.groups.iter().map(|g| g.packages.len()))?;
+        let mut trees = TreeArena::default();
+        trees
+            .nodes
+            .try_reserve_exact(capacity)
+            .map_err(|error| format!("D4 tree allocation failed: {error}"))?;
+        for (index, group) in self.groups.iter().enumerate() {
+            trees.roots[index] = build_tree(
+                &mut trees,
+                &group.packages,
+                (0..group.packages.len()).collect(),
+                &keys,
+                &global_ranges(&group.packages, &keys),
+                &self.base_context,
+                "r".into(),
+            );
+        }
+        let roots = trees.roots;
+        self.trees = Arc::new(trees);
+        Ok(roots)
+    }
+
+    fn prepare_evaluation_stats(&mut self) {
+        for group in &mut self.groups {
+            for package in &mut group.packages {
+                package.evaluation_delta = Some(package.stat_delta.evaluation_projection());
+            }
+        }
+    }
 }
 
 #[derive(Clone, Default, Serialize, Deserialize)]
@@ -121,24 +180,110 @@ pub struct NativeSchedulerTelemetry {
     pub longest_work_item_micros: u64,
 }
 
+/// Arena offsets are assigned in preorder, preserving lexical path order
+/// within each equipment tree. Only the arena owns nodes, never queue entries.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, PartialOrd, Ord)]
+struct NodeId(u32);
+
+#[derive(Clone, Default)]
+struct TreeArena {
+    nodes: Vec<TreeNode>,
+    roots: [NodeId; GROUP_COUNT],
+}
+
+impl std::ops::Index<NodeId> for TreeArena {
+    type Output = TreeNode;
+    fn index(&self, id: NodeId) -> &Self::Output {
+        &self.nodes[id.0 as usize]
+    }
+}
+
 #[derive(Clone)]
 struct TreeNode {
     path: String,
-    path_rank: usize,
     size: usize,
     envelope: Stats,
     split_score: f64,
     package: Option<usize>,
-    left: Option<Arc<TreeNode>>,
-    right: Option<Arc<TreeNode>>,
+    left: Option<NodeId>,
+    right: Option<NodeId>,
 }
 
 /// D4 always has weapon/armor/additional/special groups. An array keeps one
 /// frontier item inline: no Vec allocation and no box-path String per node.
-#[derive(Clone)]
+#[derive(Clone, Copy)]
 struct WorkItem {
     upper: f64,
-    clusters: [Arc<TreeNode>; GROUP_COUNT],
+    clusters: [NodeId; GROUP_COUNT],
+}
+
+/// Four adjacent children reduce the number of distant frontier reads per pop.
+/// Uses the unchanged WorkItem order, without caching keys or enlarging entries.
+#[derive(Default)]
+struct WorkHeap {
+    items: Vec<WorkItem>,
+}
+
+impl WorkHeap {
+    fn new() -> Self {
+        Self::default()
+    }
+    fn len(&self) -> usize {
+        self.items.len()
+    }
+    fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+    fn peek(&self) -> Option<&WorkItem> {
+        self.items.first()
+    }
+    fn iter(&self) -> std::slice::Iter<'_, WorkItem> {
+        self.items.iter()
+    }
+    fn push(&mut self, item: WorkItem) {
+        let mut index = self.items.len();
+        self.items.push(item);
+        while index > 0 {
+            let parent = (index - 1) / 4;
+            if self.items[parent] >= self.items[index] {
+                break;
+            }
+            self.items.swap(parent, index);
+            index = parent;
+        }
+    }
+    fn pop(&mut self) -> Option<WorkItem> {
+        let last = self.items.pop()?;
+        if self.items.is_empty() {
+            return Some(last);
+        }
+        let result = std::mem::replace(&mut self.items[0], last);
+        let mut index = 0;
+        // A Vec<WorkItem> cannot approach usize::MAX / 4 elements.
+        loop {
+            let first = index * 4 + 1;
+            if first >= self.items.len() {
+                break;
+            }
+            let mut best = first;
+            for child in first + 1..(first + 4).min(self.items.len()) {
+                if self.items[child] > self.items[best] {
+                    best = child;
+                }
+            }
+            if self.items[index] >= self.items[best] {
+                break;
+            }
+            self.items.swap(index, best);
+            index = best;
+        }
+        Some(result)
+    }
+    fn extend(&mut self, items: impl IntoIterator<Item = WorkItem>) {
+        for item in items {
+            self.push(item);
+        }
+    }
 }
 
 #[derive(Clone, Default, Serialize, Deserialize)]
@@ -169,7 +314,17 @@ struct NativeCheckpointWorkItem {
     paths: [String; GROUP_COUNT],
 }
 
-type NodeOutcome = Result<Option<Vec<WorkItem>>, String>;
+struct NodeChildren {
+    buffer: usize,
+    range: std::ops::Range<usize>,
+}
+type NodeOutcome = Result<Option<NodeChildren>, String>;
+type WorkerOutcome = Result<Option<std::ops::Range<usize>>, String>;
+#[derive(Default)]
+struct WorkerOutput {
+    outcomes: Vec<(usize, WorkerOutcome)>,
+    children: Vec<WorkItem>,
+}
 struct NodeBatch {
     nodes: Arc<Vec<WorkItem>>,
     next: AtomicUsize,
@@ -180,11 +335,13 @@ struct NodeBatch {
 }
 struct NodeJob {
     batch: Arc<NodeBatch>,
-    output: std::sync::mpsc::Sender<Vec<(usize, NodeOutcome)>>,
+    buffer: WorkerOutput,
+    output: std::sync::mpsc::Sender<WorkerOutput>,
 }
 struct NodePool {
     input: Option<std::sync::mpsc::Sender<NodeJob>>,
     workers: Vec<std::thread::JoinHandle<()>>,
+    buffers: Vec<WorkerOutput>,
 }
 impl NodePool {
     fn new(
@@ -198,6 +355,7 @@ impl NodePool {
         let mut pool = Self {
             input: Some(input),
             workers: Vec::new(),
+            buffers: Vec::new(),
         };
         for _ in 0..count.max(1) {
             let receiver = Arc::clone(&receiver);
@@ -213,7 +371,7 @@ impl NodePool {
                     // Progress is published after the batch joins. Keep hot
                     // counter writes private instead of bouncing shared cache lines.
                     let mut local_counters = LocalSearchCounters::default();
-                    let mut outcomes = Vec::new();
+                    let mut buffer = job.buffer;
                     loop {
                         // The message shares a batch, but claims stay node-sized
                         // so expensive nodes do not strand a fixed-size chunk.
@@ -221,9 +379,10 @@ impl NodePool {
                         let Some(node) = batch.nodes.get(index) else {
                             break;
                         };
+                        let start = buffer.children.len();
                         let outcome =
                             std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                expand_parallel_node(
+                                expand_parallel_node_into(
                                     node,
                                     &problem,
                                     &requirements,
@@ -231,15 +390,25 @@ impl NodePool {
                                     &mut local_counters,
                                     batch.cancel.as_deref(),
                                     batch.deadline,
+                                    &mut buffer.children,
                                 )
                             }))
                             .unwrap_or_else(|_| Err("D4 search worker panicked".into()));
-                        outcomes.push((index, outcome));
+                        // Cancellation, errors and panics must not publish a
+                        // partially expanded node. Keep earlier nodes intact.
+                        if !matches!(outcome, Ok(true)) {
+                            buffer.children.truncate(start);
+                        }
+                        buffer.outcomes.push((
+                            index,
+                            outcome
+                                .map(|completed| completed.then_some(start..buffer.children.len())),
+                        ));
                     }
                     batch.counters.merge_search_counts(local_counters);
                     // Release shared input before announcing completion.
                     drop(job.batch);
-                    if job.output.send(outcomes).is_err() {
+                    if job.output.send(buffer).is_err() {
                         break;
                     }
                 })
@@ -249,7 +418,7 @@ impl NodePool {
         Ok(pool)
     }
     fn run(
-        &self,
+        &mut self,
         nodes: &Arc<Vec<WorkItem>>,
         results: &mut Vec<Option<NodeOutcome>>,
         incumbent: &Arc<SharedIncumbent>,
@@ -274,15 +443,28 @@ impl NodePool {
                 .expect("live pool")
                 .send(NodeJob {
                     batch: Arc::clone(&batch),
+                    buffer: {
+                        let mut buffer = self.buffers.pop().unwrap_or_default();
+                        buffer.outcomes.clear();
+                        buffer.children.clear();
+                        buffer
+                    },
                     output: output.clone(),
                 })
                 .map_err(|_| "D4 pool stopped".to_string())?;
         }
         drop(output);
-        for outcomes in receiver {
-            for (index, outcome) in outcomes {
-                results[index] = Some(outcome);
+        for mut buffer in receiver {
+            let buffer_index = self.buffers.len();
+            for (index, outcome) in buffer.outcomes.drain(..) {
+                results[index] = Some(outcome.map(|range| {
+                    range.map(|range| NodeChildren {
+                        buffer: buffer_index,
+                        range,
+                    })
+                }));
             }
+            self.buffers.push(buffer);
         }
         if results.iter().any(Option::is_none) {
             return Err("D4 worker result missing".into());
@@ -328,6 +510,9 @@ struct LocalSearchCounters {
     splits: u64,
 }
 trait SearchCounters {
+    fn utility_pressure(&self) -> bool {
+        false
+    }
     fn count_evaluations(&mut self);
     fn count_visited(&mut self);
     fn count_pruned_by_bound(&mut self);
@@ -336,6 +521,9 @@ trait SearchCounters {
     fn count_splits(&mut self);
 }
 impl SearchCounters for LocalSearchCounters {
+    fn utility_pressure(&self) -> bool {
+        self.pruned_by_constraint > self.evaluations / 4
+    }
     #[inline]
     fn count_evaluations(&mut self) {
         self.evaluations = self.evaluations.wrapping_add(1);
@@ -409,12 +597,7 @@ impl ParallelCounters {
 
 impl PartialEq for WorkItem {
     fn eq(&self, other: &Self) -> bool {
-        self.upper.total_cmp(&other.upper) == Ordering::Equal
-            && self
-                .clusters
-                .iter()
-                .zip(other.clusters.iter())
-                .all(|(left, right)| left.path_rank == right.path_rank)
+        self.upper.total_cmp(&other.upper) == Ordering::Equal && self.clusters == other.clusters
     }
 }
 impl Eq for WorkItem {}
@@ -431,7 +614,7 @@ impl Ord for WorkItem {
         }
         // JS MaxHeap prefers lexical-smaller boxPathId when upper bounds tie.
         for (left, right) in self.clusters.iter().zip(other.clusters.iter()) {
-            let comparison = right.path_rank.cmp(&left.path_rank);
+            let comparison = right.cmp(left);
             if comparison != Ordering::Equal {
                 return comparison;
             }
@@ -562,26 +745,26 @@ fn global_ranges(packages: &[NativePackage], keys: &[String]) -> BTreeMap<String
         .collect()
 }
 
-fn build_tree(
-    packages: &[NativePackage],
-    indices: Vec<usize>,
-    keys: &[String],
-    ranges: &BTreeMap<String, f64>,
-    context: &Value,
-    path: String,
-) -> Arc<TreeNode> {
-    build_tree_ranked(packages, indices, keys, ranges, context, path, 0)
+fn tree_capacity(counts: impl IntoIterator<Item = usize>) -> Result<usize, String> {
+    counts.into_iter().try_fold(0_usize, |total, leaves| {
+        let nodes = leaves.checked_mul(2).and_then(|n| n.checked_sub(1));
+        nodes
+            .and_then(|n| total.checked_add(n))
+            .filter(|n| *n <= u32::MAX as usize)
+            .ok_or_else(|| "D4 tree exceeds the supported node index range".to_string())
+    })
 }
 
-fn build_tree_ranked(
+#[allow(clippy::too_many_arguments)]
+fn build_tree(
+    trees: &mut TreeArena,
     packages: &[NativePackage],
     indices: Vec<usize>,
     keys: &[String],
     ranges: &BTreeMap<String, f64>,
     context: &Value,
     path: String,
-    path_rank: usize,
-) -> Arc<TreeNode> {
+) -> NodeId {
     let envelope = group_envelope(packages, &indices, keys);
     // Keep the established split ordering independent of tighter signed bounds.
     // Cache it once: each node participates in many Cartesian search boxes.
@@ -590,17 +773,20 @@ fn build_tree_ranked(
         .map(|(key, value)| (key.to_owned(), value.max(0.0)))
         .collect();
     let split_score = heuristic_score(&ordering_envelope, "damage");
+    let id = NodeId(u32::try_from(trees.nodes.len()).expect("validated tree index range"));
+    trees.nodes.push(TreeNode {
+        path: path.clone(),
+        size: indices.len(),
+        envelope,
+        split_score,
+        package: (indices.len() <= 1)
+            .then(|| indices.first().copied())
+            .flatten(),
+        left: None,
+        right: None,
+    });
     if indices.len() <= 1 {
-        return Arc::new(TreeNode {
-            path,
-            path_rank,
-            size: indices.len(),
-            envelope,
-            split_score,
-            package: indices.first().copied(),
-            left: None,
-            right: None,
-        });
+        return id;
     }
     let mut split_key: Option<&str> = None;
     let mut best_spread = f64::NEG_INFINITY;
@@ -649,34 +835,27 @@ fn build_tree_ranked(
     });
     let middle = (sorted.len() / 2).max(1);
     let right = sorted.split_off(middle);
-    Arc::new(TreeNode {
-        path: path.clone(),
-        path_rank,
-        size: sorted.len() + right.len(),
-        envelope,
-        split_score,
-        package: None,
-        // Prefix < prefix0... < prefix1...: preorder is lexical path order.
-        // A full binary subtree with middle leaves has 2*middle-1 nodes.
-        left: Some(build_tree_ranked(
-            packages,
-            sorted,
-            keys,
-            ranges,
-            context,
-            format!("{path}0"),
-            path_rank + 1,
-        )),
-        right: Some(build_tree_ranked(
-            packages,
-            right,
-            keys,
-            ranges,
-            context,
-            format!("{path}1"),
-            path_rank + 2 * middle,
-        )),
-    })
+    let left_id = build_tree(
+        trees,
+        packages,
+        sorted,
+        keys,
+        ranges,
+        context,
+        format!("{path}0"),
+    );
+    let right_id = build_tree(
+        trees,
+        packages,
+        right,
+        keys,
+        ranges,
+        context,
+        format!("{path}1"),
+    );
+    trees.nodes[id.0 as usize].left = Some(left_id);
+    trees.nodes[id.0 as usize].right = Some(right_id);
+    id
 }
 
 #[derive(Clone, Copy, Default)]
@@ -695,15 +874,22 @@ impl Requirements {
             max_mp: read("maxMp"),
             ampr: read("amprBeforeDual"),
             crit: read("normalAttackCrit"),
-            aspd: read("aspd"),
+            aspd: read("aspd").map(|v| {
+                if v > 1000.0 && v <= 10000.0 {
+                    1000.0 + 180.0 * ((v - 1000.0) / 180.0).floor()
+                } else {
+                    v
+                }
+            }),
         }
     }
 }
 impl Requirements {
-    fn accepts_value(&self, index: usize, value: i64) -> bool {
+    fn accepts_value(&self, index: usize, value: f64) -> bool {
         [self.max_hp, self.max_mp, self.ampr, self.crit, self.aspd][index]
-            .is_none_or(|minimum| value as f64 >= minimum)
+            .is_none_or(|minimum| value >= minimum)
     }
+    #[cfg(test)]
     fn accepts(&self, values: [i64; 5]) -> bool {
         [self.max_hp, self.max_mp, self.ampr, self.crit, self.aspd]
             .into_iter()
@@ -711,6 +897,7 @@ impl Requirements {
             .all(|(minimum, value)| minimum.is_none_or(|v| value as f64 >= v))
     }
 }
+#[cfg(test)]
 fn feasible(summary: &D4NativeSummary, requirements: &Requirements) -> bool {
     requirements.accepts([
         summary.final_max_hp,
@@ -740,32 +927,110 @@ fn selection_stats(problem: &NativeProblem, selected: &[usize; GROUP_COUNT]) -> 
         })
 }
 
-fn box_stats(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> Stats {
-    clusters
+fn selection_evaluation_stats(problem: &NativeProblem, selected: &[usize; GROUP_COUNT]) -> Stats {
+    problem
+        .groups
         .iter()
-        .skip(1)
-        .fold(clusters[0].envelope.clone(), |stats, node| {
-            add_stats(stats, &node.envelope)
+        .zip(selected)
+        .fold(Stats::new(), |stats, (group, index)| {
+            add_stats(stats, group.packages[*index].evaluation_stats())
         })
 }
 
-fn box_combinations(clusters: &[Arc<TreeNode>; GROUP_COUNT], limit: usize) -> usize {
+fn box_stats(trees: &TreeArena, clusters: &[NodeId; GROUP_COUNT]) -> Stats {
+    clusters
+        .iter()
+        .skip(1)
+        .fold(trees[clusters[0]].envelope.clone(), |stats, node| {
+            add_stats(stats, &trees[*node].envelope)
+        })
+}
+
+fn box_combinations(trees: &TreeArena, clusters: &[NodeId; GROUP_COUNT], limit: usize) -> usize {
     clusters.iter().fold(1_usize, |total, node| {
-        total.saturating_mul(node.size).min(limit.saturating_add(1))
+        total
+            .saturating_mul(trees[*node].size)
+            .min(limit.saturating_add(1))
     })
 }
 
-fn split_slack(node: &TreeNode) -> f64 {
+/// Certify individually impossible goals before the damage search. Each queue
+/// covers the unresolved space for one utility, not a fabricated joint build.
+/// Exhausting the work budget means unknown; it must never delete candidates.
+fn individual_utilities_possible(
+    problem: &NativeProblem,
+    clusters: &[NodeId; GROUP_COUNT],
+    requirements: &Requirements,
+    state: &mut SearchState,
+) -> Result<bool, String> {
+    let root_values = utility_values(&problem.base_context, &box_stats(&problem.trees, clusters))?;
+    state.evaluations += 1;
+    let minima = [
+        requirements.max_hp,
+        requirements.max_mp,
+        requirements.ampr,
+        requirements.crit,
+        requirements.aspd,
+    ];
+    for (index, minimum) in minima.into_iter().enumerate() {
+        let Some(minimum) = minimum else {
+            continue;
+        };
+        if root_values[index] < minimum {
+            return Ok(false);
+        }
+        // An actual feasible incumbent already witnesses all individual goals.
+        if state.best_selected.is_some() {
+            continue;
+        }
+        let mut queue = BinaryHeap::new();
+        queue.push(WorkItem {
+            upper: root_values[index],
+            clusters: *clusters,
+        });
+        let mut witnessed = false;
+        for _ in 0..256 {
+            let Some(node) = queue.pop() else {
+                return Ok(false);
+            };
+            if node.upper < minimum {
+                return Ok(false);
+            }
+            if box_combinations(&problem.trees, &node.clusters, 1) == 1 {
+                witnessed = true;
+                break;
+            }
+            for child in ChildBoxes::new(&problem.trees, &node.clusters) {
+                let values =
+                    utility_values(&problem.base_context, &box_stats(&problem.trees, &child))?;
+                state.evaluations += 1;
+                if values[index] >= minimum {
+                    queue.push(WorkItem {
+                        upper: values[index],
+                        clusters: child,
+                    });
+                }
+            }
+        }
+        if !witnessed && queue.is_empty() {
+            return Ok(false);
+        }
+    }
+    Ok(true)
+}
+
+fn split_slack(trees: &TreeArena, node: &TreeNode) -> f64 {
     let (Some(left), Some(right)) = (&node.left, &node.right) else {
         return f64::NEG_INFINITY;
     };
-    node.split_score - left.split_score.max(right.split_score)
+    node.split_score - trees[*left].split_score.max(trees[*right].split_score)
 }
 
-fn split_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> [Option<usize>; 2] {
+fn split_indices(trees: &TreeArena, clusters: &[NodeId; GROUP_COUNT]) -> [Option<usize>; 2] {
     let mut available: [Option<(usize, f64, usize)>; GROUP_COUNT] = std::array::from_fn(|index| {
-        let node = &clusters[index];
-        (node.left.is_some() || node.right.is_some()).then(|| (index, split_slack(node), node.size))
+        let node = &trees[clusters[index]];
+        (node.left.is_some() || node.right.is_some())
+            .then(|| (index, split_slack(trees, node), node.size))
     });
     available.sort_by(|left, right| match (left, right) {
         (Some(left), Some(right)) => right
@@ -786,16 +1051,18 @@ fn split_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> [Option<usize>; 2] 
 /// At most two binary dimensions: produce LL, LR, RL, RR without temporary
 /// vectors or cloning parent handles that would immediately be replaced.
 struct ChildBoxes<'a> {
-    clusters: &'a [Arc<TreeNode>; GROUP_COUNT],
+    trees: &'a TreeArena,
+    clusters: &'a [NodeId; GROUP_COUNT],
     splits: [Option<usize>; 2],
     next: usize,
 }
 
 impl<'a> ChildBoxes<'a> {
-    fn new(clusters: &'a [Arc<TreeNode>; GROUP_COUNT]) -> Self {
+    fn new(trees: &'a TreeArena, clusters: &'a [NodeId; GROUP_COUNT]) -> Self {
         Self {
             clusters,
-            splits: split_indices(clusters),
+            trees,
+            splits: split_indices(trees, clusters),
             next: 0,
         }
     }
@@ -810,7 +1077,7 @@ impl<'a> ChildBoxes<'a> {
 }
 
 impl Iterator for ChildBoxes<'_> {
-    type Item = [Arc<TreeNode>; GROUP_COUNT];
+    type Item = [NodeId; GROUP_COUNT];
 
     fn next(&mut self) -> Option<Self::Item> {
         if self.next >= self.count_total() {
@@ -822,7 +1089,7 @@ impl Iterator for ChildBoxes<'_> {
         let second = self.splits[1];
         let first_right = ordinal / if second.is_some() { 2 } else { 1 } != 0;
         Some(std::array::from_fn(|index| {
-            let node = &self.clusters[index];
+            let node = &self.trees[self.clusters[index]];
             let selected = if index == first {
                 if first_right {
                     &node.right
@@ -836,13 +1103,11 @@ impl Iterator for ChildBoxes<'_> {
                     &node.left
                 }
             } else {
-                return Arc::clone(node);
+                return self.clusters[index];
             };
-            Arc::clone(
-                selected
-                    .as_ref()
-                    .expect("CandidateTree branches are binary"),
-            )
+            *selected
+                .as_ref()
+                .expect("CandidateTree branches are binary")
         }))
     }
 
@@ -886,33 +1151,70 @@ fn consider(
     Ok(())
 }
 
-fn cluster_indices(node: &TreeNode, output: &mut Vec<usize>) {
+fn visit_cluster_indices(trees: &TreeArena, id: NodeId, emit: &mut impl FnMut(usize)) {
+    let node = &trees[id];
     if let Some(index) = node.package {
-        output.push(index);
+        emit(index);
         return;
     }
     if let Some(left) = &node.left {
-        cluster_indices(left, output);
+        visit_cluster_indices(trees, *left, emit);
     }
     if let Some(right) = &node.right {
-        cluster_indices(right, output);
+        visit_cluster_indices(trees, *right, emit);
     }
 }
 
-// Preserve each tree's left-to-right package order. Small boxes contain at
-// most 64 combinations, so preparation remains bounded before cancellation checks.
-fn box_candidate_indices(clusters: &[Arc<TreeNode>; GROUP_COUNT]) -> [Vec<usize>; GROUP_COUNT] {
+#[cfg(test)]
+fn cluster_indices(trees: &TreeArena, id: NodeId, output: &mut Vec<usize>) {
+    visit_cluster_indices(trees, id, &mut |index| output.push(index));
+}
+
+#[cfg(test)]
+fn box_candidate_indices(
+    trees: &TreeArena,
+    clusters: &[NodeId; GROUP_COUNT],
+) -> [Vec<usize>; GROUP_COUNT] {
     std::array::from_fn(|group| {
-        let mut indices = Vec::with_capacity(clusters[group].size);
-        cluster_indices(&clusters[group], &mut indices);
+        let mut indices = Vec::with_capacity(trees[clusters[group]].size);
+        cluster_indices(trees, clusters[group], &mut indices);
         indices
     })
+}
+
+// For positive sizes, sum(sizes) <= product(sizes) + GROUP_COUNT - 1.
+// A small box therefore needs at most 67 indices, including a 64x1x1x1 box.
+struct SmallBoxCandidates {
+    indices: [usize; SMALL_BOX_LIMIT + GROUP_COUNT - 1],
+    offsets: [usize; GROUP_COUNT + 1],
+}
+impl SmallBoxCandidates {
+    fn new(trees: &TreeArena, clusters: &[NodeId; GROUP_COUNT]) -> Self {
+        debug_assert!(box_combinations(trees, clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT);
+        let mut result = Self {
+            indices: [0; SMALL_BOX_LIMIT + GROUP_COUNT - 1],
+            offsets: [0; GROUP_COUNT + 1],
+        };
+        let mut end = 0;
+        for (group, &cluster) in clusters.iter().enumerate() {
+            visit_cluster_indices(trees, cluster, &mut |index| {
+                result.indices[end] = index;
+                end += 1;
+            });
+            result.offsets[group + 1] = end;
+        }
+        result
+    }
+
+    fn as_slices(&self) -> [&[usize]; GROUP_COUNT] {
+        std::array::from_fn(|group| &self.indices[self.offsets[group]..self.offsets[group + 1]])
+    }
 }
 
 #[allow(clippy::too_many_arguments)] // Recursive complete enumeration shares its immutable search inputs.
 fn enumerate_box(
     index: usize,
-    candidates: &[Vec<usize>; GROUP_COUNT],
+    candidates: &[&[usize]; GROUP_COUNT],
     problem: &NativeProblem,
     requirements: &Requirements,
     selected: &mut [usize; GROUP_COUNT],
@@ -924,11 +1226,11 @@ fn enumerate_box(
         *enumerated += 1;
         return consider(problem, requirements, state, selected, stats);
     }
-    for &package_index in &candidates[index] {
+    for &package_index in candidates[index] {
         selected[index] = package_index;
         let next = add_stats(
             stats.clone(),
-            &problem.groups[index].packages[package_index].stat_delta,
+            problem.groups[index].packages[package_index].evaluation_stats(),
         );
         enumerate_box(
             index + 1,
@@ -1009,34 +1311,10 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
         return Err("D4 native solver requires four nonempty prepared groups".to_string());
     }
     let started = Instant::now();
-    let mut keys = problem.metadata.modeled_keys.clone();
-    if keys.is_empty() {
-        keys = problem
-            .groups
-            .iter()
-            .flat_map(|group| group.packages.iter())
-            .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
-            .collect();
-    }
-    keys.sort();
-    keys.dedup();
-    let trees = problem
-        .groups
-        .iter()
-        .map(|group| {
-            build_tree(
-                &group.packages,
-                (0..group.packages.len()).collect(),
-                &keys,
-                &global_ranges(&group.packages, &keys),
-                &problem.base_context,
-                "r".to_string(),
-            )
-        })
-        .collect::<Vec<_>>();
-    let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
-        .try_into()
-        .map_err(|_| "D4 native solver expected four trees".to_string())?;
+    let mut prepared_problem = problem.clone();
+    prepared_problem.prepare_evaluation_stats();
+    let clusters = prepared_problem.prepare_trees()?;
+    let problem = &prepared_problem;
     let requirements = &Requirements::new(
         problem
             .scenario_snapshot
@@ -1053,7 +1331,7 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
     let mut enumerated = 0_u64;
 
     for selected in initial_selections(problem) {
-        let stats = selection_stats(problem, &selected);
+        let stats = selection_evaluation_stats(problem, &selected);
         consider(problem, requirements, &mut state, &selected, &stats)?;
     }
     if let Some(mut selected) = state.best_selected {
@@ -1067,7 +1345,7 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
                 {
                     let mut trial = baseline;
                     trial[group_index] = package_index;
-                    let stats = selection_stats(problem, &trial);
+                    let stats = selection_evaluation_stats(problem, &trial);
                     consider(problem, requirements, &mut state, &trial, &stats)?;
                 }
                 if state.best_id != before_id {
@@ -1081,10 +1359,10 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
         }
     }
 
-    let root_stats = box_stats(&clusters);
+    let root_stats = box_stats(&problem.trees, &clusters);
     state.evaluations += 1;
     let root = evaluate_summary_from_map(&problem.base_context, &root_stats)?;
-    if !feasible(&root, requirements) {
+    if !individual_utilities_possible(problem, &clusters, requirements, &mut state)? {
         return Ok(NativeSolveResult {
             status: "invalid".to_string(),
             exact: false,
@@ -1110,10 +1388,10 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
             pruned_by_bound += 1;
             continue;
         }
-        if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
+        if box_combinations(&problem.trees, &node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
             enumerate_box(
                 0,
-                &box_candidate_indices(&node.clusters),
+                &SmallBoxCandidates::new(&problem.trees, &node.clusters).as_slices(),
                 problem,
                 requirements,
                 &mut [0; GROUP_COUNT],
@@ -1123,12 +1401,12 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
             )?;
             continue;
         }
-        let child_boxes = ChildBoxes::new(&node.clusters);
+        let child_boxes = ChildBoxes::new(&problem.trees, &node.clusters);
         if child_boxes.len() == 0 {
             continue;
         }
         for child_clusters in child_boxes {
-            let stats = box_stats(&child_clusters);
+            let stats = box_stats(&problem.trees, &child_clusters);
             state.evaluations += 1;
             let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
                 requirements.accepts_value(i, v)
@@ -1184,7 +1462,7 @@ pub struct NativeSearchSession {
     batch_outcomes: Vec<Option<NodeOutcome>>,
     problem: NativeProblem,
     requirements: Requirements,
-    heap: BinaryHeap<WorkItem>,
+    heap: WorkHeap,
     state: SearchState,
     visited: u64,
     pruned_by_bound: u64,
@@ -1198,7 +1476,7 @@ pub struct NativeSearchSession {
 }
 
 impl NativeSearchSession {
-    pub fn new(problem: NativeProblem) -> Result<Self, String> {
+    pub fn new(mut problem: NativeProblem) -> Result<Self, String> {
         if !problem.base_context.is_object()
             || problem.groups.len() != GROUP_COUNT
             || problem.groups.iter().any(|group| group.packages.is_empty())
@@ -1206,34 +1484,8 @@ impl NativeSearchSession {
             return Err("D4 native solver requires four nonempty prepared groups".to_string());
         }
         let started = Instant::now();
-        let mut keys = problem.metadata.modeled_keys.clone();
-        if keys.is_empty() {
-            keys = problem
-                .groups
-                .iter()
-                .flat_map(|group| group.packages.iter())
-                .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
-                .collect();
-        }
-        keys.sort();
-        keys.dedup();
-        let trees = problem
-            .groups
-            .iter()
-            .map(|group| {
-                build_tree(
-                    &group.packages,
-                    (0..group.packages.len()).collect(),
-                    &keys,
-                    &global_ranges(&group.packages, &keys),
-                    &problem.base_context,
-                    "r".to_string(),
-                )
-            })
-            .collect::<Vec<_>>();
-        let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
-            .try_into()
-            .map_err(|_| "D4 native solver expected four trees".to_string())?;
+        problem.prepare_evaluation_stats();
+        let clusters = problem.prepare_trees()?;
         let requirements = Requirements::new(
             problem
                 .scenario_snapshot
@@ -1245,7 +1497,7 @@ impl NativeSearchSession {
             ..SearchState::default()
         };
         for selected in initial_selections(&problem) {
-            let stats = selection_stats(&problem, &selected);
+            let stats = selection_evaluation_stats(&problem, &selected);
             consider(&problem, &requirements, &mut state, &selected, &stats)?;
         }
         if let Some(mut selected) = state.best_selected {
@@ -1265,7 +1517,7 @@ impl NativeSearchSession {
                             &requirements,
                             &mut state,
                             &trial,
-                            &selection_stats(&problem, &trial),
+                            &selection_evaluation_stats(&problem, &trial),
                         )?;
                     }
                     if state.best_id != before_id {
@@ -1278,19 +1530,20 @@ impl NativeSearchSession {
                 }
             }
         }
-        let root_stats = box_stats(&clusters);
+        let root_stats = box_stats(&problem.trees, &clusters);
         state.evaluations += 1;
         let root = evaluate_summary_from_map(&problem.base_context, &root_stats)?;
-        let mut heap = BinaryHeap::new();
-        let terminal_invalid_upper = if feasible(&root, &requirements) {
-            heap.push(WorkItem {
-                upper: root.optimization_damage_factor,
-                clusters,
-            });
-            None
-        } else {
-            Some(root.optimization_damage_factor)
-        };
+        let mut heap = WorkHeap::new();
+        let terminal_invalid_upper =
+            if individual_utilities_possible(&problem, &clusters, &requirements, &mut state)? {
+                heap.push(WorkItem {
+                    upper: root.optimization_damage_factor,
+                    clusters,
+                });
+                None
+            } else {
+                Some(root.optimization_damage_factor)
+            };
         Ok(Self {
             pool: None,
             batch_nodes: Arc::new(Vec::new()),
@@ -1323,12 +1576,14 @@ impl NativeSearchSession {
             .iter()
             .map(|item| NativeCheckpointWorkItem {
                 upper: item.upper,
-                paths: std::array::from_fn(|index| item.clusters[index].path.clone()),
+                paths: std::array::from_fn(|index| {
+                    self.problem.trees[item.clusters[index]].path.clone()
+                }),
             })
             .collect::<Vec<_>>();
         Self::audit_frontier(&frontier)?;
         Ok(NativeSearchCheckpoint {
-            schema: "toram.d4-native-search-checkpoint.v5".to_string(),
+            schema: "toram.d4-native-search-checkpoint.v8".to_string(),
             problem: self.problem.clone(),
             state: self.state.clone(),
             frontier,
@@ -1342,18 +1597,19 @@ impl NativeSearchSession {
     }
 
     pub fn from_checkpoint(checkpoint: NativeSearchCheckpoint) -> Result<Self, String> {
-        if checkpoint.schema != "toram.d4-native-search-checkpoint.v5" {
+        if checkpoint.schema != "toram.d4-native-search-checkpoint.v8" {
             return Err("D4 native checkpoint schema is invalid".to_string());
         }
         Self::audit_frontier(&checkpoint.frontier)?;
         let mut session = Self::new(checkpoint.problem.clone())?;
-        let roots = session.heap.peek().map(|item| item.clusters.clone());
-        let mut heap = BinaryHeap::new();
+        let roots = session.heap.peek().map(|item| item.clusters);
+        let mut heap = WorkHeap::new();
         if let Some(roots) = roots {
             for item in checkpoint.frontier {
-                let resolved: [Option<Arc<TreeNode>>; GROUP_COUNT] =
-                    std::array::from_fn(|index| find_tree_node(&roots[index], &item.paths[index]));
-                let clusters: [Arc<TreeNode>; GROUP_COUNT] = resolved
+                let resolved: [Option<NodeId>; GROUP_COUNT] = std::array::from_fn(|index| {
+                    find_tree_node(&session.problem.trees, roots[index], &item.paths[index])
+                });
+                let clusters: [NodeId; GROUP_COUNT] = resolved
                     .into_iter()
                     .collect::<Option<Vec<_>>>()
                     .ok_or_else(|| {
@@ -1409,10 +1665,12 @@ impl NativeSearchSession {
                     self.pruned_by_bound += 1;
                     continue;
                 }
-                if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
+                if box_combinations(&self.problem.trees, &node.clusters, SMALL_BOX_LIMIT)
+                    <= SMALL_BOX_LIMIT
+                {
                     enumerate_box(
                         0,
-                        &box_candidate_indices(&node.clusters),
+                        &SmallBoxCandidates::new(&self.problem.trees, &node.clusters).as_slices(),
                         &self.problem,
                         &self.requirements,
                         &mut [0; GROUP_COUNT],
@@ -1422,12 +1680,12 @@ impl NativeSearchSession {
                     )?;
                     continue;
                 }
-                let child_boxes = ChildBoxes::new(&node.clusters);
+                let child_boxes = ChildBoxes::new(&self.problem.trees, &node.clusters);
                 if child_boxes.len() == 0 {
                     continue;
                 }
                 for child_clusters in child_boxes {
-                    let stats = box_stats(&child_clusters);
+                    let stats = box_stats(&self.problem.trees, &child_clusters);
                     self.state.evaluations += 1;
                     let Some(bound) =
                         evaluate_feasible_summary(&self.problem.base_context, &stats, |i, v| {
@@ -1528,7 +1786,7 @@ impl NativeSearchSession {
                 }
             }
         }
-        if let Err(error) = self.pool.as_ref().unwrap().run(
+        if let Err(error) = self.pool.as_mut().unwrap().run(
             &self.batch_nodes,
             &mut self.batch_outcomes,
             &incumbent,
@@ -1557,7 +1815,12 @@ impl NativeSearchSession {
         let outcome = (|| -> Result<(), String> {
             for (node, outcome) in nodes.drain(..).zip(self.batch_outcomes.drain(..)) {
                 match outcome.expect("validated worker result")? {
-                    Some(children) => self.heap.extend(children),
+                    Some(children) => self.heap.extend(
+                        self.pool.as_ref().unwrap().buffers[children.buffer].children
+                            [children.range]
+                            .iter()
+                            .copied(),
+                    ),
                     None => self.heap.push(node),
                 }
             }
@@ -1602,7 +1865,14 @@ impl NativeSearchSession {
             .peek()
             .map(|node| node.upper)
             .or(self.terminal_invalid_upper)
-            .or_else(|| best_build.as_ref().map(|_| self.state.best_score));
+            .or_else(|| best_build.as_ref().map(|_| self.state.best_score))
+            .map(|upper| {
+                if best_build.is_some() {
+                    upper.max(self.state.best_score)
+                } else {
+                    upper
+                }
+            });
         let exact =
             self.terminal_invalid_upper.is_none() && self.heap.is_empty() && best_build.is_some();
         NativeSolveResult {
@@ -1629,18 +1899,17 @@ impl NativeSearchSession {
     }
 }
 
-fn find_tree_node(node: &Arc<TreeNode>, path: &str) -> Option<Arc<TreeNode>> {
-    if node.path == path {
-        return Some(Arc::clone(node));
+fn find_tree_node(trees: &TreeArena, root: NodeId, path: &str) -> Option<NodeId> {
+    let suffix = path.strip_prefix(&trees[root].path)?;
+    let mut id = root;
+    for direction in suffix.bytes() {
+        id = match direction {
+            b'0' => trees[id].left?,
+            b'1' => trees[id].right?,
+            _ => return None,
+        };
     }
-    node.left
-        .as_ref()
-        .and_then(|child| find_tree_node(child, path))
-        .or_else(|| {
-            node.right
-                .as_ref()
-                .and_then(|child| find_tree_node(child, path))
-        })
+    Some(id)
 }
 
 fn atomic_score(value: f64) -> f64 {
@@ -1700,7 +1969,8 @@ fn should_stop_parallel_work(cancel: Option<&AtomicBool>, deadline: Option<Insta
 #[allow(clippy::too_many_arguments)]
 fn enumerate_box_parallel(
     index: usize,
-    candidates: &[Vec<usize>; GROUP_COUNT],
+    candidates: &[&[usize]; GROUP_COUNT],
+    suffix: Option<&[Stats; GROUP_COUNT]>,
     problem: &NativeProblem,
     requirements: &Requirements,
     incumbent: &SharedIncumbent,
@@ -1718,15 +1988,38 @@ fn enumerate_box_parallel(
         consider_parallel(problem, requirements, incumbent, counters, selected, stats)?;
         return Ok(true);
     }
-    for &package_index in &candidates[index] {
+    if suffix.is_some()
+        && index > 0
+        && candidates[index..]
+            .iter()
+            .map(|items| items.len())
+            .product::<usize>()
+            >= 4
+    {
+        if let Some(suffix) = suffix {
+            let upper = add_stats(stats.clone(), &suffix[index]);
+            counters.count_evaluations();
+            let mut possible = true;
+            evaluate_feasible_summary(&problem.base_context, &upper, |i, v| {
+                possible = requirements.accepts_value(i, v);
+                possible && i != 4 // Stop before damage, including on success.
+            })?;
+            if !possible {
+                counters.count_pruned_by_constraint();
+                return Ok(true);
+            }
+        }
+    }
+    for &package_index in candidates[index] {
         selected[index] = package_index;
         let next = add_stats(
             stats.clone(),
-            &problem.groups[index].packages[package_index].stat_delta,
+            problem.groups[index].packages[package_index].evaluation_stats(),
         );
         if !enumerate_box_parallel(
             index + 1,
             candidates,
+            suffix,
             problem,
             requirements,
             incumbent,
@@ -1745,13 +2038,14 @@ fn enumerate_box_parallel(
 /// Process one shared-frontier node.  Children are returned to the caller so
 /// the parallel coordinator can put them back onto the common priority queue;
 /// this is what lets an idle worker take work created by another worker.
-fn should_look_ahead(node: &WorkItem, best: f64, depth: usize) -> bool {
+fn should_look_ahead(trees: &TreeArena, node: &WorkItem, best: f64, depth: usize) -> bool {
     depth < LOOKAHEAD_MAX_DEPTH
         && best.is_finite()
         && node.upper <= best + best.abs() * LOOKAHEAD_RELATIVE_GAP
-        && box_combinations(&node.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
+        && box_combinations(trees, &node.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
 }
 
+#[cfg(test)]
 fn expand_parallel_node(
     node: &WorkItem,
     problem: &NativeProblem,
@@ -1761,7 +2055,33 @@ fn expand_parallel_node(
     cancel: Option<&AtomicBool>,
     deadline: Option<Instant>,
 ) -> Result<Option<Vec<WorkItem>>, String> {
-    expand_parallel_node_inner(
+    let mut children = Vec::new();
+    expand_parallel_node_into(
+        node,
+        problem,
+        requirements,
+        incumbent,
+        counters,
+        cancel,
+        deadline,
+        &mut children,
+    )
+    .map(|completed| completed.then_some(children))
+}
+
+#[allow(clippy::too_many_arguments)]
+fn expand_parallel_node_into(
+    node: &WorkItem,
+    problem: &NativeProblem,
+    requirements: &Requirements,
+    incumbent: &SharedIncumbent,
+    counters: &mut impl SearchCounters,
+    cancel: Option<&AtomicBool>,
+    deadline: Option<Instant>,
+    children: &mut Vec<WorkItem>,
+) -> Result<bool, String> {
+    let start = children.len();
+    let result = expand_parallel_node_inner(
         node,
         0,
         problem,
@@ -1770,7 +2090,12 @@ fn expand_parallel_node(
         counters,
         cancel,
         deadline,
-    )
+        children,
+    );
+    if !matches!(result, Ok(true)) {
+        children.truncate(start);
+    }
+    result
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -1783,19 +2108,32 @@ fn expand_parallel_node_inner(
     counters: &mut impl SearchCounters,
     cancel: Option<&AtomicBool>,
     deadline: Option<Instant>,
-) -> Result<Option<Vec<WorkItem>>, String> {
+    children: &mut Vec<WorkItem>,
+) -> Result<bool, String> {
     if should_stop_parallel_work(cancel, deadline) {
-        return Ok(None);
+        return Ok(false);
     }
     counters.count_visited();
     if node.upper < shared_best_score(incumbent) - EPSILON {
         counters.count_pruned_by_bound();
-        return Ok(Some(Vec::new()));
+        return Ok(true);
     }
-    if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
+    if box_combinations(&problem.trees, &node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
+        // Scheduling heuristic only; every removal uses the ordinary safe
+        // coordinate envelope. Skip the extra work on low-rejection inputs.
+        let suffix: Option<[Stats; GROUP_COUNT]> = counters.utility_pressure().then(|| {
+            std::array::from_fn(|start| {
+                node.clusters[start..]
+                    .iter()
+                    .fold(Stats::new(), |sum, node| {
+                        add_stats(sum, &problem.trees[*node].envelope)
+                    })
+            })
+        });
         return enumerate_box_parallel(
             0,
-            &box_candidate_indices(&node.clusters),
+            &SmallBoxCandidates::new(&problem.trees, &node.clusters).as_slices(),
+            suffix.as_ref(),
             problem,
             requirements,
             incumbent,
@@ -1804,27 +2142,29 @@ fn expand_parallel_node_inner(
             deadline,
             &mut [0; GROUP_COUNT],
             &Stats::new(),
-        )
-        .map(|completed| completed.then(Vec::new));
+        );
     }
-    let child_boxes = ChildBoxes::new(&node.clusters);
+    let child_boxes = ChildBoxes::new(&problem.trees, &node.clusters);
     if child_boxes.len() == 0 {
-        return Ok(Some(Vec::new()));
+        return Ok(true);
     }
     counters.count_splits();
-    // Most bounded children can be discarded; allocate only for survivors.
-    let mut children = Vec::new();
+    // All recursion appends to the same reusable worker buffer.
+    let mut utility_candidates: [Option<WorkItem>; 4] = std::array::from_fn(|_| None);
+    let mut utility_candidate_count = 0;
+    let mut constraint_rejections = 0;
     for child_clusters in child_boxes {
         if should_stop_parallel_work(cancel, deadline) {
-            return Ok(None);
+            return Ok(false);
         }
-        let stats = box_stats(&child_clusters);
+        let stats = box_stats(&problem.trees, &child_clusters);
         counters.count_evaluations();
         let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
             requirements.accepts_value(i, v)
         })?
         else {
             counters.count_pruned_by_constraint();
+            constraint_rejections += 1;
             continue;
         };
         if bound.optimization_damage_factor < shared_best_score(incumbent) - EPSILON {
@@ -1838,8 +2178,8 @@ fn expand_parallel_node_inner(
             // The relative window only chooses where to spend extra evaluation work.
             // Removal still requires each sub-box's ordinary safe bound; keep
             // all surviving sub-boxes, or requeue the original parent on stop.
-            if should_look_ahead(&child, best, depth) {
-                match expand_parallel_node_inner(
+            if should_look_ahead(&problem.trees, &child, best, depth) {
+                if !expand_parallel_node_inner(
                     &child,
                     depth + 1,
                     problem,
@@ -1848,16 +2188,50 @@ fn expand_parallel_node_inner(
                     counters,
                     cancel,
                     deadline,
+                    children,
                 )? {
-                    Some(grandchildren) => children.extend(grandchildren),
-                    None => return Ok(None),
+                    return Ok(false);
                 }
+            } else if depth == 0 && counters.utility_pressure() {
+                utility_candidates[utility_candidate_count] = Some(child);
+                utility_candidate_count += 1;
             } else {
                 children.push(child);
             }
         }
     }
-    Ok(Some(children))
+    // Sibling failures are a scheduling hint, never a deletion proof. Spend
+    // one extra level only around observed constraint boundaries.
+    let probe = depth == 0 && constraint_rejections >= 2 && counters.utility_pressure();
+    for child in utility_candidates.into_iter().flatten() {
+        if probe
+            && box_combinations(&problem.trees, &child.clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
+        {
+            let coverage_count = ChildBoxes::new(&problem.trees, &child.clusters).len();
+            let start = children.len();
+            if !expand_parallel_node_inner(
+                &child,
+                LOOKAHEAD_MAX_DEPTH,
+                problem,
+                requirements,
+                incumbent,
+                counters,
+                cancel,
+                deadline,
+                children,
+            )? {
+                return Ok(false);
+            }
+            // If no subspace was removed, keep the original compact box.
+            if children.len() - start >= coverage_count {
+                children.truncate(start);
+                children.push(child);
+            }
+        } else {
+            children.push(child);
+        }
+    }
+    Ok(true)
 }
 
 fn create_parallel_shards(
@@ -1876,17 +2250,17 @@ fn create_parallel_shards(
         if node.upper < state.best_score - EPSILON {
             continue;
         }
-        if box_combinations(&node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
+        if box_combinations(&problem.trees, &node.clusters, SMALL_BOX_LIMIT) <= SMALL_BOX_LIMIT {
             frontier.push(node);
             break;
         }
-        let child_boxes = ChildBoxes::new(&node.clusters);
+        let child_boxes = ChildBoxes::new(&problem.trees, &node.clusters);
         if child_boxes.len() == 0 {
             frontier.push(node);
             break;
         }
         for child_clusters in child_boxes {
-            let stats = box_stats(&child_clusters);
+            let stats = box_stats(&problem.trees, &child_clusters);
             state.evaluations += 1;
             let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
                 requirements.accepts_value(i, v)
@@ -1937,34 +2311,10 @@ fn solve_exact_parallel_with_control(
         return Err("D4 native solver requires four nonempty prepared groups".to_string());
     }
     let started = Instant::now();
-    let mut keys = problem.metadata.modeled_keys.clone();
-    if keys.is_empty() {
-        keys = problem
-            .groups
-            .iter()
-            .flat_map(|group| group.packages.iter())
-            .flat_map(|package| package.stat_delta.keys().map(str::to_owned))
-            .collect();
-    }
-    keys.sort();
-    keys.dedup();
-    let trees = problem
-        .groups
-        .iter()
-        .map(|group| {
-            build_tree(
-                &group.packages,
-                (0..group.packages.len()).collect(),
-                &keys,
-                &global_ranges(&group.packages, &keys),
-                &problem.base_context,
-                "r".to_string(),
-            )
-        })
-        .collect::<Vec<_>>();
-    let clusters: [Arc<TreeNode>; GROUP_COUNT] = trees
-        .try_into()
-        .map_err(|_| "D4 native solver expected four trees".to_string())?;
+    let mut prepared_problem = problem.clone();
+    prepared_problem.prepare_evaluation_stats();
+    let clusters = prepared_problem.prepare_trees()?;
+    let problem = &prepared_problem;
     let requirements = &Requirements::new(
         problem
             .scenario_snapshot
@@ -1976,7 +2326,7 @@ fn solve_exact_parallel_with_control(
         ..SearchState::default()
     };
     for selected in initial_selections(problem) {
-        let stats = selection_stats(problem, &selected);
+        let stats = selection_evaluation_stats(problem, &selected);
         consider(problem, requirements, &mut seed, &selected, &stats)?;
     }
     if let Some(mut selected) = seed.best_selected {
@@ -1990,7 +2340,7 @@ fn solve_exact_parallel_with_control(
                 {
                     let mut trial = baseline;
                     trial[group_index] = package_index;
-                    let stats = selection_stats(problem, &trial);
+                    let stats = selection_evaluation_stats(problem, &trial);
                     consider(problem, requirements, &mut seed, &trial, &stats)?;
                 }
                 if seed.best_id != before_id {
@@ -2003,10 +2353,10 @@ fn solve_exact_parallel_with_control(
             }
         }
     }
-    let root_stats = box_stats(&clusters);
+    let root_stats = box_stats(&problem.trees, &clusters);
     seed.evaluations += 1;
     let root = evaluate_summary_from_map(&problem.base_context, &root_stats)?;
-    if !feasible(&root, requirements) {
+    if !individual_utilities_possible(problem, &clusters, requirements, &mut seed)? {
         return Ok(NativeParallelSolveResult {
             result: NativeSolveResult {
                 status: "invalid".to_string(),
@@ -2110,70 +2460,77 @@ fn solve_exact_parallel_with_control(
             let active = &active;
             let processed = &processed;
             let failure = &failure;
-            scope.spawn(move || loop {
-                if failure.lock().expect("D4 failure mutex poisoned").is_some() {
-                    break;
-                }
-                if cancel.is_some_and(|signal| signal.load(AtomicOrdering::Acquire)) {
-                    break;
-                }
-                let mut waited_for_frontier = false;
-                let node = loop {
-                    let mut ready = frontier.lock().expect("D4 frontier mutex poisoned");
-                    if let Some(node) = ready.pop() {
-                        // Claim while holding the same lock used to observe the
-                        // queue: an empty queue is terminal only with no active
-                        // worker that could still publish children.
-                        active.fetch_add(1, AtomicOrdering::AcqRel);
-                        if waited_for_frontier {
-                            counters.steals.fetch_add(1, AtomicOrdering::Relaxed);
+            scope.spawn(move || {
+                let mut children = Vec::new();
+                loop {
+                    if failure.lock().expect("D4 failure mutex poisoned").is_some() {
+                        break;
+                    }
+                    if cancel.is_some_and(|signal| signal.load(AtomicOrdering::Acquire)) {
+                        break;
+                    }
+                    let mut waited_for_frontier = false;
+                    let node = loop {
+                        let mut ready = frontier.lock().expect("D4 frontier mutex poisoned");
+                        if let Some(node) = ready.pop() {
+                            // Claim while holding the same lock used to observe the
+                            // queue: an empty queue is terminal only with no active
+                            // worker that could still publish children.
+                            active.fetch_add(1, AtomicOrdering::AcqRel);
+                            if waited_for_frontier {
+                                counters.steals.fetch_add(1, AtomicOrdering::Relaxed);
+                            }
+                            break Some(node);
                         }
-                        break Some(node);
-                    }
-                    drop(ready);
-                    if active.load(AtomicOrdering::Acquire) == 0 {
-                        break None;
-                    }
-                    waited_for_frontier = true;
-                    std::thread::yield_now();
-                };
-                let Some(node) = node else {
-                    break;
-                };
-                let work_started = Instant::now();
-                let outcome = expand_parallel_node(
-                    &node,
-                    problem,
-                    requirements,
-                    &incumbent,
-                    &mut counters.as_ref(),
-                    cancel,
-                    None,
-                );
-                let work_micros = work_started.elapsed().as_micros() as u64;
-                counters
-                    .work_busy_micros
-                    .fetch_add(work_micros, AtomicOrdering::Relaxed);
-                worker_busy_micros[worker_index].fetch_add(work_micros, AtomicOrdering::Relaxed);
-                counters
-                    .longest_work_item_micros
-                    .fetch_max(work_micros, AtomicOrdering::Relaxed);
-                match outcome {
-                    Ok(Some(children)) => {
-                        if !children.is_empty() {
-                            let mut ready = frontier.lock().expect("D4 frontier mutex poisoned");
-                            ready.extend(children);
+                        drop(ready);
+                        if active.load(AtomicOrdering::Acquire) == 0 {
+                            break None;
                         }
-                        processed.fetch_add(1, AtomicOrdering::Relaxed);
+                        waited_for_frontier = true;
+                        std::thread::yield_now();
+                    };
+                    let Some(node) = node else {
+                        break;
+                    };
+                    let work_started = Instant::now();
+                    children.clear();
+                    let outcome = expand_parallel_node_into(
+                        &node,
+                        problem,
+                        requirements,
+                        &incumbent,
+                        &mut counters.as_ref(),
+                        cancel,
+                        None,
+                        &mut children,
+                    );
+                    let work_micros = work_started.elapsed().as_micros() as u64;
+                    counters
+                        .work_busy_micros
+                        .fetch_add(work_micros, AtomicOrdering::Relaxed);
+                    worker_busy_micros[worker_index]
+                        .fetch_add(work_micros, AtomicOrdering::Relaxed);
+                    counters
+                        .longest_work_item_micros
+                        .fetch_max(work_micros, AtomicOrdering::Relaxed);
+                    match outcome {
+                        Ok(true) => {
+                            if !children.is_empty() {
+                                let mut ready =
+                                    frontier.lock().expect("D4 frontier mutex poisoned");
+                                ready.extend(children.drain(..));
+                            }
+                            processed.fetch_add(1, AtomicOrdering::Relaxed);
+                        }
+                        Ok(false) => {}
+                        Err(error) => {
+                            *failure.lock().expect("D4 failure mutex poisoned") = Some(error);
+                        }
                     }
-                    Ok(None) => {}
-                    Err(error) => {
-                        *failure.lock().expect("D4 failure mutex poisoned") = Some(error);
+                    active.fetch_sub(1, AtomicOrdering::AcqRel);
+                    if failure.lock().expect("D4 failure mutex poisoned").is_some() {
+                        break;
                     }
-                }
-                active.fetch_sub(1, AtomicOrdering::AcqRel);
-                if failure.lock().expect("D4 failure mutex poisoned").is_some() {
-                    break;
                 }
             });
         }
@@ -2259,6 +2616,108 @@ mod tests {
     use serde_json::json;
 
     #[test]
+    fn arena_layout_capacity_and_path_restore_are_checked() {
+        assert_eq!(std::mem::size_of::<WorkItem>(), 24);
+        assert_eq!(tree_capacity([1, 2, 3, 4]).unwrap(), 16);
+        assert!(tree_capacity([0]).is_err());
+        assert!(tree_capacity([usize::MAX]).is_err());
+        assert!(tree_capacity([u32::MAX as usize, 1]).is_err());
+        let mut problem = wide_problem();
+        let roots = problem.prepare_trees().unwrap();
+        let arena = &problem.trees;
+        assert_eq!(arena.nodes.len(), 4 * (2 * 8 - 1));
+        for group in 0..GROUP_COUNT {
+            let start = roots[group].0 as usize;
+            let end = roots
+                .get(group + 1)
+                .map_or(arena.nodes.len(), |id| id.0 as usize);
+            for index in start..end {
+                let id = NodeId(index as u32);
+                let node = &arena[id];
+                assert_eq!(find_tree_node(arena, roots[group], &node.path), Some(id));
+                if let (Some(left), Some(right)) = (node.left, node.right) {
+                    assert_eq!(left.0, id.0 + 1);
+                    assert_eq!(right.0, left.0 + (2 * arena[left].size - 1) as u32);
+                    assert_eq!(node.size, arena[left].size + arena[right].size);
+                }
+                for other in index..end {
+                    assert_eq!(
+                        id.cmp(&NodeId(other as u32)),
+                        node.path.cmp(&arena.nodes[other].path)
+                    );
+                }
+            }
+            for invalid in ["", "x", "r2", "r0000", "r0x"] {
+                assert_eq!(find_tree_node(arena, roots[group], invalid), None);
+            }
+        }
+        let clone = problem.clone();
+        assert!(Arc::ptr_eq(&clone.trees, &problem.trees));
+        let wire = serde_json::to_value(&problem).unwrap();
+        assert!(wire.get("trees").is_none());
+        let restored: NativeProblem = serde_json::from_value(wire).unwrap();
+        assert!(restored.trees.nodes.is_empty());
+    }
+
+    #[test]
+    fn projected_search_preserves_raw_output_and_rebuilds_after_checkpoint() {
+        let mut problem = wide_problem();
+        for group in &mut problem.groups {
+            for (index, package) in group.packages.iter_mut().enumerate() {
+                package.stat_delta = Stats::from([
+                    ("ATKP".into(), 1.0),
+                    ("MAXMP".into(), -20.0),
+                    ("MOTIONSPEED".into(), 7.5),
+                    ("DROP_RATE".into(), index as f64 + 2.0),
+                    ("PHYS_RES".into(), -3.25),
+                    ("UNKNOWN_FUTURE".into(), -0.0),
+                ]);
+            }
+        }
+        // Tree/order metadata is deliberately narrower than evaluator dependencies.
+        problem.metadata.modeled_keys = vec!["ATKP".into()];
+        let original = serde_json::to_value(&problem).unwrap();
+        let expected_stats = selection_stats(&problem, &[0; GROUP_COUNT]);
+        let expected_score = evaluate_summary_from_map(&problem.base_context, &expected_stats)
+            .unwrap()
+            .optimization_damage_factor;
+        let check = |result: NativeSolveResult| {
+            assert!(result.exact);
+            assert_eq!(result.score, Some(expected_score));
+            assert_eq!(result.upper_bound, Some(expected_score));
+            let build = result.best_build.unwrap();
+            assert_eq!(build.id, build_id(&problem.groups, &[0; GROUP_COUNT]));
+            assert_eq!(build.stat_delta, expected_stats);
+        };
+        check(solve_exact(&problem).unwrap());
+        for threads in [1, 4, 64] {
+            check(solve_exact_parallel(&problem, threads).unwrap().result);
+            let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+            assert_eq!(serde_json::to_value(&session.problem).unwrap(), original);
+            let package = &session.problem.groups[0].packages[0];
+            assert_eq!(package.evaluation_stats().get("DROP_RATE"), None);
+            assert_eq!(package.evaluation_stats().get("MAXMP"), Some(&-20.0));
+            assert_eq!(package.evaluation_stats().get("MOTIONSPEED"), Some(&7.5));
+            session.run_parallel_slice(1, threads).unwrap();
+            let wire = serde_json::to_value(session.checkpoint().unwrap()).unwrap();
+            assert_eq!(wire["problem"], original);
+            let checkpoint: NativeSearchCheckpoint = serde_json::from_value(wire).unwrap();
+            assert!(checkpoint.problem.groups[0].packages[0]
+                .evaluation_delta
+                .is_none());
+            let mut restored = NativeSearchSession::from_checkpoint(checkpoint).unwrap();
+            assert!(restored.problem.groups[0].packages[0]
+                .evaluation_delta
+                .is_some());
+            while !restored.is_complete() {
+                restored.run_parallel_slice(128, threads).unwrap();
+            }
+            check(restored.snapshot());
+        }
+        assert_eq!(serde_json::to_value(problem).unwrap(), original);
+    }
+
+    #[test]
     fn local_counter_overflow_and_merge_match_atomic_counts() {
         let mut local = LocalSearchCounters::default();
         let shared = ParallelCounters::default();
@@ -2332,6 +2791,66 @@ mod tests {
         }
     }
 
+    #[test]
+    fn individual_hp_bound_respects_real_two_slot_packages() {
+        let mut problem = small_problem();
+        problem.base_context = PreparedContext::from(
+            json!({"level":100,"vitBase":1,"mainType":"한손검","wpnAtk":100,"strBase":100,"critF":100}),
+        );
+        problem.scenario_snapshot = json!({"requirements":{"maxHp":5000}});
+        problem.metadata.modeled_keys = vec!["MAXHP".into(), "MAXHPP".into()];
+        for group in &mut problem.groups {
+            group.packages = vec![
+                NativePackage {
+                    evaluation_delta: None,
+                    id: format!("{}:flat", group._id),
+                    stat_delta: serde_json::from_value(json!({"MAXHP":1000})).unwrap(),
+                },
+                NativePackage {
+                    evaluation_delta: None,
+                    id: format!("{}:percent", group._id),
+                    stat_delta: serde_json::from_value(json!({"MAXHPP":100})).unwrap(),
+                },
+            ];
+        }
+        // Coordinate envelope: 8365. Actual maximum with VIT=1: 4873.
+        let session = NativeSearchSession::new(problem.clone()).unwrap();
+        assert!(session.is_complete());
+        assert_eq!(session.snapshot().status, "invalid");
+        assert_eq!(session.snapshot().visited_nodes, 0);
+        problem.scenario_snapshot["requirements"]["maxHp"] = json!(4873);
+        let result = solve_exact(&problem).unwrap();
+        assert!(result.exact);
+    }
+
+    #[test]
+    fn utility_caps_reject_impossible_targets_and_allow_motion_equivalence() {
+        for (key, value) in [
+            ("maxMp", 2001.),
+            ("normalAttackCrit", 101.),
+            ("aspd", 10001.),
+        ] {
+            let mut problem = small_problem();
+            problem.scenario_snapshot = json!({"requirements":{key:value}});
+            let session = NativeSearchSession::new(problem).unwrap();
+            assert!(session.is_complete(), "{key}");
+            assert_eq!(session.snapshot().status, "invalid");
+        }
+        let mut problem = small_problem();
+        let mut base = serde_json::to_value(&problem.base_context).unwrap();
+        base["motionSpeed"] = json!(50);
+        base["godspeedWieldLevel"] = json!(10);
+        base["maxMpF"] = json!(3000);
+        problem.base_context = PreparedContext::from(base);
+        problem.scenario_snapshot = json!({"requirements":{"maxMp":2300,"aspd":10000}});
+        assert!(solve_exact(&problem).unwrap().exact);
+        problem.scenario_snapshot["requirements"]["maxMp"] = json!(2301);
+        assert_eq!(
+            NativeSearchSession::new(problem).unwrap().snapshot().status,
+            "invalid"
+        );
+    }
+
     fn small_problem() -> NativeProblem {
         serde_json::from_value(json!({
             "baseContext":{"level":100,"mainType":"한손검","subType":"없음","armorType":"일반옷","wpnAtk":100,"wpnRefine":0,"wpnStab":100,"strBase":0,"dexBase":0,"intBase":0,"agiBase":0,"vitBase":100,"critF":100,"atkType":"PHYS","rangeType":"SHORT","bossLevel":100,"bossDef":0,"bossMdef":0,"aspdF":1000,"maxHpF":10000,"maxMpF":2000,"amprF":100},
@@ -2349,7 +2868,7 @@ mod tests {
     #[allow(clippy::too_many_arguments)] // Recursive complete enumeration shares its immutable search inputs.
     fn enumerate_box_reference(
         index: usize,
-        clusters: &[Arc<TreeNode>; GROUP_COUNT],
+        clusters: &[NodeId; GROUP_COUNT],
         problem: &NativeProblem,
         requirements: &Requirements,
         selected: &mut [usize; GROUP_COUNT],
@@ -2361,8 +2880,8 @@ mod tests {
             *enumerated += 1;
             return consider(problem, requirements, state, selected, stats);
         }
-        let mut indices = Vec::with_capacity(clusters[index].size);
-        cluster_indices(&clusters[index], &mut indices);
+        let mut indices = Vec::with_capacity(problem.trees[clusters[index]].size);
+        cluster_indices(&problem.trees, clusters[index], &mut indices);
         for package_index in indices {
             selected[index] = package_index;
             let next = add_stats(
@@ -2388,6 +2907,8 @@ mod tests {
         for sizes in [
             [1, 1, 1, 1],
             [1, 1, 1, 64],
+            [1, 1, 64, 1],
+            [1, 64, 1, 1],
             [64, 1, 1, 1],
             [2, 2, 2, 8],
             [4, 4, 2, 2],
@@ -2398,6 +2919,7 @@ mod tests {
                 group.packages = (0..sizes[group_index])
                     .rev()
                     .map(|index| NativePackage {
+                        evaluation_delta: None,
                         id: format!("{group_index}-{index}"),
                         stat_delta: Stats::from([
                             ("ATKP".into(), (index % 3) as f64 * 0.25),
@@ -2407,7 +2929,15 @@ mod tests {
                     .collect();
             }
             let session = NativeSearchSession::new(problem.clone()).unwrap();
+            let problem = session.problem.clone();
             let clusters = &session.heap.peek().unwrap().clusters;
+            let candidates = SmallBoxCandidates::new(&problem.trees, clusters);
+            assert_eq!(
+                candidates.as_slices(),
+                box_candidate_indices(&problem.trees, clusters)
+                    .each_ref()
+                    .map(|items| items.as_slice())
+            );
             let mut actual = SearchState {
                 best_score: f64::NEG_INFINITY,
                 ..SearchState::default()
@@ -2416,7 +2946,7 @@ mod tests {
             let (mut count, mut reference_count) = (0, 0);
             enumerate_box(
                 0,
-                &box_candidate_indices(clusters),
+                &candidates.as_slices(),
                 &problem,
                 &session.requirements,
                 &mut [0; GROUP_COUNT],
@@ -2450,6 +2980,7 @@ mod tests {
         for (group_index, group) in problem.groups.iter_mut().enumerate() {
             group.packages = (0..8)
                 .map(|package_index| NativePackage {
+                    evaluation_delta: None,
                     id: format!("{group_index}-{package_index}"),
                     stat_delta: Stats::new(),
                 })
@@ -2544,18 +3075,19 @@ mod tests {
     fn shared_messages_cover_ragged_batches_in_input_order() {
         let problem = wide_problem();
         let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+        let problem = session.problem.clone();
         let root = session.heap.pop().unwrap();
         let incumbent = Arc::new(SharedIncumbent {
             score_bits: AtomicU64::new(session.state.best_score.to_bits()),
             record: Mutex::new(session.state.clone()),
         });
         for workers in [1, 2, 8, 16, 64] {
-            let pool = NodePool::new(&problem, session.requirements, workers).unwrap();
+            let mut pool = NodePool::new(&problem, session.requirements, workers).unwrap();
             let mut outcomes = Vec::new();
             for count in [0, 1, 7, 31, 33, 65, 257] {
                 let nodes = (0..count)
                     .map(|index| {
-                        let mut node = root.clone();
+                        let mut node = root;
                         if index % 3 != 0 {
                             node.upper = f64::NEG_INFINITY;
                         }
@@ -2599,7 +3131,7 @@ mod tests {
                 assert_eq!(outcomes.len(), count);
                 for (index, outcome) in outcomes.drain(..).enumerate() {
                     assert_eq!(
-                        outcome.unwrap().unwrap().unwrap().len(),
+                        outcome.unwrap().unwrap().unwrap().range.len(),
                         if index % 3 == 0 { 64 } else { 0 }
                     );
                 }
@@ -2628,6 +3160,101 @@ mod tests {
                 }
             }
         }
+    }
+
+    #[test]
+    fn worker_buffers_reuse_storage_and_preserve_child_order() {
+        let session = NativeSearchSession::new(wide_problem()).unwrap();
+        let root = *session.heap.peek().unwrap();
+        let incumbent = Arc::new(SharedIncumbent {
+            score_bits: AtomicU64::new(session.state.best_score.to_bits()),
+            record: Mutex::new(session.state.clone()),
+        });
+        let expected = expand_parallel_node(
+            &root,
+            &session.problem,
+            &session.requirements,
+            &incumbent,
+            &mut LocalSearchCounters::default(),
+            None,
+            None,
+        )
+        .unwrap()
+        .unwrap();
+        assert_eq!(expected.len(), 64);
+        let mut pool = NodePool::new(&session.problem, session.requirements, 1).unwrap();
+        let nodes = Arc::new(vec![root; 7]);
+        let counters = Arc::new(ParallelCounters::default());
+        let mut outcomes = Vec::new();
+        let mut storage = None;
+        for _ in 0..3 {
+            pool.run(&nodes, &mut outcomes, &incumbent, &counters, None, None)
+                .unwrap();
+            assert_eq!(pool.buffers.len(), 1);
+            let buffer = &pool.buffers[0];
+            assert!(buffer.outcomes.is_empty());
+            let current = (buffer.children.as_ptr(), buffer.outcomes.as_ptr());
+            if let Some(previous) = storage {
+                assert_eq!(current, previous);
+            }
+            storage = Some(current);
+            for (index, outcome) in outcomes.drain(..).enumerate() {
+                let children = outcome.unwrap().unwrap().unwrap();
+                assert_eq!(children.buffer, 0);
+                assert_eq!(children.range, index * 64..(index + 1) * 64);
+                assert!(buffer.children[children.range].iter().eq(expected.iter()));
+            }
+        }
+    }
+
+    #[test]
+    fn interrupted_expansion_rolls_back_only_current_buffer_suffix() {
+        struct StopAfter<'a> {
+            cancel: &'a AtomicBool,
+            evaluations: usize,
+        }
+        impl SearchCounters for StopAfter<'_> {
+            fn count_evaluations(&mut self) {
+                self.evaluations += 1;
+                if self.evaluations == 7 {
+                    self.cancel.store(true, AtomicOrdering::Release);
+                }
+            }
+            fn count_visited(&mut self) {}
+            fn count_pruned_by_bound(&mut self) {}
+            fn count_pruned_by_constraint(&mut self) {}
+            fn count_enumerated(&mut self) {}
+            fn count_splits(&mut self) {}
+        }
+        let session = NativeSearchSession::new(wide_problem()).unwrap();
+        let root = *session.heap.peek().unwrap();
+        let incumbent = SharedIncumbent {
+            score_bits: AtomicU64::new(session.state.best_score.to_bits()),
+            record: Mutex::new(session.state.clone()),
+        };
+        let cancel = AtomicBool::new(false);
+        let mut counters = StopAfter {
+            cancel: &cancel,
+            evaluations: 0,
+        };
+        let mut children = vec![root];
+        assert!(!expand_parallel_node_into(
+            &root,
+            &session.problem,
+            &session.requirements,
+            &incumbent,
+            &mut counters,
+            Some(&cancel),
+            None,
+            &mut children
+        )
+        .unwrap());
+        assert_eq!(counters.evaluations, 7);
+        assert_eq!(children.len(), 1);
+        assert!(children[0] == root);
+        // Four descendants were appended before cancellation; the retained
+        // capacity proves this exercised rollback after actual output growth.
+        assert!(children.capacity() > 1);
     }
 
     #[test]
@@ -2674,6 +3301,7 @@ mod tests {
     fn selective_lookahead_covers_equal_bound_space_without_duplicates() {
         let problem = wide_problem();
         let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+        let problem = session.problem.clone();
         let root = session.heap.pop().unwrap();
         let incumbent = SharedIncumbent {
             score_bits: AtomicU64::new(session.state.best_score.to_bits()),
@@ -2696,7 +3324,7 @@ mod tests {
             assert!(child.upper >= session.state.best_score);
             let indices: [Vec<usize>; 4] = std::array::from_fn(|i| {
                 let mut list = Vec::new();
-                cluster_indices(&child.clusters[i], &mut list);
+                cluster_indices(&problem.trees, child.clusters[i], &mut list);
                 list
             });
             for a in &indices[0] {
@@ -2718,18 +3346,112 @@ mod tests {
         let mut root = session.heap.pop().unwrap();
         for best in [-100.0_f64, 0.0, 100.0] {
             root.upper = best + best.abs() * LOOKAHEAD_RELATIVE_GAP;
-            assert!(should_look_ahead(&root, best, 0));
-            assert!(should_look_ahead(&root, best, 1));
-            assert!(!should_look_ahead(&root, best, 2));
+            assert!(should_look_ahead(&session.problem.trees, &root, best, 0));
+            assert!(should_look_ahead(&session.problem.trees, &root, best, 1));
+            assert!(!should_look_ahead(&session.problem.trees, &root, best, 2));
             root.upper += 0.0001;
-            assert!(!should_look_ahead(&root, best, 0));
+            assert!(!should_look_ahead(&session.problem.trees, &root, best, 0));
         }
         for best in [f64::INFINITY, f64::NEG_INFINITY, f64::NAN] {
-            assert!(!should_look_ahead(&root, best, 0));
+            assert!(!should_look_ahead(&session.problem.trees, &root, best, 0));
         }
         let mut small = NativeSearchSession::new(small_problem()).unwrap();
         let node = small.heap.pop().unwrap();
-        assert!(!should_look_ahead(&node, node.upper, 0));
+        assert!(!should_look_ahead(
+            &small.problem.trees,
+            &node,
+            node.upper,
+            0
+        ));
+    }
+
+    #[test]
+    fn constraint_lookahead_removes_only_infeasible_space_and_keeps_upper() {
+        let mut problem = wide_problem();
+        for group in &mut problem.groups {
+            for (i, package) in group.packages.iter_mut().enumerate() {
+                package
+                    .stat_delta
+                    .insert("MAXHP".into(), -(i as f64) * 1200.0);
+            }
+        }
+        let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+        let problem = session.problem.clone();
+        let root = session.heap.pop().unwrap();
+        let incumbent = SharedIncumbent {
+            score_bits: AtomicU64::new(f64::NEG_INFINITY.to_bits()),
+            record: Mutex::new(SearchState {
+                best_score: f64::NEG_INFINITY,
+                ..SearchState::default()
+            }),
+        };
+        let mut coverage = Vec::new();
+        for pressure in [false, true] {
+            let mut counters = LocalSearchCounters {
+                pruned_by_constraint: if pressure { 10000 } else { 0 },
+                evaluations: 1000,
+                ..LocalSearchCounters::default()
+            };
+            let children = expand_parallel_node(
+                &root,
+                &problem,
+                &session.requirements,
+                &incumbent,
+                &mut counters,
+                None,
+                None,
+            )
+            .unwrap()
+            .unwrap();
+            let mut covered = HashSet::new();
+            for child in children {
+                let indices = box_candidate_indices(&problem.trees, &child.clusters);
+                for &a in &indices[0] {
+                    for &b in &indices[1] {
+                        for &c in &indices[2] {
+                            for &d in &indices[3] {
+                                let selected = [a, b, c, d];
+                                assert!(covered.insert(selected));
+                                let stats = selection_stats(&problem, &selected);
+                                if let Some(score) = evaluate_feasible_summary(
+                                    &problem.base_context,
+                                    &stats,
+                                    |i, v| session.requirements.accepts_value(i, v),
+                                )
+                                .unwrap()
+                                {
+                                    assert!(child.upper >= score.optimization_damage_factor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            coverage.push(covered);
+        }
+        assert!(coverage[1].len() < coverage[0].len());
+        for selected in coverage[0].difference(&coverage[1]) {
+            let stats = selection_stats(&problem, selected);
+            assert!(
+                evaluate_feasible_summary(&problem.base_context, &stats, |i, v| session
+                    .requirements
+                    .accepts_value(i, v))
+                .unwrap()
+                .is_none()
+            );
+        }
+        let cancelled = AtomicBool::new(true);
+        assert!(expand_parallel_node(
+            &root,
+            &problem,
+            &session.requirements,
+            &incumbent,
+            &mut LocalSearchCounters::default(),
+            Some(&cancelled),
+            None
+        )
+        .unwrap()
+        .is_none());
     }
 
     #[test]
@@ -2764,6 +3486,7 @@ mod tests {
         let mut problem = small_problem();
         for (group, atk) in problem.groups.iter_mut().zip([1e16, -1e16, 1.0, 0.0]) {
             group.packages = vec![NativePackage {
+                evaluation_delta: None,
                 id: group._id.clone(),
                 stat_delta: Stats::from([("ATK".into(), atk)]),
             }];
@@ -2772,8 +3495,10 @@ mod tests {
             .stat_delta
             .insert("MAXMP".into(), -100.0);
         let keys = vec!["ATK".into(), "MAXMP".into()];
+        let mut arena = TreeArena::default();
         let trees = std::array::from_fn(|index| {
             build_tree(
+                &mut arena,
                 &problem.groups[index].packages,
                 vec![0],
                 &keys,
@@ -2783,7 +3508,7 @@ mod tests {
             )
         });
         // ATK order matters: (1e16 + -1e16) + 1 is 1, not 0.
-        let stats = box_stats(&trees);
+        let stats = box_stats(&arena, &trees);
         assert_eq!(stats["ATK"], 1.0);
         assert_eq!(stats["MAXMP"], -100.0);
         assert_eq!(
@@ -2794,19 +3519,10 @@ mod tests {
 
     #[test]
     fn numeric_path_order_matches_lexical_heap_order() {
-        fn collect(node: &Arc<TreeNode>, nodes: &mut Vec<Arc<TreeNode>>) {
-            nodes.push(Arc::clone(node));
-            if let Some(left) = &node.left {
-                collect(left, nodes);
-            }
-            if let Some(right) = &node.right {
-                collect(right, nodes);
-            }
-        }
-        fn old_cmp(left: &WorkItem, right: &WorkItem) -> Ordering {
+        fn old_cmp(trees: &TreeArena, left: &WorkItem, right: &WorkItem) -> Ordering {
             left.upper.total_cmp(&right.upper).then_with(|| {
                 for (a, b) in left.clusters.iter().zip(&right.clusters) {
-                    let order = b.path.cmp(&a.path);
+                    let order = trees[*b].path.cmp(&trees[*a].path);
                     if order != Ordering::Equal {
                         return order;
                     }
@@ -2818,11 +3534,14 @@ mod tests {
         for count in 0..=65 {
             let packages = (0..count)
                 .map(|index| NativePackage {
+                    evaluation_delta: None,
                     id: index.to_string(),
                     stat_delta: Stats::new(),
                 })
                 .collect::<Vec<_>>();
+            let mut arena = TreeArena::default();
             let root = build_tree(
+                &mut arena,
                 &packages,
                 (0..count).collect(),
                 &[],
@@ -2830,17 +3549,17 @@ mod tests {
                 &serde_json::json!({}),
                 "r".into(),
             );
-            let mut nodes = Vec::new();
-            collect(&root, &mut nodes);
+            let nodes = (0..arena.nodes.len())
+                .map(|id| NodeId(id as u32))
+                .collect::<Vec<_>>();
+            assert_eq!(root, NodeId(0));
             for (rank, node) in nodes.iter().enumerate() {
-                assert_eq!(node.path_rank, rank);
+                assert_eq!(node.0 as usize, rank);
                 for other in &nodes {
-                    assert_eq!(
-                        node.path_rank.cmp(&other.path_rank),
-                        node.path.cmp(&other.path)
-                    );
+                    assert_eq!(node.cmp(other), arena[*node].path.cmp(&arena[*other].path));
                 }
             }
+            let old_cmp = |a: &WorkItem, b: &WorkItem| old_cmp(&arena, a, b);
             let uppers = [
                 0.0,
                 -0.0,
@@ -2854,7 +3573,7 @@ mod tests {
                 .map(|index| WorkItem {
                     upper: uppers[index % uppers.len()],
                     clusters: std::array::from_fn(|group| {
-                        Arc::clone(&nodes[(index * (group * 2 + 1) + group) % nodes.len()])
+                        nodes[(index * (group * 2 + 1) + group) % nodes.len()]
                     }),
                 })
                 .collect::<Vec<_>>();
@@ -2866,6 +3585,35 @@ mod tests {
             }
             let mut expected = boxes.clone();
             expected.sort_by(old_cmp);
+            let mut frontier = WorkHeap::new();
+            let mut reference = BinaryHeap::new();
+            // Mixed insertion/removal covers partial child groups, duplicates,
+            // equal upper bounds, signed zero and the existing total NaN order.
+            for (index, item) in boxes.iter().enumerate() {
+                frontier.push(*item);
+                reference.push(*item);
+                if index % 3 == 0 {
+                    assert_eq!(
+                        old_cmp(&frontier.pop().unwrap(), &reference.pop().unwrap()),
+                        Ordering::Equal
+                    );
+                }
+                assert_eq!(frontier.len(), reference.len());
+            }
+            frontier.extend(boxes.iter().cloned());
+            reference.extend(boxes.iter().cloned());
+            while let Some(item) = reference.pop() {
+                assert_eq!(old_cmp(frontier.peek().unwrap(), &item), Ordering::Equal);
+                assert_eq!(old_cmp(&frontier.pop().unwrap(), &item), Ordering::Equal);
+            }
+            assert!(frontier.is_empty());
+            assert!(frontier.pop().is_none());
+            assert!(frontier.peek().is_none());
+            frontier.push(boxes[0]);
+            assert_eq!(
+                old_cmp(&frontier.pop().unwrap(), &boxes[0]),
+                Ordering::Equal
+            );
             let mut heap = BinaryHeap::from(boxes);
             while let Some(actual) = heap.pop() {
                 assert_eq!(old_cmp(&actual, &expected.pop().unwrap()), Ordering::Equal);
@@ -2881,13 +3629,16 @@ mod tests {
             for (index, group) in problem.groups.iter_mut().enumerate() {
                 group.packages = (0..if mask & (1 << index) != 0 { 2 } else { 1 })
                     .map(|value| NativePackage {
+                        evaluation_delta: None,
                         id: value.to_string(),
                         stat_delta: Stats::new(),
                     })
                     .collect();
             }
+            let mut arena = TreeArena::default();
             let roots = std::array::from_fn(|index| {
                 build_tree(
+                    &mut arena,
                     &problem.groups[index].packages,
                     (0..problem.groups[index].packages.len()).collect(),
                     &[],
@@ -2905,26 +3656,29 @@ mod tests {
             } else {
                 1 << selected.len()
             };
-            let mut children = ChildBoxes::new(&roots);
+            let mut children = ChildBoxes::new(&arena, &roots);
             assert_eq!(children.len(), count);
             let mut covered = 0;
             for ordinal in 0..count {
                 let child = children.next().unwrap();
                 assert_eq!(children.len(), count - ordinal - 1);
-                covered += child.iter().map(|node| node.size).product::<usize>();
+                covered += child
+                    .iter()
+                    .map(|node| arena[*node].size)
+                    .product::<usize>();
                 for index in 0..GROUP_COUNT {
                     let expected = match selected.iter().position(|split| *split == index) {
                         None => &roots[index],
                         Some(position) => {
                             let right = (ordinal >> (selected.len() - position - 1)) & 1 != 0;
                             if right {
-                                roots[index].right.as_ref().unwrap()
+                                arena[roots[index]].right.as_ref().unwrap()
                             } else {
-                                roots[index].left.as_ref().unwrap()
+                                arena[roots[index]].left.as_ref().unwrap()
                             }
                         }
                     };
-                    assert!(Arc::ptr_eq(&child[index], expected));
+                    assert_eq!(&child[index], expected);
                 }
             }
             assert!(children.next().is_none());
@@ -2932,7 +3686,10 @@ mod tests {
             if count > 0 {
                 assert_eq!(
                     covered,
-                    roots.iter().map(|node| node.size).product::<usize>()
+                    roots
+                        .iter()
+                        .map(|node| arena[*node].size)
+                        .product::<usize>()
                 );
             }
         }
@@ -2941,9 +3698,84 @@ mod tests {
     #[test]
     fn old_bound_policy_checkpoint_is_rejected() {
         let session = NativeSearchSession::new(small_problem()).unwrap();
-        let mut checkpoint = session.checkpoint().unwrap();
-        checkpoint.schema = "toram.d4-native-search-checkpoint.v4".into();
-        assert!(NativeSearchSession::from_checkpoint(checkpoint).is_err());
+        for version in [4, 5, 6, 7] {
+            let mut checkpoint = session.checkpoint().unwrap();
+            checkpoint.schema = format!("toram.d4-native-search-checkpoint.v{version}");
+            assert!(NativeSearchSession::from_checkpoint(checkpoint).is_err());
+        }
+    }
+
+    #[test]
+    fn snapshot_upper_includes_incumbent_before_and_after_restore() {
+        let mut session = NativeSearchSession::new(small_problem()).unwrap();
+        let mut node = session.heap.pop().unwrap();
+        node.upper = session.state.best_score - 1.0;
+        session.heap.push(node);
+        let result = session.snapshot();
+        assert_eq!(result.status, "bounded");
+        assert_eq!(result.upper_bound, result.score);
+        let restored = NativeSearchSession::from_checkpoint(session.checkpoint().unwrap()).unwrap();
+        assert_eq!(restored.snapshot().upper_bound, result.score);
+    }
+
+    #[test]
+    fn partial_utility_pruning_matches_full_enumeration_with_penalties() {
+        let mut problem = small_problem();
+        for group in &mut problem.groups {
+            group.packages = (0..4)
+                .map(|i| NativePackage {
+                    evaluation_delta: None,
+                    id: format!("{}-{i}", group._id),
+                    stat_delta: Stats::from([
+                        ("MAXHP".into(), -6000.0 * i as f64),
+                        ("ATKP".into(), 20.0 * i as f64),
+                    ]),
+                })
+                .collect();
+        }
+        let session = NativeSearchSession::new(problem.clone()).unwrap();
+        let problem = session.problem.clone();
+        let root = session.heap.peek().unwrap();
+        let candidates = box_candidate_indices(&problem.trees, &root.clusters);
+        let suffix: [Stats; GROUP_COUNT] = std::array::from_fn(|start| {
+            root.clusters[start..]
+                .iter()
+                .fold(Stats::new(), |sum, node| {
+                    add_stats(sum, &problem.trees[*node].envelope)
+                })
+        });
+        let mut results = Vec::new();
+        let mut counts = Vec::new();
+        for pruning in [false, true] {
+            let incumbent = SharedIncumbent {
+                score_bits: AtomicU64::new(f64::NEG_INFINITY.to_bits()),
+                record: Mutex::new(SearchState {
+                    best_score: f64::NEG_INFINITY,
+                    ..SearchState::default()
+                }),
+            };
+            let mut counters = LocalSearchCounters::default();
+            assert!(enumerate_box_parallel(
+                0,
+                &candidates.each_ref().map(|items| items.as_slice()),
+                pruning.then_some(&suffix),
+                &problem,
+                &session.requirements,
+                &incumbent,
+                &mut counters,
+                None,
+                None,
+                &mut [0; GROUP_COUNT],
+                &Stats::new()
+            )
+            .unwrap());
+            let result = incumbent.record.lock().unwrap();
+            results.push((result.best_score, result.best_id.clone()));
+            counts.push(counters.enumerated);
+        }
+        assert_eq!(results[0], results[1]);
+        assert_eq!(counts[0], 256);
+        assert!(counts[1] < counts[0]);
     }
 
     #[test]

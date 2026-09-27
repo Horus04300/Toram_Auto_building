@@ -1,0 +1,5360 @@
+{
+  "date": "2026-09-25T11:14:30.583Z",
+  "binaryHashes": {
+    "before": "07793b4be1b6e9b6a2a4f001e0bb12af91c061a1aa5f9cf9bb72da45ba907185",
+    "after": "80c751189d17e77b3b85a7a3edaf9e1168557324ba11a6771656421cd54a883b"
+  },
+  "runs": [
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "before",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 7920.976,
+        "cpuMs": 0,
+        "peakWorkingSetBytes": 141631488
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7683,
+        "enumeratedCompletions": 3185697,
+        "evaluations": 60498662,
+        "exact": true,
+        "peakReadyWork": 2938690,
+        "prunedByBound": 6861245,
+        "prunedByConstraint": 35875567,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 43.3928,
+        "sessionWallMs": 7692.4021,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 44.7747,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 44,
+              "enumeratedCompletions": 0,
+              "evaluations": 3160,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 3701100.6,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1044.9501,
+            "ready": 1732703,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 1043,
+              "enumeratedCompletions": 2164,
+              "evaluations": 6940216,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 3467157,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 1390148.82,
+              "visitedNodes": 1734997
+            }
+          },
+          {
+            "ms": 2045.1107999999997,
+            "ready": 2635839,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:광폭 짐승화 리그시+굉룡 보비나리||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:광폭 짐승화 리그시+굉룡 보비나리",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ASPD_P": 20,
+                  "ATKP": 39,
+                  "CRIT": 68,
+                  "CRITP": 15,
+                  "CSPD": 200,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXHPP": 15,
+                  "MAXMP": -200,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 2
+                }
+              },
+              "elapsedMs": 2042,
+              "enumeratedCompletions": 33775,
+              "evaluations": 13038419,
+              "exact": false,
+              "prunedByBound": 68953,
+              "prunedByConstraint": 7038355,
+              "score": 1064809.62,
+              "status": "bounded",
+              "upperBound": 1317332.04,
+              "visitedNodes": 3257926
+            }
+          },
+          {
+            "ms": 3045.2156,
+            "ready": 2938539,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 3041,
+              "enumeratedCompletions": 134485,
+              "evaluations": 21213193,
+              "exact": false,
+              "prunedByBound": 778652,
+              "prunedByConstraint": 12065948,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1270555.86,
+              "visitedNodes": 5290536
+            }
+          },
+          {
+            "ms": 4045.3666000000003,
+            "ready": 2773652,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 4040,
+              "enumeratedCompletions": 296846,
+              "evaluations": 29384816,
+              "exact": false,
+              "prunedByBound": 1765864,
+              "prunedByConstraint": 17229611,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1238170.86,
+              "visitedNodes": 7311291
+            }
+          },
+          {
+            "ms": 5045.5763,
+            "ready": 2343926,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 5039,
+              "enumeratedCompletions": 520815,
+              "evaluations": 37601674,
+              "exact": false,
+              "prunedByBound": 2936993,
+              "prunedByConstraint": 22457361,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1213560.3,
+              "visitedNodes": 9330784
+            }
+          },
+          {
+            "ms": 6045.7486,
+            "ready": 1626253,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 6038,
+              "enumeratedCompletions": 838613,
+              "evaluations": 46621425,
+              "exact": false,
+              "prunedByBound": 4397620,
+              "prunedByConstraint": 28207258,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1192552.3800000001,
+              "visitedNodes": 11533866
+            }
+          },
+          {
+            "ms": 7045.8252999999995,
+            "ready": 680974,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 7037,
+              "enumeratedCompletions": 1655665,
+              "evaluations": 56126261,
+              "exact": false,
+              "prunedByBound": 6025976,
+              "prunedByConstraint": 33978848,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1159286.1,
+              "visitedNodes": 13750158
+            }
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625705
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "after",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 7867.862,
+        "cpuMs": 44250,
+        "peakWorkingSetBytes": 140812288
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7622,
+        "enumeratedCompletions": 3188581,
+        "evaluations": 60501046,
+        "exact": true,
+        "peakReadyWork": 2938690,
+        "prunedByBound": 6861245,
+        "prunedByConstraint": 35875129,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 43.622,
+        "sessionWallMs": 7631.9738,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 45.0037,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 44,
+              "enumeratedCompletions": 0,
+              "evaluations": 3160,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 3701100.6,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1045.2944,
+            "ready": 1765267,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 1043,
+              "enumeratedCompletions": 2686,
+              "evaluations": 7116442,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 3566251,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 1387227.54,
+              "visitedNodes": 1779029
+            }
+          },
+          {
+            "ms": 2045.5668999999998,
+            "ready": 2687395,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+환주의 변경백||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+환주의 변경백",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AGGRO": -50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 15,
+                  "CSPD": 200,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "INTP": 4,
+                  "LRW": 10,
+                  "MAG_BARR": 3000,
+                  "MATKP": 19,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 6
+                }
+              },
+              "elapsedMs": 2043,
+              "enumeratedCompletions": 38557,
+              "evaluations": 13594182,
+              "exact": false,
+              "prunedByBound": 94317,
+              "prunedByConstraint": 7373859,
+              "score": 1106912.16,
+              "status": "bounded",
+              "upperBound": 1312983.78,
+              "visitedNodes": 3396415
+            }
+          },
+          {
+            "ms": 3045.5722,
+            "ready": 2936996,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 3041,
+              "enumeratedCompletions": 143690,
+              "evaluations": 21681297,
+              "exact": false,
+              "prunedByBound": 830457,
+              "prunedByConstraint": 12358748,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1268389.3800000001,
+              "visitedNodes": 5406188
+            }
+          },
+          {
+            "ms": 4045.9799,
+            "ready": 2759216,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 4041,
+              "enumeratedCompletions": 308597,
+              "evaluations": 29776955,
+              "exact": false,
+              "prunedByBound": 1818316,
+              "prunedByConstraint": 17475652,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1236846.9,
+              "visitedNodes": 7407449
+            }
+          },
+          {
+            "ms": 5046.0463,
+            "ready": 2319004,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 5039,
+              "enumeratedCompletions": 535588,
+              "evaluations": 37983591,
+              "exact": false,
+              "prunedByBound": 2994743,
+              "prunedByConstraint": 22698524,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1212589.26,
+              "visitedNodes": 9423719
+            }
+          },
+          {
+            "ms": 6046.323,
+            "ready": 1597480,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 6039,
+              "enumeratedCompletions": 853510,
+              "evaluations": 46938061,
+              "exact": false,
+              "prunedByBound": 4451004,
+              "prunedByConstraint": 28407540,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1191924.06,
+              "visitedNodes": 11610425
+            }
+          },
+          {
+            "ms": 7046.6959,
+            "ready": 621977,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 7038,
+              "enumeratedCompletions": 1824106,
+              "evaluations": 56673039,
+              "exact": false,
+              "prunedByBound": 6109509,
+              "prunedByConstraint": 34228349,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1154210.58,
+              "visitedNodes": 13850506
+            }
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625705
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "after",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 7743.652,
+        "cpuMs": 36593.75,
+        "peakWorkingSetBytes": 140451840
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7543,
+        "enumeratedCompletions": 3189635,
+        "evaluations": 60502356,
+        "exact": true,
+        "peakReadyWork": 2938693,
+        "prunedByBound": 6861258,
+        "prunedByConstraint": 35875370,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 47.006600000000006,
+        "sessionWallMs": 7551.1242999999995,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 48.4729,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 48,
+              "enumeratedCompletions": 0,
+              "evaluations": 3160,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 3701100.6,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1048.6016,
+            "ready": 1800708,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 1047,
+              "enumeratedCompletions": 2955,
+              "evaluations": 7310792,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 3676241,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 1384027.8,
+              "visitedNodes": 1827669
+            }
+          },
+          {
+            "ms": 2048.657,
+            "ready": 2705530,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+환주의 변경백||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+환주의 변경백",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AGGRO": -50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 15,
+                  "CSPD": 200,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "INTP": 4,
+                  "LRW": 10,
+                  "MAG_BARR": 3000,
+                  "MATKP": 19,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 6
+                }
+              },
+              "elapsedMs": 2046,
+              "enumeratedCompletions": 42082,
+              "evaluations": 13880650,
+              "exact": false,
+              "prunedByBound": 115059,
+              "prunedByConstraint": 7546787,
+              "score": 1106912.16,
+              "status": "bounded",
+              "upperBound": 1311000.9,
+              "visitedNodes": 3467513
+            }
+          },
+          {
+            "ms": 3049.0275,
+            "ready": 2937765,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 3045,
+              "enumeratedCompletions": 138300,
+              "evaluations": 21364856,
+              "exact": false,
+              "prunedByBound": 795133,
+              "prunedByConstraint": 12160716,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1269858.18,
+              "visitedNodes": 5327812
+            }
+          },
+          {
+            "ms": 4049.4332000000004,
+            "ready": 2765983,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 4045,
+              "enumeratedCompletions": 302361,
+              "evaluations": 29589611,
+              "exact": false,
+              "prunedByBound": 1793090,
+              "prunedByConstraint": 17358783,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1237491.54,
+              "visitedNodes": 7361683
+            }
+          },
+          {
+            "ms": 5049.584000000001,
+            "ready": 2314011,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 5044,
+              "enumeratedCompletions": 536640,
+              "evaluations": 38050668,
+              "exact": false,
+              "prunedByBound": 3005224,
+              "prunedByConstraint": 22742326,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1212414.84,
+              "visitedNodes": 9440361
+            }
+          },
+          {
+            "ms": 6049.8253,
+            "ready": 1560211,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 6043,
+              "enumeratedCompletions": 866269,
+              "evaluations": 47323788,
+              "exact": false,
+              "prunedByBound": 4517553,
+              "prunedByConstraint": 28656346,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1191116.22,
+              "visitedNodes": 11704998
+            }
+          },
+          {
+            "ms": 7050.392000000001,
+            "ready": 566206,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 7042,
+              "enumeratedCompletions": 1981742,
+              "evaluations": 57167071,
+              "exact": false,
+              "prunedByBound": 6185815,
+              "prunedByConstraint": 34451354,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1149861.3,
+              "visitedNodes": 13939958
+            }
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625722
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "before",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 7671.571,
+        "cpuMs": 38421.875,
+        "peakWorkingSetBytes": 140390400
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7480,
+        "enumeratedCompletions": 3185232,
+        "evaluations": 60498331,
+        "exact": true,
+        "peakReadyWork": 2938697,
+        "prunedByBound": 6861249,
+        "prunedByConstraint": 35875630,
+        "score": 1123905.36,
+        "sessionBatches": 20603,
+        "sessionPreparationMs": 45.839,
+        "sessionWallMs": 7488.8203,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 47.4738,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 47,
+              "enumeratedCompletions": 0,
+              "evaluations": 3160,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 3701100.6,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1047.6049999999998,
+            "ready": 1762163,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 1046,
+              "enumeratedCompletions": 2651,
+              "evaluations": 7100036,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 3557083,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 1387488.66,
+              "visitedNodes": 1774933
+            }
+          },
+          {
+            "ms": 2047.8301000000001,
+            "ready": 2710671,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+환주의 변경백||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+환주의 변경백",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AGGRO": -50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 15,
+                  "CSPD": 200,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "INTP": 4,
+                  "LRW": 10,
+                  "MAG_BARR": 3000,
+                  "MATKP": 19,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 6
+                }
+              },
+              "elapsedMs": 2045,
+              "enumeratedCompletions": 42813,
+              "evaluations": 13966586,
+              "exact": false,
+              "prunedByBound": 121524,
+              "prunedByConstraint": 7598983,
+              "score": 1106912.16,
+              "status": "bounded",
+              "upperBound": 1310412.36,
+              "visitedNodes": 3488923
+            }
+          },
+          {
+            "ms": 3047.9134,
+            "ready": 2936133,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 3044,
+              "enumeratedCompletions": 146948,
+              "evaluations": 21926064,
+              "exact": false,
+              "prunedByBound": 858064,
+              "prunedByConstraint": 12512508,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1267302.06,
+              "visitedNodes": 5467163
+            }
+          },
+          {
+            "ms": 4048.1452999999997,
+            "ready": 2747699,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 4043,
+              "enumeratedCompletions": 317941,
+              "evaluations": 30081400,
+              "exact": false,
+              "prunedByBound": 1858913,
+              "prunedByConstraint": 17667023,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1235837.1,
+              "visitedNodes": 7481958
+            }
+          },
+          {
+            "ms": 5048.4452,
+            "ready": 2270563,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 5043,
+              "enumeratedCompletions": 562972,
+              "evaluations": 38688552,
+              "exact": false,
+              "prunedByBound": 3103413,
+              "prunedByConstraint": 23144208,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1210775.7,
+              "visitedNodes": 9595043
+            }
+          },
+          {
+            "ms": 6048.8196,
+            "ready": 1495142,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 6042,
+              "enumeratedCompletions": 891899,
+              "evaluations": 47982324,
+              "exact": false,
+              "prunedByBound": 4629281,
+              "prunedByConstraint": 29081375,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1189823.8800000001,
+              "visitedNodes": 11865870
+            }
+          },
+          {
+            "ms": 7049.2311,
+            "ready": 519127,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+                "packageIds": [
+                  "weapon:굉룡 보비나리+도이",
+                  "armor:푸이에트+호뢰파섬",
+                  "additional:굴라+지브릴3",
+                  "special:시카노카미+자이언트 문어"
+                ],
+                "statDelta": {
+                  "ACC": 50,
+                  "AILMENT_RES": -2,
+                  "AMPR": 40,
+                  "ANTICIPATE": 13,
+                  "AOE_RES": -1,
+                  "ASPD": 150,
+                  "ATKP": 41,
+                  "CRIT": 68,
+                  "CRITP": 25,
+                  "CSPD": 200,
+                  "DEFP": -33,
+                  "FIRE_RES": -4,
+                  "GUARD_BREAK": 10,
+                  "LRW": 16,
+                  "MAG_BARR": 3000,
+                  "MATKP": 7,
+                  "MAXHP": 6200,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "MP_REGEN": 6,
+                  "MP_REGENP": 12,
+                  "PHYS_BARR": 3000,
+                  "SRW": 34,
+                  "STRP": 10
+                }
+              },
+              "elapsedMs": 7041,
+              "enumeratedCompletions": 2114532,
+              "evaluations": 57566057,
+              "exact": false,
+              "prunedByBound": 6247446,
+              "prunedByConstraint": 34628818,
+              "score": 1123905.36,
+              "status": "bounded",
+              "upperBound": 1146549.36,
+              "visitedNodes": 14011227
+            }
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 14625709
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 1,
+      "variant": "before",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 14124.457,
+        "cpuMs": 134125,
+        "peakWorkingSetBytes": 170995712
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 13924,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950602,
+        "exact": true,
+        "peakReadyWork": 3766636,
+        "prunedByBound": 43200140,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 53.3183,
+        "sessionWallMs": 13933.780799999999,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 54.5905,
+            "ready": 4,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:칼레리프+후빗||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:칼레리프+후빗",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGGRO": -15,
+                  "AILMENT_RES": -15,
+                  "ANTICIPATE": 10,
+                  "ATKP": 58,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 30,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 54,
+              "enumeratedCompletions": 0,
+              "evaluations": 1516,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": 21246,
+              "status": "bounded",
+              "upperBound": 75380,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1054.6661,
+            "ready": 2680593,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+칼레리프||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+칼레리프",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 62,
+                  "CDMG": 48,
+                  "CRIT": 6,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -60,
+                  "MATKP": 7,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 1053,
+              "enumeratedCompletions": 130126,
+              "evaluations": 7819974,
+              "exact": false,
+              "prunedByBound": 3082899,
+              "prunedByConstraint": 0,
+              "score": 21355,
+              "status": "bounded",
+              "upperBound": 25721,
+              "visitedNodes": 1924845
+            }
+          },
+          {
+            "ms": 2054.9276,
+            "ready": 3536724,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 2053,
+              "enumeratedCompletions": 709461,
+              "evaluations": 16389279,
+              "exact": false,
+              "prunedByBound": 8206654,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24642,
+              "visitedNodes": 3934929
+            }
+          },
+          {
+            "ms": 3054.9544,
+            "ready": 3763185,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 3052,
+              "enumeratedCompletions": 1612816,
+              "evaluations": 24335570,
+              "exact": false,
+              "prunedByBound": 13243129,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24075,
+              "visitedNodes": 5714929
+            }
+          },
+          {
+            "ms": 4055.2682999999997,
+            "ready": 3687733,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 4052,
+              "enumeratedCompletions": 2796399,
+              "evaluations": 32065391,
+              "exact": false,
+              "prunedByBound": 18202339,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23683,
+              "visitedNodes": 7377409
+            }
+          },
+          {
+            "ms": 5055.7954,
+            "ready": 3400387,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 5051,
+              "enumeratedCompletions": 4351398,
+              "evaluations": 40007040,
+              "exact": false,
+              "prunedByBound": 23245168,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23366,
+              "visitedNodes": 9008576
+            }
+          },
+          {
+            "ms": 6056.4196,
+            "ready": 2949868,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 6051,
+              "enumeratedCompletions": 6221417,
+              "evaluations": 47986685,
+              "exact": false,
+              "prunedByBound": 28236402,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23102,
+              "visitedNodes": 10577487
+            }
+          },
+          {
+            "ms": 7056.5369,
+            "ready": 2360722,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 7050,
+              "enumeratedCompletions": 8432405,
+              "evaluations": 56095549,
+              "exact": false,
+              "prunedByBound": 33199712,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22873,
+              "visitedNodes": 12101199
+            }
+          },
+          {
+            "ms": 8056.8337,
+            "ready": 1684947,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 8050,
+              "enumeratedCompletions": 10942514,
+              "evaluations": 64130616,
+              "exact": false,
+              "prunedByBound": 37962841,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22674,
+              "visitedNodes": 13538803
+            }
+          },
+          {
+            "ms": 9057.5419,
+            "ready": 991782,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 9050,
+              "enumeratedCompletions": 14016557,
+              "evaluations": 72040437,
+              "exact": false,
+              "prunedByBound": 42215680,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22486,
+              "visitedNodes": 14814907
+            }
+          },
+          {
+            "ms": 10057.6531,
+            "ready": 767306,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 10049,
+              "enumeratedCompletions": 21569233,
+              "evaluations": 80110811,
+              "exact": false,
+              "prunedByBound": 42675417,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22149,
+              "visitedNodes": 15097344
+            }
+          },
+          {
+            "ms": 11058.8089,
+            "ready": 595421,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 11050,
+              "enumeratedCompletions": 29319188,
+              "evaluations": 87924472,
+              "exact": false,
+              "prunedByBound": 42736600,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21905,
+              "visitedNodes": 15271752
+            }
+          },
+          {
+            "ms": 12060.8449,
+            "ready": 412030,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 12052,
+              "enumeratedCompletions": 37002305,
+              "evaluations": 95717809,
+              "exact": false,
+              "prunedByBound": 42844498,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21719,
+              "visitedNodes": 15457465
+            }
+          },
+          {
+            "ms": 13062.142100000001,
+            "ready": 214056,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 13053,
+              "enumeratedCompletions": 44759931,
+              "evaluations": 103631781,
+              "exact": false,
+              "prunedByBound": 42998845,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21564,
+              "visitedNodes": 15657438
+            }
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872893
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 1,
+      "variant": "after",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 13760.888,
+        "cpuMs": 134281.25,
+        "peakWorkingSetBytes": 171098112
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 13563,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950602,
+        "exact": true,
+        "peakReadyWork": 3766638,
+        "prunedByBound": 43200140,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 53.2893,
+        "sessionWallMs": 13572.701000000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 54.5571,
+            "ready": 4,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:칼레리프+후빗||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:칼레리프+후빗",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGGRO": -15,
+                  "AILMENT_RES": -15,
+                  "ANTICIPATE": 10,
+                  "ATKP": 58,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 30,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 54,
+              "enumeratedCompletions": 0,
+              "evaluations": 1516,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": 21246,
+              "status": "bounded",
+              "upperBound": 75380,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1054.8343,
+            "ready": 2688859,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+칼레리프||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+칼레리프",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 62,
+                  "CDMG": 48,
+                  "CRIT": 6,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -60,
+                  "MATKP": 7,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 1053,
+              "enumeratedCompletions": 132693,
+              "evaluations": 7871793,
+              "exact": false,
+              "prunedByBound": 3111515,
+              "prunedByConstraint": 0,
+              "score": 21355,
+              "status": "bounded",
+              "upperBound": 25711,
+              "visitedNodes": 1937215
+            }
+          },
+          {
+            "ms": 2055.1331,
+            "ready": 3547699,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 2053,
+              "enumeratedCompletions": 728919,
+              "evaluations": 16591231,
+              "exact": false,
+              "prunedByBound": 8332145,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24624,
+              "visitedNodes": 3980957
+            }
+          },
+          {
+            "ms": 3055.4375,
+            "ready": 3766445,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 3053,
+              "enumeratedCompletions": 1782621,
+              "evaluations": 25524127,
+              "exact": false,
+              "prunedByBound": 14000267,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24008,
+              "visitedNodes": 5973283
+            }
+          },
+          {
+            "ms": 4056.0780999999997,
+            "ready": 3632636,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 4052,
+              "enumeratedCompletions": 3154797,
+              "evaluations": 34071181,
+              "exact": false,
+              "prunedByBound": 19485049,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23596,
+              "visitedNodes": 7797188
+            }
+          },
+          {
+            "ms": 5056.2035,
+            "ready": 3275296,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 5052,
+              "enumeratedCompletions": 4894317,
+              "evaluations": 42487701,
+              "exact": false,
+              "prunedByBound": 24811529,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23279,
+              "visitedNodes": 9505048
+            }
+          },
+          {
+            "ms": 6056.346,
+            "ready": 2782242,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 6051,
+              "enumeratedCompletions": 6871961,
+              "evaluations": 50476873,
+              "exact": false,
+              "prunedByBound": 29769258,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23028,
+              "visitedNodes": 11051901
+            }
+          },
+          {
+            "ms": 7056.6147,
+            "ready": 2160035,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 7050,
+              "enumeratedCompletions": 9164634,
+              "evaluations": 58563448,
+              "exact": false,
+              "prunedByBound": 34685562,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22809,
+              "visitedNodes": 12551706
+            }
+          },
+          {
+            "ms": 8057.2863,
+            "ready": 1467687,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 8050,
+              "enumeratedCompletions": 11775388,
+              "evaluations": 66575792,
+              "exact": false,
+              "prunedByBound": 39370734,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22618,
+              "visitedNodes": 13960472
+            }
+          },
+          {
+            "ms": 9059.7931,
+            "ready": 891184,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 9052,
+              "enumeratedCompletions": 15908315,
+              "evaluations": 74391697,
+              "exact": false,
+              "prunedByBound": 42622560,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22387,
+              "visitedNodes": 14968127
+            }
+          },
+          {
+            "ms": 10060.3096,
+            "ready": 721363,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 10052,
+              "enumeratedCompletions": 23701822,
+              "evaluations": 82255624,
+              "exact": false,
+              "prunedByBound": 42687075,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22075,
+              "visitedNodes": 15143853
+            }
+          },
+          {
+            "ms": 11060.8502,
+            "ready": 543388,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 11052,
+              "enumeratedCompletions": 31558869,
+              "evaluations": 90191191,
+              "exact": false,
+              "prunedByBound": 42762912,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21846,
+              "visitedNodes": 15324511
+            }
+          },
+          {
+            "ms": 12061.794100000001,
+            "ready": 353207,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 12053,
+              "enumeratedCompletions": 39356607,
+              "evaluations": 98115167,
+              "exact": false,
+              "prunedByBound": 42886892,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21669,
+              "visitedNodes": 15516950
+            }
+          },
+          {
+            "ms": 13064.1891,
+            "ready": 149077,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 13055,
+              "enumeratedCompletions": 47208149,
+              "evaluations": 106138191,
+              "exact": false,
+              "prunedByBound": 43056441,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21520,
+              "visitedNodes": 15723013
+            }
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872893
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 2,
+      "variant": "after",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 13745.383,
+        "cpuMs": 126921.875,
+        "peakWorkingSetBytes": 171708416
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 13550,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950606,
+        "exact": true,
+        "peakReadyWork": 3766639,
+        "prunedByBound": 43200143,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 53.163799999999995,
+        "sessionWallMs": 13559.3716,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 54.5208,
+            "ready": 4,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:칼레리프+후빗||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:칼레리프+후빗",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGGRO": -15,
+                  "AILMENT_RES": -15,
+                  "ANTICIPATE": 10,
+                  "ATKP": 58,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 30,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 54,
+              "enumeratedCompletions": 0,
+              "evaluations": 1516,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": 21246,
+              "status": "bounded",
+              "upperBound": 75380,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1054.8801999999998,
+            "ready": 2700353,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+칼레리프||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+칼레리프",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 62,
+                  "CDMG": 48,
+                  "CRIT": 6,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -60,
+                  "MATKP": 7,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 1054,
+              "enumeratedCompletions": 135306,
+              "evaluations": 7944548,
+              "exact": false,
+              "prunedByBound": 3152567,
+              "prunedByConstraint": 0,
+              "score": 21355,
+              "status": "bounded",
+              "upperBound": 25698,
+              "visitedNodes": 1954811
+            }
+          },
+          {
+            "ms": 2055.3723,
+            "ready": 3554653,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 2053,
+              "enumeratedCompletions": 741582,
+              "evaluations": 16723586,
+              "exact": false,
+              "prunedByBound": 8414689,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24613,
+              "visitedNodes": 4011151
+            }
+          },
+          {
+            "ms": 3055.8306000000002,
+            "ready": 3766395,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 3053,
+              "enumeratedCompletions": 1744649,
+              "evaluations": 25243383,
+              "exact": false,
+              "prunedByBound": 13819073,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24024,
+              "visitedNodes": 5911755
+            }
+          },
+          {
+            "ms": 4056.0319,
+            "ready": 3653209,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 4052,
+              "enumeratedCompletions": 3033413,
+              "evaluations": 33380573,
+              "exact": false,
+              "prunedByBound": 19040251,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23625,
+              "visitedNodes": 7652189
+            }
+          },
+          {
+            "ms": 5056.460999999999,
+            "ready": 3334905,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 5052,
+              "enumeratedCompletions": 4638816,
+              "evaluations": 41340436,
+              "exact": false,
+              "prunedByBound": 24088751,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23318,
+              "visitedNodes": 9276453
+            }
+          },
+          {
+            "ms": 6056.5871,
+            "ready": 2841186,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 6051,
+              "enumeratedCompletions": 6649481,
+              "evaluations": 49626279,
+              "exact": false,
+              "prunedByBound": 29244252,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23053,
+              "visitedNodes": 10889849
+            }
+          },
+          {
+            "ms": 7056.9617,
+            "ready": 2237161,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 7051,
+              "enumeratedCompletions": 8881831,
+              "evaluations": 57624789,
+              "exact": false,
+              "prunedByBound": 34122925,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22833,
+              "visitedNodes": 12381361
+            }
+          },
+          {
+            "ms": 8057.1225,
+            "ready": 1551437,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 8050,
+              "enumeratedCompletions": 11454525,
+              "evaluations": 65638513,
+              "exact": false,
+              "prunedByBound": 38831854,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22639,
+              "visitedNodes": 13799186
+            }
+          },
+          {
+            "ms": 9057.623899999999,
+            "ready": 914074,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 9049,
+              "enumeratedCompletions": 15339211,
+              "evaluations": 73741583,
+              "exact": false,
+              "prunedByBound": 42550442,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22415,
+              "visitedNodes": 14936345
+            }
+          },
+          {
+            "ms": 10058.1294,
+            "ready": 724935,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 10050,
+              "enumeratedCompletions": 23538535,
+              "evaluations": 82091223,
+              "exact": false,
+              "prunedByBound": 42686005,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22081,
+              "visitedNodes": 15140237
+            }
+          },
+          {
+            "ms": 11059.2679,
+            "ready": 541344,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 11051,
+              "enumeratedCompletions": 31645644,
+              "evaluations": 90279116,
+              "exact": false,
+              "prunedByBound": 42764035,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21844,
+              "visitedNodes": 15326582
+            }
+          },
+          {
+            "ms": 12061.303600000001,
+            "ready": 354743,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 12052,
+              "enumeratedCompletions": 39294293,
+              "evaluations": 98051789,
+              "exact": false,
+              "prunedByBound": 42885842,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21670,
+              "visitedNodes": 15515400
+            }
+          },
+          {
+            "ms": 13061.9672,
+            "ready": 153680,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 13053,
+              "enumeratedCompletions": 47032932,
+              "evaluations": 105958888,
+              "exact": false,
+              "prunedByBound": 43052403,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21523,
+              "visitedNodes": 15718362
+            }
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872895
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 2,
+      "variant": "before",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 14416.578,
+        "cpuMs": 135703.125,
+        "peakWorkingSetBytes": 171290624
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 14221,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950598,
+        "exact": true,
+        "peakReadyWork": 3766638,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 53.1665,
+        "sessionWallMs": 14230.7178,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 54.6247,
+            "ready": 4,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:칼레리프+후빗||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:칼레리프+후빗",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGGRO": -15,
+                  "AILMENT_RES": -15,
+                  "ANTICIPATE": 10,
+                  "ATKP": 58,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": -100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 30,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 54,
+              "enumeratedCompletions": 0,
+              "evaluations": 1516,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": 21246,
+              "status": "bounded",
+              "upperBound": 75380,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1054.8128000000002,
+            "ready": 2667351,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+칼레리프||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+칼레리프",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 62,
+                  "CDMG": 48,
+                  "CRIT": 6,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -60,
+                  "MATKP": 7,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 1053,
+              "enumeratedCompletions": 127524,
+              "evaluations": 7738874,
+              "exact": false,
+              "prunedByBound": 3037325,
+              "prunedByConstraint": 0,
+              "score": 21355,
+              "status": "bounded",
+              "upperBound": 25736,
+              "visitedNodes": 1905163
+            }
+          },
+          {
+            "ms": 2055.0949,
+            "ready": 3501453,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 2053,
+              "enumeratedCompletions": 649804,
+              "evaluations": 15771584,
+              "exact": false,
+              "prunedByBound": 7824669,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24697,
+              "visitedNodes": 3794147
+            }
+          },
+          {
+            "ms": 3055.5594,
+            "ready": 3748820,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 3053,
+              "enumeratedCompletions": 1429333,
+              "evaluations": 22909907,
+              "exact": false,
+              "prunedByBound": 12329780,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 24161,
+              "visitedNodes": 5400463
+            }
+          },
+          {
+            "ms": 4055.7296,
+            "ready": 3711292,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 4052,
+              "enumeratedCompletions": 2616190,
+              "evaluations": 30981814,
+              "exact": false,
+              "prunedByBound": 17505252,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23732,
+              "visitedNodes": 7147569
+            }
+          },
+          {
+            "ms": 5056.227,
+            "ready": 3450097,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 5052,
+              "enumeratedCompletions": 4117388,
+              "evaluations": 38919436,
+              "exact": false,
+              "prunedByBound": 22560443,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23405,
+              "visitedNodes": 8789997
+            }
+          },
+          {
+            "ms": 6056.4035,
+            "ready": 3059989,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 6051,
+              "enumeratedCompletions": 5783545,
+              "evaluations": 46246761,
+              "exact": false,
+              "prunedByBound": 27159497,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 23155,
+              "visitedNodes": 10242219
+            }
+          },
+          {
+            "ms": 7056.5816,
+            "ready": 2511943,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 7051,
+              "enumeratedCompletions": 7881473,
+              "evaluations": 54164619,
+              "exact": false,
+              "prunedByBound": 32025819,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22925,
+              "visitedNodes": 11743873
+            }
+          },
+          {
+            "ms": 8056.7303,
+            "ready": 1862429,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:네오 마기 피레시아+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:네오 마기 피레시아+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "AGIP": 4,
+                  "AILMENT_RES": 4,
+                  "AMPR": 4,
+                  "ANTICIPATE": 10,
+                  "ATKP": 65,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 15,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXHPP": -12,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6
+                }
+              },
+              "elapsedMs": 8050,
+              "enumeratedCompletions": 10272174,
+              "evaluations": 62090588,
+              "exact": false,
+              "prunedByBound": 36773208,
+              "prunedByConstraint": 0,
+              "score": 21440,
+              "status": "bounded",
+              "upperBound": 22722,
+              "visitedNodes": 13181266
+            }
+          },
+          {
+            "ms": 9057.1827,
+            "ready": 1180012,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 9049,
+              "enumeratedCompletions": 12907804,
+              "evaluations": 69718102,
+              "exact": false,
+              "prunedByBound": 41140876,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22548,
+              "visitedNodes": 14487899
+            }
+          },
+          {
+            "ms": 10059.7957,
+            "ready": 817830,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 10052,
+              "enumeratedCompletions": 19167256,
+              "evaluations": 77699294,
+              "exact": false,
+              "prunedByBound": 42666421,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 22242,
+              "visitedNodes": 15046276
+            }
+          },
+          {
+            "ms": 11062.158500000001,
+            "ready": 653573,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 11054,
+              "enumeratedCompletions": 26764576,
+              "evaluations": 85343226,
+              "exact": false,
+              "prunedByBound": 42710884,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21979,
+              "visitedNodes": 15212682
+            }
+          },
+          {
+            "ms": 12064.5204,
+            "ready": 476972,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 12056,
+              "enumeratedCompletions": 34344480,
+              "evaluations": 93016824,
+              "exact": false,
+              "prunedByBound": 42802087,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21779,
+              "visitedNodes": 15391774
+            }
+          },
+          {
+            "ms": 13066.3952,
+            "ready": 285182,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 13057,
+              "enumeratedCompletions": 42031317,
+              "evaluations": 100843263,
+              "exact": false,
+              "prunedByBound": 42939577,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21615,
+              "visitedNodes": 15585676
+            }
+          },
+          {
+            "ms": 14067.103,
+            "ready": 79998,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+                "packageIds": [
+                  "weapon:도이+칼레리프",
+                  "armor:칼레리프+호뢰파섬",
+                  "additional:어둠의 언데드 기사+카나요간",
+                  "special:죠코+칼레리프"
+                ],
+                "statDelta": {
+                  "ACCP": 7,
+                  "ANTICIPATE": 10,
+                  "ATKP": 64,
+                  "CDMG": 36,
+                  "CRIT": 22,
+                  "CRITP": 25,
+                  "DEFP": -33,
+                  "LIGHT_RES": -10,
+                  "MAG_RES": -45,
+                  "MATKP": 3,
+                  "MAXHP": 6500,
+                  "MAXMP": 100,
+                  "MOTIONSPEED": 2,
+                  "PHYS_PIERCE": 10,
+                  "PHYS_RES": 4,
+                  "REVIVE_TIME": -10,
+                  "SRW": 25,
+                  "STABILITY": 6,
+                  "STRP": 8
+                }
+              },
+              "elapsedMs": 14058,
+              "enumeratedCompletions": 49762990,
+              "evaluations": 108758336,
+              "exact": false,
+              "prunedByBound": 43121177,
+              "prunedByConstraint": 0,
+              "score": 21458,
+              "status": "bounded",
+              "upperBound": 21477,
+              "visitedNodes": 15792660
+            }
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 1,
+      "variant": "before",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4220.804,
+        "cpuMs": 30781.25,
+        "peakWorkingSetBytes": 145756160
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4049,
+        "enumeratedCompletions": 32546658,
+        "evaluations": 63210736,
+        "exact": true,
+        "peakReadyWork": 2912691,
+        "prunedByBound": 14598201,
+        "prunedByConstraint": 7532471,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 8.5837,
+        "sessionWallMs": 4052.9678000000004,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 9.1163,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 9,
+              "enumeratedCompletions": 0,
+              "evaluations": 3104,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 52934,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1009.3536999999999,
+            "ready": 2100641,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-2+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-1-0+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-2+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-1-0+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 60,
+                  "MAXMP": 960,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 1008,
+              "enumeratedCompletions": 1630312,
+              "evaluations": 12428792,
+              "exact": false,
+              "prunedByBound": 3417089,
+              "prunedByConstraint": 2514380,
+              "score": 42389,
+              "status": "bounded",
+              "upperBound": 45142,
+              "visitedNodes": 2712640
+            }
+          },
+          {
+            "ms": 2009.6891,
+            "ready": 2908410,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-7+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-7||additional:SYN-2-1-5+SYN-2-2-7||special:SYN-3-0-1+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-7+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-7",
+                  "additional:SYN-2-1-5+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 109,
+                  "CDMG": 115,
+                  "CRIT": 66,
+                  "MAXMP": 960,
+                  "SRW": 10
+                }
+              },
+              "elapsedMs": 2008,
+              "enumeratedCompletions": 5327783,
+              "evaluations": 28196720,
+              "exact": false,
+              "prunedByBound": 8415851,
+              "prunedByConstraint": 5624420,
+              "score": 42896,
+              "status": "bounded",
+              "upperBound": 44448,
+              "visitedNodes": 5770863
+            }
+          },
+          {
+            "ms": 3010.0764,
+            "ready": 2138027,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-0",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-0"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 3007,
+              "enumeratedCompletions": 22111378,
+              "evaluations": 51122429,
+              "exact": false,
+              "prunedByBound": 11871777,
+              "prunedByConstraint": 7125967,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43535,
+              "visitedNodes": 7621049
+            }
+          },
+          {
+            "ms": 4010.1506000000004,
+            "ready": 151756,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-5"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 11
+                }
+              },
+              "elapsedMs": 4006,
+              "enumeratedCompletions": 32546658,
+              "evaluations": 63210736,
+              "exact": false,
+              "prunedByBound": 14446445,
+              "prunedByConstraint": 7532471,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43247,
+              "visitedNodes": 9715116
+            }
+          }
+        ],
+        "upperBound": 43247,
+        "visitedNodes": 9866872
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 1,
+      "variant": "after",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4250.298,
+        "cpuMs": 28593.75,
+        "peakWorkingSetBytes": 131297280
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4081,
+        "enumeratedCompletions": 32550304,
+        "evaluations": 63213511,
+        "exact": true,
+        "peakReadyWork": 2912688,
+        "prunedByBound": 14598192,
+        "prunedByConstraint": 7531614,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 8.5596,
+        "sessionWallMs": 4085.1984,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 9.0431,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 9,
+              "enumeratedCompletions": 0,
+              "evaluations": 3104,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 52934,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1009.6935,
+            "ready": 2108200,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-2+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-1-0+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-2+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-1-0+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 60,
+                  "MAXMP": 960,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 1008,
+              "enumeratedCompletions": 1641949,
+              "evaluations": 12519900,
+              "exact": false,
+              "prunedByBound": 3450241,
+              "prunedByConstraint": 2533171,
+              "score": 42389,
+              "status": "bounded",
+              "upperBound": 45138,
+              "visitedNodes": 2732963
+            }
+          },
+          {
+            "ms": 2009.9760999999999,
+            "ready": 2912508,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-7+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-7||additional:SYN-2-1-5+SYN-2-2-7||special:SYN-3-0-1+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-7+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-7",
+                  "additional:SYN-2-1-5+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 109,
+                  "CDMG": 115,
+                  "CRIT": 66,
+                  "MAXMP": 960,
+                  "SRW": 10
+                }
+              },
+              "elapsedMs": 2008,
+              "enumeratedCompletions": 5617640,
+              "evaluations": 28749847,
+              "exact": false,
+              "prunedByBound": 8541405,
+              "prunedByConstraint": 5684901,
+              "score": 42896,
+              "status": "bounded",
+              "upperBound": 44417,
+              "visitedNodes": 5842068
+            }
+          },
+          {
+            "ms": 3010.3247,
+            "ready": 2100354,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-0",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-0"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 3008,
+              "enumeratedCompletions": 22771225,
+              "evaluations": 51945569,
+              "exact": false,
+              "prunedByBound": 11976394,
+              "prunedByConstraint": 7165690,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43516,
+              "visitedNodes": 7674752
+            }
+          },
+          {
+            "ms": 4010.3799999999997,
+            "ready": 266442,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-5"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 11
+                }
+              },
+              "elapsedMs": 4006,
+              "enumeratedCompletions": 32550304,
+              "evaluations": 63213511,
+              "exact": false,
+              "prunedByBound": 14331750,
+              "prunedByConstraint": 7531614,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43247,
+              "visitedNodes": 9600427
+            }
+          }
+        ],
+        "upperBound": 43247,
+        "visitedNodes": 9866869
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 2,
+      "variant": "after",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4191.778,
+        "cpuMs": 27125,
+        "peakWorkingSetBytes": 131485696
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4015,
+        "enumeratedCompletions": 32534508,
+        "evaluations": 63200139,
+        "exact": true,
+        "peakReadyWork": 2912690,
+        "prunedByBound": 14598198,
+        "prunedByConstraint": 7533587,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 8.6273,
+        "sessionWallMs": 4018.7244,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 9.1104,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 9,
+              "enumeratedCompletions": 0,
+              "evaluations": 3104,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 52934,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1014.5085,
+            "ready": 2097300,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-2+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-1-0+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-2+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-1-0+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 60,
+                  "MAXMP": 960,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 1013,
+              "enumeratedCompletions": 1619993,
+              "evaluations": 12390231,
+              "exact": false,
+              "prunedByBound": 3406533,
+              "prunedByConstraint": 2507683,
+              "score": 42389,
+              "status": "bounded",
+              "upperBound": 45142,
+              "visitedNodes": 2705547
+            }
+          },
+          {
+            "ms": 2014.8183999999999,
+            "ready": 2908596,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-7+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-7||additional:SYN-2-1-5+SYN-2-2-7||special:SYN-3-0-1+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-7+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-7",
+                  "additional:SYN-2-1-5+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 109,
+                  "CDMG": 115,
+                  "CRIT": 66,
+                  "MAXMP": 960,
+                  "SRW": 10
+                }
+              },
+              "elapsedMs": 2013,
+              "enumeratedCompletions": 5544007,
+              "evaluations": 28572006,
+              "exact": false,
+              "prunedByBound": 8493790,
+              "prunedByConstraint": 5660891,
+              "score": 42896,
+              "status": "bounded",
+              "upperBound": 44417,
+              "visitedNodes": 5815162
+            }
+          },
+          {
+            "ms": 3015.0848,
+            "ready": 2100359,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-0",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-0"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 3012,
+              "enumeratedCompletions": 22752738,
+              "evaluations": 51931212,
+              "exact": false,
+              "prunedByBound": 11976396,
+              "prunedByConstraint": 7168169,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43516,
+              "visitedNodes": 7674754
+            }
+          },
+          {
+            "ms": 4015.1675000000005,
+            "ready": 13519,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-5"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 11
+                }
+              },
+              "elapsedMs": 4011,
+              "enumeratedCompletions": 32534508,
+              "evaluations": 63200139,
+              "exact": false,
+              "prunedByBound": 14584679,
+              "prunedByConstraint": 7533587,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43247,
+              "visitedNodes": 9853357
+            }
+          }
+        ],
+        "upperBound": 43247,
+        "visitedNodes": 9866876
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 2,
+      "variant": "before",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4391.324,
+        "cpuMs": 30218.75,
+        "peakWorkingSetBytes": 130736128
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4214,
+        "enumeratedCompletions": 32525214,
+        "evaluations": 63193660,
+        "exact": true,
+        "peakReadyWork": 2912701,
+        "prunedByBound": 14598172,
+        "prunedByConstraint": 7535516,
+        "score": 43247,
+        "sessionBatches": 10560,
+        "sessionPreparationMs": 8.7263,
+        "sessionWallMs": 4217.7351,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 9.205400000000001,
+            "ready": 4,
+            "result": {
+              "bestBuild": null,
+              "elapsedMs": 9,
+              "enumeratedCompletions": 0,
+              "evaluations": 3104,
+              "exact": false,
+              "prunedByBound": 0,
+              "prunedByConstraint": 0,
+              "score": null,
+              "status": "no-incumbent-yet",
+              "upperBound": 52934,
+              "visitedNodes": 1
+            }
+          },
+          {
+            "ms": 1009.5423999999999,
+            "ready": 2064447,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-2+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-1-0+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-2+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-1-0+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 60,
+                  "MAXMP": 960,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 1008,
+              "enumeratedCompletions": 1554418,
+              "evaluations": 12045434,
+              "exact": false,
+              "prunedByBound": 3295242,
+              "prunedByConstraint": 2444883,
+              "score": 42389,
+              "status": "bounded",
+              "upperBound": 45165,
+              "visitedNodes": 2635009
+            }
+          },
+          {
+            "ms": 2009.9032000000002,
+            "ready": 2906535,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-0-7+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-7||additional:SYN-2-1-5+SYN-2-2-7||special:SYN-3-0-1+SYN-3-2-2",
+                "packageIds": [
+                  "weapon:SYN-0-0-7+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-7",
+                  "additional:SYN-2-1-5+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-2-2"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 109,
+                  "CDMG": 115,
+                  "CRIT": 66,
+                  "MAXMP": 960,
+                  "SRW": 10
+                }
+              },
+              "elapsedMs": 2008,
+              "enumeratedCompletions": 5072861,
+              "evaluations": 27694217,
+              "exact": false,
+              "prunedByBound": 8301215,
+              "prunedByConstraint": 5563034,
+              "score": 42896,
+              "status": "bounded",
+              "upperBound": 44483,
+              "visitedNodes": 5705241
+            }
+          },
+          {
+            "ms": 3009.9784999999997,
+            "ready": 2161215,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-6+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-0",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-6+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-0"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 14
+                }
+              },
+              "elapsedMs": 3007,
+              "enumeratedCompletions": 21746810,
+              "evaluations": 50661752,
+              "exact": false,
+              "prunedByBound": 11807298,
+              "prunedByConstraint": 7102908,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43563,
+              "visitedNodes": 7589475
+            }
+          },
+          {
+            "ms": 4010.1004,
+            "ready": 568531,
+            "result": {
+              "bestBuild": {
+                "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+                "packageIds": [
+                  "weapon:SYN-0-2-3+SYN-0-3-5",
+                  "armor:SYN-1-1-1+SYN-1-2-5",
+                  "additional:SYN-2-0-6+SYN-2-2-7",
+                  "special:SYN-3-0-1+SYN-3-1-5"
+                ],
+                "statDelta": {
+                  "AMPR": 30,
+                  "ASPD": 280,
+                  "ATKP": 111,
+                  "CDMG": 118,
+                  "CRIT": 63,
+                  "MAXMP": 880,
+                  "SRW": 11
+                }
+              },
+              "elapsedMs": 4006,
+              "enumeratedCompletions": 32525214,
+              "evaluations": 63193660,
+              "exact": false,
+              "prunedByBound": 14029641,
+              "prunedByConstraint": 7535516,
+              "score": 43247,
+              "status": "bounded",
+              "upperBound": 43247,
+              "visitedNodes": 9298338
+            }
+          }
+        ],
+        "upperBound": 43247,
+        "visitedNodes": 9866869
+      }
+    }
+  ],
+  "sourceHashes": {
+    "d4_native_evaluator.rs": "89500cff5ead808af626ad64a57519ca55561ff1d43e68ba961f363caeca9838",
+    "d4_native_solver.rs": "0bb93422c445a3423b43c43bbb351ee9bde8c3e5f7a3f7608c7ba317faf5b45b"
+  },
+  "beforeEvaluatorHash": "73015727aff60dee2141baa3de2b84bf13cbddf102c4886ea5947634271a8d65"
+}

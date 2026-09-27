@@ -1,0 +1,86 @@
+{
+  "date": "2026-09-24T09:55:23.409Z",
+  "budgetMs": 3000,
+  "sourceHashes": {
+    "d4_native_evaluator.rs": "73015727aff60dee2141baa3de2b84bf13cbddf102c4886ea5947634271a8d65",
+    "d4_native_solver.rs": "b792b79f907063a1d906c0678ace8327a6bb77bc5e4e0f3ba4a7dbddff803f58",
+    "d4_native_stats.rs": "dba2c696d693aa904ab9c3e0dc6231c8d35d825d1c4d68b18ed0b29eadaed148",
+    "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e",
+    "bin/d4_native_parallel.rs": "891eed209bb3b1813e92445790f333c5fce400c7c793cd1d3bfddbb80992bf35"
+  },
+  "runs": [
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "variant": "control",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "result": {
+        "status": "bounded",
+        "score": 1123905.36,
+        "upperBound": 1261878.72,
+        "evaluations": 23192126,
+        "sessionWallMs": 3000.0573
+      }
+    },
+    {
+      "fixture": "revenir",
+      "threads": 16,
+      "variant": "profile",
+      "packages": [
+        1141,
+        1017,
+        871,
+        1121
+      ],
+      "result": {
+        "status": "bounded",
+        "score": 1123905.36,
+        "upperBound": 1264770.42,
+        "evaluations": 22525615,
+        "sessionWallMs": 3000.1991000000003
+      }
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "variant": "control",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "result": {
+        "status": "bounded",
+        "score": 21440,
+        "upperBound": 24020,
+        "evaluations": 25307074,
+        "sessionWallMs": 3000.2449
+      }
+    },
+    {
+      "fixture": "dual",
+      "threads": 16,
+      "variant": "profile",
+      "packages": [
+        992,
+        890,
+        718,
+        931
+      ],
+      "result": {
+        "status": "bounded",
+        "score": 21440,
+        "upperBound": 24056,
+        "evaluations": 24671143,
+        "sessionWallMs": 3000.0257
+      }
+    }
+  ],
+  "notes": "Utility policy v2 smoke measurement; 3-second bounded searches, not an old/new performance comparison or an optimality certificate."
+}

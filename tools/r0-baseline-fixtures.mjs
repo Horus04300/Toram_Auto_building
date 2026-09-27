@@ -30,6 +30,7 @@ export const NORMAL_VALUE_FIXTURES = Object.freeze([
   'test-d4-recommendation-apply.mjs',
   'test-d4-rust-native-parity.mjs',
   'test-d4-utility-dependencies.mjs',
+  'test-d4-utility-caps.mjs',
   'test-dagger-s5.mjs',
   'test-dancer-s5.mjs',
   'test-dark-power-s5.mjs',

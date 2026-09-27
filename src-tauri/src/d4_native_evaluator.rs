@@ -855,7 +855,98 @@ pub fn evaluate_feasible_summary<C: ContextLookup>(
     evaluate_filtered_summary(base, stats, accepts)
 }
 
+/// Goal coordinates are distinct from raw stats used by damage calculations.
+#[allow(dead_code)] // Full raw-summary reference for the score-only search path.
+pub fn evaluate_utility_feasible_summary<C: ContextLookup>(
+    base: &C,
+    stats: &NativeStats,
+    accepts: impl FnMut(usize, f64) -> bool,
+) -> Result<Option<D4NativeSummary>, String> {
+    evaluate_utility_filtered::<true, C>(base, stats, accepts)
+}
+
+#[allow(dead_code)] // Raw-summary-only bridge does not consume search scores.
+pub struct D4NativeScore {
+    pub optimization_damage_factor: f64,
+}
+
+pub fn evaluate_utility_feasible_score<C: ContextLookup>(
+    base: &C,
+    stats: &NativeStats,
+    accepts: impl FnMut(usize, f64) -> bool,
+) -> Result<Option<D4NativeScore>, String> {
+    Ok(
+        evaluate_utility_filtered::<false, C>(base, stats, accepts)?.map(|summary| D4NativeScore {
+            optimization_damage_factor: summary.optimization_damage_factor,
+        }),
+    )
+}
+
+fn evaluate_utility_filtered<const RAW_AMPR: bool, C: ContextLookup>(
+    base: &C,
+    stats: &NativeStats,
+    mut accepts: impl FnMut(usize, f64) -> bool,
+) -> Result<Option<D4NativeSummary>, String> {
+    if !base.is_object() {
+        return Err("D4 native summary requires an object base context".into());
+    }
+    let mut mp = 0.0;
+    // Stage 2 always derives the goal AMPR here; its raw argument is unused.
+    evaluate_filtered_summary_impl::<RAW_AMPR, _, _>(base, stats, |index, raw| {
+        let value = match index {
+            1 => {
+                mp = raw as f64;
+                mp.min(if number(base, "godspeedWieldLevel") > 0.0 {
+                    2300.0
+                } else {
+                    2000.0
+                })
+            }
+            2 => {
+                let ampr = floor(10.0 + mp.min(2000.0) / 100.0)
+                    + number(base, "amprF")
+                    + stat(stats, "AMPR");
+                match base.prepared_effects() {
+                    Some(effects) => effects.ampr(ampr),
+                    None => resolve_normal_attack_ampr(
+                        ampr,
+                        base.context_get("normalAttackAmprProfile"),
+                    ),
+                }
+            }
+            3 => (raw as f64).clamp(0.0, 100.0),
+            4 if raw >= 1000 => {
+                let motion = (floor((raw as f64 - 1000.0) / 180.0).min(50.0)
+                    + number(base, "motionSpeed")
+                    + stat(stats, "MOTIONSPEED"))
+                .min(50.0);
+                1000.0 + 180.0 * motion.max(0.0)
+            }
+            _ => raw as f64,
+        };
+        accepts(index, value)
+    })
+}
+
+#[allow(dead_code)] // Standalone raw-summary bridges do not use goal bounds.
+pub fn utility_values<C: ContextLookup>(base: &C, stats: &NativeStats) -> Result<[f64; 5], String> {
+    let mut values = [0.0; 5];
+    evaluate_utility_feasible_score(base, stats, |index, value| {
+        values[index] = value;
+        index != 4 // Utility-only probe: do not calculate damage.
+    })?;
+    Ok(values)
+}
+
 fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
+    base: &C,
+    stats: &T,
+    accepts: impl FnMut(usize, i64) -> bool,
+) -> Result<Option<D4NativeSummary>, String> {
+    evaluate_filtered_summary_impl::<true, T, C>(base, stats, accepts)
+}
+
+fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: ContextLookup>(
     base: &C,
     stats: &T,
     mut accepts: impl FnMut(usize, i64) -> bool,
@@ -885,14 +976,21 @@ fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
     if !accepts(1, max_mp) {
         return Ok(None);
     }
-    let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
-    let ampr = floor(base_ampr * (100.0 + number(base, "amprP") + stat(stats, "AMPRP")) / 100.0)
-        + number(base, "amprF")
-        + stat(stats, "AMPR");
-    let ampr_before_dual = match base.prepared_effects() {
-        Some(effects) => effects.ampr(ampr),
-        None => resolve_normal_attack_ampr(ampr, base.context_get("normalAttackAmprProfile")),
-    } as i64;
+    let ampr_before_dual = if RAW_AMPR {
+        let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
+        let ampr =
+            floor(base_ampr * (100.0 + number(base, "amprP") + stat(stats, "AMPRP")) / 100.0)
+                + number(base, "amprF")
+                + stat(stats, "AMPR");
+        (match base.prepared_effects() {
+            Some(effects) => effects.ampr(ampr),
+            None => resolve_normal_attack_ampr(ampr, base.context_get("normalAttackAmprProfile")),
+        }) as i64
+    } else {
+        // Never exposed as a raw summary: the score-only entry point discards
+        // this field, and its utility callback independently computes AMPR.
+        0
+    };
 
     if !accepts(2, ampr_before_dual) {
         return Ok(None);
@@ -1225,6 +1323,69 @@ fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn search_projection_covers_evaluator_reads_and_dynamic_stat_totals() {
+        // Fail when a new literal evaluator dependency is omitted from projection.
+        let source = include_str!("d4_native_evaluator.rs")
+            .split("mod tests {")
+            .next()
+            .unwrap();
+        let mut dependencies = std::collections::BTreeSet::new();
+        for call in source.split("stat(stats, \"").skip(1) {
+            dependencies.insert(call.split('"').next().unwrap());
+        }
+        for call in source.split("stat_total(base, stats, ").skip(1) {
+            let args = call.split(')').next().unwrap();
+            let strings = args.split('"').skip(1).step_by(2).collect::<Vec<_>>();
+            assert_eq!(strings.len(), 5);
+            dependencies.extend(&strings[3..]);
+        }
+        assert!(dependencies.contains("MOTIONSPEED"));
+        assert!(dependencies.contains("VITP"));
+        for key in dependencies {
+            let raw = NativeStats::from([(key.to_owned(), -17.25)]);
+            assert_eq!(raw.evaluation_projection().get(key), raw.get(key), "{key}");
+        }
+    }
+
+    #[test]
+    fn score_only_utility_matches_raw_reference_at_every_rejection_stage() {
+        let base = serde_json::json!({"level":100,"mainType":"한손검","wpnAtk":100,"strBase":200,
+            "normalAttackAmprProfile":{"passive":[{"percent":13.7,"multiplier":1.2,"flat":-2.5}],"activeCandidates":[{"id":"a","multiplier":1.2,"flat":0.5}]}});
+        for mp in [100.0, 2000.0, 2300.0, 5000.0] {
+            for percent in [-100.0, 0.0, 250.0] {
+                let stats = NativeStats::from([
+                    ("MAXMP".into(), mp),
+                    ("AMPRP".into(), percent),
+                    ("AMPR".into(), 7.5),
+                ]);
+                let prepared = PreparedContext::from(base.clone());
+                for stop in 0..=5 {
+                    let mut expected = Vec::new();
+                    let raw = evaluate_utility_feasible_summary(&prepared, &stats, |i, v| {
+                        expected.push((i, v));
+                        i != stop
+                    })
+                    .unwrap();
+                    let mut actual = Vec::new();
+                    let score = evaluate_utility_feasible_score(&prepared, &stats, |i, v| {
+                        actual.push((i, v));
+                        i != stop
+                    })
+                    .unwrap();
+                    assert_eq!(actual, expected);
+                    assert_eq!(
+                        score.map(|s| s.optimization_damage_factor),
+                        raw.as_ref().map(|s| s.optimization_damage_factor)
+                    );
+                    if let Some(raw) = raw {
+                        let full = evaluate_summary_from_native_stats(&prepared, &stats).unwrap();
+                        assert_eq!(raw.ampr_before_dual, full.ampr_before_dual);
+                    }
+                }
+            }
+        }
+    }
     use super::*;
     use serde_json::json;
 
@@ -1516,6 +1677,11 @@ mod tests {
                             ("INT".into(), -offset),
                             ("ATK".into(), -25.0),
                             ("MATK".into(), 100.0),
+                            ("VITP".into(), 25.0),
+                            ("MAXMP".into(), -99.0),
+                            ("MOTIONSPEED".into(), 17.0),
+                            ("PHYS_RES".into(), -20.0),
+                            ("UNKNOWN_FUTURE".into(), 77.0),
                         ]);
                         let expected = evaluate_summary_from_map(&context, &stats).unwrap();
                         assert_eq!(
@@ -1525,6 +1691,16 @@ mod tests {
                         assert_eq!(
                             evaluate_summary_from_map(&restored, &stats).unwrap(),
                             expected
+                        );
+                        let raw: NativeStats = stats.into_iter().collect();
+                        let projected = raw.evaluation_projection();
+                        assert_eq!(
+                            evaluate_summary_from_native_stats(&prepared, &projected).unwrap(),
+                            expected
+                        );
+                        assert_eq!(
+                            utility_values(&prepared, &projected).unwrap(),
+                            utility_values(&prepared, &raw).unwrap()
                         );
                     }
                 }

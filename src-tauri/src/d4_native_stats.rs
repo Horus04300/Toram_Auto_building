@@ -1,7 +1,9 @@
 //! Dense known coordinates with a sparse fallback and unchanged JSON map contract.
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-const KEYS: [&str; 36] = [
+// All coordinates read by the native evaluator, including utility goals.
+// Keep this in sync with stat()/stat_total() dependencies in the evaluator.
+const KEYS: [&str; 37] = [
     "AGI",
     "AGIP",
     "AMPR",
@@ -38,6 +40,7 @@ const KEYS: [&str; 36] = [
     "VITP",
     "WATK",
     "WATKP",
+    "MOTIONSPEED",
 ];
 #[inline]
 fn index(key: &str) -> Option<usize> {
@@ -78,12 +81,13 @@ fn index(key: &str) -> Option<usize> {
         "VITP" => Some(33),
         "WATK" => Some(34),
         "WATKP" => Some(35),
+        "MOTIONSPEED" => Some(36),
         _ => None,
     }
 }
 #[derive(Clone, Debug, PartialEq)]
 pub struct NativeStats {
-    values: [f64; 36],
+    values: [f64; 37],
     present: u64,
     extra: BTreeMap<String, f64>,
 }
@@ -95,8 +99,17 @@ impl Default for NativeStats {
 impl NativeStats {
     pub fn new() -> Self {
         Self {
-            values: [0.0; 36],
+            values: [0.0; 37],
             present: 0,
+            extra: BTreeMap::new(),
+        }
+    }
+    /// Search-only copy. Raw package options remain available for result output.
+    /// Preserve presence, negative values and signed zero without re-summing.
+    pub fn evaluation_projection(&self) -> Self {
+        Self {
+            values: self.values,
+            present: self.present,
             extra: BTreeMap::new(),
         }
     }
@@ -212,6 +225,14 @@ mod tests {
                     *expected.entry(key.clone()).or_insert(0.0) += value;
                 }
                 actual.add_assign(&dense);
+                let projected = actual.evaluation_projection();
+                assert!(projected.extra.is_empty());
+                for key in KEYS {
+                    assert_eq!(
+                        projected.get(key).map(|v| v.to_bits()),
+                        expected.get(key).map(|v| v.to_bits())
+                    );
+                }
                 assert_eq!(
                     actual.keys().collect::<Vec<_>>(),
                     expected.keys().map(String::as_str).collect::<Vec<_>>()

@@ -1,0 +1,4605 @@
+{
+  "date": "2026-09-23T09:44:50.175Z",
+  "binaries": {
+    "before": "901dec4d760b50383bd913afa357661f2c428b92161853c3b22ad47874d2d1fa",
+    "after": "52e94f9e7cce50cebf3f9601bef0b7601ba65816f08e052fb648ad61450da2ea"
+  },
+  "inputHashes": {
+    "revenir": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+    "dual": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+    "basic": "15a32d3f62650223e68ac18a035c999b5c520fd30eab8ab20332939c6362d56f",
+    "hp40000": "1b283f2ca6006042e31ccad61305500a9b871456830681e0b4e8874685c5c431",
+    "magic": "5ccc811b529dd595d7c8b877730b18d3647052c84d7009e0ab6b5a3c79f4a126"
+  },
+  "runs": [
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 31732.205,
+        "cpuMs": 128328.125,
+        "peakWorkingSetBytes": 643354624
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 31502,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549392,
+        "exact": true,
+        "prunedByBound": 24160221,
+        "prunedByConstraint": 93926919,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 42.463899999999995,
+        "sessionWallMs": 31527.5774,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 43.829,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1051.6643000000001,
+            "ready": 2097421,
+            "score": null,
+            "upperBound": 1487562.9000000001,
+            "evaluations": 5778994
+          },
+          {
+            "ms": 2052.0011,
+            "ready": 3446811,
+            "score": null,
+            "upperBound": 1423996.5,
+            "evaluations": 10619363
+          },
+          {
+            "ms": 3052.1072999999997,
+            "ready": 4478356,
+            "score": null,
+            "upperBound": 1389136.98,
+            "evaluations": 14791169
+          },
+          {
+            "ms": 4052.3464999999997,
+            "ready": 5404812,
+            "score": null,
+            "upperBound": 1363267.74,
+            "evaluations": 18893413
+          },
+          {
+            "ms": 5052.465899999999,
+            "ready": 6201062,
+            "score": null,
+            "upperBound": 1343862.24,
+            "evaluations": 22682876
+          },
+          {
+            "ms": 6052.8207,
+            "ready": 6903136,
+            "score": 1064809.62,
+            "upperBound": 1327189.32,
+            "evaluations": 26883446
+          },
+          {
+            "ms": 7052.8574,
+            "ready": 7495423,
+            "score": 1091141.94,
+            "upperBound": 1313442.78,
+            "evaluations": 31073966
+          },
+          {
+            "ms": 8052.883100000001,
+            "ready": 7853510,
+            "score": 1106912.16,
+            "upperBound": 1302212.58,
+            "evaluations": 35703585
+          },
+          {
+            "ms": 9052.932,
+            "ready": 8160799,
+            "score": 1108923.6,
+            "upperBound": 1291320,
+            "evaluations": 40753974
+          },
+          {
+            "ms": 10053.1878,
+            "ready": 8393096,
+            "score": 1108923.6,
+            "upperBound": 1282019.6400000001,
+            "evaluations": 45568848
+          },
+          {
+            "ms": 11053.553000000002,
+            "ready": 8505059,
+            "score": 1123905.36,
+            "upperBound": 1273195.62,
+            "evaluations": 50639314
+          },
+          {
+            "ms": 12053.810300000001,
+            "ready": 8552604,
+            "score": 1123905.36,
+            "upperBound": 1264665.36,
+            "evaluations": 55954001
+          },
+          {
+            "ms": 13054.283800000001,
+            "ready": 8540808,
+            "score": 1123905.36,
+            "upperBound": 1257002.1,
+            "evaluations": 61141766
+          },
+          {
+            "ms": 14054.345,
+            "ready": 8474103,
+            "score": 1123905.36,
+            "upperBound": 1249899.84,
+            "evaluations": 66398243
+          },
+          {
+            "ms": 15054.5717,
+            "ready": 8361441,
+            "score": 1123905.36,
+            "upperBound": 1243139.28,
+            "evaluations": 71852689
+          },
+          {
+            "ms": 16055.1177,
+            "ready": 8198477,
+            "score": 1123905.36,
+            "upperBound": 1236720.42,
+            "evaluations": 77412408
+          },
+          {
+            "ms": 17055.601899999998,
+            "ready": 7983732,
+            "score": 1123905.36,
+            "upperBound": 1230587.16,
+            "evaluations": 83115905
+          },
+          {
+            "ms": 18055.6564,
+            "ready": 7723888,
+            "score": 1123905.36,
+            "upperBound": 1224835.3800000001,
+            "evaluations": 88855253
+          },
+          {
+            "ms": 19055.7048,
+            "ready": 7420498,
+            "score": 1123905.36,
+            "upperBound": 1219453.86,
+            "evaluations": 94579067
+          },
+          {
+            "ms": 20055.898500000003,
+            "ready": 7093748,
+            "score": 1123905.36,
+            "upperBound": 1214567.04,
+            "evaluations": 100093461
+          },
+          {
+            "ms": 21056.0312,
+            "ready": 6711343,
+            "score": 1123905.36,
+            "upperBound": 1209693.48,
+            "evaluations": 105942724
+          },
+          {
+            "ms": 22056.635700000003,
+            "ready": 6271832,
+            "score": 1123905.36,
+            "upperBound": 1204902.54,
+            "evaluations": 112031866
+          },
+          {
+            "ms": 23057.1301,
+            "ready": 5811082,
+            "score": 1123905.36,
+            "upperBound": 1200385.98,
+            "evaluations": 117997814
+          },
+          {
+            "ms": 24057.678200000002,
+            "ready": 5297954,
+            "score": 1123905.36,
+            "upperBound": 1195988.76,
+            "evaluations": 124152963
+          },
+          {
+            "ms": 25058.2193,
+            "ready": 4697252,
+            "score": 1123905.36,
+            "upperBound": 1191486.48,
+            "evaluations": 130789203
+          },
+          {
+            "ms": 26058.247300000003,
+            "ready": 4034157,
+            "score": 1123905.36,
+            "upperBound": 1187145.36,
+            "evaluations": 137508279
+          },
+          {
+            "ms": 27058.418700000002,
+            "ready": 3302447,
+            "score": 1123905.36,
+            "upperBound": 1182764.46,
+            "evaluations": 144617949
+          },
+          {
+            "ms": 28059.0127,
+            "ready": 2571466,
+            "score": 1123905.36,
+            "upperBound": 1173787.44,
+            "evaluations": 152074122
+          },
+          {
+            "ms": 29059.571200000002,
+            "ready": 1920979,
+            "score": 1123905.36,
+            "upperBound": 1157188.98,
+            "evaluations": 159095007
+          },
+          {
+            "ms": 30059.9186,
+            "ready": 1290513,
+            "score": 1123905.36,
+            "upperBound": 1141083.18,
+            "evaluations": 165393381
+          },
+          {
+            "ms": 31060.063800000004,
+            "ready": 622926,
+            "score": 1123905.36,
+            "upperBound": 1128353.58,
+            "evaluations": 171300364
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677054
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 22699.745,
+        "cpuMs": 117015.625,
+        "peakWorkingSetBytes": 634187776
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 22453,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549380,
+        "exact": true,
+        "prunedByBound": 24160222,
+        "prunedByConstraint": 93926909,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 46.3315,
+        "sessionWallMs": 22477.0212,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 47.6578,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1047.7998,
+            "ready": 2545255,
+            "score": null,
+            "upperBound": 1462954.3800000001,
+            "evaluations": 7309134
+          },
+          {
+            "ms": 2047.8546,
+            "ready": 4222249,
+            "score": null,
+            "upperBound": 1397119.5,
+            "evaluations": 13712266
+          },
+          {
+            "ms": 3048.1221,
+            "ready": 5603904,
+            "score": null,
+            "upperBound": 1358190.18,
+            "evaluations": 19815867
+          },
+          {
+            "ms": 4048.3943,
+            "ready": 6723690,
+            "score": 1064809.62,
+            "upperBound": 1331416.2,
+            "evaluations": 25732197
+          },
+          {
+            "ms": 5048.6939,
+            "ready": 7553154,
+            "score": 1106912.16,
+            "upperBound": 1311690.42,
+            "evaluations": 31755159
+          },
+          {
+            "ms": 6048.9093,
+            "ready": 8065246,
+            "score": 1108923.6,
+            "upperBound": 1294856.34,
+            "evaluations": 39045529
+          },
+          {
+            "ms": 7048.9268999999995,
+            "ready": 8423747,
+            "score": 1108923.6,
+            "upperBound": 1280703.84,
+            "evaluations": 46293080
+          },
+          {
+            "ms": 8049.080500000001,
+            "ready": 8539584,
+            "score": 1123905.36,
+            "upperBound": 1267723.32,
+            "evaluations": 53993135
+          },
+          {
+            "ms": 9049.4118,
+            "ready": 8535026,
+            "score": 1123905.36,
+            "upperBound": 1256150.4,
+            "evaluations": 61743715
+          },
+          {
+            "ms": 10049.5168,
+            "ready": 8412133,
+            "score": 1123905.36,
+            "upperBound": 1245885.12,
+            "evaluations": 69586369
+          },
+          {
+            "ms": 11049.7406,
+            "ready": 8195710,
+            "score": 1123905.36,
+            "upperBound": 1236627.6,
+            "evaluations": 77493325
+          },
+          {
+            "ms": 12050.1621,
+            "ready": 7875527,
+            "score": 1123905.36,
+            "upperBound": 1228006.56,
+            "evaluations": 85644991
+          },
+          {
+            "ms": 13050.4169,
+            "ready": 7456276,
+            "score": 1123905.36,
+            "upperBound": 1220030.16,
+            "evaluations": 93946123
+          },
+          {
+            "ms": 14050.5131,
+            "ready": 6939537,
+            "score": 1123905.36,
+            "upperBound": 1212518.8800000001,
+            "evaluations": 102488897
+          },
+          {
+            "ms": 15050.732,
+            "ready": 6359809,
+            "score": 1123905.36,
+            "upperBound": 1205803.2,
+            "evaluations": 110855589
+          },
+          {
+            "ms": 16051.110099999998,
+            "ready": 5675482,
+            "score": 1123905.36,
+            "upperBound": 1199176.26,
+            "evaluations": 119666094
+          },
+          {
+            "ms": 17051.282499999998,
+            "ready": 4891746,
+            "score": 1123905.36,
+            "upperBound": 1192892.04,
+            "evaluations": 128678391
+          },
+          {
+            "ms": 18051.5049,
+            "ready": 3987460,
+            "score": 1123905.36,
+            "upperBound": 1186861.8,
+            "evaluations": 137973674
+          },
+          {
+            "ms": 19051.650899999997,
+            "ready": 2995520,
+            "score": 1123905.36,
+            "upperBound": 1181031.48,
+            "evaluations": 147487970
+          },
+          {
+            "ms": 20052.3555,
+            "ready": 2157929,
+            "score": 1123905.36,
+            "upperBound": 1164031.1400000001,
+            "evaluations": 156578780
+          },
+          {
+            "ms": 21052.646500000003,
+            "ready": 1405244,
+            "score": 1123905.36,
+            "upperBound": 1143694.3800000001,
+            "evaluations": 164302690
+          },
+          {
+            "ms": 22052.682099999998,
+            "ready": 615264,
+            "score": 1123905.36,
+            "upperBound": 1128213.84,
+            "evaluations": 171369736
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677052
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 22930.425,
+        "cpuMs": 116437.5,
+        "peakWorkingSetBytes": 429031424
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 22701,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549372,
+        "exact": true,
+        "prunedByBound": 24160216,
+        "prunedByConstraint": 93926909,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 42.4136,
+        "sessionWallMs": 22724.55,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 43.780100000000004,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1044.0243,
+            "ready": 2526249,
+            "score": null,
+            "upperBound": 1463883.6,
+            "evaluations": 7243539
+          },
+          {
+            "ms": 2047.5474,
+            "ready": 4194665,
+            "score": null,
+            "upperBound": 1398009.96,
+            "evaluations": 13597317
+          },
+          {
+            "ms": 3047.679,
+            "ready": 5592433,
+            "score": null,
+            "upperBound": 1358480.8800000001,
+            "evaluations": 19762584
+          },
+          {
+            "ms": 4048.0241,
+            "ready": 6707804,
+            "score": 1064809.62,
+            "upperBound": 1331768.1,
+            "evaluations": 25634250
+          },
+          {
+            "ms": 5048.3330000000005,
+            "ready": 7580134,
+            "score": 1106912.16,
+            "upperBound": 1310830.56,
+            "evaluations": 32090213
+          },
+          {
+            "ms": 6048.3841,
+            "ready": 8091295,
+            "score": 1108923.6,
+            "upperBound": 1293845.52,
+            "evaluations": 39518210
+          },
+          {
+            "ms": 7048.6413,
+            "ready": 8432988,
+            "score": 1123905.36,
+            "upperBound": 1279948.02,
+            "evaluations": 46710233
+          },
+          {
+            "ms": 8048.887000000001,
+            "ready": 8540705,
+            "score": 1123905.36,
+            "upperBound": 1267600.92,
+            "evaluations": 54068049
+          },
+          {
+            "ms": 9049.0048,
+            "ready": 8535740,
+            "score": 1123905.36,
+            "upperBound": 1256238.12,
+            "evaluations": 61679596
+          },
+          {
+            "ms": 10049.108,
+            "ready": 8418256,
+            "score": 1123905.36,
+            "upperBound": 1246215.6,
+            "evaluations": 69313303
+          },
+          {
+            "ms": 11049.4436,
+            "ready": 8213231,
+            "score": 1123905.36,
+            "upperBound": 1237199.82,
+            "evaluations": 76983133
+          },
+          {
+            "ms": 12049.795100000001,
+            "ready": 7898976,
+            "score": 1123905.36,
+            "upperBound": 1228554.3,
+            "evaluations": 85111622
+          },
+          {
+            "ms": 13049.9323,
+            "ready": 7493889,
+            "score": 1123905.36,
+            "upperBound": 1220665.62,
+            "evaluations": 93257400
+          },
+          {
+            "ms": 14050.056,
+            "ready": 6997323,
+            "score": 1123905.36,
+            "upperBound": 1213269.6,
+            "evaluations": 101601358
+          },
+          {
+            "ms": 15050.268100000001,
+            "ready": 6410784,
+            "score": 1123905.36,
+            "upperBound": 1206355.02,
+            "evaluations": 110163049
+          },
+          {
+            "ms": 16050.439900000001,
+            "ready": 5742485,
+            "score": 1123905.36,
+            "upperBound": 1199762.76,
+            "evaluations": 118850068
+          },
+          {
+            "ms": 17050.7883,
+            "ready": 4978301,
+            "score": 1123905.36,
+            "upperBound": 1193535.66,
+            "evaluations": 127717045
+          },
+          {
+            "ms": 18051.1833,
+            "ready": 4091589,
+            "score": 1123905.36,
+            "upperBound": 1187532.96,
+            "evaluations": 136944170
+          },
+          {
+            "ms": 19051.4195,
+            "ready": 3136237,
+            "score": 1123905.36,
+            "upperBound": 1181808.72,
+            "evaluations": 146182692
+          },
+          {
+            "ms": 20051.813,
+            "ready": 2282153,
+            "score": 1123905.36,
+            "upperBound": 1166870.82,
+            "evaluations": 155290280
+          },
+          {
+            "ms": 21052.3002,
+            "ready": 1561812,
+            "score": 1123905.36,
+            "upperBound": 1147465.32,
+            "evaluations": 162773612
+          },
+          {
+            "ms": 22052.575,
+            "ready": 816017,
+            "score": 1123905.36,
+            "upperBound": 1131744.06,
+            "evaluations": 169673519
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677051
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 31887.724,
+        "cpuMs": 124390.625,
+        "peakWorkingSetBytes": 534532096
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 31665,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549380,
+        "exact": true,
+        "prunedByBound": 24160223,
+        "prunedByConstraint": 93926908,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 42.3039,
+        "sessionWallMs": 31689.6754,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 43.9918,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1044.0621999999998,
+            "ready": 2013572,
+            "score": null,
+            "upperBound": 1492716.96,
+            "evaluations": 5500411
+          },
+          {
+            "ms": 2044.523,
+            "ready": 3305390,
+            "score": null,
+            "upperBound": 1429414.74,
+            "evaluations": 10080761
+          },
+          {
+            "ms": 3044.5457,
+            "ready": 4362314,
+            "score": null,
+            "upperBound": 1392708,
+            "evaluations": 14300951
+          },
+          {
+            "ms": 4044.6226,
+            "ready": 5280328,
+            "score": null,
+            "upperBound": 1366516.44,
+            "evaluations": 18320486
+          },
+          {
+            "ms": 5045.0652,
+            "ready": 6105681,
+            "score": null,
+            "upperBound": 1346066.46,
+            "evaluations": 22215167
+          },
+          {
+            "ms": 6045.1967,
+            "ready": 6753187,
+            "score": 1064809.62,
+            "upperBound": 1330692,
+            "evaluations": 25921650
+          },
+          {
+            "ms": 7045.4187,
+            "ready": 7377862,
+            "score": 1064809.62,
+            "upperBound": 1316291.6400000001,
+            "evaluations": 30110727
+          },
+          {
+            "ms": 8045.5337,
+            "ready": 7805849,
+            "score": 1106912.16,
+            "upperBound": 1303791.54,
+            "evaluations": 35022475
+          },
+          {
+            "ms": 9045.8892,
+            "ready": 8123676,
+            "score": 1108923.6,
+            "upperBound": 1292673.54,
+            "evaluations": 40091875
+          },
+          {
+            "ms": 10045.9363,
+            "ready": 8377408,
+            "score": 1108923.6,
+            "upperBound": 1282737.72,
+            "evaluations": 45187228
+          },
+          {
+            "ms": 11046.181499999999,
+            "ready": 8498432,
+            "score": 1123905.36,
+            "upperBound": 1273961.6400000001,
+            "evaluations": 50190522
+          },
+          {
+            "ms": 12046.8942,
+            "ready": 8548759,
+            "score": 1123905.36,
+            "upperBound": 1265832.24,
+            "evaluations": 55207825
+          },
+          {
+            "ms": 13047.1152,
+            "ready": 8547653,
+            "score": 1123905.36,
+            "upperBound": 1258585.1400000001,
+            "evaluations": 60032753
+          },
+          {
+            "ms": 14047.4444,
+            "ready": 8493545,
+            "score": 1123905.36,
+            "upperBound": 1251588.96,
+            "evaluations": 65101582
+          },
+          {
+            "ms": 15047.880299999999,
+            "ready": 8398004,
+            "score": 1123905.36,
+            "upperBound": 1244988.54,
+            "evaluations": 70304521
+          },
+          {
+            "ms": 16047.9396,
+            "ready": 8251810,
+            "score": 1123905.36,
+            "upperBound": 1238569.68,
+            "evaluations": 75762398
+          },
+          {
+            "ms": 17048.674,
+            "ready": 8054095,
+            "score": 1123905.36,
+            "upperBound": 1232412.96,
+            "evaluations": 81389012
+          },
+          {
+            "ms": 18049.0156,
+            "ready": 7806127,
+            "score": 1123905.36,
+            "upperBound": 1226508.18,
+            "evaluations": 87155559
+          },
+          {
+            "ms": 19049.5802,
+            "ready": 7515174,
+            "score": 1123905.36,
+            "upperBound": 1221033.84,
+            "evaluations": 92874119
+          },
+          {
+            "ms": 20049.8524,
+            "ready": 7171758,
+            "score": 1123905.36,
+            "upperBound": 1215654.36,
+            "evaluations": 98822369
+          },
+          {
+            "ms": 21050.3313,
+            "ready": 6783318,
+            "score": 1123905.36,
+            "upperBound": 1210576.8,
+            "evaluations": 104873709
+          },
+          {
+            "ms": 22050.5315,
+            "ready": 6338662,
+            "score": 1123905.36,
+            "upperBound": 1205583.9,
+            "evaluations": 111151854
+          },
+          {
+            "ms": 23050.6915,
+            "ready": 5867058,
+            "score": 1123905.36,
+            "upperBound": 1200909.24,
+            "evaluations": 117307258
+          },
+          {
+            "ms": 24050.8995,
+            "ready": 5321703,
+            "score": 1123905.36,
+            "upperBound": 1196175.42,
+            "evaluations": 123891036
+          },
+          {
+            "ms": 25051.4,
+            "ready": 4732817,
+            "score": 1123905.36,
+            "upperBound": 1191731.28,
+            "evaluations": 130421588
+          },
+          {
+            "ms": 26051.8219,
+            "ready": 4048382,
+            "score": 1123905.36,
+            "upperBound": 1187247.36,
+            "evaluations": 137368125
+          },
+          {
+            "ms": 27051.9277,
+            "ready": 3326988,
+            "score": 1123905.36,
+            "upperBound": 1182896.04,
+            "evaluations": 144380259
+          },
+          {
+            "ms": 28052.2493,
+            "ready": 2592613,
+            "score": 1123905.36,
+            "upperBound": 1174311.72,
+            "evaluations": 151829919
+          },
+          {
+            "ms": 29053.087900000002,
+            "ready": 1953130,
+            "score": 1123905.36,
+            "upperBound": 1158171.24,
+            "evaluations": 158767126
+          },
+          {
+            "ms": 30053.7622,
+            "ready": 1351224,
+            "score": 1123905.36,
+            "upperBound": 1142460.18,
+            "evaluations": 164827247
+          },
+          {
+            "ms": 31053.954999999998,
+            "ready": 693920,
+            "score": 1123905.36,
+            "upperBound": 1129579.62,
+            "evaluations": 170698822
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677052
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 3,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 31472.364,
+        "cpuMs": 126515.625,
+        "peakWorkingSetBytes": 477835264
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 31242,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549380,
+        "exact": true,
+        "prunedByBound": 24160223,
+        "prunedByConstraint": 93926908,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 42.7945,
+        "sessionWallMs": 31266.4867,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 44.2804,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1044.4108999999999,
+            "ready": 2091378,
+            "score": null,
+            "upperBound": 1487897.46,
+            "evaluations": 5758516
+          },
+          {
+            "ms": 2044.7038000000002,
+            "ready": 3360171,
+            "score": null,
+            "upperBound": 1427278.86,
+            "evaluations": 10289763
+          },
+          {
+            "ms": 3044.9201000000003,
+            "ready": 4412996,
+            "score": null,
+            "upperBound": 1391122.92,
+            "evaluations": 14514422
+          },
+          {
+            "ms": 4045.361,
+            "ready": 5346364,
+            "score": null,
+            "upperBound": 1364778.36,
+            "evaluations": 18622186
+          },
+          {
+            "ms": 5045.4456,
+            "ready": 6179119,
+            "score": null,
+            "upperBound": 1344367.1400000001,
+            "evaluations": 22575800
+          },
+          {
+            "ms": 6045.6443,
+            "ready": 6871322,
+            "score": 1064809.62,
+            "upperBound": 1327921.68,
+            "evaluations": 26680369
+          },
+          {
+            "ms": 7045.9413,
+            "ready": 7485815,
+            "score": 1091141.94,
+            "upperBound": 1313668.2,
+            "evaluations": 30990384
+          },
+          {
+            "ms": 8046.3012,
+            "ready": 7866218,
+            "score": 1106912.16,
+            "upperBound": 1301802.54,
+            "evaluations": 35888908
+          },
+          {
+            "ms": 9046.4724,
+            "ready": 8166349,
+            "score": 1108923.6,
+            "upperBound": 1291121.1,
+            "evaluations": 40857634
+          },
+          {
+            "ms": 10046.484400000001,
+            "ready": 8402885,
+            "score": 1108923.6,
+            "upperBound": 1281613.68,
+            "evaluations": 45799887
+          },
+          {
+            "ms": 11047.070899999999,
+            "ready": 8509817,
+            "score": 1123905.36,
+            "upperBound": 1272617.28,
+            "evaluations": 50979922
+          },
+          {
+            "ms": 12047.373300000001,
+            "ready": 8552416,
+            "score": 1123905.36,
+            "upperBound": 1264703.1,
+            "evaluations": 55923300
+          },
+          {
+            "ms": 13047.969000000001,
+            "ready": 8540379,
+            "score": 1123905.36,
+            "upperBound": 1256867.46,
+            "evaluations": 61232038
+          },
+          {
+            "ms": 14048.0816,
+            "ready": 8472107,
+            "score": 1123905.36,
+            "upperBound": 1249709.1,
+            "evaluations": 66541174
+          },
+          {
+            "ms": 15048.4601,
+            "ready": 8356946,
+            "score": 1123905.36,
+            "upperBound": 1242932.22,
+            "evaluations": 72031908
+          },
+          {
+            "ms": 16048.795399999999,
+            "ready": 8192857,
+            "score": 1123905.36,
+            "upperBound": 1236524.58,
+            "evaluations": 77584201
+          },
+          {
+            "ms": 17048.8248,
+            "ready": 7976882,
+            "score": 1123905.36,
+            "upperBound": 1230424.98,
+            "evaluations": 83274700
+          },
+          {
+            "ms": 18048.8642,
+            "ready": 7710114,
+            "score": 1123905.36,
+            "upperBound": 1224582.42,
+            "evaluations": 89130299
+          },
+          {
+            "ms": 19049.0252,
+            "ready": 7395239,
+            "score": 1123905.36,
+            "upperBound": 1219053,
+            "evaluations": 95020170
+          },
+          {
+            "ms": 20049.1666,
+            "ready": 7032430,
+            "score": 1123905.36,
+            "upperBound": 1213747.98,
+            "evaluations": 101048666
+          },
+          {
+            "ms": 21049.6541,
+            "ready": 6642049,
+            "score": 1123905.36,
+            "upperBound": 1208890.74,
+            "evaluations": 106931976
+          },
+          {
+            "ms": 22050.018500000002,
+            "ready": 6206837,
+            "score": 1123905.36,
+            "upperBound": 1204239.54,
+            "evaluations": 112889182
+          },
+          {
+            "ms": 23050.569,
+            "ready": 5743142,
+            "score": 1123905.36,
+            "upperBound": 1199769.9,
+            "evaluations": 118842668
+          },
+          {
+            "ms": 24050.6175,
+            "ready": 5189792,
+            "score": 1123905.36,
+            "upperBound": 1195146.24,
+            "evaluations": 125354162
+          },
+          {
+            "ms": 25050.7582,
+            "ready": 4574424,
+            "score": 1123905.36,
+            "upperBound": 1190655.18,
+            "evaluations": 132058456
+          },
+          {
+            "ms": 26050.988,
+            "ready": 3891942,
+            "score": 1123905.36,
+            "upperBound": 1186272.24,
+            "evaluations": 138927972
+          },
+          {
+            "ms": 27051.287200000002,
+            "ready": 3136701,
+            "score": 1123905.36,
+            "upperBound": 1181808.72,
+            "evaluations": 146179772
+          },
+          {
+            "ms": 28051.511000000002,
+            "ready": 2447915,
+            "score": 1123905.36,
+            "upperBound": 1170789.66,
+            "evaluations": 153500185
+          },
+          {
+            "ms": 29051.9224,
+            "ready": 1816398,
+            "score": 1123905.36,
+            "upperBound": 1154167.74,
+            "evaluations": 160203269
+          },
+          {
+            "ms": 30052.145800000002,
+            "ready": 1164312,
+            "score": 1123905.36,
+            "upperBound": 1138430.16,
+            "evaluations": 166568644
+          },
+          {
+            "ms": 31052.3741,
+            "ready": 436282,
+            "score": 1123905.36,
+            "upperBound": 1125239.52,
+            "evaluations": 172875780
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677052
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 3,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 23114.64,
+        "cpuMs": 120828.125,
+        "peakWorkingSetBytes": 631570432
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 22897,
+        "enumeratedCompletions": 15138211,
+        "evaluations": 173549384,
+        "exact": true,
+        "prunedByBound": 24160222,
+        "prunedByConstraint": 93926912,
+        "score": 1123905.36,
+        "sessionBatches": 54412,
+        "sessionPreparationMs": 41.7931,
+        "sessionWallMs": 22921.342,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 43.5139,
+            "ready": 4,
+            "score": null,
+            "upperBound": 3701100.6,
+            "evaluations": 7
+          },
+          {
+            "ms": 1043.6988000000001,
+            "ready": 2462582,
+            "score": null,
+            "upperBound": 1467206.76,
+            "evaluations": 7020247
+          },
+          {
+            "ms": 2044.0127000000002,
+            "ready": 4192660,
+            "score": null,
+            "upperBound": 1398061.98,
+            "evaluations": 13589099
+          },
+          {
+            "ms": 3044.1884,
+            "ready": 5569166,
+            "score": null,
+            "upperBound": 1359067.3800000001,
+            "evaluations": 19653688
+          },
+          {
+            "ms": 4044.5571999999997,
+            "ready": 6711259,
+            "score": 1064809.62,
+            "upperBound": 1331704.86,
+            "evaluations": 25654869
+          },
+          {
+            "ms": 5044.633,
+            "ready": 7578831,
+            "score": 1106912.16,
+            "upperBound": 1310875.44,
+            "evaluations": 32073242
+          },
+          {
+            "ms": 6044.7665,
+            "ready": 8077149,
+            "score": 1108923.6,
+            "upperBound": 1294411.62,
+            "evaluations": 39261373
+          },
+          {
+            "ms": 7045.0761,
+            "ready": 8427263,
+            "score": 1123905.36,
+            "upperBound": 1280463.12,
+            "evaluations": 46422138
+          },
+          {
+            "ms": 8045.3849,
+            "ready": 8537288,
+            "score": 1123905.36,
+            "upperBound": 1268436.3,
+            "evaluations": 53543895
+          },
+          {
+            "ms": 9045.6057,
+            "ready": 8541508,
+            "score": 1123905.36,
+            "upperBound": 1257177.54,
+            "evaluations": 61019196
+          },
+          {
+            "ms": 10045.7281,
+            "ready": 8427038,
+            "score": 1123905.36,
+            "upperBound": 1246727.6400000001,
+            "evaluations": 68906460
+          },
+          {
+            "ms": 11046.0669,
+            "ready": 8210550,
+            "score": 1123905.36,
+            "upperBound": 1237123.32,
+            "evaluations": 77057941
+          },
+          {
+            "ms": 12046.1319,
+            "ready": 7890233,
+            "score": 1123905.36,
+            "upperBound": 1228347.24,
+            "evaluations": 85301907
+          },
+          {
+            "ms": 13046.53,
+            "ready": 7468975,
+            "score": 1123905.36,
+            "upperBound": 1220242.32,
+            "evaluations": 93715054
+          },
+          {
+            "ms": 14046.8269,
+            "ready": 6967693,
+            "score": 1123905.36,
+            "upperBound": 1212879.96,
+            "evaluations": 102056516
+          },
+          {
+            "ms": 15047.2004,
+            "ready": 6404908,
+            "score": 1123905.36,
+            "upperBound": 1206282.6,
+            "evaluations": 110241505
+          },
+          {
+            "ms": 16047.383100000001,
+            "ready": 5779079,
+            "score": 1123905.36,
+            "upperBound": 1200101.4,
+            "evaluations": 118402934
+          },
+          {
+            "ms": 17047.5444,
+            "ready": 5051630,
+            "score": 1123905.36,
+            "upperBound": 1194083.4,
+            "evaluations": 126910164
+          },
+          {
+            "ms": 18047.563400000003,
+            "ready": 4247048,
+            "score": 1123905.36,
+            "upperBound": 1188502.98,
+            "evaluations": 135399691
+          },
+          {
+            "ms": 19047.843100000002,
+            "ready": 3299823,
+            "score": 1123905.36,
+            "upperBound": 1182747.12,
+            "evaluations": 144643266
+          },
+          {
+            "ms": 20047.9506,
+            "ready": 2423803,
+            "score": 1123905.36,
+            "upperBound": 1170200.1,
+            "evaluations": 153778273
+          },
+          {
+            "ms": 21048.375,
+            "ready": 1705589,
+            "score": 1123905.36,
+            "upperBound": 1151119.98,
+            "evaluations": 161343773
+          },
+          {
+            "ms": 22048.384599999998,
+            "ready": 986351,
+            "score": 1123905.36,
+            "upperBound": 1134912.18,
+            "evaluations": 168192143
+          }
+        ],
+        "upperBound": 1123905.36,
+        "visitedNodes": 40677052
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 1,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 14941.072,
+        "cpuMs": 120156.25,
+        "peakWorkingSetBytes": 171974656
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 14745,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 50.8174,
+        "sessionWallMs": 14755.658300000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.031099999999995,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1052.497,
+            "ready": 2489018,
+            "score": 21355,
+            "upperBound": 25944,
+            "evaluations": 6703522
+          },
+          {
+            "ms": 2052.8296,
+            "ready": 3391307,
+            "score": 21440,
+            "upperBound": 24858,
+            "evaluations": 14114635
+          },
+          {
+            "ms": 3052.8485,
+            "ready": 3723339,
+            "score": 21440,
+            "upperBound": 24256,
+            "evaluations": 21439221
+          },
+          {
+            "ms": 4052.9837,
+            "ready": 3752365,
+            "score": 21440,
+            "upperBound": 23860,
+            "evaluations": 28320885
+          },
+          {
+            "ms": 5053.0280999999995,
+            "ready": 3589453,
+            "score": 21440,
+            "upperBound": 23541,
+            "evaluations": 35410727
+          },
+          {
+            "ms": 6053.1619,
+            "ready": 3271640,
+            "score": 21440,
+            "upperBound": 23276,
+            "evaluations": 42557747
+          },
+          {
+            "ms": 7053.7634,
+            "ready": 2841530,
+            "score": 21440,
+            "upperBound": 23053,
+            "evaluations": 49619587
+          },
+          {
+            "ms": 8054.074099999999,
+            "ready": 2299674,
+            "score": 21440,
+            "upperBound": 22853,
+            "evaluations": 56857344
+          },
+          {
+            "ms": 9054.7843,
+            "ready": 1684524,
+            "score": 21440,
+            "upperBound": 22674,
+            "evaluations": 64136953
+          },
+          {
+            "ms": 10054.8782,
+            "ready": 1015067,
+            "score": 21458,
+            "upperBound": 22505,
+            "evaluations": 71573200
+          },
+          {
+            "ms": 11055.4921,
+            "ready": 767819,
+            "score": 21458,
+            "upperBound": 22150,
+            "evaluations": 80086058
+          },
+          {
+            "ms": 12056.2859,
+            "ready": 592877,
+            "score": 21458,
+            "upperBound": 21902,
+            "evaluations": 88038230
+          },
+          {
+            "ms": 13056.2887,
+            "ready": 408962,
+            "score": 21458,
+            "upperBound": 21716,
+            "evaluations": 95840345
+          },
+          {
+            "ms": 14057.1072,
+            "ready": 199733,
+            "score": 21458,
+            "upperBound": 21554,
+            "evaluations": 104188108
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 1,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 12906.916,
+        "cpuMs": 117546.875,
+        "peakWorkingSetBytes": 171945984
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 12713,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 52.1633,
+        "sessionWallMs": 12722.4675,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 53.523599999999995,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1053.634,
+            "ready": 2761849,
+            "score": 21355,
+            "upperBound": 25627,
+            "evaluations": 8339780
+          },
+          {
+            "ms": 2054.0584000000003,
+            "ready": 3603351,
+            "score": 21440,
+            "upperBound": 24528,
+            "evaluations": 17738077
+          },
+          {
+            "ms": 3054.4611,
+            "ready": 3762536,
+            "score": 21440,
+            "upperBound": 23924,
+            "evaluations": 27066821
+          },
+          {
+            "ms": 4054.7468999999996,
+            "ready": 3565100,
+            "score": 21440,
+            "upperBound": 23514,
+            "evaluations": 36097423
+          },
+          {
+            "ms": 5055.228999999999,
+            "ready": 3161198,
+            "score": 21440,
+            "upperBound": 23210,
+            "evaluations": 44541479
+          },
+          {
+            "ms": 6055.5162,
+            "ready": 2603164,
+            "score": 21440,
+            "upperBound": 22958,
+            "evaluations": 52958935
+          },
+          {
+            "ms": 7055.791499999999,
+            "ready": 1935068,
+            "score": 21440,
+            "upperBound": 22743,
+            "evaluations": 61240557
+          },
+          {
+            "ms": 8056.0465,
+            "ready": 1180924,
+            "score": 21458,
+            "upperBound": 22549,
+            "evaluations": 69709411
+          },
+          {
+            "ms": 9056.6503,
+            "ready": 799969,
+            "score": 21458,
+            "upperBound": 22207,
+            "evaluations": 78554971
+          },
+          {
+            "ms": 10057.0843,
+            "ready": 611230,
+            "score": 21458,
+            "upperBound": 21925,
+            "evaluations": 87231601
+          },
+          {
+            "ms": 11058.3596,
+            "ready": 404866,
+            "score": 21458,
+            "upperBound": 21713,
+            "evaluations": 96010575
+          },
+          {
+            "ms": 12058.946199999998,
+            "ready": 191033,
+            "score": 21458,
+            "upperBound": 21548,
+            "evaluations": 104521546
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 2,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 12844.654,
+        "cpuMs": 120140.625,
+        "peakWorkingSetBytes": 171970560
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 12657,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 51.8404,
+        "sessionWallMs": 12667.0068,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 53.0795,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1053.2944,
+            "ready": 2750477,
+            "score": 21355,
+            "upperBound": 25640,
+            "evaluations": 8267582
+          },
+          {
+            "ms": 2053.5681,
+            "ready": 3599283,
+            "score": 21440,
+            "upperBound": 24535,
+            "evaluations": 17653702
+          },
+          {
+            "ms": 3054.1330000000003,
+            "ready": 3762014,
+            "score": 21440,
+            "upperBound": 23920,
+            "evaluations": 27148555
+          },
+          {
+            "ms": 4054.2526,
+            "ready": 3564135,
+            "score": 21440,
+            "upperBound": 23513,
+            "evaluations": 36122802
+          },
+          {
+            "ms": 5054.2578,
+            "ready": 3143529,
+            "score": 21440,
+            "upperBound": 23200,
+            "evaluations": 44846144
+          },
+          {
+            "ms": 6054.4024,
+            "ready": 2558985,
+            "score": 21440,
+            "upperBound": 22941,
+            "evaluations": 53550026
+          },
+          {
+            "ms": 7054.9944,
+            "ready": 1849661,
+            "score": 21440,
+            "upperBound": 22719,
+            "evaluations": 62241418
+          },
+          {
+            "ms": 8055.1034,
+            "ready": 1082493,
+            "score": 21458,
+            "upperBound": 22526,
+            "evaluations": 70763775
+          },
+          {
+            "ms": 9056.0841,
+            "ready": 780574,
+            "score": 21458,
+            "upperBound": 22172,
+            "evaluations": 79482445
+          },
+          {
+            "ms": 10056.9533,
+            "ready": 594408,
+            "score": 21458,
+            "upperBound": 21904,
+            "evaluations": 87970028
+          },
+          {
+            "ms": 11058.7773,
+            "ready": 392081,
+            "score": 21458,
+            "upperBound": 21701,
+            "evaluations": 96532166
+          },
+          {
+            "ms": 12060.1307,
+            "ready": 176191,
+            "score": 21458,
+            "upperBound": 21538,
+            "evaluations": 105094828
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 2,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 15649.405,
+        "cpuMs": 120187.5,
+        "peakWorkingSetBytes": 171552768
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 15457,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 51.4347,
+        "sessionWallMs": 15467.097000000002,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.6667,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1052.7545,
+            "ready": 2511146,
+            "score": 21355,
+            "upperBound": 25918,
+            "evaluations": 6824731
+          },
+          {
+            "ms": 2053.141,
+            "ready": 3335494,
+            "score": 21440,
+            "upperBound": 24934,
+            "evaluations": 13402213
+          },
+          {
+            "ms": 3053.1548000000003,
+            "ready": 3683765,
+            "score": 21440,
+            "upperBound": 24365,
+            "evaluations": 19869264
+          },
+          {
+            "ms": 4053.4241,
+            "ready": 3764757,
+            "score": 21440,
+            "upperBound": 23952,
+            "evaluations": 26559296
+          },
+          {
+            "ms": 5053.7014,
+            "ready": 3651469,
+            "score": 21440,
+            "upperBound": 23623,
+            "evaluations": 33437019
+          },
+          {
+            "ms": 6054.2587,
+            "ready": 3373283,
+            "score": 21440,
+            "upperBound": 23346,
+            "evaluations": 40565492
+          },
+          {
+            "ms": 7054.8186,
+            "ready": 2978912,
+            "score": 21440,
+            "upperBound": 23116,
+            "evaluations": 47538378
+          },
+          {
+            "ms": 8055.6538,
+            "ready": 2522392,
+            "score": 21440,
+            "upperBound": 22928,
+            "evaluations": 54029999
+          },
+          {
+            "ms": 9055.9602,
+            "ready": 2003383,
+            "score": 21440,
+            "upperBound": 22762,
+            "evaluations": 60442548
+          },
+          {
+            "ms": 10056.2151,
+            "ready": 1428422,
+            "score": 21440,
+            "upperBound": 22608,
+            "evaluations": 67017961
+          },
+          {
+            "ms": 11058.1168,
+            "ready": 886111,
+            "score": 21458,
+            "upperBound": 22377,
+            "evaluations": 74607572
+          },
+          {
+            "ms": 12061.2607,
+            "ready": 709644,
+            "score": 21458,
+            "upperBound": 22058,
+            "evaluations": 82794707
+          },
+          {
+            "ms": 13063.8264,
+            "ready": 530107,
+            "score": 21458,
+            "upperBound": 21832,
+            "evaluations": 90762653
+          },
+          {
+            "ms": 14066.958100000002,
+            "ready": 333779,
+            "score": 21458,
+            "upperBound": 21653,
+            "evaluations": 98892287
+          },
+          {
+            "ms": 15069.2798,
+            "ready": 133211,
+            "score": 21458,
+            "upperBound": 21510,
+            "evaluations": 106741947
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 3,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 15129.254,
+        "cpuMs": 130906.25,
+        "peakWorkingSetBytes": 171896832
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 14937,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 51.4098,
+        "sessionWallMs": 14946.625600000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.701100000000004,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1052.7827,
+            "ready": 2507298,
+            "score": 21355,
+            "upperBound": 25922,
+            "evaluations": 6803693
+          },
+          {
+            "ms": 2052.9155,
+            "ready": 3397219,
+            "score": 21440,
+            "upperBound": 24850,
+            "evaluations": 14193469
+          },
+          {
+            "ms": 3053.5023,
+            "ready": 3720386,
+            "score": 21440,
+            "upperBound": 24265,
+            "evaluations": 21306431
+          },
+          {
+            "ms": 4053.8835000000004,
+            "ready": 3750048,
+            "score": 21440,
+            "upperBound": 23850,
+            "evaluations": 28517851
+          },
+          {
+            "ms": 5054.3336,
+            "ready": 3583291,
+            "score": 21440,
+            "upperBound": 23534,
+            "evaluations": 35584463
+          },
+          {
+            "ms": 6055.0036,
+            "ready": 3271379,
+            "score": 21440,
+            "upperBound": 23276,
+            "evaluations": 42564193
+          },
+          {
+            "ms": 7055.049999999999,
+            "ready": 2844855,
+            "score": 21440,
+            "upperBound": 23055,
+            "evaluations": 49570670
+          },
+          {
+            "ms": 8055.3622,
+            "ready": 2322197,
+            "score": 21440,
+            "upperBound": 22860,
+            "evaluations": 56576184
+          },
+          {
+            "ms": 9055.3945,
+            "ready": 1740610,
+            "score": 21440,
+            "upperBound": 22689,
+            "evaluations": 63485587
+          },
+          {
+            "ms": 10056.0944,
+            "ready": 1111534,
+            "score": 21458,
+            "upperBound": 22533,
+            "evaluations": 70455678
+          },
+          {
+            "ms": 11056.8717,
+            "ready": 804559,
+            "score": 21458,
+            "upperBound": 22216,
+            "evaluations": 78334642
+          },
+          {
+            "ms": 12057.8452,
+            "ready": 635713,
+            "score": 21458,
+            "upperBound": 21955,
+            "evaluations": 86141912
+          },
+          {
+            "ms": 13058.2873,
+            "ready": 445271,
+            "score": 21458,
+            "upperBound": 21749,
+            "evaluations": 94343839
+          },
+          {
+            "ms": 14059.5831,
+            "ready": 237591,
+            "score": 21458,
+            "upperBound": 21580,
+            "evaluations": 102715824
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "dual",
+      "repeat": 3,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 13267.712,
+        "cpuMs": 126203.125,
+        "peakWorkingSetBytes": 171810816
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 13066,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950597,
+        "exact": true,
+        "prunedByBound": 43200137,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 52.1243,
+        "sessionWallMs": 13076.2438,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 53.320899999999995,
+            "ready": 4,
+            "score": 21246,
+            "upperBound": 75380,
+            "evaluations": 1515
+          },
+          {
+            "ms": 1053.4819,
+            "ready": 2780278,
+            "score": 21355,
+            "upperBound": 25606,
+            "evaluations": 8461623
+          },
+          {
+            "ms": 2053.7169999999996,
+            "ready": 3582180,
+            "score": 21440,
+            "upperBound": 24566,
+            "evaluations": 17282195
+          },
+          {
+            "ms": 3053.926,
+            "ready": 3765069,
+            "score": 21440,
+            "upperBound": 23957,
+            "evaluations": 26453824
+          },
+          {
+            "ms": 4054.3576999999996,
+            "ready": 3590618,
+            "score": 21440,
+            "upperBound": 23542,
+            "evaluations": 35375831
+          },
+          {
+            "ms": 5054.4340999999995,
+            "ready": 3198702,
+            "score": 21440,
+            "upperBound": 23231,
+            "evaluations": 43881179
+          },
+          {
+            "ms": 6054.7833,
+            "ready": 2661484,
+            "score": 21440,
+            "upperBound": 22980,
+            "evaluations": 52170350
+          },
+          {
+            "ms": 7054.8617,
+            "ready": 1991709,
+            "score": 21440,
+            "upperBound": 22759,
+            "evaluations": 60580075
+          },
+          {
+            "ms": 8055.321599999999,
+            "ready": 1241656,
+            "score": 21458,
+            "upperBound": 22563,
+            "evaluations": 69052927
+          },
+          {
+            "ms": 9055.9768,
+            "ready": 832123,
+            "score": 21458,
+            "upperBound": 22270,
+            "evaluations": 77010973
+          },
+          {
+            "ms": 10057.5742,
+            "ready": 653064,
+            "score": 21458,
+            "upperBound": 21978,
+            "evaluations": 85366251
+          },
+          {
+            "ms": 11058.1494,
+            "ready": 463677,
+            "score": 21458,
+            "upperBound": 21766,
+            "evaluations": 93573428
+          },
+          {
+            "ms": 12059.4827,
+            "ready": 262163,
+            "score": 21458,
+            "upperBound": 21598,
+            "evaluations": 101751368
+          },
+          {
+            "ms": 13060.773899999998,
+            "ready": 48784,
+            "score": 21458,
+            "upperBound": 21458,
+            "evaluations": 109932105
+          }
+        ],
+        "upperBound": 21458,
+        "visitedNodes": 15872892
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 1,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 3263.427,
+        "cpuMs": 25250,
+        "peakWorkingSetBytes": 58761216
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 3070,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 56.5463,
+        "sessionWallMs": 3072.6158,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 57.881299999999996,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1057.9605999999999,
+            "ready": 920587,
+            "score": 14089,
+            "upperBound": 15498,
+            "evaluations": 9080070
+          },
+          {
+            "ms": 2058.0729,
+            "ready": 370325,
+            "score": 14097,
+            "upperBound": 14878,
+            "evaluations": 17140319
+          },
+          {
+            "ms": 3058.7839,
+            "ready": 8660,
+            "score": 14097,
+            "upperBound": 14102,
+            "evaluations": 25861170
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 1,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 2888.774,
+        "cpuMs": 23781.25,
+        "peakWorkingSetBytes": 58761216
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 2697,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 51.0922,
+        "sessionWallMs": 2699.5498,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.3423,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1052.5817,
+            "ready": 862887,
+            "score": 14089,
+            "upperBound": 15352,
+            "evaluations": 10577649
+          },
+          {
+            "ms": 2054.2223000000004,
+            "ready": 175962,
+            "score": 14097,
+            "upperBound": 14494,
+            "evaluations": 20496747
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 2,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 2979.933,
+        "cpuMs": 25453.125,
+        "peakWorkingSetBytes": 59064320
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 2803,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 50.9576,
+        "sessionWallMs": 2805.5059,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.2043,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1052.51,
+            "ready": 882025,
+            "score": 14089,
+            "upperBound": 15393,
+            "evaluations": 10135448
+          },
+          {
+            "ms": 2054.6528999999996,
+            "ready": 189707,
+            "score": 14097,
+            "upperBound": 14564,
+            "evaluations": 19942669
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 2,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 3044.985,
+        "cpuMs": 22953.125,
+        "peakWorkingSetBytes": 58998784
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 2863,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 51.159499999999994,
+        "sessionWallMs": 2865.6008,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 52.3953,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1052.6101,
+            "ready": 916342,
+            "score": 14089,
+            "upperBound": 15484,
+            "evaluations": 9213230
+          },
+          {
+            "ms": 2054.2295,
+            "ready": 214143,
+            "score": 14097,
+            "upperBound": 14745,
+            "evaluations": 18854577
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 3,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 3095.223,
+        "cpuMs": 22640.625,
+        "peakWorkingSetBytes": 59224064
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 2903,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 50.3638,
+        "sessionWallMs": 2906.0497,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 51.515499999999996,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1051.796,
+            "ready": 924125,
+            "score": 14089,
+            "upperBound": 15511,
+            "evaluations": 8957037
+          },
+          {
+            "ms": 2052.116,
+            "ready": 236884,
+            "score": 14097,
+            "upperBound": 14804,
+            "evaluations": 18452257
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "basic",
+      "repeat": 3,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 2804.41,
+        "cpuMs": 23031.25,
+        "peakWorkingSetBytes": 58728448
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:알타달+칼레리프",
+            "additional:카나요간+칼레리프",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "AGGRO": -15,
+            "AILMENT_RES": -15,
+            "ASPD": -250,
+            "ATKP": 57,
+            "CDMG": 36,
+            "CRIT": 16,
+            "CRITP": 10,
+            "DEFP": -33,
+            "MAG_RES": -45,
+            "MATKP": -4,
+            "MAXMP": -200,
+            "MOTIONSPEED": 0,
+            "PHYS_PIERCE": 35,
+            "PHYS_RES": -20,
+            "SRW": 21,
+            "STABILITY": 6,
+            "STRP": 14,
+            "VITP": 6
+          }
+        },
+        "elapsedMs": 2614,
+        "enumeratedCompletions": 8840416,
+        "evaluations": 25972605,
+        "exact": true,
+        "prunedByBound": 12668525,
+        "prunedByConstraint": 0,
+        "score": 14097,
+        "sessionBatches": 4653,
+        "sessionPreparationMs": 50.498000000000005,
+        "sessionWallMs": 2616.4665999999997,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 51.740899999999996,
+            "ready": 4,
+            "score": 14089,
+            "upperBound": 46422,
+            "evaluations": 1513
+          },
+          {
+            "ms": 1052.1415,
+            "ready": 835072,
+            "score": 14089,
+            "upperBound": 15302,
+            "evaluations": 11138535
+          },
+          {
+            "ms": 2053.0688999999998,
+            "ready": 158140,
+            "score": 14097,
+            "upperBound": 14422,
+            "evaluations": 21169227
+          }
+        ],
+        "upperBound": 14097,
+        "visitedNodes": 4466938
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 1,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1362.46,
+        "cpuMs": 7718.75,
+        "peakWorkingSetBytes": 45174784
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1184,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413443,
+        "exact": true,
+        "prunedByBound": 3840997,
+        "prunedByConstraint": 2953803,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 40.6308,
+        "sessionWallMs": 1185.9922000000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 41.7746,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1041.9335999999998,
+            "ready": 121186,
+            "score": 13051,
+            "upperBound": 13493,
+            "evaluations": 9247738
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335188
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 1,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1241.128,
+        "cpuMs": 7578.125,
+        "peakWorkingSetBytes": 45641728
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1058,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413475,
+        "exact": true,
+        "prunedByBound": 3841008,
+        "prunedByConstraint": 2953816,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 40.7502,
+        "sessionWallMs": 1059.5248,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 41.858,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1042.208,
+            "ready": 32530,
+            "score": 13051,
+            "upperBound": 13081,
+            "evaluations": 10322430
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335197
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 2,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1260.69,
+        "cpuMs": 6718.75,
+        "peakWorkingSetBytes": 45150208
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1079,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413415,
+        "exact": true,
+        "prunedByBound": 3840985,
+        "prunedByConstraint": 2953794,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 48.8793,
+        "sessionWallMs": 1081.3410000000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 50.6489,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1051.6652,
+            "ready": 38132,
+            "score": 13051,
+            "upperBound": 13116,
+            "evaluations": 10229290
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335181
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 2,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1347.953,
+        "cpuMs": 6093.75,
+        "peakWorkingSetBytes": 45502464
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1166,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413463,
+        "exact": true,
+        "prunedByBound": 3841001,
+        "prunedByConstraint": 2953814,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 46.3349,
+        "sessionWallMs": 1167.9223000000002,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 47.4953,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1047.6890999999998,
+            "ready": 93017,
+            "score": 13051,
+            "upperBound": 13433,
+            "evaluations": 9466283
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335194
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 3,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1351.195,
+        "cpuMs": 6500,
+        "peakWorkingSetBytes": 45277184
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1164,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413411,
+        "exact": true,
+        "prunedByBound": 3840982,
+        "prunedByConstraint": 2953794,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 40.949600000000004,
+        "sessionWallMs": 1165.3144,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 42.0385,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1042.0415,
+            "ready": 95037,
+            "score": 13051,
+            "upperBound": 13437,
+            "evaluations": 9450098
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335181
+      }
+    },
+    {
+      "fixture": "hp40000",
+      "repeat": 3,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 1251.916,
+        "cpuMs": 8171.875,
+        "peakWorkingSetBytes": 45387776
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+후빗||armor:믈윙구 핸드+호뢰파섬||additional:고블린 주코토+카나요간||special:저편의 잔영+칼레리프",
+          "packageIds": [
+            "weapon:도이+후빗",
+            "armor:믈윙구 핸드+호뢰파섬",
+            "additional:고블린 주코토+카나요간",
+            "special:저편의 잔영+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 5,
+            "AGGRO": -30,
+            "AILMENT_RES": -15,
+            "ANTICIPATE": 10,
+            "ASPD": -250,
+            "ATKP": 56,
+            "CDMG": 12,
+            "CRIT": 31,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LRW": 4,
+            "MAG_RES": -15,
+            "MATKP": 3,
+            "MAXHP": 17000,
+            "MAXHPP": 24,
+            "MAXMP": -300,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 45,
+            "PHYS_RES": -20,
+            "SRW": 23,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 1077,
+        "enumeratedCompletions": 1309208,
+        "evaluations": 10413483,
+        "exact": true,
+        "prunedByBound": 3841011,
+        "prunedByConstraint": 2953819,
+        "score": 13051,
+        "sessionBatches": 2980,
+        "sessionPreparationMs": 41.0616,
+        "sessionWallMs": 1078.3363,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 42.2592,
+            "ready": 4,
+            "score": 12076,
+            "upperBound": 45912,
+            "evaluations": 1509
+          },
+          {
+            "ms": 1042.3027,
+            "ready": 40685,
+            "score": 13051,
+            "upperBound": 13133,
+            "evaluations": 10184634
+          }
+        ],
+        "upperBound": 13051,
+        "visitedNodes": 2335199
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 1,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 874.292,
+        "cpuMs": 5406.25,
+        "peakWorkingSetBytes": 31657984
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 699,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 50.2338,
+        "sessionWallMs": 700.1013,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 51.323,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 1,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 846.614,
+        "cpuMs": 5296.875,
+        "peakWorkingSetBytes": 31555584
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 665,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 45.153600000000004,
+        "sessionWallMs": 665.9142999999999,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 46.2845,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 2,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 904.204,
+        "cpuMs": 6015.625,
+        "peakWorkingSetBytes": 32133120
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 728,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 45.3145,
+        "sessionWallMs": 729.2370000000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 46.5606,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 2,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 892.362,
+        "cpuMs": 6359.375,
+        "peakWorkingSetBytes": 31662080
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 714,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 44.8024,
+        "sessionWallMs": 714.8519,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 46.0547,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 3,
+      "variant": "before",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 886.055,
+        "cpuMs": 4546.875,
+        "peakWorkingSetBytes": 31715328
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 711,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 43.6816,
+        "sessionWallMs": 711.9830000000001,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 44.826699999999995,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    },
+    {
+      "fixture": "magic",
+      "repeat": 3,
+      "variant": "after",
+      "threads": 16,
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 867.439,
+        "cpuMs": 4093.75,
+        "peakWorkingSetBytes": 31588352
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:디알크+키피나||armor:게그너+메르제하르||additional:데라단비트+아이야크||special:루트세이저+피누굴가",
+          "packageIds": [
+            "weapon:디알크+키피나",
+            "armor:게그너+메르제하르",
+            "additional:데라단비트+아이야크",
+            "special:루트세이저+피누굴가"
+          ],
+          "statDelta": {
+            "ACCP": -20,
+            "AGGRO": -28,
+            "AMPR": 4,
+            "AMPRP": 10,
+            "ASPD": -300,
+            "ATKP": 21,
+            "CDMG": 8,
+            "CSPD": -300,
+            "CSPD_P": 49,
+            "DEXP": 5,
+            "INTP": 6,
+            "MAG_PIERCE": 48,
+            "MATKP": 86,
+            "MAXHPP": 49,
+            "MAXMP": -400,
+            "MDEFP": -36,
+            "MOTIONSPEED": 1,
+            "PHYS_RES": 15
+          }
+        },
+        "elapsedMs": 681,
+        "enumeratedCompletions": 619949,
+        "evaluations": 5923208,
+        "exact": true,
+        "prunedByBound": 3957969,
+        "prunedByConstraint": 0,
+        "score": 5580,
+        "sessionBatches": 1545,
+        "sessionPreparationMs": 45.4242,
+        "sessionWallMs": 681.7723,
+        "status": "exact",
+        "trace": [
+          {
+            "ms": 46.648,
+            "ready": 4,
+            "score": 5580,
+            "upperBound": 20339,
+            "evaluations": 1481
+          }
+        ],
+        "upperBound": 5580,
+        "visitedNodes": 1343814
+      }
+    }
+  ],
+  "sourceCommit": "206c5f61757e0d3acf320cdb6c452e15ca368fba",
+  "sourceHashes": {
+    "beforeSolver": "a015e2f00496d82cb5eafb66ec1004c7f49d5d467d1e3cd5c5dfea43c24bc55a",
+    "afterSolver": "5449f9203028399e8a7f98f6a4567370f2ac1932ba5bbac9fd4935eaedfe3717"
+  },
+  "environment": {
+    "cpu": "AMD Ryzen 7 9800X3D 8-Core Processor           ",
+    "logicalProcessors": 16,
+    "os": "10.0.26200",
+    "node": "v24.17.0"
+  },
+  "summary": [
+    {
+      "fixture": "revenir",
+      "beforeMs": 31527.5774,
+      "afterMs": 22724.55,
+      "reductionPercent": 27.921674057962974,
+      "beforePeakMiB": [
+        613.55078125,
+        509.76953125,
+        455.69921875
+      ],
+      "afterPeakMiB": [
+        604.80859375,
+        409.15625,
+        602.3125
+      ]
+    },
+    {
+      "fixture": "dual",
+      "beforeMs": 14946.625600000001,
+      "afterMs": 12722.4675,
+      "reductionPercent": 14.880670457149881,
+      "beforePeakMiB": [
+        164.0078125,
+        163.60546875,
+        163.93359375
+      ],
+      "afterPeakMiB": [
+        163.98046875,
+        164.00390625,
+        163.8515625
+      ]
+    },
+    {
+      "fixture": "basic",
+      "beforeMs": 2906.0497,
+      "afterMs": 2699.5498,
+      "reductionPercent": 7.105862642335414,
+      "beforePeakMiB": [
+        56.0390625,
+        56.265625,
+        56.48046875
+      ],
+      "afterPeakMiB": [
+        56.0390625,
+        56.328125,
+        56.0078125
+      ]
+    },
+    {
+      "fixture": "hp40000",
+      "beforeMs": 1167.9223000000002,
+      "afterMs": 1078.3363,
+      "reductionPercent": 7.670544521668965,
+      "beforePeakMiB": [
+        43.08203125,
+        43.39453125,
+        43.1796875
+      ],
+      "afterPeakMiB": [
+        43.52734375,
+        43.05859375,
+        43.28515625
+      ]
+    },
+    {
+      "fixture": "magic",
+      "beforeMs": 711.9830000000001,
+      "afterMs": 681.7723,
+      "reductionPercent": 4.243177154510724,
+      "beforePeakMiB": [
+        30.19140625,
+        30.1953125,
+        30.24609375
+      ],
+      "afterPeakMiB": [
+        30.09375,
+        30.64453125,
+        30.125
+      ]
+    }
+  ],
+  "oracle": {
+    "date": "2026-09-23T09:45:02.346Z",
+    "binaries": {
+      "before": "901dec4d760b50383bd913afa357661f2c428b92161853c3b22ad47874d2d1fa",
+      "after": "52e94f9e7cce50cebf3f9601bef0b7601ba65816f08e052fb648ad61450da2ea"
+    },
+    "inputHashes": {
+      "revenir-oracle": "116f143d63644ae37b484066d278b281c905f5e894e66c5eca8f3763b2289368",
+      "dual-oracle": "3e07ae683132e2277ec1a9d60eeea9e16ef1f3daec05a69d385c295136b0a1ef",
+      "basic-oracle": "c6c0151fcd9bdb5f0e6ab75ef4354c70597fd0cafee9b42f19b1a3d78ba671f3",
+      "hp40000-oracle": "d04c80be1ae0088260c02fcd423283c5a9147a854c2c94fc3d1e69f006f9213e",
+      "magic-oracle": "e60fc57ece1115cfcb6ce7f10c2debd7e9e3681fb6a088499d39eceab51179e9"
+    },
+    "runs": [
+      {
+        "fixture": "revenir-oracle",
+        "repeat": 1,
+        "variant": "before",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 165.336,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:그와이몰+왕자 메기스콘VIII||armor:글록+자이언트 문어||additional:굴라+그레이트 키지무||special:시카노카미+제프펠",
+            "packageIds": [
+              "weapon:그와이몰+왕자 메기스콘VIII",
+              "armor:글록+자이언트 문어",
+              "additional:굴라+그레이트 키지무",
+              "special:시카노카미+제프펠"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AILMENT_RES": -2,
+              "AMPR": 25,
+              "AOE_RES": -1,
+              "ASPD": 150,
+              "ATKP": 16,
+              "AVOID_RECHARGE": -30,
+              "CRIT": 72,
+              "CRITP": 4,
+              "CSPD": 200,
+              "DARK_RES": 6,
+              "DEFP": -15,
+              "EARTH_RES": 6,
+              "FIRE_RES": 2,
+              "GUARD_BREAK": 10,
+              "LIGHT_RES": 6,
+              "LRW": 5,
+              "MAG_PIERCE": 1,
+              "MATKP": 12,
+              "MAXHP": 7600,
+              "MAXMP": 1300,
+              "NEUTRAL_RES": 3,
+              "PHYS_PIERCE": 1,
+              "SRW": 5,
+              "STRP": 5,
+              "WATER_DMG": 5,
+              "WATER_RES": 26,
+              "WIND_RES": 6
+            }
+          },
+          "elapsedMs": 1,
+          "enumeratedCompletions": 1280,
+          "evaluations": 1535,
+          "exact": true,
+          "prunedByBound": 0,
+          "prunedByConstraint": 170,
+          "score": 689085.48,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.4806,
+          "sessionWallMs": 1.5532,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 0.8079,
+              "ready": 4,
+              "score": null,
+              "upperBound": 1778341.44,
+              "evaluations": 7
+            }
+          ],
+          "upperBound": 689085.48,
+          "visitedNodes": 83
+        }
+      },
+      {
+        "fixture": "revenir-oracle",
+        "repeat": 1,
+        "variant": "after",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 175.293,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:그와이몰+왕자 메기스콘VIII||armor:글록+자이언트 문어||additional:굴라+그레이트 키지무||special:시카노카미+제프펠",
+            "packageIds": [
+              "weapon:그와이몰+왕자 메기스콘VIII",
+              "armor:글록+자이언트 문어",
+              "additional:굴라+그레이트 키지무",
+              "special:시카노카미+제프펠"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AILMENT_RES": -2,
+              "AMPR": 25,
+              "AOE_RES": -1,
+              "ASPD": 150,
+              "ATKP": 16,
+              "AVOID_RECHARGE": -30,
+              "CRIT": 72,
+              "CRITP": 4,
+              "CSPD": 200,
+              "DARK_RES": 6,
+              "DEFP": -15,
+              "EARTH_RES": 6,
+              "FIRE_RES": 2,
+              "GUARD_BREAK": 10,
+              "LIGHT_RES": 6,
+              "LRW": 5,
+              "MAG_PIERCE": 1,
+              "MATKP": 12,
+              "MAXHP": 7600,
+              "MAXMP": 1300,
+              "NEUTRAL_RES": 3,
+              "PHYS_PIERCE": 1,
+              "SRW": 5,
+              "STRP": 5,
+              "WATER_DMG": 5,
+              "WATER_RES": 26,
+              "WIND_RES": 6
+            }
+          },
+          "elapsedMs": 1,
+          "enumeratedCompletions": 1280,
+          "evaluations": 1535,
+          "exact": true,
+          "prunedByBound": 0,
+          "prunedByConstraint": 170,
+          "score": 689085.48,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.47419999999999995,
+          "sessionWallMs": 2.024,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.0051,
+              "ready": 4,
+              "score": null,
+              "upperBound": 1778341.44,
+              "evaluations": 7
+            }
+          ],
+          "upperBound": 689085.48,
+          "visitedNodes": 83
+        }
+      },
+      {
+        "fixture": "dual-oracle",
+        "repeat": 1,
+        "variant": "before",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 169.49,
+          "cpuMs": 0,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+폭주 마정의 짐승||armor:광폭 짐승화 리그시+죠코||additional:굴라+칼레리프||special:광폭 짐승화 리그시+죠코",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+폭주 마정의 짐승",
+              "armor:광폭 짐승화 리그시+죠코",
+              "additional:굴라+칼레리프",
+              "special:광폭 짐승화 리그시+죠코"
+            ],
+            "statDelta": {
+              "ACCP": 14,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 4,
+              "ASPD_P": 40,
+              "ATKP": 52,
+              "CDMG": 12,
+              "CRIT": -3,
+              "GUARD_BREAK": 10,
+              "MAG_RES": -15,
+              "MAXHP": -1000,
+              "MAXHPP": 18,
+              "MAXMP": 800,
+              "MOTIONSPEED": 0,
+              "PHYS_PIERCE": 10,
+              "SRW": 32
+            }
+          },
+          "elapsedMs": 2,
+          "enumeratedCompletions": 8640,
+          "evaluations": 9331,
+          "exact": true,
+          "prunedByBound": 286,
+          "prunedByConstraint": 0,
+          "score": 17788,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.7361,
+          "sessionWallMs": 2.7956,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.083,
+              "ready": 4,
+              "score": 17788,
+              "upperBound": 31932,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 17788,
+          "visitedNodes": 275
+        }
+      },
+      {
+        "fixture": "dual-oracle",
+        "repeat": 1,
+        "variant": "after",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 172.812,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+폭주 마정의 짐승||armor:광폭 짐승화 리그시+죠코||additional:굴라+칼레리프||special:광폭 짐승화 리그시+죠코",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+폭주 마정의 짐승",
+              "armor:광폭 짐승화 리그시+죠코",
+              "additional:굴라+칼레리프",
+              "special:광폭 짐승화 리그시+죠코"
+            ],
+            "statDelta": {
+              "ACCP": 14,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 4,
+              "ASPD_P": 40,
+              "ATKP": 52,
+              "CDMG": 12,
+              "CRIT": -3,
+              "GUARD_BREAK": 10,
+              "MAG_RES": -15,
+              "MAXHP": -1000,
+              "MAXHPP": 18,
+              "MAXMP": 800,
+              "MOTIONSPEED": 0,
+              "PHYS_PIERCE": 10,
+              "SRW": 32
+            }
+          },
+          "elapsedMs": 3,
+          "enumeratedCompletions": 8640,
+          "evaluations": 9331,
+          "exact": true,
+          "prunedByBound": 286,
+          "prunedByConstraint": 0,
+          "score": 17788,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.733,
+          "sessionWallMs": 3.0768,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.0952,
+              "ready": 4,
+              "score": 17788,
+              "upperBound": 31932,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 17788,
+          "visitedNodes": 275
+        }
+      },
+      {
+        "fixture": "basic-oracle",
+        "repeat": 1,
+        "variant": "before",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 175.478,
+          "cpuMs": 0,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+폭주 마정의 짐승||armor:디럭스 파이터2+뱅글돔||additional:광폭 짐승화 리그시+저편의 잔영||special:광폭 짐승화 리그시+죠코",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+폭주 마정의 짐승",
+              "armor:디럭스 파이터2+뱅글돔",
+              "additional:광폭 짐승화 리그시+저편의 잔영",
+              "special:광폭 짐승화 리그시+죠코"
+            ],
+            "statDelta": {
+              "ACCP": 22,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 4,
+              "ASPD": -250,
+              "ASPD_P": 50,
+              "ATKP": 46,
+              "CRIT": -9,
+              "CSPD_P": 10,
+              "FRAC_BARR": 5,
+              "MAG_PIERCE": 5,
+              "MATKP": 10,
+              "MAXHP": 5500,
+              "MAXHPP": -2,
+              "MAXMP": 400,
+              "PHYS_PIERCE": 15,
+              "SRW": 36
+            }
+          },
+          "elapsedMs": 2,
+          "enumeratedCompletions": 4736,
+          "evaluations": 5339,
+          "exact": true,
+          "prunedByBound": 281,
+          "prunedByConstraint": 0,
+          "score": 10518,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.7149,
+          "sessionWallMs": 2.7469,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.071,
+              "ready": 4,
+              "score": 10518,
+              "upperBound": 17896,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 10518,
+          "visitedNodes": 192
+        }
+      },
+      {
+        "fixture": "basic-oracle",
+        "repeat": 1,
+        "variant": "after",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 166.169,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+폭주 마정의 짐승||armor:디럭스 파이터2+뱅글돔||additional:광폭 짐승화 리그시+저편의 잔영||special:광폭 짐승화 리그시+죠코",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+폭주 마정의 짐승",
+              "armor:디럭스 파이터2+뱅글돔",
+              "additional:광폭 짐승화 리그시+저편의 잔영",
+              "special:광폭 짐승화 리그시+죠코"
+            ],
+            "statDelta": {
+              "ACCP": 22,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 4,
+              "ASPD": -250,
+              "ASPD_P": 50,
+              "ATKP": 46,
+              "CRIT": -9,
+              "CSPD_P": 10,
+              "FRAC_BARR": 5,
+              "MAG_PIERCE": 5,
+              "MATKP": 10,
+              "MAXHP": 5500,
+              "MAXHPP": -2,
+              "MAXMP": 400,
+              "PHYS_PIERCE": 15,
+              "SRW": 36
+            }
+          },
+          "elapsedMs": 2,
+          "enumeratedCompletions": 4736,
+          "evaluations": 5339,
+          "exact": true,
+          "prunedByBound": 281,
+          "prunedByConstraint": 0,
+          "score": 10518,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.7290000000000001,
+          "sessionWallMs": 2.4588,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.0703,
+              "ready": 4,
+              "score": 10518,
+              "upperBound": 17896,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 10518,
+          "visitedNodes": 192
+        }
+      },
+      {
+        "fixture": "hp40000-oracle",
+        "repeat": 1,
+        "variant": "before",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 169.968,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:저편의 잔영+후빗||armor:검은 복숭아 닌자+피누굴가||additional:골드쟝+오브시아||special:저편의 잔영+휴미더",
+            "packageIds": [
+              "weapon:저편의 잔영+후빗",
+              "armor:검은 복숭아 닌자+피누굴가",
+              "additional:골드쟝+오브시아",
+              "special:저편의 잔영+휴미더"
+            ],
+            "statDelta": {
+              "AGGRO": -40,
+              "AILMENT_RES": -15,
+              "ASPD": -800,
+              "ATKP": 21,
+              "CDMG": 9,
+              "CSPD": -300,
+              "DEFP": 15,
+              "FRAC_BARR": 10,
+              "GUARD_POWER": 20,
+              "MATKP": 15,
+              "MAXHP": 19000,
+              "MAXMP": 200,
+              "PHYS_PIERCE": 30,
+              "PHYS_RES": 10,
+              "SRW": 20,
+              "STABILITY": 4
+            }
+          },
+          "elapsedMs": 2,
+          "enumeratedCompletions": 6592,
+          "evaluations": 7443,
+          "exact": true,
+          "prunedByBound": 130,
+          "prunedByConstraint": 404,
+          "score": 8058,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.4312,
+          "sessionWallMs": 2.3454,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 0.7532,
+              "ready": 4,
+              "score": null,
+              "upperBound": 17577,
+              "evaluations": 7
+            }
+          ],
+          "upperBound": 8058,
+          "visitedNodes": 445
+        }
+      },
+      {
+        "fixture": "hp40000-oracle",
+        "repeat": 1,
+        "variant": "after",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 172.48,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:저편의 잔영+후빗||armor:검은 복숭아 닌자+피누굴가||additional:골드쟝+오브시아||special:저편의 잔영+휴미더",
+            "packageIds": [
+              "weapon:저편의 잔영+후빗",
+              "armor:검은 복숭아 닌자+피누굴가",
+              "additional:골드쟝+오브시아",
+              "special:저편의 잔영+휴미더"
+            ],
+            "statDelta": {
+              "AGGRO": -40,
+              "AILMENT_RES": -15,
+              "ASPD": -800,
+              "ATKP": 21,
+              "CDMG": 9,
+              "CSPD": -300,
+              "DEFP": 15,
+              "FRAC_BARR": 10,
+              "GUARD_POWER": 20,
+              "MATKP": 15,
+              "MAXHP": 19000,
+              "MAXMP": 200,
+              "PHYS_PIERCE": 30,
+              "PHYS_RES": 10,
+              "SRW": 20,
+              "STABILITY": 4
+            }
+          },
+          "elapsedMs": 2,
+          "enumeratedCompletions": 6592,
+          "evaluations": 7443,
+          "exact": true,
+          "prunedByBound": 130,
+          "prunedByConstraint": 404,
+          "score": 8058,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.4373,
+          "sessionWallMs": 2.1372999999999998,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 0.7850999999999999,
+              "ready": 4,
+              "score": null,
+              "upperBound": 17577,
+              "evaluations": 7
+            }
+          ],
+          "upperBound": 8058,
+          "visitedNodes": 445
+        }
+      },
+      {
+        "fixture": "magic-oracle",
+        "repeat": 1,
+        "variant": "before",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 163.572,
+          "cpuMs": 250,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:디알크+케슈피온||armor:게그너+콜론 두목||additional:라갈 브라조+아이야크||special:루트세이저+병사 용 달바",
+            "packageIds": [
+              "weapon:디알크+케슈피온",
+              "armor:게그너+콜론 두목",
+              "additional:라갈 브라조+아이야크",
+              "special:루트세이저+병사 용 달바"
+            ],
+            "statDelta": {
+              "ACC": -40,
+              "ACCP": 7,
+              "AGGRO": -15,
+              "AMPR": 4,
+              "AMPRP": 10,
+              "ATKP": 13,
+              "CDMG": 3,
+              "CRIT": 21,
+              "CRITP": 10,
+              "CSPD_P": 24,
+              "INTP": 6,
+              "MAG_PIERCE": 30,
+              "MATKP": 48,
+              "MAXHPP": 24,
+              "MAXMP": -400,
+              "MOTIONSPEED": 1,
+              "SRW": -1,
+              "STABILITY": 2,
+              "STRP": 3,
+              "WATKP": 14
+            }
+          },
+          "elapsedMs": 3,
+          "enumeratedCompletions": 11008,
+          "evaluations": 11903,
+          "exact": true,
+          "prunedByBound": 402,
+          "prunedByConstraint": 0,
+          "score": 3479,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.8022,
+          "sessionWallMs": 3.5499,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.1348,
+              "ready": 4,
+              "score": 3479,
+              "upperBound": 7800,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 3479,
+          "visitedNodes": 363
+        }
+      },
+      {
+        "fixture": "magic-oracle",
+        "repeat": 1,
+        "variant": "after",
+        "threads": 16,
+        "measurement": {
+          "exitCode": null,
+          "wallMs": 169.737,
+          "cpuMs": 15.625,
+          "peakWorkingSetBytes": 0
+        },
+        "result": {
+          "bestBuild": {
+            "id": "weapon:디알크+케슈피온||armor:게그너+콜론 두목||additional:라갈 브라조+아이야크||special:루트세이저+병사 용 달바",
+            "packageIds": [
+              "weapon:디알크+케슈피온",
+              "armor:게그너+콜론 두목",
+              "additional:라갈 브라조+아이야크",
+              "special:루트세이저+병사 용 달바"
+            ],
+            "statDelta": {
+              "ACC": -40,
+              "ACCP": 7,
+              "AGGRO": -15,
+              "AMPR": 4,
+              "AMPRP": 10,
+              "ATKP": 13,
+              "CDMG": 3,
+              "CRIT": 21,
+              "CRITP": 10,
+              "CSPD_P": 24,
+              "INTP": 6,
+              "MAG_PIERCE": 30,
+              "MATKP": 48,
+              "MAXHPP": 24,
+              "MAXMP": -400,
+              "MOTIONSPEED": 1,
+              "SRW": -1,
+              "STABILITY": 2,
+              "STRP": 3,
+              "WATKP": 14
+            }
+          },
+          "elapsedMs": 3,
+          "enumeratedCompletions": 11008,
+          "evaluations": 11903,
+          "exact": true,
+          "prunedByBound": 402,
+          "prunedByConstraint": 0,
+          "score": 3479,
+          "sessionBatches": 6,
+          "sessionPreparationMs": 0.7609,
+          "sessionWallMs": 3.7582,
+          "status": "exact",
+          "trace": [
+            {
+              "ms": 1.0928000000000002,
+              "ready": 4,
+              "score": 3479,
+              "upperBound": 7800,
+              "evaluations": 135
+            }
+          ],
+          "upperBound": 3479,
+          "visitedNodes": 363
+        }
+      }
+    ]
+  }
+}

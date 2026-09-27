@@ -50,7 +50,7 @@ const utilityCrysta = { name:'Utility fixture', stats:{ MaxHP:1000, MaxHPP:10, M
 const baseInput = base();
 const original = JSON.stringify(baseInput);
 const build = evaluator.createBuildSnapshot(baseInput, [utilityCrysta]);
-const scenario = evaluator.createScenarioSnapshot(baseInput, { requirements:{ maxHp:5000 } });
+const scenario = evaluator.createScenarioSnapshot(baseInput, { requirements:{ maxHp:5000,amprBeforeDual:70 } });
 const outcome = evaluator.evaluate(build, scenario, context.window.ToramCalculationKernel.evaluateContext);
 
 assert.equal(JSON.stringify(baseInput), original, 'BuildEvaluator는 호출자의 입력 객체를 변경하면 안 됩니다.');
@@ -63,6 +63,7 @@ assert.equal(outcome.utility.finalAmpr, 200, '듀얼소드는 최종 AMPR만 2�
 assert.equal(outcome.utility.aspd, 1000, 'ASPD% 적용 뒤 고정 ASPD를 더해야 합니다.');
 assert.equal(outcome.offense.normalAttackCrit, 100, '선택 스킬 확정 크리티컬과 별개로 평타 크리티컬률을 반환해야 합니다.');
 assert.equal(outcome.constraints.feasible, true, 'fixture는 모든 D4 기본 Utility 경계를 만족해야 합니다.');
+assert.equal(evaluator.evaluate(build, evaluator.createScenarioSnapshot(baseInput,{requirements:{maxHp:5000,amprBeforeDual:100}}), context.window.ToramCalculationKernel.evaluateContext).constraints.feasible,false,'AMPR%는 D4 유틸리티 목표에 포함하지 않는다.');
 assert.equal(outcome.calculation.ctx.preservedStats.DROP_RATE, 1, '현재 범위 밖 스탯도 계산 컨텍스트에 보존돼야 합니다.');
 const aggregateOutcome = evaluator.evaluateAggregate(baseInput, scenario, utilityCrysta.stats, context.window.ToramCalculationKernel.evaluateContext);
 assert.deepEqual(aggregateOutcome.damage, outcome.damage, '고속 집계 평가의 대미지는 전체 BuildSnapshot 평가와 같아야 합니다.');

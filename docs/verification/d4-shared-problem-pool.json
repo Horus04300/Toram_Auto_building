@@ -1,0 +1,349 @@
+{
+  "date": "2026-09-27T02:12:15.466Z",
+  "hashes": {
+    "before": {
+      "d4_native_evaluator.rs": "697d70e45909838eb188850e056a7da7265d46424472949d838b127adfe77617",
+      "d4_native_solver.rs": "16e820bece040dadd1071f4e8ce365e0314cc53a1c7e75289ee586d26cf59e8e",
+      "d4_native_stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+      "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e"
+    },
+    "after": {
+      "d4_native_evaluator.rs": "697d70e45909838eb188850e056a7da7265d46424472949d838b127adfe77617",
+      "d4_native_solver.rs": "231bea6c92ef8355d2845550118b73282f9479233942c6c4e812d19ad69bc541",
+      "d4_native_stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+      "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e"
+    }
+  },
+  "threads": 16,
+  "warmups": 2,
+  "repeats": 8,
+  "notes": "Calling-thread allocation/reallocation requests during pool construction only; includes thread launch scaffolding, excludes worker-thread allocations and native OS stacks. Requested bytes are not retained/live memory.",
+  "summary": [
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "medianMs": 1.2991,
+      "medianCalls": 17065,
+      "medianRequestedBytes": 4495733
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "medianMs": 0.19105,
+      "medianCalls": 85,
+      "medianRequestedBytes": 4856
+    },
+    {
+      "fixture": "dual",
+      "variant": "before",
+      "medianMs": 1.20265,
+      "medianCalls": 14785,
+      "medianRequestedBytes": 3835873
+    },
+    {
+      "fixture": "dual",
+      "variant": "after",
+      "medianMs": 0.1926,
+      "medianCalls": 85,
+      "medianRequestedBytes": 4856
+    },
+    {
+      "fixture": "utility-tight",
+      "variant": "before",
+      "medianMs": 0.47495,
+      "medianCalls": 2055,
+      "medianRequestedBytes": 1302060
+    },
+    {
+      "fixture": "utility-tight",
+      "variant": "after",
+      "medianMs": 0.20029999999999998,
+      "medianCalls": 85,
+      "medianRequestedBytes": 4856
+    }
+  ],
+  "runs": [
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "samples": [
+        {
+          "calls": 17065,
+          "ms": 1.2709,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.2833,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.2783,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.3063,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.2918999999999998,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.3441,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.4586,
+          "requestedBytes": 4495733
+        },
+        {
+          "calls": 17065,
+          "ms": 1.3642,
+          "requestedBytes": 4495733
+        }
+      ]
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "samples": [
+        {
+          "calls": 85,
+          "ms": 0.1912,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1964,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.19090000000000001,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1848,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1862,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1889,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.19699999999999998,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1924,
+          "requestedBytes": 4856
+        }
+      ]
+    },
+    {
+      "fixture": "dual",
+      "variant": "before",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "samples": [
+        {
+          "calls": 14785,
+          "ms": 1.1838,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.1811,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.158,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.174,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.2215,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.23,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.247,
+          "requestedBytes": 3835873
+        },
+        {
+          "calls": 14785,
+          "ms": 1.2596,
+          "requestedBytes": 3835873
+        }
+      ]
+    },
+    {
+      "fixture": "dual",
+      "variant": "after",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "samples": [
+        {
+          "calls": 85,
+          "ms": 0.1949,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1908,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.2361,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1897,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1891,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.18100000000000002,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1964,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.19440000000000002,
+          "requestedBytes": 4856
+        }
+      ]
+    },
+    {
+      "fixture": "utility-tight",
+      "variant": "before",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "samples": [
+        {
+          "calls": 2055,
+          "ms": 0.48119999999999996,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.4616,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.5661,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.4687,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.5216,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.44680000000000003,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.465,
+          "requestedBytes": 1302060
+        },
+        {
+          "calls": 2055,
+          "ms": 0.5986,
+          "requestedBytes": 1302060
+        }
+      ]
+    },
+    {
+      "fixture": "utility-tight",
+      "variant": "after",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "samples": [
+        {
+          "calls": 85,
+          "ms": 0.1896,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.2021,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.2138,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1938,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.19560000000000002,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.2007,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.1999,
+          "requestedBytes": 4856
+        },
+        {
+          "calls": 85,
+          "ms": 0.20450000000000002,
+          "requestedBytes": 4856
+        }
+      ]
+    }
+  ]
+}

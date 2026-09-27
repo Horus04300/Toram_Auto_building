@@ -1,0 +1,474 @@
+{
+  "date": "2026-09-26T16:14:53.231Z",
+  "node": "v24.17.0",
+  "platform": "win32",
+  "arch": "x64",
+  "sourceHashes": {
+    "d4_native_evaluator.rs": "697d70e45909838eb188850e056a7da7265d46424472949d838b127adfe77617",
+    "d4_native_solver.rs": "a63a0bec2398fc43fd8b7b5a2811daba4fa751471673da03597dab36516e2f1e",
+    "d4_native_stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+    "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e",
+    "bin/d4_native_parallel.rs": "891eed209bb3b1813e92445790f333c5fce400c7c793cd1d3bfddbb80992bf35"
+  },
+  "layout": {
+    "indexedWorkProposal": 24,
+    "nativePackage": 688,
+    "nativeStats": 328,
+    "nodeOutcome": 32,
+    "preparedContext": 5128,
+    "treeNode": 408,
+    "workItem": 40
+  },
+  "wire": [
+    {
+      "fixture": "revenir",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "packages": 4150,
+      "originalJsonBytes": 3116706,
+      "compactProposalJsonBytes": 627068,
+      "cacheKeyTiming": {
+        "original": {
+          "medianMs": 40.65480000000002,
+          "minMs": 36.665500000000065,
+          "maxMs": 44.48890000000006
+        },
+        "compactProposal": {
+          "medianMs": 8.665399999999977,
+          "minMs": 8.237499999999955,
+          "maxMs": 11.803100000000086
+        }
+      }
+    },
+    {
+      "fixture": "dual",
+      "inputHash": "aa933f99e6a3d8bc960f2001cd34c5c669030691df1aec021de03d8df404f342",
+      "packages": 3531,
+      "originalJsonBytes": 2718336,
+      "compactProposalJsonBytes": 536136,
+      "cacheKeyTiming": {
+        "original": {
+          "medianMs": 31.610399999999913,
+          "minMs": 30.40639999999985,
+          "maxMs": 33.330600000000004
+        },
+        "compactProposal": {
+          "medianMs": 7.42919999999981,
+          "minMs": 6.98720000000003,
+          "maxMs": 9.64639999999963
+        }
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "packages": 1788,
+      "originalJsonBytes": 1141391,
+      "compactProposalJsonBytes": 178535,
+      "cacheKeyTiming": {
+        "original": {
+          "medianMs": 12.936099999999897,
+          "minMs": 12.035599999999704,
+          "maxMs": 14.760800000000017
+        },
+        "compactProposal": {
+          "medianMs": 1.9356500000001233,
+          "minMs": 1.7790999999997439,
+          "maxMs": 2.7570999999998094
+        }
+      }
+    }
+  ],
+  "runs": [
+    {
+      "fixture": "revenir",
+      "variant": "control",
+      "threads": 16,
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7463,
+        "enumeratedCompletions": 3155215,
+        "evaluations": 60813829,
+        "exact": true,
+        "peakReadyWork": 2891193,
+        "prunedByBound": 6859532,
+        "prunedByConstraint": 35859931,
+        "score": 1123905.36,
+        "sessionBatches": 15897,
+        "sessionPreparationMs": 45.0721,
+        "sessionWallMs": 7471.0647,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14915598
+      },
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 7701.806,
+        "cpuMs": 34578.125,
+        "peakWorkingSetBytes": 141717504
+      },
+      "liveFrontierBytes": 115647720,
+      "proposedLiveFrontierBytes": 69388632
+    },
+    {
+      "fixture": "revenir",
+      "variant": "profile",
+      "threads": 16,
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 7786,
+        "enumeratedCompletions": 3156060,
+        "evaluations": 60813988,
+        "exact": true,
+        "peakReadyWork": 2891483,
+        "prunedByBound": 6859664,
+        "prunedByConstraint": 35859815,
+        "score": 1123905.36,
+        "sessionBatches": 15896,
+        "sessionPreparationMs": 52.0551,
+        "sessionWallMs": 7793.1004,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14915925
+      },
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 8040.175,
+        "cpuMs": 37640.625,
+        "peakWorkingSetBytes": 142061568
+      },
+      "categories": [
+        {
+          "name": "evaluator",
+          "calls": 60813988,
+          "samples": 59397,
+          "nanos": 29021700,
+          "estimatedMs": 29714.048109157025
+        },
+        {
+          "name": "boxStats",
+          "calls": 57492324,
+          "samples": 56154,
+          "nanos": 9427300,
+          "estimatedMs": 9651.981800854792
+        },
+        {
+          "name": "workerJob",
+          "calls": 254309,
+          "samples": 254309,
+          "nanos": 34184476200,
+          "estimatedMs": 34184.4762
+        },
+        {
+          "name": "poolRun",
+          "calls": 15896,
+          "samples": 15896,
+          "nanos": 4513718700,
+          "estimatedMs": 4513.7187
+        },
+        {
+          "name": "frontierPop",
+          "calls": 15896,
+          "samples": 15896,
+          "nanos": 2733184700,
+          "estimatedMs": 2733.1847
+        },
+        {
+          "name": "frontierMerge",
+          "calls": 15896,
+          "samples": 15896,
+          "nanos": 463955100,
+          "estimatedMs": 463.9551
+        },
+        {
+          "name": "leafRejected",
+          "calls": 3153354,
+          "samples": 0,
+          "nanos": 0,
+          "estimatedMs": 0
+        },
+        {
+          "name": "leafAccepted",
+          "calls": 2706,
+          "samples": 0,
+          "nanos": 0,
+          "estimatedMs": 0
+        },
+        {
+          "name": "utilityStage",
+          "calls": 60813988,
+          "samples": 59397,
+          "nanos": 16480100,
+          "estimatedMs": 16873.2529191508
+        },
+        {
+          "name": "damageStage",
+          "calls": 21730100,
+          "samples": 21230,
+          "nanos": 6373500,
+          "estimatedMs": 6523.636003297221
+        }
+      ],
+      "liveFrontierBytes": 115659320,
+      "proposedLiveFrontierBytes": 69395592
+    },
+    {
+      "fixture": "dual",
+      "variant": "control",
+      "threads": 16,
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 12755,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950574,
+        "exact": true,
+        "peakReadyWork": 3766628,
+        "prunedByBound": 43200119,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 54.0184,
+        "sessionWallMs": 12764.035,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872886
+      },
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 12974.804,
+        "cpuMs": 82593.75,
+        "peakWorkingSetBytes": 181612544
+      },
+      "liveFrontierBytes": 150665120,
+      "proposedLiveFrontierBytes": 90399072
+    },
+    {
+      "fixture": "dual",
+      "variant": "profile",
+      "threads": 16,
+      "result": {
+        "bestBuild": {
+          "id": "weapon:도이+칼레리프||armor:칼레리프+호뢰파섬||additional:어둠의 언데드 기사+카나요간||special:죠코+칼레리프",
+          "packageIds": [
+            "weapon:도이+칼레리프",
+            "armor:칼레리프+호뢰파섬",
+            "additional:어둠의 언데드 기사+카나요간",
+            "special:죠코+칼레리프"
+          ],
+          "statDelta": {
+            "ACCP": 7,
+            "ANTICIPATE": 10,
+            "ATKP": 64,
+            "CDMG": 36,
+            "CRIT": 22,
+            "CRITP": 25,
+            "DEFP": -33,
+            "LIGHT_RES": -10,
+            "MAG_RES": -45,
+            "MATKP": 3,
+            "MAXHP": 6500,
+            "MAXMP": 100,
+            "MOTIONSPEED": 2,
+            "PHYS_PIERCE": 10,
+            "PHYS_RES": 4,
+            "REVIVE_TIME": -10,
+            "SRW": 25,
+            "STABILITY": 6,
+            "STRP": 8
+          }
+        },
+        "elapsedMs": 12999,
+        "enumeratedCompletions": 50924398,
+        "evaluations": 109950578,
+        "exact": true,
+        "peakReadyWork": 3766630,
+        "prunedByBound": 43200122,
+        "prunedByConstraint": 0,
+        "score": 21458,
+        "sessionBatches": 17326,
+        "sessionPreparationMs": 56.349700000000006,
+        "sessionWallMs": 13007.3852,
+        "status": "exact",
+        "upperBound": 21458,
+        "visitedNodes": 15872887
+      },
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 13230.728,
+        "cpuMs": 93671.875,
+        "peakWorkingSetBytes": 174419968
+      },
+      "categories": [
+        {
+          "name": "evaluator",
+          "calls": 109950578,
+          "samples": 107383,
+          "nanos": 95095400,
+          "estimatedMs": 97369.17570882913
+        },
+        {
+          "name": "boxStats",
+          "calls": 59024670,
+          "samples": 57651,
+          "nanos": 9929900,
+          "estimatedMs": 10166.503107196753
+        },
+        {
+          "name": "workerJob",
+          "calls": 277189,
+          "samples": 277189,
+          "nanos": 88456206600,
+          "estimatedMs": 88456.2066
+        },
+        {
+          "name": "poolRun",
+          "calls": 17326,
+          "samples": 17326,
+          "nanos": 8995995500,
+          "estimatedMs": 8995.9955
+        },
+        {
+          "name": "frontierPop",
+          "calls": 17326,
+          "samples": 17326,
+          "nanos": 3435647700,
+          "estimatedMs": 3435.6477
+        },
+        {
+          "name": "frontierMerge",
+          "calls": 17326,
+          "samples": 17326,
+          "nanos": 485149100,
+          "estimatedMs": 485.1490999999999
+        },
+        {
+          "name": "leafRejected",
+          "calls": 3,
+          "samples": 0,
+          "nanos": 0,
+          "estimatedMs": 0
+        },
+        {
+          "name": "leafAccepted",
+          "calls": 50924395,
+          "samples": 0,
+          "nanos": 0,
+          "estimatedMs": 0
+        },
+        {
+          "name": "utilityStage",
+          "calls": 109950578,
+          "samples": 107383,
+          "nanos": 40515800,
+          "estimatedMs": 41484.551820422224
+        },
+        {
+          "name": "damageStage",
+          "calls": 109950574,
+          "samples": 107383,
+          "nanos": 33206500,
+          "estimatedMs": 34000.48178511496
+        }
+      ],
+      "liveFrontierBytes": 150665200,
+      "proposedLiveFrontierBytes": 90399120
+    }
+  ],
+  "notes": "Layout/wire proposals only; no production edits or implementation speedup claim. Profile categories overlap and worker durations are summed, not wall time. One control/profile pair per fixture."
+}

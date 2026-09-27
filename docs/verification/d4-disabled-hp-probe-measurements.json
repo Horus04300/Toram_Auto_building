@@ -1,0 +1,444 @@
+{
+  "date": "2026-09-26T11:07:57.506Z",
+  "sourceHashes": {
+    "d4_native_evaluator.rs": "89500cff5ead808af626ad64a57519ca55561ff1d43e68ba961f363caeca9838",
+    "d4_native_solver.rs": "3fda53f26c25be6e4009321247d46a3e632ae521a897d997ffb27861c3c1105c",
+    "d4_native_stats.rs": "dba2c696d693aa904ab9c3e0dc6231c8d35d825d1c4d68b18ed0b29eadaed148",
+    "d4_parallel_runtime.rs": "0773fec96642e143dbb395fb2d472a2a75617fb4df3f9622a4fe2b380dded14e",
+    "bin/d4_native_parallel.rs": "891eed209bb3b1813e92445790f333c5fce400c7c793cd1d3bfddbb80992bf35"
+  },
+  "runs": [
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "control",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 6922.454,
+        "cpuMs": 38406.25,
+        "peakWorkingSetBytes": 164950016
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 6695,
+        "enumeratedCompletions": 3167604,
+        "evaluations": 60822946,
+        "exact": true,
+        "prunedByBound": 6859586,
+        "prunedByConstraint": 35858549,
+        "score": 1123905.36,
+        "sessionBatches": 15903,
+        "sessionPreparationMs": 44.6499,
+        "sessionWallMs": 6701.556100000001,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14915520
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 1,
+      "variant": "skip-hp",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 6735.76,
+        "cpuMs": 37140.625,
+        "peakWorkingSetBytes": 139452416
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 6504,
+        "enumeratedCompletions": 3158160,
+        "evaluations": 60816448,
+        "exact": true,
+        "prunedByBound": 6859509,
+        "prunedByConstraint": 35860400,
+        "score": 1123905.36,
+        "sessionBatches": 15905,
+        "sessionPreparationMs": 46.419599999999996,
+        "sessionWallMs": 6510.6843,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14915765
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "skip-hp",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 6838.949,
+        "cpuMs": 41375,
+        "peakWorkingSetBytes": 139055104
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 6648,
+        "enumeratedCompletions": 3159854,
+        "evaluations": 60817869,
+        "exact": true,
+        "prunedByBound": 6859665,
+        "prunedByConstraint": 35859869,
+        "score": 1123905.36,
+        "sessionBatches": 15903,
+        "sessionPreparationMs": 43.8848,
+        "sessionWallMs": 6654.5091999999995,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14915261
+      }
+    },
+    {
+      "fixture": "revenir",
+      "repeat": 2,
+      "variant": "control",
+      "inputHash": "ff80fa7510c5348112f63265568c1c4b8cf3dcb0a70046c524c65994860a7ff1",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 6701.479,
+        "cpuMs": 41046.875,
+        "peakWorkingSetBytes": 166854656
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ],
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          }
+        },
+        "elapsedMs": 6512,
+        "enumeratedCompletions": 3159779,
+        "evaluations": 60815687,
+        "exact": true,
+        "prunedByBound": 6859631,
+        "prunedByConstraint": 35859209,
+        "score": 1123905.36,
+        "sessionBatches": 15904,
+        "sessionPreparationMs": 43.8854,
+        "sessionWallMs": 6518.5392,
+        "status": "exact",
+        "upperBound": 1123905.36,
+        "visitedNodes": 14914943
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 1,
+      "variant": "control",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4202.948,
+        "cpuMs": 28515.625,
+        "peakWorkingSetBytes": 133267456
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4033,
+        "enumeratedCompletions": 32547811,
+        "evaluations": 63172753,
+        "exact": true,
+        "prunedByBound": 14577083,
+        "prunedByConstraint": 7498033,
+        "score": 43247,
+        "sessionBatches": 10496,
+        "sessionPreparationMs": 8.7476,
+        "sessionWallMs": 4036.3550000000005,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9879456
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 1,
+      "variant": "skip-hp",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4189.351,
+        "cpuMs": 27593.75,
+        "peakWorkingSetBytes": 133283840
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4006,
+        "enumeratedCompletions": 32632751,
+        "evaluations": 63235765,
+        "exact": true,
+        "prunedByBound": 14576685,
+        "prunedByConstraint": 7484989,
+        "score": 43247,
+        "sessionBatches": 10496,
+        "sessionPreparationMs": 8.7181,
+        "sessionWallMs": 4009.8671,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9879690
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 2,
+      "variant": "skip-hp",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4246.913,
+        "cpuMs": 29406.25,
+        "peakWorkingSetBytes": 132694016
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4068,
+        "enumeratedCompletions": 32662188,
+        "evaluations": 63256391,
+        "exact": true,
+        "prunedByBound": 14577111,
+        "prunedByConstraint": 7480302,
+        "score": 43247,
+        "sessionBatches": 10496,
+        "sessionPreparationMs": 8.6411,
+        "sessionWallMs": 4071.2361,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9879582
+      }
+    },
+    {
+      "fixture": "utility-tight",
+      "repeat": 2,
+      "variant": "control",
+      "inputHash": "931907097dc9981b3ac2807e0563e33badfa869315d1ea863323fb0d2708c11f",
+      "measurement": {
+        "exitCode": null,
+        "wallMs": 4263.479,
+        "cpuMs": 29062.5,
+        "peakWorkingSetBytes": 132669440
+      },
+      "result": {
+        "bestBuild": {
+          "id": "weapon:SYN-0-2-3+SYN-0-3-5||armor:SYN-1-1-1+SYN-1-2-5||additional:SYN-2-0-6+SYN-2-2-7||special:SYN-3-0-1+SYN-3-1-5",
+          "packageIds": [
+            "weapon:SYN-0-2-3+SYN-0-3-5",
+            "armor:SYN-1-1-1+SYN-1-2-5",
+            "additional:SYN-2-0-6+SYN-2-2-7",
+            "special:SYN-3-0-1+SYN-3-1-5"
+          ],
+          "statDelta": {
+            "AMPR": 30,
+            "ASPD": 280,
+            "ATKP": 111,
+            "CDMG": 118,
+            "CRIT": 63,
+            "MAXMP": 880,
+            "SRW": 11
+          }
+        },
+        "elapsedMs": 4087,
+        "enumeratedCompletions": 32547634,
+        "evaluations": 63172650,
+        "exact": true,
+        "prunedByBound": 14577339,
+        "prunedByConstraint": 7497709,
+        "score": 43247,
+        "sessionBatches": 10497,
+        "sessionPreparationMs": 8.6461,
+        "sessionWallMs": 4090.4826,
+        "status": "exact",
+        "upperBound": 43247,
+        "visitedNodes": 9879531
+      }
+    }
+  ],
+  "binaryHashes": {
+    "control": "7f5de26db9a2d418f8615cda1086d30a965079aead121e2cf5ba083370d49815",
+    "skip-hp": "6e18f3ab041f847fe3624987a353a57eee9e6cb1d33a93060d8ffa5ba577c4ab"
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "spec": {
+    "schema": "toram.synthetic-utility-conflict.v1",
+    "description": "Artificial crystas and generic physical attack; stress fixture only, not real game equipment or skill values.",
+    "baseContext": {
+      "level": 220,
+      "strBase": 70,
+      "intBase": 20,
+      "vitBase": 30,
+      "agiBase": 120,
+      "dexBase": 380,
+      "crtBase": 0,
+      "mainType": "활",
+      "wpnAtk": 380,
+      "wpnRefine": 9,
+      "wpnStab": 65,
+      "subType": "없음",
+      "subAtk": 0,
+      "subRefine": 0,
+      "subStab": 0,
+      "armorType": "일반옷",
+      "bossLevel": 240,
+      "bossDef": 650,
+      "bossMdef": 450,
+      "bossCritResist": 10,
+      "bossPhysResist": 0,
+      "bossMagResist": 0,
+      "skillMult": 4,
+      "skillConst": 100,
+      "procDamageModifiers": [],
+      "atkType": "PHYS",
+      "rangeType": "LONG",
+      "chkIsUnsheathe": false,
+      "chkGuaranteedCrit": false,
+      "conversionLevel": 0,
+      "conversionActive": false,
+      "dualBringerLevel": 0,
+      "dualBringerActive": false,
+      "spellBurstLevel": 0,
+      "godspeedWieldLevel": 0,
+      "poisonSources": [],
+      "weakenSources": [],
+      "targetWeakened": false,
+      "attackElement": "none",
+      "attackPowerMode": "default",
+      "useHigherRangeDamage": false,
+      "noCritical": false,
+      "criticalChanceBonus": 0,
+      "criticalChanceMultiplier": 1,
+      "fixedCriticalChance": null,
+      "minimumCriticalDamage": 0,
+      "stabilityBonus": 0,
+      "physicalPierceSkillBonus": 0,
+      "magicPierceSkillBonus": 0,
+      "ignoreDefense": false,
+      "ignoreMdef": false,
+      "halfMdefIgnored": false,
+      "strP": 0,
+      "strF": 0,
+      "dexP": 0,
+      "dexF": 0,
+      "intP": 0,
+      "intF": 0,
+      "agiP": 0,
+      "agiF": 0,
+      "vitP": 0,
+      "vitF": 0,
+      "atkP": 0,
+      "atkF": 0,
+      "matkP": 0,
+      "matkF": 0,
+      "cdmgP": 0,
+      "cdmgF": 0,
+      "critP": 0,
+      "critF": 20,
+      "srw": 0,
+      "lrw": 0,
+      "unsheatheP": 0,
+      "unsheatheF": 0,
+      "elemP": 0,
+      "damageP": 0,
+      "watkP": 0,
+      "watkF": 0,
+      "baseWpnAtkF": 0,
+      "physPierce": 0,
+      "magPierce": 0,
+      "aspdF": 0,
+      "aspdP": 0,
+      "cspdF": 0,
+      "cspdP": 0,
+      "stability": 0,
+      "motionSpeed": 0,
+      "castRed": 0,
+      "maxHpF": 1000,
+      "maxHpP": 0,
+      "maxMpF": 300,
+      "amprF": 5,
+      "amprP": 0,
+      "elementAwakening": false,
+      "magicElement": false,
+      "atkUpSTR": 0,
+      "atkUpDEX": 0,
+      "atkUpINT": 0,
+      "atkUpAGI": 0,
+      "atkUpVIT": 0,
+      "matkUpSTR": 0,
+      "matkUpDEX": 0,
+      "matkUpINT": 0,
+      "matkUpAGI": 0,
+      "matkUpVIT": 0,
+      "preservedStats": {},
+      "statDiagnostics": [],
+      "activeBuildConversions": [],
+      "optimizationBasisName": "Synthetic utility conflict (not a game skill)"
+    },
+    "variantsPerRole": 8,
+    "roles": [
+      {
+        "key": "MAXMP",
+        "unit": 80
+      },
+      {
+        "key": "AMPR",
+        "unit": 3
+      },
+      {
+        "key": "CRIT",
+        "unit": 3
+      },
+      {
+        "key": "ASPD",
+        "unit": 40
+      }
+    ],
+    "requirementFractions": {
+      "loose": 0.25,
+      "medium": 0.65,
+      "tight": 1
+    }
+  },
+  "baseline": {
+    "maxMp": 622,
+    "amprBeforeDual": 21,
+    "normalAttackCrit": 35,
+    "aspd": 743
+  },
+  "witness": {
+    "maxMp": 1422,
+    "amprBeforeDual": 59,
+    "normalAttackCrit": 65,
+    "aspd": 1143
+  },
+  "witnessNames": [
+    [
+      "SYN-0-0-3",
+      "SYN-0-1-3"
+    ],
+    [
+      "SYN-1-1-3",
+      "SYN-1-2-3"
+    ],
+    [
+      "SYN-2-2-3",
+      "SYN-2-3-3"
+    ],
+    [
+      "SYN-3-3-3",
+      "SYN-3-0-3"
+    ]
+  ],
+  "crystaCount": 128,
+  "packages": [
+    445,
+    448,
+    446,
+    449
+  ],
+  "groupsHash": "b1ffead9f37f529690c753032c5ff92530012b72b8fd2943944e512ec429072c",
+  "variants": [
+    {
+      "level": "loose",
+      "requirements": {
+        "maxHp": null,
+        "maxMp": 822,
+        "amprBeforeDual": 30,
+        "normalAttackCrit": 42,
+        "aspd": 843
+      },
+      "small": {
+        "total": 4096,
+        "feasible": 1728,
+        "score": 37810,
+        "id": "weapon:SYN-0-0-4+SYN-0-1-0||armor:SYN-1-1-0+SYN-1-2-7||additional:SYN-2-1-0+SYN-2-2-6||special:SYN-3-1-0+SYN-3-3-1"
+      },
+      "boundCheck": {
+        "checked": 8191,
+        "completions": 4096,
+        "violations": []
+      },
+      "monotonicity": {
+        "checked": 56,
+        "violations": []
+      }
+    },
+    {
+      "level": "medium",
+      "requirements": {
+        "maxHp": null,
+        "maxMp": 1142,
+        "amprBeforeDual": 45,
+        "normalAttackCrit": 54,
+        "aspd": 1003
+      },
+      "small": {
+        "total": 4096,
+        "feasible": 390,
+        "score": 36312,
+        "id": "weapon:SYN-0-0-4+SYN-0-1-0||armor:SYN-1-1-0+SYN-1-2-7||additional:SYN-2-1-0+SYN-2-2-6||special:SYN-3-0-1+SYN-3-3-5"
+      },
+      "boundCheck": {
+        "checked": 8191,
+        "completions": 4096,
+        "violations": []
+      },
+      "monotonicity": {
+        "checked": 56,
+        "violations": []
+      }
+    },
+    {
+      "level": "tight",
+      "requirements": {
+        "maxHp": null,
+        "maxMp": 1422,
+        "amprBeforeDual": 59,
+        "normalAttackCrit": 65,
+        "aspd": 1143
+      },
+      "small": {
+        "total": 4096,
+        "feasible": 13,
+        "score": 31246,
+        "id": "weapon:SYN-0-1-0+SYN-0-2-6||armor:SYN-1-0-6+SYN-1-1-6||additional:SYN-2-2-3+SYN-2-3-3||special:SYN-3-0-1+SYN-3-3-5"
+      },
+      "boundCheck": {
+        "checked": 8191,
+        "completions": 4096,
+        "violations": []
+      },
+      "monotonicity": {
+        "checked": 56,
+        "violations": []
+      }
+    }
+  ]
+}
