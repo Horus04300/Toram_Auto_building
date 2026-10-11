@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-10-12 — 성능 개선 v0.7.3 릴리스 준비, Native v20.
+- 갱신: 2026-10-12 — 성능 개선 v0.7.3 공개 완료, Native v20.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태는 이 문서·코드·이번 검증으로 판정한다. 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다.
 
@@ -35,7 +35,7 @@
 
 ## 3. 저장·설치·업데이트
 
-- 로컬 소스 버전은 package/Cargo/Tauri와 두 lockfile의 v0.7.3이다. 2026-10-12 `gh api .../releases/latest`로 공개 Latest v0.7.2를 확인했다. 현재 성능 개선 변경을 v0.7.3으로 배포 중이며 아직 공개 완료로 판정하지 않는다.
+- 로컬 소스 버전은 package/Cargo/Tauri와 두 lockfile의 v0.7.3이다. 2026-10-12 `gh api .../releases/latest`로 일반 공개 Latest v0.7.3과 NSIS 설치 파일·서명·`latest.json` 자산을 확인했다. 릴리스 커밋은 `b779b42`, 태그는 `v0.7.3`이다. [공개 릴리스](https://github.com/Horus04300/Toram_Auto_building/releases/tag/v0.7.3).
 - 앱 식별자는 `com.toramonline.autobuildcalculator`, 제품명은 `Toram Online Auto Build Calculator`다. 설치는 LocalAppData 아래 공백 포함 제품명 폴더, 세팅은 정확히 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`다. 설치 제거와 사용자 데이터 삭제를 구분한다.
 - SettingsRepository는 `format: toram-auto-build-document`, schema v2의 `saved-build`/`application-state`를 관리한다. 이름 있는 빌드는 Native JSON, 자동 복원은 `toram.auto-build.application-state.v2`다. v1 입력의 오염된 버프 파생 `externalOptions`만 폐기하고 v2로 쓴다. 폐기한 베타 형식·File System Access API·IndexedDB를 복원하지 않는다.
 - 활성 버프는 엔진이 on/off·스택에서 해석하며 외부 옵션으로 중복 복제하지 않는다.
@@ -52,7 +52,7 @@
 
 ## 5. 검증 명령·현재 기록
 
-- v0.7.3 릴리스는 사용자 요청으로 별도 회귀·성능·설치 검증을 생략한다. 수동 release workflow의 `skip_checks=true`로 Web/Rust 검사만 건너뛰고 버전·태그 일치, 서명 빌드, 자산 준비·업로드는 유지한다.
+- v0.7.3 릴리스는 사용자 요청으로 별도 회귀·성능·설치 검증을 생략했다. `gh run watch 38149861388 --exit-status` 종료 코드 0: 수동 release workflow의 `skip_checks=true`로 Web/Rust 검사 SKIP, 버전·태그 일치·서명 빌드·자산 준비·Latest 공개 PASS. [릴리스 실행](https://github.com/Horus04300/Toram_Auto_building/actions/runs/38149861388). 실제 설치/업그레이드 통과나 새 성능 측정을 뜻하지 않는다.
 - 구조: `npm run verify:architecture`, `npm run test:regression`. 단계별 중첩 명령은 폐기했다. normal/characterization 분류: `docs/verification/regression-baseline.md`.
 - 로딩/배포 소스: `npm run verify:entry`, `npm run desktop:prepare`, `npm run verify:entry:dist`. Rust: `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo test --manifest-path src-tauri/Cargo.toml`, 필요한 clippy/빌드.
 - 스킬/계산: `node tools/verification/audit-stack-source-links.mjs --require-s1` 및 대상 트리·계산·콤보 회귀. 최적화는 정확성 계약의 해당 Gate를 추가한다.
