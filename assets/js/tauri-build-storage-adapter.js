@@ -1,5 +1,5 @@
 "use strict";
-/* Tauri 네이티브 파일 명령을 R6 Settings Repository 어댑터로 연결한다. */
+/* Tauri 네이티브 파일 명령을 Settings Settings Repository 어댑터로 연결한다. */
 (() => {
     'use strict';
     const root = window;

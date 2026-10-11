@@ -38,7 +38,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-assassin-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-assassin-regression.mjs`로 다음을 확인했다.
 
 - 한손검+단검·Lv.10에서 15개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 후방·시카리우스/극의/백스텝/포기 보정 어새신 스탭 계수 8·상수 300

@@ -16,14 +16,14 @@
 기존 취소·deadline·오류 rollback, 1~64 작업자 exact/동점, 버퍼 재사용, 원본 옵션, 체크포인트·서비스 pause/resume 검사를 유지했다. 변경 전후 bridge의 3노드 직렬 체크포인트는 elapsedMs를 제외한 전체 wire JSON이 같다. 전→전, 전→후, 후→전, 후→후 모두 같은 exact 점수·전체 build·상한으로 복원됐다.
 
 - `cargo test --offline --manifest-path src-tauri/Cargo.toml`: **55+55+16+68=194개 통과**(공통 모듈 중복 포함).
-- `npm run test:r0`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
-- `npm run verify:r9`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
-- `D4_EVALUATION_EXPERIMENT=shared-problem`에서 `node tools/check-d4-tree-checkpoint.mjs`: wire 동치·4방향 복원 통과. 기록: `d4-shared-problem-checkpoint.json`.
-- `node tools/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
+- `npm run test:regression`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
+- `npm run verify:architecture`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
+- `D4_EVALUATION_EXPERIMENT=shared-problem`에서 `node tools/benchmarks/check-crysta-tree-checkpoint.mjs`: wire 동치·4방향 복원 통과. 기록: `d4-shared-problem-checkpoint.json`.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
 
 ## 풀 생성 비용
 
-`node tools/audit-d4-shared-problem.mjs`는 변경 전후 solver를 별도 release crate로 빌드하고 실제 준비 입력 3개를 사용한다. 세션 준비 후 16작업자 풀 생성만 측정한다. 2회 준비·8회 중앙값이며, allocator 계측은 호출 스레드에서 요청한 allocation/reallocation의 횟수·바이트다. 작업자 스레드의 할당, OS 스택, 전체 프로세스 상주 메모리를 의미하지 않는다. Arc 본체 할당은 세션 생성에 한 번 남는다.
+`node tools/verification/audit-crysta-shared-problem.mjs`는 변경 전후 solver를 별도 release crate로 빌드하고 실제 준비 입력 3개를 사용한다. 세션 준비 후 16작업자 풀 생성만 측정한다. 2회 준비·8회 중앙값이며, allocator 계측은 호출 스레드에서 요청한 allocation/reallocation의 횟수·바이트다. 작업자 스레드의 할당, OS 스택, 전체 프로세스 상주 메모리를 의미하지 않는다. Arc 본체 할당은 세션 생성에 한 번 남는다.
 
 | 입력 | 할당 요청 횟수 전→후 | 할당 요청 바이트 전→후 | 풀 생성 중앙값 전→후 |
 | --- | --- | --- | --- |
@@ -38,11 +38,11 @@
 수정 전 solver·control·source 해시는 `target/shared-problem/before.rs`, `before.exe`, `before-source-hashes.json`에 보존했다. 현재 소스와 일치하는 새 control과 16작업자·입력별 각 2회·전후 교대·새 프로세스로 비교했다. 빌드·테스트와 겹치지 않았다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_EVALUATION_EXPERIMENT='shared-problem'
 $env:D4_COMPARE_NATIVE_PAYLOAD='0'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 | 입력 | 세션 평균 전→후 | 시간 증가 | peak working set 평균 전→후 |
@@ -63,4 +63,4 @@ fmt·도구 문법·`npm run ai:audit`·`git diff --check` 통과. 실제 설치
 
 롤백 직전 solver가 실험 after 해시와 같은지 확인한 뒤, 보존된 before.rs로 복원했다. 복원한 solver의 SHA-256이 4순위 착수 전과 정확히 일치한다. NativeProblem 소유 방식, 풀 생성 clone, 체크포인트 복원 및 해당 테스트까지 4순위 이전 상태다. 1~3순위 소스는 되돌리지 않았다. 동일 가설을 재시도하려면 탐색 시간 회귀를 해소한 새 근거가 필요하다.
 
-롤백 후 `cargo test --offline --manifest-path src-tauri/Cargo.toml` 54+54+16+67=191개, `npm run test:r0` 71/71 프로세스, `npm run verify:r9`, Clippy -D warnings, fmt·ai:audit·diff 검사가 통과했다. 저장 E2E는 CDP 미설정 SKIP이다. 3순위 완료 때 기록한 JS client 및 Rust 소스 전체 해시와 현재 소스가 일치하며, control/profile 바이너리도 복원 소스로 다시 빌드했다. 전체 성능 반복 측정은 동일 소스 복원이므로 다시 실행하지 않았다.
+롤백 후 `cargo test --offline --manifest-path src-tauri/Cargo.toml` 54+54+16+67=191개, `npm run test:regression` 71/71 프로세스, `npm run verify:architecture`, Clippy -D warnings, fmt·ai:audit·diff 검사가 통과했다. 저장 E2E는 CDP 미설정 SKIP이다. 3순위 완료 때 기록한 JS client 및 Rust 소스 전체 해시와 현재 소스가 일치하며, control/profile 바이너리도 복원 소스로 다시 빌드했다. 전체 성능 반복 측정은 동일 소스 복원이므로 다시 실행하지 않았다.

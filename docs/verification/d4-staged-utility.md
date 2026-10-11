@@ -1,7 +1,7 @@
 # 개선 후보 12: 유틸리티 조건의 단계별 조기 검사
 
 - 날짜: 2026-09-21. 기존 1~7·9~11번을 보존했다.
-- 구현: src-tauri/src/d4_native_evaluator.rs, src-tauri/src/d4_native_solver.rs.
+- 구현: src-tauri/src/optimization/evaluator.rs, src-tauri/src/optimization/solver.rs.
 - 측정 원본: d4-staged-utility-measurements.json.
 
 ## 구현과 보존 계약
@@ -18,7 +18,7 @@
 - 새 회귀는 다섯 단계 각각에서 거부하고, 이후 단계 또는 피해 스탯을 읽으면 실패하도록 하여 실제 조기 종료를 확인한다.
 - parity bridge는 기존 1,920개 JS/Rust 비교에 대해 좌표별 -0.5/동일/+0.5 요구조건 28,800회를 단계 API로 검증한다. 통과 경로의 전체 summary가 JS 참조와 일치하고, 탈락까지 읽은 각 값도 전체 평가 값과 일치해야 한다.
 - Rust clippy --all-targets -- -D warnings 및 release parallel 빌드: PASS.
-- npm run verify:r9: PASS. node tools/audit-stack-source-links.mjs --require-s1: PASS 427/427.
+- npm run verify:architecture: PASS. node tools/verification/audit-stack-source-links.mjs --require-s1: PASS 427/427.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.
 
@@ -26,7 +26,7 @@
 
 Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보. 기본 입력과 HP 26,000/40,000 제한(다른 요구조건은 null)을 비교한다. 변경 전후 release binary를 보존하며 전→후, 후→전으로 각각 새 프로세스 2회 실행한다. 빌드·테스트와 측정은 겹치지 않는다.
 
-D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<대상>, D4_P6_REPORT=<json>으로 node tools/benchmark-d4-native-p6.mjs를 실행한다. HP 입력에는 D4_P6_REQUIREMENTS와 반대쪽 D4_P6_REFERENCE_BINARY를 지정하여 두 결과의 exact·점수·ID·upper 일치를 검사한다. 세션 wall은 JS 준비·UI/IPC를 제외하며, 다른 입력/장비 또는 cold 10회 P95를 입증하지 않는다.
+D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<대상>, D4_P6_REPORT=<json>으로 node tools/benchmarks/benchmark-crysta-native-scaling.mjs를 실행한다. HP 입력에는 D4_P6_REQUIREMENTS와 반대쪽 D4_P6_REFERENCE_BINARY를 지정하여 두 결과의 exact·점수·ID·upper 일치를 검사한다. 세션 wall은 JS 준비·UI/IPC를 제외하며, 다른 입력/장비 또는 cold 10회 P95를 입증하지 않는다.
 
 | 입력 | 스레드 | 변경 전 평균 | 변경 후 평균 | 변화 |
 | --- | ---: | ---: | ---: | ---: |
@@ -39,6 +39,6 @@ D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<대상>, 
 
 기본 exact 14,097, HP 26,000 exact 14,089, HP 40,000 exact 13,051이며 24회 모두 입력별 최종 ID·upper가 동일하다. 기본 입력은 평균 약 1.6~1.7% 증가했고 HP 26,000의 8스레드도 약 0.6% 증가했다. HP 40,000은 두 회차·두 스레드 수 모두 단축했지만 각 2회뿐이므로 일반적인 속도 향상을 주장하지 않는다. 유틸리티 조기 탈락 입력을 위한 최적화로 채택하며 통과 위주 입력의 작은 회귀는 남긴다. 전체 메모리·평가 수는 측정 원본을 따른다. CPU 시간 0인 표본은 미수집으로 해석한다.
 
-- npm run test:r0: PASS 70/70 스크립트. Native 저장 E2E는 CDP 미설정 SKIP. fmt --check, git diff --check, npm run ai:audit: PASS.
+- npm run test:regression: PASS 70/70 스크립트. Native 저장 E2E는 CDP 미설정 SKIP. fmt --check, git diff --check, npm run ai:audit: PASS.
 - 최종 16스레드 100ms 취소: cancelled, solver 100ms / 외부 wall 293.244ms, exact false·upper 제거 검사 통과.
 - 100ms deadline: bounded, 세션 100.1107ms, lower 14089 / upper 18909로 oracle 14,097 포함.

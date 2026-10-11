@@ -13,12 +13,12 @@
 
 - 새 Rust 회귀는 MP 4구간 × AMPR% 3구간 × 조기 탈락/완료 6단계 = 72사례를 검사한다. 소수 AMPR, 음수 AMPR%, 패시브·액티브 평타 효과를 포함하며 기존 경로와 모든 목표 callback 값·점수가 일치한다. 기존 summary의 raw AMPR도 full 계산과 일치한다.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: 48+48+15+61=172개 통과. 바이너리별 중복 모듈 실행 포함.
-- `npm run test:r0`: 71/71 프로세스 성공. raw JS/Rust parity 1938개, utility 105개 JS/직렬 Native/공유 세션 대조 포함. 실제 Native 저장 E2E는 CDP 미설정 SKIP.
-- `npm run verify:r9`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` 통과. 처음 발견한 raw-summary 전용 바이너리의 미사용 점수 필드 경고를 해당 타입에 한정해 처리한 뒤 재검사했다.
+- `npm run test:regression`: 71/71 프로세스 성공. raw JS/Rust parity 1938개, utility 105개 JS/직렬 Native/공유 세션 대조 포함. 실제 Native 저장 E2E는 CDP 미설정 SKIP.
+- `npm run verify:architecture`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` 통과. 처음 발견한 raw-summary 전용 바이너리의 미사용 점수 필드 경고를 해당 타입에 한정해 처리한 뒤 재검사했다.
 
 ## 성능 비교 재현
 
-수정 전 `slow-profile/control.exe`를 `target/ampr-evaluation/before.exe`에 보존했다. 수정 후 `node tools/profile-d4-slow-inputs.mjs build`, `D4_EVALUATION_EXPERIMENT=ampr-evaluation node tools/benchmark-d4-partial-utility.mjs`로 세 입력을 측정한다. 기존 벤치마크 도구는 기본 partial-utility 출력 경로를 유지하며 환경변수로 별도 실험 폴더를 선택할 수 있게 했다.
+수정 전 `slow-profile/control.exe`를 `target/ampr-evaluation/before.exe`에 보존했다. 수정 후 `node tools/benchmarks/profile-crysta-slow-inputs.mjs build`, `D4_EVALUATION_EXPERIMENT=ampr-evaluation node tools/benchmarks/benchmark-crysta-partial-utility.mjs`로 세 입력을 측정한다. 기존 벤치마크 도구는 기본 partial-utility 출력 경로를 유지하며 환경변수로 별도 실험 폴더를 선택할 수 있게 했다.
 
 16작업자, 입력당 전→후/후→전 각 2회, 총 12회 순차 새 프로세스 실행. 빌드·회귀 검사와 성능 실행을 겹치지 않는다. 두 바이너리 모두 초당 진행 snapshot이 있고 앱 UI/IPC·JS 후보 준비는 제외한다. 상세 입력/바이너리 해시·최종 결과·메모리·평가 수는 `d4-ampr-evaluation-measurements.json`에 기록한다. 과거 날짜의 시간과 직접 개선율을 계산하지 않는다.
 

@@ -15,15 +15,15 @@ Native client engine은 `d4-native-solver.v2`, 직렬화 checkpoint는 `toram.d4
 
 ## 검증
 
-- `node tools/test-d4-global-optimizer-stage2.mjs`: PASS. 기존 oracle·상한 1,093개 외에 공통 음수/동점/역순 입력, 물리·마법·발도·듀얼의 exhaustive·부분공간 상한·단조성 검사 추가.
+- `node tools/tests/optimization/test-crysta-search-oracle.mjs`: PASS. 기존 oracle·상한 1,093개 외에 공통 음수/동점/역순 입력, 물리·마법·발도·듀얼의 exhaustive·부분공간 상한·단조성 검사 추가.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: PASS, 85개(여러 binary에 공유 모듈 테스트가 포함됨). 공통 페널티·누락 좌표·singleton·빈 집합 및 이전 checkpoint 거부 추가. 기존 1~64스레드·재개·취소·frontier 보존 테스트 유지.
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: PASS.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개 평가 동치.
-- `node tools/test-d4-evaluator-stage1.mjs`, `node tools/test-d4-utility-dependencies.mjs`, `node tools/test-d4-pair-frontier.mjs`, `node tools/test-d4-native-client.mjs`: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427. 계산 규칙이나 전투 시뮬레이션 완성을 의미하지 않는다.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS. 물리·마법·발도·듀얼 공통 음수 패키지의 JS exhaustive와 Native 1/8/64스레드 점수·ID 동치 추가.
-- `node tools/test-d4-worker-stage3.mjs`, `node tools/test-d4-parallel-shards.mjs`, `node tools/test-d4-parallel-worker-runtime.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`: PASS.
-- `node tools/test-d4-full-stage3.mjs`: PASS, 5초 예산의 bounded 회귀. 최종 실행 lower 14,089 / upper 20,367이며 exact 통과로 해석하지 않는다.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개 평가 동치.
+- `node tools/tests/optimization/test-crysta-evaluator.mjs`, `node tools/tests/optimization/test-crysta-utility-dependencies.mjs`, `node tools/tests/optimization/test-crysta-pair-frontier.mjs`, `node tools/tests/optimization/test-crysta-native-client.mjs`: PASS.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427. 계산 규칙이나 전투 시뮬레이션 완성을 의미하지 않는다.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS. 물리·마법·발도·듀얼 공통 음수 패키지의 JS exhaustive와 Native 1/8/64스레드 점수·ID 동치 추가.
+- `node tools/tests/optimization/test-crysta-worker-protocol.mjs`, `node tools/tests/optimization/test-crysta-parallel-shards.mjs`, `node tools/tests/optimization/test-crysta-parallel-worker-runtime.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`: PASS.
+- `node tools/tests/optimization/test-crysta-real-candidates.mjs`: PASS, 5초 예산의 bounded 회귀. 최종 실행 lower 14,089 / upper 20,367이며 exact 통과로 해석하지 않는다.
 - `npm run ai:audit`, `git diff --check`: PASS. 기존 handoff의 12 KiB 초과는 중복 과거 기록을 주제 링크로 축약해 해소했다.
 
 ## 측정 방법과 한계
@@ -32,7 +32,7 @@ Native client engine은 `d4-native-solver.v2`, 직렬화 checkpoint는 `toram.d4
 
 기준 소스 HEAD `24534ac`, crysta-data Git blob `7ab81aeb06e421b7fb150a518b35f16ff9a50e95`.
 
-변경 전 release binary를 보존하고 동일 입력·8스레드로 전/후를 번갈아 각 3회 새 프로세스에서 실행했다. `D4_P6_THREAD=8`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<결과 경로>`로 `node tools/benchmark-d4-native-p6.mjs`를 실행한다. 준비된 후보를 Native에 전달하며 solver 시간에는 JS compile/Pareto 시간이 포함되지 않는다. 외부 wall은 Native 프로세스 실행 비용을 포함한다.
+변경 전 release binary를 보존하고 동일 입력·8스레드로 전/후를 번갈아 각 3회 새 프로세스에서 실행했다. `D4_P6_THREAD=8`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<결과 경로>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs`를 실행한다. 준비된 후보를 Native에 전달하며 solver 시간에는 JS compile/Pareto 시간이 포함되지 않는다. 외부 wall은 Native 프로세스 실행 비용을 포함한다.
 
 첫 baseline 측정 일부에 Rust 검증이 겹쳤으므로 나머지 반복의 방향도 함께 확인한다. 전체 후보의 1스레드 초기 비교는 동시 실행/중단이 섞여 성능 근거에서 제외했다. PowerShell 측정의 종료 CPU 시간이 일부 0/null로 반환되어 CPU/exitCode 필드는 성능 근거로 사용하지 않는다. solver JSON의 exact·점수·ID와 완료 shard 수를 검증한다.
 

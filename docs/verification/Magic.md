@@ -30,7 +30,7 @@
 
 ## S5 회귀
 
-`node tools/test-magic-s4-s5.mjs`와 `node tools/test-magic-s3.mjs`가 다음을 검사한다.
+`node tools/tests/skills/test-magic-regression.mjs`와 `node tools/tests/skills/test-magic-rules.mjs`가 다음을 검사한다.
 
 - 24개 전체의 Lv.10 정상, Lv.0 경계, 지팡이·마도구·한손검 조건 변경.
 - 애로·임팩트·레이저·차징·맥시마이저·이겔의 대표 공식과 조건.
@@ -56,8 +56,8 @@
 - `node --check assets/js/data/skills/magic.js`: 통과
 - `node --check assets/js/skill-effect-engine.js`: 통과
 - `node --check assets/js/combo-sequence-engine.js`: 통과
-- `node tools/audit-stack-source-links.mjs --tree Magic --require-s1`: 24/24 통과
-- `node tools/test-magic-s3.mjs`: 통과
-- `node tools/test-magic-s4-s5.mjs`: 통과
+- `node tools/verification/audit-stack-source-links.mjs --tree Magic --require-s1`: 24/24 통과
+- `node tools/tests/skills/test-magic-rules.mjs`: 통과
+- `node tools/tests/skills/test-magic-regression.mjs`: 통과
 - 기존 Blade/Martial/Shot S4/S5 회귀: 통과
 - `git diff --check`: 통과

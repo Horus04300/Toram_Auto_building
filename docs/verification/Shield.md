@@ -24,7 +24,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-shield-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-shield-regression.mjs`로 다음을 확인했다.
 
 - 방패·Lv.10에서 13개 전체 사용 가능(벨라겔룸은 듀얼 실드 상태 입력 필요), Lv.0에서 전체 사용 불가
 - 실드 배쉬 Lv.10: MP 100, 계수 0.15, 상수 100

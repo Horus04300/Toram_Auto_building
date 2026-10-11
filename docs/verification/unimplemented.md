@@ -7,7 +7,7 @@
 
 ## 1. 이미 연결된 것을 다시 구현하지 않기
 
-충전·집념과 심안의 절대 명중/위치당 명중, Blade의 모델 범위 S4/S5 회귀, Native deadline/progress/pause/resume은 후속 구현 목록에서 제외한다. 2026-09-05 `tools/test-combo-tags.mjs`, `tools/test-blade-s4-s5.mjs`, `tools/test-d4-native-client.mjs`, `tools/test-d4-native-resume-ui-n5.mjs`가 통과했다. 실제 UI E2E 또는 모든 전투 상태 완료를 뜻하지 않는다.
+충전·집념과 심안의 절대 명중/위치당 명중, Blade의 모델 범위 S4/S5 회귀, Native deadline/progress/pause/resume은 후속 구현 목록에서 제외한다. 2026-09-05 `tools/tests/application/test-combo-tags.mjs`, `tools/tests/skills/test-blade-regression.mjs`, `tools/tests/optimization/test-crysta-native-client.mjs`, `tools/tests/optimization/test-crysta-resume-ui.mjs`가 통과했다. 실제 UI E2E 또는 모든 전투 상태 완료를 뜻하지 않는다.
 
 이 항목에 새 오류가 있으면 아래 보류 목록을 활성화하는 대신 구체 입력으로 회귀를 추가한다.
 
@@ -64,9 +64,9 @@
 
 Partisan 화살 갈기의 행동속도 수치는 기존 원문에 불명으로 남아 있다. 새 근거 없이 추정하지 않는다. 다른 트리의 불명 수치도 동일하게 처리한다.
 
-## 4. D4 후속 작업을 여는 기준
+## 4. 크리스타 최적화 후속 작업을 여는 기준
 
-현재 크리스타 compiler·평가기·탐색·Worker/Native·잠금·Utility·결과 UI를 다시 구현 목록에 넣지 않는다. 성능 변경은 `docs/architecture/d4-exact-optimization-plan.md`, 실행 제어는 `docs/architecture/d4-native-runtime-correction-plan.md`의 Gate를 따른다.
+현재 크리스타 compiler·평가기·탐색·Worker/Native·잠금·Utility·결과 UI를 다시 구현 목록에 넣지 않는다. 성능 변경은 `docs/architecture/crysta-optimization-contract.md`, 실행 제어는 `docs/architecture/native-optimization-runtime.md`의 Gate를 따른다.
 
 - 과거 425개 fixture의 단발 시간/gap을 현재 성능으로 보고하지 않는다.
 - 옵션 자동 부여의 로그 한계효용/잠재력 탐색은 현재 수동 완성 옵션과 구분한다.

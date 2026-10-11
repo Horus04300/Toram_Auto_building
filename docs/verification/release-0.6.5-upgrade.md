@@ -10,19 +10,19 @@
 
 ## 2026-09-10 공개 전 검증
 
-- `npm run verify:r9`: PASS.
-- `npm run test:r0`: 69개 프로세스 종료 성공. 68개 통과, 실제 native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정으로 SKIP.
+- `npm run verify:architecture`: PASS.
+- `npm run test:regression`: 69개 프로세스 종료 성공. 68개 통과, 실제 native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정으로 SKIP.
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`: PASS.
 - `cargo test --locked --manifest-path src-tauri/Cargo.toml`: 79개 통과.
 - `cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
 - `npm run desktop:prepare`, `node tools/release-version.mjs`: PASS.
-- `node tools/verify-update-browser.mjs`: 실제 Edge 화면 PASS, native 설치는 mock.
+- `node tools/verification/verify-update-browser.mjs`: 실제 Edge 화면 PASS, native 설치는 mock.
 - `npm run ai:audit`: PASS.
 
 로그는 `src-tauri/target/release-r0-0.6.5.log`, `release-rust-0.6.5.log`에 보관한다.
 
-추가 검증: `node tools/audit-browser-e2e.mjs` 실제 Edge 15개 통과. `node tools/audit-weapon-stat-recommendations.mjs --single-slot`은 110개 exact/oracle/재계산·상한 검사와 JS/Rust 10,010건 비교를 통과했다. 외부 계수 및 Native 불일치는 0이다.
+추가 검증: `node tools/verification/audit-browser-e2e.mjs` 실제 Edge 15개 통과. `node tools/verification/audit-weapon-stat-recommendations.mjs --single-slot`은 110개 exact/oracle/재계산·상한 검사와 JS/Rust 10,010건 비교를 통과했다. 외부 계수 및 Native 불일치는 0이다.
 
 ## 공개 결과
 
@@ -34,7 +34,7 @@
 
 ## 실제 업데이트 Gate
 
-**실제 0.6.4→0.6.5 설치 업데이트 PASS.** 2026-09-10 23:02:31~23:02:36 KST에 `tools/audit-release-upgrade.mjs upgrade`를 실행했다. updater IPC·다운로드·서명·설치·재시작을 mock하거나 대체하지 않았다.
+**실제 0.6.4→0.6.5 설치 업데이트 PASS.** 2026-09-10 23:02:31~23:02:36 KST에 `tools/verification/audit-release-upgrade.mjs upgrade`를 실행했다. updater IPC·다운로드·서명·설치·재시작을 mock하거나 대체하지 않았다.
 
 | 단계 | 관찰 결과 |
 | --- | --- |
@@ -48,7 +48,7 @@
 | 업데이트 설정 | 설치 전 false로 바꾼 checkOnStartup 및 실제 체크박스 상태 유지 |
 | 이름 있는 빌드 | 설치 전후 `UpgradePreservation.json` SHA-256 동일 |
 | 재확인 | 0.6.5에서 수동 업데이트 확인 시 `최신 버전입니다.` 표시 |
-| 설치 후 저장 E2E | `TORAM_E2E_CDP=http://127.0.0.1:9226`으로 `node tools/test-tauri-native-storage-e2e.mjs` 실행. 실제 native 저장·중복 방지·덮어쓰기·불러오기·삭제 통과, SKIP 없음 |
+| 설치 후 저장 E2E | `TORAM_E2E_CDP=http://127.0.0.1:9226`으로 `node tools/tests/application/test-tauri-native-storage-e2e.mjs` 실행. 실제 native 저장·중복 방지·덮어쓰기·불러오기·삭제 통과, SKIP 없음 |
 | 제거·정리 | 격리 NSIS 제거 후 시험 빌드 파일 보존. 원래 앱 등록 정보 복원 및 기존 사용자 설치 EXE·세팅 파일 해시 보존 확인 |
 
 설치된 EXE SHA-256:
@@ -63,7 +63,7 @@ Windows x64의 실제 설치 앱과 WebView2를 사용했다. 격리 폴더는 `
 
 `LOCALAPPDATA=<격리 루트>/local`, `WEBVIEW2_USER_DATA_FOLDER=<격리 루트>/webview`, 로컬 CDP 9226을 사용했다. named build 경로가 정확히 `<격리 루트>/local/ToramOnlineAutoBuildCalculator`인지 앱 native IPC로 검사했다. 실제 사용자 앱과 프로필에 시험 입력을 넣지 않았다.
 
-`CODEX_PLAYWRIGHT_PATH`는 설치된 Playwright 경로로 지정한다. `node tools/audit-release-upgrade.mjs prepare`가 출발 버전 데이터를 준비하고, `upgrade`가 실제 공개 버전 상승을 검증한다. 이미 설치·저장한 시험 디렉터리를 재사용하거나 다른 앱의 CDP에 연결하지 않도록 실행 전 격리 상태를 확인한다.
+`CODEX_PLAYWRIGHT_PATH`는 설치된 Playwright 경로로 지정한다. `node tools/verification/audit-release-upgrade.mjs prepare`가 출발 버전 데이터를 준비하고, `upgrade`가 실제 공개 버전 상승을 검증한다. 이미 설치·저장한 시험 디렉터리를 재사용하거나 다른 앱의 CDP에 연결하지 않도록 실행 전 격리 상태를 확인한다.
 
 로컬 증거는 격리 루트의 `prepare-report.json`, `upgrade-report.json`, `before.json`, `expected-after.json`, `after.json`, `native-storage-0.6.5.log`, `cleanup-report.json`, `0.6.4-update-available.png`, `0.6.5-updated.png`에 있다. 전체 CI 대기는 `src-tauri/target/release-ci-0.6.5.log`에 기록했다.
 

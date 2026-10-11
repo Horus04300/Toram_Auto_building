@@ -26,7 +26,7 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. Na
 
 세션 wall은 Native 준비를 포함하되 JS compile/Pareto·Tauri IPC·UI는 제외한다. 두 번씩의 단일 fixture 결과이며 전체 입력이나 cold 10회 P95 개선을 보장하지 않는다. CPU/exitCode의 기존 측정 한계 때문에 성공은 exact와 oracle 일치로 판단했다.
 
-재현: release `d4_native_parallel` 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmark-d4-native-p6.mjs` 실행.
+재현: release `d4_native_parallel` 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행.
 
 ### 채택하지 않은 고정 묶음
 
@@ -37,10 +37,10 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. Na
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 118개(32+32+9+45, binary별 공유 모듈 실행 포함).
 - 새 회귀: 1/2/8/16/64스레드, 0/1/7/31/33/65/257노드의 결과 순서·실행 횟수·사전 취소·만료 deadline. 기존 pool 재사용·오류 복구·pause/resume/checkpoint 회귀 유지.
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, clippy `--all-targets -- -D warnings`, release parallel 빌드: PASS.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, exhaustive oracle 동치.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개 계산 동치.
-- `npm run verify:r9`: PASS, 하위 Gate 포함.
-- `npm run test:r0`: PASS, 70개 스크립트 집계. Native client cache/resume 및 UI continuation 회귀 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이다.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, exhaustive oracle 동치.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개 계산 동치.
+- `npm run verify:architecture`: PASS, 하위 Gate 포함.
+- `npm run test:regression`: PASS, 70개 스크립트 집계. Native client cache/resume 및 UI continuation 회귀 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 
 설치·배포·WebView/IPC E2E는 이번 작업 범위에서 실행하지 않았다.

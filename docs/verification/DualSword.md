@@ -45,7 +45,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-dual-sword-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-dual-sword-regression.mjs`로 다음을 확인했다.
 
 - 쌍검 장비·Lv.10에서 21개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 트윈 슬래쉬 Lv.10 계수 2.5·상수 200, 비쌍검에서 사용 불가

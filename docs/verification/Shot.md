@@ -29,7 +29,7 @@
 
 ## S5 회귀
 
-`node tools/test-shot-s4-s5.mjs`가 다음을 검사한다.
+`node tools/tests/skills/test-shot-regression.mjs`가 다음을 검사한다.
 
 - 25개 전체: 활 Lv.10 정상, Lv.0 경계, 자동활 조건 변경.
 - 무사 궁술: 서브 발도검 조건.
@@ -53,8 +53,8 @@
 ## 실행 검증
 
 - `node --check assets/js/data/skills/shot.js`: 통과
-- `node tools/audit-stack-source-links.mjs --tree Shot --require-s1`: 25/25 통과
-- `node tools/test-shot-s4-s5.mjs`: 통과
-- `node tools/test-martial-s4-s5.mjs`: 통과
-- `node tools/test-blade-s4-s5.mjs`: 통과
+- `node tools/verification/audit-stack-source-links.mjs --tree Shot --require-s1`: 25/25 통과
+- `node tools/tests/skills/test-shot-regression.mjs`: 통과
+- `node tools/tests/skills/test-martial-regression.mjs`: 통과
+- `node tools/tests/skills/test-blade-regression.mjs`: 통과
 - `git diff --check`: 통과

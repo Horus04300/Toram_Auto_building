@@ -19,7 +19,7 @@
 
 Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0. P6 물리 근거리 전체 후보 992/844/724/929, 유틸리티 감사 비활성. 새 Native 프로세스로 측정하고 측정 중 빌드·테스트를 실행하지 않았다.
 
-재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8`, `D4_P6_REPORT=<json>`를 설정하고 `node tools/benchmark-d4-native-p6.mjs` 실행. 전용 병렬 경로는 `D4_SESSION_BENCH_MS`를 해제한다. 전/후 binary는 `D4_NATIVE_BINARY`로 선택했다.
+재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8`, `D4_P6_REPORT=<json>`를 설정하고 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행. 전용 병렬 경로는 `D4_SESSION_BENCH_MS`를 해제한다. 전/후 binary는 `D4_NATIVE_BINARY`로 선택했다.
 
 ### 단계별 확인
 
@@ -55,11 +55,11 @@ Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0. P6 물리 근거리 �
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 115개(31+31+9+44, 공유 모듈의 binary별 실행 포함).
 - 추가 검사: 요구조건 타입/경계; 1,000개 결정적 sparse 입력의 네 그룹 합산·부호 있는 0·미등록 스탯·직렬화 동치; 작업자 thread ID 재사용; checkpoint에서 풀 재생성; worker 오류 시 부모 공간 보존; 선택적 분할의 4,096조합 비중복 coverage·동점 상한.
 - 기존 1~64스레드 동치, 순서 반전, cancel/deadline/pause/resume/checkpoint 회귀 유지.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, exhaustive oracle 동치.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개에서 JS·Value·기존 map·새 NativeStats 경로 동치.
-- `npm run verify:r9`: PASS(하위 Gate 포함).
-- `npm run test:r0`: PASS, 70개 스크립트 집계. Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이며 실제 E2E 통과로 세지 않는다.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, exhaustive oracle 동치.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개에서 JS·Value·기존 map·새 NativeStats 경로 동치.
+- `npm run verify:architecture`: PASS(하위 Gate 포함).
+- `npm run test:regression`: PASS, 70개 스크립트 집계. Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이며 실제 E2E 통과로 세지 않는다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 - fmt / clippy `--all-targets -- -D warnings` / release exact·parallel 빌드: PASS.
 - 세션 bridge에서 100ms 취소 측정: `cancelled`, solver 100ms, 외부 wall 282ms. 취소는 exact나 인증 upper로 표시하지 않는다.
 

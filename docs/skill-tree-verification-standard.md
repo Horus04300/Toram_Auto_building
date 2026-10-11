@@ -89,4 +89,4 @@
 
 ## 7. 현재 자동 검증 범위
 
-`node tools/audit-stack-source-links.mjs`는 원문 캐시 해시, 모든 상세 정의의 `sourceRef`/원문 anchor, 정해진 스택 상한, 그리고 카탈로그 전체의 S1 출처 연결 범위를 검사·표시한다. 기본 실행은 미완료 목록을 보고하되 작업 중인 부분 정의를 막지 않는다. `--tree <TreeId>`로 한 스킬트리만 점검하고, `--require-s1`을 함께 주면 해당 범위에 S0 또는 sourceRef 누락이 하나라도 있을 때 실패한다. S2~S5 자동 점검은 이후 확장한다.
+`node tools/verification/audit-stack-source-links.mjs`는 원문 캐시 해시, 모든 상세 정의의 `sourceRef`/원문 anchor, 정해진 스택 상한, 그리고 카탈로그 전체의 S1 출처 연결 범위를 검사·표시한다. 기본 실행은 미완료 목록을 보고하되 작업 중인 부분 정의를 막지 않는다. `--tree <TreeId>`로 한 스킬트리만 점검하고, `--require-s1`을 함께 주면 해당 범위에 S0 또는 sourceRef 누락이 하나라도 있을 때 실패한다. S2~S5 자동 점검은 이후 확장한다.

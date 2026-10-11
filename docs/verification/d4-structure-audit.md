@@ -15,7 +15,7 @@
 | 5 | compiler는 두 슬롯 조합마다 `evaluatorCandidate`를 clone한다. 루브닐 prepared 입력에 복제된 후보 객체가 8,292개, 듀얼 7,054개다. | 이미 불변인 크리스타 해석 결과를 참조/ID로 공유하고, 최종 선택에서 평가·표시 객체를 조립한다. | JS 준비 시간·메모리 후보. 객체 공유만으로 JSON 중복은 줄지 않으므로 3번 전송 객체 분리와 구분한다. 정확성·Worker 구조화 복사·추천 적용을 검증한다. |
 | 6 | `optimize()`는 Pareto 준비를 수행한 뒤 prepared problem 전체를 정렬 직렬화해 캐시를 조회한다. 캐시 적중도 이 비용을 먼저 낸다. resume 반환에서도 같은 문제의 키를 다시 계산한다. | 입력의 불변 서명을 먼저 만들고 준비 결과/기존 키를 재사용한다. Native 실행용 의미와 표시용 원본의 수명을 분리한다. | 반복 요청·준비 지연 후보. 원본의 모든 계산 의존성, 잠금·금지·옵션·버전·프로필을 서명에 포함해야 한다. 축약 키로 과거 표시 객체를 그대로 돌려주면 안 된다. |
 
-주요 코드 위치: `src-tauri/src/d4_native_solver.rs`의 WorkItem/Ord, NodePool::new/run, box_candidate_indices, expand_parallel_node_inner; `assets/js/d4-native-client.js`의 prepare/cacheKey/optimize/resume; `assets/js/d4-problem-compiler.js`의 makePackage.
+주요 코드 위치: `src-tauri/src/optimization/solver.rs`의 WorkItem/Ord, NodePool::new/run, box_candidate_indices, expand_parallel_node_inner; `assets/js/optimization/native-client.js`의 prepare/cacheKey/optimize/resume; `assets/js/optimization/problem-compiler.js`의 makePackage.
 
 ## 현재 코드 계측
 
@@ -61,10 +61,10 @@ $env:D4_PROFILE_THREADS='16'
 $env:D4_PROFILE_REPEATS='1'
 $env:D4_PROFILE_BUDGET='120000'
 $env:D4_PROFILE_REPORT='structure-audit.json'
-node tools/profile-d4-slow-inputs.mjs run
-node tools/audit-d4-structure.mjs
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
+node tools/verification/audit-crysta-structure.mjs
 ```
 
-profile 바이너리가 현재 소스와 다르면 먼저 `node tools/profile-d4-slow-inputs.mjs build`가 필요하다. 조사 도구는 `target/structure-audit`의 격리 crate에서 레이아웃만 출력하며, 제품 소스 SHA-256 불변을 검사한다. 상세 수치: `d4-structure-audit-measurements.json`.
+profile 바이너리가 현재 소스와 다르면 먼저 `node tools/benchmarks/profile-crysta-slow-inputs.mjs build`가 필요하다. 조사 도구는 `target/structure-audit`의 격리 crate에서 레이아웃만 출력하며, 제품 소스 SHA-256 불변을 검사한다. 상세 수치: `d4-structure-audit-measurements.json`.
 
 새 계측·원본 불변 검사, 도구 문법 검사, `npm run ai:audit`, `git diff --check` 통과. 제품 코드를 변경하지 않아 R0/R9/Rust 전체 회귀와 실제 설치본 E2E를 이번 조사에서 재실행하지 않았다. 다음 구현은 후보별 정확성 Gate와 동일 환경 전후 반복 비교가 필요하다.

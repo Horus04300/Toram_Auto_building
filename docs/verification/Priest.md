@@ -24,7 +24,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-priest-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-priest-regression.mjs`로 다음을 확인했다.
 
 - 지팡이+방패·Lv.10에서 15개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 글로리아 Lv.10 DEF/MDEF +200%, 프리엘 Lv.10 MATK +10%, 에테르 코드 Lv.10 MATK -5%

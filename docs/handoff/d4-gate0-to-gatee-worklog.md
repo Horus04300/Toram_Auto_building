@@ -2,7 +2,7 @@
 
 > 상태: 2026-08-25 기준 작업 기록
 > 범위: 토람 온라인 빌드 계산기의 D4 전역 크리스타 최적화
-> 상위 기준: [D4 exact 최적화 계획](../architecture/d4-exact-optimization-plan.md), [현재 개발 인수인계](current-development-handoff.md)
+> 상위 기준: [D4 exact 최적화 계획](../architecture/crysta-optimization-contract.md), [현재 개발 인수인계](current-development-handoff.md)
 > 이 문서는 시간순 사실을 태그로 먼저 수집한 뒤, 배경·제약·설계·분석·실패 가설을 다시 묶은 작업 기록이다. 최신 상태 판단은 이 문서만이 아니라 실제 코드와 새로 실행한 테스트 결과를 함께 사용한다.
 
 ## 1. 태그 체계와 읽는 법
@@ -71,12 +71,12 @@
 핵심 파일:
 
 - `assets/js/build-evaluator.js`: Build/Scenario snapshot과 Outcome
-- `assets/js/d4-problem-compiler.js`: 제약을 반영한 후보 패키지 컴파일
-- `assets/js/d4-global-optimizer.js`: Pareto, oracle, 상한, best-bound 탐색
-- `assets/js/d4-source-profile.js`: Utility 의존성·잔여 요구량·획득처 분석
-- `assets/js/d4-pair-partition.js`: 세 Pair 분할의 결정적 비교
-- `assets/js/d4-optimizer-worker.js`, `assets/js/d4-worker-client.js`: Worker 실행·취소·캐시
-- `tools/benchmark-d4-exact.mjs`, `tools/test-d4-*.mjs`, `tools/analyze-d4-*.mjs`: 기준 측정·oracle·분석
+- `assets/js/optimization/problem-compiler.js`: 제약을 반영한 후보 패키지 컴파일
+- `assets/js/optimization/exact-solver.js`: Pareto, oracle, 상한, best-bound 탐색
+- `assets/js/optimization/source-profile.js`: Utility 의존성·잔여 요구량·획득처 분석
+- `assets/js/optimization/pair-partition.js`: 세 Pair 분할의 결정적 비교
+- `assets/js/optimization/solver-worker.js`, `assets/js/optimization/worker-client.js`: Worker 실행·취소·캐시
+- `tools/benchmarks/benchmark-crysta-exact.mjs`, `tools/test-d4-*.mjs`, `tools/analyze-d4-*.mjs`: 기준 측정·oracle·분석
 
 ## 5. 시간순 작업 기록
 
@@ -242,11 +242,11 @@
 [SAFETY] 최소 검증은 변경 범위에 따라 다음을 조합한다.
 
 ```powershell
-node tools/test-d4-pair-frontier.mjs
-node tools/test-d4-global-optimizer-stage2.mjs
-node tools/test-d4-full-stage3.mjs
-node tools/test-d4-browser-worker-runtime.mjs
-node tools/analyze-d4-pair-partitions.mjs
+node tools/tests/optimization/test-crysta-pair-frontier.mjs
+node tools/tests/optimization/test-crysta-search-oracle.mjs
+node tools/tests/optimization/test-crysta-real-candidates.mjs
+node tools/tests/optimization/test-crysta-browser-worker-runtime.mjs
+node tools/benchmarks/analyze-crysta-pair-partitions.mjs
 git diff --check
 ```
 

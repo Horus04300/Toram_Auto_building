@@ -50,7 +50,7 @@ const result: CalculationResult = {
   diagnostics: []
 };
 
-const savedBuild: SavedBuild = { id: 'r2-fixture', name: 'R2 fixture', updatedAtEpochMs: 0, draft: build };
+const savedBuild: SavedBuild = { id: 'r2-fixture', name: 'Calculation contract fixture', updatedAtEpochMs: 0, draft: build };
 
 const settingsRepository: SettingsRepository = {
   list: async () => [savedBuild],

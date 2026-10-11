@@ -17,18 +17,18 @@
 - 새 Rust 회귀는 음수 HP 옵션을 가진 큰 박스에서 추가 검사 전후의 전체 공간을 비교한다. 공간이 실제 감소하고, 제거된 모든 조합이 infeasible이며, 중복 coverage가 없고, 보존된 자식 상한이 실제 feasible 점수 이상임을 검사한다. 사전 취소 시 미완료 반환도 검사한다.
 - 첫 회귀 입력은 HP 여유가 너무 커 추가 검사가 발동하지 않았다. 옵션 페널티를 강화해 실제 형제 탈락을 발생시킨 뒤 성공했다. 구현을 통과시키기 위해 삭제 안전성 assertion을 완화하지 않았다.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: 49+49+15+62=175개 통과. 바이너리별 중복 모듈 검사 포함. 기존 deadline/cancel/checkpoint/resume·직렬/병렬·동점 검사 포함.
-- `npm run test:r0`: 71/71 프로세스 성공. JS oracle/상한·원시 parity·utility 105개 직렬/공유 세션 대조 포함. 실제 Native 저장 E2E는 CDP 미설정 SKIP.
-- `npm run verify:r9`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` 통과. 제품 수식·스킬 데이터 변경이 없어 S1을 이번 작업에서 재실행하지 않았다.
+- `npm run test:regression`: 71/71 프로세스 성공. JS oracle/상한·원시 parity·utility 105개 직렬/공유 세션 대조 포함. 실제 Native 저장 E2E는 CDP 미설정 SKIP.
+- `npm run verify:architecture`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings` 통과. 제품 수식·스킬 데이터 변경이 없어 S1을 이번 작업에서 재실행하지 않았다.
 
 ## 계측
 
 기존 source/control 바이너리를 `src-tauri/target/constraint-lookahead/before.rs`, `before.exe`에 보존했다. 수정 후 `profile-d4-slow-inputs.mjs build`의 control을 사용한다. 최초 1회 실험은 루브닐 단축, 듀얼 지연을 관측해 임시 Vec 할당을 제거하고 저탈락 경로를 유지하도록 보완했다. 이후 최종 구현으로 전→후/후→전 각 2회씩 측정한다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_EVALUATION_EXPERIMENT='constraint-lookahead'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 벤치마크는 루브닐·듀얼·utility-tight의 동일 준비 입력, 16작업자, 새 프로세스 12회를 순차 실행한다. 빌드·회귀 테스트와 겹치지 않는다. 두 바이너리는 같은 초당 snapshot 계측을 포함하며 JS 후보 준비·UI/IPC는 제외한다. 바이너리/입력 해시·평가·메모리·진행 상태·최종 ID는 `d4-constraint-lookahead-measurements.json`에 보존한다. 2회 반복은 P95 인증이 아니다.

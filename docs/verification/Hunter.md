@@ -24,7 +24,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-hunter-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-hunter-regression.mjs`로 다음을 확인했다.
 
 - 활+화살 또는 자동활+방패의 올바른 조합에서 17개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 킥 백 Lv.10 계수 2, 슬리프 애로 화살·수면 계수 6.6·상수 200

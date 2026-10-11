@@ -158,7 +158,7 @@
 
 - 패키지·Cargo·Tauri 설정은 모두 소스 버전 0.6.3이다.
 - `current-development-handoff.md`는 공개된 0.6.2와 배포 보류 중인 로컬 0.6.3을 함께 기록한다. 상단의 “현재 개발 버전”만 보면 소스 버전과 혼동하기 쉽다.
-- `d4-exact-optimization-plan.md` 상단은 당시 N0~N6 미완료 상태를 유지하지만 최신 handoff와 native 코드·테스트는 완료 상태를 가리킨다. 과거 계획 기록과 현재 요약의 경계가 눈에 띄지 않는다.
+- `crysta-optimization-contract.md` 상단은 당시 N0~N6 미완료 상태를 유지하지만 최신 handoff와 native 코드·테스트는 완료 상태를 가리킨다. 과거 계획 기록과 현재 요약의 경계가 눈에 띄지 않는다.
 
 **재구성:** `소스 버전`, `최신 공개 버전`, `배포 보류 여부`를 별도 필드로 둔다. 릴리스 시 버전·handoff·D4 계획 상태를 함께 검사하고 과거 계획 헤더에는 최신 상태 링크를 눈에 띄게 둔다.
 
@@ -319,9 +319,9 @@
 
 통과한 검증:
 
-- `npm run verify:r9`
-- `npm run test:r0` — 67/67, native 저장 E2E는 환경 변수 미설정으로 skip
-- `node tools/audit-stack-source-links.mjs --require-s1` — 427/427
+- `npm run verify:architecture`
+- `npm run test:regression` — 67/67, native 저장 E2E는 환경 변수 미설정으로 skip
+- `node tools/verification/audit-stack-source-links.mjs --require-s1` — 427/427
 - `cargo test --manifest-path src-tauri/Cargo.toml` — 72개 통과
 - `npm run desktop:prepare` — 0.6.3 배포 입력 생성 성공
 - 로컬 배포본 수동 점검 — 6탭, 스킬/버프/콤보 빈 상태, 세팅 모달, 결과 진입·최적화 취소

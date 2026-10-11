@@ -22,20 +22,20 @@
 검증 명령:
 
 - `cargo test --offline --manifest-path src-tauri/Cargo.toml`: **52+52+16+65=185개 통과**(공통 모듈의 바이너리별 중복 포함).
-- `npm run test:r0`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP이며 통과로 세지 않는다.
-- `npm run verify:r9`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
-- `node tools/check-d4-tree-checkpoint.mjs`: 중간 wire 상태 동치와 네 방향 복원 통과.
-- `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `node tools/audit-stack-source-links.mjs --require-s1`: 통과(S1 427/427).
+- `npm run test:regression`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP이며 통과로 세지 않는다.
+- `npm run verify:architecture`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
+- `node tools/benchmarks/check-crysta-tree-checkpoint.mjs`: 중간 wire 상태 동치와 네 방향 복원 통과.
+- `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `node tools/verification/audit-stack-source-links.mjs --require-s1`: 통과(S1 427/427).
 
 ## 성능 비교 방법
 
 수정 전 solver/source 해시/control 바이너리는 `target/indexed-tree/before.rs`, `before-source-hashes.json`, `before.exe`에 보존했다. 수정 후 `profile-d4-slow-inputs.mjs build`가 생성한 control 바이너리와 비교한다. profile 도구는 arena를 받는 box_stats 함수의 새 시그니처에 맞춰 연결했다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_EVALUATION_EXPERIMENT='indexed-tree'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 동일 준비 입력 3개, 16작업자, 새 프로세스로 전→후/후→전 각 2회, 총 12회를 실행한다. 빌드·회귀 테스트와 겹치지 않는다. Native 준비와 세션 시간을 포함하고 JS 후보 준비·UI/IPC는 제외한다. 점수·선택 패키지·전체 반환 옵션 동치, 원본 합산 및 JS 최종 재평가, 진행 상한의 최적값 포함을 검사한다. 2회 반복은 P95/전 입력 속도 보장이 아니다.

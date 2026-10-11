@@ -7,14 +7,14 @@
 이전 계측의 준비된 루브닐·듀얼·utility-tight 입력을 사용하되 현재 평가 규칙으로 다시 실행했다. 그룹별 패키지는 각각 1141/1017/871/1121, 992/890/718/931, 445/448/446/449다. 16작업자, 입력당 control/profile 각각 새 프로세스 2회, 총 12회 순차 실행했다. 실행 중 빌드·회귀 테스트는 병행하지 않았다. 후보 준비·앱 UI/IPC는 측정 범위 밖이다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_PROFILE_FIXTURES='revenir,dual,utility-tight'
 $env:D4_PROFILE_THREADS='16'
 $env:D4_PROFILE_REPEATS='2'
 $env:D4_PROFILE_BUDGET='120000'
 $env:D4_PROFILE_REPORT='post-utility-complete.json'
-node tools/profile-d4-slow-inputs.mjs run
-node tools/summarize-d4-post-utility-profile.mjs
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
+node tools/benchmarks/summarize-crysta-post-utility-profile.mjs
 ```
 
 이번 실행은 직전 작업에서 현재 소스로 빌드한 바이너리를 사용했으며 소스 해시 일치를 재검사했다. 진행 snapshot은 두 바이너리 모두에 포함한다. evaluator/boxStats는 1024회 중 1회 시간 표본, 나머지 구간은 전체 시간을 측정한다. 자세한 측정 한계는 `d4-slow-input-profile.md`와 동일하다. 스레드 합산 시간은 벽시계 시간이 아니며 중첩 구간끼리 합산하지 않는다. 반복 2회는 P95 성능 인증이 아니다.
@@ -61,5 +61,5 @@ Native 준비는 루브닐 약 46ms, 듀얼 약 55~57ms, 충돌 약 9~13ms(profi
 ## 산출물과 검사
 
 - `d4-post-utility-profile-measurements.json`: 제품 소스·입력 SHA-256, 실행별 결과/구간 합/메모리/CPU/trace, 상한 계약 문제 4건.
-- `tools/summarize-d4-post-utility-profile.mjs`: 12회 최종 일치·소스 해시·진행 상태 검증 및 보고서 집계.
+- `tools/benchmarks/summarize-crysta-post-utility-profile.mjs`: 12회 최종 일치·소스 해시·진행 상태 검증 및 보고서 집계.
 - 집계 실행과 `node --check` 통과. 제품 계산 변경이 없어 R0/R9/S1을 이번 작업에서 재실행하지 않았다.

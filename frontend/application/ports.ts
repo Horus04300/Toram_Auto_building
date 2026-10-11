@@ -38,7 +38,7 @@ export interface UpdateService {
     beforeInstall: () => Promise<void>): Promise<void>;
 }
 
-/** A compiled D4 request. It contains calculation inputs, never DOM or execution details. */
+/** A compiled CrystaOptimization request. It contains calculation inputs, never DOM or execution details. */
 export interface OptimizationProblem {
   readonly snapshot: CalculationSnapshot;
   readonly excludedCrystaIds: readonly string[];

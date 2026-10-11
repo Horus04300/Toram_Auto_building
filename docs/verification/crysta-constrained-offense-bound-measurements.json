@@ -1,0 +1,4063 @@
+{
+  "schema": "toram.constrained-offense-bound-comparison.v1",
+  "localDate": "2026-10-03",
+  "measuredAtUtc": "2026-10-02T23:03:09.633Z",
+  "boundary": "raw-resolved-input-to-final-js-result",
+  "transport": "stdio-json-lines",
+  "environment": {
+    "node": "v24.17.0",
+    "cpu": "AMD Ryzen 7 9800X3D 8-Core Processor           ",
+    "platform": "win32",
+    "logicalThreads": 16
+  },
+  "notes": [
+    "Baseline is v11 with the existing joint utility and branch changes; after is v12 with constrained offense bounds.",
+    "Same current JavaScript is used for both binaries with fresh Node/Native processes; no exact cache used.",
+    "Ten repeats per version and per fixture, alternating before/after and after/before; no builds/tests overlapped timings.",
+    "Source input is the original user-reported Revenir reproduction. Only the second fixture applies the user-reported Etowal lock. No stat, gear, buff or requirement numbers were modified.",
+    "Both fixtures are feasible; all 40 results are exact with identical full bestBuild, raw options and score within each fixture.",
+    "Native PeakWorkingSet64 sampled at 50ms; Node memory excluded. Short locked runs are sensitive to memory sampling.",
+    "Sample P95 uses nearest rank of ten samples (maximum); these two variants do not certify all required inputs or application UI P95."
+  ],
+  "sourceFixture": {
+    "path": "tools/fixtures/crysta-native-runtime-26min-revenir.json",
+    "sha256": "fee852bff4fd7fc500f3e36b77c550769e4826379754b885d964210af0334ea7",
+    "lockedEvidencePath": "tools/fixtures/crysta-native-runtime-26min-revenir-locked-measurement.json"
+  },
+  "versions": {
+    "before": {
+      "binaryHash": "a501ab7a05e7a69c72e6ef304a72381017c95d4f08cc22c1f93daae20624019d",
+      "rustSourceHashes": {
+        "src-tauri/Cargo.toml": "b9a88df03a8786d11503628bf25be14d62805d5191e8e581af015b6fc7cfb12c",
+        "src-tauri/Cargo.lock": "fc9b9696525ce8325af944b6326b1a03bd10f454b499dc0a3223c6aadd50e52f",
+        "src-tauri/build.rs": "487059eaf8a947b80f20a9aacac038a5047b2ad69d2401b827376c67d6fe847f",
+        "src-tauri/src/optimization/evaluator.rs": "7553adc39e406c8da4a1e272bf89b4e790e3512e3772543ec21afa15656bc3b7",
+        "src-tauri/src/optimization/solver.rs": "7a0d8abc13334790bbd93088fef034d6473a391b7954682fc164f1be17752edb",
+        "src-tauri/src/optimization/stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+        "src-tauri/src/optimization/parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96",
+        "src-tauri/src/optimization/service.rs": "fa12ccfc04a3c5af8f9cba85d161c97723cf57f9a68ae17b1b30a868f9f7a86b",
+        "src-tauri/src/bin/crysta_headless_service.rs": "160215374ccf55df226ad60940994c91231a179cf81afc341bcbbdb80669ee5d"
+      }
+    },
+    "after": {
+      "binaryHash": "a18a452acb19f83b312185fba96b8fde44ac873d4be9f131b2d3c07c4e8484bf",
+      "rustSourceHashes": {
+        "src-tauri/Cargo.toml": "b9a88df03a8786d11503628bf25be14d62805d5191e8e581af015b6fc7cfb12c",
+        "src-tauri/Cargo.lock": "fc9b9696525ce8325af944b6326b1a03bd10f454b499dc0a3223c6aadd50e52f",
+        "src-tauri/build.rs": "487059eaf8a947b80f20a9aacac038a5047b2ad69d2401b827376c67d6fe847f",
+        "src-tauri/src/optimization/evaluator.rs": "7553adc39e406c8da4a1e272bf89b4e790e3512e3772543ec21afa15656bc3b7",
+        "src-tauri/src/optimization/solver.rs": "d5b028fba775c52703921cd2c90a642913bc98fae8476bd442ff990c480207dd",
+        "src-tauri/src/optimization/stats.rs": "6556df283457ce45f1d52fa911f4e8192e695b5c0b5868962cdce96ea7769ff5",
+        "src-tauri/src/optimization/parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96",
+        "src-tauri/src/optimization/service.rs": "fa12ccfc04a3c5af8f9cba85d161c97723cf57f9a68ae17b1b30a868f9f7a86b",
+        "src-tauri/src/bin/crysta_headless_service.rs": "160215374ccf55df226ad60940994c91231a179cf81afc341bcbbdb80669ee5d"
+      }
+    }
+  },
+  "commonSourceHashes": {
+    "assets/js/stat-registry.js": "0fbf9545d1e84c0388f913e05102c2b5ef7fe2b9b1d0174b584c89a8c2e37b46",
+    "assets/js/calculation-policies.js": "57b1112bb120bf940d3e543b02aea1c78905a0335b31b1e3de2040cbe9b17355",
+    "assets/js/calculator.js": "8fef13916ea0c5c344dbea8f6309d81dab15fd4ecad9471c9cf2eb5faf2af5ac",
+    "assets/js/build-evaluator.js": "9e5add8cf022d8e2c3ef77d493b8ab0d26a8612f42e29121b9562ae805a39825",
+    "assets/js/optimization/source-profile.js": "9cfd1ef57de3fae5025404e7f64ba56470a2125c4f341f244df1c62e81e519f2",
+    "assets/js/optimization/marginal-score.js": "8b017791b8fe2f96ea8229d010c2b66d92e2f827f57ca6566d5be931975f1ccf",
+    "assets/js/optimization/seed-search.js": "a49c57fcb844929b1da06b91ab2b336a90d065e527118e99e35b16f154d920bd",
+    "assets/js/optimization/pair-partition.js": "840ad2bdb119426dfd8ea70dc7029ce869f75b6302748f8f6db5c7f2753b7ae0",
+    "assets/js/optimization/problem-compiler.js": "fe34273853531c32f5d36767f70afeb7902beee2b247ece8df29160c193fec7e",
+    "assets/js/optimization/exact-solver.js": "242c253cc08949e38456a8814dce069b826bf2e5a9eff42730a7a76a98699cf7",
+    "assets/js/optimization/native-client.js": "7d47d10544287f5569c6a505e8daeed0f49e58dd68b3f6eb544d143d2a6899c6",
+    "assets/js/data/crysta-data.js": "e981c74b808dc2108f2bfe71c430ce132d45efbec4b8e287b05d46f140a4237e",
+    "assets/js/optimization/solver-worker.js": "cb13d937a6dae2f18a7668474b1154621327f3d61bf1214b0927d0ee40c6f9db",
+    "tools/support/crysta-headless-environment.mjs": "7c443e03b53dea9e416ce8e4855e59b1ba5bee9bd37889fa6c055db9ceae5ccf",
+    "tools/support/crysta-headless-transport.mjs": "533143cf318b6e308504b60e3b4edc9fd1166198aadf89c2bbe5f475a34095c1",
+    "tools/support/crysta-computation-measurement.mjs": "70625c3f5dec890be667ec22d434c1f9661ffa5df631781c1328c9a3670ffc2a",
+    "src-tauri/target/constrained-upper-bound/prepare.mjs": "944d047abae58dac3267110d40c305352bad14a9c612aaaf3126dcdea04667d0",
+    "src-tauri/target/constrained-upper-bound/sample.mjs": "230e82cd093fe2157260b43167ac4db609af40575fddb28a768a41de27ee868c",
+    "src-tauri/target/constrained-upper-bound/compare.ps1": "13c28113e4b7bdfdf2d01e59e7355e9ecf718f27119c8ece950e5b4ea1861e0a",
+    "src-tauri/target/constrained-upper-bound/summarize.mjs": "bd2a1012fd1b3a0fb3f593d19b20b09f17832de5f63a828d1eef98523d46a89d"
+  },
+  "inputs": {
+    "revenir": {
+      "sha256": "239284bbc78cce5c6052c5825704020b1673a88b13735c5249d3401d064129f2",
+      "raw": {
+        "note": "This is the post-UI, post-combo context used by the D4 fixture. maxMpF includes the active-state contribution needed to reproduce the displayed maximum MP 2275; the raw UI card is retained above as provenance. The current Etowal build remains below a D4 hard constraint, so the solver must establish a feasible incumbent from the search domain.",
+        "baseContext": {
+          "level": 325,
+          "strBase": 327,
+          "intBase": 1,
+          "vitBase": 1,
+          "agiBase": 1,
+          "dexBase": 510,
+          "crtBase": 0,
+          "mainType": "한손검",
+          "wpnAtk": 625,
+          "wpnRefine": 15,
+          "wpnStab": 80,
+          "subType": "방패",
+          "subAtk": 0,
+          "subRefine": 15,
+          "subStab": 0,
+          "armorType": "경량옷",
+          "bossLevel": 300,
+          "bossDef": 1950,
+          "bossMdef": 1950,
+          "bossCritResist": 70,
+          "bossPhysResist": 0,
+          "bossMagResist": 0,
+          "atkType": "PHYS",
+          "rangeType": "SHORT",
+          "skillMult": 32.805,
+          "skillConst": 400,
+          "optimizationBasisName": "루브닐",
+          "appliedSkillId": "Knight:11",
+          "procDamageModifiers": [
+            {
+              "source": "강타",
+              "level": 10,
+              "chancePercent": 10,
+              "multiplier": 1.2,
+              "target": "physical"
+            }
+          ],
+          "chkIsUnsheathe": false,
+          "chkGuaranteedCrit": false,
+          "conversionLevel": 0,
+          "conversionActive": false,
+          "dualBringerLevel": 0,
+          "dualBringerActive": false,
+          "spellBurstLevel": 0,
+          "godspeedWieldLevel": 0,
+          "poisonSources": [],
+          "weakenSources": [],
+          "targetWeakened": false,
+          "attackElement": "none",
+          "attackPowerMode": "default",
+          "useHigherRangeDamage": false,
+          "noCritical": false,
+          "criticalChanceBonus": 0,
+          "criticalChanceMultiplier": 1,
+          "fixedCriticalChance": null,
+          "minimumCriticalDamage": 0,
+          "stabilityBonus": 0,
+          "physicalPierceSkillBonus": 0,
+          "magicPierceSkillBonus": 0,
+          "ignoreDefense": false,
+          "ignoreMdef": false,
+          "halfMdefIgnored": false,
+          "strP": 0,
+          "strF": 0,
+          "dexP": 0,
+          "dexF": 0,
+          "intP": 0,
+          "intF": 0,
+          "agiP": 0,
+          "agiF": 0,
+          "vitP": 0,
+          "vitF": 0,
+          "atkP": 20,
+          "atkF": 0,
+          "matkP": 0,
+          "matkF": 0,
+          "cdmgP": 11,
+          "cdmgF": 43,
+          "critP": -50,
+          "critF": 90,
+          "srw": 0,
+          "lrw": 0,
+          "unsheatheP": 0,
+          "unsheatheF": 0,
+          "elemP": 46,
+          "damageP": 0,
+          "watkP": 0,
+          "watkF": 0,
+          "baseWpnAtkF": 0,
+          "physPierce": 0,
+          "magPierce": 0,
+          "aspdF": 0,
+          "aspdP": 25,
+          "cspdF": 0,
+          "cspdP": 0,
+          "stability": 0,
+          "motionSpeed": 10,
+          "castRed": 0,
+          "maxHpF": 0,
+          "maxHpP": 0,
+          "maxMpF": 1850,
+          "amprF": 30,
+          "amprP": 0,
+          "elementAwakening": true,
+          "magicElement": false,
+          "atkUpSTR": 0,
+          "atkUpDEX": 0,
+          "atkUpINT": 0,
+          "atkUpAGI": 0,
+          "atkUpVIT": 0,
+          "matkUpSTR": 0,
+          "matkUpDEX": 0,
+          "matkUpINT": 0,
+          "matkUpAGI": 0,
+          "matkUpVIT": 0,
+          "preservedStats": {},
+          "statDiagnostics": [],
+          "activeBuildConversions": [],
+          "normalAttackAmprProfile": {
+            "passive": [],
+            "activeCandidates": []
+          }
+        },
+        "scenarioRequirements": {
+          "maxHp": null,
+          "maxMp": 2000,
+          "amprBeforeDual": 100,
+          "normalAttackCrit": 100,
+          "aspd": 1000
+        },
+        "currentCrystas": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "에투왈",
+          null
+        ],
+        "locks": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
+        "banned": {
+          "오로로 콜론": true,
+          "카나요간": true
+        }
+      },
+      "referenceBestBuild": {
+        "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+        "packages": [
+          {
+            "id": "weapon:굉룡 보비나리+도이",
+            "slot": "weapon",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "AMPR": 15,
+              "SRW": 7,
+              "MAG_BARR": 3000,
+              "PHYS_BARR": 3000,
+              "STRP": 8,
+              "ATKP": 12,
+              "CRITP": 10,
+              "DEFP": -33
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": []
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:굉룡보비나리",
+              "crysta:도이"
+            ],
+            "candidateNames": [
+              "굉룡 보비나리",
+              "도이"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "굉룡 보비나리",
+                "category": "무기",
+                "stats": {
+                  "AMPR": 15,
+                  "SRW": 7,
+                  "MAG_BARR": 3000,
+                  "PHYS_BARR": 3000
+                }
+              },
+              {
+                "name": "도이",
+                "category": "무기",
+                "stats": {
+                  "STRP": 8,
+                  "ATKP": 12,
+                  "CRITP": 10,
+                  "DEFP": -33
+                }
+              }
+            ],
+            "metadata": {
+              "label": "무기",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "armor:푸이에트+호뢰파섬",
+            "slot": "armor",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "MAXHP": 6200,
+              "MAXMP": -400,
+              "ATKP": 19,
+              "CRIT": 27,
+              "SRW": 13,
+              "STRP": 2,
+              "ANTICIPATE": 10,
+              "MATKP": 7,
+              "CRITP": 15,
+              "MOTIONSPEED": 2
+            },
+            "resolvedConditionMetadata": {
+              "active": [
+                {
+                  "sub": "방패"
+                }
+              ],
+              "inactive": [
+                {
+                  "main": "양손검"
+                }
+              ]
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:푸이에트",
+              "crysta:호뢰파섬"
+            ],
+            "candidateNames": [
+              "푸이에트",
+              "호뢰파섬"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "푸이에트",
+                "category": "방어구",
+                "stats": {
+                  "MAXHP": -800,
+                  "MAXMP": -400,
+                  "ATKP": 12,
+                  "CRIT": 12,
+                  "SRW": 6,
+                  "STRP": 2
+                }
+              },
+              {
+                "name": "호뢰파섬",
+                "category": "방어구",
+                "stats": {
+                  "ANTICIPATE": 10,
+                  "ATKP": 7,
+                  "MATKP": 7,
+                  "SRW": 7,
+                  "CRIT": 15,
+                  "CRITP": 15,
+                  "MAXHP": 7000,
+                  "MOTIONSPEED": 2
+                }
+              }
+            ],
+            "metadata": {
+              "label": "방어구",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "additional:굴라+지브릴3",
+            "slot": "additional",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "ATKP": 10,
+              "GUARD_BREAK": 10,
+              "MAXMP": 300,
+              "CRIT": 31,
+              "MP_REGENP": 12,
+              "MP_REGEN": 6,
+              "LRW": 11,
+              "SRW": 9,
+              "ANTICIPATE": 3
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": []
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:굴라",
+              "crysta:지브릴3"
+            ],
+            "candidateNames": [
+              "굴라",
+              "지브릴3"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "굴라",
+                "category": "추가",
+                "stats": {
+                  "ATKP": 10,
+                  "GUARD_BREAK": 10,
+                  "MAXMP": 200,
+                  "CRIT": 15
+                }
+              },
+              {
+                "name": "지브릴3",
+                "category": "추가",
+                "stats": {
+                  "MP_REGENP": 12,
+                  "MP_REGEN": 6,
+                  "LRW": 11,
+                  "MAXMP": 100,
+                  "CRIT": 16,
+                  "SRW": 9,
+                  "ANTICIPATE": 3
+                }
+              }
+            ],
+            "metadata": {
+              "label": "추가",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "special:시카노카미+자이언트 문어",
+            "slot": "special",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "SRW": 5,
+              "AMPR": 25,
+              "ACC": 50,
+              "LRW": 5,
+              "FIRE_RES": -4,
+              "AILMENT_RES": -2,
+              "AOE_RES": -1,
+              "CRIT": 10,
+              "ASPD": 150,
+              "CSPD": 200
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": [
+                {
+                  "main": "미늘창"
+                }
+              ]
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:시카노카미",
+              "crysta:자이언트문어"
+            ],
+            "candidateNames": [
+              "시카노카미",
+              "자이언트 문어"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "시카노카미",
+                "category": "특수",
+                "stats": {
+                  "SRW": 5,
+                  "AMPR": 20,
+                  "ACC": 50,
+                  "LRW": 5
+                }
+              },
+              {
+                "name": "자이언트 문어",
+                "category": "노말",
+                "stats": {
+                  "FIRE_RES": -4,
+                  "AILMENT_RES": -2,
+                  "AOE_RES": -1,
+                  "AMPR": 5,
+                  "CRIT": 10,
+                  "ASPD": 150,
+                  "CSPD": 200
+                }
+              }
+            ],
+            "metadata": {
+              "label": "특수",
+              "emptySlots": 0
+            }
+          }
+        ],
+        "statDelta": {
+          "ACC": 50,
+          "AILMENT_RES": -2,
+          "AMPR": 40,
+          "ANTICIPATE": 13,
+          "AOE_RES": -1,
+          "ASPD": 150,
+          "ATKP": 41,
+          "CRIT": 68,
+          "CRITP": 25,
+          "CSPD": 200,
+          "DEFP": -33,
+          "FIRE_RES": -4,
+          "GUARD_BREAK": 10,
+          "LRW": 16,
+          "MAG_BARR": 3000,
+          "MATKP": 7,
+          "MAXHP": 6200,
+          "MAXMP": -100,
+          "MOTIONSPEED": 2,
+          "MP_REGEN": 6,
+          "MP_REGENP": 12,
+          "PHYS_BARR": 3000,
+          "SRW": 34,
+          "STRP": 10
+        }
+      }
+    },
+    "revenir-locked": {
+      "sha256": "15565778faa4df5747d9b463f4ab23842bbb4fc07c4d4b6356751d9a65233cad",
+      "raw": {
+        "note": "This is the post-UI, post-combo context used by the D4 fixture. maxMpF includes the active-state contribution needed to reproduce the displayed maximum MP 2275; the raw UI card is retained above as provenance. The current Etowal build remains below a D4 hard constraint, so the solver must establish a feasible incumbent from the search domain.",
+        "baseContext": {
+          "level": 325,
+          "strBase": 327,
+          "intBase": 1,
+          "vitBase": 1,
+          "agiBase": 1,
+          "dexBase": 510,
+          "crtBase": 0,
+          "mainType": "한손검",
+          "wpnAtk": 625,
+          "wpnRefine": 15,
+          "wpnStab": 80,
+          "subType": "방패",
+          "subAtk": 0,
+          "subRefine": 15,
+          "subStab": 0,
+          "armorType": "경량옷",
+          "bossLevel": 300,
+          "bossDef": 1950,
+          "bossMdef": 1950,
+          "bossCritResist": 70,
+          "bossPhysResist": 0,
+          "bossMagResist": 0,
+          "atkType": "PHYS",
+          "rangeType": "SHORT",
+          "skillMult": 32.805,
+          "skillConst": 400,
+          "optimizationBasisName": "루브닐",
+          "appliedSkillId": "Knight:11",
+          "procDamageModifiers": [
+            {
+              "source": "강타",
+              "level": 10,
+              "chancePercent": 10,
+              "multiplier": 1.2,
+              "target": "physical"
+            }
+          ],
+          "chkIsUnsheathe": false,
+          "chkGuaranteedCrit": false,
+          "conversionLevel": 0,
+          "conversionActive": false,
+          "dualBringerLevel": 0,
+          "dualBringerActive": false,
+          "spellBurstLevel": 0,
+          "godspeedWieldLevel": 0,
+          "poisonSources": [],
+          "weakenSources": [],
+          "targetWeakened": false,
+          "attackElement": "none",
+          "attackPowerMode": "default",
+          "useHigherRangeDamage": false,
+          "noCritical": false,
+          "criticalChanceBonus": 0,
+          "criticalChanceMultiplier": 1,
+          "fixedCriticalChance": null,
+          "minimumCriticalDamage": 0,
+          "stabilityBonus": 0,
+          "physicalPierceSkillBonus": 0,
+          "magicPierceSkillBonus": 0,
+          "ignoreDefense": false,
+          "ignoreMdef": false,
+          "halfMdefIgnored": false,
+          "strP": 0,
+          "strF": 0,
+          "dexP": 0,
+          "dexF": 0,
+          "intP": 0,
+          "intF": 0,
+          "agiP": 0,
+          "agiF": 0,
+          "vitP": 0,
+          "vitF": 0,
+          "atkP": 20,
+          "atkF": 0,
+          "matkP": 0,
+          "matkF": 0,
+          "cdmgP": 11,
+          "cdmgF": 43,
+          "critP": -50,
+          "critF": 90,
+          "srw": 0,
+          "lrw": 0,
+          "unsheatheP": 0,
+          "unsheatheF": 0,
+          "elemP": 46,
+          "damageP": 0,
+          "watkP": 0,
+          "watkF": 0,
+          "baseWpnAtkF": 0,
+          "physPierce": 0,
+          "magPierce": 0,
+          "aspdF": 0,
+          "aspdP": 25,
+          "cspdF": 0,
+          "cspdP": 0,
+          "stability": 0,
+          "motionSpeed": 10,
+          "castRed": 0,
+          "maxHpF": 0,
+          "maxHpP": 0,
+          "maxMpF": 1850,
+          "amprF": 30,
+          "amprP": 0,
+          "elementAwakening": true,
+          "magicElement": false,
+          "atkUpSTR": 0,
+          "atkUpDEX": 0,
+          "atkUpINT": 0,
+          "atkUpAGI": 0,
+          "atkUpVIT": 0,
+          "matkUpSTR": 0,
+          "matkUpDEX": 0,
+          "matkUpINT": 0,
+          "matkUpAGI": 0,
+          "matkUpVIT": 0,
+          "preservedStats": {},
+          "statDiagnostics": [],
+          "activeBuildConversions": [],
+          "normalAttackAmprProfile": {
+            "passive": [],
+            "activeCandidates": []
+          }
+        },
+        "scenarioRequirements": {
+          "maxHp": null,
+          "maxMp": 2000,
+          "amprBeforeDual": 100,
+          "normalAttackCrit": 100,
+          "aspd": 1000
+        },
+        "currentCrystas": [
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "에투왈",
+          null
+        ],
+        "locks": [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          true,
+          false
+        ],
+        "banned": {
+          "오로로 콜론": true,
+          "카나요간": true
+        }
+      },
+      "referenceBestBuild": {
+        "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+        "packages": [
+          {
+            "id": "weapon:굉룡 보비나리+도이",
+            "slot": "weapon",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "AMPR": 15,
+              "SRW": 7,
+              "MAG_BARR": 3000,
+              "PHYS_BARR": 3000,
+              "STRP": 8,
+              "ATKP": 12,
+              "CRITP": 10,
+              "DEFP": -33
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": []
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:굉룡보비나리",
+              "crysta:도이"
+            ],
+            "candidateNames": [
+              "굉룡 보비나리",
+              "도이"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "굉룡 보비나리",
+                "category": "무기",
+                "stats": {
+                  "AMPR": 15,
+                  "SRW": 7,
+                  "MAG_BARR": 3000,
+                  "PHYS_BARR": 3000
+                }
+              },
+              {
+                "name": "도이",
+                "category": "무기",
+                "stats": {
+                  "STRP": 8,
+                  "ATKP": 12,
+                  "CRITP": 10,
+                  "DEFP": -33
+                }
+              }
+            ],
+            "metadata": {
+              "label": "무기",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "armor:푸이에트+호뢰파섬",
+            "slot": "armor",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "MAXHP": 6200,
+              "MAXMP": -400,
+              "ATKP": 19,
+              "CRIT": 27,
+              "SRW": 13,
+              "STRP": 2,
+              "ANTICIPATE": 10,
+              "MATKP": 7,
+              "CRITP": 15,
+              "MOTIONSPEED": 2
+            },
+            "resolvedConditionMetadata": {
+              "active": [
+                {
+                  "sub": "방패"
+                }
+              ],
+              "inactive": [
+                {
+                  "main": "양손검"
+                }
+              ]
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:푸이에트",
+              "crysta:호뢰파섬"
+            ],
+            "candidateNames": [
+              "푸이에트",
+              "호뢰파섬"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "푸이에트",
+                "category": "방어구",
+                "stats": {
+                  "MAXHP": -800,
+                  "MAXMP": -400,
+                  "ATKP": 12,
+                  "CRIT": 12,
+                  "SRW": 6,
+                  "STRP": 2
+                }
+              },
+              {
+                "name": "호뢰파섬",
+                "category": "방어구",
+                "stats": {
+                  "ANTICIPATE": 10,
+                  "ATKP": 7,
+                  "MATKP": 7,
+                  "SRW": 7,
+                  "CRIT": 15,
+                  "CRITP": 15,
+                  "MAXHP": 7000,
+                  "MOTIONSPEED": 2
+                }
+              }
+            ],
+            "metadata": {
+              "label": "방어구",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "additional:굴라+자이언트 문어",
+            "slot": "additional",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "ATKP": 10,
+              "GUARD_BREAK": 10,
+              "MAXMP": 200,
+              "CRIT": 25,
+              "FIRE_RES": -4,
+              "AILMENT_RES": -2,
+              "AOE_RES": -1,
+              "AMPR": 5,
+              "ASPD": 150,
+              "CSPD": 200
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": []
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:굴라",
+              "crysta:자이언트문어"
+            ],
+            "candidateNames": [
+              "굴라",
+              "자이언트 문어"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "굴라",
+                "category": "추가",
+                "stats": {
+                  "ATKP": 10,
+                  "GUARD_BREAK": 10,
+                  "MAXMP": 200,
+                  "CRIT": 15
+                }
+              },
+              {
+                "name": "자이언트 문어",
+                "category": "노말",
+                "stats": {
+                  "FIRE_RES": -4,
+                  "AILMENT_RES": -2,
+                  "AOE_RES": -1,
+                  "AMPR": 5,
+                  "CRIT": 10,
+                  "ASPD": 150,
+                  "CSPD": 200
+                }
+              }
+            ],
+            "metadata": {
+              "label": "추가",
+              "emptySlots": 0
+            }
+          },
+          {
+            "id": "special:시카노카미+에투왈",
+            "slot": "special",
+            "source": "crysta",
+            "structureSignature": "한손검|방패|경량옷",
+            "statDelta": {
+              "CRITP": 40,
+              "ASPD": 1100,
+              "MOTIONSPEED": 5,
+              "CSPD_P": -70,
+              "SRW": 5,
+              "AMPR": 20,
+              "ACC": 50,
+              "LRW": 5
+            },
+            "resolvedConditionMetadata": {
+              "active": [],
+              "inactive": [
+                {
+                  "main": "미늘창"
+                }
+              ]
+            },
+            "sockets": 2,
+            "conflicts": [],
+            "resourceCost": {
+              "sockets": 2
+            },
+            "candidateIds": [
+              "crysta:에투왈",
+              "crysta:시카노카미"
+            ],
+            "candidateNames": [
+              "에투왈",
+              "시카노카미"
+            ],
+            "evaluatorCandidates": [
+              {
+                "name": "에투왈",
+                "category": "특수",
+                "stats": {
+                  "CRITP": 40,
+                  "ASPD": 1100,
+                  "MOTIONSPEED": 5,
+                  "CSPD_P": -70
+                }
+              },
+              {
+                "name": "시카노카미",
+                "category": "특수",
+                "stats": {
+                  "SRW": 5,
+                  "AMPR": 20,
+                  "ACC": 50,
+                  "LRW": 5
+                }
+              }
+            ],
+            "metadata": {
+              "label": "특수",
+              "emptySlots": 0
+            }
+          }
+        ],
+        "statDelta": {
+          "ACC": 50,
+          "AILMENT_RES": -2,
+          "AMPR": 40,
+          "ANTICIPATE": 10,
+          "AOE_RES": -1,
+          "ASPD": 1250,
+          "ATKP": 41,
+          "CRIT": 52,
+          "CRITP": 65,
+          "CSPD": 200,
+          "CSPD_P": -70,
+          "DEFP": -33,
+          "FIRE_RES": -4,
+          "GUARD_BREAK": 10,
+          "LRW": 5,
+          "MAG_BARR": 3000,
+          "MATKP": 7,
+          "MAXHP": 6200,
+          "MAXMP": -200,
+          "MOTIONSPEED": 7,
+          "PHYS_BARR": 3000,
+          "SRW": 25,
+          "STRP": 10
+        }
+      }
+    }
+  },
+  "summaries": {
+    "revenir": {
+      "before": {
+        "timesMs": [
+          2217.0566,
+          2184.1041999999998,
+          2183.4516,
+          2172.8965,
+          2175.4882000000002,
+          2204.8679,
+          2185.3671999999997,
+          2196.4828,
+          2192.4201,
+          2174.3322
+        ],
+        "meanMs": 2188.6467300000004,
+        "medianMs": 2184.7356999999997,
+        "minMs": 2172.8965,
+        "maxMs": 2217.0566,
+        "sampleP95Ms": 2217.0566,
+        "peakMiB": [
+          45.16796875,
+          45.28125,
+          45.51171875,
+          45.4140625,
+          46.23046875,
+          45.2421875,
+          45.16015625,
+          45.15234375,
+          45.484375,
+          45.1171875
+        ],
+        "meanVisitedNodes": 4141779.3,
+        "meanEvaluations": 7783036.8,
+        "meanEnumeratedCompletions": 641896.8,
+        "score": 1123905.36
+      },
+      "after": {
+        "timesMs": [
+          1687.4889999999998,
+          1635.1269000000002,
+          1656.7069999999999,
+          1621.7555,
+          1624.7755,
+          1630.6469,
+          1653.8868,
+          1630.0285,
+          1641.4355999999998,
+          1658.0854
+        ],
+        "meanMs": 1643.99371,
+        "medianMs": 1638.28125,
+        "minMs": 1621.7555,
+        "maxMs": 1687.4889999999998,
+        "sampleP95Ms": 1687.4889999999998,
+        "peakMiB": [
+          36.27734375,
+          36.09375,
+          35.98828125,
+          36.04296875,
+          37.09375,
+          37.1875,
+          35.87890625,
+          36.16015625,
+          37.21875,
+          37.05078125
+        ],
+        "meanVisitedNodes": 1425802.8,
+        "meanEvaluations": 4856831.5,
+        "meanEnumeratedCompletions": 176145.9,
+        "score": 1123905.36
+      },
+      "comparisons": {
+        "meanReductionPercent": 24.88537837259832,
+        "medianReductionPercent": 25.01238250466634,
+        "evaluationReductionPercent": 37.59721783661616,
+        "fasterPairedRuns": 10
+      }
+    },
+    "revenir-locked": {
+      "before": {
+        "timesMs": [
+          872.4449000000001,
+          868.0265,
+          879.1566,
+          884.3974000000001,
+          885.3623,
+          879.6895,
+          870.1257,
+          865.722,
+          862.6300000000001,
+          872.8925
+        ],
+        "meanMs": 874.04474,
+        "medianMs": 872.6687000000001,
+        "minMs": 862.6300000000001,
+        "maxMs": 885.3623,
+        "sampleP95Ms": 885.3623,
+        "peakMiB": [
+          19.65625,
+          19.54296875,
+          20.61328125,
+          21.03125,
+          20.49609375,
+          20.64453125,
+          19.484375,
+          19.41015625,
+          20.62890625,
+          19.4609375
+        ],
+        "meanVisitedNodes": 329985.9,
+        "meanEvaluations": 685464.4,
+        "meanEnumeratedCompletions": 105525.5,
+        "score": 1048419.24
+      },
+      "after": {
+        "timesMs": [
+          858.2126000000001,
+          848.6383000000001,
+          842.6925,
+          840.9982,
+          845.6488999999999,
+          845.4095000000001,
+          843.0146,
+          845.4843999999999,
+          851.8567,
+          848.5943
+        ],
+        "meanMs": 847.055,
+        "medianMs": 845.56665,
+        "minMs": 840.9982,
+        "maxMs": 858.2126000000001,
+        "sampleP95Ms": 858.2126000000001,
+        "peakMiB": [
+          20.9296875,
+          21.73828125,
+          21.6953125,
+          12.3671875,
+          21.69140625,
+          15.32421875,
+          21.84375,
+          21.875,
+          22.0546875,
+          21.64453125
+        ],
+        "meanVisitedNodes": 155098,
+        "meanEvaluations": 469409.6,
+        "meanEnumeratedCompletions": 20156.8,
+        "score": 1048419.24
+      },
+      "comparisons": {
+        "meanReductionPercent": 3.087912868167375,
+        "medianReductionPercent": 3.1056516636840614,
+        "evaluationReductionPercent": 31.519477889734326,
+        "fasterPairedRuns": 10
+      }
+    }
+  },
+  "resume": {
+    "sliceMs": 250,
+    "status": "exact",
+    "score": 1123905.36,
+    "timing": {
+      "totalMs": 2584.825,
+      "compileMs": 243.41519999999997,
+      "executionAndResultMs": 2341.4098,
+      "slices": 4,
+      "progressEvents": 15,
+      "cached": false
+    }
+  },
+  "runs": [
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 1,
+      "nativePeakWorkingSetBytes": 47362048,
+      "sample": {
+        "timing": {
+          "totalMs": 2217.0566,
+          "compileMs": 217.5436,
+          "executionAndResultMs": 1999.5130000000001,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31807426560,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23318698963,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4135645,
+        "evaluations": 7770620,
+        "prunedByConstraint": 8650580,
+        "enumeratedCompletions": 640687
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 1,
+      "nativePeakWorkingSetBytes": 38039552,
+      "sample": {
+        "timing": {
+          "totalMs": 1687.4889999999998,
+          "compileMs": 222.64980000000003,
+          "executionAndResultMs": 1464.8392,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31786741760,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23303185363,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1426106,
+        "evaluations": 4847836,
+        "prunedByConstraint": 1525337,
+        "enumeratedCompletions": 175166
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 2,
+      "nativePeakWorkingSetBytes": 37847040,
+      "sample": {
+        "timing": {
+          "totalMs": 1635.1269000000002,
+          "compileMs": 223.3716,
+          "executionAndResultMs": 1411.7553,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31763124224,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23285472238,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425741,
+        "evaluations": 4858348,
+        "prunedByConstraint": 1520915,
+        "enumeratedCompletions": 175689
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 2,
+      "nativePeakWorkingSetBytes": 47480832,
+      "sample": {
+        "timing": {
+          "totalMs": 2184.1041999999998,
+          "compileMs": 218.5131,
+          "executionAndResultMs": 1965.5910999999999,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31759060992,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23282424763,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4141647,
+        "evaluations": 7784542,
+        "prunedByConstraint": 8649676,
+        "enumeratedCompletions": 641961
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 3,
+      "nativePeakWorkingSetBytes": 47722496,
+      "sample": {
+        "timing": {
+          "totalMs": 2183.4516,
+          "compileMs": 219.7187,
+          "executionAndResultMs": 1963.7329,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31766077440,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23287687138,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4143546,
+        "evaluations": 7790288,
+        "prunedByConstraint": 8650686,
+        "enumeratedCompletions": 642199
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 3,
+      "nativePeakWorkingSetBytes": 37736448,
+      "sample": {
+        "timing": {
+          "totalMs": 1656.7069999999999,
+          "compileMs": 222.13139999999999,
+          "executionAndResultMs": 1434.5756,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31751942144,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23277085663,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1426041,
+        "evaluations": 4855964,
+        "prunedByConstraint": 1521720,
+        "enumeratedCompletions": 175270
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 4,
+      "nativePeakWorkingSetBytes": 37793792,
+      "sample": {
+        "timing": {
+          "totalMs": 1621.7555,
+          "compileMs": 220.60660000000001,
+          "executionAndResultMs": 1401.1489,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31759990784,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23283122113,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1426186,
+        "evaluations": 4860157,
+        "prunedByConstraint": 1520368,
+        "enumeratedCompletions": 177144
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 4,
+      "nativePeakWorkingSetBytes": 47620096,
+      "sample": {
+        "timing": {
+          "totalMs": 2172.8965,
+          "compileMs": 218.1857,
+          "executionAndResultMs": 1954.7107999999998,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31751938048,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23277082588,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4139926,
+        "evaluations": 7779708,
+        "prunedByConstraint": 8650563,
+        "enumeratedCompletions": 643585
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 5,
+      "nativePeakWorkingSetBytes": 48476160,
+      "sample": {
+        "timing": {
+          "totalMs": 2175.4882000000002,
+          "compileMs": 219.0643,
+          "executionAndResultMs": 1956.4239000000002,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31763390464,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23285671888,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4143846,
+        "evaluations": 7790426,
+        "prunedByConstraint": 8650115,
+        "enumeratedCompletions": 643026
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 5,
+      "nativePeakWorkingSetBytes": 38895616,
+      "sample": {
+        "timing": {
+          "totalMs": 1624.7755,
+          "compileMs": 217.74900000000002,
+          "executionAndResultMs": 1407.0265,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31765835776,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23287505863,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425767,
+        "evaluations": 4856415,
+        "prunedByConstraint": 1521277,
+        "enumeratedCompletions": 176252
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 6,
+      "nativePeakWorkingSetBytes": 38993920,
+      "sample": {
+        "timing": {
+          "totalMs": 1630.6469,
+          "compileMs": 218.1395,
+          "executionAndResultMs": 1412.5074,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31764631552,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23286602713,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425499,
+        "evaluations": 4857842,
+        "prunedByConstraint": 1520271,
+        "enumeratedCompletions": 175399
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 6,
+      "nativePeakWorkingSetBytes": 47439872,
+      "sample": {
+        "timing": {
+          "totalMs": 2204.8679,
+          "compileMs": 219.6673,
+          "executionAndResultMs": 1985.2006000000001,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31748239360,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23274308563,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4138651,
+        "evaluations": 7771058,
+        "prunedByConstraint": 8651784,
+        "enumeratedCompletions": 640990
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 7,
+      "nativePeakWorkingSetBytes": 47353856,
+      "sample": {
+        "timing": {
+          "totalMs": 2185.3671999999997,
+          "compileMs": 221.9485,
+          "executionAndResultMs": 1963.4187,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31754641408,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23279110138,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4143708,
+        "evaluations": 7785305,
+        "prunedByConstraint": 8650413,
+        "enumeratedCompletions": 641432
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 7,
+      "nativePeakWorkingSetBytes": 37621760,
+      "sample": {
+        "timing": {
+          "totalMs": 1653.8868,
+          "compileMs": 223.43419999999998,
+          "executionAndResultMs": 1430.4526,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31745658880,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23272373188,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425353,
+        "evaluations": 4861691,
+        "prunedByConstraint": 1518559,
+        "enumeratedCompletions": 176852
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 8,
+      "nativePeakWorkingSetBytes": 37916672,
+      "sample": {
+        "timing": {
+          "totalMs": 1630.0285,
+          "compileMs": 214.41049999999998,
+          "executionAndResultMs": 1415.618,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31751610368,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23276836813,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425562,
+        "evaluations": 4858866,
+        "prunedByConstraint": 1521214,
+        "enumeratedCompletions": 177719
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 8,
+      "nativePeakWorkingSetBytes": 47345664,
+      "sample": {
+        "timing": {
+          "totalMs": 2196.4828,
+          "compileMs": 217.3757,
+          "executionAndResultMs": 1979.1071000000002,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31758278656,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23281838038,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4144416,
+        "evaluations": 7782248,
+        "prunedByConstraint": 8652819,
+        "enumeratedCompletions": 640272
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 9,
+      "nativePeakWorkingSetBytes": 47693824,
+      "sample": {
+        "timing": {
+          "totalMs": 2192.4201,
+          "compileMs": 220.0592,
+          "executionAndResultMs": 1972.3609000000001,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31766806528,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23288233963,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4143879,
+        "evaluations": 7788796,
+        "prunedByConstraint": 8650828,
+        "enumeratedCompletions": 642329
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 9,
+      "nativePeakWorkingSetBytes": 39026688,
+      "sample": {
+        "timing": {
+          "totalMs": 1641.4355999999998,
+          "compileMs": 219.0821,
+          "executionAndResultMs": 1422.3535,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31763439616,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23285708788,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1425663,
+        "evaluations": 4854907,
+        "prunedByConstraint": 1521745,
+        "enumeratedCompletions": 175933
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "after",
+      "repeat": 10,
+      "nativePeakWorkingSetBytes": 38850560,
+      "sample": {
+        "timing": {
+          "totalMs": 1658.0854,
+          "compileMs": 223.30179999999996,
+          "executionAndResultMs": 1434.7836,
+          "slices": 1,
+          "progressEvents": 8,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31770791936,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23291223013,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 1426110,
+        "evaluations": 4856289,
+        "prunedByConstraint": 1521507,
+        "enumeratedCompletions": 176035
+      }
+    },
+    {
+      "fixture": "revenir",
+      "variant": "before",
+      "repeat": 10,
+      "nativePeakWorkingSetBytes": 47308800,
+      "sample": {
+        "timing": {
+          "totalMs": 2174.3322,
+          "compileMs": 220.1159,
+          "executionAndResultMs": 1954.2163,
+          "slices": 1,
+          "progressEvents": 14,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31762014208,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23284639738,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1123905.36,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+지브릴3||special:시카노카미+자이언트 문어",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 13,
+            "AOE_RES": -1,
+            "ASPD": 150,
+            "ATKP": 41,
+            "CRIT": 68,
+            "CRITP": 25,
+            "CSPD": 200,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 16,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -100,
+            "MOTIONSPEED": 2,
+            "MP_REGEN": 6,
+            "MP_REGENP": 12,
+            "PHYS_BARR": 3000,
+            "SRW": 34,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+지브릴3",
+            "special:시카노카미+자이언트 문어"
+          ]
+        },
+        "upperBound": 1123905.36,
+        "visitedNodes": 4142529,
+        "evaluations": 7787377,
+        "prunedByConstraint": 8650530,
+        "enumeratedCompletions": 642487
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 1,
+      "nativePeakWorkingSetBytes": 20611072,
+      "sample": {
+        "timing": {
+          "totalMs": 872.4449000000001,
+          "compileMs": 172.18699999999998,
+          "executionAndResultMs": 700.2579000000001,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31800119296,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23313218488,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 329645,
+        "evaluations": 684175,
+        "prunedByConstraint": 728472,
+        "enumeratedCompletions": 105077
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 1,
+      "nativePeakWorkingSetBytes": 21946368,
+      "sample": {
+        "timing": {
+          "totalMs": 858.2126000000001,
+          "compileMs": 174.052,
+          "executionAndResultMs": 684.1606,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31799754752,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23312945113,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 154743,
+        "evaluations": 465520,
+        "prunedByConstraint": 202879,
+        "enumeratedCompletions": 20353
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 2,
+      "nativePeakWorkingSetBytes": 22794240,
+      "sample": {
+        "timing": {
+          "totalMs": 848.6383000000001,
+          "compileMs": 172.5359,
+          "executionAndResultMs": 676.1024,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31800786944,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23313719263,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155071,
+        "evaluations": 470641,
+        "prunedByConstraint": 201317,
+        "enumeratedCompletions": 20364
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 2,
+      "nativePeakWorkingSetBytes": 20492288,
+      "sample": {
+        "timing": {
+          "totalMs": 868.0265,
+          "compileMs": 171.7407,
+          "executionAndResultMs": 696.2858,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31796654080,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23310619588,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 330045,
+        "evaluations": 686242,
+        "prunedByConstraint": 728259,
+        "enumeratedCompletions": 106209
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 3,
+      "nativePeakWorkingSetBytes": 21614592,
+      "sample": {
+        "timing": {
+          "totalMs": 879.1566,
+          "compileMs": 173.3373,
+          "executionAndResultMs": 705.8193,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31789019136,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23304893413,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 329950,
+        "evaluations": 686534,
+        "prunedByConstraint": 728206,
+        "enumeratedCompletions": 105408
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 3,
+      "nativePeakWorkingSetBytes": 22749184,
+      "sample": {
+        "timing": {
+          "totalMs": 842.6925,
+          "compileMs": 171.052,
+          "executionAndResultMs": 671.6405,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31795306496,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23309608888,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 154989,
+        "evaluations": 468140,
+        "prunedByConstraint": 201786,
+        "enumeratedCompletions": 19815
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 4,
+      "nativePeakWorkingSetBytes": 12967936,
+      "sample": {
+        "timing": {
+          "totalMs": 840.9982,
+          "compileMs": 170.8699,
+          "executionAndResultMs": 670.1283,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31790227456,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23305799638,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 154921,
+        "evaluations": 468042,
+        "prunedByConstraint": 201709,
+        "enumeratedCompletions": 20405
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 4,
+      "nativePeakWorkingSetBytes": 22052864,
+      "sample": {
+        "timing": {
+          "totalMs": 884.3974000000001,
+          "compileMs": 175.6833,
+          "executionAndResultMs": 708.7141,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31800578048,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23313562588,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 329808,
+        "evaluations": 684216,
+        "prunedByConstraint": 728504,
+        "enumeratedCompletions": 105231
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 5,
+      "nativePeakWorkingSetBytes": 21491712,
+      "sample": {
+        "timing": {
+          "totalMs": 885.3623,
+          "compileMs": 173.3441,
+          "executionAndResultMs": 712.0182,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31774478336,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23293987813,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 330222,
+        "evaluations": 686502,
+        "prunedByConstraint": 728450,
+        "enumeratedCompletions": 104705
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 5,
+      "nativePeakWorkingSetBytes": 22745088,
+      "sample": {
+        "timing": {
+          "totalMs": 845.6488999999999,
+          "compileMs": 171.9996,
+          "executionAndResultMs": 673.6493,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31790120960,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23305719763,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155497,
+        "evaluations": 473523,
+        "prunedByConstraint": 201123,
+        "enumeratedCompletions": 20134
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 6,
+      "nativePeakWorkingSetBytes": 16068608,
+      "sample": {
+        "timing": {
+          "totalMs": 845.4095000000001,
+          "compileMs": 171.0091,
+          "executionAndResultMs": 674.4004,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31770636288,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23291106238,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155234,
+        "evaluations": 470686,
+        "prunedByConstraint": 201348,
+        "enumeratedCompletions": 19828
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 6,
+      "nativePeakWorkingSetBytes": 21647360,
+      "sample": {
+        "timing": {
+          "totalMs": 879.6895,
+          "compileMs": 180.7017,
+          "executionAndResultMs": 698.9878,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31767568384,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23288805313,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 330431,
+        "evaluations": 687068,
+        "prunedByConstraint": 728301,
+        "enumeratedCompletions": 106579
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 7,
+      "nativePeakWorkingSetBytes": 20430848,
+      "sample": {
+        "timing": {
+          "totalMs": 870.1257,
+          "compileMs": 172.6366,
+          "executionAndResultMs": 697.4891,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31768301568,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23289355213,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 329887,
+        "evaluations": 684808,
+        "prunedByConstraint": 728140,
+        "enumeratedCompletions": 105491
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 7,
+      "nativePeakWorkingSetBytes": 22904832,
+      "sample": {
+        "timing": {
+          "totalMs": 843.0146,
+          "compileMs": 171.2214,
+          "executionAndResultMs": 671.7932000000001,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31768711168,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23289662413,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 154901,
+        "evaluations": 466647,
+        "prunedByConstraint": 202551,
+        "enumeratedCompletions": 20592
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 8,
+      "nativePeakWorkingSetBytes": 22937600,
+      "sample": {
+        "timing": {
+          "totalMs": 845.4843999999999,
+          "compileMs": 171.40230000000003,
+          "executionAndResultMs": 674.0821,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31767162880,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23288501188,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155293,
+        "evaluations": 469474,
+        "prunedByConstraint": 201785,
+        "enumeratedCompletions": 19936
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 8,
+      "nativePeakWorkingSetBytes": 20353024,
+      "sample": {
+        "timing": {
+          "totalMs": 865.722,
+          "compileMs": 169.99759999999998,
+          "executionAndResultMs": 695.7244000000001,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31792398336,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23307427813,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 330021,
+        "evaluations": 684997,
+        "prunedByConstraint": 728521,
+        "enumeratedCompletions": 105706
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 9,
+      "nativePeakWorkingSetBytes": 21630976,
+      "sample": {
+        "timing": {
+          "totalMs": 862.6300000000001,
+          "compileMs": 172.361,
+          "executionAndResultMs": 690.269,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31791923200,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23307071488,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 330084,
+        "evaluations": 685939,
+        "prunedByConstraint": 728114,
+        "enumeratedCompletions": 105230
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 9,
+      "nativePeakWorkingSetBytes": 23126016,
+      "sample": {
+        "timing": {
+          "totalMs": 851.8567,
+          "compileMs": 175.5675,
+          "executionAndResultMs": 676.2892,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31785029632,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23301901288,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155170,
+        "evaluations": 471096,
+        "prunedByConstraint": 201154,
+        "enumeratedCompletions": 20350
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "after",
+      "repeat": 10,
+      "nativePeakWorkingSetBytes": 22695936,
+      "sample": {
+        "timing": {
+          "totalMs": 848.5943,
+          "compileMs": 175.2127,
+          "executionAndResultMs": 673.3815999999999,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31784710144,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23301661663,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 155161,
+        "evaluations": 470327,
+        "prunedByConstraint": 201234,
+        "enumeratedCompletions": 19791
+      }
+    },
+    {
+      "fixture": "revenir-locked",
+      "variant": "before",
+      "repeat": 10,
+      "nativePeakWorkingSetBytes": 20406272,
+      "sample": {
+        "timing": {
+          "totalMs": 872.8925,
+          "compileMs": 172.4044,
+          "executionAndResultMs": 700.4881,
+          "slices": 1,
+          "progressEvents": 3,
+          "cached": false
+        },
+        "metadata": {
+          "transport": "stdio-json-lines",
+          "commands": {
+            "crysta_hardware_profile": 1,
+            "crysta_optimize_parallel": 1
+          },
+          "hardwareProfile": {
+            "availableMemoryBytes": 31786881024,
+            "initialShardTarget": 128,
+            "logicalThreads": 16,
+            "queueMemoryBudgetBytes": 23303289838,
+            "schema": "toram.crysta-hardware-profile.v1",
+            "totalMemoryBytes": 50634702848
+          }
+        },
+        "status": "exact",
+        "score": 1048419.24,
+        "bestBuild": {
+          "id": "weapon:굉룡 보비나리+도이||armor:푸이에트+호뢰파섬||additional:굴라+자이언트 문어||special:시카노카미+에투왈",
+          "statDelta": {
+            "ACC": 50,
+            "AILMENT_RES": -2,
+            "AMPR": 40,
+            "ANTICIPATE": 10,
+            "AOE_RES": -1,
+            "ASPD": 1250,
+            "ATKP": 41,
+            "CRIT": 52,
+            "CRITP": 65,
+            "CSPD": 200,
+            "CSPD_P": -70,
+            "DEFP": -33,
+            "FIRE_RES": -4,
+            "GUARD_BREAK": 10,
+            "LRW": 5,
+            "MAG_BARR": 3000,
+            "MATKP": 7,
+            "MAXHP": 6200,
+            "MAXMP": -200,
+            "MOTIONSPEED": 7,
+            "PHYS_BARR": 3000,
+            "SRW": 25,
+            "STRP": 10
+          },
+          "packageIds": [
+            "weapon:굉룡 보비나리+도이",
+            "armor:푸이에트+호뢰파섬",
+            "additional:굴라+자이언트 문어",
+            "special:시카노카미+에투왈"
+          ]
+        },
+        "upperBound": 1048419.24,
+        "visitedNodes": 329766,
+        "evaluations": 684163,
+        "prunedByConstraint": 728416,
+        "enumeratedCompletions": 105619
+      }
+    }
+  ]
+}

@@ -16,7 +16,7 @@
 | S4 | 계산기 범위 22 | 공격 프로필·정적 패시브·활성 버프·다음 스킬 1회 효과 연결 |
 | S5 | 모델 범위 22 | Lv.10·Lv.0·무기 조건 전수와 대표 공식/순서 효과 회귀 통과 |
 
-`node tools/audit-stack-source-links.mjs --tree Martial --require-s1`은 **22/22로 통과**했다. 모든 정의는 `partial`이다. 여기서 S4/S5는 대미지 계산기·빌드 시뮬레이터 범위의 완료 판정이며, 피격·시간 경과·통상 공격 자동 시뮬레이션까지 뜻하지 않는다.
+`node tools/verification/audit-stack-source-links.mjs --tree Martial --require-s1`은 **22/22로 통과**했다. 모든 정의는 `partial`이다. 여기서 S4/S5는 대미지 계산기·빌드 시뮬레이터 범위의 완료 판정이며, 피격·시간 경과·통상 공격 자동 시뮬레이션까지 뜻하지 않는다.
 
 ## S4 계산 연결
 
@@ -44,7 +44,7 @@
 
 ## S5 회귀
 
-`node tools/test-martial-s4-s5.mjs`가 다음을 검사한다.
+`node tools/tests/skills/test-martial-regression.mjs`가 다음을 검사한다.
 
 - 22개 전부: 권갑 Lv.10 정상, Lv.0 경계, 활 장착 시 무기 조건 변경.
 - 스매시·셸 브레이크·헤비 스매시·채리엇·트라이 어츠의 대표 수식과 후속타.
@@ -58,9 +58,9 @@
 - `node --check assets/js/data/skills/martial.js`: 통과
 - `node --check assets/js/data/skills/crusher.js`: 통과
 - `node --check assets/js/active-buff-ui.js`: 통과
-- `node tools/audit-stack-source-links.mjs --tree Martial --require-s1`: 22/22 통과
-- `node tools/test-martial-s4-s5.mjs`: 통과
-- `node tools/test-blade-s4-s5.mjs`: 통과
+- `node tools/verification/audit-stack-source-links.mjs --tree Martial --require-s1`: 22/22 통과
+- `node tools/tests/skills/test-martial-regression.mjs`: 통과
+- `node tools/tests/skills/test-blade-regression.mjs`: 통과
 - `git diff --check`: 통과
 
 ## 계산기 범위 밖 항목

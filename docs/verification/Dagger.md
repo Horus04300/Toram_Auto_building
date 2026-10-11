@@ -24,7 +24,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-dagger-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-dagger-regression.mjs`로 다음을 확인했다.
 
 - 단검·Lv.10에서 13개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 스로잉 Lv.10 MP 0, 계수 0.5, 단검 ATK 200 고정 피해

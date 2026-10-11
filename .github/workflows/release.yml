@@ -8,6 +8,10 @@ on:
         description: 'Existing release tag, e.g. v0.6.4'
         required: true
         type: string
+      skip_checks:
+        description: 'Skip web and Rust regression checks for this release'
+        type: boolean
+        default: false
 permissions:
   contents: write
 concurrency:
@@ -50,16 +54,18 @@ jobs:
           rustup component add rustfmt clippy
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: G2 - Web regressions
+        if: ${{ !inputs.skip_checks }}
         env:
           # GitHub's shared Windows runner can need more time than the local
           # performance fixture. The correctness assertions remain unchanged.
-          D4_TIME_LIMIT_MS: '10000'
+          OPTIMIZATION_TIME_LIMIT_MS: '10000'
         run: |
-          npm run verify:r9
+          npm run verify:architecture
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          npm run test:r0
+          npm run test:regression
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: G3 - Rust regressions
+        if: ${{ !inputs.skip_checks }}
         run: |
           npm run desktop:prepare
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }

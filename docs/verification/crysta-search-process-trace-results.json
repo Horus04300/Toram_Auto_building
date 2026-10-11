@@ -1,0 +1,5462 @@
+{
+  "schema": "toram.crysta-search-process-trace.v1",
+  "date": "2026-10-11",
+  "notes": [
+    "Product Native client compiles/prepares the real saved fixture; copied Rust NativeSearchSession advances without a deadline.",
+    "Serial control and trace have identical score, build ID, upper bound and all solver counters. Parallel bounded equivalence is not asserted.",
+    "Counts are executed events, not unique combinations or completion percentages. Lookahead can revisit subspace when compact parents are retained.",
+    "Small-box counter deltas are exclusive to the box only in the serial run. Event samples are powers of two; counters count every event.",
+    "Full fixture runs stop by batch count and remain bounded; the small exact check does not prove the full-fixture optimum."
+  ],
+  "build": {
+    "hashes": {
+      "evaluator.rs": "ca69f8889f08ba6e4a02c6e8e567c1d92aa945cc67e572d084a00f92c2e7069e",
+      "solver.rs": "93b75c79e2de047a2338bee722577c8fde4322d96fc317b12e31f7a3d96c5484",
+      "stats.rs": "8556971cf97651b85f1fe0284e3c2c5f9cf8c451e7fa6a1dc4f9b830821ad6f8",
+      "parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96"
+    },
+    "scriptHash": "eded3aff0eb6bbd4cafce2ab4a8752dbb6eff3ae0cd311336ba59f2c2fb7446c"
+  },
+  "serial": {
+    "date": "2026-10-11",
+    "input": "tools/fixtures/crysta-saved-sword-shield-revenir-unlocked.json",
+    "inputHash": "36181c1358793578a341af8913681805f191f475a5c829c8dcab5538fe8b1124",
+    "rustSourceHashes": {
+      "evaluator.rs": "ca69f8889f08ba6e4a02c6e8e567c1d92aa945cc67e572d084a00f92c2e7069e",
+      "solver.rs": "93b75c79e2de047a2338bee722577c8fde4322d96fc317b12e31f7a3d96c5484",
+      "stats.rs": "8556971cf97651b85f1fe0284e3c2c5f9cf8c451e7fa6a1dc4f9b830821ad6f8",
+      "parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96"
+    },
+    "jsSourceHashes": {
+      "stat-registry.js": "0fbf9545d1e84c0388f913e05102c2b5ef7fe2b9b1d0174b584c89a8c2e37b46",
+      "calculation-policies.js": "57b1112bb120bf940d3e543b02aea1c78905a0335b31b1e3de2040cbe9b17355",
+      "calculator.js": "8fef13916ea0c5c344dbea8f6309d81dab15fd4ecad9471c9cf2eb5faf2af5ac",
+      "build-evaluator.js": "9e5add8cf022d8e2c3ef77d493b8ab0d26a8612f42e29121b9562ae805a39825",
+      "optimization/source-profile.js": "9cfd1ef57de3fae5025404e7f64ba56470a2125c4f341f244df1c62e81e519f2",
+      "optimization/marginal-score.js": "8b017791b8fe2f96ea8229d010c2b66d92e2f827f57ca6566d5be931975f1ccf",
+      "optimization/seed-search.js": "a49c57fcb844929b1da06b91ab2b336a90d065e527118e99e35b16f154d920bd",
+      "optimization/pair-partition.js": "840ad2bdb119426dfd8ea70dc7029ce869f75b6302748f8f6db5c7f2753b7ae0",
+      "optimization/problem-compiler.js": "b8f3e244ad064885ebe12a4a3f332088156cfcd9d78c3fd2d67f1f12d5bcd823",
+      "optimization/exact-solver.js": "b8bacae5eb4a2579c1968c7d96a10d07fd3b4680e938d96ae6ed0ce83a659999",
+      "optimization/native-client.js": "5070dad08cb4fd7ded70c2effa43dc8608651bd0154898953cc4bda8d11b20f2",
+      "data/crysta-data.js": "94f506e288083bc0f547ffe9a97af1f83cf80d9694c890f0317d319ae670ad06"
+    },
+    "policy": {
+      "calculationVersion": "optimization-native-evaluator.v3",
+      "engineVersion": "optimization-native-solver.v16",
+      "splitPolicy": "candidate-tree-2axis-gap-work-smallbox64-lookahead-precheck.v6",
+      "gpuPolicy": "cpu-only.v1"
+    },
+    "threads": 1,
+    "batchSize": 32,
+    "provenance": {
+      "name": "딜검방 샘플",
+      "sha256": "97c8ddb048cb92687bb2a0746071b72006d6f3f1dcc44d859c19a0a5acca3f11",
+      "changes": [
+        "Unlock armor slots; retain only Etowal slot 6 lock",
+        "Apply saved combo Knight:11 main hit through application and combo engine",
+        "Release final Etowal slot 6 lock; retain all stats, requirements, skills and current crystals"
+      ]
+    },
+    "requirements": {
+      "maxHp": 10000,
+      "maxMp": 2000,
+      "amprBeforeDual": 100,
+      "normalAttackCrit": 100,
+      "aspd": 1000
+    },
+    "locks": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "rawGroups": [
+      {
+        "id": "weapon",
+        "packages": 4000
+      },
+      {
+        "id": "armor",
+        "packages": 3319
+      },
+      {
+        "id": "additional",
+        "packages": 3914
+      },
+      {
+        "id": "special",
+        "packages": 3740
+      }
+    ],
+    "preparedGroups": [
+      {
+        "id": "weapon",
+        "packages": 1701
+      },
+      {
+        "id": "armor",
+        "packages": 1330
+      },
+      {
+        "id": "additional",
+        "packages": 1648
+      },
+      {
+        "id": "special",
+        "packages": 1572
+      }
+    ],
+    "stoppingRule": "complete proof or fixed batch count; no deadline",
+    "sampleRule": "event occurrences 1, 2, 4, 8, ...; aggregate counters count every event",
+    "checks": {
+      "controlResultParity": true,
+      "serialCountersEqual": true,
+      "eventAccounting": true,
+      "finalJsEvaluation": true
+    },
+    "batchLimit": 10000,
+    "counts": {
+      "childBoundEvaluation": 2067821,
+      "childBoundRejected": 653343,
+      "childCreated": 2067828,
+      "childJointRejected": 7,
+      "childSurvived": 1237893,
+      "childUtilityRejected": 176585,
+      "incumbentImproved": 5,
+      "jointProbe": 517694,
+      "jointRejected": 639,
+      "leafBelowBest": 25,
+      "leafEvaluation": 406,
+      "leafRejected": 376,
+      "leafTieOrAbove": 5,
+      "lookahead": 196278,
+      "partialUtilityProbe": 0,
+      "partialUtilityRejected": 0,
+      "popBoundRejected": 0,
+      "seedEvaluation": 1526,
+      "seedFeasible": 573,
+      "seedImproved": 17,
+      "seedRejected": 953,
+      "smallBox": 8,
+      "smallBoxOutcome": 8,
+      "split": 516957,
+      "utilityLookahead": 1401,
+      "visited": 517604
+    },
+    "peakReady": 719651,
+    "samples": [
+      {
+        "details": {
+          "evaluation": 1,
+          "id": "weapon:멘티+왕자 메기스콘VIII||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 932682.9
+        },
+        "event": "seedImproved",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "evaluation": 107,
+          "id": "weapon:그레이트 키지무+왕자 메기스콘VIII||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 936299.8200000001
+        },
+        "event": "seedImproved",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "evaluation": 196,
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:뱅글돔+비모즈||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 1136032.1400000001
+        },
+        "event": "seedImproved",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "evaluation": 224,
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:푸이에트+호뢰파섬||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 1261721.6400000001
+        },
+        "event": "seedImproved",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "evaluation": 768,
+          "id": "weapon:폭주 마정의 짐승+후빗||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+          "score": 1811033.46
+        },
+        "event": "seedImproved",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r0",
+            "r",
+            "r0",
+            "r"
+          ],
+          "sizes": [
+            850,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 28,
+            "AGIP": 6,
+            "AMPR": 110,
+            "AMPRP": 15,
+            "ASPD": 4200,
+            "ASPD_P": 70,
+            "ATK": 110,
+            "ATKP": 48,
+            "CDMG": 74,
+            "CDMGP": 7,
+            "CRIT": 154,
+            "CRITP": 230,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 41700,
+            "MAXHPP": 206,
+            "MAXMP": 4200,
+            "PHYS_PIERCE": 54,
+            "SRW": 85,
+            "STABILITY": 47,
+            "STR": 28,
+            "STRP": 15,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 3438954.48
+        },
+        "event": "childSurvived",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r1",
+            "r",
+            "r0",
+            "r"
+          ],
+          "sizes": [
+            851,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 27,
+            "AGIP": 10,
+            "AMPR": 106,
+            "AMPRP": 15,
+            "ASPD": 4000,
+            "ASPD_P": 97,
+            "ATK": 110,
+            "ATKP": 70,
+            "CDMG": 78,
+            "CDMGP": 7,
+            "CRIT": 134,
+            "CRITP": 220,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 41400,
+            "MAXHPP": 206,
+            "MAXMP": 3900,
+            "PHYS_PIERCE": 64,
+            "SRW": 80,
+            "STABILITY": 47,
+            "STR": 27,
+            "STRP": 25,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 4023177.84
+        },
+        "event": "childSurvived",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r1",
+            "r",
+            "r1",
+            "r"
+          ],
+          "sizes": [
+            851,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 26,
+            "AGIP": 10,
+            "AMPR": 105,
+            "AMPRP": 15,
+            "ASPD": 3350,
+            "ASPD_P": 197,
+            "ATK": 110,
+            "ATKP": 91,
+            "CDMG": 81,
+            "CDMGP": 7,
+            "CRIT": 135,
+            "CRITP": 195,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 38400,
+            "MAXHPP": 200,
+            "MAXMP": 3750,
+            "PHYS_PIERCE": 78,
+            "SRW": 81,
+            "STABILITY": 47,
+            "STR": 26,
+            "STRP": 28,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 4605508.08
+        },
+        "event": "childSurvived",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4605508.08,
+          "paths": [
+            "r1",
+            "r1",
+            "r1",
+            "r1"
+          ],
+          "sizes": [
+            851,
+            665,
+            824,
+            786
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 10,
+            "AMPR": 88,
+            "AMPRP": 15,
+            "ASPD": 3000,
+            "ASPD_P": 197,
+            "ATK": 100,
+            "ATKP": 91,
+            "CDMG": 81,
+            "CDMGP": 7,
+            "CRIT": 131,
+            "CRITP": 165,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 32400,
+            "MAXHPP": 189,
+            "MAXMP": 3550,
+            "PHYS_PIERCE": 78,
+            "SRW": 79,
+            "STABILITY": 40,
+            "STR": 24,
+            "STRP": 28,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 4524613.92
+        },
+        "event": "childSurvived",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4023177.84,
+          "paths": [
+            "r1",
+            "r1",
+            "r0",
+            "r1"
+          ],
+          "sizes": [
+            851,
+            665,
+            824,
+            786
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 10,
+            "AMPR": 89,
+            "AMPRP": 15,
+            "ASPD": 3650,
+            "ASPD_P": 97,
+            "ATK": 100,
+            "ATKP": 70,
+            "CDMG": 78,
+            "CDMGP": 7,
+            "CRIT": 130,
+            "CRITP": 190,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 35400,
+            "MAXHPP": 195,
+            "MAXMP": 3700,
+            "PHYS_PIERCE": 64,
+            "SRW": 78,
+            "STABILITY": 40,
+            "STR": 25,
+            "STRP": 25,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 3940178.4
+        },
+        "event": "childSurvived",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4004628.12,
+          "paths": [
+            "r0",
+            "r1",
+            "r11",
+            "r11"
+          ],
+          "sizes": [
+            850,
+            665,
+            412,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 6,
+            "AMPR": 92,
+            "AMPRP": 15,
+            "ASPD": 2900,
+            "ASPD_P": 170,
+            "ATK": 100,
+            "ATKP": 71,
+            "CDMG": 77,
+            "CDMGP": 5,
+            "CRIT": 140,
+            "CRITP": 175,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 32700,
+            "MAXHPP": 189,
+            "MAXMP": 3800,
+            "PHYS_PIERCE": 68,
+            "SRW": 70,
+            "STABILITY": 34,
+            "STR": 25,
+            "STRP": 18,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 3659108.22
+        },
+        "event": "childSurvived",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3339920.64,
+          "paths": [
+            "r11",
+            "r1",
+            "r0",
+            "r01"
+          ],
+          "sizes": [
+            426,
+            665,
+            824,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 7,
+            "AMPR": 105,
+            "AMPRP": 15,
+            "ASPD": 4000,
+            "ASPD_P": 67,
+            "ATK": 100,
+            "ATKP": 49,
+            "CDMG": 62,
+            "CDMGP": 5,
+            "CRIT": 119,
+            "CRITP": 190,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 37400,
+            "MAXHPP": 165,
+            "MAXMP": 3200,
+            "PHYS_PIERCE": 53,
+            "SRW": 69,
+            "STABILITY": 36,
+            "STR": 26,
+            "STRP": 22,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 3167376.42
+        },
+        "event": "childSurvived",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3421566.54,
+          "paths": [
+            "r10",
+            "r10",
+            "r11",
+            "r00"
+          ],
+          "sizes": [
+            425,
+            332,
+            412,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 3,
+            "AMPR": 87,
+            "AMPRP": 15,
+            "ASPD": 3000,
+            "ASPD_P": 130,
+            "ATK": 110,
+            "ATKP": 41,
+            "CDMG": 60,
+            "CDMGP": 5,
+            "CRIT": 130,
+            "CRITP": 184,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 33400,
+            "MAXHPP": 169,
+            "MAXMP": 3200,
+            "PHYS_PIERCE": 73,
+            "SRW": 53,
+            "STABILITY": 32,
+            "STR": 19,
+            "STRP": 20,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 7
+          },
+          "upper": 2695284.72
+        },
+        "event": "childSurvived",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3420371.1,
+          "paths": [
+            "r110",
+            "r10",
+            "r110",
+            "r10"
+          ],
+          "sizes": [
+            213,
+            332,
+            206,
+            393
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 10,
+            "AMPR": 80,
+            "AMPRP": 10,
+            "ASPD": 2800,
+            "ASPD_P": 130,
+            "ATK": 100,
+            "ATKP": 49,
+            "CDMG": 59,
+            "CDMGP": 7,
+            "CRIT": 125,
+            "CRITP": 165,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 13,
+            "MAXHP": 31400,
+            "MAXHPP": 144,
+            "MAXMP": 2850,
+            "PHYS_PIERCE": 29,
+            "SRW": 59,
+            "STABILITY": 25,
+            "STR": 24,
+            "STRP": 28,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 2796356.52
+        },
+        "event": "childSurvived",
+        "occurrence": 256
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3363029.7600000002,
+          "paths": [
+            "r1010",
+            "r111",
+            "r1110",
+            "r101"
+          ],
+          "sizes": [
+            106,
+            167,
+            103,
+            197
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 6,
+            "AMPR": 76,
+            "AMPRP": 15,
+            "ASPD": 2550,
+            "ASPD_P": 140,
+            "ATK": 100,
+            "ATKP": 58,
+            "CDMG": 53,
+            "CDMGP": 5,
+            "CRIT": 121,
+            "CRITP": 115,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 31400,
+            "MAXHPP": 164,
+            "MAXMP": 1950,
+            "PHYS_PIERCE": 37,
+            "SRW": 58,
+            "STABILITY": 25,
+            "STR": 19,
+            "STRP": 19,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 2880541.2
+        },
+        "event": "childSurvived",
+        "occurrence": 512
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3133620.54,
+          "paths": [
+            "r100",
+            "r111",
+            "r1110",
+            "r1100"
+          ],
+          "sizes": [
+            212,
+            167,
+            103,
+            98
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 3,
+            "AMPR": 72,
+            "AMPRP": 15,
+            "ASPD": 2550,
+            "ASPD_P": 150,
+            "ATK": 100,
+            "ATKP": 65,
+            "CDMG": 64,
+            "CDMGP": 5,
+            "CRIT": 120,
+            "CRITP": 119,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 32400,
+            "MAXHPP": 169,
+            "MAXMP": 2700,
+            "PHYS_PIERCE": 19,
+            "SRW": 35,
+            "STABILITY": 34,
+            "STR": 14,
+            "STRP": 22,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 7
+          },
+          "upper": 2462620.68
+        },
+        "event": "childSurvived",
+        "occurrence": 1024
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3014329.5,
+          "paths": [
+            "r11111",
+            "r111110",
+            "r10111",
+            "r101110"
+          ],
+          "sizes": [
+            54,
+            21,
+            52,
+            25
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 4,
+            "AMPR": 32,
+            "AMPRP": 5,
+            "ASPD": 200,
+            "ASPD_P": 60,
+            "ATKP": 52,
+            "CDMG": 32,
+            "CRIT": 60,
+            "CRITP": 115,
+            "DEX": 1,
+            "DEXP": 14,
+            "INT": 1,
+            "INTP": 9,
+            "MAXHP": 11700,
+            "MAXHPP": 90,
+            "MAXMP": 1500,
+            "PHYS_PIERCE": 38,
+            "SRW": 64,
+            "STABILITY": 24,
+            "STR": 13,
+            "STRP": 16,
+            "VITP": 15,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 2564088.24
+        },
+        "event": "childSurvived",
+        "occurrence": 2048
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2902921.02,
+          "paths": [
+            "r111000",
+            "r111110",
+            "r1111110",
+            "r1011111"
+          ],
+          "sizes": [
+            26,
+            21,
+            13,
+            13
+          ],
+          "stats": {
+            "AGIP": 7,
+            "AMPR": 40,
+            "ASPD": 150,
+            "ASPD_P": 50,
+            "ATKP": 61,
+            "CDMG": 31,
+            "CDMGP": 2,
+            "CRIT": 49,
+            "CRITP": 70,
+            "DEXP": 5,
+            "INTP": 4,
+            "MAXHP": 13500,
+            "MAXHPP": 69,
+            "MAXMP": 900,
+            "PHYS_PIERCE": 26,
+            "SRW": 45,
+            "STABILITY": 24,
+            "STR": 12,
+            "STRP": 16,
+            "VITP": 6,
+            "WATK": 10,
+            "WATKP": 21
+          },
+          "upper": 2338543.8
+        },
+        "event": "childSurvived",
+        "occurrence": 4096
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2799579.72,
+          "paths": [
+            "r11101",
+            "r1111110",
+            "r111011",
+            "r111110"
+          ],
+          "sizes": [
+            53,
+            10,
+            26,
+            25
+          ],
+          "stats": {
+            "AGIP": 7,
+            "AMPR": 43,
+            "ASPD": 1150,
+            "ASPD_P": 127,
+            "ATKP": 81,
+            "CDMG": 46,
+            "CDMGP": 2,
+            "CRIT": 70,
+            "CRITP": 75,
+            "DEXP": 23,
+            "INTP": 8,
+            "MAXHP": 12000,
+            "MAXHPP": 59,
+            "MAXMP": 1600,
+            "PHYS_PIERCE": 31,
+            "SRW": 40,
+            "STABILITY": 16,
+            "STR": 12,
+            "STRP": 14,
+            "VITP": 4,
+            "WATKP": 14
+          },
+          "upper": 2648971.62
+        },
+        "event": "childSurvived",
+        "occurrence": 8192
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2702237.04,
+          "paths": [
+            "r110",
+            "r01110",
+            "r111111",
+            "r1101"
+          ],
+          "sizes": [
+            213,
+            42,
+            26,
+            98
+          ],
+          "stats": {
+            "AGI": 18,
+            "AGIP": 7,
+            "AMPR": 62,
+            "ASPD": 1600,
+            "ASPD_P": 70,
+            "ATK": 100,
+            "ATKP": 50,
+            "CDMG": 36,
+            "CDMGP": 5,
+            "CRIT": 94,
+            "CRITP": 100,
+            "DEX": 3,
+            "DEXP": 19,
+            "INT": 3,
+            "INTP": 4,
+            "MAXHP": 8400,
+            "MAXHPP": 129,
+            "MAXMP": 2700,
+            "PHYS_PIERCE": 36,
+            "SRW": 47,
+            "STABILITY": 30,
+            "STR": 13,
+            "STRP": 22,
+            "VITP": 15,
+            "WATK": 30,
+            "WATKP": 14
+          },
+          "upper": 2441483.22
+        },
+        "event": "childSurvived",
+        "occurrence": 16384
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2603796.84,
+          "paths": [
+            "r111101",
+            "r1111100",
+            "r111011",
+            "r1011111"
+          ],
+          "sizes": [
+            27,
+            10,
+            26,
+            13
+          ],
+          "stats": {
+            "AGIP": 10,
+            "AMPR": 40,
+            "ASPD": 1050,
+            "ASPD_P": 130,
+            "ATKP": 71,
+            "CDMG": 36,
+            "CDMGP": 2,
+            "CRIT": 54,
+            "CRITP": 70,
+            "DEXP": 14,
+            "INTP": 8,
+            "MAXHP": 12200,
+            "MAXHPP": 64,
+            "MAXMP": 700,
+            "PHYS_PIERCE": 29,
+            "SRW": 33,
+            "STABILITY": 23,
+            "STR": 6,
+            "STRP": 17,
+            "WATKP": 21
+          },
+          "upper": 2333125.56
+        },
+        "event": "childSurvived",
+        "occurrence": 32768
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2509292.82,
+          "paths": [
+            "r11101",
+            "r111110",
+            "r10110",
+            "r111010"
+          ],
+          "sizes": [
+            53,
+            21,
+            51,
+            24
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 7,
+            "AMPR": 47,
+            "ASPD": 1000,
+            "ASPD_P": 97,
+            "ATKP": 65,
+            "CDMG": 33,
+            "CDMGP": 2,
+            "CRIT": 69,
+            "CRITP": 85,
+            "DEX": 1,
+            "DEXP": 28,
+            "INT": 1,
+            "INTP": 8,
+            "MAXHP": 14200,
+            "MAXHPP": 45,
+            "MAXMP": 1450,
+            "PHYS_PIERCE": 6,
+            "SRW": 46,
+            "STABILITY": 24,
+            "STR": 18,
+            "STRP": 20,
+            "VITP": 15,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 2419940.82
+        },
+        "event": "childSurvived",
+        "occurrence": 65536
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2417627.46,
+          "paths": [
+            "r101101",
+            "r111101",
+            "r011",
+            "r1110111"
+          ],
+          "sizes": [
+            27,
+            21,
+            206,
+            13
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 3,
+            "AMPR": 47,
+            "AMPRP": 15,
+            "ASPD": 1300,
+            "ASPD_P": 40,
+            "ATKP": 33,
+            "CDMG": 46,
+            "CDMGP": 2,
+            "CRIT": 62,
+            "CRITP": 95,
+            "DEX": 1,
+            "DEXP": 24,
+            "INT": 1,
+            "INTP": 14,
+            "MAXHP": 28300,
+            "MAXHPP": 100,
+            "MAXMP": 2000,
+            "PHYS_PIERCE": 35,
+            "SRW": 52,
+            "STABILITY": 22,
+            "STR": 12,
+            "STRP": 14,
+            "VITP": 12,
+            "WATK": 10
+          },
+          "upper": 2169314.58
+        },
+        "event": "childSurvived",
+        "occurrence": 131072
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2327791.98,
+          "paths": [
+            "r11101",
+            "r11111011",
+            "r00111",
+            "r11111010"
+          ],
+          "sizes": [
+            53,
+            6,
+            52,
+            6
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 7,
+            "AMPR": 62,
+            "ASPD": 1300,
+            "ASPD_P": 27,
+            "ATKP": 52,
+            "CDMG": 27,
+            "CRIT": 55,
+            "CRITP": 72,
+            "DEX": 1,
+            "DEXP": 18,
+            "INT": 1,
+            "INTP": 8,
+            "MAXHP": 16200,
+            "MAXHPP": 45,
+            "MAXMP": 600,
+            "PHYS_PIERCE": 16,
+            "SRW": 42,
+            "STABILITY": 17,
+            "STR": 13,
+            "STRP": 17,
+            "VITP": 12,
+            "WATK": 10
+          },
+          "upper": 2094924.96
+        },
+        "event": "childSurvived",
+        "occurrence": 262144
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 1,
+          "parentUpper": 1883656.44,
+          "paths": [
+            "r1101110",
+            "r10010",
+            "r110111",
+            "r11111010"
+          ],
+          "sizes": [
+            13,
+            41,
+            26,
+            6
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 3,
+            "AMPR": 51,
+            "ASPD": 1350,
+            "ASPD_P": 107,
+            "ATKP": 46,
+            "CDMG": 26,
+            "CRIT": 46,
+            "CRITP": 75,
+            "DEX": 1,
+            "DEXP": 14,
+            "INT": 1,
+            "INTP": 7,
+            "MAXHP": 12700,
+            "MAXHPP": 75,
+            "MAXMP": 1550,
+            "PHYS_PIERCE": 11,
+            "SRW": 32,
+            "STABILITY": 13,
+            "STR": 13,
+            "STRP": 17,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 1856229.66
+        },
+        "event": "childSurvived",
+        "occurrence": 524288
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2184485.04
+        },
+        "event": "smallBox",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9523
+        },
+        "event": "leafRejected",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:시카노카미+저편의 잔영",
+          "utilityIndex": 3,
+          "value": 90
+        },
+        "event": "leafRejected",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+호뢰파섬||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 89
+        },
+        "event": "leafRejected",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "id": "weapon:데스타레스+도이||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9904
+        },
+        "event": "leafRejected",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9523
+        },
+        "event": "leafRejected",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:지브릴3+카나요간||special:시카노카미+저편의 잔영",
+          "previous": 1821006,
+          "score": 1830685.8
+        },
+        "event": "incumbentImproved",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:데스타레스+죠코||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9404
+        },
+        "event": "leafRejected",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "belowBest": 10,
+          "best": 1830685.8,
+          "evaluated": 56,
+          "improvements": 1,
+          "paths": [
+            "r11101011",
+            "r1111111011",
+            "r1111111111",
+            "r1011111110"
+          ],
+          "rejected": 45,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2184485.04
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "best": 1830685.8,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2183585.4
+        },
+        "event": "smallBox",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 89
+        },
+        "event": "leafRejected",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "belowBest": 4,
+          "best": 1830685.8,
+          "evaluated": 56,
+          "improvements": 0,
+          "paths": [
+            "r11101011",
+            "r1111111011",
+            "r1111111110",
+            "r1011111110"
+          ],
+          "rejected": 52,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2183585.4
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:광폭 짐승화 리그시+스토문||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 85
+        },
+        "event": "leafRejected",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "best": 1830685.8,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2169250.32
+        },
+        "event": "smallBox",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+저편의 잔영",
+          "previous": 1830685.8,
+          "score": 1839531.24
+        },
+        "event": "incumbentImproved",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "belowBest": 0,
+          "best": 1839672,
+          "evaluated": 56,
+          "improvements": 2,
+          "paths": [
+            "r11101111",
+            "r1111111011",
+            "r1111111110",
+            "r1011111110"
+          ],
+          "rejected": 54,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2169250.32
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1839672,
+          "depth": 0,
+          "parentUpper": 2155645.56,
+          "paths": [
+            "r11100110",
+            "r1011111",
+            "r11001",
+            "r11011101"
+          ],
+          "sizes": [
+            7,
+            11,
+            52,
+            6
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 7,
+            "AMPR": 34,
+            "AMPRP": 10,
+            "ASPD": 1150,
+            "ASPD_P": 10,
+            "ATKP": 51,
+            "CDMG": 38,
+            "CDMGP": 2,
+            "CRIT": 60,
+            "CRITP": 80,
+            "DEX": 1,
+            "DEXP": 14,
+            "INT": 1,
+            "INTP": 6,
+            "MAXHP": 17500,
+            "MAXHPP": 79,
+            "MAXMP": 1450,
+            "PHYS_PIERCE": 18,
+            "SRW": 30,
+            "STABILITY": 22,
+            "STR": 7,
+            "STRP": 17,
+            "VITP": 8,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 1955904.06
+        },
+        "event": "childSurvived",
+        "occurrence": 1048576
+      },
+      {
+        "details": {
+          "id": "weapon:광폭 짐승화 리그시+칼레리프||armor:푸이에트+피누굴가||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+          "utilityIndex": 1,
+          "value": 1875
+        },
+        "event": "leafRejected",
+        "occurrence": 256
+      },
+      {
+        "details": {
+          "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+          "previous": 1839672,
+          "score": 1851284.7
+        },
+        "event": "incumbentImproved",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1851405.06,
+          "depth": 0,
+          "sizes": [
+            7,
+            3,
+            1,
+            2
+          ],
+          "upper": 2136449.16
+        },
+        "event": "smallBox",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "belowBest": 2,
+          "best": 1851405.06,
+          "evaluated": 42,
+          "improvements": 0,
+          "paths": [
+            "r11101011",
+            "r111111101",
+            "r11111110111",
+            "r1011111110"
+          ],
+          "rejected": 40,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            3,
+            1,
+            2
+          ],
+          "upper": 2136449.16
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 8
+      }
+    ],
+    "batches": [
+      {
+        "batch": 0,
+        "counts": {
+          "childBoundEvaluation": 0,
+          "childBoundRejected": 0,
+          "childCreated": 0,
+          "childJointRejected": 0,
+          "childSurvived": 0,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 0,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 0,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 0,
+          "utilityLookahead": 0,
+          "visited": 0
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r",
+              "r",
+              "r",
+              "r"
+            ],
+            "sizes": [
+              1701,
+              1330,
+              1648,
+              1572
+            ],
+            "upper": 4787082.36
+          }
+        ],
+        "ready": 1,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 1528,
+          "exact": false,
+          "prunedByBound": 0,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 4787082.36,
+          "visitedNodes": 0
+        }
+      },
+      {
+        "batch": 1,
+        "counts": {
+          "childBoundEvaluation": 4,
+          "childBoundRejected": 0,
+          "childCreated": 4,
+          "childJointRejected": 0,
+          "childSurvived": 4,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 1,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 0,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 1,
+          "utilityLookahead": 0,
+          "visited": 1
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1",
+              "r",
+              "r1",
+              "r"
+            ],
+            "sizes": [
+              851,
+              1330,
+              824,
+              1572
+            ],
+            "upper": 4605508.08
+          }
+        ],
+        "ready": 4,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 1532,
+          "exact": false,
+          "prunedByBound": 0,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 4605508.08,
+          "visitedNodes": 1
+        }
+      },
+      {
+        "batch": 10,
+        "counts": {
+          "childBoundEvaluation": 980,
+          "childBoundRejected": 1,
+          "childCreated": 980,
+          "childJointRejected": 0,
+          "childSurvived": 979,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 245,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 0,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 245,
+          "utilityLookahead": 0,
+          "visited": 245
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1110",
+              "r11111",
+              "r111111",
+              "r10111"
+            ],
+            "sizes": [
+              106,
+              42,
+              26,
+              50
+            ],
+            "upper": 3267627.12
+          }
+        ],
+        "ready": 735,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 2508,
+          "exact": false,
+          "prunedByBound": 1,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 3267627.12,
+          "visitedNodes": 245
+        }
+      },
+      {
+        "batch": 100,
+        "counts": {
+          "childBoundEvaluation": 12500,
+          "childBoundRejected": 1,
+          "childCreated": 12500,
+          "childJointRejected": 0,
+          "childSurvived": 12484,
+          "childUtilityRejected": 15,
+          "incumbentImproved": 0,
+          "jointProbe": 3126,
+          "jointRejected": 1,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 1,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 3125,
+          "utilityLookahead": 0,
+          "visited": 3126
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1111",
+              "r1010",
+              "r1111",
+              "r1001"
+            ],
+            "sizes": [
+              107,
+              83,
+              103,
+              98
+            ],
+            "upper": 2738734.68
+          }
+        ],
+        "ready": 9359,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 14028,
+          "exact": false,
+          "prunedByBound": 1,
+          "prunedByConstraint": 16,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 2738734.68,
+          "visitedNodes": 3126
+        }
+      },
+      {
+        "batch": 1000,
+        "counts": {
+          "childBoundEvaluation": 131480,
+          "childBoundRejected": 2983,
+          "childCreated": 131480,
+          "childJointRejected": 0,
+          "childSurvived": 126194,
+          "childUtilityRejected": 2303,
+          "incumbentImproved": 0,
+          "jointProbe": 32922,
+          "jointRejected": 45,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 968,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 32870,
+          "utilityLookahead": 22,
+          "visited": 32915
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r111001",
+              "r111010",
+              "r1111111",
+              "r11100"
+            ],
+            "sizes": [
+              27,
+              21,
+              13,
+              49
+            ],
+            "upper": 2422534.68
+          }
+        ],
+        "ready": 93256,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 133008,
+          "exact": false,
+          "prunedByBound": 2983,
+          "prunedByConstraint": 2348,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 2422534.68,
+          "visitedNodes": 32915
+        }
+      },
+      {
+        "batch": 3000,
+        "counts": {
+          "childBoundEvaluation": 434640,
+          "childBoundRejected": 40824,
+          "childCreated": 434640,
+          "childJointRejected": 0,
+          "childSurvived": 376926,
+          "childUtilityRejected": 16890,
+          "incumbentImproved": 0,
+          "jointProbe": 108846,
+          "jointRejected": 162,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 12734,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 108660,
+          "utilityLookahead": 163,
+          "visited": 108822
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r110010",
+              "r1111110",
+              "r11011",
+              "r10111111"
+            ],
+            "sizes": [
+              26,
+              10,
+              52,
+              7
+            ],
+            "upper": 2281411.56
+          }
+        ],
+        "ready": 267934,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 436168,
+          "exact": false,
+          "prunedByBound": 40824,
+          "prunedByConstraint": 17052,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 2281411.56,
+          "visitedNodes": 108822
+        }
+      },
+      {
+        "batch": 5000,
+        "counts": {
+          "childBoundEvaluation": 799392,
+          "childBoundRejected": 128503,
+          "childCreated": 799392,
+          "childJointRejected": 0,
+          "childSurvived": 625891,
+          "childUtilityRejected": 44998,
+          "incumbentImproved": 0,
+          "jointProbe": 200186,
+          "jointRejected": 313,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 39803,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 199848,
+          "utilityLookahead": 433,
+          "visited": 200161
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11101",
+              "r111101",
+              "r11011",
+              "r000001"
+            ],
+            "sizes": [
+              53,
+              21,
+              52,
+              25
+            ],
+            "upper": 2218243.98
+          }
+        ],
+        "ready": 425395,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 800920,
+          "exact": false,
+          "prunedByBound": 128503,
+          "prunedByConstraint": 45311,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 2218243.98,
+          "visitedNodes": 200161
+        }
+      },
+      {
+        "batch": 6609,
+        "counts": {
+          "childBoundEvaluation": 1140109,
+          "childBoundRejected": 237889,
+          "childCreated": 1140116,
+          "childJointRejected": 7,
+          "childSurvived": 825491,
+          "childUtilityRejected": 76729,
+          "incumbentImproved": 1,
+          "jointProbe": 285546,
+          "jointRejected": 432,
+          "leafBelowBest": 10,
+          "leafEvaluation": 56,
+          "leafRejected": 45,
+          "leafTieOrAbove": 1,
+          "lookahead": 73359,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 1,
+          "smallBoxOutcome": 1,
+          "split": 285029,
+          "utilityLookahead": 690,
+          "visited": 285462
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r110",
+              "r001",
+              "r1110",
+              "r1111"
+            ],
+            "sizes": [
+              213,
+              166,
+              103,
+              99
+            ],
+            "upper": 2184452.4
+          }
+        ],
+        "ready": 539574,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:지브릴3+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+도이",
+              "armor:푸이에트+호뢰파섬",
+              "additional:지브릴3+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 24,
+              "ANTICIPATE": 13,
+              "ASPD": -250,
+              "ATKP": 56,
+              "CRIT": 59,
+              "CRITP": 25,
+              "DEFP": -33,
+              "LRW": 16,
+              "MATKP": 3,
+              "MAXHP": 6200,
+              "MAXHPP": -12,
+              "MAXMP": -300,
+              "MOTIONSPEED": 2,
+              "MP_REGEN": 6,
+              "MP_REGENP": 12,
+              "PHYS_PIERCE": 15,
+              "PHYS_RES": -20,
+              "SRW": 37,
+              "STRP": 10
+            }
+          },
+          "enumeratedCompletions": 56,
+          "evaluations": 1141693,
+          "exact": false,
+          "prunedByBound": 237889,
+          "prunedByConstraint": 77168,
+          "score": 1830685.8,
+          "status": "bounded",
+          "upperBound": 2184452.4,
+          "visitedNodes": 285462
+        }
+      },
+      {
+        "batch": 7000,
+        "counts": {
+          "childBoundEvaluation": 1233945,
+          "childBoundRejected": 273971,
+          "childCreated": 1233952,
+          "childJointRejected": 7,
+          "childSurvived": 873860,
+          "childUtilityRejected": 86114,
+          "incumbentImproved": 1,
+          "jointProbe": 309032,
+          "jointRejected": 457,
+          "leafBelowBest": 21,
+          "leafEvaluation": 168,
+          "leafRejected": 146,
+          "leafTieOrAbove": 1,
+          "lookahead": 84246,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 3,
+          "smallBoxOutcome": 3,
+          "split": 308488,
+          "utilityLookahead": 777,
+          "visited": 308948
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11101",
+              "r11111011",
+              "r1001",
+              "r1011000"
+            ],
+            "sizes": [
+              53,
+              6,
+              103,
+              12
+            ],
+            "upper": 2177598
+          }
+        ],
+        "ready": 564418,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:지브릴3+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+도이",
+              "armor:푸이에트+호뢰파섬",
+              "additional:지브릴3+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 24,
+              "ANTICIPATE": 13,
+              "ASPD": -250,
+              "ATKP": 56,
+              "CRIT": 59,
+              "CRITP": 25,
+              "DEFP": -33,
+              "LRW": 16,
+              "MATKP": 3,
+              "MAXHP": 6200,
+              "MAXHPP": -12,
+              "MAXMP": -300,
+              "MOTIONSPEED": 2,
+              "MP_REGEN": 6,
+              "MP_REGENP": 12,
+              "PHYS_PIERCE": 15,
+              "PHYS_RES": -20,
+              "SRW": 37,
+              "STRP": 10
+            }
+          },
+          "enumeratedCompletions": 168,
+          "evaluations": 1235641,
+          "exact": false,
+          "prunedByBound": 273971,
+          "prunedByConstraint": 86578,
+          "score": 1830685.8,
+          "status": "bounded",
+          "upperBound": 2177598,
+          "visitedNodes": 308948
+        }
+      },
+      {
+        "batch": 7511,
+        "counts": {
+          "childBoundEvaluation": 1361333,
+          "childBoundRejected": 324917,
+          "childCreated": 1361340,
+          "childJointRejected": 7,
+          "childSurvived": 937086,
+          "childUtilityRejected": 99330,
+          "incumbentImproved": 3,
+          "jointProbe": 340921,
+          "jointRejected": 498,
+          "leafBelowBest": 21,
+          "leafEvaluation": 224,
+          "leafRejected": 200,
+          "leafTieOrAbove": 3,
+          "lookahead": 99660,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 4,
+          "smallBoxOutcome": 4,
+          "split": 340335,
+          "utilityLookahead": 900,
+          "visited": 340837
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11100110",
+              "r1111011",
+              "r111011",
+              "r1111011"
+            ],
+            "sizes": [
+              7,
+              11,
+              26,
+              13
+            ],
+            "upper": 2169244.2
+          }
+        ],
+        "ready": 595719,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:저편의 잔영+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:바쿠잔+죠코",
+              "armor:푸이에트+호뢰파섬",
+              "additional:저편의 잔영+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 7,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -500,
+              "ASPD_P": 7,
+              "ATKP": 42,
+              "CRIT": 34,
+              "CRITP": 15,
+              "DEXP": 9,
+              "LRW": 5,
+              "MATKP": 3,
+              "MAXHP": 5700,
+              "MAXMP": -200,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 50,
+              "STRP": 2
+            }
+          },
+          "enumeratedCompletions": 224,
+          "evaluations": 1363085,
+          "exact": false,
+          "prunedByBound": 324917,
+          "prunedByConstraint": 99835,
+          "score": 1839672,
+          "status": "bounded",
+          "upperBound": 2169244.2,
+          "visitedNodes": 340837
+        }
+      },
+      {
+        "batch": 9693,
+        "counts": {
+          "childBoundEvaluation": 1972709,
+          "childBoundRejected": 605226,
+          "childCreated": 1972716,
+          "childJointRejected": 7,
+          "childSurvived": 1201719,
+          "childUtilityRejected": 165764,
+          "incumbentImproved": 4,
+          "jointProbe": 493891,
+          "jointRejected": 616,
+          "leafBelowBest": 23,
+          "leafEvaluation": 308,
+          "leafRejected": 281,
+          "leafTieOrAbove": 4,
+          "lookahead": 182381,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 6,
+          "smallBoxOutcome": 6,
+          "split": 493179,
+          "utilityLookahead": 1319,
+          "visited": 493801
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r111110",
+              "r111100",
+              "r101110",
+              "r110110"
+            ],
+            "sizes": [
+              27,
+              21,
+              26,
+              24
+            ],
+            "upper": 2139146.04
+          }
+        ],
+        "ready": 707304,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:바쿠잔+죠코",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 7,
+              "AGGRO": -15,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ASPD_P": 7,
+              "ATKP": 52,
+              "CRIT": 34,
+              "CRITP": 15,
+              "DEXP": 9,
+              "LRW": 5,
+              "MATKP": 3,
+              "MAXHP": 5700,
+              "MAXHPP": 24,
+              "MAXMP": -200,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 25,
+              "PHYS_RES": -20,
+              "SRW": 40,
+              "STRP": 2
+            }
+          },
+          "enumeratedCompletions": 308,
+          "evaluations": 1974545,
+          "exact": false,
+          "prunedByBound": 605226,
+          "prunedByConstraint": 166387,
+          "score": 1851284.7,
+          "status": "bounded",
+          "upperBound": 2139146.04,
+          "visitedNodes": 493801
+        }
+      },
+      {
+        "batch": 9708,
+        "counts": {
+          "childBoundEvaluation": 1977521,
+          "childBoundRejected": 607648,
+          "childCreated": 1977528,
+          "childJointRejected": 7,
+          "childSurvived": 1203560,
+          "childUtilityRejected": 166313,
+          "incumbentImproved": 5,
+          "jointProbe": 495099,
+          "jointRejected": 620,
+          "leafBelowBest": 23,
+          "leafEvaluation": 364,
+          "leafRejected": 336,
+          "leafTieOrAbove": 5,
+          "lookahead": 183106,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 7,
+          "smallBoxOutcome": 7,
+          "split": 494382,
+          "utilityLookahead": 1322,
+          "visited": 495009
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r111001",
+              "r10100",
+              "r1111111",
+              "r101110"
+            ],
+            "sizes": [
+              27,
+              41,
+              13,
+              25
+            ],
+            "upper": 2138964.48
+          }
+        ],
+        "ready": 707937,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGGRO": -65,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ATKP": 53,
+              "CRIT": 43,
+              "CRITP": 15,
+              "INTP": 4,
+              "LRW": -1,
+              "MATKP": 15,
+              "MAXHP": 6200,
+              "MAXHPP": 24,
+              "MAXMP": 0,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 35,
+              "PHYS_RES": -20,
+              "SRW": 36,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 364,
+          "evaluations": 1979413,
+          "exact": false,
+          "prunedByBound": 607648,
+          "prunedByConstraint": 166940,
+          "score": 1851405.06,
+          "status": "bounded",
+          "upperBound": 2138964.48,
+          "visitedNodes": 495009
+        }
+      },
+      {
+        "batch": 10000,
+        "counts": {
+          "childBoundEvaluation": 2067821,
+          "childBoundRejected": 653343,
+          "childCreated": 2067828,
+          "childJointRejected": 7,
+          "childSurvived": 1237893,
+          "childUtilityRejected": 176585,
+          "incumbentImproved": 5,
+          "jointProbe": 517694,
+          "jointRejected": 639,
+          "leafBelowBest": 25,
+          "leafEvaluation": 406,
+          "leafRejected": 376,
+          "leafTieOrAbove": 5,
+          "lookahead": 196278,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 8,
+          "smallBoxOutcome": 8,
+          "split": 516957,
+          "utilityLookahead": 1401,
+          "visited": 517604
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11101",
+              "r00101",
+              "r1011111",
+              "r1111110"
+            ],
+            "sizes": [
+              53,
+              42,
+              13,
+              12
+            ],
+            "upper": 2135461.8
+          }
+        ],
+        "ready": 719651,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGGRO": -65,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ATKP": 53,
+              "CRIT": 43,
+              "CRITP": 15,
+              "INTP": 4,
+              "LRW": -1,
+              "MATKP": 15,
+              "MAXHP": 6200,
+              "MAXHPP": 24,
+              "MAXMP": 0,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 35,
+              "PHYS_RES": -20,
+              "SRW": 36,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 406,
+          "evaluations": 2069755,
+          "exact": false,
+          "prunedByBound": 653343,
+          "prunedByConstraint": 177231,
+          "score": 1851405.06,
+          "status": "bounded",
+          "upperBound": 2135461.8,
+          "visitedNodes": 517604
+        }
+      }
+    ],
+    "totalBatches": 10000
+  },
+  "parallel": {
+    "date": "2026-10-11",
+    "input": "tools/fixtures/crysta-saved-sword-shield-revenir-unlocked.json",
+    "inputHash": "36181c1358793578a341af8913681805f191f475a5c829c8dcab5538fe8b1124",
+    "rustSourceHashes": {
+      "evaluator.rs": "ca69f8889f08ba6e4a02c6e8e567c1d92aa945cc67e572d084a00f92c2e7069e",
+      "solver.rs": "93b75c79e2de047a2338bee722577c8fde4322d96fc317b12e31f7a3d96c5484",
+      "stats.rs": "8556971cf97651b85f1fe0284e3c2c5f9cf8c451e7fa6a1dc4f9b830821ad6f8",
+      "parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96"
+    },
+    "jsSourceHashes": {
+      "stat-registry.js": "0fbf9545d1e84c0388f913e05102c2b5ef7fe2b9b1d0174b584c89a8c2e37b46",
+      "calculation-policies.js": "57b1112bb120bf940d3e543b02aea1c78905a0335b31b1e3de2040cbe9b17355",
+      "calculator.js": "8fef13916ea0c5c344dbea8f6309d81dab15fd4ecad9471c9cf2eb5faf2af5ac",
+      "build-evaluator.js": "9e5add8cf022d8e2c3ef77d493b8ab0d26a8612f42e29121b9562ae805a39825",
+      "optimization/source-profile.js": "9cfd1ef57de3fae5025404e7f64ba56470a2125c4f341f244df1c62e81e519f2",
+      "optimization/marginal-score.js": "8b017791b8fe2f96ea8229d010c2b66d92e2f827f57ca6566d5be931975f1ccf",
+      "optimization/seed-search.js": "a49c57fcb844929b1da06b91ab2b336a90d065e527118e99e35b16f154d920bd",
+      "optimization/pair-partition.js": "840ad2bdb119426dfd8ea70dc7029ce869f75b6302748f8f6db5c7f2753b7ae0",
+      "optimization/problem-compiler.js": "b8f3e244ad064885ebe12a4a3f332088156cfcd9d78c3fd2d67f1f12d5bcd823",
+      "optimization/exact-solver.js": "b8bacae5eb4a2579c1968c7d96a10d07fd3b4680e938d96ae6ed0ce83a659999",
+      "optimization/native-client.js": "5070dad08cb4fd7ded70c2effa43dc8608651bd0154898953cc4bda8d11b20f2",
+      "data/crysta-data.js": "94f506e288083bc0f547ffe9a97af1f83cf80d9694c890f0317d319ae670ad06"
+    },
+    "policy": {
+      "calculationVersion": "optimization-native-evaluator.v3",
+      "engineVersion": "optimization-native-solver.v16",
+      "splitPolicy": "candidate-tree-2axis-gap-work-smallbox64-lookahead-precheck.v6",
+      "gpuPolicy": "cpu-only.v1"
+    },
+    "threads": 8,
+    "batchSize": 256,
+    "provenance": {
+      "name": "딜검방 샘플",
+      "sha256": "97c8ddb048cb92687bb2a0746071b72006d6f3f1dcc44d859c19a0a5acca3f11",
+      "changes": [
+        "Unlock armor slots; retain only Etowal slot 6 lock",
+        "Apply saved combo Knight:11 main hit through application and combo engine",
+        "Release final Etowal slot 6 lock; retain all stats, requirements, skills and current crystals"
+      ]
+    },
+    "requirements": {
+      "maxHp": 10000,
+      "maxMp": 2000,
+      "amprBeforeDual": 100,
+      "normalAttackCrit": 100,
+      "aspd": 1000
+    },
+    "locks": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ],
+    "rawGroups": [
+      {
+        "id": "weapon",
+        "packages": 4000
+      },
+      {
+        "id": "armor",
+        "packages": 3319
+      },
+      {
+        "id": "additional",
+        "packages": 3914
+      },
+      {
+        "id": "special",
+        "packages": 3740
+      }
+    ],
+    "preparedGroups": [
+      {
+        "id": "weapon",
+        "packages": 1701
+      },
+      {
+        "id": "armor",
+        "packages": 1330
+      },
+      {
+        "id": "additional",
+        "packages": 1648
+      },
+      {
+        "id": "special",
+        "packages": 1572
+      }
+    ],
+    "stoppingRule": "complete proof or fixed batch count; no deadline",
+    "sampleRule": "event occurrences 1, 2, 4, 8, ...; aggregate counters count every event",
+    "checks": {
+      "controlResultParity": false,
+      "serialCountersEqual": false,
+      "eventAccounting": true,
+      "finalJsEvaluation": true
+    },
+    "batchLimit": 1250,
+    "counts": {
+      "childBoundEvaluation": 2059285,
+      "childBoundRejected": 649126,
+      "childCreated": 2059320,
+      "childJointRejected": 35,
+      "childSurvived": 1234659,
+      "childUtilityRejected": 175500,
+      "incumbentImproved": 5,
+      "jointProbe": 515714,
+      "jointRejected": 635,
+      "leafBelowBest": 25,
+      "leafEvaluation": 406,
+      "leafRejected": 376,
+      "leafTieOrAbove": 5,
+      "lookahead": 195052,
+      "partialUtilityProbe": 0,
+      "partialUtilityRejected": 0,
+      "popBoundRejected": 0,
+      "seedEvaluation": 1526,
+      "seedFeasible": 573,
+      "seedImproved": 17,
+      "seedRejected": 953,
+      "smallBox": 8,
+      "smallBoxOutcome": 8,
+      "split": 514830,
+      "utilityLookahead": 1387,
+      "visited": 515473
+    },
+    "peakReady": 718479,
+    "samples": [
+      {
+        "details": {
+          "evaluation": 1,
+          "id": "weapon:멘티+왕자 메기스콘VIII||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 932682.9
+        },
+        "event": "seedImproved",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "evaluation": 107,
+          "id": "weapon:그레이트 키지무+왕자 메기스콘VIII||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 936299.8200000001
+        },
+        "event": "seedImproved",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "evaluation": 196,
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:뱅글돔+비모즈||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 1136032.1400000001
+        },
+        "event": "seedImproved",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "evaluation": 224,
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:푸이에트+호뢰파섬||additional:고르도+아말곤||special:브리타+에투왈",
+          "score": 1261721.6400000001
+        },
+        "event": "seedImproved",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "evaluation": 768,
+          "id": "weapon:폭주 마정의 짐승+후빗||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+          "score": 1811033.46
+        },
+        "event": "seedImproved",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r0",
+            "r",
+            "r0",
+            "r"
+          ],
+          "sizes": [
+            850,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 28,
+            "AGIP": 6,
+            "AMPR": 110,
+            "AMPRP": 15,
+            "ASPD": 4200,
+            "ASPD_P": 70,
+            "ATK": 110,
+            "ATKP": 48,
+            "CDMG": 74,
+            "CDMGP": 7,
+            "CRIT": 154,
+            "CRITP": 230,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 41700,
+            "MAXHPP": 206,
+            "MAXMP": 4200,
+            "PHYS_PIERCE": 54,
+            "SRW": 85,
+            "STABILITY": 47,
+            "STR": 28,
+            "STRP": 15,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 3438954.48
+        },
+        "event": "childSurvived",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r1",
+            "r",
+            "r0",
+            "r"
+          ],
+          "sizes": [
+            851,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 27,
+            "AGIP": 10,
+            "AMPR": 106,
+            "AMPRP": 15,
+            "ASPD": 4000,
+            "ASPD_P": 97,
+            "ATK": 110,
+            "ATKP": 70,
+            "CDMG": 78,
+            "CDMGP": 7,
+            "CRIT": 134,
+            "CRITP": 220,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 41400,
+            "MAXHPP": 206,
+            "MAXMP": 3900,
+            "PHYS_PIERCE": 64,
+            "SRW": 80,
+            "STABILITY": 47,
+            "STR": 27,
+            "STRP": 25,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 4023177.84
+        },
+        "event": "childSurvived",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4787082.36,
+          "paths": [
+            "r1",
+            "r",
+            "r1",
+            "r"
+          ],
+          "sizes": [
+            851,
+            1330,
+            824,
+            1572
+          ],
+          "stats": {
+            "AGI": 26,
+            "AGIP": 10,
+            "AMPR": 105,
+            "AMPRP": 15,
+            "ASPD": 3350,
+            "ASPD_P": 197,
+            "ATK": 110,
+            "ATKP": 91,
+            "CDMG": 81,
+            "CDMGP": 7,
+            "CRIT": 135,
+            "CRITP": 195,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 38400,
+            "MAXHPP": 200,
+            "MAXMP": 3750,
+            "PHYS_PIERCE": 78,
+            "SRW": 81,
+            "STABILITY": 47,
+            "STR": 26,
+            "STRP": 28,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 4605508.08
+        },
+        "event": "childSurvived",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4605508.08,
+          "paths": [
+            "r1",
+            "r1",
+            "r1",
+            "r1"
+          ],
+          "sizes": [
+            851,
+            665,
+            824,
+            786
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 10,
+            "AMPR": 88,
+            "AMPRP": 15,
+            "ASPD": 3000,
+            "ASPD_P": 197,
+            "ATK": 100,
+            "ATKP": 91,
+            "CDMG": 81,
+            "CDMGP": 7,
+            "CRIT": 131,
+            "CRITP": 165,
+            "DEX": 4,
+            "DEXP": 33,
+            "INT": 4,
+            "INTP": 18,
+            "MAXHP": 32400,
+            "MAXHPP": 189,
+            "MAXMP": 3550,
+            "PHYS_PIERCE": 78,
+            "SRW": 79,
+            "STABILITY": 40,
+            "STR": 24,
+            "STRP": 28,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 4524613.92
+        },
+        "event": "childSurvived",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 4076201.52,
+          "paths": [
+            "r0",
+            "r1",
+            "r1",
+            "r0"
+          ],
+          "sizes": [
+            850,
+            665,
+            824,
+            786
+          ],
+          "stats": {
+            "AGI": 26,
+            "AGIP": 3,
+            "AMPR": 108,
+            "AMPRP": 15,
+            "ASPD": 3550,
+            "ASPD_P": 140,
+            "ATK": 110,
+            "ATKP": 50,
+            "CDMG": 67,
+            "CDMGP": 5,
+            "CRIT": 155,
+            "CRITP": 200,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 35700,
+            "MAXHPP": 184,
+            "MAXMP": 3550,
+            "PHYS_PIERCE": 64,
+            "SRW": 81,
+            "STABILITY": 41,
+            "STR": 26,
+            "STRP": 15,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 3402635.34
+        },
+        "event": "childSurvived",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3951090.36,
+          "paths": [
+            "r10",
+            "r1",
+            "r10",
+            "r0"
+          ],
+          "sizes": [
+            425,
+            665,
+            412,
+            786
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 3,
+            "AMPR": 94,
+            "AMPRP": 15,
+            "ASPD": 3350,
+            "ASPD_P": 80,
+            "ATK": 110,
+            "ATKP": 40,
+            "CDMG": 67,
+            "CDMGP": 5,
+            "CRIT": 135,
+            "CRITP": 184,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 35400,
+            "MAXHPP": 160,
+            "MAXMP": 3250,
+            "PHYS_PIERCE": 59,
+            "SRW": 75,
+            "STABILITY": 41,
+            "STR": 25,
+            "STRP": 20,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 3103161.3000000003
+        },
+        "event": "childSurvived",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2915094.72,
+          "paths": [
+            "r0",
+            "r01",
+            "r0",
+            "r10"
+          ],
+          "sizes": [
+            850,
+            333,
+            824,
+            393
+          ],
+          "stats": {
+            "AGI": 26,
+            "AGIP": 6,
+            "AMPR": 89,
+            "AMPRP": 15,
+            "ASPD": 3700,
+            "ASPD_P": 10,
+            "ATK": 100,
+            "ATKP": 7,
+            "CDMG": 61,
+            "CDMGP": 7,
+            "CRIT": 128,
+            "CRITP": 200,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 38700,
+            "MAXHPP": 190,
+            "MAXMP": 3650,
+            "PHYS_PIERCE": 51,
+            "SRW": 83,
+            "STABILITY": 42,
+            "STR": 27,
+            "STRP": 15,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 2518359.6
+        },
+        "event": "childSurvived",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 3421566.54,
+          "paths": [
+            "r10",
+            "r10",
+            "r11",
+            "r00"
+          ],
+          "sizes": [
+            425,
+            332,
+            412,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 3,
+            "AMPR": 87,
+            "AMPRP": 15,
+            "ASPD": 3000,
+            "ASPD_P": 130,
+            "ATK": 110,
+            "ATKP": 41,
+            "CDMG": 60,
+            "CDMGP": 5,
+            "CRIT": 130,
+            "CRITP": 184,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 33400,
+            "MAXHPP": 169,
+            "MAXMP": 3200,
+            "PHYS_PIERCE": 73,
+            "SRW": 53,
+            "STABILITY": 32,
+            "STR": 19,
+            "STRP": 20,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 7
+          },
+          "upper": 2695284.72
+        },
+        "event": "childSurvived",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2702129.94,
+          "paths": [
+            "r10",
+            "r01",
+            "r00",
+            "r10"
+          ],
+          "sizes": [
+            425,
+            333,
+            412,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 6,
+            "AMPR": 77,
+            "AMPRP": 15,
+            "ASPD": 3500,
+            "ASPD_P": 30,
+            "ATK": 100,
+            "ATKP": 14,
+            "CDMG": 66,
+            "CDMGP": 7,
+            "CRIT": 108,
+            "CRITP": 154,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 38400,
+            "MAXHPP": 190,
+            "MAXMP": 3350,
+            "PHYS_PIERCE": 56,
+            "SRW": 62,
+            "STABILITY": 42,
+            "STR": 20,
+            "STRP": 20,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 25
+          },
+          "upper": 2411937.9
+        },
+        "event": "childSurvived",
+        "occurrence": 256
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2989152.84,
+          "paths": [
+            "r101",
+            "r11",
+            "r110",
+            "r00"
+          ],
+          "sizes": [
+            213,
+            333,
+            206,
+            393
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 3,
+            "AMPR": 87,
+            "AMPRP": 15,
+            "ASPD": 2850,
+            "ASPD_P": 160,
+            "ATK": 110,
+            "ATKP": 53,
+            "CDMG": 63,
+            "CDMGP": 5,
+            "CRIT": 134,
+            "CRITP": 165,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 14,
+            "MAXHP": 32400,
+            "MAXHPP": 179,
+            "MAXMP": 2900,
+            "PHYS_PIERCE": 48,
+            "SRW": 48,
+            "STABILITY": 27,
+            "STR": 19,
+            "STRP": 16,
+            "VITP": 17,
+            "WATK": 40,
+            "WATKP": 7
+          },
+          "upper": 2656677.72
+        },
+        "event": "childSurvived",
+        "occurrence": 512
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2272463.1,
+          "paths": [
+            "r01",
+            "r101",
+            "r00",
+            "r100"
+          ],
+          "sizes": [
+            425,
+            166,
+            412,
+            196
+          ],
+          "stats": {
+            "AGI": 25,
+            "AGIP": 6,
+            "AMPR": 89,
+            "AMPRP": 15,
+            "ASPD": 3700,
+            "ASPD_P": 10,
+            "ATK": 100,
+            "ATKP": 14,
+            "CDMG": 48,
+            "CDMGP": 7,
+            "CRIT": 138,
+            "CRITP": 150,
+            "DEX": 4,
+            "DEXP": 19,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 34900,
+            "MAXHPP": 150,
+            "MAXMP": 3450,
+            "PHYS_PIERCE": 44,
+            "SRW": 40,
+            "STABILITY": 35,
+            "STR": 15,
+            "STRP": 15,
+            "VITP": 13,
+            "WATK": 40,
+            "WATKP": 21
+          },
+          "upper": 1921882.98
+        },
+        "event": "childSurvived",
+        "occurrence": 1024
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2641805.1,
+          "paths": [
+            "r010",
+            "r110",
+            "r110",
+            "r010"
+          ],
+          "sizes": [
+            212,
+            166,
+            206,
+            196
+          ],
+          "stats": {
+            "AGI": 24,
+            "AGIP": 3,
+            "AMPR": 79,
+            "AMPRP": 15,
+            "ASPD": 2750,
+            "ASPD_P": 130,
+            "ATK": 100,
+            "ATKP": 43,
+            "CDMG": 60,
+            "CDMGP": 5,
+            "CRIT": 110,
+            "CRITP": 140,
+            "DEX": 4,
+            "DEXP": 24,
+            "INT": 4,
+            "INTP": 9,
+            "MAXHP": 25400,
+            "MAXHPP": 159,
+            "MAXMP": 3000,
+            "PHYS_PIERCE": 36,
+            "SRW": 18,
+            "STABILITY": 30,
+            "STR": 20,
+            "STRP": 9,
+            "VITP": 7,
+            "WATK": 40,
+            "WATKP": 7
+          },
+          "upper": 1903721.8800000001
+        },
+        "event": "childSurvived",
+        "occurrence": 2048
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2844130.2600000002,
+          "paths": [
+            "r1111",
+            "r1010",
+            "r011",
+            "r11111"
+          ],
+          "sizes": [
+            107,
+            83,
+            206,
+            50
+          ],
+          "stats": {
+            "AGI": 12,
+            "AGIP": 10,
+            "AMPR": 69,
+            "AMPRP": 15,
+            "ASPD": 1450,
+            "ASPD_P": 60,
+            "ATKP": 53,
+            "CDMG": 40,
+            "CDMGP": 2,
+            "CRIT": 81,
+            "CRITP": 155,
+            "DEX": 2,
+            "DEXP": 19,
+            "INT": 2,
+            "INTP": 18,
+            "MAXHP": 27300,
+            "MAXHPP": 130,
+            "MAXMP": 3000,
+            "PHYS_PIERCE": 39,
+            "SRW": 57,
+            "STABILITY": 23,
+            "STR": 24,
+            "STRP": 21,
+            "VITP": 12,
+            "WATK": 20,
+            "WATKP": 21
+          },
+          "upper": 2661208.56
+        },
+        "event": "childSurvived",
+        "occurrence": 4096
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2822346.12,
+          "paths": [
+            "r1110",
+            "r1110",
+            "r11101",
+            "r10110"
+          ],
+          "sizes": [
+            106,
+            83,
+            52,
+            49
+          ],
+          "stats": {
+            "AGI": 12,
+            "AGIP": 10,
+            "AMPR": 76,
+            "AMPRP": 10,
+            "ASPD": 2550,
+            "ASPD_P": 147,
+            "ATK": 100,
+            "ATKP": 72,
+            "CDMG": 45,
+            "CDMGP": 5,
+            "CRIT": 101,
+            "CRITP": 120,
+            "DEX": 2,
+            "DEXP": 28,
+            "INT": 2,
+            "INTP": 14,
+            "MAXHP": 23900,
+            "MAXHPP": 130,
+            "MAXMP": 1750,
+            "PHYS_PIERCE": 29,
+            "SRW": 35,
+            "STABILITY": 24,
+            "STR": 19,
+            "STRP": 20,
+            "VITP": 6,
+            "WATK": 30,
+            "WATKP": 21
+          },
+          "upper": 2605228.92
+        },
+        "event": "childSurvived",
+        "occurrence": 8192
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2708278.5,
+          "paths": [
+            "r11100",
+            "r111111",
+            "r10111",
+            "r111010"
+          ],
+          "sizes": [
+            53,
+            21,
+            52,
+            24
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 4,
+            "AMPR": 33,
+            "AMPRP": 10,
+            "ASPD": 450,
+            "ASPD_P": 70,
+            "ATKP": 66,
+            "CDMG": 29,
+            "CDMGP": 2,
+            "CRIT": 112,
+            "CRITP": 120,
+            "DEX": 1,
+            "DEXP": 24,
+            "INT": 1,
+            "INTP": 10,
+            "MAXHP": 12900,
+            "MAXHPP": 100,
+            "MAXMP": 1750,
+            "PHYS_PIERCE": 14,
+            "SRW": 56,
+            "STABILITY": 18,
+            "STR": 18,
+            "STRP": 10,
+            "VITP": 9,
+            "WATK": 20
+          },
+          "upper": 2515062.96
+        },
+        "event": "childSurvived",
+        "occurrence": 16384
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2605687.92,
+          "paths": [
+            "r11111",
+            "r111001",
+            "r011",
+            "r110110"
+          ],
+          "sizes": [
+            54,
+            21,
+            206,
+            24
+          ],
+          "stats": {
+            "AGI": 7,
+            "AGIP": 7,
+            "AMPR": 61,
+            "AMPRP": 5,
+            "ASPD": 2300,
+            "ASPD_P": 40,
+            "ATK": 100,
+            "ATKP": 51,
+            "CDMG": 30,
+            "CDMGP": 5,
+            "CRIT": 74,
+            "CRITP": 135,
+            "DEX": 2,
+            "DEXP": 14,
+            "INT": 2,
+            "INTP": 12,
+            "MAXHP": 22500,
+            "MAXHPP": 135,
+            "MAXMP": 2200,
+            "PHYS_PIERCE": 35,
+            "SRW": 40,
+            "STABILITY": 15,
+            "STR": 7,
+            "STRP": 13,
+            "VITP": 11,
+            "WATK": 10
+          },
+          "upper": 2170537.56
+        },
+        "event": "childSurvived",
+        "occurrence": 32768
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2510182.2600000002,
+          "paths": [
+            "r1111101",
+            "r1111101",
+            "r101110",
+            "r111000"
+          ],
+          "sizes": [
+            14,
+            11,
+            26,
+            24
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 4,
+            "AMPR": 18,
+            "ASPD": 500,
+            "ASPD_P": 60,
+            "ATKP": 54,
+            "CDMG": 24,
+            "CDMGP": 5,
+            "CRIT": 60,
+            "CRITP": 92,
+            "DEX": 1,
+            "DEXP": 14,
+            "INT": 1,
+            "INTP": 4,
+            "MAXHP": 10700,
+            "MAXHPP": 70,
+            "MAXMP": 1300,
+            "PHYS_PIERCE": 25,
+            "SRW": 43,
+            "STABILITY": 23,
+            "STR": 13,
+            "STRP": 16,
+            "VITP": 15,
+            "WATK": 10
+          },
+          "upper": 2185945.68
+        },
+        "event": "childSurvived",
+        "occurrence": 65536
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2417834.52,
+          "paths": [
+            "r1110",
+            "r11011",
+            "r11000",
+            "r110100"
+          ],
+          "sizes": [
+            106,
+            42,
+            51,
+            24
+          ],
+          "stats": {
+            "AGI": 13,
+            "AGIP": 4,
+            "AMPR": 63,
+            "AMPRP": 10,
+            "ASPD": 1850,
+            "ASPD_P": 67,
+            "ATKP": 62,
+            "CDMG": 31,
+            "CDMGP": 5,
+            "CRIT": 97,
+            "CRITP": 125,
+            "DEX": 3,
+            "DEXP": 23,
+            "INT": 3,
+            "INTP": 14,
+            "MAXHP": 24400,
+            "MAXHPP": 110,
+            "MAXMP": 2850,
+            "PHYS_PIERCE": 15,
+            "SRW": 26,
+            "STABILITY": 25,
+            "STR": 14,
+            "STRP": 12,
+            "VITP": 11,
+            "WATK": 30,
+            "WATKP": 7
+          },
+          "upper": 2047967.22
+        },
+        "event": "childSurvived",
+        "occurrence": 131072
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2327920.5,
+          "paths": [
+            "r111001",
+            "r101101",
+            "r11011",
+            "r1101110"
+          ],
+          "sizes": [
+            27,
+            21,
+            52,
+            12
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 7,
+            "AMPR": 47,
+            "AMPRP": 10,
+            "ASPD": 1450,
+            "ASPD_P": 110,
+            "ATKP": 56,
+            "CDMG": 37,
+            "CDMGP": 2,
+            "CRIT": 67,
+            "CRITP": 105,
+            "DEX": 1,
+            "DEXP": 19,
+            "INT": 1,
+            "INTP": 13,
+            "MAXHP": 27100,
+            "MAXHPP": 70,
+            "MAXMP": 2250,
+            "PHYS_PIERCE": 11,
+            "SRW": 45,
+            "STABILITY": 23,
+            "STR": 18,
+            "STRP": 17,
+            "VITP": 6,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 2255238.36
+        },
+        "event": "childSurvived",
+        "occurrence": 262144
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "parentUpper": 2240043.42,
+          "paths": [
+            "r111111",
+            "r1001",
+            "r1111110",
+            "r1110110"
+          ],
+          "sizes": [
+            27,
+            83,
+            13,
+            12
+          ],
+          "stats": {
+            "AGI": 6,
+            "AGIP": 4,
+            "AMPR": 51,
+            "AMPRP": 15,
+            "ASPD": 1400,
+            "ASPD_P": 47,
+            "ATK": 100,
+            "ATKP": 62,
+            "CDMG": 28,
+            "CRIT": 36,
+            "CRITP": 80,
+            "DEX": 1,
+            "DEXP": 9,
+            "INT": 1,
+            "INTP": 11,
+            "MAXHP": 16000,
+            "MAXHPP": 94,
+            "MAXMP": 2450,
+            "PHYS_PIERCE": 43,
+            "SRW": 26,
+            "STABILITY": 17,
+            "STR": 6,
+            "STRP": 17,
+            "WATK": 10,
+            "WATKP": 7
+          },
+          "upper": 2089748.46
+        },
+        "event": "childSurvived",
+        "occurrence": 524288
+      },
+      {
+        "details": {
+          "best": 1821006,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2184485.04
+        },
+        "event": "smallBox",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9523
+        },
+        "event": "leafRejected",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:시카노카미+저편의 잔영",
+          "utilityIndex": 3,
+          "value": 90
+        },
+        "event": "leafRejected",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+멘티||armor:푸이에트+호뢰파섬||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 89
+        },
+        "event": "leafRejected",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "id": "weapon:데스타레스+도이||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9904
+        },
+        "event": "leafRejected",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9523
+        },
+        "event": "leafRejected",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:지브릴3+카나요간||special:시카노카미+저편의 잔영",
+          "previous": 1821006,
+          "score": 1830685.8
+        },
+        "event": "incumbentImproved",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:데스타레스+죠코||armor:푸이에트+피누굴가||additional:카나요간+포비 댄서||special:저편의 잔영+죠코",
+          "utilityIndex": 0,
+          "value": 9404
+        },
+        "event": "leafRejected",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "belowBest": 10,
+          "best": 1830685.8,
+          "evaluated": 56,
+          "improvements": 1,
+          "paths": [
+            "r11101011",
+            "r1111111011",
+            "r1111111111",
+            "r1011111110"
+          ],
+          "rejected": 45,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2184485.04
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "best": 1830685.8,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2183585.4
+        },
+        "event": "smallBox",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 89
+        },
+        "event": "leafRejected",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "belowBest": 4,
+          "best": 1830685.8,
+          "evaluated": 56,
+          "improvements": 0,
+          "paths": [
+            "r11101011",
+            "r1111111011",
+            "r1111111110",
+            "r1011111110"
+          ],
+          "rejected": 52,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2183585.4
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:광폭 짐승화 리그시+스토문||armor:푸이에트+피누굴가||additional:지브릴3+카나요간||special:저편의 잔영+죠코",
+          "utilityIndex": 2,
+          "value": 85
+        },
+        "event": "leafRejected",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "best": 1830685.8,
+          "depth": 0,
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2169250.32
+        },
+        "event": "smallBox",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+저편의 잔영",
+          "previous": 1830685.8,
+          "score": 1839531.24
+        },
+        "event": "incumbentImproved",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "belowBest": 0,
+          "best": 1839672,
+          "evaluated": 56,
+          "improvements": 2,
+          "paths": [
+            "r11101111",
+            "r1111111011",
+            "r1111111110",
+            "r1011111110"
+          ],
+          "rejected": 54,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            2,
+            2,
+            2
+          ],
+          "upper": 2169250.32
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1839672,
+          "depth": 0,
+          "parentUpper": 2155659.84,
+          "paths": [
+            "r11100110",
+            "r11110110",
+            "r1111110",
+            "r1011010"
+          ],
+          "sizes": [
+            7,
+            5,
+            13,
+            12
+          ],
+          "stats": {
+            "AGIP": 4,
+            "AMPR": 44,
+            "ASPD": 400,
+            "ASPD_P": 40,
+            "ATKP": 53,
+            "CDMG": 12,
+            "CDMGP": 2,
+            "CRIT": 44,
+            "CRITP": 25,
+            "DEXP": 19,
+            "MAXHP": 13000,
+            "MAXHPP": 44,
+            "MAXMP": 1000,
+            "PHYS_PIERCE": 15,
+            "SRW": 36,
+            "STABILITY": 22,
+            "STR": 6,
+            "STRP": 17,
+            "VITP": 6
+          },
+          "upper": 1968681.6
+        },
+        "event": "childSurvived",
+        "occurrence": 1048576
+      },
+      {
+        "details": {
+          "id": "weapon:광폭 짐승화 리그시+칼레리프||armor:푸이에트+피누굴가||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+          "utilityIndex": 1,
+          "value": 1875
+        },
+        "event": "leafRejected",
+        "occurrence": 256
+      },
+      {
+        "details": {
+          "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+          "previous": 1839672,
+          "score": 1851284.7
+        },
+        "event": "incumbentImproved",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "best": 1851405.06,
+          "depth": 0,
+          "sizes": [
+            7,
+            3,
+            1,
+            2
+          ],
+          "upper": 2136449.16
+        },
+        "event": "smallBox",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "belowBest": 2,
+          "best": 1851405.06,
+          "evaluated": 42,
+          "improvements": 0,
+          "paths": [
+            "r11101011",
+            "r111111101",
+            "r11111110111",
+            "r1011111110"
+          ],
+          "rejected": 40,
+          "scope": "global counters; exclusive only with one worker",
+          "sizes": [
+            7,
+            3,
+            1,
+            2
+          ],
+          "upper": 2136449.16
+        },
+        "event": "smallBoxOutcome",
+        "occurrence": 8
+      }
+    ],
+    "batches": [
+      {
+        "batch": 0,
+        "counts": {
+          "childBoundEvaluation": 0,
+          "childBoundRejected": 0,
+          "childCreated": 0,
+          "childJointRejected": 0,
+          "childSurvived": 0,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 0,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 0,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 0,
+          "utilityLookahead": 0,
+          "visited": 0
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r",
+              "r",
+              "r",
+              "r"
+            ],
+            "sizes": [
+              1701,
+              1330,
+              1648,
+              1572
+            ],
+            "upper": 4787082.36
+          }
+        ],
+        "ready": 1,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 1528,
+          "exact": false,
+          "prunedByBound": 0,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 4787082.36,
+          "visitedNodes": 0
+        }
+      },
+      {
+        "batch": 1,
+        "counts": {
+          "childBoundEvaluation": 4,
+          "childBoundRejected": 0,
+          "childCreated": 4,
+          "childJointRejected": 0,
+          "childSurvived": 4,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 1,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 0,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 1,
+          "utilityLookahead": 0,
+          "visited": 1
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1",
+              "r",
+              "r1",
+              "r"
+            ],
+            "sizes": [
+              851,
+              1330,
+              824,
+              1572
+            ],
+            "upper": 4605508.08
+          }
+        ],
+        "ready": 4,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 1532,
+          "exact": false,
+          "prunedByBound": 0,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 4605508.08,
+          "visitedNodes": 1
+        }
+      },
+      {
+        "batch": 10,
+        "counts": {
+          "childBoundEvaluation": 6824,
+          "childBoundRejected": 516,
+          "childCreated": 6824,
+          "childJointRejected": 0,
+          "childSurvived": 6308,
+          "childUtilityRejected": 0,
+          "incumbentImproved": 0,
+          "jointProbe": 1706,
+          "jointRejected": 0,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 112,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 1706,
+          "utilityLookahead": 0,
+          "visited": 1706
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1110",
+              "r11111",
+              "r111111",
+              "r10111"
+            ],
+            "sizes": [
+              106,
+              42,
+              26,
+              50
+            ],
+            "upper": 3267627.12
+          }
+        ],
+        "ready": 4603,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 8352,
+          "exact": false,
+          "prunedByBound": 516,
+          "prunedByConstraint": 0,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 3267627.12,
+          "visitedNodes": 1706
+        }
+      },
+      {
+        "batch": 100,
+        "counts": {
+          "childBoundEvaluation": 100976,
+          "childBoundRejected": 2071,
+          "childCreated": 100976,
+          "childJointRejected": 0,
+          "childSurvived": 97463,
+          "childUtilityRejected": 1442,
+          "incumbentImproved": 0,
+          "jointProbe": 25281,
+          "jointRejected": 37,
+          "leafBelowBest": 0,
+          "leafEvaluation": 0,
+          "leafRejected": 0,
+          "leafTieOrAbove": 0,
+          "lookahead": 631,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 0,
+          "smallBoxOutcome": 0,
+          "split": 25244,
+          "utilityLookahead": 16,
+          "visited": 25281
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11101",
+              "r1111001",
+              "r01111",
+              "r111110111"
+            ],
+            "sizes": [
+              53,
+              11,
+              52,
+              4
+            ],
+            "upper": 2457581.88
+          }
+        ],
+        "ready": 72150,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:카나요간+카스틸리아",
+              "special:시카노카미+피누굴가"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 10,
+              "AGGRO": -50,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -1200,
+              "ATKP": 54,
+              "CRIT": 43,
+              "CRITP": 15,
+              "CSPD": -300,
+              "INTP": 4,
+              "LRW": 5,
+              "MATKP": 26,
+              "MAXHP": 6200,
+              "MAXMP": 0,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 38,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 0,
+          "evaluations": 102504,
+          "exact": false,
+          "prunedByBound": 2071,
+          "prunedByConstraint": 1479,
+          "score": 1821006,
+          "status": "bounded",
+          "upperBound": 2457581.88,
+          "visitedNodes": 25281
+        }
+      },
+      {
+        "batch": 830,
+        "counts": {
+          "childBoundEvaluation": 1141131,
+          "childBoundRejected": 238284,
+          "childCreated": 1141132,
+          "childJointRejected": 1,
+          "childSurvived": 825942,
+          "childUtilityRejected": 76905,
+          "incumbentImproved": 1,
+          "jointProbe": 285735,
+          "jointRejected": 430,
+          "leafBelowBest": 10,
+          "leafEvaluation": 56,
+          "leafRejected": 45,
+          "leafTieOrAbove": 1,
+          "lookahead": 73478,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 1,
+          "smallBoxOutcome": 1,
+          "split": 285283,
+          "utilityLookahead": 722,
+          "visited": 285714
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r011110111",
+              "r11111111",
+              "r11110101",
+              "r1111110"
+            ],
+            "sizes": [
+              4,
+              6,
+              7,
+              12
+            ],
+            "upper": 2184561.54
+          }
+        ],
+        "ready": 539710,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:네오 마기 피레시아+도이||armor:푸이에트+호뢰파섬||additional:지브릴3+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:네오 마기 피레시아+도이",
+              "armor:푸이에트+호뢰파섬",
+              "additional:지브릴3+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGIP": 4,
+              "AILMENT_RES": 4,
+              "AMPR": 24,
+              "ANTICIPATE": 13,
+              "ASPD": -250,
+              "ATKP": 56,
+              "CRIT": 59,
+              "CRITP": 25,
+              "DEFP": -33,
+              "LRW": 16,
+              "MATKP": 3,
+              "MAXHP": 6200,
+              "MAXHPP": -12,
+              "MAXMP": -300,
+              "MOTIONSPEED": 2,
+              "MP_REGEN": 6,
+              "MP_REGENP": 12,
+              "PHYS_PIERCE": 15,
+              "PHYS_RES": -20,
+              "SRW": 37,
+              "STRP": 10
+            }
+          },
+          "enumeratedCompletions": 56,
+          "evaluations": 1142715,
+          "exact": false,
+          "prunedByBound": 238284,
+          "prunedByConstraint": 77336,
+          "score": 1830685.8,
+          "status": "bounded",
+          "upperBound": 2184561.54,
+          "visitedNodes": 285714
+        }
+      },
+      {
+        "batch": 943,
+        "counts": {
+          "childBoundEvaluation": 1362943,
+          "childBoundRejected": 325723,
+          "childCreated": 1362944,
+          "childJointRejected": 1,
+          "childSurvived": 937733,
+          "childUtilityRejected": 99487,
+          "incumbentImproved": 3,
+          "jointProbe": 341257,
+          "jointRejected": 496,
+          "leafBelowBest": 21,
+          "leafEvaluation": 224,
+          "leafRejected": 200,
+          "leafTieOrAbove": 3,
+          "lookahead": 99891,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 4,
+          "smallBoxOutcome": 4,
+          "split": 340736,
+          "utilityLookahead": 903,
+          "visited": 341236
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r101011",
+              "r10101",
+              "r1111111",
+              "r0100"
+            ],
+            "sizes": [
+              27,
+              42,
+              13,
+              98
+            ],
+            "upper": 2169282.96
+          }
+        ],
+        "ready": 595904,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:저편의 잔영+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:바쿠잔+죠코",
+              "armor:푸이에트+호뢰파섬",
+              "additional:저편의 잔영+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 7,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -500,
+              "ASPD_P": 7,
+              "ATKP": 42,
+              "CRIT": 34,
+              "CRITP": 15,
+              "DEXP": 9,
+              "LRW": 5,
+              "MATKP": 3,
+              "MAXHP": 5700,
+              "MAXMP": -200,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 50,
+              "STRP": 2
+            }
+          },
+          "enumeratedCompletions": 224,
+          "evaluations": 1364695,
+          "exact": false,
+          "prunedByBound": 325723,
+          "prunedByConstraint": 99984,
+          "score": 1839672,
+          "status": "bounded",
+          "upperBound": 2169282.96,
+          "visitedNodes": 341236
+        }
+      },
+      {
+        "batch": 1000,
+        "counts": {
+          "childBoundEvaluation": 1484483,
+          "childBoundRejected": 378690,
+          "childCreated": 1484484,
+          "childJointRejected": 1,
+          "childSurvived": 993538,
+          "childUtilityRejected": 112255,
+          "incumbentImproved": 3,
+          "jointProbe": 371670,
+          "jointRejected": 524,
+          "leafBelowBest": 21,
+          "leafEvaluation": 224,
+          "leafRejected": 200,
+          "leafTieOrAbove": 3,
+          "lookahead": 115620,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 4,
+          "smallBoxOutcome": 4,
+          "split": 371121,
+          "utilityLookahead": 995,
+          "visited": 371649
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11111001",
+              "r1111100",
+              "r0111",
+              "r1111010"
+            ],
+            "sizes": [
+              7,
+              10,
+              103,
+              12
+            ],
+            "upper": 2162178.66
+          }
+        ],
+        "ready": 621272,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:저편의 잔영+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:바쿠잔+죠코",
+              "armor:푸이에트+호뢰파섬",
+              "additional:저편의 잔영+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 7,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -500,
+              "ASPD_P": 7,
+              "ATKP": 42,
+              "CRIT": 34,
+              "CRITP": 15,
+              "DEXP": 9,
+              "LRW": 5,
+              "MATKP": 3,
+              "MAXHP": 5700,
+              "MAXMP": -200,
+              "MOTIONSPEED": 2,
+              "PHYS_PIERCE": 20,
+              "PHYS_RES": -20,
+              "SRW": 50,
+              "STRP": 2
+            }
+          },
+          "enumeratedCompletions": 224,
+          "evaluations": 1486235,
+          "exact": false,
+          "prunedByBound": 378690,
+          "prunedByConstraint": 112780,
+          "score": 1839672,
+          "status": "bounded",
+          "upperBound": 2162178.66,
+          "visitedNodes": 371649
+        }
+      },
+      {
+        "batch": 1216,
+        "counts": {
+          "childBoundEvaluation": 1975053,
+          "childBoundRejected": 606432,
+          "childCreated": 1975088,
+          "childJointRejected": 35,
+          "childSurvived": 1202616,
+          "childUtilityRejected": 166005,
+          "incumbentImproved": 4,
+          "jointProbe": 494635,
+          "jointRejected": 616,
+          "leafBelowBest": 23,
+          "leafEvaluation": 308,
+          "leafRejected": 281,
+          "leafTieOrAbove": 4,
+          "lookahead": 182745,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 6,
+          "smallBoxOutcome": 6,
+          "split": 493772,
+          "utilityLookahead": 1319,
+          "visited": 494394
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r1110011",
+              "r1111101",
+              "r1001",
+              "r100111"
+            ],
+            "sizes": [
+              14,
+              11,
+              103,
+              25
+            ],
+            "upper": 2139103.2
+          }
+        ],
+        "ready": 707518,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:바쿠잔+죠코||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:바쿠잔+죠코",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "ACCP": 7,
+              "AGGRO": -15,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ASPD_P": 7,
+              "ATKP": 52,
+              "CRIT": 34,
+              "CRITP": 15,
+              "DEXP": 9,
+              "LRW": 5,
+              "MATKP": 3,
+              "MAXHP": 5700,
+              "MAXHPP": 24,
+              "MAXMP": -200,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 25,
+              "PHYS_RES": -20,
+              "SRW": 40,
+              "STRP": 2
+            }
+          },
+          "enumeratedCompletions": 308,
+          "evaluations": 1976889,
+          "exact": false,
+          "prunedByBound": 606432,
+          "prunedByConstraint": 166656,
+          "score": 1851284.7,
+          "status": "bounded",
+          "upperBound": 2139103.2,
+          "visitedNodes": 494394
+        }
+      },
+      {
+        "batch": 1218,
+        "counts": {
+          "childBoundEvaluation": 1979909,
+          "childBoundRejected": 608914,
+          "childCreated": 1979944,
+          "childJointRejected": 35,
+          "childSurvived": 1204509,
+          "childUtilityRejected": 166486,
+          "incumbentImproved": 5,
+          "jointProbe": 495852,
+          "jointRejected": 618,
+          "leafBelowBest": 23,
+          "leafEvaluation": 364,
+          "leafRejected": 336,
+          "leafTieOrAbove": 5,
+          "lookahead": 183445,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 7,
+          "smallBoxOutcome": 7,
+          "split": 494986,
+          "utilityLookahead": 1324,
+          "visited": 495611
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r11101",
+              "r111111001",
+              "r111101000",
+              "r1011010"
+            ],
+            "sizes": [
+              53,
+              3,
+              3,
+              12
+            ],
+            "upper": 2138921.64
+          }
+        ],
+        "ready": 708194,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGGRO": -65,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ATKP": 53,
+              "CRIT": 43,
+              "CRITP": 15,
+              "INTP": 4,
+              "LRW": -1,
+              "MATKP": 15,
+              "MAXHP": 6200,
+              "MAXHPP": 24,
+              "MAXMP": 0,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 35,
+              "PHYS_RES": -20,
+              "SRW": 36,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 364,
+          "evaluations": 1981801,
+          "exact": false,
+          "prunedByBound": 608914,
+          "prunedByConstraint": 167139,
+          "score": 1851405.06,
+          "status": "bounded",
+          "upperBound": 2138921.64,
+          "visitedNodes": 495611
+        }
+      },
+      {
+        "batch": 1250,
+        "counts": {
+          "childBoundEvaluation": 2059285,
+          "childBoundRejected": 649126,
+          "childCreated": 2059320,
+          "childJointRejected": 35,
+          "childSurvived": 1234659,
+          "childUtilityRejected": 175500,
+          "incumbentImproved": 5,
+          "jointProbe": 515714,
+          "jointRejected": 635,
+          "leafBelowBest": 25,
+          "leafEvaluation": 406,
+          "leafRejected": 376,
+          "leafTieOrAbove": 5,
+          "lookahead": 195052,
+          "partialUtilityProbe": 0,
+          "partialUtilityRejected": 0,
+          "popBoundRejected": 0,
+          "seedEvaluation": 1526,
+          "seedFeasible": 573,
+          "seedImproved": 17,
+          "seedRejected": 953,
+          "smallBox": 8,
+          "smallBoxOutcome": 8,
+          "split": 514830,
+          "utilityLookahead": 1387,
+          "visited": 515473
+        },
+        "frontier": [
+          {
+            "paths": [
+              "r0110011",
+              "r1110011",
+              "r0111",
+              "r111111"
+            ],
+            "sizes": [
+              14,
+              11,
+              103,
+              25
+            ],
+            "upper": 2135847.36
+          }
+        ],
+        "ready": 718479,
+        "result": {
+          "bestBuild": {
+            "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+            "packageIds": [
+              "weapon:폭주 마정의 짐승+환주의 변경백",
+              "armor:푸이에트+호뢰파섬",
+              "additional:고블린 주코토+카나요간",
+              "special:시카노카미+저편의 잔영"
+            ],
+            "statDelta": {
+              "ACC": 50,
+              "AGGRO": -65,
+              "AMPR": 20,
+              "ANTICIPATE": 10,
+              "ASPD": -250,
+              "ATKP": 53,
+              "CRIT": 43,
+              "CRITP": 15,
+              "INTP": 4,
+              "LRW": -1,
+              "MATKP": 15,
+              "MAXHP": 6200,
+              "MAXHPP": 24,
+              "MAXMP": 0,
+              "MOTIONSPEED": 3,
+              "PHYS_PIERCE": 35,
+              "PHYS_RES": -20,
+              "SRW": 36,
+              "STRP": 6
+            }
+          },
+          "enumeratedCompletions": 406,
+          "evaluations": 2061219,
+          "exact": false,
+          "prunedByBound": 649126,
+          "prunedByConstraint": 176170,
+          "score": 1851405.06,
+          "status": "bounded",
+          "upperBound": 2135847.36,
+          "visitedNodes": 515473
+        }
+      }
+    ],
+    "totalBatches": 1250
+  },
+  "smallExactCheck": {
+    "pass": true,
+    "packages": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "result": {
+      "bestBuild": {
+        "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:고블린 주코토+카나요간||special:시카노카미+저편의 잔영",
+        "packageIds": [
+          "weapon:폭주 마정의 짐승+환주의 변경백",
+          "armor:푸이에트+호뢰파섬",
+          "additional:고블린 주코토+카나요간",
+          "special:시카노카미+저편의 잔영"
+        ],
+        "statDelta": {
+          "ACC": 50,
+          "AGGRO": -65,
+          "AMPR": 20,
+          "ANTICIPATE": 10,
+          "ASPD": -250,
+          "ATKP": 53,
+          "CRIT": 43,
+          "CRITP": 15,
+          "INTP": 4,
+          "LRW": -1,
+          "MATKP": 15,
+          "MAXHP": 6200,
+          "MAXHPP": 24,
+          "MAXMP": 0,
+          "MOTIONSPEED": 3,
+          "PHYS_PIERCE": 35,
+          "PHYS_RES": -20,
+          "SRW": 36,
+          "STRP": 6
+        }
+      },
+      "enumeratedCompletions": 36,
+      "evaluations": 57,
+      "exact": true,
+      "prunedByBound": 0,
+      "prunedByConstraint": 3,
+      "score": 1851405.06,
+      "status": "exact",
+      "upperBound": 1851405.06,
+      "visitedNodes": 2
+    },
+    "counts": {
+      "childBoundEvaluation": 4,
+      "childBoundRejected": 0,
+      "childCreated": 4,
+      "childJointRejected": 0,
+      "childSurvived": 1,
+      "childUtilityRejected": 3,
+      "incumbentImproved": 0,
+      "jointProbe": 2,
+      "jointRejected": 0,
+      "leafBelowBest": 0,
+      "leafEvaluation": 36,
+      "leafRejected": 35,
+      "leafTieOrAbove": 1,
+      "lookahead": 0,
+      "partialUtilityProbe": 0,
+      "partialUtilityRejected": 0,
+      "popBoundRejected": 0,
+      "seedEvaluation": 15,
+      "seedFeasible": 6,
+      "seedImproved": 1,
+      "seedRejected": 9,
+      "smallBox": 1,
+      "smallBoxOutcome": 1,
+      "split": 1,
+      "utilityLookahead": 0,
+      "visited": 2
+    }
+  },
+  "redundantEvaluationAudit": {
+    "date": "2026-10-11",
+    "threads": 1,
+    "workBatches": 10000,
+    "definition": "Repeated evaluations of the same candidate package ID tuple or same immutable tree-node tuple under the same prepared context and requirements. This is value-reuse potential, not elapsed-time saving.",
+    "totalEvaluations": 2069755,
+    "duplicateBoundEvaluations": 312,
+    "duplicateCandidateEvaluations": 8,
+    "repeatedEvaluations": 320,
+    "repeatedEvaluationPercent": 0.015460767095622429,
+    "discardedUtilityLookahead": 213,
+    "discardedProbeBoundEvaluations": 852,
+    "discardedProbeEvaluationPercent": 0.041164292392094716,
+    "note": "Discarded probes did not eliminate subspace or improve the incumbent. Their repeated later evaluations can overlap the duplicate category; do not add the percentages. Hindsight lack of pruning does not make the probe statically removable.",
+    "checks": {
+      "baselineResultsAndCountersUnchanged": true,
+      "controlTraceCountersEqual": true,
+      "finalJsEvaluation": true
+    },
+    "build": {
+      "hashes": {
+        "evaluator.rs": "ca69f8889f08ba6e4a02c6e8e567c1d92aa945cc67e572d084a00f92c2e7069e",
+        "solver.rs": "93b75c79e2de047a2338bee722577c8fde4322d96fc317b12e31f7a3d96c5484",
+        "stats.rs": "8556971cf97651b85f1fe0284e3c2c5f9cf8c451e7fa6a1dc4f9b830821ad6f8",
+        "parallel_runtime.rs": "c472f82cb317bc4c6a248a572355efb403d1c82ceac0ae0722c39a4d2e0cba96"
+      },
+      "scriptHash": "17da9272baec647c17e96ac5f423b111d1a0c3eaac040426ee4ddb164d4de448"
+    },
+    "samples": [
+      {
+        "details": {
+          "id": "weapon:멘티+왕자 메기스콘VIII||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈"
+        },
+        "event": "duplicateCandidateEvaluation",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:검은 복숭아 닌자+믈윙구 핸드||additional:고르도+아말곤||special:브리타+에투왈"
+        },
+        "event": "duplicateCandidateEvaluation",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "id": "weapon:왕자 메기스콘VIII+폭주 마정의 짐승||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:브리타+에투왈"
+        },
+        "event": "duplicateCandidateEvaluation",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "id": "weapon:폭주 마정의 짐승+환주의 변경백||armor:푸이에트+호뢰파섬||additional:카나요간+카스틸리아||special:시카노카미+피누굴가"
+        },
+        "event": "duplicateCandidateEvaluation",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r1111100",
+            "r1111101",
+            "r1111111",
+            "r1101001"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r1111101",
+            "r1111101",
+            "r1111111",
+            "r1101001"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r1010111",
+            "r1111111",
+            "r1111111",
+            "r0110111"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "nodes": [
+            2310,
+            6039,
+            9331,
+            10706
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 1
+      },
+      {
+        "details": {
+          "nodes": [
+            2310,
+            6039,
+            9331,
+            10717
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 2
+      },
+      {
+        "details": {
+          "nodes": [
+            2310,
+            6039,
+            9342,
+            10717
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 4
+      },
+      {
+        "details": {
+          "nodes": [
+            2310,
+            5998,
+            9342,
+            10717
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r11000",
+            "r101111",
+            "r1111111",
+            "r111110"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 8
+      },
+      {
+        "details": {
+          "nodes": [
+            2553,
+            5354,
+            9342,
+            12424
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r111101",
+            "r11111010",
+            "r111111111",
+            "r1011010"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 16
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r111110",
+            "r110101",
+            "r1111111",
+            "r0110111"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "nodes": [
+            3070,
+            5998,
+            9279,
+            10717
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 32
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r111101",
+            "r1111110",
+            "r1111100",
+            "r11010101"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "nodes": [
+            3374,
+            5603,
+            9342,
+            10705
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 64
+      },
+      {
+        "details": {
+          "evaluations": 4,
+          "paths": [
+            "r1111110",
+            "r1111011",
+            "r1011110",
+            "r1101101"
+          ],
+          "scope": "exclusive only with one worker"
+        },
+        "event": "discardedUtilityLookahead",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "nodes": [
+            3070,
+            6020,
+            6371,
+            12449
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 128
+      },
+      {
+        "details": {
+          "nodes": [
+            2605,
+            5966,
+            9348,
+            11706
+          ]
+        },
+        "event": "duplicateBoundEvaluation",
+        "occurrence": 256
+      }
+    ]
+  }
+}

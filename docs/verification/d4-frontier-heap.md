@@ -14,9 +14,9 @@
 
 - 기존 `numeric_path_order_matches_lexical_heap_order`에 표준 BinaryHeap과 전용 힙의 혼합 삽입/삭제·일괄 추가·peek·빈 큐·재삽입 비교를 추가했다. 크기 0~65의 불균등 트리와 동점·중복·±0·무한대·기존 NaN total order를 포함한다.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: **156개 통과**. 기존 1~64작업자 동점/exact, 체크포인트 복원, 취소/deadline 재삽입, 작업자 실패 시 frontier 보존 검사를 포함한다.
-- `npm run test:r0`: **70/70 통과**. JS oracle·상한·JS/Rust parity 1938개·잠금·세션 연결 등을 포함한다. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 **SKIP**이다.
-- `npm run verify:r9`, `node tools/audit-stack-source-links.mjs --require-s1`: 통과, S1 **427/427**.
-- `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`, `node --check tools/benchmark-d4-frontier-heap.mjs`, `npm run ai:audit`, `git diff --check`: 통과.
+- `npm run test:regression`: **70/70 통과**. JS oracle·상한·JS/Rust parity 1938개·잠금·세션 연결 등을 포함한다. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 **SKIP**이다.
+- `npm run verify:architecture`, `node tools/verification/audit-stack-source-links.mjs --require-s1`: 통과, S1 **427/427**.
+- `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`, `node --check tools/benchmarks/benchmark-crysta-frontier-heap.mjs`, `npm run ai:audit`, `git diff --check`: 통과.
 - 실제 UI E2E·설치·배포는 실행하지 않았다. 모든 입력의 10초 exact를 주장하지 않는다.
 
 ## 성능 측정 방법
@@ -32,7 +32,7 @@
 준비 입력은 `audit-d4-performance-regressions.mjs prepare`, 루브닐은 `benchmark-d4-native-p6.mjs`의 `D4_P6_REVENIR=1` export로 만든다. 변경 전후 소스 각각에서 `profile-d4-slow-inputs.mjs build`로 만든 control.exe를 위 before/after 이름으로 보존한 뒤 실행한다.
 
 ```powershell
-node tools/benchmark-d4-frontier-heap.mjs
+node tools/benchmarks/benchmark-crysta-frontier-heap.mjs
 ```
 
 기본값은 루브닐·듀얼·기본·HP40000·마법 입력 각 3회다. `D4_HEAP_FIXTURES`, `D4_HEAP_REPEATS`, `D4_HEAP_REPORT`로 별도 검증 입력·반복·출력 파일을 지정할 수 있다. 각 그룹 16개 샘플의 `*-oracle.json`은 JS 완전 탐색 점수/ID도 함께 검사한다.

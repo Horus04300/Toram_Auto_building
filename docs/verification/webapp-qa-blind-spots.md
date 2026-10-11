@@ -126,15 +126,15 @@
 
 ## 5. 검증 명령
 
-- `node tools/test-qa-edge-cases.mjs`
-- `node tools/test-active-buff-context.mjs`
-- `node tools/test-magic-blade-s5.mjs`
-- `node tools/test-knight-s5.mjs`
-- `node tools/test-combo-ui-loading.mjs`
-- `node tools/test-active-buff-ui.mjs`
-- `node tools/test-proc-damage-results.mjs`
+- `node tools/tests/application/test-qa-edge-cases.mjs`
+- `node tools/tests/application/test-active-buff-context.mjs`
+- `node tools/tests/skills/test-magic-blade-regression.mjs`
+- `node tools/tests/skills/test-knight-regression.mjs`
+- `node tools/tests/application/test-combo-ui-loading.mjs`
+- `node tools/tests/application/test-active-buff-ui.mjs`
+- `node tools/tests/application/test-proc-damage-results.mjs`
 - 전체 `tools/test-*.mjs` 회귀
-- `node tools/audit-stack-source-links.mjs --require-s1`
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`
 
 브라우저 클릭 QA는 Codex Windows 브라우저 보조기의 초기화 오류와 별개로 다시 수행해야 한다. 자동 테스트 통과는 UI에서 실제 탭을 클릭했을 때의 반응성과 표시 계약까지 보장하지 않는다.
 

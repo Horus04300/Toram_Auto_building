@@ -4,7 +4,7 @@
 
 ## 변경과 유지 계약
 
-`assets/js/d4-native-client.js`는 준비된 문제 전체 대신 Rust의 역직렬화 필드에 맞춘 객체를 `d4_optimize_parallel`에 전달한다.
+`assets/js/optimization/native-client.js`는 준비된 문제 전체 대신 Rust의 역직렬화 필드에 맞춘 객체를 `d4_optimize_parallel`에 전달한다.
 
 | 범위 | 전달하는 필드 |
 | --- | --- |
@@ -28,11 +28,11 @@
 
 실행한 명령:
 
-- `node tools/test-d4-native-client.mjs`: 통과.
-- `npm run test:r0`: 71/71 프로세스 성공. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
-- `npm run verify:r9`: 통과.
-- `node tools/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
-- `node tools/benchmark-d4-native-payload.mjs`: 실제 입력 3개의 NativeProblem 값 동치와 아래 직렬화/파싱 측정 통과.
+- `node tools/tests/optimization/test-crysta-native-client.mjs`: 통과.
+- `npm run test:regression`: 71/71 프로세스 성공. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
+- `npm run verify:architecture`: 통과.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
+- `node tools/benchmarks/benchmark-crysta-native-payload.mjs`: 실제 입력 3개의 NativeProblem 값 동치와 아래 직렬화/파싱 측정 통과.
 
 ## 전송 크기·직렬화·파싱
 
@@ -56,7 +56,7 @@ Copy-Item src-tauri/target/slow-profile/control.exe src-tauri/target/native-payl
 $env:D4_EVALUATION_EXPERIMENT='native-payload'
 $env:D4_COMPARE_NATIVE_PAYLOAD='1'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 | 입력 | Native 세션 평균 전→후 | peak working set 평균 전→후 |

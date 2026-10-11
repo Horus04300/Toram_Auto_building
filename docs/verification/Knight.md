@@ -38,7 +38,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-knight-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-knight-regression.mjs`로 다음을 확인했다.
 
 - 한손검+방패·Lv.10에서 15개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 어솔트 어택 Lv.10 방패·나이트 윌 Lv.10 계수 7.5·상수 100

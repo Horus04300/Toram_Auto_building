@@ -21,13 +21,13 @@
 
 ## 실행 검증 (2026-09-11)
 
-- 후속 UI/길드 수정: `npm run verify:r6`, `node tools/test-my-room-food.mjs`, `node tools/audit-stack-source-links.mjs --require-s1`, `node tools/verify-food-browser.mjs` 통과. Edge에서 요리명 미표시·재클릭 해제, 길드 기본 on·실제 HP 1000/MP 100 차이·off 저장/새로고침 복원·구형 저장 기본 on을 확인했다. 아래 R0 전체/Rust 기록은 최초 요리 구현 시 실행 결과이며 이번 후속 수정에서 반복하지 않았다.
-- `node tools/test-my-room-food.mjs`: 33개 효과·39개 이름, 330개 레벨 사례, 중복/경계, 명시 Snapshot 입력, 보존 효과 미연결 통과.
-- `npm run verify:r6`: 타입·계산/Application/BuildDraft/UI·저장 Snapshot/어댑터/Repository 계약 통과. 저장 테스트에 요리 슬롯 왕복 추가.
-- `npm run verify:r1a`: 86개 classic script 로딩 순서/브라우저·Tauri URL 통과.
-- `node tools/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
-- `npm run test:r0`: 70개 프로세스 종료 성공, 실제 69개 통과·Native 저장 E2E 1개 SKIP (`TORAM_E2E_CDP` 미설정).
+- 후속 UI/길드 수정: `npm run verify:architecture`, `node tools/tests/application/test-my-room-food.mjs`, `node tools/verification/audit-stack-source-links.mjs --require-s1`, `node tools/verification/verify-food-browser.mjs` 통과. Edge에서 요리명 미표시·재클릭 해제, 길드 기본 on·실제 HP 1000/MP 100 차이·off 저장/새로고침 복원·구형 저장 기본 on을 확인했다. 아래 R0 전체/Rust 기록은 최초 요리 구현 시 실행 결과이며 이번 후속 수정에서 반복하지 않았다.
+- `node tools/tests/application/test-my-room-food.mjs`: 33개 효과·39개 이름, 330개 레벨 사례, 중복/경계, 명시 Snapshot 입력, 보존 효과 미연결 통과.
+- `npm run verify:architecture`: 타입·계산/Application/BuildDraft/UI·저장 Snapshot/어댑터/Repository 계약 통과. 저장 테스트에 요리 슬롯 왕복 추가.
+- `npm run verify:entry`: 86개 classic script 로딩 순서/브라우저·Tauri URL 통과.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
+- `npm run test:regression`: 70개 프로세스 종료 성공, 실제 69개 통과·Native 저장 E2E 1개 SKIP (`TORAM_E2E_CDP` 미설정).
 - `cargo test --manifest-path src-tauri/Cargo.toml settings_repository`: 저장 단위 테스트 3개 통과.
-- `node tools/verify-food-browser.mjs`: 실제 headless Edge에서 고정 5칸, 빠른 선택·첫 빈 칸 채우기, 중복 비활성화, 레벨 변경/상한, 읽기 전용, 새로고침 복원, STR/CRIT/MP/ELEM_P 계산 반영, 보존 효과 미연결, 구형 저장 복원, 390px 화면 범위 검증 통과. 데스크톱/모바일 스크린샷 육안 확인.
+- `node tools/verification/verify-food-browser.mjs`: 실제 headless Edge에서 고정 5칸, 빠른 선택·첫 빈 칸 채우기, 중복 비활성화, 레벨 변경/상한, 읽기 전용, 새로고침 복원, STR/CRIT/MP/ELEM_P 계산 반영, 보존 효과 미연결, 구형 저장 복원, 390px 화면 범위 검증 통과. 데스크톱/모바일 스크린샷 육안 확인.
 - 브라우저 검증은 `CODEX_PLAYWRIGHT_PATH`에 설치된 Playwright 경로를 지정한다. `FOOD_QA_DIR` 지정 시 스크린샷을 그 경로에 저장한다.
 - 설치본 빌드·Native 실제 요리 저장 E2E·배포는 실행하지 않았다.

@@ -3,7 +3,7 @@
 이 저장소에서 작업하는 모든 AI 에이전트는 코드 수정, 상태 보고, 계획 수립 전에 다음 문서를 순서대로 끝까지 읽어야 한다.
 
 1. docs/handoff/current-development-handoff.md
-2. D4 전역 최적화의 정확성·성능·후보 탐색 작업이면 docs/architecture/d4-exact-optimization-plan.md
+2. 크리스타 전역 최적화의 정확성·성능·후보 탐색 작업이면 docs/architecture/crysta-optimization-contract.md
 3. 스킬 데이터나 계산 규칙 작업이면 docs/skill-tree-verification-standard.md
 4. 미구현 여부를 판단하거나 후속 구현을 하면 docs/verification/unimplemented.md
 
@@ -28,6 +28,6 @@
 - 파일을 찾을 때는 `rg --files`, 일치 파일명만 필요하면 `rg -l`, 내용은 `rg -n`으로 범위를 좁힌 뒤 필요한 부분을 읽는다. 긴 출력이 잘리면 동일한 전체 읽기를 반복하지 않는다.
 - 제외 대상도 작업에 필요하면 정확한 파일 경로를 지정해 읽거나 검색한다. 원문·fixture·계산 코드를 토큰 절약 명목으로 생략하지 않는다.
 - 진입점·생성 파일 원본·검증 선택은 `docs/ai-context-guide.md`에서 필요한 항목만 확인한다. 같은 세션에서 변경되지 않은 문서를 다시 읽지 않는다.
-- 문서·검색 설정만 바꿀 때는 `npm run ai:audit`와 `git diff --check`로 검증한다. 계산 변경에는 기존 S1/회귀 Gate를 유지하고, 중첩된 `verify:r*` 명령을 전부 반복 실행하지 않는다.
+- 문서·검색 설정만 바꿀 때는 `npm run ai:audit`와 `git diff --check`로 검증한다. 계산 변경에는 기존 S1/회귀 Gate를 유지하고, 중첩된 `verify:architecture` 명령을 전부 반복 실행하지 않는다.
 - 현재 handoff는 12 KiB 이하의 현재 상태·계약·링크로 유지한다. 상세 작업 로그는 해당 주제 문서에 기록한다.
 - 현재 기능/릴리스 판정은 handoff 한 곳, 설계 문서는 불변 계약·Gate, unimplemented는 남은 결정·보류 범위만 관리한다. 완료된 항목은 후속 목록에서 제거하고, 실험 기록의 과거 상태를 현재형으로 복사하지 않는다.

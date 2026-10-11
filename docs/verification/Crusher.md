@@ -34,7 +34,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-crusher-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-crusher-regression.mjs`로 다음을 확인했다.
 
 - 권갑 장비·Lv.10에서 10개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 정권 찌르기 Lv.10 계수 4와 확정 크리티컬

@@ -1,7 +1,7 @@
 # 개선 후보 13: 중첩 고정 효과의 사전 준비
 
 - 날짜: 2026-09-21. 기존 1~7·9~12번을 보존했다.
-- 구현: src-tauri/src/d4_native_evaluator.rs. JS 비교: tools/test-d4-rust-native-parity.mjs.
+- 구현: src-tauri/src/optimization/evaluator.rs. JS 비교: tools/tests/optimization/test-crysta-rust-native-parity.mjs.
 - 측정 원본: d4-nested-effects-measurements.json.
 
 ## 구현과 보존 계약
@@ -19,10 +19,10 @@ PreparedContext가 입력 준비 시 다음 효과를 형식화한다.
 
 - cargo test --manifest-path src-tauri/Cargo.toml -q: PASS 156개(43+43+14+56).
 - 신규 Rust 회귀: 원본 JSON/준비 객체/직렬화 후 복원 결과 일치. 누락·null·잘못된 타입, 소수·음수 보정, AMPR active 동점, 중복 변환, 고정·동적 skillStats 순서 포함. AMPR은 음수·소수·큰 값과 부호 있는 0의 비트도 원본과 비교한다.
-- npm run test:r0: PASS 70/70 스크립트. Native 저장 E2E는 TORAM_E2E_CDP 미설정 SKIP.
-- 전체 회귀 뒤 JS 중첩 효과 18개를 보강하고 node tools/test-d4-rust-native-parity.mjs 재실행: PASS 1,938개(기존 1,488 + 평가 계획 432 + 중첩 효과 18). 5개 유틸리티 × 3개 경계 = 29,070회 조건 검사도 포함한다.
-- npm run verify:r9, Rust fmt --check, clippy --all-targets -- -D warnings, release parallel 빌드: PASS.
-- node tools/audit-stack-source-links.mjs --require-s1: PASS 427/427.
+- npm run test:regression: PASS 70/70 스크립트. Native 저장 E2E는 TORAM_E2E_CDP 미설정 SKIP.
+- 전체 회귀 뒤 JS 중첩 효과 18개를 보강하고 node tools/tests/optimization/test-crysta-rust-native-parity.mjs 재실행: PASS 1,938개(기존 1,488 + 평가 계획 432 + 중첩 효과 18). 5개 유틸리티 × 3개 경계 = 29,070회 조건 검사도 포함한다.
+- npm run verify:architecture, Rust fmt --check, clippy --all-targets -- -D warnings, release parallel 빌드: PASS.
+- node tools/verification/audit-stack-source-links.mjs --require-s1: PASS 427/427.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.
 
@@ -30,7 +30,7 @@ PreparedContext가 입력 준비 시 다음 효과를 형식화한다.
 
 Windows / Ryzen 7 9800X3D, 기본 P6 물리 근거리 전체 후보 992/844/724/929. 이전 release binary를 보존하고 스레드별 전→후, 후→전으로 각 2회 새 프로세스를 실행한다. 빌드·테스트는 측정과 겹치지 않는다.
 
-D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<대상>, D4_P6_REPORT=<json>으로 node tools/benchmark-d4-native-p6.mjs 실행. 세션 wall은 JS 준비·UI/IPC를 제외한다. 기본 입력에는 복잡한 AMPR/skillStats 효과가 없으므로 이 측정은 기본 경로의 비용 변화이며 효과가 많은 실제 빌드의 speedup을 뜻하지 않는다. 복잡한 효과는 정확성 검증만 했다. 다른 입력/장비·cold 10회 P95는 미검증이다.
+D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<대상>, D4_P6_REPORT=<json>으로 node tools/benchmarks/benchmark-crysta-native-scaling.mjs 실행. 세션 wall은 JS 준비·UI/IPC를 제외한다. 기본 입력에는 복잡한 AMPR/skillStats 효과가 없으므로 이 측정은 기본 경로의 비용 변화이며 효과가 많은 실제 빌드의 speedup을 뜻하지 않는다. 복잡한 효과는 정확성 검증만 했다. 다른 입력/장비·cold 10회 P95는 미검증이다.
 
 | 스레드 | 변경 전 평균 | 변경 후 평균 | 변화 |
 | --- | ---: | ---: | ---: |

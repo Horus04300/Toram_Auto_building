@@ -1,7 +1,7 @@
 # D4 평가 스탯 직접 조회
 
 - 날짜: 2026-09-16. 하위호환 강화는 계속 보류.
-- 대상: `src-tauri/src/d4_native_evaluator.rs`.
+- 대상: `src-tauri/src/optimization/evaluator.rs`.
 
 ## 변경과 보존 계약
 
@@ -13,16 +13,16 @@
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 99개(26+26+8+39, 공유 모듈의 binary별 실행 포함).
 - 새 테스트는 캐시된 모든 스탯을 개별/동시 입력하고, 없는 값·음수·소수·큰 값·부호 있는 0·비유한 값·향후 이름에서 원본 lookup과 비트 단위 일치를 검사한다. 비유한 값을 제품 유효 입력으로 승인한다는 뜻은 아니다.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, JS/기존 Value 경로/새 map 경로 1,488개 동치.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, exhaustive oracle 동치.
-- `node tools/test-d4-evaluator-stage1.mjs`, `node tools/test-d4-global-optimizer-stage2.mjs`: PASS(oracle 3,430 / solver 144 / bounds 1,093).
-- `node tools/test-d4-worker-stage3.mjs`, `node tools/test-d4-native-client.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, JS/기존 Value 경로/새 map 경로 1,488개 동치.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, exhaustive oracle 동치.
+- `node tools/tests/optimization/test-crysta-evaluator.mjs`, `node tools/tests/optimization/test-crysta-search-oracle.mjs`: PASS(oracle 3,430 / solver 144 / bounds 1,093).
+- `node tools/tests/optimization/test-crysta-worker-protocol.mjs`, `node tools/tests/optimization/test-crysta-native-client.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`: PASS.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 - release exact/parallel bridge 빌드 및 `cargo fmt --manifest-path src-tauri/Cargo.toml --check`: PASS.
 
 ## 성능 비교 방법
 
-Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보(992/844/724/929), 8스레드. `D4_P6_THREAD=8`, `D4_P6_PACKAGE_LIMIT=0`, 유틸리티 감사 비활성으로 `node tools/benchmark-d4-native-p6.mjs` 실행.
+Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보(992/844/724/929), 8스레드. `D4_P6_THREAD=8`, `D4_P6_PACKAGE_LIMIT=0`, 유틸리티 감사 비활성으로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행.
 
 baseline은 바로 직전 기본 설정 캐시까지 포함한 `d4_native_parallel-before-dense-stats.exe`. `D4_NATIVE_BINARY`를 바꿔 전→후 / 후→전 순서로 새 프로세스에서 두 번씩 측정한다. 측정 중 빌드/테스트를 병행하지 않는다. 이전 개선 수치를 이번 효과에 합산하지 않는다.
 

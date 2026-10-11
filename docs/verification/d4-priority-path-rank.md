@@ -24,7 +24,7 @@ CandidateTree를 만들 때 각 노드에 `usize` 숫자 순위를 준비한다.
 
 Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. Native 세션 경로, 새 프로세스, 30초 한도. 8/16스레드 각각 전→후 / 후→전 순서로 두 번씩 측정하며 빌드/테스트와 겹치지 않았다.
 
-재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmark-d4-native-p6.mjs` 실행.
+재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행.
 
 세션 wall은 JS 준비·UI·IPC를 제외한다. 단일 물리 fixture 결과이며 루브닐·마법·듀얼의 성능 향상이나 전체 입력의 cold 10회 P95 달성을 주장하지 않는다. CPU/exitCode 일부 표본은 기존 측정 한계가 있어 판정 근거로 사용하지 않는다.
 
@@ -43,10 +43,10 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. Na
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 121개(33+33+9+46). 새 순서 동치 회귀와 기존 세션/병렬 회귀 포함.
 - fmt, clippy `--all-targets -- -D warnings`, release parallel bridge 빌드: PASS.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, 소형 exhaustive oracle 동치.
-- `node tools/test-d4-global-optimizer-stage2.mjs`: PASS, oracle 3,430 / solver 144 / bound 1,093.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개.
-- `node tools/test-d4-native-client.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, 소형 exhaustive oracle 동치.
+- `node tools/tests/optimization/test-crysta-search-oracle.mjs`: PASS, oracle 3,430 / solver 144 / bound 1,093.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개.
+- `node tools/tests/optimization/test-crysta-native-client.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`: PASS.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 
 전체 R0/R9, 실제 WebView/IPC E2E, 설치·배포는 이번 변경에서 실행하지 않았다. 다음 합의된 후보는 **3번 입력에 맞춰 평가 경로 준비**이며 아직 구현하지 않았다.

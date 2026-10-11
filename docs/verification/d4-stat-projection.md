@@ -22,19 +22,19 @@
 실행 명령과 결과:
 
 - `cargo test --offline --manifest-path src-tauri/Cargo.toml`: 51+51+16+64=182개 통과(바이너리별 공통 모듈 중복 포함).
-- `npm run test:r0`: 71/71 프로세스 성공. JS exhaustive/상한/property, JS/Rust parity, 잠금·추천 적용 및 유틸리티 105개 대조 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
-- `npm run verify:r9`, `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
-- `node tools/audit-stack-source-links.mjs --require-s1`: 427/427 출처 연결 통과. 스킬 수식/데이터는 변경하지 않았다.
+- `npm run test:regression`: 71/71 프로세스 성공. JS exhaustive/상한/property, JS/Rust parity, 잠금·추천 적용 및 유틸리티 105개 대조 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
+- `npm run verify:architecture`, `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: 427/427 출처 연결 통과. 스킬 수식/데이터는 변경하지 않았다.
 
 ## 성능 계측 방법
 
 수정 직전 제품 소스의 control 바이너리를 `src-tauri/target/stat-projection/before.exe`에 보존하고, 수정 후 같은 도구의 control을 사용한다. 두 바이너리는 같은 진행 snapshot 계측을 포함한다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_EVALUATION_EXPERIMENT='stat-projection'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 동일한 준비 입력 3개, 16작업자, 120초 예산, 변경 전→후/후→전 순서의 새 프로세스 12회를 순차 실행한다. 다른 빌드/테스트와 겹치지 않는다. Native 세션 준비 비용은 포함하며 JS 후보 준비·UI/IPC는 제외한다. 원본 옵션 재합산·반환값 및 JS 최종 재평가는 계측 도구에서 별도로 검증한다. 두 번 반복은 P95 인증이나 모든 입력의 개선 보장이 아니다.

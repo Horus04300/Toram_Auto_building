@@ -1,7 +1,7 @@
 # D4 스탯 합산 할당 비용 개선
 
 - 날짜: 2026-09-15. 유틸리티 하위호환 강화는 사용자 요청으로 보류하고 실행 비용 개선으로 전환했다.
-- 변경 대상: `src-tauri/src/d4_native_solver.rs`의 `add_stats`, `box_stats`.
+- 변경 대상: `src-tauri/src/optimization/solver.rs`의 `add_stats`, `box_stats`.
 
 ## 변경
 
@@ -22,7 +22,7 @@
 
 이전 signed envelope/분기 캐시까지 반영한 release binary를 `d4_native_parallel-before-map-merge.exe`로 보존했다. 이전 개선 전 수치를 이번 변경의 baseline으로 사용하지 않는다.
 
-Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보, 8스레드. 패키지 수 992/844/724/929. `D4_P6_THREAD=8`과 `D4_NATIVE_BINARY`로 전/후를 번갈아 각 3회 새 프로세스 실행하고, 환경 변동 확인을 위해 마지막 한 쌍은 후→전 순서로 추가 실행했다. 실행 명령은 `node tools/benchmark-d4-native-p6.mjs`다. 유틸리티 감사는 비활성이다.
+Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보, 8스레드. 패키지 수 992/844/724/929. `D4_P6_THREAD=8`과 `D4_NATIVE_BINARY`로 전/후를 번갈아 각 3회 새 프로세스 실행하고, 환경 변동 확인을 위해 마지막 한 쌍은 후→전 순서로 추가 실행했다. 실행 명령은 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs`다. 유틸리티 감사는 비활성이다.
 
 solver 시간은 JS compile/Pareto를 제외한다. 외부 wall에는 Native 프로세스 실행 비용이 포함된다. PowerShell 종료 CPU/exitCode가 일부 0/null로 반환되는 기존 계측 한계가 있어 해당 필드로 성능을 판정하지 않는다. JSON의 exact·점수·최종 ID·완료 shard와 실제 시간/메모리를 비교한다.
 
@@ -39,6 +39,6 @@ solver 시간은 JS compile/Pareto를 제외한다. 외부 wall에는 Native 프
 
 peak working set은 기존 89,776,128~91,070,464 bytes, 변경 89,972,736~94,285,824 bytes였다. 한 변경 실행에서 peak가 더 높아 메모리 감소 효과는 주장하지 않는다.
 
-추가 회귀: `node tools/test-d4-native-exact-p4.mjs`, `node tools/test-d4-global-optimizer-stage2.mjs`, `node tools/test-d4-worker-stage3.mjs`, `node tools/test-d4-native-client.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`, `node tools/test-d4-utility-dependencies.mjs`, `node tools/test-d4-replacement-proof.mjs`, `node tools/audit-stack-source-links.mjs --require-s1` 모두 PASS(S1 427/427).
+추가 회귀: `node tools/tests/optimization/test-crysta-native-exact.mjs`, `node tools/tests/optimization/test-crysta-search-oracle.mjs`, `node tools/tests/optimization/test-crysta-worker-protocol.mjs`, `node tools/tests/optimization/test-crysta-native-client.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`, `node tools/tests/optimization/test-crysta-utility-dependencies.mjs`, `node tools/tests/optimization/test-crysta-replacement-proof.mjs`, `node tools/verification/audit-stack-source-links.mjs --require-s1` 모두 PASS(S1 427/427).
 
 실제 서비스의 30초 slice 전체/WebView/설치본 E2E, 배포, 모든 필수 fixture의 cold 10회 P95는 미실행이다. 모든 입력에서 10초 exact를 달성했다는 의미가 아니다.

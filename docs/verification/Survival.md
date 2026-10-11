@@ -14,6 +14,6 @@
 
 죽은 척, 보상 2종, 안전한/작은 휴식, HP/MP 부스트, 전투 중 HP/MP 자연회복 수식을 반영했다.
 
-`node tools/test-survival-s5.mjs`에서 Lv.10/Lv.0 경계와 부활 시간 단축, 자연회복, HP/MP 부스트, 전투 중 자연회복을 확인한다.
+`node tools/tests/skills/test-survival-regression.mjs`에서 Lv.10/Lv.0 경계와 부활 시간 단축, 자연회복, HP/MP 부스트, 전투 중 자연회복을 확인한다.
 
 실제 비전투/사망/이모션 상태, 장비 자연회복과 최종 자연회복 계산은 상태 엔진 후속 항목이다.

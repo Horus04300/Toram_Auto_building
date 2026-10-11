@@ -1,0 +1,814 @@
+diff --git a/src-tauri/src/optimization/evaluator.rs b/src-tauri/src/optimization/evaluator.rs
+index c3a8d45..e6fd575 100644
+--- a/src-tauri/src/optimization/evaluator.rs
++++ b/src-tauri/src/optimization/evaluator.rs
+@@ -1184,7 +1184,7 @@ pub fn evaluate_utility_feasible_summary<C: ContextLookup>(
+     stats: &NativeStats,
+     accepts: impl FnMut(usize, f64) -> bool,
+ ) -> Result<Option<CrystaOptimizationNativeSummary>, String> {
+-    evaluate_utility_filtered::<true, _, C>(base, stats, accepts)
++    evaluate_utility_filtered::<true, 0, _, C>(base, stats, accepts)
+ }
+ 
+ #[allow(dead_code)] // Raw-summary-only bridge does not consume search scores.
+@@ -1198,7 +1198,7 @@ pub fn evaluate_utility_feasible_score<C: ContextLookup>(
+     accepts: impl FnMut(usize, f64) -> bool,
+ ) -> Result<Option<CrystaOptimizationNativeScore>, String> {
+     Ok(
+-        evaluate_utility_filtered::<false, _, C>(base, stats, accepts)?.map(|summary| {
++        evaluate_utility_filtered::<false, 0, _, C>(base, stats, accepts)?.map(|summary| {
+             CrystaOptimizationNativeScore {
+                 optimization_damage_factor: summary.optimization_damage_factor,
+             }
+@@ -1216,15 +1216,71 @@ pub fn evaluate_utility_feasible_score_from_sum<C: ContextLookup>(
+     accepts: impl FnMut(usize, f64) -> bool,
+ ) -> Result<Option<CrystaOptimizationNativeScore>, String> {
+     Ok(
+-        evaluate_utility_filtered::<false, _, C>(base, &SummedStats { left, right }, accepts)?.map(
+-            |summary| CrystaOptimizationNativeScore {
++        evaluate_utility_filtered::<false, 0, _, C>(base, &SummedStats { left, right }, accepts)?
++            .map(|summary| CrystaOptimizationNativeScore {
+                 optimization_damage_factor: summary.optimization_damage_factor,
+-            },
+-        ),
++            }),
+     )
+ }
+ 
+-fn evaluate_utility_filtered<const RAW_AMPR: bool, T: StatLookup, C: ContextLookup>(
++/// Only changes rejection order. MP must precede AMPR, and ASPD remains
++/// last so utility-only callbacks can stop before damage as before.
++#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
++#[allow(dead_code)] // Standalone raw-summary bridge does not link the solver.
++pub enum UtilityOrder {
++    #[default]
++    Hp,
++    MpAmpr,
++    Crit,
++}
++
++#[inline(always)]
++#[allow(dead_code)] // Standalone raw-summary bridge does not link the solver.
++pub fn evaluate_utility_feasible_score_ordered<C: ContextLookup>(
++    base: &C,
++    stats: &NativeStats,
++    order: UtilityOrder,
++    accepts: impl FnMut(usize, f64) -> bool,
++) -> Result<Option<CrystaOptimizationNativeScore>, String> {
++    evaluate_ordered_score(base, stats, order, accepts)
++}
++
++#[inline(always)]
++#[allow(dead_code)] // Standalone raw-summary bridge does not link the solver.
++pub fn evaluate_utility_feasible_score_from_sum_ordered<C: ContextLookup>(
++    base: &C,
++    left: &NativeStats,
++    right: &NativeStats,
++    order: UtilityOrder,
++    accepts: impl FnMut(usize, f64) -> bool,
++) -> Result<Option<CrystaOptimizationNativeScore>, String> {
++    evaluate_ordered_score(base, &SummedStats { left, right }, order, accepts)
++}
++
++#[inline(always)]
++#[allow(dead_code)] // Standalone raw-summary bridge does not link the solver.
++fn evaluate_ordered_score<T: StatLookup, C: ContextLookup>(
++    base: &C,
++    stats: &T,
++    order: UtilityOrder,
++    accepts: impl FnMut(usize, f64) -> bool,
++) -> Result<Option<CrystaOptimizationNativeScore>, String> {
++    let summary = match order {
++        UtilityOrder::Hp => evaluate_utility_filtered::<false, 0, _, _>(base, stats, accepts),
++        UtilityOrder::MpAmpr => evaluate_utility_filtered::<false, 1, _, _>(base, stats, accepts),
++        UtilityOrder::Crit => evaluate_utility_filtered::<false, 2, _, _>(base, stats, accepts),
++    }?;
++    Ok(summary.map(|summary| CrystaOptimizationNativeScore {
++        optimization_damage_factor: summary.optimization_damage_factor,
++    }))
++}
++
++fn evaluate_utility_filtered<
++    const RAW_AMPR: bool,
++    const PRIORITY: u8,
++    T: StatLookup,
++    C: ContextLookup,
++>(
+     base: &C,
+     stats: &T,
+     mut accepts: impl FnMut(usize, f64) -> bool,
+@@ -1234,7 +1290,7 @@ fn evaluate_utility_filtered<const RAW_AMPR: bool, T: StatLookup, C: ContextLook
+     }
+     let mut mp = 0.0;
+     // Stage 2 always derives the goal AMPR here; its raw argument is unused.
+-    evaluate_filtered_summary_impl::<RAW_AMPR, _, _>(base, stats, |index, raw| {
++    evaluate_filtered_summary_impl::<RAW_AMPR, PRIORITY, _, _>(base, stats, |index, raw| {
+         let value = match index {
+             1 => {
+                 mp = raw as f64;
+@@ -1287,10 +1343,15 @@ fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
+     stats: &T,
+     accepts: impl FnMut(usize, i64) -> bool,
+ ) -> Result<Option<CrystaOptimizationNativeSummary>, String> {
+-    evaluate_filtered_summary_impl::<true, T, C>(base, stats, accepts)
++    evaluate_filtered_summary_impl::<true, 0, T, C>(base, stats, accepts)
+ }
+ 
+-fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: ContextLookup>(
++fn evaluate_filtered_summary_impl<
++    const RAW_AMPR: bool,
++    const PRIORITY: u8,
++    T: StatLookup,
++    C: ContextLookup,
++>(
+     base: &C,
+     stats: &T,
+     mut accepts: impl FnMut(usize, i64) -> bool,
+@@ -1302,82 +1363,120 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
+         plan.need_matk = true;
+         plan
+     });
+-    let vit = stat_total(
+-        base,
+-        stats,
+-        ContextKey::field_vit_base,
+-        ContextKey::field_vit_p,
+-        ContextKey::field_vit_f,
+-        StatKey::VITP,
+-        StatKey::VIT,
+-    );
+     let level = number_at(base, ContextKey::field_level);
+-    let base_max_hp = floor_ratio(vit * 100.0 + 2241.0, level, 300.0, 93.0);
+-    let max_hp = (floor_percent(
+-        base_max_hp,
+-        number_at(base, ContextKey::field_max_hp_p) + stat_at(stats, StatKey::MAXHPP),
+-        number_at(base, ContextKey::field_max_hp_f) + stat_at(stats, StatKey::MAXHP),
+-    ))
+-    .clamp(0.0, 99999.0) as i64;
+-    if !accepts(0, max_hp) {
+-        return Ok(None);
++    macro_rules! hp_stage {
++        () => {{
++            let vit = stat_total(
++                base,
++                stats,
++                ContextKey::field_vit_base,
++                ContextKey::field_vit_p,
++                ContextKey::field_vit_f,
++                StatKey::VITP,
++                StatKey::VIT,
++            );
++            let base_max_hp = floor_ratio(vit * 100.0 + 2241.0, level, 300.0, 93.0);
++            let max_hp = (floor_percent(
++                base_max_hp,
++                number_at(base, ContextKey::field_max_hp_p) + stat_at(stats, StatKey::MAXHPP),
++                number_at(base, ContextKey::field_max_hp_f) + stat_at(stats, StatKey::MAXHP),
++            ))
++            .clamp(0.0, 99999.0) as i64;
++            if !accepts(0, max_hp) {
++                return Ok(None);
++            }
++            (vit, max_hp)
++        }};
++    }
++    macro_rules! mp_ampr_stage {
++        () => {{
++            let int_ = stat_total(
++                base,
++                stats,
++                ContextKey::field_int_base,
++                ContextKey::field_int_p,
++                ContextKey::field_int_f,
++                StatKey::INTP,
++                StatKey::INT,
++            );
++            let max_mp = floor_ratio(
++                int_,
++                1.0,
++                10.0,
++                base.invariant(Invariant::MpFlat) + stat_at(stats, StatKey::MAXMP),
++            )
++            .max(0.0) as i64;
++            if !accepts(1, max_mp) {
++                return Ok(None);
++            }
++            let ampr_before_dual = if RAW_AMPR {
++                let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
++                let ampr = floor_percent(
++                    base_ampr,
++                    number_at(base, ContextKey::field_ampr_p) + stat_at(stats, StatKey::AMPRP),
++                    0.0,
++                ) + number_at(base, ContextKey::field_ampr_f)
++                    + stat_at(stats, StatKey::AMPR);
++                (match base.prepared_effects() {
++                    Some(effects) => effects.ampr(ampr),
++                    None => resolve_normal_attack_ampr(
++                        ampr,
++                        base.get_at(ContextKey::field_normal_attack_ampr_profile),
++                    ),
++                }) as i64
++            } else {
++                // Never exposed as a raw summary: the score-only entry point discards
++                // this field, and its utility callback independently computes AMPR.
++                0
++            };
++
++            if !accepts(2, ampr_before_dual) {
++                return Ok(None);
++            }
++
++            (int_, max_mp, ampr_before_dual)
++        }};
+     }
+-    let int_ = stat_total(
+-        base,
+-        stats,
+-        ContextKey::field_int_base,
+-        ContextKey::field_int_p,
+-        ContextKey::field_int_f,
+-        StatKey::INTP,
+-        StatKey::INT,
+-    );
+-    let max_mp = floor_ratio(
+-        int_,
+-        1.0,
+-        10.0,
+-        base.invariant(Invariant::MpFlat) + stat_at(stats, StatKey::MAXMP),
+-    )
+-    .max(0.0) as i64;
+-    if !accepts(1, max_mp) {
+-        return Ok(None);
++    macro_rules! crit_stage {
++        () => {{
++            let base_crit = base.invariant(Invariant::BaseCrit);
++            let normal_raw = floor_percent(
++                base_crit,
++                number_at(base, ContextKey::field_crit_p) + stat_at(stats, StatKey::CRITP),
++                0.0,
++            ) + number_at(base, ContextKey::field_crit_f)
++                + stat_at(stats, StatKey::CRIT);
++            let normal_attack_crit =
++                (normal_raw - number_at(base, ContextKey::field_boss_crit_resist)) as i64;
++            if !accepts(3, normal_attack_crit) {
++                return Ok(None);
++            }
++            (normal_raw, normal_attack_crit)
++        }};
+     }
+-    let ampr_before_dual = if RAW_AMPR {
+-        let base_ampr = floor(10.0 + max_mp as f64 / 100.0);
+-        let ampr = floor_percent(
+-            base_ampr,
+-            number_at(base, ContextKey::field_ampr_p) + stat_at(stats, StatKey::AMPRP),
+-            0.0,
+-        ) + number_at(base, ContextKey::field_ampr_f)
+-            + stat_at(stats, StatKey::AMPR);
+-        (match base.prepared_effects() {
+-            Some(effects) => effects.ampr(ampr),
+-            None => resolve_normal_attack_ampr(
+-                ampr,
+-                base.get_at(ContextKey::field_normal_attack_ampr_profile),
+-            ),
+-        }) as i64
+-    } else {
+-        // Never exposed as a raw summary: the score-only entry point discards
+-        // this field, and its utility callback independently computes AMPR.
+-        0
+-    };
+ 
+-    if !accepts(2, ampr_before_dual) {
+-        return Ok(None);
+-    }
++    let ((vit, max_hp), (int_, max_mp, ampr_before_dual), (normal_raw, normal_attack_crit)) =
++        match PRIORITY {
++            1 => {
++                let mp = mp_ampr_stage!();
++                let hp = hp_stage!();
++                let crit = crit_stage!();
++                (hp, mp, crit)
++            }
++            2 => {
++                let crit = crit_stage!();
++                let hp = hp_stage!();
++                let mp = mp_ampr_stage!();
++                (hp, mp, crit)
++            }
++            _ => {
++                let hp = hp_stage!();
++                let mp = mp_ampr_stage!();
++                let crit = crit_stage!();
++                (hp, mp, crit)
++            }
++        };
+ 
+-    let base_crit = base.invariant(Invariant::BaseCrit);
+-    let normal_raw = floor_percent(
+-        base_crit,
+-        number_at(base, ContextKey::field_crit_p) + stat_at(stats, StatKey::CRITP),
+-        0.0,
+-    ) + number_at(base, ContextKey::field_crit_f)
+-        + stat_at(stats, StatKey::CRIT);
+-    let normal_attack_crit =
+-        (normal_raw - number_at(base, ContextKey::field_boss_crit_resist)) as i64;
+-    if !accepts(3, normal_attack_crit) {
+-        return Ok(None);
+-    }
+     let str_ = stat_total(
+         base,
+         stats,
+@@ -1861,6 +1960,64 @@ mod tests {
+         }
+     }
+ 
++    #[test]
++    fn reordered_utilities_preserve_values_rejection_and_lazy_sum_score() {
++        for (weapon, atk_type, dual) in [
++            ("한손검", "PHYS", false),
++            ("지팡이", "MAG", false),
++            ("한손검", "PHYS", true),
++        ] {
++            let base = PreparedContext::from(
++                serde_json::json!({"level":325,"mainType":weapon,"atkType":atk_type,"subType":if dual {"한손검(듀얼소드)"}else{"방패"},"wpnAtk":690,"strBase":327,"dexBase":510,"intBase":-27,"vitBase":20,"critF":120,"critP":13.7,"maxMpF":1950,"maxHpF":7400,"aspdF":1600,"aspdP":160,"skillMult":32.80499999999999,"normalAttackAmprProfile":{"passive":[{"percent":13.7,"multiplier":1.2,"flat":-2.5}],"activeCandidates":[{"id":"a","multiplier":1.2,"flat":0.5}]}}),
++            );
++            for offset in [-100.25, -1.0, 0.0, 0.125, 100.5] {
++                let left = NativeStats::from([
++                    ("MAXMP".into(), offset),
++                    ("AMPR".into(), offset),
++                    ("CRITP".into(), offset),
++                ]);
++                let right = NativeStats::from([
++                    ("MAXHP".into(), offset),
++                    ("CRIT".into(), offset),
++                    ("ATKP".into(), offset),
++                    ("ASPD".into(), offset),
++                ]);
++                let mut sum = left.clone();
++                for (key, value) in right.iter() {
++                    sum.insert(key.to_owned(), *value);
++                }
++                let values = utility_values(&base, &sum).unwrap();
++                for blocked in 0..=5 {
++                    let accepts =
++                        |i: usize, v: f64| v >= values[i] + if i == blocked { 1.0 } else { 0.0 };
++                    let reference = evaluate_utility_feasible_score(&base, &sum, accepts)
++                        .unwrap()
++                        .map(|s| s.optimization_damage_factor.to_bits());
++                    for order in [UtilityOrder::Hp, UtilityOrder::MpAmpr, UtilityOrder::Crit] {
++                        let ordered =
++                            evaluate_utility_feasible_score_ordered(&base, &sum, order, accepts)
++                                .unwrap()
++                                .map(|s| s.optimization_damage_factor.to_bits());
++                        let lazy = evaluate_utility_feasible_score_from_sum_ordered(
++                            &base, &left, &right, order, accepts,
++                        )
++                        .unwrap()
++                        .map(|s| s.optimization_damage_factor.to_bits());
++                        assert_eq!(ordered,reference,"{weapon} {atk_type}, offset={offset}, blocked={blocked}, order={order:?}");
++                        assert_eq!(lazy, reference);
++                        let mut seen = [None; 5];
++                        evaluate_utility_feasible_score_ordered(&base, &sum, order, |i, v| {
++                            seen[i] = Some(v.to_bits());
++                            i != 4
++                        })
++                        .unwrap();
++                        assert_eq!(seen, values.map(|v| Some(v.to_bits())));
++                    }
++                }
++            }
++        }
++    }
++
+     #[test]
+     fn score_only_utility_matches_raw_reference_at_every_rejection_stage() {
+         let base = serde_json::json!({"level":100,"mainType":"한손검","wpnAtk":100,"strBase":200,
+diff --git a/src-tauri/src/optimization/solver.rs b/src-tauri/src/optimization/solver.rs
+index b85705f..71d2fab 100644
+--- a/src-tauri/src/optimization/solver.rs
++++ b/src-tauri/src/optimization/solver.rs
+@@ -14,12 +14,14 @@ use std::time::{Duration, Instant};
+ use serde::{Deserialize, Serialize};
+ use serde_json::Value;
+ 
+-#[cfg(test)]
+-use crate::crysta_native_evaluator::CrystaOptimizationNativeSummary;
+ use crate::crysta_native_evaluator::{
+     evaluate_summary_from_native_stats as evaluate_summary_from_map,
+-    evaluate_utility_feasible_score as evaluate_feasible_summary,
+-    evaluate_utility_feasible_score_from_sum, utility_values, NativeStats, PreparedContext,
++    evaluate_utility_feasible_score_from_sum_ordered, evaluate_utility_feasible_score_ordered,
++    utility_values, NativeStats, PreparedContext, UtilityOrder,
++};
++#[cfg(test)]
++use crate::crysta_native_evaluator::{
++    evaluate_utility_feasible_score as evaluate_feasible_summary, CrystaOptimizationNativeSummary,
+ };
+ 
+ const EPSILON: f64 = 1e-9;
+@@ -30,6 +32,7 @@ const LOOKAHEAD_MAX_DEPTH: usize = 2;
+ pub const SESSION_NODES_PER_WORKER: usize = 32;
+ const HEURISTIC_CANDIDATE_LIMIT: usize = 192;
+ const HEURISTIC_PASSES: usize = 2;
++const DEFICIT_SAMPLE_COUNT: usize = 128;
+ type Stats = NativeStats;
+ 
+ #[derive(Clone, Serialize, Deserialize)]
+@@ -103,6 +106,12 @@ impl NativeProblem {
+         self.trees = Arc::new(trees);
+         let joint = JointUtilityBounds::prepare(self, &roots)?;
+         Arc::get_mut(&mut self.trees).unwrap().joint = joint;
++        let (utility_order, first_direction) = sampled_probe_order(self)?;
++        let trees = Arc::get_mut(&mut self.trees).unwrap();
++        trees.utility_order = utility_order;
++        if let Some(joint) = &mut trees.joint {
++            joint.first_direction = first_direction;
++        }
+         Ok(roots)
+     }
+ 
+@@ -192,6 +201,7 @@ struct TreeArena {
+     nodes: Vec<TreeNode>,
+     roots: [NodeId; GROUP_COUNT],
+     joint: Option<JointUtilityBounds>,
++    utility_order: UtilityOrder,
+ }
+ 
+ // Positive integer directions are a cost/strength choice, not game constants.
+@@ -281,6 +291,7 @@ struct JointUtilityBounds {
+     crit_p_ascending: bool,
+     coordinates: [BoundCoordinate; 3],
+     weights: [(f64, f64); 5],
++    first_direction: usize,
+     crit_p: Vec<f64>,
+     maxima: Vec<[f64; 5]>,
+     offense: ConstrainedOffenseBounds,
+@@ -487,6 +498,7 @@ impl JointUtilityBounds {
+             crit_p_ascending,
+             coordinates: [ampr_coordinate, crit_coordinate, crit_p_coordinate],
+             weights,
++            first_direction: 0,
+             crit_p: vec![0.0; problem.trees.nodes.len()],
+             maxima: vec![[0.0; 5]; problem.trees.nodes.len()],
+             offense: ConstrainedOffenseBounds {
+@@ -552,6 +564,31 @@ impl JointUtilityBounds {
+     }
+ 
+     fn possible(&self, clusters: &[NodeId; GROUP_COUNT]) -> bool {
++        let [a, b, c, d] = *clusters;
++        let (a, b, c, d) = (a.0 as usize, b.0 as usize, c.0 as usize, d.0 as usize);
++        let p = self.crit_p[a] + self.crit_p[b] + self.crit_p[c] + self.crit_p[d];
++        let minima = &self.minima[self.bucket_index(p)];
++        let (first, second, third, fourth) = (
++            &self.maxima[a],
++            &self.maxima[b],
++            &self.maxima[c],
++            &self.maxima[d],
++        );
++        // All five original exact support checks remain. Sampling changes only
++        // which proven inequality gets the first chance to reject this box.
++        macro_rules! checks { ($($i:expr),+) => {$(first[$i]+second[$i]+third[$i]+fourth[$i]>=minima[$i])&&+}; }
++        const _: [(); 5] = [(); JOINT_WEIGHTS.len()];
++        match self.first_direction {
++            1 => checks!(1, 0, 2, 3, 4),
++            2 => checks!(2, 0, 1, 3, 4),
++            3 => checks!(3, 0, 1, 2, 4),
++            4 => checks!(4, 0, 1, 2, 3),
++            _ => checks!(0, 1, 2, 3, 4),
++        }
++    }
++
++    #[cfg(test)]
++    fn possible_reference(&self, clusters: &[NodeId; GROUP_COUNT]) -> bool {
+         // All these operations are on bounded integers exactly representable
+         // by f64. Equality must survive for feasible ties.
+         let p = clusters
+@@ -1645,10 +1682,19 @@ fn consider_with_extra(
+     state.evaluations += 1;
+     let accepts = |i, v| requirements.accepts_value(i, v);
+     let Some(summary) = (match extra {
+-        Some(right) => {
+-            evaluate_utility_feasible_score_from_sum(&problem.base_context, stats, right, accepts)
+-        }
+-        None => evaluate_feasible_summary(&problem.base_context, stats, accepts),
++        Some(right) => evaluate_utility_feasible_score_from_sum_ordered(
++            &problem.base_context,
++            stats,
++            right,
++            problem.trees.utility_order,
++            accepts,
++        ),
++        None => evaluate_utility_feasible_score_ordered(
++            &problem.base_context,
++            stats,
++            problem.trees.utility_order,
++            accepts,
++        ),
+     })?
+     else {
+         return Ok(());
+@@ -1831,6 +1877,118 @@ fn initial_selections(problem: &NativeProblem) -> Vec<[usize; GROUP_COUNT]> {
+     result
+ }
+ 
++/// Sample only actual four-equipment selections from this input. Relative
++/// deficits compare different utility units; they schedule checks, never prune.
++/// The immutable order is rebuilt from raw input on checkpoint restoration.
++fn sampled_probe_order(problem: &NativeProblem) -> Result<(UtilityOrder, usize), String> {
++    let requirements = Requirements::new(
++        problem
++            .scenario_snapshot
++            .get("requirements")
++            .unwrap_or(&Value::Null),
++    );
++    let minima = [
++        requirements.max_hp,
++        requirements.max_mp,
++        requirements.ampr,
++        requirements.crit,
++    ];
++    if minima.iter().all(Option::is_none) || problem.groups.iter().all(|g| g.packages.len() == 1) {
++        return Ok((UtilityOrder::Hp, 0));
++    }
++    let sorted: [Vec<usize>; GROUP_COUNT] = std::array::from_fn(|g| {
++        let mut ids: Vec<_> = (0..problem.groups[g].packages.len()).collect();
++        ids.sort_by(|a, b| {
++            problem.groups[g].packages[*a]
++                .id
++                .cmp(&problem.groups[g].packages[*b].id)
++        });
++        ids
++    });
++    let mut samples = initial_selections(problem);
++    for sample in 0..DEFICIT_SAMPLE_COUNT {
++        samples.push(std::array::from_fn(|g| {
++            let rank = (sample * [1, 5, 11, 17][g] + g * 7) % DEFICIT_SAMPLE_COUNT;
++            sorted[g][rank * sorted[g].len() / DEFICIT_SAMPLE_COUNT]
++        }));
++    }
++    fn leaf_ids(trees: &TreeArena, node: NodeId, ids: &mut [NodeId]) {
++        let n = &trees[node];
++        if let Some(package) = n.package {
++            ids[package] = node;
++        }
++        if let Some(left) = n.left {
++            leaf_ids(trees, left, ids);
++        }
++        if let Some(right) = n.right {
++            leaf_ids(trees, right, ids);
++        }
++    }
++    let leaves: [Vec<NodeId>; GROUP_COUNT] = std::array::from_fn(|g| {
++        let mut ids = vec![NodeId::default(); problem.groups[g].packages.len()];
++        leaf_ids(&problem.trees, problem.trees.roots[g], &mut ids);
++        ids
++    });
++    let mut seen = HashSet::new();
++    let mut failures = [0_u32; 3];
++    let mut joint_failures = [0_u32; 5];
++    let mut deficits = [0.0_f64; 3];
++    for selected in samples {
++        if !seen.insert(selected) {
++            continue;
++        }
++        let clusters = std::array::from_fn(|g| leaves[g][selected[g]]);
++        if let Some(joint) = &problem.trees.joint {
++            let p = clusters.iter().map(|id| joint.crit_p[id.0 as usize]).sum();
++            let required = &joint.minima[joint.bucket_index(p)];
++            for i in 0..5 {
++                let support: f64 = clusters
++                    .iter()
++                    .map(|id| joint.maxima[id.0 as usize][i])
++                    .sum();
++                joint_failures[i] += u32::from(support < required[i]);
++            }
++        }
++        // Sample the same population that survives the existing joint check.
++        // Otherwise already-pruned CRIT failures can dominate the order.
++        if !problem.trees.joint_utilities_possible(&clusters) {
++            continue;
++        }
++        let values = utility_values(
++            &problem.base_context,
++            &selection_evaluation_stats(problem, &selected),
++        )?;
++        let deficit: [f64; 4] = std::array::from_fn(|i| {
++            minima[i].map_or(0.0, |goal| {
++                ((goal - values[i]).max(0.0) / goal.abs().max(1.0)).min(1.0)
++            })
++        });
++        let block_deficits = [deficit[0], deficit[1].max(deficit[2]), deficit[3]];
++        for i in 0..3 {
++            failures[i] += u32::from(block_deficits[i] > 0.0);
++            deficits[i] += block_deficits[i];
++        }
++    }
++    let mut best = 0;
++    for i in 1..3 {
++        if failures[i] > failures[best]
++            || (failures[i] == failures[best] && deficits[i] > deficits[best])
++        {
++            best = i;
++        }
++    }
++    let mut first_direction = 0;
++    for i in 1..5 {
++        if joint_failures[i] > joint_failures[first_direction] {
++            first_direction = i;
++        }
++    }
++    Ok((
++        [UtilityOrder::Hp, UtilityOrder::MpAmpr, UtilityOrder::Crit][best],
++        first_direction,
++    ))
++}
++
+ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String> {
+     if !problem.base_context.is_object()
+         || problem.groups.len() != GROUP_COUNT
+@@ -1942,9 +2100,12 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
+         for child_clusters in child_boxes {
+             let stats = box_stats(&problem.trees, &child_clusters);
+             state.evaluations += 1;
+-            let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+-                requirements.accepts_value(i, v)
+-            })?
++            let Some(bound) = evaluate_utility_feasible_score_ordered(
++                &problem.base_context,
++                &stats,
++                problem.trees.utility_order,
++                |i, v| requirements.accepts_value(i, v),
++            )?
+             else {
+                 pruned_by_constraint += 1;
+                 continue;
+@@ -2238,10 +2399,12 @@ impl NativeSearchSession {
+                 for child_clusters in child_boxes {
+                     let stats = box_stats(&self.problem.trees, &child_clusters);
+                     self.state.evaluations += 1;
+-                    let Some(bound) =
+-                        evaluate_feasible_summary(&self.problem.base_context, &stats, |i, v| {
+-                            self.requirements.accepts_value(i, v)
+-                        })?
++                    let Some(bound) = evaluate_utility_feasible_score_ordered(
++                        &self.problem.base_context,
++                        &stats,
++                        self.problem.trees.utility_order,
++                        |i, v| self.requirements.accepts_value(i, v),
++                    )?
+                     else {
+                         self.pruned_by_constraint += 1;
+                         continue;
+@@ -2504,10 +2667,19 @@ fn consider_parallel_with_extra(
+     counters.count_evaluations();
+     let accepts = |i, v| requirements.accepts_value(i, v);
+     let Some(summary) = (match extra {
+-        Some(right) => {
+-            evaluate_utility_feasible_score_from_sum(&problem.base_context, stats, right, accepts)
+-        }
+-        None => evaluate_feasible_summary(&problem.base_context, stats, accepts),
++        Some(right) => evaluate_utility_feasible_score_from_sum_ordered(
++            &problem.base_context,
++            stats,
++            right,
++            problem.trees.utility_order,
++            accepts,
++        ),
++        None => evaluate_utility_feasible_score_ordered(
++            &problem.base_context,
++            stats,
++            problem.trees.utility_order,
++            accepts,
++        ),
+     })?
+     else {
+         return Ok(());
+@@ -2574,10 +2746,11 @@ fn enumerate_box_parallel(
+         if let Some(suffix) = suffix {
+             counters.count_evaluations();
+             let mut possible = true;
+-            evaluate_utility_feasible_score_from_sum(
++            evaluate_utility_feasible_score_from_sum_ordered(
+                 &problem.base_context,
+                 stats,
+                 &suffix[index],
++                problem.trees.utility_order,
+                 |i, v| {
+                     possible = requirements.accepts_value(i, v);
+                     possible && i != 4 // Stop before damage, including on success.
+@@ -2771,9 +2944,12 @@ fn expand_parallel_node_inner(
+         }
+         let stats = box_stats(&problem.trees, &child_clusters);
+         counters.count_evaluations();
+-        let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+-            requirements.accepts_value(i, v)
+-        })?
++        let Some(bound) = evaluate_utility_feasible_score_ordered(
++            &problem.base_context,
++            &stats,
++            problem.trees.utility_order,
++            |i, v| requirements.accepts_value(i, v),
++        )?
+         else {
+             counters.count_pruned_by_constraint();
+             constraint_rejections += 1;
+@@ -2874,9 +3050,12 @@ fn create_parallel_shards(
+         for child_clusters in child_boxes {
+             let stats = box_stats(&problem.trees, &child_clusters);
+             state.evaluations += 1;
+-            let Some(bound) = evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
+-                requirements.accepts_value(i, v)
+-            })?
++            let Some(bound) = evaluate_utility_feasible_score_ordered(
++                &problem.base_context,
++                &stats,
++                problem.trees.utility_order,
++                |i, v| requirements.accepts_value(i, v),
++            )?
+             else {
+                 continue;
+             };
+@@ -3242,6 +3421,85 @@ mod tests {
+     use super::*;
+     use serde_json::json;
+ 
++    #[test]
++    fn deficit_samples_choose_only_check_order_and_rebuild_deterministically() {
++        for (goals, expected) in [
++            (serde_json::json!({}), UtilityOrder::Hp),
++            (serde_json::json!({"maxHp":99999}), UtilityOrder::Hp),
++            (
++                serde_json::json!({"amprBeforeDual":100}),
++                UtilityOrder::MpAmpr,
++            ),
++            (
++                serde_json::json!({"normalAttackCrit":100}),
++                UtilityOrder::Crit,
++            ),
++            (serde_json::json!({"aspd":10000}), UtilityOrder::Hp),
++        ] {
++            let mut problem = joint_problem();
++            problem.scenario_snapshot = serde_json::json!({"requirements":goals});
++            let original = serde_json::to_value(&problem).unwrap();
++            problem.prepare_trees().unwrap();
++            let cached_order = problem.trees.utility_order;
++            let cached_direction = problem.trees.joint.as_ref().map(|j| j.first_direction);
++            // Isolate deficit selection from the pre-existing safe joint filter.
++            let joint = Arc::get_mut(&mut problem.trees).unwrap().joint.take();
++            assert_eq!(sampled_probe_order(&problem).unwrap().0, expected);
++            Arc::get_mut(&mut problem.trees).unwrap().joint = joint;
++            assert_eq!(serde_json::to_value(&problem).unwrap(), original);
++            for group in &mut problem.groups {
++                group.packages.reverse();
++            }
++            problem.prepare_trees().unwrap();
++            assert_eq!(problem.trees.utility_order, cached_order);
++            assert_eq!(
++                problem.trees.joint.as_ref().map(|j| j.first_direction),
++                cached_direction
++            );
++            let mut rebuilt: NativeProblem =
++                serde_json::from_value(serde_json::to_value(&problem).unwrap()).unwrap();
++            rebuilt.prepare_trees().unwrap();
++            assert_eq!(rebuilt.trees.utility_order, cached_order);
++            assert_eq!(
++                rebuilt.trees.joint.as_ref().map(|j| j.first_direction),
++                cached_direction
++            );
++        }
++    }
++
++    #[test]
++    fn reordered_joint_checks_match_reference_for_all_boxes() {
++        let mut problem = joint_problem();
++        problem.prepare_trees().unwrap();
++        let nodes: [Vec<NodeId>; GROUP_COUNT] = std::array::from_fn(|g| {
++            let start = problem.trees.roots[g].0 as usize;
++            let end = if g + 1 < GROUP_COUNT {
++                problem.trees.roots[g + 1].0 as usize
++            } else {
++                problem.trees.nodes.len()
++            };
++            (start..end).map(|i| NodeId(i as u32)).collect()
++        });
++        let mut joint = problem.trees.joint.as_ref().unwrap().clone();
++        let mut rejected = 0;
++        for a in &nodes[0] {
++            for b in &nodes[1] {
++                for c in &nodes[2] {
++                    for d in &nodes[3] {
++                        let box_ = [*a, *b, *c, *d];
++                        let reference = joint.possible_reference(&box_);
++                        rejected += usize::from(!reference);
++                        for first_direction in 0..5 {
++                            joint.first_direction = first_direction;
++                            assert_eq!(joint.possible(&box_), reference);
++                        }
++                    }
++                }
++            }
++        }
++        assert!(rejected > 0);
++    }
++
+     #[test]
+     fn cached_split_slack_matches_original_envelope_scores() {
+         for mut problem in [wide_problem(), joint_problem()] {

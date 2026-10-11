@@ -1,7 +1,7 @@
 # Toram Auto Building 개발 소스
 
-현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.7.2`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
-
+현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.7.3`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
+.
 ## 구조
 
 - `index.html`: 개발판 진입점과 화면 마크업
@@ -15,11 +15,11 @@
 - `assets/js/skill-data-validator.js`: 스킬 데이터 커버리지·정합성 검사
 - `assets/js/crysta-ui.js`: 크리스타 입력·자동완성·장비 옵션 UI
 - `assets/js/calculator.js`: 스탯과 전투 수치 계산
-- `assets/js/optimizer.js`: 크리스타 추천·결과 렌더링
+- `assets/js/optimization-results.js`: 크리스타 추천·결과 렌더링
 - `assets/js/status-points.js`: 스테이터스 포인트 제어
 - `assets/js/skill-tree.js`: 스킬트리 시뮬레이터·저장 기능
 - `assets/js/tabs.js`: 상단 탭 구성
-- `assets/js/ui-bindings.js`: 화면 이벤트 연결 및 기능별 공개 API 호출
+- `assets/js/ui-bootstrap.js`: 화면 이벤트 연결 및 기능별 공개 API 호출
 - `assets/icons/skills/`: Coryn 기반 스킬 트리 아이콘
 - `assets/game-data/ui/`: 이름 미정의 인게임 UI 스프라이트 원본
 - `assets/source-data/coryn-skill-simulator/`: Coryn 아이콘 매니페스트·생성 원본

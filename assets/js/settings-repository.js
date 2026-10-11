@@ -1,4 +1,4 @@
-/* R6 단일 저장 경계: named build, app settings, last session. */
+/* Settings 단일 저장 경계: named build, app settings, last session. */
 (function (root) {
   'use strict';
   var FORMAT = 'toram-auto-build-document';

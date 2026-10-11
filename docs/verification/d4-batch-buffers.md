@@ -1,7 +1,7 @@
 # 개선 후보 11: 배치 버퍼 재사용과 노드 복사 감소
 
 - 날짜: 2026-09-21. 기존 1~7·9~10번 변경을 보존했다.
-- 구현: src-tauri/src/d4_native_solver.rs.
+- 구현: src-tauri/src/optimization/solver.rs.
 - 측정 원본: d4-batch-buffers-measurements.json.
 
 ## 구현과 보존 계약
@@ -17,15 +17,15 @@ NativeSearchSession이 입력 Vec과 순서별 결과 Vec의 용량을 배치 �
 - cargo test --manifest-path src-tauri/Cargo.toml -q: PASS 148개(41+41+12+54).
 - 기존 불균등 배치 0/1/7/31/33/65/257개와 1/2/8/16/64 작업자 회귀에 공유 참조 회수를 추가 검증했다. 완료 순서와 무관한 결과·통계, 취소/deadline을 확인한다.
 - 신규 회귀는 스레드 수를 바꾸며 반복 취소해 입력·결과 버퍼 주소 재사용, 빈 버퍼 정리, checkpoint frontier·incumbent 보존을 확인한다. 기존 오류 부모 복원·직렬/병렬 exact·동점·pause/resume 회귀도 통과했다.
-- npm run test:r0: PASS 70/70 스크립트. Native 저장 E2E는 TORAM_E2E_CDP 미설정 SKIP.
-- npm run verify:r9, Rust fmt --check, clippy --all-targets -- -D warnings, release parallel 빌드: PASS.
-- node tools/audit-stack-source-links.mjs --require-s1: PASS 427/427.
+- npm run test:regression: PASS 70/70 스크립트. Native 저장 E2E는 TORAM_E2E_CDP 미설정 SKIP.
+- npm run verify:architecture, Rust fmt --check, clippy --all-targets -- -D warnings, release parallel 빌드: PASS.
+- node tools/verification/audit-stack-source-links.mjs --require-s1: PASS 427/427.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.
 
 ## 측정
 
-Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. 변경 전후 release binary를 보존하고 새 프로세스에서 교대로 실행했다. 빌드·테스트와 측정은 겹치지 않았다. D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<비교 binary>, D4_P6_REPORT=<json>으로 node tools/benchmark-d4-native-p6.mjs를 실행했다. 세션 wall은 JS 준비·UI/IPC를 제외한다. 단일 입력의 측정이며 다른 환경 및 cold 10회 P95 달성을 뜻하지 않는다.
+Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. 변경 전후 release binary를 보존하고 새 프로세스에서 교대로 실행했다. 빌드·테스트와 측정은 겹치지 않았다. D4_SESSION_BENCH_MS=30000, D4_P6_THREAD=8 또는 16, D4_NATIVE_BINARY=<비교 binary>, D4_P6_REPORT=<json>으로 node tools/benchmarks/benchmark-crysta-native-scaling.mjs를 실행했다. 세션 wall은 JS 준비·UI/IPC를 제외한다. 단일 입력의 측정이며 다른 환경 및 cold 10회 P95 달성을 뜻하지 않는다.
 
 스레드별 전/후→후/전 순서를 두 차례 반복하여 각 4회 측정했다.
 

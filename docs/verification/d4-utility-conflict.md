@@ -4,7 +4,7 @@
 
 ## 입력 구성과 통제
 
-- `tools/fixtures/d4-synthetic-utility-conflict.json`: Lv.220 활/원거리, STR 70·DEX 380·AGI 120, 공격력 380·제련 9. 범용 물리 공격의 테스트 계수다. **실제 게임 크리스타나 스킬 수치라고 주장하지 않는 합성 데이터**이며 카탈로그에 등록하지 않는다.
+- `tools/fixtures/crysta-synthetic-utility-conflict.json`: Lv.220 활/원거리, STR 70·DEX 380·AGI 120, 공격력 380·제련 9. 범용 물리 공격의 테스트 계수다. **실제 게임 크리스타나 스킬 수치라고 주장하지 않는 합성 데이터**이며 카탈로그에 등록하지 않는다.
 - 부위별 MP·AMPR·CRIT·ASPD 특화 4종 × 강도 8개, 총 128개 가상 크리스타. 한 후보는 유틸리티 한 종류를 공급하고 강도가 높을수록 ATKP가 낮다. CDMG와 SRW도 결정적인 패턴으로 달라진다. 기존 compiler가 부위·2슬롯·동일 장비 중복 규칙을 적용한다.
 - 모든 유틸리티 좌표가 활성인 tight 조건으로 **한 번만 준비**하고, 그룹 445/448/446/449개를 세 조건에 그대로 사용한다. 약 399억 조합이다. 그룹 해시 일치를 검사한다. 실제 앱처럼 매 조건마다 Pareto 준비를 다시 하는 전체 경로의 벤치마크는 아니다. 준비 결과를 고정해 탐색 단계에 미치는 제약의 영향을 분리한다.
 - 각 유틸리티를 균형 있게 공급하는 8슬롯 조합을 증인으로 구성하고, 기본값→증인 값 증가분의 25%/65%/100%를 요구한다. 임의의 불가능 문제를 빡빡한 입력으로 오인하지 않도록 세 조건 모두 증인의 실제 계산값이 제약을 만족하는지 검사한다.
@@ -55,23 +55,23 @@ control 관측 peak working set은 느슨함 약 12~13 MiB, 중간 약 26 MiB, �
 - 새 도구 2개와 수정한 profile 도구의 `node --check`, `npm run ai:audit`, `git diff --check`: 통과. 이번에 제품 계산·탐색 코드는 바꾸지 않아 앱 R0/R9/S1·UI E2E·배포는 재실행하지 않았다.
 
 ```powershell
-node tools/prepare-d4-utility-conflict.mjs
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/prepare-crysta-utility-conflict.mjs
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_PROFILE_FIXTURES='utility-loose,utility-medium,utility-tight'
 $env:D4_PROFILE_THREADS='16'
 $env:D4_PROFILE_REPEATS='3'
 $env:D4_PROFILE_BUDGET='60000'
 $env:D4_PROFILE_REPORT='utility-complete.json'
-node tools/profile-d4-slow-inputs.mjs run
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
 $env:D4_PROFILE_REPEATS='1'
 $env:D4_PROFILE_REPORT='utility-leaves.json'
-node tools/profile-d4-slow-inputs.mjs run
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
 $env:D4_PROFILE_FIXTURES='utility-loose-oracle,utility-medium-oracle,utility-tight-oracle'
 $env:D4_PROFILE_THREADS='1,16'
 $env:D4_PROFILE_REPORT='utility-oracle.json'
-node tools/profile-d4-slow-inputs.mjs run
-node tools/prepare-d4-utility-conflict.mjs verify
-node tools/summarize-d4-utility-conflict.mjs
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
+node tools/benchmarks/prepare-crysta-utility-conflict.mjs verify
+node tools/benchmarks/summarize-crysta-utility-conflict.mjs
 ```
 
 현재 profile 생성기는 leaf 카운터도 포함한다. 최초 3회 구간 계측 당시에는 leaf 카운터가 없었고 이후 추가했다. 재실행 시 control 중앙값은 같은 방식으로 비교하고 profile에는 해당 추가 비용이 포함됨을 구분한다. 15초 pilot은 탐색용으로 사용했으며 위 중앙값에 포함하지 않았다.

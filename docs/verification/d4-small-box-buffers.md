@@ -21,21 +21,21 @@
 실행한 검증:
 
 - `cargo test --offline --manifest-path src-tauri/Cargo.toml`: **54+54+16+67=191개 통과**(공통 모듈 중복 포함).
-- `npm run test:r0`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
-- `npm run verify:r9`: 통과.
+- `npm run test:regression`: **71/71 프로세스 성공**. 실제 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
+- `npm run verify:architecture`: 통과.
 - `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: 통과.
-- `node tools/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
-- `D4_EVALUATION_EXPERIMENT=small-box-buffers`에서 `node tools/check-d4-tree-checkpoint.mjs`: 위 wire 동치와 4가지 복원 통과. 도구는 실험명을 받아 기존 인덱스 트리 기록을 보존하도록 변경했다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
+- `D4_EVALUATION_EXPERIMENT=small-box-buffers`에서 `node tools/benchmarks/check-crysta-tree-checkpoint.mjs`: 위 wire 동치와 4가지 복원 통과. 도구는 실험명을 받아 기존 인덱스 트리 기록을 보존하도록 변경했다.
 
 ## 성능 비교
 
 수정 전 solver·source 해시·control 바이너리는 `target/small-box-buffers/before.rs`, `before-source-hashes.json`, `before.exe`로 보존했다. 동일한 sparse progress 계측을 넣은 변경 후 control과 비교했다.
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_EVALUATION_EXPERIMENT='small-box-buffers'
 $env:D4_COMPARE_REPEATS='2'
-node tools/benchmark-d4-partial-utility.mjs
+node tools/benchmarks/benchmark-crysta-partial-utility.mjs
 ```
 
 준비된 동일 입력 3개·16작업자·새 프로세스·전후 순서 교대 각 2회다. 회귀 테스트·빌드와 겹치지 않는다. 시간은 Native 준비 및 세션 실행을 포함하며 JS 후보 준비와 UI/IPC는 제외한다. 2회 반복은 P95 또는 모든 입력의 속도 보장이 아니다.

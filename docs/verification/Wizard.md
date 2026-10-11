@@ -24,7 +24,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-wizard-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-wizard-regression.mjs`로 다음을 확인했다.
 
 - 지팡이 또는 필요한 메인 마도구 조건에서 15개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 패밀리어 Lv.10 최대 MP +200, 캐릭터 Lv.300 기준 MATK +75

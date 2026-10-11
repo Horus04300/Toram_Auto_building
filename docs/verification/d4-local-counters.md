@@ -24,7 +24,7 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929, �
 
 모든 결과는 exact 14,097 및 동일 추천 ID다. 평가 수는 8스레드 25,932,301 / 16스레드 25,932,305로 전후 같고 방문·가지치기·묶음 수도 같다. peak working set은 전후 약 76.6~77.7MB 범위였다. CPU 표본 일부는 0으로 반환되어 속도 판단에 사용하지 않았다.
 
-재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`를 설정해 `node tools/benchmark-d4-native-p6.mjs` 실행.
+재현: release parallel bridge 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`를 설정해 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행.
 
 두 번씩의 단일 fixture 비교다. 세션 wall은 JS 준비·UI·IPC를 제외하며 전체 입력의 개선이나 cold 10회 P95를 입증하지 않는다.
 
@@ -34,7 +34,7 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929, �
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 118개(32+32+9+45).
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, clippy `--all-targets -- -D warnings`: PASS. release parallel bridge 빌드 PASS.
-- `npm run test:r0`: PASS, 70개 스크립트 집계. Native exact oracle·잠금·parity 1,488건·client/resume 회귀 포함. Native 저장 E2E는 CDP 미설정으로 SKIP이다.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
+- `npm run test:regression`: PASS, 70개 스크립트 집계. Native exact oracle·잠금·parity 1,488건·client/resume 회귀 포함. Native 저장 E2E는 CDP 미설정으로 SKIP이다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.

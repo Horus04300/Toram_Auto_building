@@ -16,7 +16,7 @@
 | S4 | 7 | 기존 패시브 2개·장인의 검술과 트리거 슬래시·램페이지·오라 블레이드·퍼스트 어택의 계산 연결 |
 | S5 | 모델 범위 24 | 각 스킬의 Lv.10·Lv.0·무기 조건 회귀와 대표 공식·순서 효과 회귀 통과; 피격·시간 기반 규칙은 범위 밖 |
 
-`node tools/audit-stack-source-links.mjs --tree Blade --require-s1`은 **24/24로 통과**했다. 이는 S1 완결이며 S2~S5 계산 완결을 뜻하지 않는다. 현재 `verified`는 0개이고 24개 모두 `partial`이다.
+`node tools/verification/audit-stack-source-links.mjs --tree Blade --require-s1`은 **24/24로 통과**했다. 이는 S1 완결이며 S2~S5 계산 완결을 뜻하지 않는다. 현재 `verified`는 0개이고 24개 모두 `partial`이다.
 
 ## 24개 전수 대조
 
@@ -83,7 +83,7 @@
 
 ## S4/S5 계산기 범위 회귀 (2026-08-20)
 
-- `tools/test-blade-s4-s5.mjs`가 24개 모두에 대해 Lv.10 정상, Lv.0 경계, 제한 무기 조건 변경을 검사한다.
+- `tools/tests/skills/test-blade-regression.mjs`가 24개 모두에 대해 Lv.10 정상, Lv.0 경계, 제한 무기 조건 변경을 검사한다.
 - 대표 수식으로 해머 다운 Lv.10 계수, 클리브 어택 4대상 계수·상수, 장인의 검술 Lv.10 피해 배율을 검증한다.
 - 트리거 슬래시의 다음 스킬 행동 속도, 퍼스트 어택 Lv.10의 다음 스킬 MP 반감, MP 부족 시 이후 스킬 미계산을 검증한다.
 - 장인의 검술은 이제 `skillCategory:Blade` 피해 배율을 일반 패시브 공격 배율 경로로 합성한다. Lv.10 양손검 해머 다운의 계수는 9에서 10.8로 반영된다.

@@ -18,10 +18,10 @@
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 139개(38+38+12+51).
 - 신규 테스트는 즉시 snapshot과 지연 snapshot의 결과·checkpoint 전체를 실행 시간 필드만 제외하고 비교한다. 취소 신호, 이미 지난 deadline, 정상 진행, 완료 후 재호출을 포함한다. 테스트 작성 중 Result 래퍼를 풀지 않아 실행 시간 정규화가 잘못된 문제를 수정한 뒤 전체 재실행했다.
 - 기존 1~64스레드 exact/동점·오류 복원·pause/resume·checkpoint·대기 시간 제외 회귀 유지.
-- `npm run test:r0`: PASS, 70/70 스크립트 집계. JS/Rust parity 1,920건 및 선검사 28,800회, Native client/UI continuation 포함. Native 저장 E2E는 CDP 미설정 SKIP.
-- `npm run verify:r9`: PASS. R8의 기존 메서드명 검사를 새 실행 진입점과 취소/deadline 전달 검사로 갱신하고, 알림 조건 안의 snapshot 생성 검사도 추가했다.
+- `npm run test:regression`: PASS, 70/70 스크립트 집계. JS/Rust parity 1,920건 및 선검사 28,800회, Native client/UI continuation 포함. Native 저장 E2E는 CDP 미설정 SKIP.
+- `npm run verify:architecture`: PASS. R8의 기존 메서드명 검사를 새 실행 진입점과 취소/deadline 전달 검사로 갱신하고, 알림 조건 안의 snapshot 생성 검사도 추가했다.
 - fmt, clippy `--all-targets -- -D warnings`, release parallel 빌드: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
 - 최종 binary 16스레드 100ms 취소: cancelled, solver 100ms / 외부 wall 304.594ms. exact false 및 인증 upper 제거 확인.
 - 최종 binary 16스레드 100ms deadline: bounded, 세션 wall 100.076ms, lower 14,089 / upper 19,254로 oracle 14,097을 포함한다.
 
@@ -29,7 +29,7 @@
 
 ## 성능 측정 조건
 
-Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929, release binary. `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmark-d4-native-p6.mjs` 실행. 빌드·회귀 검증을 측정과 겹치지 않았다.
+Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929, release binary. `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행. 빌드·회귀 검증을 측정과 겹치지 않았다.
 
 각 스레드에서 전→후, 후→전 순서를 두 번씩 반복해 전후 각 4회 측정했다. 첫 두 회차가 엇갈려 두 회차를 추가했다. 세션 wall은 JS 준비·실제 UI/IPC를 제외하며, bridge는 주기적 진행 알림을 보내지 않는다. 실제 앱 전체 성능, 루브닐·마법·듀얼 입력, cold 10회 P95는 입증하지 않는다.
 

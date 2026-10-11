@@ -1,7 +1,7 @@
 # D4 기본 설정 조회 캐시
 
 - 날짜: 2026-09-16. 하위호환 강화는 보류한 상태로 진행했다.
-- 대상: `src-tauri/src/d4_native_evaluator.rs`, `src-tauri/src/d4_native_solver.rs`.
+- 대상: `src-tauri/src/optimization/evaluator.rs`, `src-tauri/src/optimization/solver.rs`.
 
 ## 변경과 정확성 계약
 
@@ -16,17 +16,17 @@
 ## 검증
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 95개(25+25+7+38, 공유 모듈의 binary별 실행 포함). 신규 JSON 타입·기본값·알 수 없는 필드·직렬화 왕복·유효하지 않은 입력 검증 포함.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개에서 JS/기존 Rust/캐시 Rust 동치.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, exhaustive oracle와 최적 결과 동치.
-- `node tools/test-d4-global-optimizer-stage2.mjs`: PASS, oracle 3,430 / solver 144 / bounds 1,093.
-- `node tools/test-d4-worker-stage3.mjs`, `node tools/test-d4-native-client.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`: PASS.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개에서 JS/기존 Rust/캐시 Rust 동치.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, exhaustive oracle와 최적 결과 동치.
+- `node tools/tests/optimization/test-crysta-search-oracle.mjs`: PASS, oracle 3,430 / solver 144 / bounds 1,093.
+- `node tools/tests/optimization/test-crysta-worker-protocol.mjs`, `node tools/tests/optimization/test-crysta-native-client.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`: PASS.
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: PASS.
 - `cargo build --manifest-path src-tauri/Cargo.toml --release --bin d4_native_exact --bin d4_native_parallel`: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 
 ## 실제 전체 후보 측정
 
-Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0. P6 물리 근거리, 패키지 992/844/724/929, 8스레드. `D4_P6_THREAD=8`, `D4_P6_PACKAGE_LIMIT=0`, 유틸리티 감사 비활성. `D4_NATIVE_BINARY`를 바꾸며 `node tools/benchmark-d4-native-p6.mjs`를 새 프로세스로 실행했다. 측정 중 빌드/테스트를 병행하지 않았다.
+Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0. P6 물리 근거리, 패키지 992/844/724/929, 8스레드. `D4_P6_THREAD=8`, `D4_P6_PACKAGE_LIMIT=0`, 유틸리티 감사 비활성. `D4_NATIVE_BINARY`를 바꾸며 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs`를 새 프로세스로 실행했다. 측정 중 빌드/테스트를 병행하지 않았다.
 
 baseline은 직전 signed envelope·분기 점수 캐시·스탯 합산 개선을 포함한 `d4_native_parallel-before-branch-alloc.exe`다. 변경본은 이번 분기 생성 공통화와 설정 조회 캐시를 포함한다. 이전 개선 효과를 이번 수치에 다시 합산하지 않는다.
 

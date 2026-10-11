@@ -1,6 +1,6 @@
 (function (root) {
   'use strict';
-  var SCHEMA='toram.d4-build-evaluator.v1';
+  var SCHEMA='toram.crysta-build-evaluator.v1';
   function clone(value){if(value===null||value===undefined||typeof value!=='object')return value;if(Array.isArray(value))return value.map(clone);return Object.keys(value).reduce(function(result,key){result[key]=clone(value[key]);return result;},{});}
   function freeze(value){if(!value||typeof value!=='object'||Object.isFrozen(value))return value;Object.keys(value).forEach(function(key){freeze(value[key]);});return Object.freeze(value);}
   function stableStringify(value){if(value===null||typeof value!=='object')return JSON.stringify(value);if(Array.isArray(value))return '['+value.map(stableStringify).join(',')+']';return '{'+Object.keys(value).sort().map(function(key){return JSON.stringify(key)+':'+stableStringify(value[key]);}).join(',')+'}';}
@@ -10,7 +10,7 @@
   function createScenarioSnapshot(baseContext,overrides){var input=overrides||{};var scenario={schema:SCHEMA,utilityPolicyVersion:2,basisName:String(input.basisName||baseContext&&baseContext.optimizationBasisName||'평타'),attackType:String(input.attackType||baseContext&&baseContext.atkType||'PHYS'),rangeType:String(input.rangeType||baseContext&&baseContext.rangeType||'SHORT'),requirements:Object.assign(defaultRequirements(baseContext),clone(input.requirements||{})),combo:clone(input.combo||null),metadata:clone(input.metadata||{})};scenario.hash=hashString(stableStringify(scenario));return freeze(scenario);}
   function violation(metric,actual,required){return{metric:metric,actual:Number(actual),required:Number(required),shortage:Number(required)-Number(actual)};}
   function utilityRequirements(requirements){var r=Object.assign({},requirements||{});if(r.aspd>1000&&r.aspd<=10000)r.aspd=1000+180*Math.floor((r.aspd-1000)/180);return r;}
-  function utilityValues(raw){return raw.d4UtilityValues||[raw.finalMaxHP,raw.finalMaxMP,raw.amprBeforeDual,raw.normalAttackCrit,raw.finalASPD];}
+  function utilityValues(raw){return raw.optimizationUtilityValues||[raw.finalMaxHP,raw.finalMaxMP,raw.amprBeforeDual,raw.normalAttackCrit,raw.finalASPD];}
   function outcomeFromRaw(raw,scenario,buildHash,immutable){
     var requirements=utilityRequirements(scenario.requirements);var violations=[];
     var values=utilityValues(raw);
@@ -24,19 +24,19 @@
     return immutable?freeze(outcome):outcome;
   }
   function evaluate(buildSnapshot,scenarioSnapshot,kernel){
-    if(!buildSnapshot||buildSnapshot.schema!==SCHEMA)throw new Error('유효한 D4 BuildSnapshot이 필요합니다.');
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('D4 계산 커널이 연결되지 않았습니다.');
+    if(!buildSnapshot||buildSnapshot.schema!==SCHEMA)throw new Error('유효한 CrystaOptimization BuildSnapshot이 필요합니다.');
+    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
     var scenario=scenarioSnapshot||createScenarioSnapshot(buildSnapshot.baseContext);var raw=evaluator(clone(buildSnapshot.baseContext),clone(buildSnapshot.candidates));
     return outcomeFromRaw(raw,scenario,buildSnapshot.hash,true);
   }
   function evaluateAggregate(baseContext,scenarioSnapshot,stats,kernel){
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('D4 계산 커널이 연결되지 않았습니다.');
-    var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var raw=evaluator(baseContext||{},[{name:'D4 aggregate',stats:stats||{}}]);
+    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
+    var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var raw=evaluator(baseContext||{},[{name:'CrystaOptimization aggregate',stats:stats||{}}]);
     return outcomeFromRaw(raw,scenario,null,false);
   }
   function evaluateAggregateSummary(baseContext,scenarioSnapshot,stats,kernel){
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('D4 계산 커널이 연결되지 않았습니다.');
-    var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var requirements=utilityRequirements(scenario.requirements);var raw=evaluator(baseContext||{},[{name:'D4 aggregate',stats:stats||{}}],true);var values=utilityValues(raw);var feasible=!(raw.ctx&&raw.ctx.statDiagnostics&&raw.ctx.statDiagnostics.length);
+    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
+    var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var requirements=utilityRequirements(scenario.requirements);var raw=evaluator(baseContext||{},[{name:'CrystaOptimization aggregate',stats:stats||{}}],true);var values=utilityValues(raw);var feasible=!(raw.ctx&&raw.ctx.statDiagnostics&&raw.ctx.statDiagnostics.length);
     if(requirements.maxHp!==null&&requirements.maxHp!==undefined&&values[0]<requirements.maxHp)feasible=false;
     if(requirements.maxMp!==null&&requirements.maxMp!==undefined&&values[1]<requirements.maxMp)feasible=false;
     if(requirements.amprBeforeDual!==null&&requirements.amprBeforeDual!==undefined&&values[2]<requirements.amprBeforeDual)feasible=false;

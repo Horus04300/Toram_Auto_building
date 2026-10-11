@@ -26,7 +26,7 @@
         <progress id="updateProgress" max="100" aria-label="업데이트 다운로드 진행률" hidden></progress>
         <p id="updateInstallNotice">설치하면 앱이 종료된 뒤 다시 실행됩니다. 현재 세팅은 설치 전에 저장합니다.</p>
         <div class="update-actions">
-            <button type="button" id="updateInstall" class="d4-apply-button">업데이트</button>
+            <button type="button" id="updateInstall" class="optimization-apply-button">업데이트</button>
             <button type="button" id="updateRetryCheck" class="result-secondary-button" hidden>다시 확인</button>
             <button type="button" id="updateLater" class="result-secondary-button">나중에</button>
         </div>
@@ -36,7 +36,7 @@
         <p id="updateConfirmMessage"></p>
         <form method="dialog" class="update-actions">
             <button value="cancel" class="result-secondary-button" autofocus>취소</button>
-            <button id="updateConfirmAccept" value="approve" class="d4-apply-button">업데이트</button>
+            <button id="updateConfirmAccept" value="approve" class="optimization-apply-button">업데이트</button>
         </form>
     </dialog>
     <section class="skill-bookmark-section" aria-labelledby="combatSkillBookmarkTitle">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="result-action-buttons">
                     <button type="button" id="optimizationRequirementsButton" class="result-secondary-button">요구조건</button>
-                    <button type="button" id="d4RunPreciseOptimization" class="d4-apply-button">정밀 계산 시작</button>
+                    <button type="button" id="optimizationRunPreciseOptimization" class="optimization-apply-button">정밀 계산 시작</button>
                 </div>
             </div>
             <p id="optimizationBasisLabel" class="optimization-basis-label">[평타] 기준 빠른 추천</p>
@@ -193,26 +193,26 @@
                 <span style="font-weight:normal; font-size:13px;">이 상태에서는 공격력이나 관통력이 아주 조금만 올라도 데미지가 수백%씩 폭증하는 수학적 착시 현상(효율 과표집)이 발생합니다. 정확한 효율을 보시려면 스킬 상수를 높은 값으로 조정하거나, 적 방어력을 낮춰주세요.</span>
             </div>
 
-            <section id="d4RecommendationOverview" class="d4-recommendation-overview" hidden aria-live="polite">
-                <div class="d4-recommendation-heading">
-                    <div><span id="d4RecommendationEyebrow" class="d4-eyebrow">빠른 크리스타 추천</span><h2>현재 빌드에서 무엇이 달라지는지</h2></div>
-                    <div class="d4-recommendation-actions">
-                        <span id="top3CurrentDmgBadge" class="d4-recommendation-certification"></span>
-                        <button type="button" id="d4ApplyRecommendedCrystas" class="d4-apply-button" hidden>추천 크리스타를 장비에 적용</button>
+            <section id="optimizationRecommendationOverview" class="optimization-recommendation-overview" hidden aria-live="polite">
+                <div class="optimization-recommendation-heading">
+                    <div><span id="optimizationRecommendationEyebrow" class="optimization-eyebrow">빠른 크리스타 추천</span><h2>현재 빌드에서 무엇이 달라지는지</h2></div>
+                    <div class="optimization-recommendation-actions">
+                        <span id="top3CurrentDmgBadge" class="optimization-recommendation-certification"></span>
+                        <button type="button" id="optimizationApplyRecommendedCrystas" class="optimization-apply-button" hidden>추천 크리스타를 장비에 적용</button>
                     </div>
                 </div>
-                <div id="d4RecommendationSummary" class="d4-recommendation-summary"></div>
+                <div id="optimizationRecommendationSummary" class="optimization-recommendation-summary"></div>
             </section>
-            <section class="d4-progress-panel" id="d4OptimizationProgress" aria-live="polite" hidden>
-                <div class="d4-progress-head"><strong id="d4OptimizationStatus">전역 후보를 준비하고 있습니다.</strong><span><button type="button" id="d4OptimizationContinue" hidden>정밀 계산 계속</button><button type="button" id="d4OptimizationPause" hidden>일시정지</button><button type="button" id="d4OptimizationCancel">계산 취소</button></span></div>
-                <div class="d4-progress-track" id="d4OptimizationTrack" role="progressbar" aria-label="전역 최적화 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuetext="후보 준비 중"><span id="d4OptimizationBar"></span></div>
-                <div class="d4-progress-meta" id="d4OptimizationMeta">캐시와 입력 스냅샷을 확인하고 있습니다.</div>
+            <section class="optimization-progress-panel" id="crystaOptimizationProgress" aria-live="polite" hidden>
+                <div class="optimization-progress-head"><strong id="crystaOptimizationStatus">전역 후보를 준비하고 있습니다.</strong><span><button type="button" id="crystaOptimizationContinue" hidden>정밀 계산 계속</button><button type="button" id="crystaOptimizationPause" hidden>일시정지</button><button type="button" id="crystaOptimizationCancel">계산 취소</button></span></div>
+                <div class="optimization-progress-track" id="crystaOptimizationTrack" role="progressbar" aria-label="전역 최적화 진행률" aria-valuemin="0" aria-valuemax="100" aria-valuetext="후보 준비 중"><span id="crystaOptimizationBar"></span></div>
+                <div class="optimization-progress-meta" id="crystaOptimizationMeta">캐시와 입력 스냅샷을 확인하고 있습니다.</div>
             </section>
             <div class="top3-container" id="top3ListContainer"></div>
 
             <details class="final-rec" id="finalRecContainer">
                 <div class="total-eff-badge" id="globalEffTextBadge"></div>
-                <summary>전체 추천 옵션 보기 <span id="d4RecommendationOptionCount"></span></summary>
+                <summary>전체 추천 옵션 보기 <span id="optimizationRecommendationOptionCount"></span></summary>
                 <div id="finalRecText" style="font-size:15px; font-weight:bold; color:#2c3e50; line-height:1.6;"></div>
                 <div class="final-rec-tags" id="finalRecTags"></div>
             </details>
@@ -280,7 +280,7 @@
                 <button type="button" id="optimizationRequirementsReset" class="result-secondary-button">기본값 복원</button>
                 <span></span>
                 <button type="button" id="optimizationRequirementsCancel" class="result-secondary-button">취소</button>
-                <button type="button" id="optimizationRequirementsApply" class="d4-apply-button">적용</button>
+                <button type="button" id="optimizationRequirementsApply" class="optimization-apply-button">적용</button>
             </div>
         </section>
     </div>

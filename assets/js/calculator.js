@@ -1,3 +1,49 @@
+// Decimal coefficients are ratios, not rounded binary multipliers. Floor only
+// after the complete formula stage; never snap a nearly-integral float upward.
+var ToramExactMath = (function () {
+    var cache = new Map();
+    function parts(value) {
+        if (Number.isSafeInteger(value)) return [BigInt(value), 1n];
+        if (cache.has(value)) return cache.get(value);
+        var text = String(value).toLowerCase().split('e');
+        var exponent = Number(text[1] || 0), mantissa = text[0];
+        var dot = mantissa.indexOf('.');
+        var places = dot < 0 ? 0 : mantissa.length - dot - 1;
+        var numerator = BigInt(mantissa.replace('.', ''));
+        var scale = places - exponent;
+        var pair = scale >= 0 ? [numerator, 10n ** BigInt(scale)] : [numerator * 10n ** BigInt(-scale), 1n];
+        if (cache.size >= 1024) cache.clear();
+        cache.set(value, pair);
+        return pair;
+    }
+    function quotient(n, d) {
+        if (d < 0n) { n = -n; d = -d; }
+        var q = n / d;
+        if (n % d < 0n) q -= 1n;
+        return Number(q);
+    }
+    function ratio(value, rate, divisor, flat) {
+        divisor = divisor === undefined ? 1 : divisor;
+        flat = flat === undefined ? 0 : flat;
+        if (![value, rate, divisor, flat].every(Number.isFinite) || divisor === 0) return Math.floor(value * rate / divisor + flat);
+        var product = value * rate, total = product + flat * divisor;
+        if (Number.isSafeInteger(value) && Number.isSafeInteger(rate) && Number.isSafeInteger(divisor) && Number.isSafeInteger(flat) && Number.isSafeInteger(product) && Number.isSafeInteger(flat * divisor) && Number.isSafeInteger(total)) return Math.floor(total / divisor);
+        var v = parts(value), r = parts(rate), d = parts(divisor), f = parts(flat);
+        var n = v[0] * r[0] * d[1], den = v[1] * r[1] * d[0];
+        return quotient(n * f[1] + f[0] * den, den * f[1]);
+    }
+    function percent(value, rate, flat) {
+        flat = flat === undefined ? 0 : flat;
+        if (Number.isSafeInteger(rate) && Math.abs(rate) < 9007199254740000) return ratio(value, 100 + rate, 100, flat);
+        if (![value, rate, flat].every(Number.isFinite)) return Math.floor(value * (1 + rate / 100) + flat);
+        var v = parts(value), r = parts(rate), f = parts(flat);
+        var n = v[0] * (100n * r[1] + r[0]), d = v[1] * r[1] * 100n;
+        return quotient(n * f[1] + f[0] * d, d * f[1]);
+    }
+    return Object.freeze({ ratio:ratio, percent:percent });
+}());
+window.ToramExactMath = ToramExactMath;
+
         function applyStat(ctx, key, val) {
             var policies = window.ToramCalculationPolicies;
             if (!policies || typeof policies.applyStat !== 'function') throw new Error('계산 정책이 준비되지 않았습니다.');
@@ -10,8 +56,8 @@
             var percent = Number(modifier && modifier.percent) || 0;
             var multiplier = Number(modifier && modifier.multiplier);
             if (!Number.isFinite(multiplier)) multiplier = 1;
-            if (percent) result = Math.floor(result * (100 + percent) / 100);
-            if (multiplier !== 1) result = Math.floor(result * multiplier);
+            if (percent) result = ToramExactMath.percent(result, percent);
+            if (multiplier !== 1) result = ToramExactMath.ratio(result, multiplier);
             result += Number(modifier && modifier.flat) || 0;
             return Math.floor(result);
         }
@@ -246,8 +292,8 @@
                 var unsheatheF = Number(ctx.unsheatheF) || 0;
                 ctx.unsheatheP = 0;
                 ctx.unsheatheF = 0;
-                var convertedUnsheatheP = Math.floor(rate * unsheatheP);
-                var convertedUnsheatheF = Math.floor(rate * unsheatheF);
+                var convertedUnsheatheP = ToramExactMath.ratio(unsheatheP, rate);
+                var convertedUnsheatheF = ToramExactMath.ratio(unsheatheF, rate);
                 ctx.atkP += convertedUnsheatheP;
                 ctx.baseWpnAtkF = (Number(ctx.baseWpnAtkF) || 0) + convertedUnsheatheP;
                 ctx.atkF += convertedUnsheatheF;
@@ -291,38 +337,38 @@
 
             applyActiveSkillStatConversions(ctx);
 
-            var totalSTR = Math.floor(ctx.strBase * (1 + ctx.strP/100) + ctx.strF);
-            var totalDEX = Math.floor(ctx.dexBase * (1 + ctx.dexP/100) + ctx.dexF);
-            var totalINT = Math.floor(ctx.intBase * (1 + ctx.intP/100) + ctx.intF);
-            var totalAGI = Math.floor(ctx.agiBase * (1 + ctx.agiP/100) + ctx.agiF);
-            var totalVIT = Math.floor(ctx.vitBase * (1 + ctx.vitP/100) + ctx.vitF);
-            var finalMaxMP = Math.max(0, Math.floor(100 + Number(ctx.level) + totalINT * 0.1 + ctx.maxMpF));
+            var totalSTR = ToramExactMath.percent(ctx.strBase, ctx.strP, ctx.strF);
+            var totalDEX = ToramExactMath.percent(ctx.dexBase, ctx.dexP, ctx.dexF);
+            var totalINT = ToramExactMath.percent(ctx.intBase, ctx.intP, ctx.intF);
+            var totalAGI = ToramExactMath.percent(ctx.agiBase, ctx.agiP, ctx.agiF);
+            var totalVIT = ToramExactMath.percent(ctx.vitBase, ctx.vitP, ctx.vitF);
+            var finalMaxMP = Math.max(0, ToramExactMath.ratio(totalINT, 1, 10, 100 + Number(ctx.level) + ctx.maxMpF));
             var finalMaxMPAfterBuff = finalMaxMP;
-            var baseMaxHP = Math.floor((totalVIT + 22.41) * Number(ctx.level) / 3 + 93);
-            var finalMaxHP = Math.min(99999, Math.max(0, Math.floor(baseMaxHP * (1 + ctx.maxHpP / 100)) + ctx.maxHpF));
+            var baseMaxHP = ToramExactMath.ratio(totalVIT * 100 + 2241, Number(ctx.level), 300, 93);
+            var finalMaxHP = Math.min(99999, Math.max(0, ToramExactMath.percent(baseMaxHP, ctx.maxHpP) + ctx.maxHpF));
             var baseAMPR = Math.floor(10 + finalMaxMP / 100);
-            var equipmentAndBuffAMPR = Math.floor(baseAMPR * (100 + ctx.amprP) / 100) + ctx.amprF;
+            var equipmentAndBuffAMPR = ToramExactMath.percent(baseAMPR, ctx.amprP) + ctx.amprF;
             var normalAttackAmpr = resolveNormalAttackAmpr(equipmentAndBuffAMPR, ctx.normalAttackAmprProfile);
             var amprBeforeDual = normalAttackAmpr.final;
             
-            var statAtkUp = Math.floor(ctx.strBase * ctx.atkUpSTR / 100) +
-                            Math.floor(ctx.dexBase * ctx.atkUpDEX / 100) +
-                            Math.floor(ctx.intBase * ctx.atkUpINT / 100) +
-                            Math.floor(ctx.agiBase * ctx.atkUpAGI / 100) +
-                            Math.floor(ctx.vitBase * ctx.atkUpVIT / 100);
+            var statAtkUp = ToramExactMath.ratio(ctx.strBase, ctx.atkUpSTR, 100) +
+                            ToramExactMath.ratio(ctx.dexBase, ctx.atkUpDEX, 100) +
+                            ToramExactMath.ratio(ctx.intBase, ctx.atkUpINT, 100) +
+                            ToramExactMath.ratio(ctx.agiBase, ctx.atkUpAGI, 100) +
+                            ToramExactMath.ratio(ctx.vitBase, ctx.atkUpVIT, 100);
 
-            var statMatkUp = Math.floor(ctx.strBase * ctx.matkUpSTR / 100) +
-                            Math.floor(ctx.dexBase * ctx.matkUpDEX / 100) +
-                            Math.floor(ctx.intBase * ctx.matkUpINT / 100) +
-                            Math.floor(ctx.agiBase * ctx.matkUpAGI / 100) +
-                            Math.floor(ctx.vitBase * ctx.matkUpVIT / 100);
+            var statMatkUp = ToramExactMath.ratio(ctx.strBase, ctx.matkUpSTR, 100) +
+                            ToramExactMath.ratio(ctx.dexBase, ctx.matkUpDEX, 100) +
+                            ToramExactMath.ratio(ctx.intBase, ctx.matkUpINT, 100) +
+                            ToramExactMath.ratio(ctx.agiBase, ctx.matkUpAGI, 100) +
+                            ToramExactMath.ratio(ctx.vitBase, ctx.matkUpVIT, 100);
 
 
             // 1. 최종 무기 공격력: 기본 무기 공격력 → 무기 ATK%·재련 → 무기 ATK(+)
             // 일진강풍의 발도공격% 변환은 이 첫 단계의 기본 무기 공격력에만 더한다.
             var effectiveBaseWpnAtk = Number(ctx.wpnAtk) + (Number(ctx.baseWpnAtkF) || 0);
-            var mainWpnBase = effectiveBaseWpnAtk + Math.floor(effectiveBaseWpnAtk * ctx.watkP / 100) + ctx.watkF;
-            var refineWpnBonus = Math.floor(effectiveBaseWpnAtk * Math.pow(ctx.wpnRefine, 2) / 100) + ctx.wpnRefine;
+            var mainWpnBase = effectiveBaseWpnAtk + ToramExactMath.ratio(effectiveBaseWpnAtk, ctx.watkP, 100) + ctx.watkF;
+            var refineWpnBonus = ToramExactMath.ratio(effectiveBaseWpnAtk, Math.pow(ctx.wpnRefine, 2), 100) + ctx.wpnRefine;
             var baseWpnAtk = mainWpnBase + refineWpnBonus;
 
             if (ctx.subType === '화살' && (ctx.mainType === '활' || ctx.mainType === '자동활')) {
@@ -332,7 +378,7 @@
             var statAtk = 0;
             var statMatk = totalINT * 4 + totalDEX * 1; 
             var matkRatio = (ctx.mainType === '지팡이' || ctx.mainType === '마도구') ? 1.0 : 0.0;
-            var wpnMatkContrib = Math.floor(mainWpnBase * matkRatio);
+            var wpnMatkContrib = ToramExactMath.ratio(mainWpnBase, matkRatio);
             var m = ctx.mainType;
 
             if (m === '한손검') { 
@@ -359,9 +405,9 @@
             var conversionAddMatk = 0;
             var conversionIntMatk = 0;
             if (ctx.conversionLevel > 0 && ['한손검','양손검','자동활','권갑'].indexOf(ctx.mainType) >= 0) {
-                conversionAddMatk = Math.floor(baseWpnAtk * Math.pow(ctx.conversionLevel, 2) / 100);
+                conversionAddMatk = ToramExactMath.ratio(baseWpnAtk, Math.pow(ctx.conversionLevel, 2), 100);
                 if (ctx.mainType === '권갑') conversionAddMatk = Math.floor(conversionAddMatk / 2);
-                else conversionIntMatk = Math.floor(totalINT * ctx.conversionLevel * .1);
+                else conversionIntMatk = ToramExactMath.ratio(totalINT, ctx.conversionLevel, 10);
             }
 
             //  서브 마도구 페널티 및 '마법전사의 마음가짐' 연산 로직
@@ -383,11 +429,11 @@
 
 
             // 3. 무기별 MATK 반영률은 위 무기 분기에서 확정한다 (지팡이·마도구 100%, 권갑 50%).
-            wpnMatkContrib = Math.floor(baseWpnAtk * matkRatio);
+            wpnMatkContrib = ToramExactMath.ratio(baseWpnAtk, matkRatio);
 
             // 4. 최종 물리 ATK 산출
             var preFinalAtk = baseWpnAtk + statAtk + Number(ctx.level) + statAtkUp;
-            var finalATK = Math.floor(preFinalAtk * (1 + ctx.atkP / 100)) + ctx.atkF;
+            var finalATK = ToramExactMath.percent(preFinalAtk, ctx.atkP) + ctx.atkF;
 
             // ---- 피드백 1: 듀얼소드(서브 한손검) 최종 ATK 및 서브 ATK 로직 추가 ----
             var finalSubAtk = 0;
@@ -397,21 +443,21 @@
             
             if (isDualSword) {
                 // 서브 무기 최종 공격력 (재련치 제곱을 200으로 나눔)
-                var subWpnBase = Number(ctx.subAtk) + Math.floor(ctx.subAtk * ctx.watkP / 100) + Math.floor(ctx.subAtk * Math.pow(ctx.subRefine, 2) / 200) + Number(ctx.subRefine) + ctx.watkF;
+                var subWpnBase = Number(ctx.subAtk) + ToramExactMath.ratio(ctx.subAtk, ctx.watkP, 100) + ToramExactMath.ratio(ctx.subAtk, Math.pow(ctx.subRefine, 2), 200) + Number(ctx.subRefine) + ctx.watkF;
                 
                 // 서브 스탯 공격력 (통상 듀얼소드 서브 스탯은 STR 1 + AGI 3)
                 var subStatAtk = Math.floor((totalSTR * 1) + (totalAGI * 3));
                 
                 // 서브 ATK
                 var preFinalSubAtk = subWpnBase + subStatAtk + ctx.level;
-                finalSubAtk = Math.floor(preFinalSubAtk * (1 + ctx.atkP / 100)) + ctx.atkF;
+                finalSubAtk = ToramExactMath.percent(preFinalSubAtk, ctx.atkP) + ctx.atkF;
                 
                 // 서브 안정률 (최대 100%)
-                finalSubStab = Math.floor(ctx.subStab * 0.5) + Math.floor(totalSTR * 0.06) + Math.floor(totalAGI * 0.04) + ctx.stability;
+                finalSubStab = Math.floor(ctx.subStab * 0.5) + ToramExactMath.ratio(totalSTR, 6, 100) + ToramExactMath.ratio(totalAGI, 4, 100) + ctx.stability;
                 if (finalSubStab > 100) finalSubStab = 100;
                 
                 // 듀얼소드 최종 ATK 합산
-                finalATK = finalATK + Math.floor(finalSubAtk * finalSubStab / 100);
+                finalATK = finalATK + ToramExactMath.ratio(finalSubAtk, finalSubStab, 100);
             }
             // -------------------------------------------------------------
 
@@ -419,53 +465,53 @@
             // 최종 마법 MATK 산출 
             var preFinalMatk = wpnMatkContrib + statMatk + Number(ctx.level) + statMatkUp;
             var conversionFlatMatk = Math.floor(conversionAddMatk) + Math.floor(conversionIntMatk);
-            var finalMATK = Math.floor(preFinalMatk * (1 + ctx.matkP / 100)) + ctx.matkF + conversionFlatMatk;
+            var finalMATK = ToramExactMath.percent(preFinalMatk, ctx.matkP) + ctx.matkF + conversionFlatMatk;
             
             
             var baseCDMG = (totalSTR >= totalAGI) ? 150 + Math.floor(totalSTR/5) : 150 + Math.floor((totalSTR+totalAGI)/10);
-            var calcCDMG = Math.floor(baseCDMG * (1 + ctx.cdmgP/100)) + ctx.cdmgF;
+            var calcCDMG = ToramExactMath.percent(baseCDMG, ctx.cdmgP) + ctx.cdmgF;
             if (calcCDMG > 300) calcCDMG = 300 + Math.floor((calcCDMG - 300)/2);
             
-            var baseCrit = 25 + Math.floor(ctx.crtBase / 3.4);
-            var normalAttackCritRaw = Math.floor(baseCrit * (1 + ctx.critP/100)) + ctx.critF;
+            var baseCrit = 25 + ToramExactMath.ratio(ctx.crtBase, 10, 34);
+            var normalAttackCritRaw = ToramExactMath.percent(baseCrit, ctx.critP) + ctx.critF;
             var normalAttackCrit = normalAttackCritRaw - ctx.bossCritResist;
             var finalCrit = normalAttackCritRaw;
             var attackCritMultiplier = Number(ctx.criticalChanceMultiplier); if (!Number.isFinite(attackCritMultiplier)) attackCritMultiplier = 1;
-            finalCrit = Math.floor((finalCrit + (Number(ctx.criticalChanceBonus) || 0)) * attackCritMultiplier);
+            finalCrit = ToramExactMath.ratio(finalCrit + (Number(ctx.criticalChanceBonus) || 0), attackCritMultiplier);
             if (ctx.fixedCriticalChance !== null && ctx.fixedCriticalChance !== undefined && Number.isFinite(Number(ctx.fixedCriticalChance))) finalCrit = Number(ctx.fixedCriticalChance);
             if (Number(ctx.minimumCriticalDamage)) calcCDMG = Math.max(calcCDMG, Number(ctx.minimumCriticalDamage));
             
             var baseASPDConst = BASE_ASPD_MAP[m] || 100;
             var statAspd = 0;
             
-            if (m === "한손검" || ctx.subType === "한손검(듀얼소드)") { statAspd = (totalAGI * 4.2) + (totalSTR * 0.2); }
-            else if (m === "양손검") { statAspd = (totalAGI * 2.1) + (totalSTR * 0.2); }
-            else if (m === "활") { statAspd = (totalAGI * 3.1) + (totalDEX * 0.2); }
-            else if (m === "자동활") { statAspd = (totalAGI * 2.2) + (totalDEX * 0.2); }
-            else if (m === "지팡이") { statAspd = (totalAGI * 1.8) + (totalINT * 0.2); }
-            else if (m === "마도구") { statAspd = (totalAGI * 4.0) + (totalINT * 0.2); }
-            else if (m === "권갑") { statAspd = (totalAGI * 4.6) + (totalDEX * 0.1) + (totalSTR * 0.1); }
-            else if (m === "선풍창") { statAspd = (totalAGI * 3.5) + (totalSTR * 0.2); }
-            else if (m === "발도검") { statAspd = (totalAGI * 3.9) + (totalDEX * 0.3); }
-            else { statAspd = totalAGI * 9.6; }
+            if (m === "한손검" || ctx.subType === "한손검(듀얼소드)") { statAspd = (totalAGI * 42 + totalSTR * 2) / 10; }
+            else if (m === "양손검") { statAspd = (totalAGI * 21 + totalSTR * 2) / 10; }
+            else if (m === "활") { statAspd = (totalAGI * 31 + totalDEX * 2) / 10; }
+            else if (m === "자동활") { statAspd = (totalAGI * 22 + totalDEX * 2) / 10; }
+            else if (m === "지팡이") { statAspd = (totalAGI * 18 + totalINT * 2) / 10; }
+            else if (m === "마도구") { statAspd = (totalAGI * 40 + totalINT * 2) / 10; }
+            else if (m === "권갑") { statAspd = (totalAGI * 46 + totalDEX + totalSTR) / 10; }
+            else if (m === "선풍창") { statAspd = (totalAGI * 35 + totalSTR * 2) / 10; }
+            else if (m === "발도검") { statAspd = (totalAGI * 39 + totalDEX * 3) / 10; }
+            else { statAspd = totalAGI * 96 / 10; }
 
             var armorAspdP = 0;
             if(ctx.armorType === '경량옷') armorAspdP = 50;
             else if(ctx.armorType === '중량옷') armorAspdP = -50;
             
             var preAspd = baseASPDConst + Math.floor(statAspd) + Number(ctx.level);
-            var finalASPD = Math.floor(preAspd * (1 + (ctx.aspdP + armorAspdP) / 100)) + ctx.aspdF;
+            var finalASPD = ToramExactMath.percent(preAspd, ctx.aspdP + armorAspdP) + ctx.aspdF;
 
-            var preCspd = Number(ctx.level) + Math.floor(1.16 * totalAGI) + Math.floor(2.94 * totalDEX);
-            var finalCSPD = Math.floor(preCspd * (1 + ctx.cspdP / 100)) + ctx.cspdF;
+            var preCspd = Number(ctx.level) + ToramExactMath.ratio(totalAGI, 116, 100) + ToramExactMath.ratio(totalDEX, 294, 100);
+            var finalCSPD = ToramExactMath.percent(preCspd, ctx.cspdP) + ctx.cspdF;
 
             var aspdMotionBonus = finalASPD >= 1000 ? (finalASPD - 1000) / 180 : 0;
             var aspdMotionFloor = Math.min(50, Math.floor(aspdMotionBonus));
             var finalMotionSpeed = Math.min(50, aspdMotionFloor + (ctx.motionSpeed || 0));
-            // D4 utility goals saturate independently of raw combat stats.
+            // CrystaOptimization utility goals saturate independently of raw combat stats.
             // MP includes the three-stack Godspeed reserve; AMPR% is deliberately
             // excluded from this goal metric, while passive/active AMPR remains.
-            var d4UtilityValues = [finalMaxHP,
+            var optimizationUtilityValues = [finalMaxHP,
                 Math.min(Number(ctx.godspeedWieldLevel) > 0 ? 2300 : 2000, finalMaxMP),
                 resolveNormalAttackAmpr(Math.floor(10 + Math.min(2000, finalMaxMP) / 100) + ctx.amprF, ctx.normalAttackAmprProfile).final,
                 Math.max(0, Math.min(100, normalAttackCrit)),
@@ -539,7 +585,7 @@
     var finalCdmgVal = calcCDMG;
     var finalStab = physStab;
     
-    var critTip = `기초 크리율: 25 + 스탯보정(${Math.floor(ctx.crtBase / 3.4)}) = ${baseCrit}\n옵션 보정: +${ctx.critP}%, +${ctx.critF}\n`;
+    var critTip = `기초 크리율: 25 + 스탯보정(${ToramExactMath.ratio(ctx.crtBase, 10, 34)}) = ${baseCrit}\n옵션 보정: +${ctx.critP}%, +${ctx.critF}\n`;
     var cdmgTip = `기초 크뎀: ${baseCDMG}\n옵션 보정: +${ctx.cdmgP}%, +${ctx.cdmgF}\n`;
 
     if (isMag) {
@@ -550,7 +596,7 @@
             magCritReflect += 2.5 * ctx.dualBringerLevel;
         }
 
-        finalCritRate = Math.floor(finalCrit * (magCritReflect / 100));
+        finalCritRate = ToramExactMath.ratio(finalCrit, magCritReflect, 100);
         critTip += `마법 크리 반영률: ${magCritReflect}% (스펠 버스트 ${spellBurstReflect}%${weakenCriticalReflect ? ' + 쇠약 50%' : ''}, 최종: ${finalCritRate})`;
         
         var magCdmgReflect = 50 + spellBurstReflect;
@@ -558,7 +604,7 @@
             magCdmgReflect += 2.5 * ctx.dualBringerLevel;
         }
         
-        finalCdmgVal = 100 + Math.floor((calcCDMG - 100) * (magCdmgReflect / 100));
+        finalCdmgVal = 100 + ToramExactMath.ratio(calcCDMG - 100, magCdmgReflect, 100);
         cdmgTip += `마법 크뎀 반영률: ${magCdmgReflect}% (최종: ${finalCdmgVal}%)`;
 
     finalStab = Math.floor(50 + physStab / 2);
@@ -578,17 +624,12 @@
         critTip = '선택한 공격은 크리티컬이 발생하지 않습니다.';
     }
 
-    var effectiveCritRate = finalCritRate - ctx.bossCritResist;
-    var critRateEv = Math.max(0, Math.min(effectiveCritRate, 100)) / 100;
-    var evCdmgMult = (critRateEv * finalCdmgVal + (1 - critRateEv) * 100) / 100;
-    var avgStabMult = (100 + finalStab) / 200;
-
     var targetDef = isMag ? ctx.bossMdef : ctx.bossDef;
     var targetPierce = isMag ? ctx.magPierce + (Number(ctx.magicPierceSkillBonus) || 0) : ctx.physPierce + (Number(ctx.physicalPierceSkillBonus) || 0);
     var targetResistanceComponents = [isMag ? ctx.bossMagResist : ctx.bossPhysResist];
     if (Array.isArray(ctx.additionalTargetResistances)) targetResistanceComponents = targetResistanceComponents.concat(ctx.additionalTargetResistances);
     var targetResistance = calculateResistanceProfile(targetResistanceComponents);
-    var effectiveDef = Math.floor(targetDef * (1 - (targetPierce / 100)));
+    var effectiveDef = ToramExactMath.percent(targetDef, -targetPierce);
     if ((isMag && ctx.ignoreMdef) || (!isMag && ctx.ignoreDefense)) effectiveDef = 0;
     else if (isMag && ctx.halfMdefIgnored) effectiveDef = Math.floor(effectiveDef / 2);
     if (effectiveDef < 0) effectiveDef = 0;
@@ -635,7 +676,7 @@
 
             // 원문 순서: (ATK+레벨 차)×내성 + 발도공격(+) + 상수 - 관통 후 방어력.
             var resistMult = targetResistance.multiplier;
-            var rawAtkBase = Math.floor((baseAtkRaw + lvDiff) * resistMult);
+            var rawAtkBase = ToramExactMath.ratio(baseAtkRaw + lvDiff, resistMult);
             if (ctx.chkIsUnsheathe) rawAtkBase += Number(ctx.unsheatheF) || 0;
             rawAtkBase += finalSkillConst - effectiveDef;
             var isPierced = (rawAtkBase > 0);
@@ -643,26 +684,21 @@
 
             var rangeDmgPct = (ctx.rangeType === 'SHORT') ? ctx.srw : ctx.lrw;
             if (ctx.useHigherRangeDamage) rangeDmgPct = Math.max(ctx.srw, ctx.lrw);
-            var rangeMult = 1 + (rangeDmgPct / 100);
-            var unsheatheMult = ctx.chkIsUnsheathe ? (1 + ctx.unsheatheP / 100) : 1;
-            var elemMult = 1 + (ctx.elemP / 100);
-            var activeBuffDamageMult = 1 + (ctx.damageP / 100);
-
             // 원문에서 곱셈으로 표시된 각 단계는 단계마다 소수점을 버린다.
-            var damageFactor = Math.floor(rawAtkBase * evCdmgMult);
-            damageFactor = Math.floor(damageFactor * elemMult);
-            damageFactor = Math.floor(damageFactor * finalSkillMult);
-            damageFactor = Math.floor(damageFactor * unsheatheMult);
-            damageFactor = Math.floor(damageFactor * avgStabMult);
-            damageFactor = Math.floor(damageFactor * passiveDamageMult);
-            damageFactor = Math.floor(damageFactor * rangeMult);
-            damageFactor = Math.floor(damageFactor * activeDamageLayerMult);
-            damageFactor = Math.floor(damageFactor * activeBuffDamageMult);
-            damageFactor = Math.floor(damageFactor * comboDamageMult);
+            var damageFactor = ToramExactMath.ratio(rawAtkBase, 10000 + Math.max(0, Math.min(100, finalCritRate - ctx.bossCritResist)) * (finalCdmgVal - 100), 10000);
+            damageFactor = ToramExactMath.percent(damageFactor, ctx.elemP);
+            damageFactor = ToramExactMath.ratio(damageFactor, finalSkillMult);
+            damageFactor = ToramExactMath.percent(damageFactor, ctx.chkIsUnsheathe ? ctx.unsheatheP : 0);
+            damageFactor = ToramExactMath.ratio(damageFactor, 100 + finalStab, 200);
+            damageFactor = ToramExactMath.ratio(damageFactor, passiveDamageMult);
+            damageFactor = ToramExactMath.percent(damageFactor, rangeDmgPct);
+            damageFactor = ToramExactMath.ratio(damageFactor, activeDamageLayerMult);
+            damageFactor = ToramExactMath.percent(damageFactor, ctx.damageP);
+            damageFactor = ToramExactMath.ratio(damageFactor, comboDamageMult);
             var procDamage = calculateProcDamageProfile(ctx.procDamageModifiers);
             var procTriggeredDamageFactor = damageFactor * procDamage.triggeredMultiplier;
             var procExpectedDamageFactor = damageFactor * procDamage.expectedMultiplier;
-            if (summaryOnly) return { ctx:{ statDiagnostics:ctx.statDiagnostics || [] }, d4UtilityValues:d4UtilityValues, finalMaxHP:finalMaxHP, finalMaxMP:finalMaxMP, amprBeforeDual:amprBeforeDual, normalAttackCrit:normalAttackCrit, finalASPD:finalASPD, optimizationDamageFactor:procExpectedDamageFactor };
+            if (summaryOnly) return { ctx:{ statDiagnostics:ctx.statDiagnostics || [] }, optimizationUtilityValues:optimizationUtilityValues, finalMaxHP:finalMaxHP, finalMaxMP:finalMaxMP, amprBeforeDual:amprBeforeDual, normalAttackCrit:normalAttackCrit, finalASPD:finalASPD, optimizationDamageFactor:procExpectedDamageFactor };
             var poisonDefenseAverage = (Number(ctx.bossDef) + Number(ctx.bossMdef)) / 2;
             var poisonDefenseRatio = Number(ctx.bossLevel) > 0 ? Math.min(.5, poisonDefenseAverage / (Number(ctx.bossLevel) * 6)) : 0;
             var poisonResistanceAverage = (Number(ctx.bossPhysResist) + Number(ctx.bossMagResist)) / 2;
@@ -683,7 +719,7 @@
                 finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
                 finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: ctx.chkGuaranteedCrit ? "확정치명타" : finalCritRate,
                 normalAttackCrit: normalAttackCrit,
-                d4UtilityValues:d4UtilityValues,
+                optimizationUtilityValues:optimizationUtilityValues,
                 finalASPD: finalASPD, finalCSPD: finalCSPD, finalStab: finalStab,
                 finalMaxHP: finalMaxHP, finalMaxMP: finalMaxMP, finalMaxMPAfterBuff: finalMaxMPAfterBuff,
                 baseAMPR: baseAMPR, equipmentAndBuffAMPR: equipmentAndBuffAMPR,

@@ -4,10 +4,10 @@
 
 ## 입력과 방법
 
-- 실제 보고 입력: `tools/fixtures/d4-native-runtime-26min-revenir.json`의 resolvedExecutionContext. 루브닐, 8슬롯 잠금 해제, MP 2000·AMPR 100·일반 공격 크리티컬 100·ASPD 1000 제한. 준비된 그룹 크기 1141/1017/871/1121.
+- 실제 보고 입력: `tools/fixtures/crysta-native-runtime-26min-revenir.json`의 resolvedExecutionContext. 루브닐, 8슬롯 잠금 해제, MP 2000·AMPR 100·일반 공격 크리티컬 100·ASPD 1000 제한. 준비된 그룹 크기 1141/1017/871/1121.
 - 비교 입력: 이전 회귀 감사의 듀얼 fixture. 실제 사용자 보고 입력은 아니며, 현재 코드에서 상대적으로 느린 재현 입력이다.
 - AMD Ryzen 7 9800X3D, 논리 프로세서 16개, Windows 10.0.26200, Node 24.17.0. 실행은 순차 진행했다.
-- `tools/profile-d4-slow-inputs.mjs`가 Rust 파일 5개를 target 아래 격리 crate로 복사하고 control/profile release 바이너리를 만든다. 입력·제품 코드 해시를 기록한다. 제품 Native/checkpoint v5, split v3, 계산 v2 계약은 바꾸지 않는다.
+- `tools/benchmarks/profile-crysta-slow-inputs.mjs`가 Rust 파일 5개를 target 아래 격리 crate로 복사하고 control/profile release 바이너리를 만든다. 입력·제품 코드 해시를 기록한다. 제품 Native/checkpoint v5, split v3, 계산 v2 계약은 바꾸지 않는다.
 - control에도 초당 최대 1회의 진행 snapshot을 넣었다. 따라서 앱 전체 UI/IPC 시간이나 완전히 무계측인 제품 바이너리의 벤치마크는 아니다.
 - evaluator와 boxStats는 작업자별 1024회 중 1회 시간 표본을 수집한다. workerJob/poolRun/frontierPop/frontierMerge는 구간 전체를 잰다. 작업자 통계는 스레드 종료 때 한 번 합친다.
 - poolRun은 전달·실행·대기·수신을 모두 포함한다. workerJob에는 평가·통계 병합·메모리 처리 등이 포함되며 OS 선점 시간도 들어간다. 두 값의 차이를 순수 잠금 대기로 해석하지 않는다.
@@ -45,7 +45,7 @@ profile의 작업자 구간 합은 루브닐 110.3~111.3초, 듀얼 144.3~149.5�
 - 30초 탐색 8회, 완료 측정 8회, JS oracle 대조 4회. 완료된 실행끼리 점수·최적 조합 ID·upper 일치, bounded 구간의 최적점 포함 검사 통과. 병렬 incumbent 공유 시점에 따라 평가 횟수에는 소폭 차이가 있다.
 - 그룹당 16개씩 샘플링한 두 입력의 JS 완전 탐색(각 65,536조합)과 control/profile 모두 일치했다. 이는 전체 입력에 대한 독립 완전 탐색 검증은 아니다.
 - `cargo test --offline --release --manifest-path src-tauri/target/slow-profile/crate/Cargo.toml --bin d4_native_parallel`: **43/43 통과**.
-- `node --check tools/profile-d4-slow-inputs.mjs`, `node --check tools/benchmark-d4-native-p6.mjs`, `npm run ai:audit`, `git diff --check`: 통과.
+- `node --check tools/benchmarks/profile-crysta-slow-inputs.mjs`, `node --check tools/benchmarks/benchmark-crysta-native-scaling.mjs`, `npm run ai:audit`, `git diff --check`: 통과.
 - 제품 Rust diff 없음. 전체 앱 R0/R9/S1·UI E2E·배포는 이번 계측 작업에서 재실행하지 않았다. 이전 실행 결과는 이전 감사 문서에 구분해 남긴다.
 - 원자료 요약: `d4-slow-input-profile-measurements.json`. 소스/입력 SHA-256, 최종 결과, 초당 frontier/점수/상한, 스레드별 계측 합을 보존했다. OS 25ms 원시 샘플은 target/slow-profile의 원본 JSON에 남고 문서 산출물에는 집계값을 담았다.
 
@@ -60,23 +60,23 @@ profile의 작업자 구간 합은 루브닐 110.3~111.3초, 듀얼 144.3~149.5�
 ## 재현
 
 ```powershell
-node tools/audit-d4-performance-regressions.mjs prepare
+node tools/verification/audit-crysta-performance-regressions.mjs prepare
 $env:D4_P6_REVENIR='1'
 $env:D4_P6_THREAD='16'
 $env:D4_P6_EXPORT_INPUT='src-tauri/target/regression-audit/revenir.json'
-node tools/benchmark-d4-native-p6.mjs
+node tools/benchmarks/benchmark-crysta-native-scaling.mjs
 Remove-Item Env:D4_P6_REVENIR,Env:D4_P6_THREAD,Env:D4_P6_EXPORT_INPUT
-node tools/profile-d4-slow-inputs.mjs build
-node tools/profile-d4-slow-inputs.mjs run
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
 $env:D4_PROFILE_THREADS='16'
 $env:D4_PROFILE_REPEATS='2'
 $env:D4_PROFILE_BUDGET='120000'
 $env:D4_PROFILE_REPORT='complete.json'
-node tools/profile-d4-slow-inputs.mjs run
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
 ```
 
 JS oracle용 입력은 같은 export 명령에 `D4_P6_PACKAGE_LIMIT=16`을 더하고 `revenir-oracle.json`으로 저장한다. 듀얼 oracle은 이전 감사의 `verify` 준비 입력을 사용했다. profiler 실행 시 `D4_PROFILE_FIXTURES=revenir-oracle,dual-oracle`로 두 바이너리를 JS 완전 탐색 결과와 비교할 수 있다.
 
-oracle 실행에는 `D4_PROFILE_REPORT=oracle.json`, `D4_PROFILE_REPEATS=1`을 사용한다. 세 측정 파일이 준비되면 `node tools/profile-d4-slow-inputs.mjs report`로 문서용 JSON과 구간/결과 일치 검사를 재생성한다.
+oracle 실행에는 `D4_PROFILE_REPORT=oracle.json`, `D4_PROFILE_REPEATS=1`을 사용한다. 세 측정 파일이 준비되면 `node tools/benchmarks/profile-crysta-slow-inputs.mjs report`로 문서용 JSON과 구간/결과 일치 검사를 재생성한다.
 
 이전 6·7·12 회귀 감사와 제품 유지 결정은 `d4-regression-audit.md`를 참조한다.

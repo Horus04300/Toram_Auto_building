@@ -28,7 +28,7 @@
 
 ## S5 회귀
 
-`node tools/test-mononofu-s5.mjs`가 검사한다.
+`node tools/tests/skills/test-mononofu-regression.mjs`가 검사한다.
 
 - 전 23개 Lv.10 발도검 정상값과 Lv.0 경계.
 - 일섬 발도검 전용, 천류 4스택/불요불굴, 하설월화 4타+마무리.
@@ -49,8 +49,8 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/mononofu-s5.js`: 통과
-- `node tools/audit-stack-source-links.mjs --tree Mononofu --require-s1`: 23/23 통과
-- `node tools/test-mononofu-s5.mjs`: 통과
+- `node --check assets/js/data/skills/mononofu.js`: 통과
+- `node tools/verification/audit-stack-source-links.mjs --tree Mononofu --require-s1`: 23/23 통과
+- `node tools/tests/skills/test-mononofu-regression.mjs`: 통과
 - 기존 Blade/Martial/Shot/Magic/Halberd S4/S5 회귀: 통과
 - `git diff --check`: 통과

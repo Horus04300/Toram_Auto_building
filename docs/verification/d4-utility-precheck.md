@@ -30,13 +30,13 @@ Windows / Ryzen 7 9800X3D, release binary, 30초 세션 한도. 기본 P6와 HP 
 
 ## 재현과 검증
 
-`cargo build --release --manifest-path src-tauri/Cargo.toml --bin d4_native_parallel`로 변경 전후 binary를 각각 준비한다. `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<대상>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmark-d4-native-p6.mjs`를 실행한다.
+`cargo build --release --manifest-path src-tauri/Cargo.toml --bin d4_native_parallel`로 변경 전후 binary를 각각 준비한다. `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<대상>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs`를 실행한다.
 
 HP 변형은 `D4_P6_REQUIREMENTS={"maxHp":26000,"maxMp":null,"amprBeforeDual":null,"normalAttackCrit":null,"aspd":null}`과 `D4_P6_REFERENCE_BINARY=<비교 대상>`을 추가한다. 40,000도 같은 방식이다. 이 경로는 두 binary 모두 exact 및 동일 점수·ID·상한을 요구한다. 완전열거 oracle은 `D4_P6_PACKAGE_LIMIT=20`으로 별도 실행했다. 두 HP 입력 각각 160,000개 조합에서 JS oracle과 점수·ID가 일치했다(11,775 / 9,109). 작은 표본의 1~2ms 탐색 시간을 성능 근거로 사용하지 않았다.
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 136개(37+37+12+50). 새 검사에서 유틸리티 거부 후 피해용 스탯을 읽으면 실패하도록 하여 실제 조기 종료를 검증했다.
-- `npm run test:r0`: PASS, 70/70 스크립트 집계. Native 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
+- `npm run test:regression`: PASS, 70/70 스크립트 집계. Native 저장 E2E는 `TORAM_E2E_CDP` 미설정 SKIP.
 - parity bridge는 기존 1,920건 각각 5개 유틸리티 좌표의 -0.5/동일/+0.5 경계를 검사한다. 28,800회 선검사 판정 및 통과 summary가 전체 평가와 일치한다. JS 원본 계산 비교, 마법·듀얼·변환 경계도 유지했다.
-- `npm run verify:r9`, `node tools/audit-stack-source-links.mjs --require-s1`(427/427), Rust fmt, clippy `--all-targets -- -D warnings`, release 빌드: PASS. clippy가 지적한 불필요한 참조는 제거 후 재검증했다.
+- `npm run verify:architecture`, `node tools/verification/audit-stack-source-links.mjs --require-s1`(427/427), Rust fmt, clippy `--all-targets -- -D warnings`, release 빌드: PASS. clippy가 지적한 불필요한 참조는 제거 후 재검증했다.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.

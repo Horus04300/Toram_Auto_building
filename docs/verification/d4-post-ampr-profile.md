@@ -45,15 +45,15 @@
 ## 재현·검증
 
 ```powershell
-node tools/profile-d4-slow-inputs.mjs build
+node tools/benchmarks/profile-crysta-slow-inputs.mjs build
 $env:D4_PROFILE_FIXTURES='revenir,dual,utility-tight'
 $env:D4_PROFILE_THREADS='16'
 $env:D4_PROFILE_REPEATS='2'
 $env:D4_PROFILE_BUDGET='120000'
 $env:D4_PROFILE_REPORT='post-ampr-complete.json'
-node tools/profile-d4-slow-inputs.mjs run
+node tools/benchmarks/profile-crysta-slow-inputs.mjs run
 $env:D4_SUMMARY_EXPERIMENT='post-ampr'
-node tools/summarize-d4-post-utility-profile.mjs
+node tools/benchmarks/summarize-crysta-post-utility-profile.mjs
 ```
 
 - 집계기는 소스 SHA-256, 12회 exact 점수·ID·최종 upper 일치 및 진행 구간을 검사한다. `certificateIssues`는 **0건**이다. 전체 입력의 독립 완전 탐색을 새로 실행한 것은 아니다.

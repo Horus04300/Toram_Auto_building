@@ -17,13 +17,13 @@
 - snapshot 회귀: 남은 heap 상한이 incumbent보다 낮아진 bounded 상태와 checkpoint 복원 모두 `upperBound == score` 확인.
 - 부분 조합 회귀: 음수 HP와 높은 ATKP가 함께 붙은 256개 조합에서 검사 적용/미적용의 최적 점수·ID 일치, 실제 열거 감소 확인.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: 47+47+14+60=168개 통과(바이너리별 중복 모듈 검사 포함).
-- `npm run test:r0`: 71/71 프로세스 성공. 실제 Native 저장 E2E는 CDP 미설정 SKIP. 마지막 조기 실패 평가/비활성 경로 단순화 후 Rust 전체와 utility 105사례를 다시 실행했다.
-- `tools/test-d4-utility-caps.mjs`를 확장해 105개 입력의 JS 완전 탐색·직렬 Native·4작업자 공유 세션의 상태·점수·최적 ID를 비교한다. 트리 상한·단조성 및 13개 경계 검사도 통과했다.
-- `npm run verify:r9`, release 브리지 빌드, clippy `--all-targets -- -D warnings` 통과. 이번 변경은 스킬 수식·원문 연결 변경이 아니며 S1은 재실행하지 않았다. 설치본 UI/저장 E2E는 미실행이다.
+- `npm run test:regression`: 71/71 프로세스 성공. 실제 Native 저장 E2E는 CDP 미설정 SKIP. 마지막 조기 실패 평가/비활성 경로 단순화 후 Rust 전체와 utility 105사례를 다시 실행했다.
+- `tools/tests/optimization/test-crysta-utility-caps.mjs`를 확장해 105개 입력의 JS 완전 탐색·직렬 Native·4작업자 공유 세션의 상태·점수·최적 ID를 비교한다. 트리 상한·단조성 및 13개 경계 검사도 통과했다.
+- `npm run verify:architecture`, release 브리지 빌드, clippy `--all-targets -- -D warnings` 통과. 이번 변경은 스킬 수식·원문 연결 변경이 아니며 S1은 재실행하지 않았다. 설치본 UI/저장 E2E는 미실행이다.
 
 ## 계측 방법
 
-변경 전 계측용 control 바이너리를 `target/partial-utility/before.exe`에 보존하고, 수정 후 `profile-d4-slow-inputs.mjs build`의 control을 after로 사용했다. `node tools/benchmark-d4-partial-utility.mjs`가 세 입력에서 전→후/후→전 순으로 각 2회씩 순차 실행한다. 빌드·테스트와 계측을 겹치지 않았다.
+변경 전 계측용 control 바이너리를 `target/partial-utility/before.exe`에 보존하고, 수정 후 `profile-d4-slow-inputs.mjs build`의 control을 after로 사용했다. `node tools/benchmarks/benchmark-crysta-partial-utility.mjs`가 세 입력에서 전→후/후→전 순으로 각 2회씩 순차 실행한다. 빌드·테스트와 계측을 겹치지 않았다.
 
 두 바이너리는 동일한 초당 진행 snapshot을 포함한다. 후보 준비와 앱 UI/IPC는 측정하지 않는다. 원자료 `d4-partial-utility-measurements.json`에 바이너리·입력 SHA-256, 최종 조합, 시간·메모리·평가·열거 수·진행 snapshot을 기록한다. 수정 후 snapshot마다 최종 exact 점수 이상을 포함하는지도 검사한다. 2회 반복의 작은 시간 차이는 확정적 개선율이나 모든 입력의 P95 보장으로 해석하지 않는다.
 

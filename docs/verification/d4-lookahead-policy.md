@@ -44,7 +44,7 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929. Native �
 
 모든 측정은 exact 14,097 및 같은 추천 ID `weapon:도이+후빗||armor:알타달+칼레리프||additional:카나요간+칼레리프||special:저편의 잔영+칼레리프`였다. 병렬 타이밍에 따른 소수 평가/방문 차이는 원본에 보존했다.
 
-재현: release parallel bridge 및 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmark-d4-native-p6.mjs` 실행. 각 정책의 상수는 `LOOKAHEAD_RELATIVE_GAP`, `LOOKAHEAD_MAX_DEPTH`다. 제품 runtime 환경변수로 정책을 변경하지 않는다.
+재현: release parallel bridge 및 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행. 각 정책의 상수는 `LOOKAHEAD_RELATIVE_GAP`, `LOOKAHEAD_MAX_DEPTH`다. 제품 runtime 환경변수로 정책을 변경하지 않는다.
 
 단일 물리 fixture의 반복 측정이다. 세션 wall은 JS 준비·UI·IPC를 제외한다. 루브닐·마법·듀얼의 성능 향상 또는 전체 입력의 cold 10회 P95 달성은 입증하지 않았다.
 
@@ -54,9 +54,9 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929. Native �
 - 추가 깊이 2의 64개 생존 상자가 4,096조합을 중복/누락 없이 덮는 coverage, 입력 순서·1~64스레드·동점 동치, 작업 통계, 부모 복원·오류·checkpoint·pause/resume 회귀 통과.
 - 새 경계 검사: 양/음/0 incumbent의 5% 경계 포함/초과, 깊이 0/1/2, 무한/NaN incumbent 제외, 작은 상자 제외.
 - fmt, clippy `--all-targets -- -D warnings`, release parallel bridge 빌드: PASS.
-- `npm run verify:r9`: PASS, 하위 Gate 포함.
-- `npm run test:r0`: PASS, 70개 스크립트 집계. Native exact oracle·JS/Rust parity 1,920건·client/resume 포함. Native 저장 E2E는 CDP 미설정 SKIP이다.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `npm run verify:architecture`: PASS, 하위 Gate 포함.
+- `npm run test:regression`: PASS, 70개 스크립트 집계. Native exact oracle·JS/Rust parity 1,920건·client/resume 포함. Native 저장 E2E는 CDP 미설정 SKIP이다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 - 최종 binary 16스레드 100ms 취소: cancelled, solver 99ms / 외부 wall 284ms, exact false 및 인증 upper 제거 검사 통과.
 - 최종 binary 100ms deadline: bounded, 세션 100.05ms, lower 14,089 / upper 18,800. oracle 14,097을 안전하게 포함한다. 정상 종료와 혼동하지 않는다.
 

@@ -59,9 +59,9 @@ projection 12회 결과(`d4-stat-projection-probe-measurements.json`):
 ## 재현
 
 ```powershell
-node tools/probe-d4-disabled-hp.mjs build
-node tools/probe-d4-disabled-hp.mjs run
-node tools/probe-d4-disabled-hp.mjs projection
+node tools/benchmarks/probe-crysta-disabled-hp.mjs build
+node tools/benchmarks/probe-crysta-disabled-hp.mjs run
+node tools/benchmarks/probe-crysta-disabled-hp.mjs projection
 ```
 
 도구는 현재 제품 소스 5개를 `target/disabled-hp-probe/crate`로 복사해 control/skip-hp 바이너리를 만든다. projection은 같은 control 바이너리에 원본/계산 좌표만 남긴 입력을 번갈아 전달한다. 16작업자, 120초 예산, 순차 새 프로세스, 빌드/다른 테스트와 계측을 겹치지 않았다. JS 후보 준비·UI/IPC는 제외한다. 소스 해시가 달라지면 재빌드를 요구한다.

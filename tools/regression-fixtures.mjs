@@ -1,0 +1,91 @@
+/**
+ * Regression refactoring baseline.
+ *
+ * `normalValue` fixtures have expectations backed by a source, formula, or
+ * explicit algorithmic invariant. `characterization` fixtures intentionally
+ * record observable 37dae51 behaviour, including legacy boundaries scheduled
+ * for removal only in later refactoring phases.
+ */
+export const BASELINE_COMMIT = '37dae51';
+
+export const NORMAL_VALUE_FIXTURES = Object.freeze([
+  'tests/application/test-ui-bootstrap.mjs',
+  'tests/application/test-my-room-food.mjs',
+  'tests/application/test-updates.mjs',
+  'tests/application/test-update-release.mjs',
+  'tests/application/test-active-buff-context.mjs',
+  'tests/skills/test-assassin-regression.mjs',
+  'tests/skills/test-barehand-regression.mjs',
+  'tests/skills/test-battle-regression.mjs',
+  'tests/skills/test-blade-regression.mjs',
+  'tests/application/test-combo-tags.mjs',
+  'tests/skills/test-crusher-regression.mjs',
+  'tests/application/test-combat-calculation-integration.mjs',
+  'tests/optimization/test-crysta-evaluator.mjs',
+  'tests/optimization/test-crysta-computation-measurement.mjs',
+  'tests/optimization/test-crysta-integer-pareto.mjs',
+  'tests/application/test-decimal-floor.mjs',
+  'tests/optimization/test-crysta-search-oracle.mjs',
+  'tests/optimization/test-crysta-native-exact.mjs',
+  'tests/optimization/test-crysta-native-locks.mjs',
+  'tests/optimization/test-crysta-pair-frontier.mjs',
+  'tests/optimization/test-crysta-pair-partition.mjs',
+  'tests/optimization/test-crysta-parallel-shards.mjs',
+  'tests/optimization/test-crysta-recommendation-apply.mjs',
+  'tests/optimization/test-crysta-rust-native-parity.mjs',
+  'tests/optimization/test-crysta-utility-dependencies.mjs',
+  'tests/optimization/test-crysta-utility-caps.mjs',
+  'tests/skills/test-dagger-regression.mjs',
+  'tests/skills/test-dancer-regression.mjs',
+  'tests/skills/test-dark-power-regression.mjs',
+  'tests/skills/test-dual-sword-regression.mjs',
+  'tests/application/test-equipment-option-selector.mjs',
+  'tests/skills/test-golem-regression.mjs',
+  'tests/skills/test-guard-regression.mjs',
+  'tests/skills/test-halberd-rules.mjs',
+  'tests/skills/test-halberd-regression.mjs',
+  'tests/skills/test-hunter-regression.mjs',
+  'tests/skills/test-knight-regression.mjs',
+  'tests/skills/test-magic-blade-regression.mjs',
+  'tests/skills/test-magic-rules.mjs',
+  'tests/skills/test-magic-regression.mjs',
+  'tests/skills/test-martial-regression.mjs',
+  'tests/skills/test-minstrel-regression.mjs',
+  'tests/skills/test-mononofu-regression.mjs',
+  'tests/skills/test-necromancer-regression.mjs',
+  'tests/skills/test-ninja-regression.mjs',
+  'tests/application/test-normal-attack-ampr-priority.mjs',
+  'tests/skills/test-partisan-regression.mjs',
+  'tests/skills/test-priest-regression.mjs',
+  'tests/application/test-proc-damage-results.mjs',
+  'tests/skills/test-shield-regression.mjs',
+  'tests/skills/test-shot-regression.mjs',
+  'tests/application/test-skill-data-audit.mjs',
+  'tests/skills/test-sprite-regression.mjs',
+  'tests/application/test-status-points.mjs',
+  'tests/skills/test-support-regression.mjs',
+  'tests/skills/test-survival-regression.mjs',
+  'tests/skills/test-wizard-regression.mjs'
+]);
+
+export const CHARACTERIZATION_FIXTURES = Object.freeze([
+  'tests/skills/test-definition-precedence.mjs',
+  'tests/application/test-active-buff-ui.mjs',
+  'tests/application/test-build-setting-snapshot.mjs',
+  'tests/application/test-combo-ui-loading.mjs',
+  'tests/optimization/test-crysta-browser-worker-runtime.mjs',
+  'tests/optimization/test-crysta-dynamic-marginal.mjs',
+  'tests/optimization/test-crysta-dynamic-seed-builds.mjs',
+  'tests/optimization/test-crysta-execution-adapter.mjs',
+  'tests/optimization/test-crysta-real-candidates.mjs',
+  'tests/optimization/test-crysta-native-client.mjs',
+  'tests/optimization/test-crysta-resume-ui.mjs',
+  'tests/optimization/test-crysta-native-runtime-input.mjs',
+  'tests/optimization/test-crysta-parallel-worker-runtime.mjs',
+  'tests/optimization/test-crysta-replacement-proof.mjs',
+  'tests/optimization/test-crysta-worker-protocol.mjs',
+  'tests/application/test-qa-edge-cases.mjs',
+  'tests/application/test-skill-icon-assets.mjs',
+  'tests/application/test-tauri-build-storage-adapter.mjs',
+  'tests/application/test-tauri-native-storage-e2e.mjs'
+]);

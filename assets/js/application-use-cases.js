@@ -1,4 +1,4 @@
-/* R4 Application 경계: BuildDraft + Context + Request만 계산 입력으로 허용한다. */
+/* Build state Application 경계: BuildDraft + Context + Request만 계산 입력으로 허용한다. */
 (function (root) {
   'use strict';
   function clone(value) { if (value === null || value === undefined || typeof value !== 'object') return value; if (Array.isArray(value)) return value.map(clone); return Object.keys(value).reduce(function (result, key) { result[key] = clone(value[key]); return result; }, {}); }

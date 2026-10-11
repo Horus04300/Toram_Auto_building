@@ -1,7 +1,7 @@
 # D4 분기 생성 할당 절감
 
 - 날짜: 2026-09-16. 하위호환 강화는 계속 보류했다.
-- 대상: `src-tauri/src/d4_native_solver.rs`의 분기 차원 선택과 자식 상자 생성.
+- 대상: `src-tauri/src/optimization/solver.rs`의 분기 차원 선택과 자식 상자 생성.
 
 ## 변경과 보존 계약
 
@@ -17,15 +17,15 @@
 - 새 검증은 4개 그룹의 leaf/branch 16가지 패턴에서 생성 순서·원래 조합 수 보존·중복 없는 분할·반복자의 잔여 길이·종료 후 동작을 확인한다.
 - 기존 exact·동점·1~64스레드·deadline·취소·pause/resume·checkpoint 회귀 유지.
 - `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`, 두 Native 개발 bridge release 빌드: PASS. 최초 fmt의 일시적 Windows 파일 매핑 오류는 재실행으로 해소했다.
-- `node tools/test-d4-native-exact-p4.mjs`: PASS, 소형 exhaustive oracle와 Native 결과 동치.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,488개.
-- `node tools/test-d4-native-client.mjs`, `node tools/test-d4-native-resume-ui-n5.mjs`: PASS.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: PASS, 소형 exhaustive oracle와 Native 결과 동치.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,488개.
+- `node tools/tests/optimization/test-crysta-native-client.mjs`, `node tools/tests/optimization/test-crysta-resume-ui.mjs`: PASS.
 
 ## 성능 비교 조건
 
 baseline은 signed envelope·분기 점수 캐시·스탯 합산 개선까지 반영한 직전 release binary(`d4_native_parallel-before-branch-alloc.exe`)다. 초기 코드와 비교해 이전 개선 효과를 재계상하지 않는다.
 
-Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보, 8스레드. 패키지 수 992/844/724/929. `D4_P6_THREAD=8`, `D4_NATIVE_BINARY=<대상 binary>`, `D4_P6_REPORT=<기록 경로>`로 `node tools/benchmark-d4-native-p6.mjs` 실행. 유틸리티 감사는 비활성. 전→후 / 후→전 순서를 번갈아 각 네 번 새 프로세스로 측정한다.
+Windows / Ryzen 7 9800X3D / Node v24.17.0 / rustc 1.98.0, P6 물리 근거리 전체 후보, 8스레드. 패키지 수 992/844/724/929. `D4_P6_THREAD=8`, `D4_NATIVE_BINARY=<대상 binary>`, `D4_P6_REPORT=<기록 경로>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행. 유틸리티 감사는 비활성. 전→후 / 후→전 순서를 번갈아 각 네 번 새 프로세스로 측정한다.
 
 solver 시간에는 JS 준비/Pareto가 포함되지 않는다. 외부 wall에는 Native 프로세스 실행 비용이 포함된다. PowerShell의 종료 CPU/exitCode가 일부 0/null로 나오는 기존 한계는 유지되므로 해당 필드로 성능을 판정하지 않는다.
 

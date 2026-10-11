@@ -28,7 +28,7 @@
 
 ## S5 회귀
 
-`node tools/test-halberd-s3.mjs` 및 `node tools/test-halberd-s4-s5.mjs`가 검사한다.
+`node tools/tests/skills/test-halberd-rules.mjs` 및 `node tools/tests/skills/test-halberd-regression.mjs`가 검사한다.
 
 - 전 22개 Lv.10 선풍창 정상값 및 Lv.0 경계.
 - 플래쉬 스탭 한손검 허용, 캐논 스피어 선풍창 전용.
@@ -50,9 +50,9 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/halberd-s3.js`: 통과
-- `node tools/audit-stack-source-links.mjs --tree Halberd --require-s1`: 22/22 통과
-- `node tools/test-halberd-s3.mjs`: 통과
-- `node tools/test-halberd-s4-s5.mjs`: 통과
+- `node --check assets/js/data/skills/halberd.js`: 통과
+- `node tools/verification/audit-stack-source-links.mjs --tree Halberd --require-s1`: 22/22 통과
+- `node tools/tests/skills/test-halberd-rules.mjs`: 통과
+- `node tools/tests/skills/test-halberd-regression.mjs`: 통과
 - Blade/Martial/Shot/Magic 기존 회귀: 통과
 - `git diff --check`: 통과

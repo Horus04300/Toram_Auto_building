@@ -27,11 +27,11 @@ MP·AMPR% 제외·크리티컬·ASPD/행동속도 한계의 근거는 이번 사
 
 ## 검증
 
-- `npm run test:r0`: 71/71 프로세스 성공. 실제 Native 저장 E2E는 CDP 미설정으로 SKIP이며 실행 통과로 간주하지 않는다.
-- `node tools/test-d4-utility-caps.mjs`: 13개 경계, 105개 JS 완전 탐색/Native score·최적 ID·상태 일치, 트리 상한 및 단조성 검사 통과. R0 정상값 fixture에 등록했다. 단독 실행 전 `cargo build --release --manifest-path src-tauri/Cargo.toml --bin d4_native_exact`로 브리지를 준비한다.
+- `npm run test:regression`: 71/71 프로세스 성공. 실제 Native 저장 E2E는 CDP 미설정으로 SKIP이며 실행 통과로 간주하지 않는다.
+- `node tools/tests/optimization/test-crysta-utility-caps.mjs`: 13개 경계, 105개 JS 완전 탐색/Native score·최적 ID·상태 일치, 트리 상한 및 단조성 검사 통과. R0 정상값 fixture에 등록했다. 단독 실행 전 `cargo build --release --manifest-path src-tauri/Cargo.toml --bin d4_native_exact`로 브리지를 준비한다.
 - `cargo test --manifest-path src-tauri/Cargo.toml`: 실행 대상별 45+45+14+58=162개 통과. 동일 모듈이 여러 바이너리에서 검사되는 수를 포함한다.
 - HP 회귀: VIT 1, 옵션별 루트 상한 8365지만 실제 조합 최대는 4873인 입력에서 목표 5000을 대미지 탐색 노드 방문 0회로 배제한다. 목표 4873은 exact로 도달한다.
-- `npm run verify:r9`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`, S1 출처 연결 427/427 통과. raw JS/Rust parity 1938개는 R0에서 통과했다.
+- `npm run verify:architecture`, `cargo clippy --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`, S1 출처 연결 427/427 통과. raw JS/Rust parity 1938개는 R0에서 통과했다.
 - 큰 입력 smoke: `profile-d4-slow-inputs.mjs build` 후 `D4_PROFILE_FIXTURES=revenir,dual`, threads 16, budget 3000으로 계측. 제품 경로 복사본에서 루브닐 23,192,126회 평가, score 1,123,905.36 / upper 1,261,878.72; 듀얼 25,307,074회 평가, score 21,440 / upper 24,020. 모두 bounded이며 최적성 또는 이전 대비 성능 향상을 주장하지 않는다. 계측 삽입본도 같은 incumbent를 얻었다. 상세: `d4-individual-utility-measurements.json`.
 
 이전 계측은 `d4-utility-conflict.md`, 4진 힙 변경은 `d4-frontier-heap.md`에 보존한다. 목표 의미가 바뀌었으므로 이전 synthetic 결과와 이번 실행 시간을 직접 개선율로 비교하지 않는다. 설치본 UI 및 실제 Native 저장 E2E는 이번에 실행하지 않았다.

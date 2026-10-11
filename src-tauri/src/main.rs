@@ -3,33 +3,36 @@
 // The executable root only composes modules and managed state. Command DTOs
 // remain stable in tauri_commands; domain work stays in services/repositories.
 #[allow(dead_code)]
-mod d4_native_evaluator;
+#[path = "optimization/evaluator.rs"]
+mod crysta_native_evaluator;
 #[allow(dead_code)]
-mod d4_native_solver;
+#[path = "optimization/solver.rs"]
+mod crysta_native_solver;
 #[allow(dead_code)]
-mod d4_parallel_runtime;
-mod d4_service;
-mod settings_repository;
-mod settings_service;
+#[path = "optimization/parallel_runtime.rs"]
+mod crysta_parallel_runtime;
+#[path = "optimization/service.rs"]
+mod crysta_service;
+mod settings;
 mod tauri_commands;
 mod update_service;
 
-use d4_service::D4OptimizationService;
+use crysta_service::CrystaOptimizationService;
 use tauri_commands::*;
 
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_updater::Builder::new().build())
-        .manage(D4OptimizationService::default())
+        .manage(CrystaOptimizationService::default())
         .manage(update_service::UpdateService::default())
         .invoke_handler(tauri::generate_handler![
             settings_directory,
-            d4_hardware_profile,
-            d4_optimize_parallel,
-            resume_d4_optimization,
-            dispose_d4_optimization,
-            cancel_d4_optimization,
-            pause_d4_optimization,
+            crysta_hardware_profile,
+            crysta_optimize_parallel,
+            resume_crysta_optimization,
+            dispose_crysta_optimization,
+            cancel_crysta_optimization,
+            pause_crysta_optimization,
             list_settings,
             save_setting,
             load_setting,

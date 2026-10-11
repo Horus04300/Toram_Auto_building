@@ -1,7 +1,7 @@
 # 개선 후보 9: 작업자 내부 통계의 atomic 연산 제거
 
 - 날짜: 2026-09-20. 기존 1~7번 변경을 보존하고 9번만 구현했다.
-- 구현: `src-tauri/src/d4_native_solver.rs`.
+- 구현: `src-tauri/src/optimization/solver.rs`.
 - 원본 측정: `d4-local-plain-counters-measurements.json`.
 
 ## 변경과 유지한 계약
@@ -20,9 +20,9 @@
 - 기존 `shared_messages_cover_ragged_batches_in_input_order`가 실제 풀의 비원자 누적·합산과 atomic 참조 경로의 여섯 통계를 비교한다. 1/2/8/16/64스레드, 빈/불균등 묶음, 취소/deadline 및 결과 순서 검사를 유지한다.
 - 신규 테스트는 여섯 카운터 모두 `u64::MAX`에서 증가할 때 atomic과 같은 0으로 순환하고, 후속 값이 공유 통계로 정확히 합산되는지 검사한다.
 - 기존 오류 시 부모 보존, exact·동점, pause/resume·checkpoint, 대기 시간 제외 회귀 통과.
-- `npm run test:r0`: PASS, 70/70 스크립트 집계. parity 1,920건·선검사 28,800회 포함. Native 저장 E2E는 CDP 미설정 SKIP.
-- `npm run verify:r9`, Rust fmt, clippy `--all-targets -- -D warnings`, release parallel 빌드: PASS.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
+- `npm run test:regression`: PASS, 70/70 스크립트 집계. parity 1,920건·선검사 28,800회 포함. Native 저장 E2E는 CDP 미설정 SKIP.
+- `npm run verify:architecture`, Rust fmt, clippy `--all-targets -- -D warnings`, release parallel 빌드: PASS.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, 427/427.
 
 실제 WebView/IPC E2E와 설치·배포는 미실행이다.
 
@@ -30,7 +30,7 @@
 
 Windows / Ryzen 7 9800X3D, P6 물리 근거리 전체 후보 992/844/724/929. 변경 전후 release binary를 보존하고 각 스레드에서 전→후, 후→전 순으로 각각 두 번 새 프로세스를 실행했다. 빌드/테스트를 측정과 겹치지 않았다.
 
-재현: `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmark-d4-native-p6.mjs` 실행. 세션 wall은 JS 준비·UI/IPC 시간을 제외한다. 다른 입력·장비의 개선이나 cold 10회 P95 달성을 입증하지 않는다.
+재현: `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<비교 binary>`, `D4_P6_REPORT=<json>`으로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행. 세션 wall은 JS 준비·UI/IPC 시간을 제외한다. 다른 입력·장비의 개선이나 cold 10회 P95 달성을 입증하지 않는다.
 
 | 스레드 | 변경 전 평균 세션 wall | 최종 변경 후 평균 | 변화 |
 | --- | ---: | ---: | ---: |

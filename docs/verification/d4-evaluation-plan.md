@@ -35,7 +35,7 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929. 새 프�
 
 먼저 시도한 무기 enum 없는 plan은 16스레드에서 1.7~2.8% 느려 채택하지 않았다(`evalplan` 기록). 최종안은 `weaponplan` 기록이다. 두 단계 모두 보존했다.
 
-재현: release `d4_native_parallel` 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmark-d4-native-p6.mjs` 실행.
+재현: release `d4_native_parallel` 빌드 후 `D4_SESSION_BENCH_MS=30000`, `D4_P6_THREAD=8` 또는 `16`, `D4_NATIVE_BINARY=<전/후 binary>`, `D4_P6_REPORT=<json>`로 `node tools/benchmarks/benchmark-crysta-native-scaling.mjs` 실행.
 
 세션 wall은 JS 준비·UI·IPC를 제외한다. 다른 마법/듀얼/루브닐 입력의 속도 개선 및 전체 입력의 cold 10회 P95는 미검증이다. CPU/exitCode 일부 표본의 기존 측정 한계 때문에 해당 값은 판정 근거로 사용하지 않았다.
 
@@ -43,9 +43,9 @@ Windows / Ryzen 7 9800X3D, P6 물리 근거리 후보 992/844/724/929. 새 프�
 
 - `cargo test --manifest-path src-tauri/Cargo.toml -q`: PASS, 125개(34+34+10+47).
 - fmt `--check`, clippy `--all-targets -- -D warnings`, release parallel bridge 빌드: PASS.
-- `node tools/test-d4-rust-native-parity.mjs`: PASS, 1,920건.
-- `npm run verify:r9`: PASS, 하위 Gate 포함.
-- `npm run test:r0`: PASS, 70개 스크립트 집계. Native exact oracle·계산·잠금·client/resume 회귀 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이다.
-- `node tools/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
+- `node tools/tests/optimization/test-crysta-rust-native-parity.mjs`: PASS, 1,920건.
+- `npm run verify:architecture`: PASS, 하위 Gate 포함.
+- `npm run test:regression`: PASS, 70개 스크립트 집계. Native exact oracle·계산·잠금·client/resume 회귀 포함. 실제 Native 저장 E2E는 `TORAM_E2E_CDP` 미설정으로 SKIP이다.
+- `node tools/verification/audit-stack-source-links.mjs --require-s1`: PASS, S1 427/427.
 
 설치·배포 및 실제 WebView/IPC E2E는 미실행이다.

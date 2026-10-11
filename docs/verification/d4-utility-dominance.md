@@ -18,7 +18,7 @@ raw 합계가 4,096개를 넘으면 유틸리티 후보 트리의 하한·상한
 
 ## 실측과 채택 판단
 
-환경: Ryzen 7 9800X3D, Windows, Node v24.17.0. 입력은 `tools/fixtures/d4-native-runtime-26min-revenir.json`의 resolvedExecutionContext(현재 크리스타·잠금·금지 목록 포함), 현재 crysta-data를 사용했다.
+환경: Ryzen 7 9800X3D, Windows, Node v24.17.0. 입력은 `tools/fixtures/crysta-native-runtime-26min-revenir.json`의 resolvedExecutionContext(현재 크리스타·잠금·금지 목록 포함), 현재 crysta-data를 사용했다.
 
 - 기존 Pareto 이후 패키지: 무기 1,141 / 방어구 1,017 / 추가 871 / 특수 1,121 = 4,150개.
 - 확대 감사: 평가 500,000회, 비교 2,173,651회, 추가 삭제 **0개**.
@@ -40,10 +40,10 @@ $env:D4_PROOF_EVALUATIONS='500000'
 $env:D4_PROOF_NODES='4096'
 $env:D4_PROOF_COMPARISONS='2000000'
 $env:D4_PROOF_REPORT='docs/verification/d4-utility-dominance-audit.json'
-node tools/benchmark-d4-native-p6.mjs
+node tools/benchmarks/benchmark-crysta-native-scaling.mjs
 ```
 
 ## 검증
 
-- `node tools/test-d4-global-optimizer-stage2.mjs`: PASS. 축소 전후 exhaustive 점수·ID, 유틸리티가 작아도 실제 요구조건을 바꾸는 경우, 불가능 문제, 물리·마법·발도·듀얼 20개 결정적 입력×3가지 검사 예산, 상태 수/노드/평가 예산 초과 시 보존, 활성 변환 생략 검사 추가.
+- `node tools/tests/optimization/test-crysta-search-oracle.mjs`: PASS. 축소 전후 exhaustive 점수·ID, 유틸리티가 작아도 실제 요구조건을 바꾸는 경우, 불가능 문제, 물리·마법·발도·듀얼 20개 결정적 입력×3가지 검사 예산, 상태 수/노드/평가 예산 초과 시 보존, 활성 변환 생략 검사 추가.
 - 큰 실제 fixture에서는 추가 축소가 없어 최적값 변화나 성능 개선을 주장하지 않는다. Native 설치본·WebView E2E 및 배포는 실행하지 않았다.

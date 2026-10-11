@@ -6,7 +6,7 @@
 
 ## 1. 목적과 범위
 
-이 문서는 토람 온라인의 **유저 제작 무기·몸장비에 최종 옵션을 부여하는 문제**를 계산기와 D4 전역 빌드 최적화에 연결하기 위한 계약이다.
+이 문서는 토람 온라인의 **유저 제작 무기·몸장비에 최종 옵션을 부여하는 문제**를 계산기와 크리스타 최적화 전역 빌드 최적화에 연결하기 위한 계약이다.
 
 다루는 것은 다음이다.
 
@@ -36,7 +36,7 @@
 | 옵션 줄 | 정확히 8개 |
 | 음수 옵션 | 허용. 잠재력 회복 효과와 함께 하나의 줄을 차지 |
 | 잠긴 크리스타 | 고정 효과로 먼저 합산 |
-| 잠기지 않은 크리스타 | D4 전역 후보 탐색에 남김 |
+| 잠기지 않은 크리스타 | 크리스타 최적화 전역 후보 탐색에 남김 |
 | 성공률 | 단일 성공률·최종 성공률을 사용자 입력값으로 결과 메타데이터에 보존 |
 | 잠재력 | 옵션 집합의 hard budget |
 
@@ -68,7 +68,7 @@ Coryn의 Statting Simulator도 장비 종류, 원본/시작 잠재력, 기준 �
 
 그러나 이 프로젝트는 게임 UI의 절차를 그대로 복제하지 않는다. 다음처럼 의도적으로 분리한다.
 
-| 게임 절차 | 계산기·D4 모델 |
+| 게임 절차 | 계산기·크리스타 최적화 모델 |
 | --- | --- |
 | 옵션을 여러 단계로 부여 | 최종 옵션 벡터만 보관 |
 | 단계별 잠재력 변화와 성공률 | 사용자가 준 단일/최종 성공률을 보존 |
@@ -134,7 +134,7 @@ exclusiveWith 충돌이 없음
 - 단일 성공률과 최종 성공률을 각각 독립 저장
 - 계산기가 값의 진위를 역산하거나 수정하지 않음
 
-## 6. D4 전역 최적화 연결
+## 6. 크리스타 전역 최적화 연결
 
 ### 6.1 평가 순서
 
@@ -147,7 +147,7 @@ exclusiveWith 충돌이 없음
         ↓
 각 후보를 CandidatePackage로 변환
         ↓
-잠기지 않은 크리스타·고정 장비 후보와 전역 D4 탐색
+잠기지 않은 크리스타·고정 장비 후보와 전역 크리스타 최적화 탐색
         ↓
 BuildEvaluator로 완성 빌드 재평가
 ```
@@ -181,7 +181,7 @@ DeltaLogDamage / DeltaPotential
 3. 상태에는 최소한 `lineCount`, `remainingPotential`, 관련 스탯 벡터, 조건 서명을 둔다.
 4. 같은 줄 수에서 잠재력이 더 많이 남고 모든 관련 스탯·Utility가 열등하지 않은 상태만 안전하게 우선 제거한다.
 5. 남은 Pareto 상태를 커스텀 장비 `CandidatePackage`로 변환한다.
-6. 이 후보를 잠기지 않은 크리스타·고정 장비와 함께 D4 전역 탐색에 넣는다.
+6. 이 후보를 잠기지 않은 크리스타·고정 장비와 함께 크리스타 최적화 전역 탐색에 넣는다.
 
 작은 옵션 도메인에서는 DP 결과를 원시 전수조사와 비교해 정확성을 검증한다. 옵션 상한·비용 데이터가 `verified`가 아니면 해당 옵션을 자동 생성 대상에서 제외하고, UI에 이유를 표시한다.
 
@@ -212,8 +212,8 @@ DeltaLogDamage / DeltaPotential
 
 ## 10. 관련 문서
 
-- `docs/architecture/d4-exact-optimization-plan.md`
-- `docs/architecture/d4-build-optimizer-design.md`
-- `docs/architecture/d4-build-optimizer-prerequisites.md`
+- `docs/architecture/crysta-optimization-contract.md`
+- `docs/architecture/build-optimization-design.md`
+- `docs/architecture/build-optimization-prerequisites.md`
 - `docs/verification/unimplemented.md`
 - `docs/sources/skills/Smith.txt`

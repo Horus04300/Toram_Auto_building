@@ -40,7 +40,7 @@
 
 ## S5 회귀 사례
 
-`node tools/test-sprite-s5.mjs`로 다음을 확인했다.
+`node tools/tests/skills/test-sprite-regression.mjs`로 다음을 확인했다.
 
 - 마도구·Lv.10에서 17개 전체 사용 가능, Lv.0에서 전체 사용 불가
 - 클라인 힐 Lv.10 회복량 1100, 리저렉션 Lv.10 영창 5초

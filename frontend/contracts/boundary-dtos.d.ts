@@ -1,8 +1,8 @@
 /**
- * R1b legacy boundary DTOs.
+ * Type boundary legacy boundary DTOs.
  *
  * These describe only the data that currently crosses build, calculation,
- * storage, and D4 boundaries. R2 owns the future application/domain contracts.
+ * storage, and CrystaOptimization boundaries. Calculation contract owns the future application/domain contracts.
  */
 interface SavedBuildDocumentDto {
   readonly format: 'toram-auto-build-document';
@@ -27,25 +27,25 @@ interface CalculationResultDto {
   readonly aggregate: Readonly<Record<string, unknown>>;
 }
 
-type D4OptimizationStatus = 'exact' | 'bounded' | 'heuristic' | 'no-incumbent-yet' | 'paused' | 'cancelled' | 'invalid';
+type CrystaOptimizationStatus = 'exact' | 'bounded' | 'heuristic' | 'no-incumbent-yet' | 'paused' | 'cancelled' | 'invalid';
 
-interface D4CandidatePackageDto {
+interface CrystaOptimizationCandidatePackageDto {
   readonly id: string;
   readonly statDelta: Readonly<Record<string, number>>;
 }
 
-interface D4OptimizationRequestDto {
+interface CrystaOptimizationRequestDto {
   readonly schema: string;
   readonly baseContext: Readonly<Record<string, unknown>>;
   readonly scenarioSnapshot: Readonly<Record<string, unknown>>;
   readonly groups: readonly {
     readonly id: string;
-    readonly packages: readonly D4CandidatePackageDto[];
+    readonly packages: readonly CrystaOptimizationCandidatePackageDto[];
   }[];
 }
 
-interface D4OptimizationResultDto {
-  readonly status: D4OptimizationStatus;
+interface CrystaOptimizationResultDto {
+  readonly status: CrystaOptimizationStatus;
   readonly score: number | null;
   readonly lowerBound: number | null;
   readonly upperBound: number | null;

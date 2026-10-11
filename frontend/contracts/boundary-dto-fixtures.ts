@@ -2,7 +2,7 @@ const storageFixture: SavedBuildDocumentDto = {
   format: 'toram-auto-build-document',
   schemaVersion: 1,
   documentType: 'saved-build',
-  name: 'R1b fixture',
+  name: 'Type boundary fixture',
   createdAt: '2026-09-01T00:00:00.000Z',
   updatedAt: '2026-09-01T00:00:00.000Z',
   build: { character: { level:300 }, equipment: {}, skillLevels: {}, activeBuffs: {}, externalOptions: [], combo: [] },
@@ -21,14 +21,14 @@ const calculationResultFixture: CalculationResultDto = {
   aggregate: { expectedDamage: 14089 }
 };
 
-const d4RequestFixture: D4OptimizationRequestDto = {
-  schema: 'toram.d4-problem.v1',
+const optimizationRequestFixture: CrystaOptimizationRequestDto = {
+  schema: 'toram.crysta-problem.v1',
   baseContext: calculationFixture.baseContext,
   scenarioSnapshot: calculationFixture.scenario,
   groups: [{ id: 'weapon', packages: [{ id: 'weapon:empty', statDelta: {} }] }]
 };
 
-const d4ResultFixture: D4OptimizationResultDto = {
+const optimizationResultFixture: CrystaOptimizationResultDto = {
   status: 'bounded',
   score: 14089,
   lowerBound: 14089,
@@ -39,11 +39,11 @@ const d4ResultFixture: D4OptimizationResultDto = {
 
 const storageAdapterFixture: SettingsFileRepositoryAdapter = {
   directory: async () => 'C:\\Settings',
-  list: async () => [{ name: 'R1b fixture.json', lastModified: 0 }],
+  list: async () => [{ name: 'Type boundary fixture.json', lastModified: 0 }],
   save: async () => undefined,
   load: async () => JSON.stringify(storageFixture),
   overwrite: async () => undefined,
   delete: async () => undefined
 };
 
-void [storageFixture, calculationFixture, calculationResultFixture, d4RequestFixture, d4ResultFixture, storageAdapterFixture];
+void [storageFixture, calculationFixture, calculationResultFixture, optimizationRequestFixture, optimizationResultFixture, storageAdapterFixture];

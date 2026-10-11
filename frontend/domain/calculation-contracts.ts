@@ -1,5 +1,5 @@
 /**
- * R2 pure calculation contracts.
+ * Calculation contract pure calculation contracts.
  *
  * These types deliberately contain no DOM, Tauri, storage-format, Worker, or
  * UI-runtime state. They describe the values Application code may pass to the

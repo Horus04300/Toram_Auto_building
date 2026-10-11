@@ -2,7 +2,7 @@
 
 - 날짜: 2026-09-22. 기준 소스 v0.7.1. 시작 시 작업 트리는 깨끗했다.
 - 사용자 요청: 기본·강한 유틸리티 제한·마법·듀얼 입력으로 유지/되돌림을 판단한다.
-- 재현 도구: tools/audit-d4-performance-regressions.mjs. P6의 export-only context patch 기능을 사용한다.
+- 재현 도구: tools/verification/audit-crysta-performance-regressions.mjs. P6의 export-only context patch 기능을 사용한다.
 
 ## 비교 설계
 
@@ -21,7 +21,7 @@ no12는 단계별 종료만 비교하며 이미 바뀐 독립 스탯 계산 순�
 
 빌드·테스트와 성능 측정은 겹치지 않는다. 점수·ID·상한은 입력별 전 변형·스레드에서 같아야 한다. 평균과 중앙값을 함께 기록하여 한 번 느린 실행이 평균을 왜곡하는지 구분한다. 실측 데이터·소스 해시는 d4-regression-audit-measurements.json에 기록한다. 세션 wall은 JS 준비/IPC를 제외한다. cold 10회 P95나 모든 입력의 10초 exact 검증이 아니다.
 
-재현 명령: node tools/audit-d4-performance-regressions.mjs build → prepare → run → verify. 생성 binary/input은 src-tauri/target/regression-audit에만 둔다. verify는 각 입력에서 16개씩 뽑은 65,536조합 JS exhaustive oracle과 네 변형의 점수·ID를 비교한다.
+재현 명령: node tools/verification/audit-crysta-performance-regressions.mjs build → prepare → run → verify. 생성 binary/input은 src-tauri/target/regression-audit에만 둔다. verify는 각 입력에서 16개씩 뽑은 65,536조합 JS exhaustive oracle과 네 변형의 점수·ID를 비교한다.
 
 ## 측정 결과와 판단
 
@@ -60,10 +60,10 @@ no12는 단계별 종료만 비교하며 이미 바뀐 독립 스탯 계산 순�
 ## 최종 검증
 
 - 전체 후보 cold 측정 96회 + 동일 binary snapshot 비교 16회: 입력별 exact 점수·ID·upper 일치.
-- node tools/audit-d4-performance-regressions.mjs verify: 4입력 × 4변형 PASS. 입력별 65,536조합 JS exhaustive oracle과 일치.
+- node tools/verification/audit-crysta-performance-regressions.mjs verify: 4입력 × 4변형 PASS. 입력별 65,536조합 JS exhaustive oracle과 일치.
 - cargo test --manifest-path src-tauri/Cargo.toml -q: PASS 156개(43+43+14+56). fmt --check PASS. 제품 Rust 변경은 없다.
-- npm run test:r0: PASS 70/70 스크립트. Native 저장 E2E는 CDP 미설정 SKIP.
-- npm run verify:r9: PASS. node tools/audit-stack-source-links.mjs --require-s1: PASS 427/427.
+- npm run test:regression: PASS 70/70 스크립트. Native 저장 E2E는 CDP 미설정 SKIP.
+- npm run verify:architecture: PASS. node tools/verification/audit-stack-source-links.mjs --require-s1: PASS 427/427.
 - node --check(두 도구), npm run ai:audit, git diff --check: PASS.
 
 Windows x64 / Ryzen 7 9800X3D 16논리 CPU / Node v24.17.0 / rustc 1.98.0. 실제 UI/IPC E2E와 배포는 미실행이다. 실측 입력은 기본/제약/마법/듀얼 네 개뿐이며 사용자의 전체 세팅 분포로 일반화하지 않는다.

@@ -3,10 +3,10 @@
   'use strict';
   var locked = false, epoch = 0, previousInert = false;
   function hasWork() {
-    var execution = root.ToramD4ExecutionAdapter;
+    var execution = root.ToramCrystaOptimizationExecutionAdapter;
     var runtime = root.ToramRuntimeState && root.ToramRuntimeState.get();
     return Boolean(execution && (execution.isRunning() || execution.hasContinuation()) ||
-      runtime && (runtime.calculationQueued || runtime.d4 && runtime.d4.executionStatus === 'running'));
+      runtime && (runtime.calculationQueued || runtime.crystaOptimization && runtime.crystaOptimization.executionStatus === 'running'));
   }
   function lock() {
     locked = true;
