@@ -24,6 +24,7 @@ export const NORMAL_VALUE_FIXTURES = Object.freeze([
   'tests/optimization/test-crysta-evaluator.mjs',
   'tests/optimization/test-crysta-computation-measurement.mjs',
   'tests/optimization/test-crysta-integer-pareto.mjs',
+  'tests/optimization/test-crysta-candidate-projection.mjs',
   'tests/application/test-decimal-floor.mjs',
   'tests/optimization/test-crysta-search-oracle.mjs',
   'tests/optimization/test-crysta-native-exact.mjs',

@@ -4,6 +4,7 @@
   var SCHEMA='toram.crysta-global-optimizer.v1';
   var EPSILON=1e-9;
   var PAIR_FRONTIER_POLICY_VERSION='optimization-pair-frontier.v1';
+  var CANDIDATE_PROJECTION_POLICY='optimization-candidate-projection.v1';
 
   function createSearchProfile(enabled){
     if(enabled!==true)return null;
@@ -96,6 +97,126 @@
     return Object.freeze({packages:Object.freeze(frontier.slice()),inputCount:input.length,outputCount:frontier.length,duplicateCount:duplicates,comparisons:comparisons,complete:complete});
   }
 
+  function candidateProjection(problem,keys){
+    var kernel=root.ToramCalculationKernel,context=problem.baseContext||{};
+    if(!kernel||typeof kernel.candidateSupplyBases!=='function')return null;
+    if(problem.groups.some(function(group){return !group.packages.length;}))return null;
+    if((context.activeBuildConversions||[]).some(function(effect){return !effect||effect.conversion!=='unsheatheToAtk';}))return null;
+    var minimum={},maximum={},invalid=new Set(),modeled=new Set(modeledKeys(root.ToramStatRegistry));
+    problem.groups.forEach(function(group){
+      var ranges=new Map();
+      group.packages.forEach(function(item){Object.keys(item.statDelta||{}).forEach(function(key){
+        if(!modeled.has(key))return;
+        var value=Number(item.statDelta[key])||0,range=ranges.get(key)||{low:Infinity,high:-Infinity,count:0};
+        range.low=Math.min(range.low,value);range.high=Math.max(range.high,value);range.count++;ranges.set(key,range);
+        if(!boundedInteger(value))invalid.add(key);
+      });});
+      ranges.forEach(function(range,key){
+        if(range.count<group.packages.length){range.low=Math.min(range.low,0);range.high=Math.max(range.high,0);}
+        minimum[key]=(minimum[key]||0)+range.low;maximum[key]=(maximum[key]||0)+range.high;
+      });
+    });
+    if(!Object.values(minimum).concat(Object.values(maximum)).every(Number.isFinite))return null;
+    function boundedInteger(value){return Number.isSafeInteger(value)&&Math.abs(value)<=1000000;}
+    function fixed(dependencies){return dependencies.every(function(key){return (minimum[key]||0)===(maximum[key]||0);});}
+    var lowStats=clone(minimum),highStats=clone(maximum);
+    ['STR','DEX','AGI','INT','VIT'].forEach(function(key){
+      if(Number(context[key.toLowerCase()+'Base'])<0){lowStats[key+'P']=maximum[key+'P']||0;highStats[key+'P']=minimum[key+'P']||0;}
+    });
+    var low=kernel.candidateSupplyBases(context,lowStats),high=kernel.candidateSupplyBases(context,highStats);
+    var stats=['STR','DEX','AGI','INT','VIT'],statKeys=stats.flatMap(function(key){return [key,key+'P'];});
+    var upKeys=['ATK','MATK'].flatMap(function(prefix){return stats.map(function(key){return prefix+'_UP_'+key;});});
+    var conversions=(context.activeBuildConversions||[]).some(function(effect){return effect.conversion==='unsheatheToAtk';})?['UNSHEATHE','UNSHEATHEP']:[];
+    var pairs=stats.map(function(key){return {id:key,percent:key+'P',flat:key,prefix:key.toLowerCase(),dependencies:[]};}).concat([
+      {id:'CRIT',percent:'CRITP',flat:'CRIT',prefix:'crit',dependencies:[]},
+      {id:'WATK',percent:'WATKP',flat:'WATK',prefix:'watk',dependencies:conversions},
+      {id:'ATK',percent:'ATKP',flat:'ATK',prefix:'atk',dependencies:statKeys.concat(upKeys,['WATKP','WATK'],conversions)},
+      {id:'MATK',percent:'MATKP',flat:'MATK',prefix:'matk',dependencies:statKeys.concat(upKeys,['WATKP','WATK'],conversions)},
+      {id:'CDMG',percent:'CDMGP',flat:'CDMG',prefix:'cdmg',dependencies:['STR','STRP','AGI','AGIP'],interval:true},
+      {id:'MAXHP',percent:'MAXHPP',flat:'MAXHP',prefix:'maxHp',dependencies:['VIT','VITP'],interval:true,utility:true},
+      {id:'ASPD',percent:'ASPD_P',flat:'ASPD',prefix:'aspd',dependencies:statKeys,interval:true,utility:true},
+      {id:'CSPD',percent:'CSPD_P',flat:'CSPD',prefix:'cspd',dependencies:['AGI','AGIP','DEX','DEXP'],interval:true},
+      {id:'UNSHEATHE',percent:'UNSHEATHEP',flat:'UNSHEATHE',prefix:'unsheathe',dependencies:[],raw:true}
+    ]);
+    var bundles=[],replaced=new Set(),projectedKeys=[],equality=new Set();
+    pairs.forEach(function(pair){
+      if(!keys.includes(pair.percent)||!keys.includes(pair.flat))return;
+      var dependenciesFixed=fixed(pair.dependencies),bases=[];
+      var safe=!pair.raw&&boundedInteger(Number(context[pair.prefix+'P'])||0)&&boundedInteger(Number(context[pair.prefix+'F'])||0);
+      if(invalid.has(pair.percent)||invalid.has(pair.flat))safe=false;
+      if(pair.dependencies.length&&(!dependenciesFixed&&!pair.interval))safe=false;
+      if(pair.interval&&statKeys.some(function(key){return !boundedInteger(lowStats[key]||0)||!boundedInteger(highStats[key]||0);}))safe=false;
+      if(pair.id==='MAXHP'&&!dependenciesFixed&&Number(context.level)<0)safe=false;
+      if(safe){
+        bases=Array.from(new Set([].concat(low[pair.id],high[pair.id]))).sort(function(a,b){return a-b;});
+        if(!bases.length||!bases.every(boundedInteger))safe=false;
+      }
+      if(!safe){bundles.push({id:pair.id,mode:'raw',keys:[pair.percent,pair.flat],reason:pair.raw?'different-formula-stages':'variable-base-or-arithmetic-boundary'});return;}
+      var divisor=100;
+      bases.forEach(function(base){var a=divisor,b=Math.abs(base);while(b){var remainder=a%b;a=b;b=remainder;}divisor=a;});
+      var bundle={id:pair.id,mode:bases.length===1?'fixed-base':'base-function',keys:[pair.percent,pair.flat],bases:bases,divisor:divisor,utility:Boolean(pair.utility)};
+      bundle.coordinates=bases.map(function(_,index){return '@'+pair.id+':'+index;});bundles.push(bundle);
+      replaced.add(pair.percent);replaced.add(pair.flat);
+      bundle.coordinates.forEach(function(key){projectedKeys.push(key);if(!pair.utility)equality.add(key);});
+    });
+    if(!replaced.size)return null;
+    keys.forEach(function(key){if(!replaced.has(key)){projectedKeys.push(key);equality.add(key);}});
+    // Damage/stat branches may be nonmonotone. New dominance changes only HP/ASPD;
+    // other transformed outputs must be identical for every remaining completion.
+    var equalityKeys=projectedKeys.filter(function(key){return equality.has(key);});
+    var utilityKeys=projectedKeys.filter(function(key){return !equality.has(key);});
+    var rawKeys=keys.filter(function(key){return !replaced.has(key);}),directions=[];
+    bundles.forEach(function(bundle){if(bundle.mode==='raw')return;bundle.bases.forEach(function(base,index){directions.push({key:bundle.coordinates[index],percent:bundle.keys[0],flat:bundle.keys[1],percentWeight:base/bundle.divisor,flatWeight:100/bundle.divisor});});});
+    var classes=new Map();
+    return {
+      keys:projectedKeys,bundles:bundles,
+      project:function(item){
+        var values={},source=item.statDelta||{};
+        for(var i=0;i<rawKeys.length;i++)values[rawKeys[i]]=Number(source[rawKeys[i]])||0;
+        for(var j=0;j<directions.length;j++){var direction=directions[j];values[direction.key]=direction.percentWeight*(Number(source[direction.percent])||0)+direction.flatWeight*(Number(source[direction.flat])||0);}
+        var originalSignature=JSON.stringify([item.slot,item.source,item.structureSignature,item.sockets,item.resourceCost,item.conflicts]);
+        var classKey=originalSignature+'|'+equalityKeys.map(function(key){return values[key];}).join('|');
+        if(!classes.has(classKey))classes.set(classKey,classes.size);
+        return Object.freeze(Object.assign({},item,{searchProjection:Object.freeze(values),searchProjectionClass:classes.get(classKey)}));
+      },
+      replacementRelation:function(left,right){
+        if(left.searchProjectionClass!==right.searchProjectionClass)return -1;
+        var strict=false;
+        for(var i=0;i<utilityKeys.length;i++){
+          var key=utilityKeys[i],a=left.searchProjection[key],b=right.searchProjection[key];
+          if(a<b)return -1;if(a>b)strict=true;
+        }
+        return strict?1:0;
+      }
+    };
+  }
+
+  function projectedFrontier(packages,projection,options){
+    var buckets=new Map(),retained=[],duplicates=0,dominated=0,comparisons=0;
+    var limit=Number(options&&options.maxComparisons)||2000000,complete=true;
+    for(var i=0;i<packages.length;i++){
+      var item=packages[i],bucket=buckets.get(item.searchProjectionClass)||[],removed=false;
+      for(var j=0;j<bucket.length;j++){
+        if(++comparisons>limit){complete=false;break;}
+        var relation=projection.replacementRelation(bucket[j],item);
+        if(relation>=0){if(relation===0)duplicates++;else dominated++;removed=true;break;}
+      }
+      if(!complete){retained=retained.concat(packages.slice(i));break;}
+      if(removed)continue;
+      bucket.push(item);buckets.set(item.searchProjectionClass,bucket);retained.push(item);
+    }
+    return {packages:retained,duplicateCount:duplicates,dominatedCount:dominated,comparisons:comparisons,complete:complete};
+  }
+
+  function uniqueRawPackages(packages,keys){
+    var seen=new Set(),unique=[];
+    packages.slice().sort(function(a,b){return String(a.id)<String(b.id)?-1:String(a.id)>String(b.id)?1:0;}).forEach(function(item){
+      var key=keys.map(function(k){return Number(item.statDelta&&item.statDelta[k])||0;}).join('|');
+      if(!seen.has(key)){seen.add(key);unique.push(item);}
+    });
+    return unique;
+  }
+
   function groupVaryingKeys(group,keys){
     var packages=group&&group.packages||[];
     return (keys||[]).filter(function(key){
@@ -109,15 +230,20 @@
   function prepareProblem(problem,options){
     if(!problem||!Array.isArray(problem.groups))throw new Error('CrystaOptimization 후보 문제가 필요합니다.');
     var registry=options&&options.registry||root.ToramStatRegistry;var keys=options&&options.relevantKeys||modeledKeys(registry);var reports=[];
-    var groups=problem.groups.map(function(group){
-      var groupKeys=groupVaryingKeys(group,keys);
+    var projectionDisabled=!root.ToramCalculationKernel||typeof root.ToramCalculationKernel.candidateSupplyBases!=='function'||options&&(options.disableCandidateProjection||options.disablePareto||options.evaluateStats||options.kernel&&options.kernel!==root.ToramCalculationKernel.evaluateContext||options.registry&&options.registry!==root.ToramStatRegistry||options.evaluator&&options.evaluator!==root.ToramBuildEvaluator);
+    var uniqueGroups=projectionDisabled?problem.groups:problem.groups.map(function(group){return {id:group.id,packages:uniqueRawPackages(group.packages,keys)};});
+    var projection=projectionDisabled?null:candidateProjection(Object.assign({},problem,{groups:uniqueGroups}),keys);
+    var groups=problem.groups.map(function(group,index){
+      var groupKeys=groupVaryingKeys(group,keys),rawDuplicates=projection?group.packages.length-uniqueGroups[index].packages.length:0;
+      var packages=projection?uniqueGroups[index].packages.map(projection.project):group.packages;
+      var projected=projection?projectedFrontier(packages,projection,options&&options.pareto):{packages:packages,duplicateCount:0,dominatedCount:0,comparisons:0,complete:true};
       var result=options&&options.disablePareto
-        ? {packages:Object.freeze((group.packages||[]).slice()),inputCount:(group.packages||[]).length,outputCount:(group.packages||[]).length,duplicateCount:0,comparisons:0,complete:true}
-        : strictParetoFrontier(group.packages,groupKeys,options&&options.pareto);
-      reports.push({groupId:group.id,inputCount:result.inputCount,outputCount:result.outputCount,duplicateCount:result.duplicateCount,comparisons:result.comparisons,complete:result.complete,relevantKeyCount:groupKeys.length});
+        ? {packages:Object.freeze((group.packages||[]).slice()),inputCount:group.packages.length,outputCount:group.packages.length,duplicateCount:0,comparisons:0,complete:true}
+        : strictParetoFrontier(projected.packages,groupKeys,options&&options.pareto);
+      reports.push({groupId:group.id,inputCount:group.packages.length,outputCount:result.packages.length,duplicateCount:rawDuplicates+result.duplicateCount+projected.duplicateCount,projectedDuplicateCount:projected.duplicateCount,projectedDominatedCount:projected.dominatedCount,projectionComparisons:projected.comparisons,comparisons:result.comparisons,complete:result.complete&&projected.complete,relevantKeyCount:groupKeys.length,projectedKeyCount:projection?projection.keys.length:keys.length});
       return Object.freeze({id:group.id,label:group.label,slots:clone(group.slots||[]),packages:result.packages});
     });
-    var prepared=Object.freeze({schema:problem.schema,baseContext:clone(problem.baseContext||{}),scenarioSnapshot:clone(problem.scenarioSnapshot||null),structure:clone(problem.structure||{}),groups:Object.freeze(groups),diagnostics:clone(problem.diagnostics||[]),metadata:Object.assign({},clone(problem.metadata||{}),{paretoReports:reports,modeledKeys:keys})});
+    var prepared=Object.freeze({schema:problem.schema,baseContext:clone(problem.baseContext||{}),scenarioSnapshot:clone(problem.scenarioSnapshot||null),structure:clone(problem.structure||{}),groups:Object.freeze(groups),diagnostics:clone(problem.diagnostics||[]),metadata:Object.assign({},clone(problem.metadata||{}),{paretoReports:reports,modeledKeys:keys,candidateProjection:projection?{policyVersion:CANDIDATE_PROJECTION_POLICY,keys:projection.keys,bundles:projection.bundles}:null})});
     return options&&options.enableUtilityDominanceAudit===true&&!options.disablePareto?pruneUtilityDominance(prepared,options):prepared;
   }
 
@@ -278,6 +404,7 @@
   }
 
   function splitImportance(key,context){
+    if(key.charAt(0)==='@')key=key.slice(1).split(':')[0];
     var weights={ATKP:12,MATKP:12,ATK:5,MATK:5,SRW:12,LRW:12,UNSHEATHE:12,UNSHEATHEP:12,CDMG_P:10,CDMGP:10,CDMG:8,PHYS_PIERCE:10,MAG_PIERCE:10,WATKP:8,WATK:5,DAMAGE_P:12,ELEM_P:8,CRIT:7,CRIT_P:7,CRITP:7,STABILITY:6,MAXHP:8,MAXHPP:8,MAXMP:8,AMPR:8,AMPRP:8,ASPD:8,ASPD_P:8};
     var weight=weights[key]||3;var type=String(context&&context.atkType||'PHYS').toUpperCase();var range=String(context&&context.rangeType||'SHORT').toUpperCase();
     if(type==='PHYS'&&(key==='MATKP'||key==='MATK'||key==='MAG_PIERCE'||key.indexOf('MATK_UP_')===0))weight*=0.05;
@@ -297,7 +424,9 @@
 
   function buildCandidateTree(group,keys,context,candidateOrder){
     var packages=(group&&group.packages||[]).slice(),rankById=dynamicCandidateOrderRanks(candidateOrder,group&&group.id);var ranges={};
-    keys.forEach(function(key){var low=Infinity,high=-Infinity;packages.forEach(function(item){var value=Number(item.statDelta&&item.statDelta[key])||0;low=Math.min(low,value);high=Math.max(high,value);});ranges[key]=Math.max(0,high-low);});
+    var orderingKeys=packages.length&&packages.every(function(item){return item.searchProjection;})?Object.keys(packages[0].searchProjection):keys;
+    function orderingValue(item,key){return Number((item.searchProjection||item.statDelta||{})[key])||0;}
+    orderingKeys.forEach(function(key){var low=Infinity,high=-Infinity;packages.forEach(function(item){var value=orderingValue(item,key);low=Math.min(low,value);high=Math.max(high,value);});ranges[key]=Math.max(0,high-low);});
     function build(items,depth,path){
       var envelope=groupMaximum({packages:items},keys),orderingEnvelope={};
       // Preserve split ordering while tightening bounds; reuse the score per box.
@@ -305,8 +434,8 @@
       var splitScore=heuristicPackageScore({statDelta:orderingEnvelope},'damage');
       if(items.length<=1)return{path:path,size:items.length,envelope:envelope,splitScore:splitScore,packages:items,package:items[0]||null,left:null,right:null};
       var splitKey=null,bestSpread=-Infinity;
-      keys.forEach(function(key){var globalRange=ranges[key]||0;if(globalRange<=EPSILON)return;var low=Infinity,high=-Infinity;items.forEach(function(item){var value=Number(item.statDelta&&item.statDelta[key])||0;low=Math.min(low,value);high=Math.max(high,value);});var spread=(high-low)/globalRange*splitImportance(key,context);if(spread>bestSpread+EPSILON||(Math.abs(spread-bestSpread)<=EPSILON&&String(key)<String(splitKey||'\uffff'))){bestSpread=spread;splitKey=key;}});
-      var sorted=items.slice().sort(function(a,b){if(splitKey){var av=Number(a.statDelta&&a.statDelta[splitKey])||0;var bv=Number(b.statDelta&&b.statDelta[splitKey])||0;if(Math.abs(av-bv)>EPSILON)return av-bv;}if(rankById){var rankA=Object.prototype.hasOwnProperty.call(rankById,String(a.id))?rankById[String(a.id)]:Infinity,rankB=Object.prototype.hasOwnProperty.call(rankById,String(b.id))?rankById[String(b.id)]:Infinity;if(rankA!==rankB)return rankA-rankB;}var scoreDiff=heuristicPackageScore(a,'damage')-heuristicPackageScore(b,'damage');if(Math.abs(scoreDiff)>EPSILON)return scoreDiff;return String(a.id)<String(b.id)?-1:String(a.id)>String(b.id)?1:0;});
+      orderingKeys.forEach(function(key){var globalRange=ranges[key]||0;if(globalRange<=EPSILON)return;var low=Infinity,high=-Infinity;items.forEach(function(item){var value=orderingValue(item,key);low=Math.min(low,value);high=Math.max(high,value);});var spread=(high-low)/globalRange*splitImportance(key,context);if(spread>bestSpread+EPSILON||(Math.abs(spread-bestSpread)<=EPSILON&&String(key)<String(splitKey||'\uffff'))){bestSpread=spread;splitKey=key;}});
+      var sorted=items.slice().sort(function(a,b){if(splitKey){var av=orderingValue(a,splitKey);var bv=orderingValue(b,splitKey);if(Math.abs(av-bv)>EPSILON)return av-bv;}if(rankById){var rankA=Object.prototype.hasOwnProperty.call(rankById,String(a.id))?rankById[String(a.id)]:Infinity,rankB=Object.prototype.hasOwnProperty.call(rankById,String(b.id))?rankById[String(b.id)]:Infinity;if(rankA!==rankB)return rankA-rankB;}var scoreDiff=heuristicPackageScore(a,'damage')-heuristicPackageScore(b,'damage');if(Math.abs(scoreDiff)>EPSILON)return scoreDiff;return String(a.id)<String(b.id)?-1:String(a.id)>String(b.id)?1:0;});
       var middle=Math.floor(sorted.length/2);if(middle<=0)middle=1;
       return{path:path,size:items.length,envelope:envelope,splitScore:splitScore,packages:items,package:null,left:build(sorted.slice(0,middle),depth+1,path+'0'),right:build(sorted.slice(middle),depth+1,path+'1')};
     }

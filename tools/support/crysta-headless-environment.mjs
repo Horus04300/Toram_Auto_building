@@ -25,6 +25,8 @@ export async function loadHeadlessEnvironment(core) {
   const crystas = vm.runInContext('crystaDataJson', context);
   return {
     client:context.ToramCrystaOptimizationNativeClient,
+    optimizer:context.ToramCrystaOptimizationGlobalOptimizer,
+    registry:context.ToramStatRegistry, evaluator:context.ToramBuildEvaluator, kernel:context.ToramCalculationKernel,
     compile(input) {
       const scenario = context.ToramBuildEvaluator.createScenarioSnapshot(input.baseContext, {
         requirements:input.scenarioRequirements

@@ -43,9 +43,35 @@
 Windows에서는 Rust `stable-msvc`, Microsoft C++ Build Tools와 WebView2가 필요합니다.
 
 ```powershell
+Set-Location -LiteralPath 'C:\Users\조연우\Documents\GitHub\Toram_Auto_building'
 npm install
 npm run desktop:dev
 ```
+
+폴더를 옮기면서 `src-tauri/target/`도 함께 옮겼다면 먼저 `npm run desktop:clean`을 실행합니다. Tauri 권한 파일의 이전 절대 경로가 남아 있는 Tauri·업데이터·앱 패키지의 개발·릴리스·Windows x64 릴리스 캐시만 정리합니다. 나머지 의존성 캐시와 계측 기록, 사용자 세팅은 유지하며, 다음 개발 실행이나 빌드에서 해당 패키지를 다시 컴파일합니다.
+
+모든 npm 명령은 저장소 루트를 기준으로 실행하므로 폴더를 다시 옮겨도 `package.json`의 경로를 수정할 필요가 없습니다. 다른 폴더에서 실행하려면 `npm --prefix "C:\Users\조연우\Documents\GitHub\Toram_Auto_building" run desktop:dev`처럼 현재 저장소 경로를 지정합니다.
+
+| 명령 | 용도 |
+| --- | --- |
+| `npm run desktop:clean` | 폴더 이동 후 Tauri·업데이터·앱 빌드 캐시 정리 |
+| `npm run desktop:prepare` | TypeScript 런타임 생성 및 `dist/` 준비 |
+| `npm run desktop:dev` | 개발 앱 실행 |
+| `npm run desktop:build` | NSIS 설치 파일 빌드 |
+| `npm run desktop:build:exe` | 설치 없는 실행 파일 빌드 |
+| `npm run types:check` | TypeScript 타입 검사 |
+| `npm run types:emit` | 저장·업데이트 어댑터 JavaScript 생성 |
+| `npm run verify:architecture` | 구조·계약·어댑터 검사 |
+| `npm run verify:entry` | 소스 로딩 진입점 검사 |
+| `npm run verify:entry:dist` | 준비된 배포본 로딩 검사 (`desktop:prepare` 후) |
+| `npm run test:regression` | 전체 계산 회귀 검사 |
+| `npm run test:regression:normal` | 정상값 회귀 검사 |
+| `npm run test:regression:characterization` | 기존 동작 회귀 검사 |
+| `npm run bench:optimization:build` | Native 계측 실행 파일 빌드 |
+| `npm run bench:optimization` | 최적화 계측 (`bench:optimization:build` 후) |
+| `npm run ai:files` | AI 검색용 파일 목록 |
+| `npm run ai:search -- "패턴" 경로` | AI 검색용 내용 검색 |
+| `npm run ai:audit` | AI 검색 설정·문서 감사 |
 
 Windows NSIS 설치 파일을 빌드하려면 다음 명령을 사용합니다.
 

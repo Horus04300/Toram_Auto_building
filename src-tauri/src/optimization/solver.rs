@@ -41,6 +41,13 @@ pub struct NativePackage {
     pub id: String,
     #[serde(rename = "statDelta", default)]
     pub stat_delta: Stats,
+    /// Ordering coordinates only. Bounds and exact evaluation always use raw stats.
+    #[serde(
+        rename = "searchValues",
+        default,
+        skip_serializing_if = "Vec::is_empty"
+    )]
+    pub search_values: Vec<f64>,
     /// Derived for search; never replaces or serializes over the original options.
     #[serde(skip)]
     evaluation_delta: Option<Stats>,
@@ -88,17 +95,34 @@ impl NativeProblem {
         keys.dedup();
         let capacity = tree_capacity(self.groups.iter().map(|g| g.packages.len()))?;
         let mut trees = TreeArena::default();
+        if !self.metadata.search_keys.is_empty()
+            && self.groups.iter().flat_map(|g| &g.packages).all(|p| {
+                p.search_values.len() == self.metadata.search_keys.len()
+                    && p.search_values.iter().all(|v| v.is_finite())
+            })
+        {
+            trees.ordering_keys = self.metadata.search_keys.clone();
+        }
         trees
             .nodes
             .try_reserve_exact(capacity)
             .map_err(|error| format!("CrystaOptimization tree allocation failed: {error}"))?;
         for (index, group) in self.groups.iter().enumerate() {
+            let ranges = ordering_ranges(
+                &group.packages,
+                if trees.ordering_keys.is_empty() {
+                    &keys
+                } else {
+                    &trees.ordering_keys
+                },
+                !trees.ordering_keys.is_empty(),
+            );
             trees.roots[index] = build_tree(
                 &mut trees,
                 &group.packages,
                 (0..group.packages.len()).collect(),
                 &keys,
-                &global_ranges(&group.packages, &keys),
+                &ranges,
                 &self.base_context,
                 "r".into(),
             );
@@ -128,6 +152,8 @@ pub struct NativeMetadata {
     pub modeled_keys: Vec<String>,
     #[serde(rename = "initialPackageIds", default)]
     pub initial_package_ids: Vec<String>,
+    #[serde(rename = "searchKeys", default, skip_serializing_if = "Vec::is_empty")]
+    pub search_keys: Vec<String>,
 }
 
 #[derive(Clone, Debug, Serialize)]
@@ -200,6 +226,7 @@ struct TreeArena {
     roots: [NodeId; GROUP_COUNT],
     joint: Option<JointUtilityBounds>,
     supply: Option<SupplyBounds>,
+    ordering_keys: Vec<String>,
 }
 
 const SUPPLY_METRICS: usize = 6; // Display CSPD/cast planes do not enter the search objective.
@@ -1496,6 +1523,10 @@ fn heuristic_score(stats: &Stats, mode: &str) -> f64 {
 }
 
 fn split_importance(key: &str, context: &Value) -> f64 {
+    let key = key
+        .strip_prefix('@')
+        .and_then(|k| k.split(':').next())
+        .unwrap_or(key);
     let mut weight = match key {
         "ATKP" | "MATKP" | "SRW" | "LRW" | "UNSHEATHE" | "UNSHEATHEP" | "DAMAGE_P" => 12.0,
         "CDMG_P" | "CDMGP" | "PHYS_PIERCE" | "MAG_PIERCE" => 10.0,
@@ -1564,14 +1595,32 @@ fn group_envelope(packages: &[NativePackage], indices: &[usize], keys: &[String]
     result
 }
 
+#[cfg(test)]
 fn global_ranges(packages: &[NativePackage], keys: &[String]) -> BTreeMap<String, f64> {
+    ordering_ranges(packages, keys, false)
+}
+
+fn ordering_value(package: &NativePackage, index: usize, key: &str, projected: bool) -> f64 {
+    if projected {
+        package.search_values[index]
+    } else {
+        package.stat_delta.get(key).copied().unwrap_or(0.0)
+    }
+}
+
+fn ordering_ranges(
+    packages: &[NativePackage],
+    keys: &[String],
+    projected: bool,
+) -> BTreeMap<String, f64> {
     keys.iter()
-        .map(|key| {
+        .enumerate()
+        .map(|(index, key)| {
             let (low, high) =
                 packages
                     .iter()
                     .fold((f64::INFINITY, f64::NEG_INFINITY), |range, item| {
-                        let value = item.stat_delta.get(key).copied().unwrap_or(0.0);
+                        let value = ordering_value(item, index, key, projected);
                         (range.0.min(value), range.1.max(value))
                     });
             (key.clone(), (high - low).max(0.0))
@@ -1628,9 +1677,15 @@ fn build_tree(
     if indices.len() <= 1 {
         return id;
     }
-    let mut split_key: Option<&str> = None;
+    let projected = !trees.ordering_keys.is_empty();
+    let ordering_keys = if projected {
+        &trees.ordering_keys
+    } else {
+        keys
+    };
+    let mut split_key: Option<(usize, &str)> = None;
     let mut best_spread = f64::NEG_INFINITY;
-    for key in keys {
+    for (coordinate, key) in ordering_keys.iter().enumerate() {
         let global_range = ranges.get(key).copied().unwrap_or(0.0);
         if global_range <= EPSILON {
             continue;
@@ -1639,28 +1694,25 @@ fn build_tree(
             indices
                 .iter()
                 .fold((f64::INFINITY, f64::NEG_INFINITY), |range, index| {
-                    let value = packages[*index].stat_delta.get(key).copied().unwrap_or(0.0);
+                    let value = ordering_value(&packages[*index], coordinate, key, projected);
                     (range.0.min(value), range.1.max(value))
                 });
         let spread = (high - low) / global_range * split_importance(key, context);
         if spread > best_spread + EPSILON
             || ((spread - best_spread).abs() <= EPSILON
-                && key.as_str() < split_key.unwrap_or("\u{ffff}"))
+                && key.as_str() < split_key.map(|(_, k)| k).unwrap_or("\u{ffff}"))
         {
             best_spread = spread;
-            split_key = Some(key);
+            split_key = Some((coordinate, key));
         }
     }
     let mut sorted = indices;
     sorted.sort_by(|left, right| {
         let value_order = split_key
-            .map(|key| {
-                packages[*left]
-                    .stat_delta
-                    .get(key)
-                    .copied()
-                    .unwrap_or(0.0)
-                    .total_cmp(&packages[*right].stat_delta.get(key).copied().unwrap_or(0.0))
+            .map(|(coordinate, key)| {
+                ordering_value(&packages[*left], coordinate, key, projected).total_cmp(
+                    &ordering_value(&packages[*right], coordinate, key, projected),
+                )
             })
             .unwrap_or(Ordering::Equal);
         if value_order != Ordering::Equal {
@@ -2768,7 +2820,7 @@ impl NativeSearchSession {
             .collect::<Vec<_>>();
         Self::audit_frontier(&frontier)?;
         Ok(NativeSearchCheckpoint {
-            schema: "toram.crysta-native-search-checkpoint.v20".to_string(),
+            schema: "toram.crysta-native-search-checkpoint.v21".to_string(),
             problem: self.problem.clone(),
             state: self.state.clone(),
             frontier,
@@ -2783,7 +2835,7 @@ impl NativeSearchSession {
 
     pub fn from_checkpoint(checkpoint: NativeSearchCheckpoint) -> Result<Self, String> {
         // Bound-policy changes invalidate persisted frontiers and cache entries.
-        if checkpoint.schema != "toram.crysta-native-search-checkpoint.v20" {
+        if checkpoint.schema != "toram.crysta-native-search-checkpoint.v21" {
             return Err("CrystaOptimization native checkpoint schema is invalid".to_string());
         }
         Self::audit_frontier(&checkpoint.frontier)?;
@@ -3946,6 +3998,7 @@ mod tests {
                 .map(|(i, value)| NativePackage {
                     id: format!("{g}-{i}"),
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     stat_delta: Stats::from([("ATKP".into(), value)]),
                 })
                 .collect();
@@ -4012,6 +4065,7 @@ mod tests {
                 .map(|(i, stat_delta)| NativePackage {
                     id: format!("{g}-{i}"),
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     stat_delta,
                 })
                 .collect();
@@ -4971,11 +5025,13 @@ mod tests {
             group.packages = vec![
                 NativePackage {
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     id: format!("{}:flat", group._id),
                     stat_delta: serde_json::from_value(json!({"MAXHP":1000})).unwrap(),
                 },
                 NativePackage {
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     id: format!("{}:percent", group._id),
                     stat_delta: serde_json::from_value(json!({"MAXHPP":100})).unwrap(),
                 },
@@ -5052,6 +5108,7 @@ mod tests {
                     ("ATKP".into(), 10.0),
                 ]),
                 evaluation_delta: None,
+                search_values: Vec::new(),
             });
         }
         problem.prepare_trees().unwrap();
@@ -5203,6 +5260,7 @@ mod tests {
                     id: format!("{}-{index}", group._id),
                     stat_delta: Stats::new(),
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                 })
                 .collect();
         }
@@ -5314,6 +5372,7 @@ mod tests {
                     id: format!("{}-{i}", group._id),
                     stat_delta: Stats::new(),
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                 })
                 .collect();
         }
@@ -5475,6 +5534,7 @@ mod tests {
                     .rev()
                     .map(|index| NativePackage {
                         evaluation_delta: None,
+                        search_values: Vec::new(),
                         id: format!("{group_index}-{index}"),
                         stat_delta: Stats::from([
                             ("ATKP".into(), (index % 3) as f64 * 0.25),
@@ -5536,6 +5596,7 @@ mod tests {
             group.packages = (0..8)
                 .map(|package_index| NativePackage {
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     id: format!("{group_index}-{package_index}"),
                     stat_delta: Stats::new(),
                 })
@@ -6018,6 +6079,68 @@ mod tests {
     }
 
     #[test]
+    fn candidate_coordinates_only_order_trees_and_preserve_oracle_resume() {
+        let mut problem = joint_problem();
+        let oracle = solve_exact(&problem).unwrap();
+        problem.metadata.search_keys = vec!["@CRIT:0".into(), "@ASPD:1".into()];
+        // Deliberately unrelated to damage: these values can only order splits.
+        for group in &mut problem.groups {
+            for (index, package) in group.packages.iter_mut().enumerate() {
+                package.search_values = vec![(index % 3) as f64, -(index as f64)];
+            }
+        }
+        let raw = serde_json::to_value(&problem.groups).unwrap();
+        for reverse in [false, true] {
+            if reverse {
+                for group in &mut problem.groups {
+                    group.packages.reverse();
+                }
+            }
+            for threads in [1, 2, 8, 64] {
+                let mut session = NativeSearchSession::new(problem.clone()).unwrap();
+                assert_eq!(
+                    session.problem.trees.ordering_keys,
+                    problem.metadata.search_keys
+                );
+                session.run_parallel_slice(1, threads).unwrap();
+                let wire = serde_json::to_string(&session.checkpoint().unwrap()).unwrap();
+                let mut restored =
+                    NativeSearchSession::from_checkpoint(serde_json::from_str(&wire).unwrap())
+                        .unwrap();
+                assert_eq!(
+                    restored.problem.trees.ordering_keys,
+                    problem.metadata.search_keys
+                );
+                while !restored.is_complete() {
+                    let result = restored.run_parallel_slice(8, threads).unwrap();
+                    assert!(result.upper_bound.unwrap() >= oracle.score.unwrap());
+                }
+                let result = restored.snapshot();
+                assert_eq!(result.score, oracle.score);
+                assert_eq!(
+                    serde_json::to_value(result.best_build).unwrap(),
+                    serde_json::to_value(&oracle.best_build).unwrap()
+                );
+            }
+        }
+        for group in &mut problem.groups {
+            group.packages.reverse();
+        }
+        assert_eq!(serde_json::to_value(&problem.groups).unwrap(), raw);
+        for invalid in [Vec::new(), vec![f64::NAN, 0.0]] {
+            problem.groups[0].packages[0].search_values = invalid;
+            let session = NativeSearchSession::new(problem.clone()).unwrap();
+            assert!(session.problem.trees.ordering_keys.is_empty());
+            let result = solve_exact(&problem).unwrap();
+            assert_eq!(result.score, oracle.score);
+            assert_eq!(
+                result.best_build.unwrap().id,
+                oracle.best_build.as_ref().unwrap().id
+            );
+        }
+    }
+
+    #[test]
     fn envelope_preserves_forced_penalties_and_missing_coordinate_zero() {
         let packages: Vec<NativePackage> = serde_json::from_value(json!([
             {"id":"a","statDelta":{"ATKP":-10,"MAXMP":-200}},
@@ -6042,6 +6165,7 @@ mod tests {
         for (group, atk) in problem.groups.iter_mut().zip([1e16, -1e16, 1.0, 0.0]) {
             group.packages = vec![NativePackage {
                 evaluation_delta: None,
+                search_values: Vec::new(),
                 id: group._id.clone(),
                 stat_delta: Stats::from([("ATK".into(), atk)]),
             }];
@@ -6090,6 +6214,7 @@ mod tests {
             let packages = (0..count)
                 .map(|index| NativePackage {
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     id: index.to_string(),
                     stat_delta: Stats::new(),
                 })
@@ -6185,6 +6310,7 @@ mod tests {
                 group.packages = (0..if mask & (1 << index) != 0 { 2 } else { 1 })
                     .map(|value| NativePackage {
                         evaluation_delta: None,
+                        search_values: Vec::new(),
                         id: value.to_string(),
                         stat_delta: Stats::new(),
                     })
@@ -6253,7 +6379,7 @@ mod tests {
     #[test]
     fn old_bound_policy_checkpoint_is_rejected() {
         let session = NativeSearchSession::new(small_problem()).unwrap();
-        for version in 4..=19 {
+        for version in 4..=20 {
             let mut checkpoint = session.checkpoint().unwrap();
             checkpoint.schema = format!("toram.crysta-native-search-checkpoint.v{version}");
             assert!(NativeSearchSession::from_checkpoint(checkpoint.clone()).is_err());
@@ -6282,6 +6408,7 @@ mod tests {
             group.packages = (0..4)
                 .map(|i| NativePackage {
                     evaluation_delta: None,
+                    search_values: Vec::new(),
                     id: format!("{}-{i}", group._id),
                     stat_delta: Stats::from([
                         ("MAXHP".into(), -6000.0 * i as f64),
@@ -6652,6 +6779,7 @@ mod tests {
                             id: format!("{g}-{p}"),
                             stat_delta: stats,
                             evaluation_delta: None,
+                            search_values: Vec::new(),
                         }
                     })
                     .collect();

@@ -1,6 +1,6 @@
 # 현재 개발 상태 및 AI 인수인계
 
-- 갱신: 2026-10-12 — 성능 개선 v0.7.3 공개 완료, Native v20.
+- 갱신: 2026-10-12 — v0.7.3 공개 완료, 로컬 Native v21 후보 공급 좌표 구현.
 - 제품: 토람 온라인 대미지 계산기 및 빌드 시뮬레이터, Tauri v2 Windows 앱.
 - 현재 상태는 이 문서·코드·이번 검증으로 판정한다. 작업 시작 시 `git status --short`로 기존 변경을 확인·보존한다.
 
@@ -23,12 +23,13 @@
 - 추천 적용은 잠기지 않은 크리스타만 바꾸고 빈 잠금도 보존한다. 계산 입력 변경 시 이전 추천·continuation을 폐기한다. 세팅/백업 이름·검색·파일 선택·미적용 요구조건 편집·동일 서명의 중복 화면 알림은 결과를 무효화하지 않는다.
 - 실행 adapter는 Native/Worker 선택과 제어만 담당한다. 오래된 요청의 fallback을 금지한다. 일반 Worker에 Native 재개를 가장하는 continuation을 만들지 않는다. Native 세션은 최대 4개, oldest eviction이다.
 - Worker dynamic seed+ordering은 기본 경로, Replacement Proof 축소는 감사 전용이다. JS 병렬 pool과 GPU는 기본 제품 경로가 아니다.
-- 최적화 schema는 `toram.crysta-*`다. Native/checkpoint v20·split policy v6이며 v19 이하의 현재·과거 `toram.d4-*` checkpoint를 거부한다. no-incumbent/무한 상한의 JSON 재개도 보존한다. 앱 저장 schema와 버전은 유지한다.
-- 유틸리티 상한은 MP 2000/신속의 수도 2300, AMPR% 제외, 저항 후 CRIT 100, ASPD/행동속도 50%다. 파생 대미지·raw 조건은 보존한다. utilityPolicyVersion 2, Native 계산 v4, Worker client/parallel v2다.
-- Native v20는 52키·14쌍·전체 확장 묶음의 실제 패키지 지지값을 사용한다. 변동 기초값×비율·내림·조건/포화를 외향 평면으로 표현하고 raw/크뎀/안정률/속성/스킬/거리 단계에도 인증 상한을 적용한다. 현재 없는 stat-up/속성 키를 평가에 연결했으며 CSPD/영창은 표시 파생값이다. 문맥의 안전 조건 밖에서는 기존 envelope 가지치기를 사용하지 않는다. 증명·Gate: `docs/verification/crysta-joint-supply-bound.md`.
-- Native 분기는 양쪽 자식 감소폭·후보 수와 상한/최적 점수 차이로 두 축을 고른다(split v6). 순서만 정하며 삭제는 안전 상한으로 증명한다. median·사전 검사·lookahead 유지. 근거: `docs/verification/crysta-branch-workload.md`.
-- 기존 CRIT 정수 결합·AMPR/CRIT 조건부 공격 45방향도 유지한다. 예산/단조성 fallback: `docs/verification/crysta-linear-crit-bound.md`, `docs/verification/crysta-axis-upper-bound.md`. 전체 목록: `docs/verification/crysta-joint-supply-inventory.md`.
-- 백분율·소수 배율 내림은 정수 비율로 계산하며 정수 옵션만 i32 Pareto 비교한다. 산술 계약: `docs/verification/optimization-integer-arithmetic.md`. 옵션 분리·큐·버퍼·전송 최적화와 입력 공유 롤백 근거는 기존 실험 기록에 남긴다.
+- 최적화 schema는 `toram.crysta-*`다. Native/checkpoint v21·split v7이며 v20 이하 및 과거 `toram.d4-*` checkpoint를 거부한다. no-incumbent/무한 상한의 JSON 재개·앱 저장 schema·출시 버전을 유지한다.
+- 유틸리티 상한은 MP 2000/신속의 수도 2300, AMPR% 제외, 저항 후 CRIT 100, ASPD/행동속도 50%다. 파생 대미지·raw 조건을 보존한다. utilityPolicyVersion 2, Native 계산 v4, Worker client/parallel v3다.
+- Native는 52키·14쌍·확장 묶음의 실제 지지값·인증 상한을 쓴다. stat-up/속성 평가, CSPD/영창 표시, 안전 조건 밖 envelope 금지 유지. 계약: `docs/verification/crysta-joint-supply-bound.md`.
+- 후보 준비는 고정 %/+ 공급 좌표·가변 기초값 함수로 동등/HP·ASPD 우열 후보를 축소한다. 소수·가변 ATK·알 수 없는 변환은 raw 보존. JS/Native 트리 정렬만 압축하며 상한·최종 평가는 raw다. 전처리로 전체 시간은 증가. 계약/140회 계측: `docs/verification/crysta-candidate-projection.md`.
+- Native 분기는 두 자식 감소폭·후보 수·gap으로 두 축을 고른다. median·사전 검사·lookahead 유지. 근거: `docs/verification/crysta-branch-workload.md`.
+- CRIT 정수 결합·AMPR/CRIT 조건부 공격 45방향을 유지한다. 예산/단조성 fallback·전체 목록: `docs/verification/crysta-linear-crit-bound.md`, `docs/verification/crysta-axis-upper-bound.md`, `docs/verification/crysta-joint-supply-inventory.md`.
+- 백분율·소수 배율 내림은 정수 비율로 계산하며 정수 옵션만 i32 Pareto 비교한다. 산술 계약: `docs/verification/optimization-integer-arithmetic.md`.
 - 콤보 근거리/원거리 override는 상호 배타적이고 모두 끄면 스킬 기본 판정이다. 트리 탐색·증감 단위·resize는 투자 변경 이벤트가 아니다.
 - 결과 요구조건은 MAXHP/MAXMP/듀얼 적용 전 AMPR/평타 CRIT/ASPD다. 거리·요구조건 override·추천 제외 크리스타는 schema v2 `ScenarioContext.optimizationPreferences`에 저장한다. `null`은 제한 해제, 누락 키는 동적 기본값이다.
 - 마이룸 요리는 5칸·중복 금지·Lv.1~10·수치 고정·요리명 미표시다. `myRoomFood`는 `{id,level}`/null, `guildFoodBuff` 기본 true(HP+1000/MP+100)다. Application 파생·ELEM_P·보존 효과 미연결 계약: `docs/verification/my-room-food.md`.
@@ -52,15 +53,16 @@
 
 ## 5. 검증 명령·현재 기록
 
-- v0.7.3 릴리스는 사용자 요청으로 별도 회귀·성능·설치 검증을 생략했다. `gh run watch 38149861388 --exit-status` 종료 코드 0: 수동 release workflow의 `skip_checks=true`로 Web/Rust 검사 SKIP, 버전·태그 일치·서명 빌드·자산 준비·Latest 공개 PASS. [릴리스 실행](https://github.com/Horus04300/Toram_Auto_building/actions/runs/38149861388). 실제 설치/업그레이드 통과나 새 성능 측정을 뜻하지 않는다.
+- v0.7.3은 사용자 요청으로 회귀·성능·설치 검증을 생략했다. `gh run watch 38149861388 --exit-status` 종료 0: `skip_checks=true`로 Web/Rust SKIP, 버전·태그·서명 빌드·자산·Latest 공개 PASS. [실행](https://github.com/Horus04300/Toram_Auto_building/actions/runs/38149861388). 실제 설치/업그레이드·성능 검증과 구분한다.
 - 구조: `npm run verify:architecture`, `npm run test:regression`. 단계별 중첩 명령은 폐기했다. normal/characterization 분류: `docs/verification/regression-baseline.md`.
 - 로딩/배포 소스: `npm run verify:entry`, `npm run desktop:prepare`, `npm run verify:entry:dist`. Rust: `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo test --manifest-path src-tauri/Cargo.toml`, 필요한 clippy/빌드.
+- 폴더 이동 후 `npm run desktop:clean`으로 Tauri·업데이터·앱의 dev/release/Windows x64 release 캐시를 정리한다. 계측 기록·다른 의존성·사용자 세팅 유지. npm 상대 경로·전체 명령: `README.md`.
 - 스킬/계산: `node tools/verification/audit-stack-source-links.mjs --require-s1` 및 대상 트리·계산·콤보 회귀. 최적화는 정확성 계약의 해당 Gate를 추가한다.
 - 저장 실기기 E2E는 `TORAM_E2E_CDP`가 필요하고 SKIP은 통과가 아니다. 브라우저 검증도 실제 Tauri 설치/업그레이드와 구분한다.
 - 계측: `npm run bench:optimization:build` → `npm run bench:optimization`. `timing.totalMs`는 JS 준비부터 Native 결과 복원·최종 JS 재평가까지이며 UI 제외다. 계약: `docs/verification/optimization-computation-timing.md`.
-- 구조 변경 기록은 `docs/verification/role-based-refactoring.md`, 이전 인앱 시간 조사는 `docs/verification/crysta-in-app-timing-gap.md`다. 과거 수치를 현재 성능으로 사용하지 않는다.
-- Native 평가·상한: 최종 공통 exact 82개·소형 JS oracle·회귀 76/76·architecture/clippy PASS. 평가식 기존 JS/Rust 1,986개·S1 427/427 기록은 유지한다. 미래 옵션·조상 상자·oracle·1~64 thread·JSON 재개 확인. Native 저장 E2E는 CDP 미설정 SKIP이다.
-- v20: 유효 초기해가 없으면 제한된 단일/두 부위 수리 후 기존 대미지 개선을 수행한다. 정렬 점수는 후보당 한 번 계산한다. 전후 140회 점수/전체 조합 동치. 현재 허용/금지 모두 방문 0에서 유효해, 방문 -8.32%/-3.98%. 금지는 Native +6.6ms, 잠금 해제는 Native -14.53%. 근거: `docs/verification/crysta-infeasible-seed-repair.md`.
-- 기존 듀얼 계측과 가산 5개를 제거한 후속 계측은 실제 사용자 빌드를 재현하지 못해 사용자 요청의 성능 근거에서 제외한다. 듀얼 실제 입력을 받은 검증은 미완료다. 부적절한 샘플의 감사 기록: `docs/verification/crysta-dual-unadjusted.md`.
+- 구조 변경·이전 인앱 시간 기록: `docs/verification/role-based-refactoring.md`, `docs/verification/crysta-in-app-timing-gap.md`. 과거 수치를 현재 성능으로 쓰지 않는다.
+- 이번 검증: Native exact 83개, 압축 oracle 72조건/3,711완성/324대체, JS/Rust 1,986개, 회귀 77/77, architecture/clippy, S1 427/427 PASS. Native 저장 E2E는 CDP 미설정 SKIP. 상세 명령: `docs/verification/crysta-candidate-projection.md`.
+- 초기해 단일/두 부위 수리·대미지 개선·정렬 점수 캐시 유지. 당시 v20 계측: `docs/verification/crysta-infeasible-seed-repair.md`.
+- 기존 듀얼 계측은 실제 사용자 빌드를 재현하지 못해 성능 근거에서 제외한다. 실제 입력 검증은 미완료다. 감사: `docs/verification/crysta-dual-unadjusted.md`.
 - 문서 변경: `npm run ai:audit`, `git diff --check`. 현재 handoff는 12 KiB 이하로 유지한다. 탐색 진입점: `docs/ai-context-guide.md`.
 - B&B 과정 로그(bounded, 제품 정책 유지): `docs/verification/crysta-search-process-trace.md`.

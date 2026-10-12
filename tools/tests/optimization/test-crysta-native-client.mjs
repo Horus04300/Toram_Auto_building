@@ -88,8 +88,8 @@ const cached = await context.window.ToramCrystaOptimizationNativeClient.optimize
 assert.equal(cached, result, '같은 계산식·엔진·분할·스레드·GPU 정책 cache key는 native 결과를 재사용해야 합니다.');
 assert.equal(calls.filter(call => call.command === 'crysta_optimize_parallel').length, 1, 'native cache hit은 solver를 다시 호출하지 않아야 합니다.');
 assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.gpuPolicy, 'cpu-only.v1');
-assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.engineVersion, 'optimization-native-solver.v20', '초기해 수리 변경은 이전 엔진의 exact cache와 재개 입력을 구분해야 합니다.');
-assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.splitPolicy, 'candidate-tree-2axis-gap-work-smallbox64-lookahead-precheck.v6', '분기 우선순위 변경은 이전 정책의 cache와 재개 상태를 재사용하지 않습니다.');
+assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.engineVersion, 'optimization-native-solver.v21', '후보 압축 변경은 이전 엔진의 exact cache와 재개 입력을 구분해야 합니다.');
+assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.splitPolicy, 'candidate-tree-projected-2axis-gap-work-smallbox64-lookahead-precheck.v7', '분기 우선순위 변경은 이전 정책의 cache와 재개 상태를 재사용하지 않습니다.');
 assert.equal(typeof context.window.ToramCrystaOptimizationNativeClient.pause, 'function', 'native client must expose pause separately from destructive cancel');
 
 boundedMode = true;

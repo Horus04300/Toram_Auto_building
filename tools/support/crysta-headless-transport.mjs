@@ -13,6 +13,7 @@ export function createHeadlessTransport(binary) {
   }
   function launch() {
     child = spawn(binary, [], { windowsHide:true, stdio:['pipe','pipe','pipe'] });
+    metadata.nativePid = child.pid;
     exited = new Promise(resolve => child.once('close', resolve));
     child.on('error', fail);
     child.stdin.on('error', fail);

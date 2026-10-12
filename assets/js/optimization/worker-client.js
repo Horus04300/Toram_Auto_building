@@ -1,8 +1,8 @@
 (function (root) {
   'use strict';
 
-  var SCHEMA = 'toram.crysta-worker-client.v2';
-  var PARALLEL_SCHEMA = 'toram.crysta-parallel-worker-client.v2';
+  var SCHEMA = 'toram.crysta-worker-client.v3';
+  var PARALLEL_SCHEMA = 'toram.crysta-parallel-worker-client.v3';
   var WORKER_URL = 'assets/js/optimization/solver-worker.js';
   // seed acceleration approved profile: seed work raises only the lower bound, and ordering
   // resolves split-value ties. Neither setting removes an exact candidate.

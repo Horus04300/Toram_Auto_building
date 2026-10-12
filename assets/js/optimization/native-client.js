@@ -6,8 +6,8 @@
   // tree-splitting, runtime or GPU-policy change must not reuse a result made
   // under a different exact-search contract.
   var CALCULATION_VERSION = 'optimization-native-evaluator.v4';
-  var ENGINE_VERSION = 'optimization-native-solver.v20';
-  var SPLIT_POLICY = 'candidate-tree-2axis-gap-work-smallbox64-lookahead-precheck.v6';
+  var ENGINE_VERSION = 'optimization-native-solver.v21';
+  var SPLIT_POLICY = 'candidate-tree-projected-2axis-gap-work-smallbox64-lookahead-precheck.v7';
   var GPU_POLICY = 'cpu-only.v1';
 
   function invoke() {
@@ -30,12 +30,15 @@
   function stableStringify(value) {
     if (value === null || typeof value !== 'object') return JSON.stringify(value);
     if (Array.isArray(value)) return '[' + value.map(stableStringify).join(',') + ']';
-    return '{' + Object.keys(value).sort().map(function (key) { return JSON.stringify(key) + ':' + stableStringify(value[key]); }).join(',') + '}';
+    var keys = Object.keys(value);
+    // These coordinates are derived from raw options and the versioned plan.
+    if (value.statDelta && value.searchProjection) keys = keys.filter(function (key) { return key !== 'searchProjection' && key !== 'searchProjectionClass'; });
+    return '{' + keys.sort().map(function (key) { return JSON.stringify(key) + ':' + stableStringify(value[key]); }).join(',') + '}';
   }
 
   function hashString(text) {
-    var hash = 2166136261;
-    for (var index = 0; index < text.length; index++) { hash ^= text.charCodeAt(index); hash = Math.imul(hash, 16777619); }
+    var hash = 2166136261, multiply = Math.imul;
+    for (var index = 0; index < text.length; index++) { hash ^= text.charCodeAt(index); hash = multiply(hash, 16777619); }
     return ('00000000' + (hash >>> 0).toString(16)).slice(-8);
   }
 
@@ -71,6 +74,7 @@
       problem:optimizer.prepareProblem(problem, {
         registry:root.ToramStatRegistry,
         relevantKeys:keys,
+        disableCandidateProjection:Boolean(options && options.disableCandidateProjection),
         pareto:{ maxComparisons:Number(options && options.maxParetoComparisons) || 1000000 }
       }),
       evaluate:adapter
@@ -92,15 +96,16 @@
   // complete evaluator dependencies or the options returned to the user.
   function nativeProblem(prepared) {
     var metadata = prepared.metadata || {};
+    var projection = metadata.candidateProjection;
     return {
       baseContext:prepared.baseContext,
       scenarioSnapshot:prepared.scenarioSnapshot,
-      metadata:{ modeledKeys:metadata.modeledKeys, initialPackageIds:metadata.initialPackageIds },
+      metadata:Object.assign({ modeledKeys:metadata.modeledKeys, initialPackageIds:metadata.initialPackageIds }, projection ? {searchKeys:projection.keys} : {}),
       groups:prepared.groups.map(function (group) {
         return {
           id:group.id,
           packages:group.packages.map(function (candidate) {
-            return { id:candidate.id, statDelta:candidate.statDelta };
+            return Object.assign({ id:candidate.id, statDelta:candidate.statDelta }, projection ? {searchValues:projection.keys.map(function(key){return candidate.searchProjection[key];})} : {});
           })
         };
       })
@@ -135,6 +140,8 @@
       lowerBound:lowerBound,
       upperBound:upperBound,
       optimalityGap:optimalityGap(lowerBound, upperBound, exact),
+      frontierReports:prepared.metadata && prepared.metadata.paretoReports || [],
+      candidateProjectionReport:prepared.metadata && prepared.metadata.candidateProjection || null,
       diagnostics:result && result.diagnostics || []
     });
   }

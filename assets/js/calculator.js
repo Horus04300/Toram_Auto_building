@@ -300,7 +300,7 @@ window.ToramExactMath = ToramExactMath;
             });
         }
 
-        function simulateWithCrystas(baseCtx, crystas, snapshotOnly, summaryOnly) {
+        function simulateWithCrystas(baseCtx, crystas, snapshotOnly, summaryOnly, supplyOnly) {
             var ctx = cloneCtx(baseCtx);
             var policies = window.ToramCalculationPolicies;
             if (!policies || typeof policies.matchesCrystaCondition !== 'function') throw new Error('크리스타 조건 정책이 준비되지 않았습니다.');
@@ -504,6 +504,14 @@ window.ToramExactMath = ToramExactMath;
 
             var preCspd = Number(ctx.level) + ToramExactMath.ratio(totalAGI, 116, 100) + ToramExactMath.ratio(totalDEX, 294, 100);
             var finalCSPD = ToramExactMath.percent(preCspd, ctx.cspdP) + ctx.cspdF;
+
+            // Candidate preparation reads the evaluator's own bases, before damage work.
+            if (supplyOnly) return {
+                STR:ctx.strBase, DEX:ctx.dexBase, AGI:ctx.agiBase, INT:ctx.intBase, VIT:ctx.vitBase,
+                CRIT:baseCrit, CDMG:baseCDMG, MAXHP:baseMaxHP, ASPD:preAspd, CSPD:preCspd,
+                ATK:[preFinalAtk].concat(isDualSword ? [preFinalSubAtk] : []), MATK:preFinalMatk,
+                WATK:[effectiveBaseWpnAtk].concat(isDualSword ? [Number(ctx.subAtk)] : [])
+            };
 
             var aspdMotionBonus = finalASPD >= 1000 ? (finalASPD - 1000) / 180 : 0;
             var aspdMotionFloor = Math.min(50, Math.floor(aspdMotionBonus));
@@ -755,6 +763,7 @@ window.ToramExactMath = ToramExactMath;
 
 window.ToramCalculationKernel = Object.freeze({
     evaluateContext: function (baseContext, candidates, summaryOnly) { return simulateWithCrystas(baseContext, candidates || [], true, summaryOnly === true); },
+    candidateSupplyBases: function (baseContext, stats) { return simulateWithCrystas(baseContext, [{stats:stats || {}}], true, false, true); },
     cloneContext: cloneCtx,
     applyStat: applyStat,
     resolveNormalAttackAmpr: resolveNormalAttackAmpr

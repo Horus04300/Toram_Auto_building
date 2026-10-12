@@ -15,6 +15,7 @@
     "verify:entry": "node tools/verification/verify-es-module-entry.mjs",
     "verify:entry:dist": "node tools/verification/verify-es-module-entry.mjs --dist",
     "desktop:prepare": "npm run types:emit && node tools/prepare-tauri-frontend.mjs",
+    "desktop:clean": "cargo clean --manifest-path src-tauri/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator && cargo clean --release --manifest-path src-tauri/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator && cargo clean --release --target x86_64-pc-windows-msvc --manifest-path src-tauri/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator",
     "desktop:dev": "tauri dev",
     "desktop:build": "tauri build --bundles nsis",
     "desktop:build:exe": "tauri build --no-bundle",
