@@ -1,0 +1,16 @@
+--- assets\source-data\toram-monsters\native-schema\MobModeData-CreateModeData-7fff5fe4a340.c
++++ 8646.c
+@@ -10,5 +10,5 @@
+   }
+   puVar5 = (undefined *)CALL1(GLOBAL1);
+-  _loadFieldData_d__125_System_IDisposable_Dispose(puVar5,(undefined *)0x0);
++  CALL2(puVar5,0);
+   if (reader != (undefined *)0x0) {
+     uVar2 = (**(code **)(*(longlong *)reader + 0x1d8))
+@@ -52,5 +52,5 @@
+     }
+   }
+-  CALL2();
++  CALL3();
+   pcVar1 = (code *)swi(3);
+   puVar5 = (undefined *)(*pcVar1)();

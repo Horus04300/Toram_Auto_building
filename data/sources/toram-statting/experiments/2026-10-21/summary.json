@@ -1,0 +1,84 @@
+{
+  "schema": "toram.statting-survey.v1",
+  "seed": 20261021,
+  "samplesPerCategoryFrame": 24,
+  "scope": "fixed legal targets in declared frames; monotone nonzero ordinary options; no crafting RNG, reversal, or battle-score optimization",
+  "startingPotentialStatus": "source-model combined-floor and separate-floor sensitivity; native final crafting arithmetic remains unknown",
+  "nativeWarningModel": "retained client pre-start warning only, not server outcome probability",
+  "nativeMethodHashesChecked": 36,
+  "totals": {
+    "inputCases": 1670,
+    "prefixStatesGenerated": 2618550,
+    "negativeSchedulesAttempted": 1112773,
+    "completedRoutes": 1304618,
+    "uniqueCompletedRoutes": 1199301,
+    "noRouteFound": 553,
+    "foundExecutableRoute": 1117,
+    "all100Found": 544
+  },
+  "winnerFamilies": {
+    "drain-split": 274,
+    "mixed": 20,
+    "drain": 401,
+    "negative-first": 422
+  },
+  "comparisons": {
+    "betterThanBaseline": 695,
+    "baselineEqual": 975,
+    "negativeOrderingImproves": 0,
+    "splitWithoutDrainImproves": 204,
+    "drainAddsImprovement": 695,
+    "mixedAddsImprovement": 0
+  },
+  "supportedSurveyOptionIds": [
+    6,
+    7,
+    18,
+    20,
+    23,
+    25,
+    34,
+    36,
+    40,
+    41,
+    42,
+    43,
+    53
+  ],
+  "excludedSpecialIds": [
+    12,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    65
+  ],
+  "sensitivity": {
+    "pairedCases": 763,
+    "differentWarningScores": 273,
+    "maxWarningDifferencePoints": 9
+  },
+  "oracle": {
+    "cases": 12,
+    "edges": 492202,
+    "matches": 12,
+    "maxDifferencePoints": 0
+  },
+  "elapsedSeconds": 434.95902240000214,
+  "sources": {
+    "catalog.json": "afe674904815b7367f49967e7ad0f3028a7dff1d889f4aa84f90b6e6163ea3e1",
+    "native-crafting\\base-profiles.json": "ae5fec13a2b8673d47bf671a94e9eacf8a4a1454d63f8553caca0cb461185e4e",
+    "native-stat-budget\\budget.325.json": "eacf541603fe3453de1bf4115fa69e63d27f5ad318e584f57bff9a772bc5b39a",
+    "native-success\\index.json": "02ba36c08c5000754e36726fa26978350068277700f0be426ee89c98e6488e2b"
+  },
+  "toolHashes": {
+    "catalog_sweep.py": "46b84d1ee68474adae1df1ca73a4f70efe4873ab4dfc098d346d2042eb7386b4",
+    "experiment.py": "e881fe469a2276d2ffa49793fd1006c6f096549f70a2a7f9bdd4d59ff78e4df9",
+    "native_model.py": "0ecd2e8d49f2bbf416fd3888deaecbdf980ea1473d3b1c2d8f0779cc96925665",
+    "routes.py": "31a58f6a4a0043d5554e2d2acdfff8ea2819e9082d06a5435b8ad1e6d80f137c",
+    "self_check.py": "6ae9e8d077a4ee2425c389428fe5282c1c44e30a2ec75341a5f73826ab7a50b4",
+    "simulate.py": "86ce883966639e965b22d921d7ac31a7021748a11255b3e75bdf91d926b12c05"
+  }
+}

@@ -1,0 +1,88 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidManager-UpdateHeldData-7fff60051000.c
++++ 17414.c
+@@ -4,7 +4,7 @@
+   char cVar3;
+   undefined4 uVar4;
+-  undefined *puVar5;
++  longlong lVar5;
+   undefined8 uVar6;
+-  undefined *puStackX_10;
++  longlong lStackX_10;
+   undefined8 uStackX_20;
+   undefined8 auStack_28 [2];
+@@ -18,10 +18,10 @@
+     return;
+   }
+-  puStackX_10 = (undefined *)0x0;
++  lStackX_10 = 0;
+   if (*(longlong *)(self + 0x28) != 0) {
+-    cVar3 = CALL1(*(longlong *)(self + 0x28),held[0x20],&puStackX_10,GLOBAL2);
++    cVar3 = CALL1(*(longlong *)(self + 0x28),held[0x20],&lStackX_10,GLOBAL2);
+     if (cVar3 == '\0') {
+       uVar1 = held[0x20];
+-      puVar5 = (undefined *)CALL2(GLOBAL3);
++      lVar5 = CALL2(GLOBAL3);
+       if (GLOBAL4 == '\0') {
+         CALL0(&GLOBAL5);
+@@ -31,43 +31,43 @@
+         CALL3(GLOBAL5);
+       }
+-      *(undefined8 *)(puVar5 + 0x18) = **(undefined8 **)(GLOBAL5 + 0xb8);
+-      *(undefined8 *)(puVar5 + 0x20) = **(undefined8 **)(GLOBAL5 + 0xb8);
+-      GuildRaidRoomData_LoadAsset(puVar5,(undefined *)0x0);
+-      puVar5[0x10] = uVar1;
+-      puStackX_10 = puVar5;
++      *(undefined8 *)(lVar5 + 0x18) = **(undefined8 **)(GLOBAL5 + 0xb8);
++      *(undefined8 *)(lVar5 + 0x20) = **(undefined8 **)(GLOBAL5 + 0xb8);
++      CALL4(lVar5,0);
++      *(undefined1 *)(lVar5 + 0x10) = uVar1;
++      lStackX_10 = lVar5;
+       if (*(longlong *)(self + 0x28) == 0) goto LABEL0;
+-      CALL4(*(longlong *)(self + 0x28),held[0x20],puVar5,GLOBAL1);
++      CALL5(*(longlong *)(self + 0x28),held[0x20],lVar5,GLOBAL1);
+     }
+-    puVar5 = puStackX_10;
+-    if (puStackX_10 != (undefined *)0x0) {
++    lVar5 = lStackX_10;
++    if (lStackX_10 != 0) {
+       if (GLOBAL6 == '\0') {
+         CALL0(&GLOBAL7);
+         GLOBAL6 = '\x01';
+       }
+-      if (held[0x20] != puVar5[0x10]) {
++      if (held[0x20] != *(char *)(lVar5 + 0x10)) {
+         return;
+       }
+-      puVar5[0x11] = held[0x21];
+-      puVar5[0x30] = held[0x22];
++      *(undefined *)(lVar5 + 0x11) = held[0x21];
++      *(undefined *)(lVar5 + 0x30) = held[0x22];
+       uVar4 = (**(code **)(*(longlong *)held + 0x1b8))
+                         (held,*(undefined8 *)(*(longlong *)held + 0x1c0));
+       uStackX_20 = 0;
+-      CALL5(&uStackX_20,0,0,uVar4,0);
+-      *(undefined8 *)(puVar5 + 0x18) = uStackX_20;
++      CALL6(&uStackX_20,0,0,uVar4,0);
++      *(undefined8 *)(lVar5 + 0x18) = uStackX_20;
+       uVar4 = (**(code **)(*(longlong *)held + 0x1d8))
+                         (held,*(undefined8 *)(*(longlong *)held + 0x1e0));
+       auStack_28[0] = 0;
+-      CALL5(auStack_28,0,0,uVar4,0);
+-      *(undefined8 *)(puVar5 + 0x20) = auStack_28[0];
++      CALL6(auStack_28,0,0,uVar4,0);
++      *(undefined8 *)(lVar5 + 0x20) = auStack_28[0];
+       if (*(int *)(GLOBAL7 + 0xe0) == 0) {
+         CALL3();
+       }
+-      uVar6 = CALL6(0);
+-      *(undefined8 *)(puVar5 + 0x28) = uVar6;
++      uVar6 = CALL7(0);
++      *(undefined8 *)(lVar5 + 0x28) = uVar6;
+       return;
+     }
+   }
+ LABEL0:
+-  CALL7();
++  CALL8();
+   pcVar2 = (code *)swi(3);
+   (*pcVar2)();

@@ -7,9 +7,9 @@ export function verifyVersion(root = resolve(import.meta.dirname, '..'), tag = p
   const read = path => readFileSync(resolve(root, path), 'utf8');
   const pkg = JSON.parse(read('package.json'));
   const lock = JSON.parse(read('package-lock.json'));
-  const config = JSON.parse(read('src-tauri/tauri.conf.json'));
-  const cargo = read('src-tauri/Cargo.toml').match(/\[package\][\s\S]*?^version = "([^"]+)"/m)?.[1];
-  const cargoLock = read('src-tauri/Cargo.lock').match(/name = "toram-online-auto-build-calculator"\r?\nversion = "([^"]+)"/)?.[1];
+  const config = JSON.parse(read('desktop/tauri.conf.json'));
+  const cargo = read('desktop/Cargo.toml').match(/\[package\][\s\S]*?^version = "([^"]+)"/m)?.[1];
+  const cargoLock = read('desktop/Cargo.lock').match(/name = "toram-online-auto-build-calculator"\r?\nversion = "([^"]+)"/)?.[1];
   assert.match(pkg.version, /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/, 'Only regular release versions are allowed');
   for (const [name, value] of Object.entries({ cargo, cargoLock, tauri:config.version, packageLock:lock.version, lockRoot:lock.packages[''].version })) {
     assert.equal(value, pkg.version, `${name} version mismatch`);

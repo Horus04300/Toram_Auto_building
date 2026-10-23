@@ -7,7 +7,7 @@ const context = { window:{}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Magic:{} }) };
 vm.createContext(context);
-for (const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skills/magic.js', 'assets/js/skill-effect-engine.js', 'assets/js/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/magic.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
 const effects = context.window.ToramSkillEffects;
 const combo = context.window.ToramComboSequence;
@@ -31,6 +31,20 @@ assert(profile.hits.length === 2 && profile.hits[0].count + profile.hits[1].coun
 profile = effects.profile('Magic:3', base(), combat, { spellTuningReinforce:true, spellTuningNextQuick:true });
 close(profile.hits[0].multiplier, 5, '임팩트 리인포스 기본 계수 2배');
 assert(profile.effects.some((effect) => effect.key === 'motionSpeed' && effect.value === 50), '임팩트 넥스트 퀵 다음 신속');
+
+// Manual barrier activation represents remaining inside the barrier; its
+// stat must reach build calculation without enabling position/hit simulation.
+const barrierBuff = { activeBuffs:{'Magic:22':{active:true,stacks:0}} };
+for(const weapon of ['지팡이','마도구']) {
+  const changes=effects.activeStatChanges(base(weapon),combat,{},barrierBuff);
+  close(changes.filter(change=>change.source.id==='Magic:22'&&change.key==='MOTIONSPEED').reduce((sum,change)=>sum+change.value,0),25,'결계 Lv.10 행동속도 전달');
+}
+assert(!effects.activeStatChanges(base('한손검'),combat,{},barrierBuff).some(change=>change.source.id==='Magic:22'),'결계 무기 제한');
+assert(!effects.activeStatChanges(base(),combat,{}, {activeBuffs:{'Magic:22':{active:false}}}).some(change=>change.source.id==='Magic:22'),'비활성 결계는 행동속도 미적용');
+levels(0,{22:1});
+close(effects.activeStatChanges(base(),combat,{},barrierBuff).find(change=>change.key==='MOTIONSPEED').value,7,'결계 Lv.1 행동속도');
+levels(0);
+assert(!effects.activeStatChanges(base(),combat,{},barrierBuff).some(change=>change.source.id==='Magic:22'),'미습득 결계 미적용');
 
 levels(0, { 0:10, 3:10, 5:10, 7:10, 15:10, 18:10 });
 let result = combo.evaluate([{ skillId:'Magic:3', tag:'none' }, { skillId:'Magic:0', tag:'none' }], base(), combat, { maxMp:500 });

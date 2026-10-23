@@ -3,6 +3,10 @@
 > 상태: 설계·데이터 수집 기준 문서. 자동 옵션부여 기능은 아직 구현하지 않는다.
 >
 > 확인일: 2026-08-26
+>
+> 2026-10-22 검토안: 사용자 `docs/statting.md`와 후속 지시를 반영한 [추천 알고리즘 설계안](statting-recommendation-design.md)과 [오프라인 실험](../verification/toram-statting-experiments.md)을 별도로 작성했다. 아래 과거 비용 합 모델보다 새 단계별 설계를 우선한다. 앱 추천은 미연결이다.
+>
+> 2026-10-20 원형 조사: [실제 카탈로그·계산 근거](../verification/toram-statting-extraction.md)를 확보했다. 아래의 정확히 8줄·최종 벡터 hard budget은 과거 제품 설계이며 게임 계산식의 검증 결과가 아니다. 실제로는 스킬별 가용 줄 수, 최종 카테고리와 기존 값·부여 단계·TEC·float32 절삭이 비용에 영향을 준다. 자동 기능을 구현하기 전에 아래 `potentialCost` 단순 합 계약을 개정해야 한다.
 
 ## 1. 목적과 범위
 
@@ -49,7 +53,7 @@
 | 입력 | 필수 | 용도 |
 | --- | --- | --- |
 | 장비 부위·유형 | 예 | 옵션 호환성·조건 판정 |
-| 장비 기준 레벨 | 예 | 옵션 상한 계산 |
+| 옵션 부여자 캐릭터 레벨 | 예 | 옵션 상한 계산 |
 | 시작/사용 가능 잠재력 | 예 | hard budget |
 | 단일 성공률 | 예 | 결과 표시·저장만 함 |
 | 최종 성공률 | 예 | 결과 표시·저장만 함 |
@@ -58,7 +62,7 @@
 | 사용 가능한 옵션/금지 옵션 | 선택 | 플레이어의 재고·선호·금지 반영 |
 | 목표 시나리오 | 예 | 스킬, 대상, 버프, Utility 요구치 |
 
-장비 레벨은 최신 공식 레벨 상한 공지를 우선해 결정하고, 온라인 확인이 불가능하면 사용자가 입력한 레벨로 fallback한다. 특정 숫자를 데이터에 영구 상수로 박아 넣지 않는다.
+상한 계산에는 옵션 부여자 본인의 현재 레벨을 쓴다. 게임 전체 최고 레벨이나 장비 레벨로 대체하지 않는다. 원형의 `GrantData.LimitLevel=210`은 계산 분기점이며 부여자 레벨 상한이 아니다.
 
 ## 3. 게임 정보와 제품 모델의 구분
 
@@ -90,7 +94,7 @@ Coryn의 Statting Simulator도 장비 종류, 원본/시작 잠재력, 기준 �
 | `equipmentTypes` | 허용되는 장비 유형(무기/몸장비 및 세부 제한) |
 | `min`, `max`, `step` | 수치 도메인 |
 | `sign` | `positive`, `negative`, 또는 양방향 |
-| `potentialCost(level, value)` | 해당 최종 수치의 순잠재력 비용. 음수 옵션은 음수 비용 가능 |
+| `potentialCost(level, value)` | 과거 제품 모델의 추상 비용. 실제 비용은 기존 값·증분·장비·TEC·최종 카테고리·단계별 절삭이 필요하므로 이 시그니처만으로 확정하지 않음 |
 | `lineCost` | 기본 1줄. 예외가 있으면 명시 |
 | `exclusiveWith` | 함께 선택할 수 없는 옵션 ID |
 | `requires` | 속성·장비 유형·다른 옵션 등 활성 조건 |
@@ -101,7 +105,7 @@ Coryn의 Statting Simulator도 장비 종류, 원본/시작 잠재력, 기준 �
 
 ### 4.1 상한과 비용 데이터의 확인 규칙
 
-1. 공식 공지: 장비 레벨 상한의 기준.
+1. 게임 원형: 부여자 레벨·스킬·옵션 마스터와 소비 함수를 연결한다. 공식 최고 레벨 공지를 개인 레벨 입력으로 대체하지 않는다.
 2. Coryn과 Dodamu 공개 계산기: 옵션 범위·잠재력 비용·호환성의 교차 확인 후보.
 3. 서로 다르거나 한쪽만 확인되면 `unverified`로 남기며 자동 생성에 사용하지 않는다.
 4. 확인된 값은 출처 URL, 확인일, 적용 장비 유형, 레벨 규칙을 함께 기록한다.
@@ -213,7 +217,5 @@ DeltaLogDamage / DeltaPotential
 ## 10. 관련 문서
 
 - `docs/architecture/crysta-optimization-contract.md`
-- `docs/architecture/build-optimization-design.md`
-- `docs/architecture/build-optimization-prerequisites.md`
 - `docs/verification/unimplemented.md`
 - `docs/sources/skills/Smith.txt`

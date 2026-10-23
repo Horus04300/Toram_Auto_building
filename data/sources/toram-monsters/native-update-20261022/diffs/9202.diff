@@ -1,0 +1,18 @@
+--- assets\source-data\toram-monsters\native-schema\MobStatusMaster-SetMobPropertyMaster-7fff5fe6aee0.c
++++ 9202.c
+@@ -1,10 +1,11 @@
+ {
+   code *pcVar1;
+-  if (*(longlong *)(self + 0xa0) != 0) {
+-    CALL0(*(longlong *)(self + 0xa0),*(undefined4 *)(self + 0x14),
+-                     *(undefined4 *)(self + 0x10),masterData,0);
++  if (*(undefined **)(self + 0xa0) != (undefined *)0x0) {
++    MobPropertyManager_SetMasterData
++              (*(undefined **)(self + 0xa0),*(int *)(self + 0x14),*(int *)(self + 0x10),masterData,
++               (undefined *)0x0);
+     return;
+   }
+-  CALL1();
++  CALL0();
+   pcVar1 = (code *)swi(3);
+   (*pcVar1)();

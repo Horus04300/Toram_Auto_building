@@ -1,0 +1,112 @@
+--- assets\source-data\toram-monsters\native-highraid-target\HighRaidBossBattleStatus-get_MagicDef-7fff5fe2e260.c
++++ 7910.c
+@@ -3,10 +3,9 @@
+   longlong *plVar2;
+   char cVar3;
+-  int iVar4;
+-  longlong lVar5;
+-  int iVar6;
+-  undefined8 uVar7;
+-  undefined *methodInfo_00;
+-  longlong lStackX_20;
++  byte bVar4;
++  int iVar5;
++  longlong lVar6;
++  int iVar7;
++  undefined *puStackX_20;
+   undefined8 uStack_50;
+   undefined8 *puStack_48;
+@@ -23,5 +22,5 @@
+     GLOBAL0 = '\x01';
+   }
+-  lStackX_20 = 0;
++  puStackX_20 = (undefined *)0x0;
+   if (GLOBAL6 == '\0') {
+     CALL0(&GLOBAL7);
+@@ -29,24 +28,22 @@
+   }
+   if ((*(longlong *)(self + 0x10) == 0) ||
+-     (lVar5 = *(longlong *)(*(longlong *)(self + 0x10) + 0xa0), lVar5 == 0)) goto LABEL0;
+-  methodInfo_00 = GLOBAL7;
+-  cVar3 = CALL1(lVar5,0x20,&lStackX_20);
++     (lVar6 = *(longlong *)(*(longlong *)(self + 0x10) + 0xa0), lVar6 == 0)) goto LABEL0;
++  cVar3 = CALL1(lVar6,0x20,&puStackX_20,GLOBAL7);
+   if (cVar3 == '\0') {
+ LABEL1:
+     if (*(longlong *)(self + 0x10) == 0) goto LABEL0;
+-    iVar6 = (int)((float)*(int *)(self + 0x30) *
++    iVar7 = (int)((float)*(int *)(self + 0x30) *
+                  ((float)*(int *)(*(longlong *)(self + 0x10) + 0x40) / GLOBAL8));
+   }
+   else {
+-    if (lStackX_20 == 0) goto LABEL0;
+-    cVar3 = CALL2(lStackX_20,0);
+-    if (cVar3 == '\0') goto LABEL1;
++    if (puStackX_20 == (undefined *)0x0) goto LABEL0;
++    bVar4 = MobPropertyHighRaidCalcExceptionFlag_FixedMagicDefFlag(puStackX_20,(undefined *)0x0);
++    if (bVar4 == 0) goto LABEL1;
+     if (*(longlong *)(self + 0x10) == 0) goto LABEL0;
+-    iVar6 = *(int *)(*(longlong *)(self + 0x10) + 0x40);
++    iVar7 = *(int *)(*(longlong *)(self + 0x10) + 0x40);
+   }
+   if ((*(longlong *)(self + 0x38) != 0) &&
+-     (lVar5 = CALL3(*(longlong *)(self + 0x38),GLOBAL1), lVar5 != 0)) {
+-    uVar7 = GLOBAL5;
+-    CALL4(&uStack_50,lVar5);
++     (lVar6 = CALL2(*(longlong *)(self + 0x38),GLOBAL1), lVar6 != 0)) {
++    CALL3(&uStack_50,lVar6,GLOBAL5);
+     uStack_38 = uStack_50;
+     puStack_30 = puStack_48;
+@@ -54,35 +51,33 @@
+     uStack_50 = 0;
+     puStack_48 = &uStack_38;
+-    while (cVar3 = CALL5(&uStack_38,GLOBAL3), plVar2 = plStack_28,
+-          cVar3 != '\0') {
++    while (cVar3 = CALL4(&uStack_38), plVar2 = plStack_28, cVar3 != '\0') {
+       if (plStack_28 == (longlong *)0x0) goto LABEL2;
+-      cVar3 = CALL6(plStack_28,0);
+-      if (cVar3 == '\0') {
+-        lVar5 = *plVar2;
+-        iVar4 = (**(code **)(lVar5 + 0x198))(plVar2,*(undefined8 *)(lVar5 + 0x1a0));
+-        iVar6 = iVar6 + iVar4;
++      bVar4 = MobPartsStatus_get_IsDead((undefined *)plStack_28,(undefined *)0x0);
++      if (bVar4 == 0) {
++        lVar6 = *plVar2;
++        iVar5 = (**(code **)(lVar6 + 0x198))(plVar2,*(undefined8 *)(lVar6 + 0x1a0));
++        iVar7 = iVar7 + iVar5;
+       }
+     }
+-    HighRaidRoomData_LoadAsset
+-              ((undefined *)&uStack_38,(byte)GLOBAL2,(short)uVar7,methodInfo_00);
++    CALL5(&uStack_38,GLOBAL2);
+     if (*(longlong *)(self + 0x20) != 0) {
+-      iVar4 = CALL7(*(longlong *)(self + 0x20),3);
+-      iVar6 = (int)(((float)iVar4 / GLOBAL8 + GLOBAL9) * (float)iVar6);
++      iVar5 = CALL6(*(longlong *)(self + 0x20),3);
++      iVar7 = (int)(((float)iVar5 / GLOBAL8 + GLOBAL9) * (float)iVar7);
+       if (*(longlong *)(self + 0x18) != 0) {
+-        cVar3 = CALL8(*(longlong *)(self + 0x18),10);
++        cVar3 = CALL7(*(longlong *)(self + 0x18),10);
+         if (cVar3 != '\0') {
+-          iVar6 = (int)((float)iVar6 * GLOBAL10);
++          iVar7 = (int)((float)iVar7 * GLOBAL10);
+         }
+-        return iVar6;
++        return iVar7;
+       }
+     }
+   }
+ LABEL0:
++  CALL8();
++LABEL2:
++  CALL8();
+   CALL9();
+-LABEL2:
+-  CALL9();
+-  CALL10();
+   pcVar1 = (code *)swi(3);
+-  iVar6 = (*pcVar1)();
+-  return iVar6;
++  iVar7 = (*pcVar1)();
++  return iVar7;
+ }

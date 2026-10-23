@@ -1,0 +1,560 @@
+{
+  "authority": "saved-module-Ghidra-pseudocode-and-passive-formatter-constants",
+  "ghidraVersion": "12.1.4",
+  "methods": [
+    {
+      "class": "SkillManager",
+      "name": "GetAvatarSkillId",
+      "method_definition_index": 31244,
+      "token": "0x06007a0d",
+      "metadata_declaration_range": {
+        "offset": 4870000,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "bonusValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51611216,
+      "pointer_slot_va": "0x7fff62388650",
+      "runtime_va": "0x7fff60307220",
+      "rva": "0x10b7220",
+      "status": "mapped",
+      "code_preview_hex": "83f90577284863c1488d15d18df4fe8b8c8250720b014803",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillManager-GetAvatarSkillId-7fff60307220.c",
+      "sha256": "d6f0293333b35c53dce003f4acf4857ece1ba1be91fb43ccb32a2d8d3f58952f"
+    },
+    {
+      "class": "SkillTextManager",
+      "name": "Initialize",
+      "method_definition_index": 46464,
+      "token": "0x0600b581",
+      "metadata_declaration_range": {
+        "offset": 5417920,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9987
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51732976,
+      "pointer_slot_va": "0x7fff623a61f0",
+      "runtime_va": "0x7fff5f5655b0",
+      "rva": "0x3155b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410488974241848894c2408574154415541564157",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManager-Initialize-7fff5f5655b0.c",
+      "sha256": "7a0d735b1eb775cae201e611a6ee71b5a11bd0c5e025f9d035f14e5967cabd93"
+    },
+    {
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "method_definition_index": 46468,
+      "token": "0x0600b585",
+      "metadata_declaration_range": {
+        "offset": 5418064,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51733008,
+      "pointer_slot_va": "0x7fff623a6210",
+      "runtime_va": "0x7fff5f5654f0",
+      "rva": "0x3154f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d6dc00703008bfa488bd9752b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManager-GetSkillName-7fff5f5654f0.c",
+      "sha256": "43696a7e1b2dc5c82d94e9c765ce25ca2ba3adf08403534578ad0d8bb9d34b37"
+    },
+    {
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "method_definition_index": 46469,
+      "token": "0x0600b586",
+      "metadata_declaration_range": {
+        "offset": 5418100,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "key",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51733016,
+      "pointer_slot_va": "0x7fff623a6218",
+      "runtime_va": "0x7fff5f565430",
+      "rva": "0x315430",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d29c1070300498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManager-GetSkillName-7fff5f565430.c",
+      "sha256": "cd638a8b4845c74bb70fe501b39b2ede0f51b86d4ad63887a92fbc505210b0fc"
+    },
+    {
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "method_definition_index": 46470,
+      "token": "0x0600b587",
+      "metadata_declaration_range": {
+        "offset": 5418136,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "elementType",
+          "type_index": 15203,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51733024,
+      "pointer_slot_va": "0x7fff623a6220",
+      "runtime_va": "0x7fff5f565370",
+      "rva": "0x315370",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803deac1070300418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManager-GetSkillName-7fff5f565370.c",
+      "sha256": "a72da684c69299064cdfb10f9d78ffcb1af74496a07c09566abc18e87aead4c8"
+    },
+    {
+      "class": "SystemTextManager",
+      "name": "Initialize",
+      "method_definition_index": 46499,
+      "token": "0x0600b5a4",
+      "metadata_declaration_range": {
+        "offset": 5419180,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9987
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51733256,
+      "pointer_slot_va": "0x7fff623a6308",
+      "runtime_va": "0x7fff5f568210",
+      "rva": "0x318210",
+      "status": "mapped",
+      "code_preview_hex": "48894c240853565741544155415641574883ec70488bfa4c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SystemTextManager-Initialize-7fff5f568210.c",
+      "sha256": "8f879839188f3a9eaaae825ab5a092fc61ee80595445c6146abf36ee4cd8fa16"
+    },
+    {
+      "class": "BonusManager",
+      "name": "CreateBonus",
+      "method_definition_index": 15696,
+      "token": "0x06003d51",
+      "metadata_declaration_range": {
+        "offset": 4310272,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusLines",
+          "type_index": 5976,
+          "is_enum": false
+        },
+        {
+          "name": "exec",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean",
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 12833,
+        "exact_byval_name": "BonusData",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51486832,
+      "pointer_slot_va": "0x7fff6236a070",
+      "runtime_va": "0x7fff5fff4910",
+      "rva": "0xda4910",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d2e0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-CreateBonus-7fff5fff4910.c",
+      "sha256": "fd5b809375704e1de6b5edfb7055fbfbee990d3d667250a33b4c8aa7a8af4660"
+    },
+    {
+      "class": "BonusManager",
+      "name": "CreateBonus",
+      "method_definition_index": 15697,
+      "token": "0x06003d52",
+      "metadata_declaration_range": {
+        "offset": 4310308,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusLines",
+          "type_index": 5976,
+          "is_enum": false
+        },
+        {
+          "name": "exec",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean",
+          "is_enum": false
+        },
+        {
+          "name": "stack",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32",
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 12833,
+        "exact_byval_name": "BonusData",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51486840,
+      "pointer_slot_va": "0x7fff6236a078",
+      "runtime_va": "0x7fff5fff4430",
+      "rva": "0xda4430",
+      "status": "mapped",
+      "code_preview_hex": "44894c242053565741544155415641574881eca000000045",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-CreateBonus-7fff5fff4430.c",
+      "sha256": "65b29c8671f67159dbff304396f0494cb79fd665e03545724a0d4952b6def021"
+    },
+    {
+      "class": "BonusManager",
+      "name": "UpdateEquipLimitBonus",
+      "method_definition_index": 15703,
+      "token": "0x06003d58",
+      "metadata_declaration_range": {
+        "offset": 4310524,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51486888,
+      "pointer_slot_va": "0x7fff6236a0a8",
+      "runtime_va": "0x7fff5fff7c50",
+      "rva": "0xda7c50",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408488974241048897c24184c8974242041574883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-UpdateEquipLimitBonus-7fff5fff7c50.c",
+      "sha256": "116afc24dacb9ad9ecdaf658ed017b9ca61ef7302546dbc8ace00868319c5596"
+    },
+    {
+      "class": "BonusManager",
+      "name": "CreateBonusParameter",
+      "method_definition_index": 15724,
+      "token": "0x06003d6d",
+      "metadata_declaration_range": {
+        "offset": 4311280,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 10331,
+          "is_enum": false
+        },
+        {
+          "name": "val",
+          "type_index": 10331,
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 6725,
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51487056,
+      "pointer_slot_va": "0x7fff6236a150",
+      "runtime_va": "0x7fff5fff4290",
+      "rva": "0xda4290",
+      "status": "mapped",
+      "code_preview_hex": "415541564883ec28803dd4155f02004d8be84c8bf2753748",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-CreateBonusParameter-7fff5fff4290.c",
+      "sha256": "96ed8f3ea776853284e4898b762ddd3f3b6d6c0df6522857bce808ded6b0a393"
+    },
+    {
+      "class": "SkillTextManagerData",
+      "name": "CheckNameText",
+      "method_definition_index": 46478,
+      "token": "0x0600b58f",
+      "metadata_declaration_range": {
+        "offset": 5418424,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "name",
+          "type_index": 25252,
+          "exact_byval_name": "System.String",
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51733088,
+      "pointer_slot_va": "0x7fff623a6260",
+      "runtime_va": "0x7fff5f563ff0",
+      "rva": "0x313ff0",
+      "status": "mapped",
+      "code_preview_hex": "48895c241848897c242041564883ec20803d6ed507030048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManagerData-CheckNameText-7fff5f563ff0.c",
+      "sha256": "fd88bb4a3f06dd253f82013732f4ddde23ea208609ef65459e229cd31315b616"
+    },
+    {
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "method_definition_index": 46479,
+      "token": "0x0600b590",
+      "metadata_declaration_range": {
+        "offset": 5418460,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "elementType",
+          "type_index": 15203,
+          "exact_byval_name": "ElementType",
+          "is_enum": true
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51733096,
+      "pointer_slot_va": "0x7fff623a6268",
+      "runtime_va": "0x7fff5f564a80",
+      "rva": "0x314a80",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803de5ca0703008bda488bf9751f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManagerData-GetName-7fff5f564a80.c",
+      "sha256": "33cc98f4b7fd855a0eaeeb167c3234c8b190d9750a89324f3f52290cb1bc4e85"
+    },
+    {
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "method_definition_index": 46480,
+      "token": "0x0600b591",
+      "metadata_declaration_range": {
+        "offset": 5418496,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "key",
+          "type_index": 25252,
+          "exact_byval_name": "System.String",
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51733104,
+      "pointer_slot_va": "0x7fff623a6270",
+      "runtime_va": "0x7fff5f5649d0",
+      "rva": "0x3149d0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803d96cb070300488bfa488bd975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManagerData-GetName-7fff5f5649d0.c",
+      "sha256": "3a3a51dde404d7768f593c354a429533df954195890fe856799f2dd1d37bd620"
+    },
+    {
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "method_definition_index": 46481,
+      "token": "0x0600b592",
+      "metadata_declaration_range": {
+        "offset": 5418532,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51733112,
+      "pointer_slot_va": "0x7fff623a6278",
+      "runtime_va": "0x7fff5f564a70",
+      "rva": "0x314a70",
+      "status": "mapped",
+      "code_preview_hex": "4533c033d2e906000000cccccccccccc48895c2408574883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManagerData-GetName-7fff5f564a70.c",
+      "sha256": "b7c75b8aa5baf1e62bafd0ee556afa632fd506a17cd9d13209d93634ec9a38d3"
+    },
+    {
+      "class": "SkillTextManagerData",
+      "name": ".cctor",
+      "method_definition_index": 46491,
+      "token": "0x0600b59c",
+      "metadata_declaration_range": {
+        "offset": 5418892,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void",
+        "is_enum": false
+      },
+      "pointer_slot_offset": 51733192,
+      "pointer_slot_va": "0x7fff623a62c8",
+      "runtime_va": "0x7fff5f564b60",
+      "rva": "0x314b60",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d14ca0703007573488d0d9aeaee02e8d5",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillTextManagerData-_cctor-7fff5f564b60.c",
+      "sha256": "47ea9e001bdf6810f409094204e96c0d5116754acbd5a5e54b5dce3d0a0d4d9a"
+    },
+    {
+      "class": "BonusScriptManager",
+      "name": "funcEquipTypeLimit",
+      "method_definition_index": 15867,
+      "token": "0x06003dfc",
+      "metadata_declaration_range": {
+        "offset": 4316428,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12845,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter",
+          "is_enum": false
+        }
+      ],
+      "return_type": {
+        "type_index": 31254,
+        "exact_byval_name": "BonusScriptCommand",
+        "is_enum": true
+      },
+      "pointer_slot_offset": 51488200,
+      "pointer_slot_va": "0x7fff6236a5c8",
+      "runtime_va": "0x7fff60003070",
+      "rva": "0xdb3070",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec204c8b4118",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-funcEquipTypeLimit-7fff60003070.c",
+      "sha256": "6888f50974a4cd8cd11f0af34637bc420530528c845cc95b3064a459ba0ed99d"
+    }
+  ]
+}

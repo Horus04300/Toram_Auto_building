@@ -11,7 +11,7 @@ assert.ok(process.env.CODEX_PLAYWRIGHT_PATH, 'Set CODEX_PLAYWRIGHT_PATH');
 const { chromium } = require(process.env.CODEX_PLAYWRIGHT_PATH);
 const mode = process.argv[2];
 assert.ok(['prepare', 'upgrade', 'inspect'].includes(mode), 'Use prepare, upgrade, or inspect');
-const root = resolve('src-tauri/target/upgrade-0.6.4-to-0.6.5');
+const root = resolve('desktop/target/upgrade-0.6.4-to-0.6.5');
 const executable = resolve(root, 'Toram Online Auto Build Calculator/toram-online-auto-build-calculator.exe');
 const local = resolve(root, 'local'), profile = resolve(root, 'webview');
 const endpoint = 'http://127.0.0.1:9226';

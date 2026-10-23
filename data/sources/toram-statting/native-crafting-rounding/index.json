@@ -1,0 +1,616 @@
+{
+  "schema": "toram.crafting-rounding-investigation.v1",
+  "checkedDate": "2026-10-21",
+  "authority": "bounded selected-function static analysis of saved native snapshot; no live execution",
+  "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "imageBase": "0x7fff5f250000",
+  "methods": [
+    {
+      "class": "ShopUtil",
+      "name": "GetManufactureItemText",
+      "method_definition_index": 69803,
+      "token": "0x060110ac",
+      "metadata_declaration_range": {
+        "offset": 6258124,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919688,
+      "pointer_slot_va": "0x7fff623d3b48",
+      "runtime_va": "0x7fff5fc6c4e0",
+      "rva": "0xa1c4e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803df07c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "ShopUtil-GetManufactureItemText-7fff5fc6c4e0.c",
+      "pseudocodeSha256": "527b09fa4fc32d3e84ccae8a4a74ee5a754f48bbdf98a94f8929897ddb3d374d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetManufactureItemPropertyText",
+      "method_definition_index": 69805,
+      "token": "0x060110ae",
+      "metadata_declaration_range": {
+        "offset": 6258196,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919704,
+      "pointer_slot_va": "0x7fff623d3b58",
+      "runtime_va": "0x7fff5fc6c0b0",
+      "rva": "0xa1c0b0",
+      "status": "mapped",
+      "code_preview_hex": "405355564883ec50803d2e81970200498bd8488bf2488be9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "ShopUtil-GetManufactureItemPropertyText-7fff5fc6c0b0.c",
+      "pseudocodeSha256": "23fdde70485c164724c019fa330ac72fb1695e72427481a2f936209779bd5d5a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SelectElement",
+      "method_definition_index": 70166,
+      "token": "0x06011217",
+      "metadata_declaration_range": {
+        "offset": 6271192,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922592,
+      "pointer_slot_va": "0x7fff623d46a0",
+      "runtime_va": "0x7fff5fc93920",
+      "rva": "0xa43920",
+      "status": "mapped",
+      "code_preview_hex": "40534154415641574883ec48803d5d09950200448bf2488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-SelectElement-7fff5fc93920.c",
+      "pseudocodeSha256": "56b99a31808bc82918055cfe5bf7eee8b30c37a7c6dc6ce3fb2d97cad4f5cb44"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SelectElementFirst",
+      "method_definition_index": 70167,
+      "token": "0x06011218",
+      "metadata_declaration_range": {
+        "offset": 6271228,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922600,
+      "pointer_slot_va": "0x7fff623d46a8",
+      "runtime_va": "0x7fff5fc93610",
+      "rva": "0xa43610",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c24184889742420574883ec20803d660c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-SelectElementFirst-7fff5fc93610.c",
+      "pseudocodeSha256": "9925a53e72d1f9367e1b7a8dc730a6382b3184d1b157f5084f1778d975d0071a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetRequiredMaterial",
+      "method_definition_index": 70169,
+      "token": "0x0601121a",
+      "metadata_declaration_range": {
+        "offset": 6271300,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922616,
+      "pointer_slot_va": "0x7fff623d46b8",
+      "runtime_va": "0x7fff5fc93e80",
+      "rva": "0xa43e80",
+      "status": "mapped",
+      "code_preview_hex": "89542410555357488d6c24b94881eca0000000803df90395",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-SetRequiredMaterial-7fff5fc93e80.c",
+      "pseudocodeSha256": "d28a01b2c0f5f3555ba9c068463b50fb6d80f522755887c3640f719a8deb2331"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "PopUpWindow",
+      "method_definition_index": 70170,
+      "token": "0x0601121b",
+      "metadata_declaration_range": {
+        "offset": 6271336,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922624,
+      "pointer_slot_va": "0x7fff623d46c0",
+      "runtime_va": "0x7fff5fc92f10",
+      "rva": "0xa42f10",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d7313950200488bf97513488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-PopUpWindow-7fff5fc92f10.c",
+      "pseudocodeSha256": "b667f53aac23d77078c766b7e892091ed9c9cb84e7e6888666a079e07381f862"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnInfomationButton",
+      "method_definition_index": 70171,
+      "token": "0x0601121c",
+      "metadata_declaration_range": {
+        "offset": 6271372,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922632,
+      "pointer_slot_va": "0x7fff623d46c8",
+      "runtime_va": "0x7fff5fc91f70",
+      "rva": "0xa41f70",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d1823950200488bd97513488d0dcfab7c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-OnInfomationButton-7fff5fc91f70.c",
+      "pseudocodeSha256": "451f1621d5a487a7c349fd33f7beb8a32c907c8f356f73b622a9fc8d424631b6"
+    },
+    {
+      "class": "<ConnectWaitManufacture>d__86",
+      "name": "MoveNext",
+      "method_definition_index": 70244,
+      "token": "0x06011265",
+      "metadata_declaration_range": {
+        "offset": 6274000,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51923216,
+      "pointer_slot_va": "0x7fff623d4910",
+      "runtime_va": "0x7fff5fca7760",
+      "rva": "0xa57760",
+      "status": "mapped",
+      "code_preview_hex": "4055415541564883ec50803d44cb9302004c8bf10f850301",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "_ConnectWaitManufacture_d__86-MoveNext-7fff5fca7760.c",
+      "pseudocodeSha256": "4e8a862ff1013c8f1755224be55cbcf58f8cbe3b241a968415e0b6bac47e5b04"
+    },
+    {
+      "class": "<EquipmentProductionConnect>d__88",
+      "name": "MoveNext",
+      "method_definition_index": 70250,
+      "token": "0x0601126b",
+      "metadata_declaration_range": {
+        "offset": 6274216,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51923264,
+      "pointer_slot_va": "0x7fff623d4940",
+      "runtime_va": "0x7fff5fca8700",
+      "rva": "0xa58700",
+      "status": "mapped",
+      "code_preview_hex": "40565741554881ec80000000803da3bb930200488bf10f85",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "_EquipmentProductionConnect_d__88-MoveNext-7fff5fca8700.c",
+      "pseudocodeSha256": "76db64cc8f2bed40a32d41c74748b27a1092ea86b56cc51b5a31f597de19c7fe"
+    },
+    {
+      "class": "SmithManufactureDialog",
+      "name": "Open",
+      "method_definition_index": 70326,
+      "token": "0x060112b7",
+      "metadata_declaration_range": {
+        "offset": 6276952,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "createId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51923872,
+      "pointer_slot_va": "0x7fff623d4ba0",
+      "runtime_va": "0x7fff5fc9bb90",
+      "rva": "0xa4bb90",
+      "status": "mapped",
+      "code_preview_hex": "48895c241848896c242041564883ec20803d2c8794020044",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufactureDialog-Open-7fff5fc9bb90.c",
+      "pseudocodeSha256": "23bfb51ef574521bfc5a99036f79dfd7149ecff69d26ed3c03c185318a8a01a2"
+    },
+    {
+      "class": "EquipmentProduction",
+      "name": ".ctor",
+      "method_definition_index": 70203,
+      "token": "0x0601123c",
+      "metadata_declaration_range": {
+        "offset": 6272524,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "manager",
+          "type_index": 24714,
+          "exact_byval_name": "SmithManufacture"
+        },
+        {
+          "name": "recipeId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922888,
+      "pointer_slot_va": "0x7fff623d47c8",
+      "runtime_va": "0x7fff5fc80480",
+      "rva": "0xa30480",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20418bc0488bfa8bd04533c0488bd9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EquipmentProduction-_ctor-7fff5fc80480.c",
+      "pseudocodeSha256": "74f15db9fc4e8c69c7845a141a0d006daa15fe12c52abb33388ef5c85f5c795a"
+    },
+    {
+      "class": "EquipmentProduction",
+      "name": ".ctor",
+      "method_definition_index": 70204,
+      "token": "0x0601123d",
+      "metadata_declaration_range": {
+        "offset": 6272560,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "manager",
+          "type_index": 24714,
+          "exact_byval_name": "SmithManufacture"
+        },
+        {
+          "name": "shopId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "position",
+          "type_index": 10331
+        },
+        {
+          "name": "recipeId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922896,
+      "pointer_slot_va": "0x7fff623d47d0",
+      "runtime_va": "0x7fff5fc80410",
+      "rva": "0xa30410",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec30498bc148c744242000000000448b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EquipmentProduction-_ctor-7fff5fc80410.c",
+      "pseudocodeSha256": "60468dda6a21b1e7fdac343a7374873d3db984edae33463ae0546c8b31fb51b1"
+    },
+    {
+      "class": "EquipmentProduction",
+      "name": "OnSuccess",
+      "method_definition_index": 70206,
+      "token": "0x0601123f",
+      "metadata_declaration_range": {
+        "offset": 6272632,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "response",
+          "type_index": 15412,
+          "exact_byval_name": "Toram.Common.Operations.Shop.EquipmentProductionResponse"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922912,
+      "pointer_slot_va": "0x7fff623d47e0",
+      "runtime_va": "0x7fff5fc80350",
+      "rva": "0xa30350",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d4a3f960200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EquipmentProduction-OnSuccess-7fff5fc80350.c",
+      "pseudocodeSha256": "9caaa25d2447ed5ee1a74effcbcf28d572a0cfce90fe01e299f9bbba7fce7e69"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "<EquipmentProductionConnect>b__88_0",
+      "method_definition_index": 70202,
+      "token": "0x0601123b",
+      "metadata_declaration_range": {
+        "offset": 6272488,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922880,
+      "pointer_slot_va": "0x7fff623d47c0",
+      "runtime_va": "0x7fff5fc95a10",
+      "rva": "0xa45a10",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b89d80100004885c9742633d2e8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-_EquipmentProductionConnect_b__88_0-7fff5fc95a10.c",
+      "pseudocodeSha256": "5d6cd9b11ee66c2c1677d28cb85532c821ce43a2bb434f3bc74cc7a42615960a"
+    }
+  ],
+  "files": [
+    {
+      "file": "ShopUtil-GetManufactureItemText-7fff5fc6c4e0.c",
+      "size": 1118,
+      "sha256": "527b09fa4fc32d3e84ccae8a4a74ee5a754f48bbdf98a94f8929897ddb3d374d"
+    },
+    {
+      "file": "ShopUtil-GetManufactureItemPropertyText-7fff5fc6c0b0.c",
+      "size": 5359,
+      "sha256": "23fdde70485c164724c019fa330ac72fb1695e72427481a2f936209779bd5d5a"
+    },
+    {
+      "file": "SmithManufacture-SelectElement-7fff5fc93920.c",
+      "size": 6352,
+      "sha256": "56b99a31808bc82918055cfe5bf7eee8b30c37a7c6dc6ce3fb2d97cad4f5cb44"
+    },
+    {
+      "file": "SmithManufacture-SelectElementFirst-7fff5fc93610.c",
+      "size": 3840,
+      "sha256": "9925a53e72d1f9367e1b7a8dc730a6382b3184d1b157f5084f1778d975d0071a"
+    },
+    {
+      "file": "SmithManufacture-SetRequiredMaterial-7fff5fc93e80.c",
+      "size": 29781,
+      "sha256": "d28a01b2c0f5f3555ba9c068463b50fb6d80f522755887c3640f719a8deb2331"
+    },
+    {
+      "file": "SmithManufacture-PopUpWindow-7fff5fc92f10.c",
+      "size": 758,
+      "sha256": "b667f53aac23d77078c766b7e892091ed9c9cb84e7e6888666a079e07381f862"
+    },
+    {
+      "file": "SmithManufacture-OnInfomationButton-7fff5fc91f70.c",
+      "size": 1994,
+      "sha256": "451f1621d5a487a7c349fd33f7beb8a32c907c8f356f73b622a9fc8d424631b6"
+    },
+    {
+      "file": "methods.json",
+      "size": 102772,
+      "sha256": "b741484ed37692857280787a97ac0e7a8490bb26da53aa6f30393328b43ae359"
+    },
+    {
+      "file": "TraceToramCraftRounding.java",
+      "size": 8491,
+      "sha256": "156826e415444bdc203d761f20fb7d4b361f6966fc6256d1f7e7f4d1a65d30ae"
+    },
+    {
+      "file": "_ConnectWaitManufacture_d__86-MoveNext-7fff5fca7760.c",
+      "size": 13721,
+      "sha256": "4e8a862ff1013c8f1755224be55cbcf58f8cbe3b241a968415e0b6bac47e5b04"
+    },
+    {
+      "file": "_EquipmentProductionConnect_d__88-MoveNext-7fff5fca8700.c",
+      "size": 9718,
+      "sha256": "76db64cc8f2bed40a32d41c74748b27a1092ea86b56cc51b5a31f597de19c7fe"
+    },
+    {
+      "file": "SmithManufactureDialog-Open-7fff5fc9bb90.c",
+      "size": 5705,
+      "sha256": "23bfb51ef574521bfc5a99036f79dfd7149ecff69d26ed3c03c185318a8a01a2"
+    },
+    {
+      "file": "methods2.json",
+      "size": 120940,
+      "sha256": "ad4d6020ffb8277f2f5734d2a67d6e0d839652d7cf98a291114813a3cdffa76c"
+    },
+    {
+      "file": "TraceToramCraftRoundingBody.java",
+      "size": 8361,
+      "sha256": "a7491ff0041c516eca0a19c1226b22d16319d99f01100d89bea869118744fb59"
+    },
+    {
+      "file": "EquipmentProduction-_ctor-7fff5fc80480.c",
+      "size": 1134,
+      "sha256": "74f15db9fc4e8c69c7845a141a0d006daa15fe12c52abb33388ef5c85f5c795a"
+    },
+    {
+      "file": "EquipmentProduction-_ctor-7fff5fc80410.c",
+      "size": 1198,
+      "sha256": "60468dda6a21b1e7fdac343a7374873d3db984edae33463ae0546c8b31fb51b1"
+    },
+    {
+      "file": "EquipmentProduction-OnSuccess-7fff5fc80350.c",
+      "size": 3245,
+      "sha256": "9caaa25d2447ed5ee1a74effcbcf28d572a0cfce90fe01e299f9bbba7fce7e69"
+    },
+    {
+      "file": "SmithManufacture-_EquipmentProductionConnect_b__88_0-7fff5fc95a10.c",
+      "size": 761,
+      "sha256": "5d6cd9b11ee66c2c1677d28cb85532c821ce43a2bb434f3bc74cc7a42615960a"
+    },
+    {
+      "file": "methods3.json",
+      "size": 124895,
+      "sha256": "bfc14e6751779a907aa6bedb1d2435eb51992eafaca0a4d440237de470b0a9c7"
+    },
+    {
+      "file": "TraceToramCraftRoundingRequest.java",
+      "size": 8411,
+      "sha256": "28735d3bca3b0403d90dffee041a1bca5a56317d88229357261c010463d90fba"
+    }
+  ],
+  "conclusions": {
+    "display": "SmithManufacture.SetRequiredMaterial reads original ItemDBData.Potential+0x4c for preview text, no creation-skill arithmetic in this function.",
+    "request": "EquipmentProductionConnect.MoveNext creates EquipmentProduction(recipeId), submits via GameManager.OperationConnection, waits through ReconnectionManager.Contains/TryGetErr.",
+    "response": "EquipmentProduction.OnSuccess stores response at SmithManufacture+0x1e8; ConnectWaitManufacture.MoveNext subsequently reads returned item list for completion UI.",
+    "nativeRounding": "not recovered in these fourteen selected functions; no exhaustive absence or server-only ownership claim"
+  },
+  "initialProfileAlternatives": {
+    "authority": "sensitivity assumptions from local Smith+user formulas, not verified native creation arithmetic",
+    "combinedFloor": {
+      "formula": "floor(base*130/100)+statBonus",
+      "weaponSingle": 138,
+      "weaponPair": 128,
+      "armor": 132
+    },
+    "separateFloor": {
+      "formula": "base+floor(base*10/100)+floor(base*20/100)+statBonus",
+      "weaponSingle": 137,
+      "weaponPair": 127,
+      "armor": 132
+    },
+    "warning": "These alternatives are not an exhaustive proof of the possible game implementation. Keep exact statting-step arithmetic independent from initial-profile assumptions."
+  },
+  "reproduction": "Saved snapshot imported into isolated Ghidra12.1.4 project with -noanalysis and private application.settingsdir/cachedir/tempdir. Use the matching retained TraceToramCraftRounding*.java and methods*.json for pass1/2/3."
+}

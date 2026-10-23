@@ -3,8 +3,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
-const contracts = await readFile(resolve(root, 'frontend/domain/calculation-contracts.ts'), 'utf8');
-const ports = await readFile(resolve(root, 'frontend/application/ports.ts'), 'utf8');
+const contracts = await readFile(resolve(root, 'web/src/domain/calculation-contracts.ts'), 'utf8');
+const ports = await readFile(resolve(root, 'web/src/application/ports.ts'), 'utf8');
 const forbiddenReferences = /\b(window|document|HTMLElement|localStorage|__TAURI__|Worker|JSON)\b/u;
 const withoutComments = source => source.replace(/\/\*[\s\S]*?\*\//gu, '').replace(/\/\/[^\r\n]*/gu, '');
 

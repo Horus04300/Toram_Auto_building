@@ -52,7 +52,7 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/shot.js`: 통과
+- `node --check web/src/data/skills/shot.js`: 통과
 - `node tools/verification/audit-stack-source-links.mjs --tree Shot --require-s1`: 25/25 통과
 - `node tools/tests/skills/test-shot-regression.mjs`: 통과
 - `node tools/tests/skills/test-martial-regression.mjs`: 통과

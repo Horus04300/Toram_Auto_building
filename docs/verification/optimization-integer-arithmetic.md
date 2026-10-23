@@ -1,41 +1,11 @@
-# D4 정수 비교와 단계별 내림 수정 (2026-09-28)
+# 정수 비율 산술
 
-## 계산 계약
+JS calculator.js와 공용 Rust evaluator.rs는 백분율·소수 배율을 정수 분자/분모로 계산하고 각 단계에서 기존 위치에 내림한다. 음수는 수학적 floor다. JS 안전 정수 범위는 Number, 소수 계수·범위 초과는 BigInt 분수, Rust는 대응 정수 비율을 사용한다. 계산 변경은 탐색 평가와 최종 JS 재평가 양쪽에서 검증한다.
 
-내림은 수학적 계산 결과의 소수 부분에 적용한다. 이진 부동소수점 배율의 오차로 정수가 1 감소하는 현상은 보존할 동작이 아니다. `25 × 116 / 100 = 29`, `50 × 114 / 100 = 57`, `25 × 11648 / 10000 = 29.12 → 29`를 독립 기대값으로 검증한다. EPSILON을 더해 정수 근처의 실제 소수를 올리지 않는다.
+후보 준비는 관련 옵션이 모두 i32 정수일 때만 Int32Array Pareto 비교를 사용한다. 소수·범위 초과는 반올림 없이 일반 비교로 되돌린다. 비교 예산·동점 ID·원본 raw 패키지를 보존한다.
 
-JS `calculator.js`와 Rust `d4_native_evaluator.rs`의 백분율·소수 배율 내림 단계를 정수 분자/분모로 계산한다. 능력치, HP/MP, 무기/변환, ATK/MATK, CRIT/CDMG, ASPD/CSPD, 관통, 단계별 대미지에 적용한다. ASPD의 소수 계수도 정수 계수의 합/10으로 표현한다. 기존 단계 순서와 내림 위치를 유지한다. 음수는 기존 수학적 floor를 유지한다.
+- tools/tests/application/test-decimal-floor.mjs: 독립 정수 분수 75,250건, 음수·소수·큰 정수 경계와 실제 JS/Rust 대미지.
+- tools/tests/optimization/test-crysta-integer-pareto.mjs: 제품 후보 준비의 1,268개 frontier/예산·i32/소수 경계.
+- tools/tests/optimization/test-crysta-rust-native-parity.mjs: JS/Rust 실제 평가 동치.
 
-- JS: 안전 정수 범위의 곱과 합은 Number의 정확한 정수 표현을 사용한다. 소수 계수나 범위 초과는 십진 표현을 BigInt 분수로 바꾸어 계산한다.
-- Rust: 증명된 범위에서는 i64 정수 곱셈/몫을 사용한다. 나머지는 checked i128, 오버플로 시 num-bigint로 처리한다. 계수의 분수 변환은 작업자별 제한 크기 캐시를 사용한다.
-- 외부 입력과 결과의 Number/f64 계약은 유지한다. 프로그램 전체를 정수 자료형으로 바꾼 것은 아니다. 상류의 옵션 합산·동적 스킬 계수 조립과 내림 없는 발동 확률 기대값까지 임의 정밀도 분수로 바꾸지는 않는다. 이미 반올림된 입력의 원래 의도를 추측해 복원하지 않는다.
-- 계산 변경은 탐색 평가와 최종 JS 재평가 양쪽에 적용한다. Native 계산 v3, solver/checkpoint v9, Worker client/parallel schema v2로 이전 캐시·checkpoint를 무효화한다.
-
-실제 듀얼 브링거 회귀에서 마법 크뎀 반영 `170 × 70 / 100`이 118로 잘리던 오류가 119로 수정됐다. ATK 3297 + MATK 1455, 내성 후 4371, 마법 크뎀 219%로 결과는 `floor(4371 × 219 / 100) = 9572`다. 기존 9528 기대값을 이 독립 계산 근거로 교체했다.
-
-## 후보 비교와 성능
-
-JS CPU profile에서는 `dominates` 자기 실행 시간이 약 4.6초였다. 부동소수점 산술 자체가 주 병목이라는 근거는 발견하지 못했다. strict Pareto의 관련 옵션이 모두 i32 정수일 때만 연속 Int32Array에서 직접 비교한다. 소수·범위 초과 입력은 기존 비교를 사용하며 반올림하지 않는다. 원본 패키지, 순서, 중복 제거, 비교 예산을 유지한다.
-
-동일 루브닐 raw 입력, UI 없는 `timing.totalMs`, 새 프로세스 각 3회 측정:
-
-| 상태 | 평균 전체 시간 | 해석 |
-| --- | ---: | --- |
-| 변경 전 | 9.568초 | 기존 계산식 |
-| 정수 후보 비교만 | 5.199초 | 기존 계산식, 동일 exact 점수·조합 |
-| 내림 수정 최초 구현 | 12.051초 | 범용 i128 처리 비용 확인 |
-| 내림 수정 + i64 경로 | 8.396초 | 올바른 계산식, 동일 입력 3회 exact |
-| 미사용 JS 배율 정리 후 최종 코드 | 8.957초 | 8.764 / 8.962 / 9.143초, 3회 exact |
-
-최종 코드 결과는 이번 작업 전보다 약 6.4% 짧지만, 내림 수정만의 속도 개선은 아니다. Native elapsed 평균은 비교만 적용한 경우 약 4.18초에서 i64 경로 첫 측정에서 약 7.23초로 늘었다. 정확성 수정과 성능 개선을 구분한다. 재측정 간 편차도 있으므로 미사용 변수 정리의 성능 효과를 주장하지 않는다. 이 입력의 최종 점수는 모두 1,123,905.36이며 다른 입력의 오류 수정 결과까지 같아야 한다고 요구하지 않는다. 3회 결과를 전체 입력의 P95 보장으로 사용하지 않는다.
-
-로컬 측정 산출물은 `src-tauri/target/integer-audit/{before,after,corrected,corrected-fast,final}.json` 및 CPU profile이다. Git 제외 산출물이며 각 JSON에 입력·코드·실행 파일 해시가 들어 있다.
-
-## 검증
-
-- `tools/tests/application/test-decimal-floor.mjs`: 독립 정수 분수 oracle 75,250건, 소수/음수/큰 정수 경계, 실제 JS/Rust 대미지 8개 사례.
-- `tools/tests/optimization/test-crysta-integer-pareto.mjs`: 기존 비교와 1,268건 동치, 소수 fallback·i32 경계·원본 보존.
-- R0: 계산 full/summary·JS/Rust parity·축소 전후 oracle·상한 property·Worker 실행 포함. Native 저장 E2E는 환경 미설정으로 SKIP한다.
-- Rust 전체 테스트·clippy·fmt, S1 427/427, R9, 문서 감사와 diff 검사를 실행한다. 실행 완료 결과는 현재 handoff에 기록한다.
-
-설치 빌드와 실제 WebView 화면 검증은 이번 범위에서 실행하지 않는다.
+현재 버전·검증 상태는 docs/handoff/current-development-handoff.md를 따른다. 과거 JS 추천기 성능 비교·실험 로그는 삭제했다.

@@ -1,22 +1,22 @@
 import assert from 'node:assert/strict';
 import { access, readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { CLASSIC_SCRIPT_PATHS } from '../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const read = path => readFile(resolve(root, path), 'utf8');
-const repository = await read('assets/js/settings-repository.js');
-const application = await read('assets/js/application-use-cases.js');
-const buildState = await read('assets/js/build-state-snapshot.js');
-const buffs = await read('assets/js/active-buff-ui.js');
-const combo = await read('assets/js/combo-ui.js');
-const skills = await read('assets/js/skill-tree.js');
-const rust = await read('src-tauri/src/settings.rs');
+const repository = await read('web/src/storage/settings-repository.js');
+const application = await read('web/src/application/application-use-cases.js');
+const buildState = await read('web/src/storage/build-state-snapshot.js');
+const buffs = await read('web/src/ui/active-buff-ui.js');
+const combo = await read('web/src/ui/combo-ui.js');
+const skills = await read('web/src/ui/skill-tree.js');
+const rust = await read('desktop/src/settings.rs');
 const e2e = await read('tools/tests/application/test-tauri-native-storage-e2e.mjs');
 
-await assert.rejects(access(resolve(root, 'assets/js/build-setting-snapshot.js')));
+await assert.rejects(access(resolve(root, 'web/src/build-setting-snapshot.js')));
 assert.ok(!CLASSIC_SCRIPT_PATHS.includes('assets/js/build-setting-snapshot.js'));
-assert.ok(CLASSIC_SCRIPT_PATHS.includes('assets/js/settings-repository.js'));
+assert.ok(CLASSIC_SCRIPT_PATHS.includes('assets/js/storage/settings-repository.js'));
 assert.match(repository, /documentType:'saved-build'/);
 assert.match(repository, /documentType:'application-state'/);
 assert.match(repository, /schemaVersion:SCHEMA_VERSION/);

@@ -1,0 +1,197 @@
+--- assets\source-data\toram-monsters\native-schema\MobMaster-ReadMaster-7fff5fe48ff0.c
++++ 8586.c
+@@ -12,10 +12,10 @@
+   undefined8 uVar11;
+   longlong *plVar12;
+-  undefined *puVar13;
+-  undefined8 *puVar14;
+-  undefined8 uVar15;
+-  ushort uVar16;
+-  int iVar17;
+-  uint uVar18;
++  undefined *self_00;
++  undefined8 *puVar13;
++  undefined8 uVar14;
++  ushort uVar15;
++  int iVar16;
++  uint uVar17;
+   int aiStackX_10 [2];
+   byte bStack_e8;
+@@ -176,6 +176,6 @@
+   else {
+     plVar8[4] = lVar9;
+-    CALL9();
+-    _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL41,(undefined *)plVar8);
++    il2cpp_write_barrier_0();
++    CALL9(GLOBAL41,plVar8,0);
+     bStack_e8 = 1;
+     if (*(longlong *)(self + 0x20) == 0) {
+@@ -226,9 +226,9 @@
+           CALL12(GLOBAL35);
+         }
+-        uVar15 = **(undefined8 **)(GLOBAL35 + 0xb8);
++        uVar14 = **(undefined8 **)(GLOBAL35 + 0xb8);
+         lVar9 = CALL16(GLOBAL17);
+-        CALL17(lVar9,uVar15,GLOBAL32,0);
++        CALL17(lVar9,uVar14,GLOBAL32,0);
+         *(longlong *)(*(longlong *)(GLOBAL35 + 0xb8) + 8) = lVar9;
+-        CALL9();
++        il2cpp_write_barrier_0();
+       }
+       lVar9 = CALL18(uVar11,lVar9,GLOBAL12);
+@@ -238,5 +238,5 @@
+       pplStack_c0 = &plStack_b0;
+       while (plStack_b0 != (longlong *)0x0) {
+-        cVar3 = CALL19(0);
++        cVar3 = CALL19(0,GLOBAL21);
+         if (cVar3 == '\0') {
+           if (*pplStack_c0 == (longlong *)0x0) {
+@@ -246,35 +246,35 @@
+           return bStack_e8;
+         }
+-        puVar13 = (undefined *)CALL16(GLOBAL34);
+-        _loadFieldData_d__125_System_IDisposable_Dispose(puVar13,(undefined *)0x0);
++        lVar9 = CALL16(GLOBAL34);
++        CALL9(lVar9,0);
+         plVar8 = plStack_b0;
+         if (plStack_b0 == (longlong *)0x0) goto LABEL33;
+-        lVar9 = *plStack_b0;
+-        uVar16 = 0;
+-        if (*(ushort *)(lVar9 + 0x12e) != 0) {
++        lVar10 = *plStack_b0;
++        uVar15 = 0;
++        if (*(ushort *)(lVar10 + 0x12e) != 0) {
+           do {
+-            if (*(longlong *)(*(longlong *)(lVar9 + 0xb0) + (ulonglong)uVar16 * 0x10) ==
++            if (*(longlong *)(*(longlong *)(lVar10 + 0xb0) + (ulonglong)uVar15 * 0x10) ==
+                 GLOBAL20) {
+-              puVar14 = (undefined8 *)
+-                        (lVar9 + 0x138 +
++              puVar13 = (undefined8 *)
++                        (lVar10 + 0x138 +
+                         (longlong)
+-                        *(int *)(*(longlong *)(lVar9 + 0xb0) + 8 + (ulonglong)uVar16 * 0x10) * 0x10)
+-              ;
++                        *(int *)(*(longlong *)(lVar10 + 0xb0) + 8 + (ulonglong)uVar15 * 0x10) * 0x10
++                        );
+               goto LABEL34;
+             }
+-            uVar16 = uVar16 + 1;
+-          } while (uVar16 < *(ushort *)(lVar9 + 0x12e));
+-        }
+-        puVar14 = (undefined8 *)CALL21(plStack_b0,GLOBAL20,0);
++            uVar15 = uVar15 + 1;
++          } while (uVar15 < *(ushort *)(lVar10 + 0x12e));
++        }
++        puVar13 = (undefined8 *)CALL21(plStack_b0,GLOBAL20,0);
+ LABEL34:
+-        lVar9 = (*(code *)*puVar14)(plVar8,puVar14[1]);
+-        if (puVar13 == (undefined *)0x0) goto LABEL35;
+-        plVar8 = (longlong *)(puVar13 + 0x10);
+-        *plVar8 = lVar9;
+-        CALL9();
++        lVar10 = (*(code *)*puVar13)(plVar8,puVar13[1]);
++        if (lVar9 == 0) goto LABEL35;
++        plVar8 = (longlong *)(lVar9 + 0x10);
++        *plVar8 = lVar10;
++        il2cpp_write_barrier_0();
+         uVar11 = *(undefined8 *)(self + 0x40);
+-        uVar15 = CALL16(GLOBAL16);
+-        CALL17(uVar15,puVar13,GLOBAL33,0);
+-        lVar9 = CALL22(uVar11,uVar15,GLOBAL11);
++        uVar14 = CALL16(GLOBAL16);
++        CALL17(uVar14,lVar9,GLOBAL33,0);
++        lVar9 = CALL22(uVar11,uVar14,GLOBAL11);
+         if (lVar9 == 0) {
+           lVar9 = CALL16(GLOBAL27);
+@@ -286,5 +286,5 @@
+           if (*plVar8 == 0) goto LABEL38;
+           *(longlong *)(*plVar8 + 0xa8) = lVar9;
+-          CALL9();
++          il2cpp_write_barrier_0();
+         }
+         if (*plVar8 == 0) goto LABEL39;
+@@ -313,5 +313,5 @@
+           }
+         }
+-        _loadFieldData_d__125_System_IDisposable_Dispose((undefined *)&uStack_98,GLOBAL13);
++        CALL9(&uStack_98,GLOBAL13);
+       }
+       goto LABEL46;
+@@ -345,5 +345,5 @@
+       if ((int)plVar8[3] == 0) goto LABEL3;
+       plVar8[4] = lVar9;
+-      CALL9();
++      il2cpp_write_barrier_0();
+       iStack_d4 = iStack_d0;
+       lVar9 = CALL2(GLOBAL23,&iStack_d4);
+@@ -353,6 +353,6 @@
+       if (*(uint *)(plVar8 + 3) < 2) goto LABEL5;
+       plVar8[5] = lVar9;
+-      CALL9();
+-      _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL39,(undefined *)plVar8);
++      il2cpp_write_barrier_0();
++      CALL9(GLOBAL39,plVar8,0);
+       if (iVar5 == aiStackX_10[0]) {
+         if (plStack_e0 != (longlong *)0x0) {
+@@ -369,7 +369,7 @@
+             if ((int)plVar8[3] == 0) goto LABEL7;
+             plVar8[4] = lVar9;
+-            CALL9();
+-            _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL40,(undefined *)plVar8);
+-            while (iVar2 = iStack_d0, iVar17 = 0, iStack_d8 = iVar7, iVar7 < iVar5) {
++            il2cpp_write_barrier_0();
++            CALL9(GLOBAL40,plVar8,0);
++            while (iVar2 = iStack_d0, iVar16 = 0, iStack_d8 = iVar7, iVar7 < iVar5) {
+               puStack_80 = MobStatusMaster_CreateStatusMaster
+                                      (aiStackX_10[0],iStack_d0,(undefined *)plStack_e0,
+@@ -385,14 +385,14 @@
+                 if (0 < iVar7) {
+                   plVar8 = (longlong *)CALL1(GLOBAL28,iVar7);
+-                  for (uVar18 = 0; plVar12 = plStack_e0, (int)uVar18 < iVar7; uVar18 = uVar18 + 1) {
+-                    puVar13 = (undefined *)CALL16(GLOBAL29);
+-                    MobPropertyMaster__ctor(puVar13,(undefined *)plVar12,(undefined *)0x0);
++                  for (uVar17 = 0; plVar12 = plStack_e0, (int)uVar17 < iVar7; uVar17 = uVar17 + 1) {
++                    self_00 = (undefined *)CALL16(GLOBAL29);
++                    MobPropertyMaster__ctor(self_00,(undefined *)plVar12,(undefined *)0x0);
+                     if (plVar8 == (longlong *)0x0) goto LABEL10;
+-                    if ((puVar13 != (undefined *)0x0) &&
+-                       (lVar9 = CALL3(puVar13,*(undefined8 *)(*plVar8 + 0x40)),
++                    if ((self_00 != (undefined *)0x0) &&
++                       (lVar9 = CALL3(self_00,*(undefined8 *)(*plVar8 + 0x40)),
+                        lVar9 == 0)) goto LABEL8;
+-                    if (*(uint *)(plVar8 + 3) <= uVar18) goto LABEL9;
+-                    plVar8[(longlong)(int)uVar18 + 4] = (longlong)puVar13;
+-                    CALL9();
++                    if (*(uint *)(plVar8 + 3) <= uVar17) goto LABEL9;
++                    plVar8[(longlong)(int)uVar17 + 4] = (longlong)self_00;
++                    il2cpp_write_barrier_0();
+                     iVar7 = iStack_d4;
+                   }
+@@ -418,8 +418,7 @@
+               if ((int)plVar8[3] == 0) goto LABEL15;
+               plVar8[4] = lVar9;
+-              CALL9();
+-              _loadFieldData_d__125_System_IDisposable_Dispose
+-                        (GLOBAL38,(undefined *)plVar8);
+-              for (; iVar17 < iVar7; iVar17 = iVar17 + 1) {
++              il2cpp_write_barrier_0();
++              CALL9(GLOBAL38,plVar8,0);
++              for (; iVar16 < iVar7; iVar16 = iVar16 + 1) {
+                 if (plStack_e0 == (longlong *)0x0) goto LABEL22;
+                 aiStackX_10[0] =
+@@ -430,11 +429,11 @@
+                                   (plStack_e0,*(undefined8 *)(*plStack_e0 + 0x230));
+                 lVar9 = CALL1(GLOBAL22,iVar7);
+-                for (uVar18 = 0; (int)uVar18 < iVar7; uVar18 = uVar18 + 1) {
++                for (uVar17 = 0; (int)uVar17 < iVar7; uVar17 = uVar17 + 1) {
+                   if (plStack_e0 == (longlong *)0x0) goto LABEL19;
+                   uVar6 = (**(code **)(*plStack_e0 + 0x228))
+                                     (plStack_e0,*(undefined8 *)(*plStack_e0 + 0x230));
+                   if (lVar9 == 0) goto LABEL18;
+-                  if (*(uint *)(lVar9 + 0x18) <= uVar18) goto LABEL16;
+-                  *(undefined4 *)(lVar9 + 0x20 + (longlong)(int)uVar18 * 4) = uVar6;
++                  if (*(uint *)(lVar9 + 0x18) <= uVar17) goto LABEL16;
++                  *(undefined4 *)(lVar9 + 0x20 + (longlong)(int)uVar17 * 4) = uVar6;
+                   if (plStack_e0 == (longlong *)0x0) goto LABEL17;
+                   (**(code **)(*plStack_e0 + 0x228))

@@ -1,3 +1,5 @@
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -5,17 +7,19 @@ import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import vm from 'node:vm';
 import { projectNativeProblem } from '../../support/crysta-native-payload-helper.mjs';
+import { loadSavedBuildEnvironment } from '../../support/saved-build-headless-environment.mjs';
+import { loadHeadlessEnvironment } from '../../support/crysta-headless-environment.mjs';
 
 const root = resolve(import.meta.dirname, '../../..');
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const evaluator = require(resolve(root, 'assets/js/build-evaluator.js'));
-const compiler = require(resolve(root, 'assets/js/optimization/problem-compiler.js'));
-const optimizer = require(resolve(root, 'assets/js/optimization/exact-solver.js'));
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
+const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
+const compiler = require(resolve(root, 'web/src/optimization/problem-compiler.js'));
+const candidates = require(resolve(root, 'web/src/optimization/candidate-preparation.js'));
 
 function runNative(problem, binary='crysta_native_exact', session=false) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'src-tauri/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'], env:{...process.env, ...(session ? {OPTIMIZATION_SESSION_BENCH_MS:'30000'} : {})} });
+    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'desktop/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'], env:{...process.env, ...(session ? {OPTIMIZATION_SESSION_BENCH_MS:'30000'} : {})} });
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += chunk; });
     child.stderr.on('data', chunk => { stderr += chunk; });
@@ -32,8 +36,8 @@ const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
 vm.createContext(context);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), context, { filename:'calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 const kernel = context.window.ToramCalculationKernel.evaluateContext;
 
 const small = {
@@ -46,7 +50,7 @@ const small = {
     {id:'special',packages:[{id:'special:a',statDelta:{CDMG:1}},{id:'special:b',statDelta:{CDMG:2}}]}
   ]
 };
-const smallJs = optimizer.exhaustiveSearch(small, { prepared:small, evaluateStats:stats => evaluator.evaluateAggregate(small.baseContext, small.scenarioSnapshot, stats, kernel) });
+const smallJs = exhaustiveSearch(small, { prepared:small, evaluateStats:stats => evaluator.evaluateAggregate(small.baseContext, small.scenarioSnapshot, stats, kernel) });
 const smallNative = await runNative(small);
 const smallCompact = await runNative(projectNativeProblem(small));
 assert.equal(smallCompact.status, smallNative.status);
@@ -64,6 +68,45 @@ for (const threads of [1, 2, 16, 64]) {
 }
 
 if (process.env.OPTIMIZATION_REAL_CANDIDATES !== '1') {
+  // Native/JS parity alone cannot detect a buff omitted by Application.
+  const savedEnv = await loadSavedBuildEnvironment();
+  const savedText = await readFile(resolve(root, 'samples/미완성 서포터 세팅 (톱스타 포툼 없음) - oo o.json'), 'utf8');
+  const sample = savedEnv.ToramSettingsRepository.parseSavedBuild(savedText);
+  const original = JSON.stringify(sample);
+  savedEnv.skillSimulatorState = { getInvestments:() => sample.build.skillLevels };
+  const env = await loadHeadlessEnvironment({});
+  const slots = ['mainWeapon','armor','additional','special'];
+  for (const active of [true,false]) {
+    sample.build.activeBuffs['Magic:22'].active = active;
+    const current = savedEnv.ToramApplication.CalculateBuild(sample);
+    assert.equal(current.snapshot.baseContext.motionSpeed, active ? 25 : 0);
+    assert.equal(current.calculation.finalASPD,6999);
+    assert.equal(current.calculation.finalMotionSpeed,active ? 50 : 37);
+    const input = {baseContext:current.snapshot.baseContext,
+      scenarioRequirements:sample.scenario.optimizationPreferences.requirements,
+      currentCrystas:slots.flatMap(slot=>sample.build.equipment[slot].crystas),
+      locks:slots.flatMap(slot=>sample.build.equipment[slot].lockedCrystaSlots),
+      banned:Object.fromEntries(sample.scenario.optimizationPreferences.bannedCrystas.map(name=>[name,true]))};
+    assert.equal(input.locks.filter(Boolean).length,7);
+    assert.equal(input.scenarioRequirements.aspd,10000);
+    assert.equal(input.scenarioRequirements.maxMp,2000);
+    const problem = env.compile(input);
+    assert.equal(problem.groups[0].packages[0].statDelta.MOTIONSPEED,3);
+    assert.equal(problem.groups[1].packages[0].statDelta.MOTIONSPEED,1);
+    const oracle = exhaustiveSearch(problem,{prepared:true,
+      evaluateStats:stats=>env.evaluator.evaluateAggregate(problem.baseContext,problem.scenarioSnapshot,stats,env.kernel.evaluateContext)});
+    assert.equal(oracle.evaluations,problem.groups.reduce((count,group)=>count*group.packages.length,1),'Oracle must enumerate every live-catalog completion of the unlocked slot');
+    assert.equal(oracle.status,active ? 'exact' : 'invalid');
+    if(active) assert.equal(oracle.outcomes.utility.motionSpeed,50);
+    for (const [binary,session] of [['crysta_native_exact',false],['crysta_native_parallel',true]]) {
+      const native = await runNative({...problem,threads:8},binary,session);
+      assert.equal(native.status,oracle.status);
+      assert.equal(native.score,oracle.score);
+      assert.equal(native.bestBuild?.id,oracle.bestBuild?.id);
+    }
+  }
+  sample.build.activeBuffs['Magic:22'].active = true;
+  assert.equal(JSON.stringify(sample),original,'Preserve supplied build and original requirements');
   for (const patch of [{},{atkType:'MAG',mainType:'지팡이',subType:'마도구',attackPowerMode:'sum'},
     {subType:'한손검(듀얼소드)',subAtk:400,subStab:80,attackPowerMode:'higher'}]) {
     const future={...small,baseContext:{...small.baseContext,...patch,strBase:327,intBase:320,agiBase:300,dexBase:400,vitBase:50,
@@ -79,7 +122,7 @@ if (process.env.OPTIMIZATION_REAL_CANDIDATES !== '1') {
         ELEM_AWAKENING:p===1?1:0,MAGIC_ELEMENT:p===2?1:0,
         ...Object.fromEntries(['ATK','MATK'].flatMap(kind=>['STR','DEX','AGI','INT','VIT'].map(stat=>[`${kind}_UP_${stat}`,p*1.7])))
       }}))}))};
-    const oracle=optimizer.exhaustiveSearch(future,{prepared:future,evaluateStats:stats=>evaluator.evaluateAggregate(future.baseContext,future.scenarioSnapshot,stats,kernel)});
+    const oracle=exhaustiveSearch(future,{prepared:future,evaluateStats:stats=>evaluator.evaluateAggregate(future.baseContext,future.scenarioSnapshot,stats,kernel)});
     assert.ok(oracle.bestBuild,'future supply fixture must have a feasible optimum');
     const serial=await runNative(future);
     assert.equal(serial.score,oracle.score);assert.equal(serial.bestBuild.id,oracle.bestBuild.id);
@@ -97,7 +140,7 @@ if (process.env.OPTIMIZATION_REAL_CANDIDATES !== '1') {
         const n = Math.floor(i/2);
         return {id:`${g}-${i}`,statDelta:{AMPR:n*9-3,CRIT:42-n*15,CRITP:i%2 ? 0 : -20,MAXMP:g%2 ? 100 : -100,ATKP:n*7-4,MATKP:n*7-4,SRW:9-n*4,LRW:9-n*4,CDMG:n*3-7}};
       })}))};
-    const oracle = optimizer.exhaustiveSearch(joint,{prepared:joint,evaluateStats:stats => evaluator.evaluateAggregate(joint.baseContext,joint.scenarioSnapshot,stats,kernel)});
+    const oracle = exhaustiveSearch(joint,{prepared:joint,evaluateStats:stats => evaluator.evaluateAggregate(joint.baseContext,joint.scenarioSnapshot,stats,kernel)});
     assert.ok(oracle.bestBuild, 'joint fixture must have a feasible optimum');
     for (const threads of [1,8,64]) {
       const native = await runNative({...joint,threads},'crysta_native_parallel',true);
@@ -108,7 +151,7 @@ if (process.env.OPTIMIZATION_REAL_CANDIDATES !== '1') {
   }
   for (const contextOverrides of [{}, {atkType:'MAG',mainType:'지팡이',intBase:200}, {mainType:'발도검',chkIsUnsheathe:true}, {subType:'한손검',subAtk:100,subStab:80}]) {
     const signed = {...small,baseContext:{...small.baseContext,...contextOverrides},groups:small.groups.map((group,index) => ({...group,packages:Array.from({length:4},(_,i) => ({id:`${index}-${i}`,statDelta:{ATKP:-12+i*3,MATKP:-12+i*3,SRW:6-i*3,MAXMP:-100-i*20,ASPD:-50-i*10}}))}))};
-    const signedOracle = optimizer.exhaustiveSearch(signed,{prepared:signed,evaluateStats:stats => evaluator.evaluateAggregate(signed.baseContext,signed.scenarioSnapshot,stats,kernel)});
+    const signedOracle = exhaustiveSearch(signed,{prepared:signed,evaluateStats:stats => evaluator.evaluateAggregate(signed.baseContext,signed.scenarioSnapshot,stats,kernel)});
     for (const threads of [1,8,64]) {
       const native = await runNative({...signed,threads},'crysta_native_parallel');
       assert.equal(native.status,'exact');
@@ -123,7 +166,7 @@ if (process.env.OPTIMIZATION_REAL_CANDIDATES !== '1') {
       scenarioSnapshot:{requirements:{maxHp:10000,maxMp:2000,amprBeforeDual:100,normalAttackCrit:100,aspd:10000}},
       groups:small.groups.map((group,index)=>({...group,packages:Array.from({length:4},(_,i)=>({id:`${index}-${i}`,statDelta:{ATKP:i*3,MATKP:i*3,MAXHP:-i*100,MAXMP:-i*20,VITP:i,MOTIONSPEED:15-i,DROP_RATE:2+i,PHYS_RES:-3.25,EXP:37+i}}))}))};
     const evaluateStats=stats=>evaluator.evaluateAggregate(problem.baseContext,problem.scenarioSnapshot,stats,kernel);
-    const oracle=optimizer.exhaustiveSearch(problem,{prepared:problem,evaluateStats});
+    const oracle=exhaustiveSearch(problem,{prepared:problem,evaluateStats});
     assert.ok(oracle.bestBuild);
     for (const [binary,session] of [['crysta_native_exact',false],['crysta_native_parallel',false],['crysta_native_parallel',true]]) {
       const native=await runNative({...problem,threads:4},binary,session);
@@ -159,12 +202,12 @@ const baseContext = {
 };
 const dataContext = {};
 vm.createContext(dataContext);
-vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8')}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
 const scenario = evaluator.createScenarioSnapshot(baseContext);
 const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:[], locks:[], banned:{'오로로 콜론':true} });
 const adapter = stats => evaluator.evaluateAggregate(baseContext, scenario, stats, kernel);
-const relevantKeys = optimizer.deriveRelevantKeys(compiled, registry, adapter);
-const prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, pareto:{maxComparisons:1000000} });
+const relevantKeys = candidates.deriveRelevantKeys(compiled, registry, adapter);
+const prepared = candidates.prepareProblem(compiled, { registry, relevantKeys, pareto:{maxComparisons:1000000} });
 assert.ok(prepared.metadata.paretoReports.every(report => report.complete), 'native exact real fixture requires completed Pareto preparation');
 const native = await runNative(prepared);
 const compactNative = await runNative(projectNativeProblem(prepared));
@@ -180,18 +223,4 @@ assert.equal(parallel.status, 'exact', 'native parallel real native solver must 
 assert.equal(parallel.score, native.score, 'native parallel real parallel score must equal the native single-thread exact result');
 assert.equal(parallel.bestBuild.id, native.bestBuild.id, 'native parallel real parallel tie result must equal the native single-thread exact result');
 assert.equal(parallel.completedShards, parallel.scheduledShards, 'native parallel real parallel run must complete every scheduled shard');
-if (process.env.OPTIMIZATION_VERIFY_JS === '1') {
-  const jsExact = optimizer.optimize(prepared, {
-    prepared,
-    registry,
-    relevantKeys,
-    evaluateStats:adapter,
-    smallBoxEnumerationLimit:64,
-    splitDimensions:2,
-    timeLimitMs:0
-  });
-  assert.equal(jsExact.status, 'exact', 'native exact comparison must re-run the current JS exact search to exhaustion');
-  assert.equal(native.score, jsExact.score, 'native exact native exact score must equal the current JS exact result');
-  assert.equal(native.bestBuild.id, jsExact.bestBuild.id, 'native exact native exact tie result must equal the current JS exact result');
-}
 console.log(`CrystaOptimization native parallel real native exact: PASS (${native.score}, single ${native.elapsedMs}ms, parallel ${parallel.elapsedMs}ms, ${parallel.threadsUsed} threads, ${parallel.scheduledShards} shards)`);

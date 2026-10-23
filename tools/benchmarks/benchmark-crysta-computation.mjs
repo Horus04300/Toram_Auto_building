@@ -12,7 +12,7 @@ import { measureComputation } from '../support/crysta-computation-measurement.mj
 
 const { values, positionals } = parseArgs({ allowPositionals:true, options:{
   input:{ type:'string', default:'tools/fixtures/crysta-native-runtime-26min-revenir.json' },
-  repeats:{ type:'string', default:'3' }, output:{ type:'string', default:'src-tauri/target/computation-benchmark/latest.json' },
+  repeats:{ type:'string', default:'3' }, output:{ type:'string', default:'desktop/target/computation-benchmark/latest.json' },
   'max-ms':{ type:'string', default:'120000' }, 'slice-ms':{ type:'string', default:'30000' }
 } });
 const mode = positionals[0] || 'run';
@@ -21,10 +21,12 @@ const repeats = Number(values.repeats), maxDurationMs = Number(values['max-ms'])
 assert.ok(Number.isInteger(repeats) && repeats > 0 && repeats <= 100);
 assert.ok(Number.isFinite(maxDurationMs) && maxDurationMs > 0 && maxDurationMs <= 3600000);
 assert.ok(Number.isInteger(sliceMs) && sliceMs > 0 && sliceMs <= 30000);
-const binary = resolve(root, 'src-tauri/target/release/crysta_headless_service' + (process.platform === 'win32' ? '.exe' : ''));
+const binary = resolve(root, 'desktop/target/release/crysta_headless_service' + (process.platform === 'win32' ? '.exe' : ''));
 const buildStamp = binary + '.measurement.json';
-const rustSources = ['src-tauri/Cargo.toml','src-tauri/Cargo.lock','src-tauri/build.rs',
-  ...['optimization/evaluator.rs','optimization/solver.rs','optimization/stats.rs','optimization/joint_supply.rs','optimization/parallel_runtime.rs','optimization/service.rs','bin/crysta_headless_service.rs'].map(f => 'src-tauri/src/' + f)];
+const rustSources = ['desktop/Cargo.toml','desktop/Cargo.lock','desktop/build.rs',
+  'engine/Cargo.toml','engine/Cargo.lock','engine/src/lib.rs',
+  ...['evaluator.rs','solver.rs','stats.rs','joint_supply.rs'].map(f => 'engine/src/' + f),
+  ...['optimization/parallel_runtime.rs','optimization/service.rs','bin/crysta_headless_service.rs'].map(f => 'desktop/src/' + f)];
 const hash = text => createHash('sha256').update(text).digest('hex');
 async function sourceHashes(paths) {
   return Object.fromEntries(await Promise.all(paths.map(async file => [file, hash((await readFile(resolve(root, file), 'utf8')).replaceAll('\r\n','\n'))])));
@@ -48,7 +50,7 @@ function run(command, args, timeout) {
 
 if (mode === 'build') {
   const sources = await sourceHashes(rustSources);
-  await run('cargo', ['build','--offline','--release','--manifest-path','src-tauri/Cargo.toml','--bin','crysta_headless_service'], 600000);
+  await run('cargo', ['build','--offline','--release','--manifest-path','desktop/Cargo.toml','--bin','crysta_headless_service'], 600000);
   assert.deepEqual(await sourceHashes(rustSources), sources, 'Sources changed during the build');
   await writeFile(buildStamp, JSON.stringify({ sources, binaryHash:hash(await readFile(binary)) }, null, 2) + '\n');
   console.log(`Built ${binary}`);
@@ -87,7 +89,8 @@ if (mode === 'build') {
   assert.equal(hash(await readFile(binary)), stamp.binaryHash, 'Binary changed: rebuild the measurement stamp');
   const inputPath = resolve(root, values.input), outputPath = resolve(root, values.output);
   assert.notEqual(inputPath, outputPath, 'Do not overwrite the input fixture');
-  const measuredJsPaths = [...jsSources.map(f => 'assets/js/' + f), 'assets/js/optimization/solver-worker.js',
+  const measuredJsPaths = [...jsSources.map(f => 'web/src/' + f),
+    'tools/support/crysta-catalog-source.mjs','web/public/game-data/items/manifest.json',
     'tools/support/crysta-headless-environment.mjs','tools/support/crysta-headless-transport.mjs','tools/support/crysta-computation-measurement.mjs','tools/benchmarks/benchmark-crysta-computation.mjs'];
   const jsHashes = await sourceHashes(measuredJsPaths), inputHash = hash(await readFile(inputPath));
   const report = { schema:'toram.crysta-computation-benchmark.v1', date:new Date().toISOString(),

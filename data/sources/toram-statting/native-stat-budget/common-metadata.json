@@ -1,0 +1,634 @@
+{
+  "type_definition_index": 11542,
+  "name": "Toram.Common.Parameters.PrimaryStatusData",
+  "image": "Toram.Common.dll",
+  "range": {
+    "offset": 25546004,
+    "size": 88
+  },
+  "byval_type_index": 22927,
+  "declaring_type": {
+    "type_index": -1,
+    "exact_byval_name": null
+  },
+  "parent_type": {
+    "type_index": 28743,
+    "exact_byval_name": "Asobimo.Photon.UnityHash.UnityHashBase"
+  },
+  "is_enum": false,
+  "fields": [
+    {
+      "field_index": 63084,
+      "name": "StatusValueLimit",
+      "type_index": 18787,
+      "exact_byval_name": null,
+      "token": "0x0400060c",
+      "range": {
+        "offset": 22816020,
+        "size": 12
+      },
+      "default": {
+        "type_index": 18774,
+        "data_index": 10637005,
+        "offset": 20342669,
+        "preview_hex": "ff00fe01f4010002"
+      }
+    },
+    {
+      "field_index": 63085,
+      "name": "OverStatusValueLimit",
+      "type_index": 18787,
+      "exact_byval_name": null,
+      "token": "0x0400060d",
+      "range": {
+        "offset": 22816032,
+        "size": 12
+      },
+      "default": {
+        "type_index": 18774,
+        "data_index": 10637007,
+        "offset": 20342671,
+        "preview_hex": "fe01f40100020406"
+      }
+    },
+    {
+      "field_index": 63086,
+      "name": "OverStatusAvailablePoint",
+      "type_index": 18787,
+      "exact_byval_name": null,
+      "token": "0x0400060e",
+      "range": {
+        "offset": 22816044,
+        "size": 12
+      },
+      "default": {
+        "type_index": 18774,
+        "data_index": 10637009,
+        "offset": 20342673,
+        "preview_hex": "f401000204060802"
+      }
+    },
+    {
+      "field_index": 63087,
+      "name": "_str",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x0400060f",
+      "range": {
+        "offset": 22816056,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63088,
+      "name": "_int",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000610",
+      "range": {
+        "offset": 22816068,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63089,
+      "name": "_vit",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000611",
+      "range": {
+        "offset": 22816080,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63090,
+      "name": "_agi",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000612",
+      "range": {
+        "offset": 22816092,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63091,
+      "name": "_dex",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000613",
+      "range": {
+        "offset": 22816104,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63092,
+      "name": "_crt",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000614",
+      "range": {
+        "offset": 22816116,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63093,
+      "name": "_luk",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000615",
+      "range": {
+        "offset": 22816128,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63094,
+      "name": "_men",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000616",
+      "range": {
+        "offset": 22816140,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63095,
+      "name": "_tec",
+      "type_index": 18777,
+      "exact_byval_name": null,
+      "token": "0x04000617",
+      "range": {
+        "offset": 22816152,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63096,
+      "name": "<Lv>k__BackingField",
+      "type_index": 18775,
+      "exact_byval_name": null,
+      "token": "0x04000618",
+      "range": {
+        "offset": 22816164,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63097,
+      "name": "<StatusPoint>k__BackingField",
+      "type_index": 18775,
+      "exact_byval_name": null,
+      "token": "0x04000619",
+      "range": {
+        "offset": 22816176,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63098,
+      "name": "<SkillPoint>k__BackingField",
+      "type_index": 18775,
+      "exact_byval_name": null,
+      "token": "0x0400061a",
+      "range": {
+        "offset": 22816188,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63099,
+      "name": "<Personality>k__BackingField",
+      "type_index": 13014,
+      "exact_byval_name": null,
+      "token": "0x0400061b",
+      "range": {
+        "offset": 22816200,
+        "size": 12
+      }
+    },
+    {
+      "field_index": 63100,
+      "name": "<ComboPoint>k__BackingField",
+      "type_index": 13014,
+      "exact_byval_name": null,
+      "token": "0x0400061c",
+      "range": {
+        "offset": 22816212,
+        "size": 12
+      }
+    }
+  ],
+  "methods": [
+    {
+      "method_index": 88931,
+      "name": ".ctor",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [],
+      "token": "0x060002ed",
+      "range": {
+        "offset": 6946732,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88932,
+      "name": ".ctor",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "parameters",
+          "type_index": 3620,
+          "exact_byval_name": null
+        }
+      ],
+      "token": "0x060002ee",
+      "range": {
+        "offset": 6946768,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88933,
+      "name": "get_Lv",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002ef",
+      "range": {
+        "offset": 6946804,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88934,
+      "name": "set_Lv",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "token": "0x060002f0",
+      "range": {
+        "offset": 6946840,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88935,
+      "name": "get_Str",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f1",
+      "range": {
+        "offset": 6946876,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88936,
+      "name": "get_Int",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f2",
+      "range": {
+        "offset": 6946912,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88937,
+      "name": "get_Vit",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f3",
+      "range": {
+        "offset": 6946948,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88938,
+      "name": "get_Agi",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f4",
+      "range": {
+        "offset": 6946984,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88939,
+      "name": "get_Dex",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f5",
+      "range": {
+        "offset": 6947020,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88940,
+      "name": "get_Crt",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f6",
+      "range": {
+        "offset": 6947056,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88941,
+      "name": "get_Luk",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f7",
+      "range": {
+        "offset": 6947092,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88942,
+      "name": "get_Men",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f8",
+      "range": {
+        "offset": 6947128,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88943,
+      "name": "get_Tec",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002f9",
+      "range": {
+        "offset": 6947164,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88944,
+      "name": "get_StatusPoint",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002fa",
+      "range": {
+        "offset": 6947200,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88945,
+      "name": "set_StatusPoint",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "token": "0x060002fb",
+      "range": {
+        "offset": 6947236,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88946,
+      "name": "get_SkillPoint",
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "parameters": [],
+      "token": "0x060002fc",
+      "range": {
+        "offset": 6947272,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88947,
+      "name": "set_SkillPoint",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "token": "0x060002fd",
+      "range": {
+        "offset": 6947308,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88948,
+      "name": "get_Personality",
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "parameters": [],
+      "token": "0x060002fe",
+      "range": {
+        "offset": 6947344,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88949,
+      "name": "set_Personality",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "token": "0x060002ff",
+      "range": {
+        "offset": 6947380,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88950,
+      "name": "get_ComboPoint",
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "parameters": [],
+      "token": "0x06000300",
+      "range": {
+        "offset": 6947416,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88951,
+      "name": "set_ComboPoint",
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "token": "0x06000301",
+      "range": {
+        "offset": 6947452,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88952,
+      "name": "ToString",
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "parameters": [],
+      "token": "0x06000302",
+      "range": {
+        "offset": 6947488,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88953,
+      "name": "IsOverStatus",
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "parameters": [],
+      "token": "0x06000303",
+      "range": {
+        "offset": 6947524,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88954,
+      "name": "get_Code",
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "parameters": [],
+      "token": "0x06000304",
+      "range": {
+        "offset": 6947560,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88955,
+      "name": "SetValue",
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "parameters": [
+        {
+          "name": "parameters",
+          "type_index": 3620,
+          "exact_byval_name": null
+        }
+      ],
+      "token": "0x06000305",
+      "range": {
+        "offset": 6947596,
+        "size": 36
+      }
+    },
+    {
+      "method_index": 88956,
+      "name": "GetValue",
+      "return_type": {
+        "type_index": 3620,
+        "exact_byval_name": null
+      },
+      "parameters": [],
+      "token": "0x06000306",
+      "range": {
+        "offset": 6947632,
+        "size": 36
+      }
+    }
+  ]
+}

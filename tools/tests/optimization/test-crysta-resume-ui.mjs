@@ -4,9 +4,9 @@ import { resolve } from 'node:path';
 import vm from 'node:vm';
 
 const root = resolve(import.meta.dirname, '../../..');
-const client = await readFile(resolve(root, 'assets/js/optimization/native-client.js'), 'utf8');
-const optimizerCore = await readFile(resolve(root, 'assets/js/optimization-results.js'), 'utf8');
-const optimizerUi = await readFile(resolve(root, 'assets/js/optimizer-ui-controller.js'), 'utf8');
+const client = await readFile(resolve(root, 'desktop/adapters/optimization-client.js'), 'utf8');
+const optimizerCore = await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8');
+const optimizerUi = await readFile(resolve(root, 'web/src/ui/optimizer-ui-controller.js'), 'utf8');
 const optimizer = optimizerCore + '\n' + optimizerUi;
 
 assert.match(client, /run\('resume_crysta_optimization'/, 'native client must invoke the Rust continuation command');
@@ -39,14 +39,14 @@ const documentRef = {
 const context = {
   document:documentRef, window:null,
   addEventListener(type, handler) { windowListeners.set(type, handler); },
-  populateRefineSelects() {}, updateSubWeaponList() {}, initAutocomplete() {}, renderBanTags() {}, addDefaultOptions() {},
+  initAutocomplete() {}, renderBanTags() {},
   ToramApp:{ optimizer:{ uiSupport:{ runtime:() => runtime, updateProgress() {} } } },
   ToramBuildDraftStore:{ syncFromUi:() => calculationInput },
   ToramCrystaOptimizationExecutionAdapter:{ hasContinuation:() => true, cancel() { cancellations++; }, disposeContinuation() { disposals++; } }
 };
 context.window = context;
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/build-state-snapshot.js'), 'utf8'), context);
+vm.runInContext(await readFile(resolve(root, 'web/src/storage/build-state-snapshot.js'), 'utf8'), context);
 vm.runInContext(optimizerUi, context);
 context.ToramApp.optimizerUi.initialize();
 function arm() {

@@ -1,0 +1,245 @@
+{
+  "schemaVersion": 1,
+  "authority": "offline-ghidra-selected-functions-plus-metadata-token-map",
+  "source": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "imageBase": "0x7fff5f250000",
+  "snapshotPeSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "ghidraVersion": "12.1.4",
+  "methods": [
+    {
+      "class": "MobMaster",
+      "name": "ReadMaster",
+      "token": "0x0600218b",
+      "runtime_va": "0x7fff5fe48ff0",
+      "rva": "0xbf8ff0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobMaster-ReadMaster-7fff5fe48ff0.c",
+      "sha256": "a3c04ef74dea5f96c8a95b0c188d1fe7fa80e5a0a74b8a58eb8d80dce0d45a7f"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Uuid",
+      "token": "0x060023cf",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobStatusMaster-get_Uuid-7fff5f4e44f0.c",
+      "sha256": "4ad305814f05d764914f2bc26b11ae8efc592301b5fb8e7c4690a16974d86b39"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "SetMobPropertyMaster",
+      "token": "0x060023f3",
+      "runtime_va": "0x7fff5fe6aee0",
+      "rva": "0xc1aee0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobStatusMaster-SetMobPropertyMaster-7fff5fe6aee0.c",
+      "sha256": "d7f70f30a33fad6f3276dfea00815eee36b15792fd46c10e30e24adcf06188b6"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "CreateStatusMaster",
+      "token": "0x060023f5",
+      "runtime_va": "0x7fff5fe6a780",
+      "rva": "0xc1a780",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobStatusMaster-CreateStatusMaster-7fff5fe6a780.c",
+      "sha256": "88774046349deb35f4e2b245b95cfbe673ad2f6912bc366c03396480d5e0b32e"
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": ".ctor",
+      "token": "0x060025cd",
+      "runtime_va": "0x7fff5fe85b10",
+      "rva": "0xc35b10",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobPropertyMaster-_ctor-7fff5fe85b10.c",
+      "sha256": "737da656b58d8b28a796dc0ef6125c52082b9f186d345780fe1ad442ff526984"
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "Initialize",
+      "token": "0x0600b48c",
+      "runtime_va": "0x7fff5f555c00",
+      "rva": "0x305c00",
+      "decompileCompleted": true,
+      "pseudocodeFile": "EnemyTextManager-Initialize-7fff5f555c00.c",
+      "sha256": "736550963a32a099f81c5e0916d4fef3fffec46c982475c6e86a7ce2f4ef41b2"
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "GetName",
+      "token": "0x0600b48f",
+      "runtime_va": "0x7fff5f555b60",
+      "rva": "0x305b60",
+      "decompileCompleted": true,
+      "pseudocodeFile": "EnemyTextManager-GetName-7fff5f555b60.c",
+      "sha256": "5623e1a8caa71f2c522410432ce6169707249b5cee5dddb1eccde1bc275215bd"
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "CreateActionPattern",
+      "token": "0x06002049",
+      "runtime_va": "0x7fff5fe32440",
+      "rva": "0xbe2440",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobActionPattern-CreateActionPattern-7fff5fe32440.c",
+      "sha256": "e541a597f4f8f2c633a040e0418a4ad15736dcb0199da03335d4888000430985"
+    },
+    {
+      "class": "MobModeData",
+      "name": "CreateModeData",
+      "token": "0x060021c7",
+      "runtime_va": "0x7fff5fe4a340",
+      "rva": "0xbfa340",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobModeData-CreateModeData-7fff5fe4a340.c",
+      "sha256": "be5cdef985b1f44f7a880e941649fbbf84b5d2796e4a2fdcf1bd8b3fba4405b9"
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "MoveNext",
+      "token": "0x06008f5a",
+      "runtime_va": "0x7fff603f3f50",
+      "rva": "0x11a3f50",
+      "decompileCompleted": true,
+      "pseudocodeFile": "_loadFieldData_d__125-MoveNext-7fff603f3f50.c",
+      "sha256": "cf4f5b4ee5919645ce7a3ded768d8725edd9851f23682da5e2419e5297b41a9b"
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "MoveNext",
+      "token": "0x060085ff",
+      "runtime_va": "0x7fff6037e4c0",
+      "rva": "0x112e4c0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "_LoadMapInfo_d__94-MoveNext-7fff6037e4c0.c",
+      "sha256": "b29d9c00e459532ae1a8340cd29181a752f6b3726b775d04bc8333d8e1b4d38c"
+    },
+    {
+      "class": "UI3DNameManager",
+      "name": "Initialize",
+      "token": "0x0600d711",
+      "runtime_va": "0x7fff5f7bf850",
+      "rva": "0x56f850",
+      "decompileCompleted": true,
+      "pseudocodeFile": "UI3DNameManager-Initialize-7fff5f7bf850.c",
+      "sha256": "ae644486b60cb0d8de2ddf152639e6088b91d8f36c68cbc3eb85e15edd3ffce9"
+    },
+    {
+      "class": "UIMobNameLabel",
+      "name": "Initialize",
+      "token": "0x060120f6",
+      "runtime_va": "0x7fff5fdc0a80",
+      "rva": "0xb70a80",
+      "decompileCompleted": true,
+      "pseudocodeFile": "UIMobNameLabel-Initialize-7fff5fdc0a80.c",
+      "sha256": "b26c300578339da4261f1840f4b5f398d5caacbac4489a06e6c3afb9208f56c6"
+    },
+    {
+      "class": "UIMobNameLabel",
+      "name": "UpdateName",
+      "token": "0x060120f8",
+      "runtime_va": "0x7fff5fdc4490",
+      "rva": "0xb74490",
+      "decompileCompleted": true,
+      "pseudocodeFile": "UIMobNameLabel-UpdateName-7fff5fdc4490.c",
+      "sha256": "854f1ca1c04d3ef54525faed25f9c8e2533429fa4471b40194253f99c0389248"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "get_MobName",
+      "token": "0x06001d9f",
+      "runtime_va": "0x7fff5fe22e10",
+      "rva": "0xbd2e10",
+      "decompileCompleted": true,
+      "pseudocodeFile": "EnemyMobActionManagerBase-get_MobName-7fff5fe22e10.c",
+      "sha256": "e6479b9429c52b191702db1b0cfceee89269b9a77c6afd4ba55dcbb49f349ecf"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "get_MobStatusMaster",
+      "token": "0x06001d71",
+      "runtime_va": "0x7fff5fe22f70",
+      "rva": "0xbd2f70",
+      "decompileCompleted": true,
+      "pseudocodeFile": "EnemyMobActionManagerBase-get_MobStatusMaster-7fff5fe22f70.c",
+      "sha256": "5813aa89b068b092f049f2fdfb15072596e14ea3d9093756745781982164d2c7"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Uuid",
+      "token": "0x060023cf",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MobStatusMaster-get_Uuid-7fff5f4e44f0.c",
+      "sha256": "4ad305814f05d764914f2bc26b11ae8efc592301b5fb8e7c4690a16974d86b39"
+    },
+    {
+      "class": "MapInfo",
+      "name": "get_MobDb",
+      "token": "0x060087c3",
+      "runtime_va": "0x7fff5f4eacb0",
+      "rva": "0x29acb0",
+      "decompileCompleted": true,
+      "pseudocodeFile": "MapInfo-get_MobDb-7fff5f4eacb0.c",
+      "sha256": "37caae4e2c2e6d5cf127d89dec525a6777a3d43ffe717388e7c85323b43c2e04"
+    },
+    {
+      "class": "LocalizeManager",
+      "name": "Get",
+      "token": "0x0600b4d4",
+      "runtime_va": "0x7fff5f55ae30",
+      "rva": "0x30ae30",
+      "decompileCompleted": true,
+      "pseudocodeFile": "LocalizeManager-Get-7fff5f55ae30.c",
+      "sha256": "b24479765aa57ad8440fa66323e951b8249b40c04cb0754c4d6817f1df9aa89f"
+    }
+  ],
+  "files": {
+    "EnemyMobActionManagerBase-get_MobName-7fff5fe22e10.c": "e6479b9429c52b191702db1b0cfceee89269b9a77c6afd4ba55dcbb49f349ecf",
+    "EnemyMobActionManagerBase-get_MobStatusMaster-7fff5fe22f70.c": "5813aa89b068b092f049f2fdfb15072596e14ea3d9093756745781982164d2c7",
+    "EnemyTextManager-GetName-7fff5f555b60.c": "5623e1a8caa71f2c522410432ce6169707249b5cee5dddb1eccde1bc275215bd",
+    "EnemyTextManager-Initialize-7fff5f555c00.c": "736550963a32a099f81c5e0916d4fef3fffec46c982475c6e86a7ce2f4ef41b2",
+    "LocalizeManager-Get-7fff5f55ae30.c": "b24479765aa57ad8440fa66323e951b8249b40c04cb0754c4d6817f1df9aa89f",
+    "MapInfo-get_MobDb-7fff5f4eacb0.c": "37caae4e2c2e6d5cf127d89dec525a6777a3d43ffe717388e7c85323b43c2e04",
+    "metadata.json": "2be144a94b5d21b8f21186004a395b34047f37aa51f9f7f4c83cba299af92f30",
+    "method-map.json": "bde84a7cc421a43f2700c4d7ca09943bcc5ea9e30f903fd05e8514393f6db6bb",
+    "MobActionPattern-CreateActionPattern-7fff5fe32440.c": "e541a597f4f8f2c633a040e0418a4ad15736dcb0199da03335d4888000430985",
+    "MobMaster-ReadMaster-7fff5fe48ff0.c": "a3c04ef74dea5f96c8a95b0c188d1fe7fa80e5a0a74b8a58eb8d80dce0d45a7f",
+    "MobModeData-CreateModeData-7fff5fe4a340.c": "be5cdef985b1f44f7a880e941649fbbf84b5d2796e4a2fdcf1bd8b3fba4405b9",
+    "MobPropertyMaster-_ctor-7fff5fe85b10.c": "737da656b58d8b28a796dc0ef6125c52082b9f186d345780fe1ad442ff526984",
+    "MobStatusMaster-CreateStatusMaster-7fff5fe6a780.c": "88774046349deb35f4e2b245b95cfbe673ad2f6912bc366c03396480d5e0b32e",
+    "MobStatusMaster-get_Uuid-7fff5f4e44f0.c": "4ad305814f05d764914f2bc26b11ae8efc592301b5fb8e7c4690a16974d86b39",
+    "MobStatusMaster-SetMobPropertyMaster-7fff5fe6aee0.c": "d7f70f30a33fad6f3276dfea00815eee36b15792fd46c10e30e24adcf06188b6",
+    "TraceToramMonsterSchema.java": "a095446ccc0d40892a6969e5c6cac1bc010f063ff84c072ef105fcc8aa6b9fcf",
+    "UI3DNameManager-Initialize-7fff5f7bf850.c": "ae644486b60cb0d8de2ddf152639e6088b91d8f36c68cbc3eb85e15edd3ffce9",
+    "UIMobNameLabel-Initialize-7fff5fdc0a80.c": "b26c300578339da4261f1840f4b5f398d5caacbac4489a06e6c3afb9208f56c6",
+    "UIMobNameLabel-UpdateName-7fff5fdc4490.c": "854f1ca1c04d3ef54525faed25f9c8e2533429fa4471b40194253f99c0389248",
+    "_loadFieldData_d__125-MoveNext-7fff603f3f50.c": "cf4f5b4ee5919645ce7a3ded768d8725edd9851f23682da5e2419e5297b41a9b",
+    "_LoadMapInfo_d__94-MoveNext-7fff6037e4c0.c": "b29d9c00e459532ae1a8340cd29181a752f6b3726b775d04bc8333d8e1b4d38c"
+  },
+  "limitations": [
+    "Decompiled native pseudocode is not original C# and does not establish execution.",
+    "Raw action delay/sound timing fields preserve serialized bytes without guessed float scale.",
+    "Drop tail pairs retain both words; native code discards the second word.",
+    "Runtime difficulty, mode/property overrides and server state are separate from serialized base rows."
+  ]
+}

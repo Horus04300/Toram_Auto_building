@@ -1,0 +1,311 @@
+--- assets\source-data\toram-monsters\native-classification\_OnBossMenuCommand_d__263-MoveNext-7fff60538be0.c
++++ 41420.c
+@@ -1,11 +1,12 @@
+ {
+   longlong lVar1;
++  undefined *self_00;
+   code *pcVar2;
+   byte bVar3;
+-  undefined1 uVar4;
++  byte bVar4;
+   char cVar5;
+   byte bVar6;
+   short sVar7;
+-  undefined4 uVar8;
++  int iVar8;
+   undefined8 *puVar9;
+   longlong lVar10;
+@@ -14,6 +15,7 @@
+   int iVar13;
+   undefined4 uVar14;
+-  undefined4 uVar15;
++  uint uVar15;
+   undefined4 uVar16;
++  undefined4 uVar17;
+   bool bStackX_8;
+   short sStackX_18;
+@@ -40,71 +42,73 @@
+     if (lVar1 == 0) goto LABEL0;
+     if (*(int *)(lVar1 + 0xdc) == 0) {
+-      CALL1(lVar1,1);
+-    }
+-    uVar4 = 0;
++      CALL1(lVar1);
++    }
++    bVar6 = 0;
+     self[0x2c] = *(undefined1 *)(lVar1 + 0xe2);
+-    lVar10 = *(longlong *)(lVar1 + 0x40);
++    self_00 = *(undefined **)(lVar1 + 0x40);
+     *(undefined1 *)(lVar1 + 0xe2) = 2;
+     bStackX_8 = false;
+-    if (lVar10 == 0) goto LABEL0;
+-    if (*(int *)(lVar10 + 0x18) < 0xf) {
+-      if (*(int *)(lVar10 + 0x18) < 0xe) {
+-        sVar7 = CALL2();
++    if (self_00 == (undefined *)0x0) goto LABEL0;
++    if (*(int *)(self_00 + 0x18) < 0xf) {
++      if (*(int *)(self_00 + 0x18) < 0xe) {
++        sVar7 = FieldScriptLoader_ReadShort(self_00,(undefined *)0x0);
+         iVar13 = (int)sVar7;
+       }
+       else {
+-        iVar13 = CALL3();
+-      }
++        iVar13 = FieldScriptLoader_ReadInt(self_00,(undefined *)0x0);
++      }
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      bVar3 = FieldScriptLoader_ReadByte(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      uVar15 = (uint)bVar3;
+       if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      bVar3 = CALL4(*(longlong *)(lVar1 + 0x40),0);
++      puVar9 = (undefined8 *)CALL2(&uStack_58,*(longlong *)(lVar1 + 0x40),0);
++      uVar16 = (undefined4)*puVar9;
++      uVar17 = (undefined4)((ulonglong)*puVar9 >> 0x20);
++      uStackX_20 = *(undefined4 *)(puVar9 + 1);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      sStackX_18 = FieldScriptLoader_ReadShort(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      FieldScriptLoader_ReadShort(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      uStack_68 = CALL3(lVar1);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      iVar8 = FieldScriptLoader_ReadInt(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++    }
++    else {
++      bVar3 = FieldScriptLoader_ReadByte(self_00,(undefined *)0x0);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      FieldScriptLoader_ReadByte(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      iVar13 = FieldScriptLoader_ReadInt(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      bVar4 = FieldScriptLoader_ReadByte(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      uVar15 = (uint)bVar4;
+       if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      puVar9 = (undefined8 *)CALL5(&uStack_58,*(longlong *)(lVar1 + 0x40),0);
+-      uVar15 = (undefined4)*puVar9;
+-      uVar16 = (undefined4)((ulonglong)*puVar9 >> 0x20);
++      puVar9 = (undefined8 *)CALL2(&uStack_58,*(longlong *)(lVar1 + 0x40),0);
++      uVar16 = (undefined4)*puVar9;
++      uVar17 = (undefined4)((ulonglong)*puVar9 >> 0x20);
+       uStackX_20 = *(undefined4 *)(puVar9 + 1);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      sStackX_18 = CALL2(*(longlong *)(lVar1 + 0x40),0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      CALL2(*(longlong *)(lVar1 + 0x40),0);
+-      uStack_68 = CALL6(lVar1,0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      uVar8 = CALL3(*(longlong *)(lVar1 + 0x40),0);
+-    }
+-    else {
+-      bVar6 = CALL4(lVar10,0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      CALL4(*(longlong *)(lVar1 + 0x40),0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      iVar13 = CALL3(*(longlong *)(lVar1 + 0x40),0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      bVar3 = CALL4(*(longlong *)(lVar1 + 0x40),0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      puVar9 = (undefined8 *)CALL5(&uStack_58,*(longlong *)(lVar1 + 0x40),0);
+-      uVar15 = (undefined4)*puVar9;
+-      uVar16 = (undefined4)((ulonglong)*puVar9 >> 0x20);
+-      uStackX_20 = *(undefined4 *)(puVar9 + 1);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      sStackX_18 = CALL2(*(longlong *)(lVar1 + 0x40),0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      CALL2(*(longlong *)(lVar1 + 0x40),0);
+-      uStack_68 = CALL6(lVar1,0);
+-      if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-      uVar8 = CALL3(*(longlong *)(lVar1 + 0x40),0);
+-      if (0xe < bVar6) {
+-        if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-        uVar4 = CALL4(*(longlong *)(lVar1 + 0x40),0);
+-        if (0xf < bVar6) {
+-          if (*(longlong *)(lVar1 + 0x40) == 0) goto LABEL0;
+-          cVar5 = CALL4(*(longlong *)(lVar1 + 0x40),0);
+-          bStackX_8 = cVar5 != '\0';
+-        }
+-      }
+-    }
+-    lVar10 = CALL7(GLOBAL6);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      sStackX_18 = FieldScriptLoader_ReadShort(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      FieldScriptLoader_ReadShort(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      uStack_68 = CALL3(lVar1);
++      if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++      iVar8 = FieldScriptLoader_ReadInt(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++      if (0xe < bVar3) {
++        if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++        bVar6 = FieldScriptLoader_ReadByte(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++        if (0xf < bVar3) {
++          if (*(undefined **)(lVar1 + 0x40) == (undefined *)0x0) goto LABEL0;
++          bVar3 = FieldScriptLoader_ReadByte(*(undefined **)(lVar1 + 0x40),(undefined *)0x0);
++          bStackX_8 = bVar3 != 0;
++        }
++      }
++    }
++    lVar10 = CALL4(GLOBAL6);
+     if (lVar10 == 0) goto LABEL0;
+     plVar12 = *(longlong **)(lVar10 + 0x28);
+     if (plVar12 == (longlong *)0x0) {
+ LABEL1:
+-      lVar10 = CALL7(GLOBAL6);
++      lVar10 = CALL4(GLOBAL6);
+       if (lVar10 == 0) goto LABEL0;
+       plVar12 = *(longlong **)(lVar10 + 0x28);
+@@ -117,5 +121,5 @@
+             (ulonglong)*(byte *)(GLOBAL1 + 0x130) * 8) == GLOBAL1)) {
+           if ((int)plVar12[7] != iVar13) {
+-            CALL8(plVar12,0);
++            CALL5(plVar12,0);
+           }
+           uVar14 = *(undefined4 *)((longlong)plVar12 + 0xa4);
+@@ -129,24 +133,24 @@
+            ) != GLOBAL2)) goto LABEL1;
+       if ((int)plVar12[7] != iVar13) {
+-        CALL9(plVar12,0);
++        CALL6(plVar12,0);
+       }
+       uVar14 = *(undefined4 *)((longlong)plVar12 + 0xac);
+     }
+     *(undefined2 *)(self + 0x2d) = 0;
+-    if (((uint)bVar3 == *(uint *)(lVar1 + 200)) && (iVar13 == *(int *)(lVar1 + 0xc4))) {
+-      plVar12 = (longlong *)CALL7(GLOBAL7);
++    if ((uVar15 == *(uint *)(lVar1 + 200)) && (iVar13 == *(int *)(lVar1 + 0xc4))) {
++      plVar12 = (longlong *)CALL4(GLOBAL7);
+       if (plVar12 == (longlong *)0x0) goto LABEL0;
+       (**(code **)(*plVar12 + 0x278))(plVar12,0x7a,*(undefined8 *)(*plVar12 + 0x280));
+-      lVar10 = CALL7(GLOBAL7);
+-      if ((lVar10 == 0) || (lVar10 = CALL10(lVar10,0), lVar10 == 0))
++      lVar10 = CALL4(GLOBAL7);
++      if ((lVar10 == 0) || (lVar10 = CALL7(lVar10,0), lVar10 == 0))
+       goto LABEL0;
+-      uVar11 = CALL11(lVar10,GLOBAL3);
++      uVar11 = CALL8(lVar10,GLOBAL3);
+       *(undefined8 *)(self + 0x30) = uVar11;
+-      CALL12();
++      il2cpp_write_barrier_0();
+       if (*(longlong *)(self + 0x30) == 0) goto LABEL0;
+       uStack_50 = uStackX_20;
+-      uStack_58 = CONCAT44(uVar16,uVar15);
+-      CALL13(*(longlong *)(self + 0x30),iVar13,bVar3,&uStack_58,(float)(int)sStackX_18,
+-                       uStack_68,uVar8,uVar14,1,GLOBAL8,uVar4,
++      uStack_58 = CONCAT44(uVar17,uVar16);
++      CALL9(*(longlong *)(self + 0x30),iVar13,uVar15,&uStack_58,(float)(int)sStackX_18,
++                       uStack_68,iVar8,uVar14,1,GLOBAL8,bVar6,
+                        CONCAT71((int7)((ulonglong)in_stack_ffffffffffffff80 >> 8),
+                                 ~*(byte *)(lVar1 + 0xcc)) & GLOBAL9,
+@@ -154,24 +158,24 @@
+       goto LABEL2;
+     }
+-    plVar12 = (longlong *)CALL7(GLOBAL7);
++    plVar12 = (longlong *)CALL4(GLOBAL7);
+     if (plVar12 == (longlong *)0x0) goto LABEL0;
+     (**(code **)(*plVar12 + 0x278))(plVar12,0x40,*(undefined8 *)(*plVar12 + 0x280));
+-    lVar10 = CALL7(GLOBAL7);
+-    if ((lVar10 == 0) || (lVar10 = CALL10(lVar10,0), lVar10 == 0)) goto LABEL0;
+-    uVar11 = CALL11(lVar10,GLOBAL4);
++    lVar10 = CALL4(GLOBAL7);
++    if ((lVar10 == 0) || (lVar10 = CALL7(lVar10,0), lVar10 == 0)) goto LABEL0;
++    uVar11 = CALL8(lVar10,GLOBAL4);
+     *(undefined8 *)(self + 0x38) = uVar11;
+-    CALL12();
++    il2cpp_write_barrier_0();
+     if (*(longlong *)(self + 0x38) == 0) goto LABEL0;
+     uStack_50 = uStackX_20;
+-    uStack_58 = CONCAT44(uVar16,uVar15);
+-    CALL14(*(longlong *)(self + 0x38),iVar13,bVar3,&uStack_58,(float)(int)sStackX_18,
+-                     uStack_68,uVar8,uVar14,1,GLOBAL8,uVar4,*(undefined8 *)(lVar1 + 0xd0),
++    uStack_58 = CONCAT44(uVar17,uVar16);
++    CALL10(*(longlong *)(self + 0x38),iVar13,uVar15,&uStack_58,(float)(int)sStackX_18,
++                     uStack_68,iVar8,uVar14,1,GLOBAL8,bVar6,*(undefined8 *)(lVar1 + 0xd0),
+                      bStackX_8,0);
+ LABEL3:
+     uVar11 = *(undefined8 *)(self + 0x38);
+     if (*(int *)(GLOBAL5 + 0xe0) == 0) {
+-      CALL15();
+-    }
+-    cVar5 = CALL16(uVar11,0,0);
++      CALL11();
++    }
++    cVar5 = CALL12(uVar11,0,0);
+     if (cVar5 != '\0') {
+       lVar10 = *(longlong *)(self + 0x38);
+@@ -181,5 +185,5 @@
+         self[0x2e] = *(undefined1 *)(lVar10 + 0x210);
+         if (((lVar1 == 0) || (*(longlong *)(lVar1 + 0x20) == 0)) ||
+-           (plVar12 = (longlong *)CALL17(*(longlong *)(lVar1 + 0x20),0),
++           (plVar12 = (longlong *)CALL13(*(longlong *)(lVar1 + 0x20),0),
+            plVar12 == (longlong *)0x0)) goto LABEL0;
+         cVar5 = (**(code **)(*plVar12 + 0x248))(plVar12,*(undefined8 *)(*plVar12 + 0x250));
+@@ -191,5 +195,5 @@
+         if (self[0x2d] == '\0') {
+           *(undefined8 *)(self + 0x18) = 0;
+-          CALL12();
++          il2cpp_write_barrier_0();
+           *(undefined4 *)(self + 0x10) = 2;
+           return 1;
+@@ -211,7 +215,7 @@
+     uVar11 = *(undefined8 *)(self + 0x30);
+     if (*(int *)(GLOBAL5 + 0xe0) == 0) {
+-      CALL15();
+-    }
+-    cVar5 = CALL16(uVar11,0,0);
++      CALL11();
++    }
++    cVar5 = CALL12(uVar11,0,0);
+     if (cVar5 != '\0') {
+       lVar10 = *(longlong *)(self + 0x30);
+@@ -223,5 +227,5 @@
+         if (cVar5 == '\0') {
+           if (((lVar1 != 0) && (*(longlong *)(lVar1 + 0x20) != 0)) &&
+-             (plVar12 = (longlong *)CALL17(*(longlong *)(lVar1 + 0x20),0),
++             (plVar12 = (longlong *)CALL13(*(longlong *)(lVar1 + 0x20),0),
+              plVar12 != (longlong *)0x0)) {
+             cVar5 = (**(code **)(*plVar12 + 0x248))(plVar12,*(undefined8 *)(*plVar12 + 0x250));
+@@ -232,5 +236,5 @@
+             }
+             *(undefined8 *)(self + 0x18) = 0;
+-            CALL12();
++            il2cpp_write_barrier_0();
+             *(undefined4 *)(self + 0x10) = 1;
+             return 1;
+@@ -242,10 +246,10 @@
+     *(undefined8 *)(self + 0x30) = 0;
+   }
+-  CALL12();
++  il2cpp_write_barrier_0();
+   if (lVar1 != 0) {
+     *(undefined *)(lVar1 + 0xe2) = self[0x2c];
+-    CALL18(lVar1,*(undefined4 *)(self + 0x28),0);
++    CALL14(lVar1,*(undefined4 *)(self + 0x28),0);
+     if ((*(longlong *)(lVar1 + 0x20) != 0) &&
+-       (plVar12 = (longlong *)CALL17(*(longlong *)(lVar1 + 0x20),0),
++       (plVar12 = (longlong *)CALL13(*(longlong *)(lVar1 + 0x20),0),
+        plVar12 != (longlong *)0x0)) {
+       cVar5 = (**(code **)(*plVar12 + 0x248))(plVar12,*(undefined8 *)(*plVar12 + 0x250));
+@@ -253,9 +257,9 @@
+         return 0;
+       }
+-      plVar12 = (longlong *)CALL7(GLOBAL7);
++      plVar12 = (longlong *)CALL4(GLOBAL7);
+       if (plVar12 != (longlong *)0x0) {
+         (**(code **)(*plVar12 + 0x278))(plVar12,2,*(undefined8 *)(*plVar12 + 0x280));
+         if (self[0x2d] == '\0') {
+-          plVar12 = (longlong *)CALL7(GLOBAL7);
++          plVar12 = (longlong *)CALL4(GLOBAL7);
+           if (plVar12 != (longlong *)0x0) {
+             (**(code **)(*plVar12 + 0x248))(plVar12,0,5,*(undefined8 *)(*plVar12 + 0x250));
+@@ -267,5 +271,5 @@
+             return 0;
+           }
+-          plVar12 = (longlong *)CALL7(GLOBAL7);
++          plVar12 = (longlong *)CALL4(GLOBAL7);
+           if (plVar12 != (longlong *)0x0) {
+             (**(code **)(*plVar12 + 0x278))(plVar12,0x5d,*(undefined8 *)(*plVar12 + 0x280));
+@@ -277,5 +281,5 @@
+   }
+ LABEL0:
+-  CALL19();
++  CALL15();
+   pcVar2 = (code *)swi(3);
+   bVar6 = (*pcVar2)();

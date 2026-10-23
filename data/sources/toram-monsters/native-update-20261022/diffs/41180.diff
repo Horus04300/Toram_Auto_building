@@ -1,0 +1,177 @@
+--- assets\source-data\toram-monsters\native-guildraid-links\FieldScriptManager-OnGuildRaidBossNameCommnad-7fff60527600.c
++++ 41180.c
+@@ -9,15 +9,14 @@
+   code *pcVar8;
+   byte bVar9;
+-  undefined1 uVar10;
+-  uint uVar11;
++  uint uVar10;
++  longlong lVar11;
+   longlong lVar12;
+-  longlong lVar13;
+-  longlong lVar14;
+-  longlong *plVar15;
++  undefined *puVar13;
++  longlong *plVar14;
++  undefined8 uVar15;
+   undefined8 uVar16;
+   undefined8 uVar17;
+   undefined8 uVar18;
+   undefined8 uVar19;
+-  undefined8 uVar20;
+   int aiStackX_8 [2];
+   int aiStackX_20 [2];
+@@ -36,72 +35,73 @@
+     GLOBAL0 = '\x01';
+   }
+-  uVar17 = **(undefined8 **)(GLOBAL8 + 0xb8);
+-  lVar12 = *(longlong *)(self + 0x40);
+-  if (lVar12 != 0) {
+-    if (*(int *)(lVar12 + 0x18) < 0x10) {
+-      bVar9 = CALL1(lVar12,0);
+-      uVar11 = (uint)bVar9;
++  uVar16 = **(undefined8 **)(GLOBAL8 + 0xb8);
++  puVar13 = *(undefined **)(self + 0x40);
++  if (puVar13 != (undefined *)0x0) {
++    if (*(int *)(puVar13 + 0x18) < 0x10) {
++      bVar9 = FieldScriptLoader_ReadByte(puVar13,(undefined *)0x0);
++      uVar10 = (uint)bVar9;
+     }
+     else {
+-      uVar11 = CALL2();
++      uVar10 = FieldScriptLoader_ReadInt(puVar13,(undefined *)0x0);
+     }
+-    if (*(longlong *)(self + 0x40) != 0) {
+-      uVar10 = CALL1(*(longlong *)(self + 0x40),0);
+-      lVar12 = CALL3(GLOBAL5);
+-      if (lVar12 != 0) {
+-        lVar12 = CALL4(lVar12,uVar11,0);
+-        uVar16 = uVar17;
+-        if (lVar12 != 0) {
+-          lVar13 = CALL3(GLOBAL6);
+-          if (lVar13 == 0) goto LABEL0;
+-          plVar15 = *(longlong **)(lVar13 + 0x28);
+-          if (plVar15 != (longlong *)0x0) {
+-            if ((*(byte *)(GLOBAL3 + 0x130) <= *(byte *)(*plVar15 + 0x130)) &&
++    if (*(undefined **)(self + 0x40) != (undefined *)0x0) {
++      bVar9 = FieldScriptLoader_ReadByte(*(undefined **)(self + 0x40),(undefined *)0x0);
++      lVar11 = CALL1(GLOBAL5);
++      if (lVar11 != 0) {
++        lVar11 = CALL2(lVar11,uVar10,0);
++        uVar15 = uVar16;
++        if (lVar11 != 0) {
++          lVar12 = CALL1(GLOBAL6);
++          if (lVar12 == 0) goto LABEL0;
++          plVar14 = *(longlong **)(lVar12 + 0x28);
++          if (plVar14 != (longlong *)0x0) {
++            if ((*(byte *)(GLOBAL3 + 0x130) <= *(byte *)(*plVar14 + 0x130)) &&
+                (*(longlong *)
+-                 (*(longlong *)(*plVar15 + 200) + -8 +
++                 (*(longlong *)(*plVar14 + 200) + -8 +
+                  (ulonglong)*(byte *)(GLOBAL3 + 0x130) * 8) == GLOBAL3)) {
+-              sVar4 = *(short *)((longlong)plVar15 + 0xb6);
+-              sVar5 = *(short *)((longlong)plVar15 + 0xb2);
+-              lVar13 = plVar15[0x16];
+-              fVar2 = *(float *)(plVar15 + 0x17);
+-              lVar14 = CALL3(GLOBAL7);
+-              if (lVar14 != 0) {
+-                plVar15 = (longlong *)CALL5(lVar14,7,0);
+-                uVar6 = *(undefined4 *)(lVar12 + 0x14);
+-                if (plVar15 != (longlong *)0x0) {
+-                  if ((*(byte *)(*plVar15 + 0x130) < *(byte *)(GLOBAL2 + 0x130)) ||
++              sVar4 = *(short *)((longlong)plVar14 + 0xb6);
++              sVar5 = *(short *)((longlong)plVar14 + 0xb2);
++              lVar12 = plVar14[0x16];
++              fVar2 = *(float *)(plVar14 + 0x17);
++              puVar13 = (undefined *)CALL1(GLOBAL7);
++              if (puVar13 != (undefined *)0x0) {
++                plVar14 = (longlong *)LocalizeManager_Get(puVar13,(undefined *)0x7,(undefined *)0x0)
++                ;
++                uVar6 = *(undefined4 *)(lVar11 + 0x14);
++                if (plVar14 != (longlong *)0x0) {
++                  if ((*(byte *)(*plVar14 + 0x130) < *(byte *)(GLOBAL2 + 0x130)) ||
+                      (*(longlong *)
+-                       (*(longlong *)(*plVar15 + 200) + -8 +
++                       (*(longlong *)(*plVar14 + 200) + -8 +
+                        (ulonglong)*(byte *)(GLOBAL2 + 0x130) * 8) != GLOBAL2)) {
+-                    CALL6(plVar15);
++                    CALL3(plVar14);
+                     pcVar8 = (code *)swi(3);
+                     (*pcVar8)();
+                     return;
+                   }
+-                  lVar12 = CALL7(*(undefined8 *)
+-                                                (*plVar15 +
++                  lVar11 = CALL4(*(undefined8 *)
++                                                (*plVar14 +
+                                                 ((ulonglong)*(ushort *)(GLOBAL1 + 0x50) +
+                                                 0x14) * 0x10));
+-                  plVar15 = (longlong *)(**(code **)(lVar12 + 8))(plVar15,uVar6,lVar12);
+-                  if (plVar15 != (longlong *)0x0) {
+-                    uVar16 = (**(code **)(*plVar15 + 0x178))
+-                                       (plVar15,*(undefined8 *)(*plVar15 + 0x180));
++                  plVar14 = (longlong *)(**(code **)(lVar11 + 8))(plVar14,uVar6,lVar11);
++                  if (plVar14 != (longlong *)0x0) {
++                    uVar15 = (**(code **)(*plVar14 + 0x178))
++                                       (plVar14,*(undefined8 *)(*plVar14 + 0x180));
+                   }
+-                  lVar12 = CALL8(self,0);
+-                  if (lVar12 == 0) {
+-                    CALL9();
++                  lVar11 = CALL5(self,0);
++                  if (lVar11 == 0) {
++                    CALL6();
+                     pcVar8 = (code *)swi(3);
+                     (*pcVar8)();
+                     return;
+                   }
+-                  uVar17 = CALL10(lVar12,GLOBAL10,0);
+-                  aiStackX_8[0] = (int)(short)lVar13;
+-                  uVar18 = CALL11(GLOBAL4,aiStackX_8);
++                  uVar16 = CALL7(lVar11,GLOBAL10,0);
++                  aiStackX_8[0] = (int)(short)lVar12;
++                  uVar17 = CALL8(GLOBAL4,aiStackX_8);
+                   aiStackX_20[0] = (int)sVar4 - (int)sVar5;
+-                  uVar19 = CALL11(GLOBAL4,aiStackX_20);
++                  uVar18 = CALL8(GLOBAL4,aiStackX_20);
+                   aiStack_58[0] = (int)(fVar2 * GLOBAL11);
+-                  uVar20 = CALL11(GLOBAL4,aiStack_58);
+-                  uVar17 = CALL12(uVar17,uVar18,uVar19,uVar20,0);
+-                  goto CALL13;
++                  uVar19 = CALL8(GLOBAL4,aiStack_58);
++                  uVar16 = CALL9(uVar16,uVar17,uVar18,uVar19,0);
++                  goto il2cpp_write_barrier_0;
+                 }
+               }
+@@ -110,11 +110,11 @@
+           }
+         }
+-CALL13:
+-        uVar18 = CALL14(GLOBAL9,0);
+-        uVar17 = CALL15(self,uVar18,uVar10,uVar16,uVar17,0);
+-        *(undefined8 *)(self + 0x60) = uVar17;
++il2cpp_write_barrier_0:
++        uVar17 = CALL10(GLOBAL9,0);
++        uVar16 = CALL11(self,uVar17,bVar9,uVar15,uVar16,0);
++        *(undefined8 *)(self + 0x60) = uVar16;
+         if (GLOBAL12 != 0) {
+-          uVar11 = (uint)((ulonglong)(self + 0x60) >> 0xc);
+-          puVar1 = (ulonglong *)((ulonglong)((uVar11 & 0x1fffff) >> 6) * 8 + GLOBAL13);
++          uVar10 = (uint)((ulonglong)(self + 0x60) >> 0xc);
++          puVar1 = (ulonglong *)((ulonglong)((uVar10 & 0x1fffff) >> 6) * 8 + GLOBAL13);
+           do {
+             uVar7 = *puVar1;
+@@ -122,5 +122,5 @@
+             uVar3 = *puVar1;
+             if (uVar7 == uVar3) {
+-              *puVar1 = uVar7 | 1L << (uVar11 & 0x3f);
++              *puVar1 = uVar7 | 1L << (uVar10 & 0x3f);
+             }
+             UNLOCK();
+@@ -132,5 +132,5 @@
+   }
+ LABEL0:
+-  CALL9();
++  CALL6();
+   pcVar8 = (code *)swi(3);
+   (*pcVar8)();

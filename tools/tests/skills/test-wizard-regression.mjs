@@ -7,7 +7,7 @@ const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Wizard: {} }) };
 vm.createContext(context);
-for (const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skills/wizard.js', 'assets/js/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
+for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/wizard.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
 
 const E = context.window.ToramSkillEffects;
 const ids = Array.from({ length: 15 }, (_, index) => `Wizard:${index}`);

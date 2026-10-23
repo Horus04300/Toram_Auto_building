@@ -1,0 +1,47 @@
+{
+  "authority": "Static selected-function Ghidra analysis of existing authorized saved runtime PE; no current process access or REA retained Evidence ID",
+  "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "mappedImageSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+  "tupleContract": {
+    "type": "Toram.Common.Productions.EnhanceProperties2",
+    "ctorOrder": [
+      "UsePotential:i32",
+      "Coefficient:i32",
+      "MaterialCategory:i32",
+      "AbilityCategory:i32",
+      "Rate:f32",
+      "BaseMax:i32",
+      "UpperMax:i32",
+      "LowerMax:i32",
+      "OverRate:i32",
+      "DoubleUse:i32"
+    ],
+    "costFields": {
+      "C": "UsePotential",
+      "t": "BaseMax",
+      "s": "OverRate",
+      "doubleRule": "DoubleUse"
+    }
+  },
+  "rules": {
+    "delta": "EnhanceGetPropertyPosition builds changeProperties as target-existing on retained original slot/type; fills new slots; newProperties contains final property vector. GetUsePotentialPoint overload without exclusion passes exclusionType=0.",
+    "equipCost": "UIItemListManager.CheckWeaponItem(itemType): true for 7..19 except17, also23; false otherwise. If true and DoubleUse==2, C*=2. If false and DoubleUse==1, C*=2.",
+    "up": "x=old,d=delta>=0,y=x+d. a=(x<-t ? min(d,-t-x):0);r=d-a;b=(y>t ? min(r,y-t):0); row=C*(div0(a,s)+(r-b)+2*div0(b,s)). div0 is integer division toward zero.",
+    "down": "d<0. a=(x>t ? max(d,t-x):0);r=d-a;b=(y<-t ? max(r,y+t):0);score=f32(f32(div0(b,s))*.5f + f32((div0(a,s)-b)+r));R=f32(f32(f32(TEC)/1000f)+.05f);row=trunc(f32(f32(R*score)*f32(C))).",
+    "refundTEC": "PlayerDataManager.get_PlayerStatus then PlayerStatusBase.get_SecondaryStatus virtual slot6 (+0x198), IPlayerStatusCalculator.get_Tec interface slot9. TEC255 gives approximately30.5% base refund factor. No generic uniform refund amount independent of previous value/threshold/row rounding.",
+    "rounding": "Positive row uses integer arithmetic; negative row uses f32 with per-op rounding then i32 truncation. Row additions accumulate in signed short. Finally category multiplier computed from FINAL property types is applied ONCE to total signed short via f32, i32 truncation then signed-short return.",
+    "categoryCrossRef": "Category multiplier logic lives in same CalcUsePotentialPoint; independent native-penalty investigation owns complete counting contract. Do not multiply positive/negative rows independently before summation.",
+    "element": "BonusType65 bElement obtains C from ElementCost keyed by change-property value; ordinary threshold/TEC path skipped. If original base item master has same element value, use integer C/10 after equipment doubling. Otherwise C. This does not prove arbitrary existing-element replacement is allowed by UI/server.",
+    "detailUI": "SetConsumptionPotential only stores UsedPotential and onePotential then calls UpdateDetailVal. CheckOverRateType true for BonusType12,22,24,26,28,30,32; false others. UI cap/detailed price/material calculations are separately handled in native-penalty.",
+    "stepDependence": "At t20,s1,C3,TEC255: one step0->-10 costs-9; two steps0->-5->-10 cost-4+-4=-8 before category multiplier. Equal final vectors need not imply equal potential refunds.",
+    "exclusion": "Exclusion removes matching type from both final-category counting and delta cost; it is not simply subtracting one already priced row from unchanged total."
+  },
+  "limitations": [
+    "No native function execution or current game UI observations. Standalone self-check is a translated arithmetic check.",
+    "Master catalog values/availability and cap restrictions are outside this folder; use separately retained native catalog/penalty evidence.",
+    "Signed-short overflow is preserved in function contract, not interpreted as valid gameplay potential. Stay within verified input domains.",
+    "Element mutation acceptance and failure outcomes/server checks require separate evidence.",
+    "getEnhanceMax initial draft had a Math.Max tail-call decompiler boundary issue and is intentionally NOT retained here; corrected native-penalty evidence owns that function."
+  ]
+}

@@ -1,0 +1,106 @@
+--- assets\source-data\toram-monsters\native-guildraid-links\PhotonListener-OnEventEnterGuildRaidField-7fff605ac7d0.c
++++ 43866.c
+@@ -6,4 +6,5 @@
+   longlong lVar5;
+   longlong *plVar6;
++  undefined *self_00;
+   undefined8 uVar7;
+   longlong lVar8;
+@@ -34,5 +35,5 @@
+     if (lVar5 != 0) {
+       *(longlong **)(lVar5 + 0x28) = plVar6;
+-      CALL4();
++      il2cpp_write_barrier_0();
+ LABEL0:
+       if (((enterEvent != (undefined *)0x0) && (*(longlong *)(enterEvent + 0x28) != 0)) &&
+@@ -41,26 +42,26 @@
+                   ((undefined *)plVar6,*(short *)(*(longlong *)(enterEvent + 0x28) + 0x20),
+                    (undefined *)0x0);
+-        CALL5(plVar6,enterEvent[0x48],0);
+-        CALL6(plVar6,enterEvent[0x49],0);
++        CALL4(plVar6,enterEvent[0x48]);
++        GuildRaidRoomData_SetCurrentHpCount((undefined *)plVar6,enterEvent[0x49],(undefined *)0x0);
+         plVar6[0xe] = *(longlong *)(enterEvent + 0x40);
+-        CALL4();
+-        lVar5 = CALL1(GLOBAL5);
+-        if (lVar5 != 0) {
+-          CALL7(lVar5,*(undefined4 *)(enterEvent + 0x20),0);
++        il2cpp_write_barrier_0();
++        self_00 = (undefined *)CALL1(GLOBAL5);
++        if (self_00 != (undefined *)0x0) {
++          UITrophyButton_set_TrophyId(self_00,*(int *)(enterEvent + 0x20),(undefined *)0x0);
+           lVar5 = CALL1(GLOBAL5);
+           if (*(longlong *)(enterEvent + 0x28) != 0) {
+-            cVar2 = CALL8(*(longlong *)(enterEvent + 0x28),0);
++            cVar2 = CALL5(*(longlong *)(enterEvent + 0x28),0);
+             if (*(longlong *)(enterEvent + 0x28) != 0) {
+-              uVar3 = CALL8(*(longlong *)(enterEvent + 0x28),0);
++              uVar3 = CALL5(*(longlong *)(enterEvent + 0x28),0);
+               if (*(longlong *)(enterEvent + 0x28) != 0) {
+-                uVar4 = CALL9(*(longlong *)(enterEvent + 0x28),0);
++                uVar4 = CALL6(*(longlong *)(enterEvent + 0x28),0);
+                 uVar7 = CALL2(GLOBAL4);
+-                CALL10(uVar7,cVar2 == '\0',uVar3,uVar4,
++                CALL7(uVar7,cVar2 == '\0',uVar3,uVar4,
+                                  in_stack_ffffffffffffffc8 & GLOBAL7,0);
+                 if (*(longlong *)(enterEvent + 0x28) != 0) {
+-                  uVar3 = CALL11(*(longlong *)(enterEvent + 0x28),0);
++                  uVar3 = CALL8(*(longlong *)(enterEvent + 0x28),0);
+                   if (lVar5 != 0) {
+-                    CALL12(lVar5,uVar7,uVar3,0);
+-                    lVar8 = CALL13(GLOBAL6);
++                    CALL9(lVar5,uVar7,uVar3,0);
++                    lVar8 = CALL10(GLOBAL6);
+                     lVar5 = *(longlong *)(enterEvent + 0x30);
+                     uVar7 = *(undefined8 *)(enterEvent + 0x38);
+@@ -68,14 +69,14 @@
+                       uVar3 = *(undefined1 *)(lVar5 + 0x26);
+                       uVar4 = *(undefined1 *)(lVar5 + 0x25);
+-                      plVar6 = (longlong *)CALL14(GLOBAL3,1);
++                      plVar6 = (longlong *)CALL11(GLOBAL3,1);
+                       if (*(longlong *)(enterEvent + 0x28) != 0) {
+                         aiStack_28[0] = (int)*(short *)(*(longlong *)(enterEvent + 0x28) + 0x20);
+-                        lVar5 = CALL15(GLOBAL2,aiStack_28);
++                        lVar5 = CALL12(GLOBAL2,aiStack_28);
+                         if (plVar6 != (longlong *)0x0) {
+                           if (lVar5 != 0) {
+-                            lVar9 = CALL16(lVar5,*(undefined8 *)(*plVar6 + 0x40));
++                            lVar9 = CALL13(lVar5,*(undefined8 *)(*plVar6 + 0x40));
+                             if (lVar9 == 0) {
+-                              uVar7 = CALL17();
+-                              CALL18(uVar7,0);
++                              uVar7 = CALL14();
++                              CALL15(uVar7,0);
+                               pcVar1 = (code *)swi(3);
+                               (*pcVar1)();
+@@ -84,5 +85,5 @@
+                           }
+                           if ((int)plVar6[3] == 0) {
+-                            CALL19();
++                            CALL16();
+                             pcVar1 = (code *)swi(3);
+                             (*pcVar1)();
+@@ -90,7 +91,7 @@
+                           }
+                           plVar6[4] = lVar5;
+-                          CALL4();
++                          il2cpp_write_barrier_0();
+                           if (lVar8 != 0) {
+-                            CALL20(lVar8,uVar7,uVar3,uVar4,plVar6,0);
++                            CALL17(lVar8,uVar7,uVar3,uVar4,plVar6,0);
+                             return;
+                           }
+@@ -105,5 +106,5 @@
+         }
+       }
+-      CALL21();
++      CALL18();
+       pcVar1 = (code *)swi(3);
+       (*pcVar1)();
+@@ -111,5 +112,5 @@
+     }
+   }
+-  CALL21();
++  CALL18();
+   pcVar1 = (code *)swi(3);
+   (*pcVar1)();

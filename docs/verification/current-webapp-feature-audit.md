@@ -45,7 +45,7 @@
 ### A-01 · 결과 보기와 최적화 실행이 같은 동작임 — P1 · 재현/코드
 
 - `tabs.js:51`은 결과 탭 클릭 때마다 `toram:calculate`를 발생시킨다.
-- 원래 `index.html:143`에 있던 명시적 계산 버튼은 `tabs.js:103`에서 제거된다.
+- 원래 `web/index.html:143`에 있던 명시적 계산 버튼은 `tabs.js:103`에서 제거된다.
 - 실제 UI에서 결과 탭을 누르자 즉시 “전역 후보를 축약하고 있습니다”와 취소 버튼이 나타났다.
 - 사용자는 이전 결과만 다시 보거나, 현재 계산 상세만 갱신하거나, 최적화를 실행할지 구분할 수 없다.
 
@@ -203,8 +203,8 @@
 
 | 파일 | 의도 | 감사 결과 |
 |---|---|---|
-| `index.html` | 모든 입력·결과 요소의 정적 골격 | 필수 입력은 존재. 계산 버튼이 소스에는 있으나 런타임에 제거됨. 초기 DOM 재배치 의존 |
-| `assets/css/style.css` | 데스크톱/모바일 레이아웃과 상태 표현 | 6탭 화면은 정상. 옵션 select 반복과 스킬 캔버스 정보 밀도는 높음. 버프 on/off가 색에 크게 의존 |
+| `web/index.html` | 모든 입력·결과 요소의 정적 골격 | 필수 입력은 존재. 계산 버튼이 소스에는 있으나 런타임에 제거됨. 초기 DOM 재배치 의존 |
+| `web/public/css/style.css` | 데스크톱/모바일 레이아웃과 상태 표현 | 6탭 화면은 정상. 옵션 select 반복과 스킬 캔버스 정보 밀도는 높음. 버프 on/off가 색에 크게 의존 |
 | `app-entry.mjs` | classic script를 순서대로 부팅 | 실패 시 promise가 거부되지만 사용자용 복구 UI 없음 |
 | `legacy-script-manifest.mjs` | 전역 스크립트 의존 순서 계약 | 회귀에는 유용하나 긴 순서가 아키텍처 결합점 |
 | `tabs.js` | 기존 DOM을 6개 기능 탭으로 재배치 | A-01, A-15. 탭 키보드 방향키/roving tabindex도 별도 구현 없음 |
@@ -219,8 +219,8 @@
 | `build-ui-controller.js` | 입력 이벤트를 crysta UI에 연결 | 기능이 작고 명확. 필수 DOM 누락 시 초기화 전체가 중단될 수 있음 |
 | `build-draft-store.js` | 계산 가능한 영속 Build/Scenario와 일회성 Request 분리 | 경계는 좋음. 모든 number 오류를 0으로 만드는 정책과 제외목록 누락, 문서 타입과 실제 skillLevels 중첩형의 차이를 점검할 필요 |
 | `build-state-storage.js` | 저장 상태를 실제 입력 요소로 복원 | 기존 옵션 행을 제거하고 재구성. 부분 손상 데이터의 사용자 확인 단계 없음 |
-| `frontend/domain/calculation-contracts.ts` | DOM/Tauri와 무관한 계산 입력 계약 | 방향은 좋음. 실제 런타임 JS와 자동 schema 동기화가 필요 |
-| `frontend/application/ports.ts` | 저장·최적화 외부 포트 계약 | 목표 구조는 명확. 현재 classic JS 구현과 병행되어 이중 계약 드리프트 가능 |
+| `web/src/domain/calculation-contracts.ts` | DOM/Tauri와 무관한 계산 입력 계약 | 방향은 좋음. 실제 런타임 JS와 자동 schema 동기화가 필요 |
+| `web/src/application/ports.ts` | 저장·최적화 외부 포트 계약 | 목표 구조는 명확. 현재 classic JS 구현과 병행되어 이중 계약 드리프트 가능 |
 
 ### 5.3 스킬·버프·콤보
 
@@ -272,7 +272,7 @@
 
 | 파일 | 의도 | 감사 결과 |
 |---|---|---|
-| `src-tauri/src/main.rs` | 서비스 상태와 IPC 명령 조립 | 실행 root가 얇고 적절함 |
+| `desktop/src/main.rs` | 서비스 상태와 IPC 명령 조립 | 실행 root가 얇고 적절함 |
 | `tauri_commands.rs` | 저장·D4 명령 DTO 경계 | UI와 서비스 책임을 분리함 |
 | `d4_native_evaluator.rs` | JS 커널과 동등한 D4 요약 계산 | parity fixture와 단위 테스트가 통과. 계산식 변경 때 동시 갱신 필수 |
 | `d4_native_solver.rs` | Rust exact branch-and-bound와 continuation | 결정적 병합·상한 검증 테스트가 핵심 안전망 |
@@ -322,7 +322,7 @@
 - `npm run verify:architecture`
 - `npm run test:regression` — 67/67, native 저장 E2E는 환경 변수 미설정으로 skip
 - `node tools/verification/audit-stack-source-links.mjs --require-s1` — 427/427
-- `cargo test --manifest-path src-tauri/Cargo.toml` — 72개 통과
+- `cargo test --manifest-path desktop/Cargo.toml` — 72개 통과
 - `npm run desktop:prepare` — 0.6.3 배포 입력 생성 성공
 - 로컬 배포본 수동 점검 — 6탭, 스킬/버프/콤보 빈 상태, 세팅 모달, 결과 진입·최적화 취소
 

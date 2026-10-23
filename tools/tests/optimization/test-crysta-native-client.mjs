@@ -16,7 +16,7 @@ const context = {
       createScenarioSnapshot:base => ({ requirements:{} }),
       evaluateAggregate:(base, scenario, stats) => ({ calculation:{ damageFactor:Number(stats.DMG || 0) }, utility:{} })
     },
-    ToramCrystaOptimizationGlobalOptimizer:{
+    ToramCrystaOptimizationCandidates:{
       deriveRelevantKeys:() => ['DMG'],
       prepareProblem:(problem, options) => Object.assign({}, problem, { metadata:Object.assign({}, problem.metadata, { modeledKeys:options.relevantKeys }) })
     },
@@ -42,7 +42,8 @@ const context = {
 };
 context.window.window = context.window;
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/optimization/native-client.js'), 'utf8'), context, { filename:'optimization/native-client.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/optimization/rust-bridge.js'), 'utf8'), context, { filename:'optimization/rust-bridge.js' });
+vm.runInContext(await readFile(resolve(root, 'desktop/adapters/optimization-client.js'), 'utf8'), context, { filename:'optimization/native-client.js' });
 
 const problem = {
   baseContext:{ activeBuildConversions:[{ source:'STR', target:'ATK', rate:1 }] },
@@ -88,8 +89,8 @@ const cached = await context.window.ToramCrystaOptimizationNativeClient.optimize
 assert.equal(cached, result, '같은 계산식·엔진·분할·스레드·GPU 정책 cache key는 native 결과를 재사용해야 합니다.');
 assert.equal(calls.filter(call => call.command === 'crysta_optimize_parallel').length, 1, 'native cache hit은 solver를 다시 호출하지 않아야 합니다.');
 assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.gpuPolicy, 'cpu-only.v1');
-assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.engineVersion, 'optimization-native-solver.v21', '후보 압축 변경은 이전 엔진의 exact cache와 재개 입력을 구분해야 합니다.');
-assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.splitPolicy, 'candidate-tree-projected-2axis-gap-work-smallbox64-lookahead-precheck.v7', '분기 우선순위 변경은 이전 정책의 cache와 재개 상태를 재사용하지 않습니다.');
+assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.engineVersion, 'optimization-native-solver.v23', '관통 축 제거와 결합 상한은 이전 엔진의 exact cache와 재개 입력을 구분해야 합니다.');
+assert.equal(context.window.ToramCrystaOptimizationNativeClient.cachePolicy.splitPolicy, 'candidate-tree-stat-weighted-projected-2axis-gap-work-smallbox64-lookahead-precheck.v8', '분기 우선순위 변경은 이전 정책의 cache와 재개 상태를 재사용하지 않습니다.');
 assert.equal(typeof context.window.ToramCrystaOptimizationNativeClient.pause, 'function', 'native client must expose pause separately from destructive cancel');
 
 boundedMode = true;
@@ -142,12 +143,12 @@ assert.equal(Object.hasOwn(minimalWire, 'scenarioSnapshot'), false);
 assert.deepEqual(minimalWire.metadata, { modeledKeys:['DMG'] });
 assert.equal(minimalWire.groups[0].packages[0].statDelta.FUTURE_RAW_OPTION, 7);
 
-const originalPrepare = context.window.ToramCrystaOptimizationGlobalOptimizer.prepareProblem;
+const originalPrepare = context.window.ToramCrystaOptimizationCandidates.prepareProblem;
 const diagnostic = new Error('unknown locked crysta');
-context.window.ToramCrystaOptimizationGlobalOptimizer.prepareProblem = () => { throw diagnostic; };
+context.window.ToramCrystaOptimizationCandidates.prepareProblem = () => { throw diagnostic; };
 const callsBeforeInvalid = calls.filter(call => call.command === 'crysta_optimize_parallel').length;
 await assert.rejects(() => context.window.ToramCrystaOptimizationNativeClient.optimize(problem, {}), error => error === diagnostic);
 assert.equal(calls.filter(call => call.command === 'crysta_optimize_parallel').length, callsBeforeInvalid);
-context.window.ToramCrystaOptimizationGlobalOptimizer.prepareProblem = originalPrepare;
+context.window.ToramCrystaOptimizationCandidates.prepareProblem = originalPrepare;
 
 console.log('CrystaOptimization native client: PASS (compact payload, raw options, original restoration, cache metadata isolation, continuation resume, expiry handling)');

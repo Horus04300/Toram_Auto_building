@@ -9,14 +9,14 @@
 | `node tools/tests/application/test-updates.mjs` | PASS: 메타데이터, 자동 확인 실패의 조용한 처리, 동의 거부, 진행 표시, 저장/서명 실패 시 설치 차단, 재시도, 동시 요청 차단, 실행/일시정지 계산 동의, 최종 재저장·UI 잠금 해제 |
 | `node tools/tests/application/test-update-release.mjs` | PASS: 소스·lockfile·태그 버전 불일치 및 잘못된 공개키 차단 |
 | `node tools/tests/application/test-build-setting-snapshot.mjs` | PASS: 업데이트 설정 저장 계약과 설치 전 strict flush |
-| `cargo test --manifest-path src-tauri/Cargo.toml update_service -- --nocapture` | updater Rust 단위 테스트 3개 PASS; 나머지 테스트는 필터 제외 |
+| `cargo test --manifest-path desktop/Cargo.toml update_service -- --nocapture` | updater Rust 단위 테스트 3개 PASS; 나머지 테스트는 필터 제외 |
 | `npm run desktop:prepare` | PASS: TypeScript 생성과 현재 소스 dist 준비 |
 | `node tools/verification/verify-update-browser.mjs` | 실제 Edge PASS: 웹에서 사용 불가, 시작 알림, 릴리스 노트의 텍스트 표시, 일시정지 계산 유지/동의, 다운로드 중 입력 편집, 최신 입력 저장. Native 다운로드·설치는 mock |
 | 공개 Latest manifest 및 설치 파일 다운로드 | 성공: version `0.6.4`, platform `windows-x86_64` |
-| `src-tauri/target/debug/verify_updater_artifact.exe src-tauri/tauri.conf.json src-tauri/target/update-audit-2026-09-10/installer.exe src-tauri/target/update-audit-2026-09-10/installer.exe.sig` | PASS: 공개 설치 파일을 현재 앱 공개키와 manifest 서명으로 검증 |
+| `desktop/target/debug/verify_updater_artifact.exe desktop/tauri.conf.json desktop/target/update-audit-2026-09-10/installer.exe desktop/target/update-audit-2026-09-10/installer.exe.sig` | PASS: 공개 설치 파일을 현재 앱 공개키와 manifest 서명으로 검증 |
 | 같은 검증기에 설치 파일의 1024번 바이트를 반전한 사본 입력 | `InvalidSignature`, 비정상 종료로 거부됨: PASS |
 
-브라우저 실행 시 `CODEX_PLAYWRIGHT_PATH`는 번들 런타임의 `dependencies/node/node_modules/playwright`로 지정했다. 화면 증거는 `dist/update-ui-check.png`, 공개 자산과 변조 사본은 `src-tauri/target/update-audit-2026-09-10/`에 있다. 설치 파일을 실행하지 않았다.
+브라우저 실행 시 `CODEX_PLAYWRIGHT_PATH`는 번들 런타임의 `dependencies/node/node_modules/playwright`로 지정했다. 화면 증거는 `dist/update-ui-check.png`, 공개 자산과 변조 사본은 `desktop/target/update-audit-2026-09-10/`에 있다. 설치 파일을 실행하지 않았다.
 
 공개 확인 경로: https://github.com/Horus04300/Toram_Auto_building/releases/latest/download/latest.json
 

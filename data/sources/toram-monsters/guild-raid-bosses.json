@@ -1,0 +1,13 @@
+{
+  "schema": "toram.reviewed-guild-raid-routes.v1",
+  "identificationSource": "User supplied the six guild raid boss names and Soteria's male/magic-defense and female/physical-defense identities on 2026-10-19; joined to retained locale UUIDs and exact field/master/model records. This is a reviewed identity registry, not an extracted client master table.",
+  "routeBoundary": "The live server selects BossFieldSettingData and MobList. These reviewed main-boss anchors do not claim a locally hardcoded six-map table or classify entourage monsters by name.",
+  "routes": [
+    {"fieldId":100100,"roomId":0,"gameMonsterId":916,"elementRaw":1,"actors":[{"masterId":1,"modelId":1010101}]},
+    {"fieldId":100200,"roomId":0,"gameMonsterId":741,"elementRaw":2,"actors":[{"masterId":1,"modelId":1008001}]},
+    {"fieldId":100300,"roomId":0,"gameMonsterId":802,"elementRaw":3,"actors":[{"masterId":1,"modelId":1010601}]},
+    {"fieldId":100400,"roomId":0,"gameMonsterId":830,"elementRaw":4,"actors":[{"masterId":1,"modelId":1005702}]},
+    {"fieldId":100500,"roomId":0,"gameMonsterId":1195,"elementRaw":5,"actors":[{"masterId":1,"modelId":1015601,"identity":"male"},{"masterId":2,"modelId":1015602,"identity":"female"}]},
+    {"fieldId":100600,"roomId":0,"gameMonsterId":742,"elementRaw":6,"actors":[{"masterId":1,"modelId":1003902}]}
+  ]
+}

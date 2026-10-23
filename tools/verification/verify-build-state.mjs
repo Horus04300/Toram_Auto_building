@@ -35,7 +35,7 @@ const window = {
 window.window = window;
 const context = { window, console };
 vm.createContext(context);
-vm.runInContext(await read('assets/js/application-use-cases.js'), context, { filename:'application-use-cases.js' });
+vm.runInContext(await read('web/src/application/application-use-cases.js'), context, { filename:'application/application-use-cases.js' });
 const result = window.ToramApplication.CalculateBuild();
 assert.equal(passiveCalls, 1, '패시브 적용은 Snapshot 생성에서 한 번이어야 합니다.');
 assert.equal(result.snapshot.source, 'build-draft');
@@ -44,18 +44,18 @@ assert.equal(window.ToramCalculationInputScope, undefined, '계산 입력 스코
 draft.character.attributes.STR = 999;
 assert.equal(result.snapshot.build.character.attributes.STR, 100, 'Snapshot은 이후 BuildDraft 변경에 영향받지 않아야 합니다.');
 
-const contracts = await read('frontend/domain/calculation-contracts.ts');
+const contracts = await read('web/src/domain/calculation-contracts.ts');
 assert.match(contracts, /externalOptions: readonly StatOptionDraft\[\]/);
 assert.match(contracts, /includeSpecialAttack: boolean/);
 assert.match(contracts, /optimizationPreferences\?/);
-const storeSource = await read('assets/js/build-draft-store.js');
+const storeSource = await read('web/src/application/build-draft-store.js');
 assert.match(storeSource, /ToramUiState/);
 assert.match(storeSource, /ToramRuntimeState/);
 assert.doesNotMatch(storeSource, /optimizationUiRunVersion|optimizationLastOptimizationRequest/);
-const applicationSource = await read('assets/js/application-use-cases.js');
+const applicationSource = await read('web/src/application/application-use-cases.js');
 assert.doesNotMatch(applicationSource, /document\./, 'Application은 DOM을 직접 읽으면 안 됩니다.');
 assert.doesNotMatch(applicationSource, /ToramComboUi|getCurrentCrystas|ToramActiveBuffs/, 'Application은 암묵적 UI 전역값을 계산 입력으로 읽으면 안 됩니다.');
-const optimizerSource = await read('assets/js/optimization-results.js');
+const optimizerSource = await read('web/src/ui/optimization-results.js');
 assert.match(optimizerSource, /ToramRuntimeState/);
 
 console.log('Build state BuildDraft single-source state verification: PASS');

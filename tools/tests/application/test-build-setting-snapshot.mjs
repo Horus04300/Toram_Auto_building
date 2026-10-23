@@ -18,7 +18,7 @@ const window = {
 window.window = window;
 const context = { window, document, console, JSON, Date, Blob, URL:{ createObjectURL:() => '', revokeObjectURL() {} } };
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/settings-repository.js'), 'utf8'), context, { filename:'settings-repository.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/storage/settings-repository.js'), 'utf8'), context, { filename:'storage/settings-repository.js' });
 const repository = window.ToramSettingsRepository;
 build.myRoomFood = [{id:'STR',level:10},null,{id:'ELEM_P',level:6},{id:'PHYS_RES',level:10},null];
 const expectedFood = JSON.parse(JSON.stringify(build.myRoomFood));

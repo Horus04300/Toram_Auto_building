@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "date": "2026-10-17",
+  "gameBundlesOriginalHashVerified": 24,
+  "textAssetsRawAndDecodedHashVerified": 137,
+  "allVersionTablesCountEofUtf8Verified": {
+    "ItemProperties": 13,
+    "ItemMaster": 13,
+    "localization": 33
+  },
+  "corynResponsesHashVerified": 90,
+  "masterRowsRepackedExactly": 11718,
+  "propertyRowsRepackedExactly": 4460,
+  "availableItemLocales": [
+    "kr"
+  ],
+  "nameCandidates": {
+    "unique": 359,
+    "unmatched": 66
+  },
+  "commands": {
+    "pythonSelfTests": "PASS (all three scripts)",
+    "corynSelfTestAndNodeCheck": "PASS",
+    "npm run verify:architecture": "PASS",
+    "npm run ai:audit": "PASS",
+    "git diff --check": "PASS"
+  },
+  "limitations": [
+    "Static downloaded cache snapshot only",
+    "Display scaling not applied",
+    "No runtime, other locale item bundles, enhancement or character-stat logic verified"
+  ]
+}

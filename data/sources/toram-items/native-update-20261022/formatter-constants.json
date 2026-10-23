@@ -1,0 +1,569 @@
+{
+  "authority": "passive-targeted-item-formatter-constants",
+  "pid": 3108,
+  "moduleBase": "0x7ffe99740000",
+  "moduleSha256": "c0f666aa071136bfae7ada61135ba01fc2907c3987945a86cce5909c6011fbff",
+  "capturedUtc": "2026-10-22T13:35:59.134863+00:00",
+  "processAccess": "PROCESS_QUERY_INFORMATION | PROCESS_VM_READ",
+  "bytesRead": 1347,
+  "limitList": [
+    96,
+    103,
+    108,
+    109,
+    115,
+    120
+  ],
+  "initializerFieldName": "EF2BA7DAEFA8D8337BDEE29DF61E5561A05950B2A3D56083A008941EBD1AEBE5",
+  "initializerToken": "0x400d4e2",
+  "strings": {
+    "negativeReplacement": "+",
+    "empty": "",
+    "positiveColor": "[ffffff]",
+    "negativeColor": "[ff8888]",
+    "zeroColor": "[888888]",
+    "colorFormat": "{0}{1}[ffffff]",
+    "skillDefaultTag": "N",
+    "skillBracketPrefix": "[N]",
+    "skillUnknownName": "???",
+    "versionFilePrefix1": "?",
+    "versionFilePrefix2": "RevisionInfoBinary.bytes",
+    "localizePrefix1": "Localize/",
+    "localizePrefix2": "/Stamp",
+    "localizePrefix3": "/GameScene_",
+    "languageFileSuffix": "_",
+    "assetBundleUrlFormat": "{0}{1}.unity3d",
+    "downloadPathDefault": "windows_",
+    "downloadPathRelease": "windows/review/",
+    "downloadPathAlternative": "windows/",
+    "downloadSuffixDefault": "release/",
+    "applicationPath1": "releaseB/",
+    "applicationPath2": "releaseC/",
+    "applicationPath3": "releaseD/",
+    "applicationPath4": "releaseE/",
+    "applicationPath5": "releaseF/",
+    "applicationPathDefault": "releaseA/"
+  },
+  "reads": [
+    {
+      "address": "0x7ffe9a4eb240",
+      "bytes": 24,
+      "purpose": "GetBonusTime code identity",
+      "hex": "40534883ec20803da92e5f02008bd9752b488d0db0d64502"
+    },
+    {
+      "address": "0x7ffe9c948908",
+      "bytes": 8,
+      "purpose": "BonusManager TypeInfo reference",
+      "hex": "400e1eb2a9010000"
+    },
+    {
+      "address": "0x1a9b21e0ef8",
+      "bytes": 8,
+      "purpose": "BonusManager static_fields",
+      "hex": "4058128ba9010000"
+    },
+    {
+      "address": "0x1a98b125850",
+      "bytes": 8,
+      "purpose": "BonusManager.limitList",
+      "hex": "00fd2500ab010000"
+    },
+    {
+      "address": "0x1ab0025fd00",
+      "bytes": 32,
+      "purpose": "limitList array header",
+      "hex": "681cdeb2a9010000000000000000000000000000000000000600000000000000"
+    },
+    {
+      "address": "0x1ab0025fd20",
+      "bytes": 24,
+      "purpose": "limitList six int32 values",
+      "hex": "60000000670000006c0000006d0000007300000078000000"
+    },
+    {
+      "address": "0x7ffe9c9459f8",
+      "bytes": 8,
+      "purpose": "limitList initializer RuntimeFieldHandle",
+      "hex": "60e26750aa010000"
+    },
+    {
+      "address": "0x1aa5067e260",
+      "bytes": 32,
+      "purpose": "Initializer FieldInfo",
+      "hex": "dc422e8eaa0100003864999cfe7f000070f85550aa010000482f0600e2d40004"
+    },
+    {
+      "address": "0x1aa8e2e42dc",
+      "bytes": 65,
+      "purpose": "Compiler SHA256 field name",
+      "hex": "4546324241374441454641384438333337424445453239444636314535353631413035393530423241334435363038334130303839343145424431414542453500"
+    },
+    {
+      "address": "0x7ffe9c914158",
+      "bytes": 8,
+      "purpose": "negativeReplacement literal reference",
+      "hex": "004e128ba9010000"
+    },
+    {
+      "address": "0x1a98b124e00",
+      "bytes": 20,
+      "purpose": "negativeReplacement string header",
+      "hex": "d0b325b0a9010000000000000000000001000000"
+    },
+    {
+      "address": "0x1a98b124e14",
+      "bytes": 2,
+      "purpose": "negativeReplacement UTF-16",
+      "hex": "2b00"
+    },
+    {
+      "address": "0x7ffe9c8f1820",
+      "bytes": 8,
+      "purpose": "empty literal reference",
+      "hex": "405f128ba9010000"
+    },
+    {
+      "address": "0x1a98b125f40",
+      "bytes": 20,
+      "purpose": "empty string header",
+      "hex": "d0b325b0a9010000000000000000000000000000"
+    },
+    {
+      "address": "0x7ffe9c920578",
+      "bytes": 8,
+      "purpose": "positiveColor literal reference",
+      "hex": "3043d39eab010000"
+    },
+    {
+      "address": "0x1ab9ed34330",
+      "bytes": 20,
+      "purpose": "positiveColor string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab9ed34344",
+      "bytes": 16,
+      "purpose": "positiveColor UTF-16",
+      "hex": "5b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7ffe9c91f5d8",
+      "bytes": 8,
+      "purpose": "negativeColor literal reference",
+      "hex": "807a799fab010000"
+    },
+    {
+      "address": "0x1ab9f797a80",
+      "bytes": 20,
+      "purpose": "negativeColor string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab9f797a94",
+      "bytes": 16,
+      "purpose": "negativeColor UTF-16",
+      "hex": "5b006600660038003800380038005d00"
+    },
+    {
+      "address": "0x7ffe9c916818",
+      "bytes": 8,
+      "purpose": "zeroColor literal reference",
+      "hex": "b07a799fab010000"
+    },
+    {
+      "address": "0x1ab9f797ab0",
+      "bytes": 20,
+      "purpose": "zeroColor string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab9f797ac4",
+      "bytes": 16,
+      "purpose": "zeroColor UTF-16",
+      "hex": "5b003800380038003800380038005d00"
+    },
+    {
+      "address": "0x7ffe9c8fbe30",
+      "bytes": 8,
+      "purpose": "colorFormat literal reference",
+      "hex": "00ba2101ab010000"
+    },
+    {
+      "address": "0x1ab0121ba00",
+      "bytes": 20,
+      "purpose": "colorFormat string header",
+      "hex": "d0b325b0a901000000000000000000000e000000"
+    },
+    {
+      "address": "0x1ab0121ba14",
+      "bytes": 28,
+      "purpose": "colorFormat UTF-16",
+      "hex": "7b0030007d007b0031007d005b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7ffe9c96c1b0",
+      "bytes": 8,
+      "purpose": "skillDefaultTag literal reference",
+      "hex": "c0c6ce87a9010000"
+    },
+    {
+      "address": "0x1a987cec6c0",
+      "bytes": 20,
+      "purpose": "skillDefaultTag string header",
+      "hex": "d0b325b0a9010000000000000000000001000000"
+    },
+    {
+      "address": "0x1a987cec6d4",
+      "bytes": 2,
+      "purpose": "skillDefaultTag UTF-16",
+      "hex": "4e00"
+    },
+    {
+      "address": "0x7ffe9c91c178",
+      "bytes": 8,
+      "purpose": "skillBracketPrefix literal reference",
+      "hex": "107e959eab010000"
+    },
+    {
+      "address": "0x1ab9e957e10",
+      "bytes": 20,
+      "purpose": "skillBracketPrefix string header",
+      "hex": "d0b325b0a9010000000000000000000003000000"
+    },
+    {
+      "address": "0x1ab9e957e24",
+      "bytes": 6,
+      "purpose": "skillBracketPrefix UTF-16",
+      "hex": "5b004e005d00"
+    },
+    {
+      "address": "0x7ffe9c93a1c8",
+      "bytes": 8,
+      "purpose": "skillUnknownName literal reference",
+      "hex": "304c2a9fab010000"
+    },
+    {
+      "address": "0x1ab9f2a4c30",
+      "bytes": 20,
+      "purpose": "skillUnknownName string header",
+      "hex": "d0b325b0a9010000000000000000000003000000"
+    },
+    {
+      "address": "0x1ab9f2a4c44",
+      "bytes": 6,
+      "purpose": "skillUnknownName UTF-16",
+      "hex": "3f003f003f00"
+    },
+    {
+      "address": "0x7ffe9c939eb8",
+      "bytes": 8,
+      "purpose": "versionFilePrefix1 literal reference",
+      "hex": "00b79967ab010000"
+    },
+    {
+      "address": "0x1ab6799b700",
+      "bytes": 20,
+      "purpose": "versionFilePrefix1 string header",
+      "hex": "d0b325b0a9010000000000000000000001000000"
+    },
+    {
+      "address": "0x1ab6799b714",
+      "bytes": 2,
+      "purpose": "versionFilePrefix1 UTF-16",
+      "hex": "3f00"
+    },
+    {
+      "address": "0x7ffe9c955128",
+      "bytes": 8,
+      "purpose": "versionFilePrefix2 literal reference",
+      "hex": "a065af67ab010000"
+    },
+    {
+      "address": "0x1ab67af65a0",
+      "bytes": 20,
+      "purpose": "versionFilePrefix2 string header",
+      "hex": "d0b325b0a9010000000000000000000018000000"
+    },
+    {
+      "address": "0x1ab67af65b4",
+      "bytes": 48,
+      "purpose": "versionFilePrefix2 UTF-16",
+      "hex": "5200650076006900730069006f006e0049006e0066006f00420069006e006100720079002e0062007900740065007300"
+    },
+    {
+      "address": "0x7ffe9c9405c8",
+      "bytes": 8,
+      "purpose": "localizePrefix1 literal reference",
+      "hex": "00d69867ab010000"
+    },
+    {
+      "address": "0x1ab6798d600",
+      "bytes": 20,
+      "purpose": "localizePrefix1 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab6798d614",
+      "bytes": 18,
+      "purpose": "localizePrefix1 UTF-16",
+      "hex": "4c006f00630061006c0069007a0065002f00"
+    },
+    {
+      "address": "0x7ffe9c91ef08",
+      "bytes": 8,
+      "purpose": "localizePrefix2 literal reference",
+      "hex": "2001a267ab010000"
+    },
+    {
+      "address": "0x1ab67a20120",
+      "bytes": 20,
+      "purpose": "localizePrefix2 string header",
+      "hex": "d0b325b0a9010000000000000000000006000000"
+    },
+    {
+      "address": "0x1ab67a20134",
+      "bytes": 12,
+      "purpose": "localizePrefix2 UTF-16",
+      "hex": "2f005300740061006d007000"
+    },
+    {
+      "address": "0x7ffe9c91ebe8",
+      "bytes": 8,
+      "purpose": "localizePrefix3 literal reference",
+      "hex": "40cd1e00ab010000"
+    },
+    {
+      "address": "0x1ab001ecd40",
+      "bytes": 20,
+      "purpose": "localizePrefix3 string header",
+      "hex": "d0b325b0a901000000000000000000000b000000"
+    },
+    {
+      "address": "0x1ab001ecd54",
+      "bytes": 22,
+      "purpose": "localizePrefix3 UTF-16",
+      "hex": "2f00470061006d0065005300630065006e0065005f00"
+    },
+    {
+      "address": "0x7ffe9c9275f8",
+      "bytes": 8,
+      "purpose": "languageFileSuffix literal reference",
+      "hex": "00c01700ab010000"
+    },
+    {
+      "address": "0x1ab0017c000",
+      "bytes": 20,
+      "purpose": "languageFileSuffix string header",
+      "hex": "d0b325b0a9010000000000000000000001000000"
+    },
+    {
+      "address": "0x1ab0017c014",
+      "bytes": 2,
+      "purpose": "languageFileSuffix UTF-16",
+      "hex": "5f00"
+    },
+    {
+      "address": "0x7ffe9c8fbbc0",
+      "bytes": 8,
+      "purpose": "assetBundleUrlFormat literal reference",
+      "hex": "8040a767ab010000"
+    },
+    {
+      "address": "0x1ab67a74080",
+      "bytes": 20,
+      "purpose": "assetBundleUrlFormat string header",
+      "hex": "d0b325b0a901000000000000000000000e000000"
+    },
+    {
+      "address": "0x1ab67a74094",
+      "bytes": 28,
+      "purpose": "assetBundleUrlFormat UTF-16",
+      "hex": "7b0030007d007b0031007d002e0075006e0069007400790033006400"
+    },
+    {
+      "address": "0x7ffe9c9722f0",
+      "bytes": 8,
+      "purpose": "downloadPathDefault literal reference",
+      "hex": "c036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b136c0",
+      "bytes": 20,
+      "purpose": "downloadPathDefault string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab67b136d4",
+      "bytes": 16,
+      "purpose": "downloadPathDefault UTF-16",
+      "hex": "770069006e0064006f00770073005f00"
+    },
+    {
+      "address": "0x7ffe9c972220",
+      "bytes": 8,
+      "purpose": "downloadPathRelease literal reference",
+      "hex": "0041a767ab010000"
+    },
+    {
+      "address": "0x1ab67a74100",
+      "bytes": 20,
+      "purpose": "downloadPathRelease string header",
+      "hex": "d0b325b0a901000000000000000000000f000000"
+    },
+    {
+      "address": "0x1ab67a74114",
+      "bytes": 30,
+      "purpose": "downloadPathRelease UTF-16",
+      "hex": "770069006e0064006f00770073002f007200650076006900650077002f00"
+    },
+    {
+      "address": "0x7ffe9c972150",
+      "bytes": 8,
+      "purpose": "downloadPathAlternative literal reference",
+      "hex": "9036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b13690",
+      "bytes": 20,
+      "purpose": "downloadPathAlternative string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab67b136a4",
+      "bytes": 16,
+      "purpose": "downloadPathAlternative UTF-16",
+      "hex": "770069006e0064006f00770073002f00"
+    },
+    {
+      "address": "0x7ffe9c93ca68",
+      "bytes": 8,
+      "purpose": "downloadSuffixDefault literal reference",
+      "hex": "f036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b136f0",
+      "bytes": 20,
+      "purpose": "downloadSuffixDefault string header",
+      "hex": "d0b325b0a9010000000000000000000008000000"
+    },
+    {
+      "address": "0x1ab67b13704",
+      "bytes": 16,
+      "purpose": "downloadSuffixDefault UTF-16",
+      "hex": "720065006c0065006100730065002f00"
+    },
+    {
+      "address": "0x7ffe9c93ccb0",
+      "bytes": 8,
+      "purpose": "applicationPath1 literal reference",
+      "hex": "d035b167ab010000"
+    },
+    {
+      "address": "0x1ab67b135d0",
+      "bytes": 20,
+      "purpose": "applicationPath1 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b135e4",
+      "bytes": 18,
+      "purpose": "applicationPath1 UTF-16",
+      "hex": "720065006c00650061007300650042002f00"
+    },
+    {
+      "address": "0x7ffe9c93ce38",
+      "bytes": 8,
+      "purpose": "applicationPath2 literal reference",
+      "hex": "7035b167ab010000"
+    },
+    {
+      "address": "0x1ab67b13570",
+      "bytes": 20,
+      "purpose": "applicationPath2 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b13584",
+      "bytes": 18,
+      "purpose": "applicationPath2 UTF-16",
+      "hex": "720065006c00650061007300650043002f00"
+    },
+    {
+      "address": "0x7ffe9c93d088",
+      "bytes": 8,
+      "purpose": "applicationPath3 literal reference",
+      "hex": "a035b167ab010000"
+    },
+    {
+      "address": "0x1ab67b135a0",
+      "bytes": 20,
+      "purpose": "applicationPath3 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b135b4",
+      "bytes": 18,
+      "purpose": "applicationPath3 UTF-16",
+      "hex": "720065006c00650061007300650044002f00"
+    },
+    {
+      "address": "0x7ffe9c93d210",
+      "bytes": 8,
+      "purpose": "applicationPath4 literal reference",
+      "hex": "6036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b13660",
+      "bytes": 20,
+      "purpose": "applicationPath4 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b13674",
+      "bytes": 18,
+      "purpose": "applicationPath4 UTF-16",
+      "hex": "720065006c00650061007300650045002f00"
+    },
+    {
+      "address": "0x7ffe9c93d398",
+      "bytes": 8,
+      "purpose": "applicationPath5 literal reference",
+      "hex": "3036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b13630",
+      "bytes": 20,
+      "purpose": "applicationPath5 string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b13644",
+      "bytes": 18,
+      "purpose": "applicationPath5 UTF-16",
+      "hex": "720065006c00650061007300650046002f00"
+    },
+    {
+      "address": "0x7ffe9c93cb28",
+      "bytes": 8,
+      "purpose": "applicationPathDefault literal reference",
+      "hex": "0036b167ab010000"
+    },
+    {
+      "address": "0x1ab67b13600",
+      "bytes": 20,
+      "purpose": "applicationPathDefault string header",
+      "hex": "d0b325b0a9010000000000000000000009000000"
+    },
+    {
+      "address": "0x1ab67b13614",
+      "bytes": 18,
+      "purpose": "applicationPathDefault UTF-16",
+      "hex": "720065006c00650061007300650041002f00"
+    }
+  ],
+  "limitations": [
+    "Sequential read of the fixed references only; not an atomic snapshot or general heap dump.",
+    "No player inventory, account information, function execution or target modification."
+  ]
+}

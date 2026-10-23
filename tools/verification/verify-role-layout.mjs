@@ -1,10 +1,16 @@
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
-import { CLASSIC_SCRIPT_PATHS } from '../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs';
+import { frontendSourcePath } from '../support/frontend-paths.mjs';
+import { posix } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
-const files = ['assets/js', 'frontend', 'src-tauri/src', 'tools'].flatMap(directory =>
+assert(!existsSync(resolve(root, 'tools/reference')), 'Retired recommendation implementations must stay deleted');
+for (const retired of ['assets', 'frontend', 'src-tauri', 'crates', 'index.html']) {
+  assert(!existsSync(resolve(root, retired)), `Obsolete source root: ${retired}`);
+}
+const files = ['web/src', 'desktop/adapters', 'desktop/src', 'engine/src', 'tools'].flatMap(directory =>
   readdirSync(resolve(root, directory), { recursive:true, withFileTypes:true })
     .filter(entry => entry.isFile())
     .map(entry => resolve(entry.parentPath, entry.name)));
@@ -21,9 +27,13 @@ for (const file of files) {
   }
 }
 assert.equal(new Set(CLASSIC_SCRIPT_PATHS).size, CLASSIC_SCRIPT_PATHS.length);
-assert.equal(CLASSIC_SCRIPT_PATHS.at(-1), 'assets/js/ui-bootstrap.js');
-const worker = resolve(root, 'assets/js/optimization/solver-worker.js');
+for (const path of CLASSIC_SCRIPT_PATHS) assert(existsSync(resolve(root, frontendSourcePath(path))), `Missing runtime source: ${path}`);
+assert.equal(CLASSIC_SCRIPT_PATHS.at(-1), 'assets/js/ui/ui-bootstrap.js');
+const worker = resolve(root, 'web/src/optimization/wasm-worker.js');
 const imports = readFileSync(worker, 'utf8').match(/importScripts\(([\s\S]*?)\);/)[1];
-for (const [, path] of imports.matchAll(/'([^']+)'/g)) assert(existsSync(resolve(dirname(worker), path)), `Missing Worker dependency: ${path}`);
-assert.equal(readdirSync(resolve(root, 'assets/js/data/skills')).filter(name => name.endsWith('.js')).length, 29);
+for (const [, path] of imports.matchAll(/'([^']+)'/g)) {
+  const source = frontendSourcePath(posix.normalize('assets/js/optimization/' + path));
+  assert(existsSync(resolve(root, source)), `Missing Worker dependency: ${path}`);
+}
+assert.equal(readdirSync(resolve(root, 'web/src/data/skills')).filter(name => name.endsWith('.js')).length, 29);
 console.log('Role layout: PASS (paths, imports, Worker dependencies, single bootstrap, 29 skill trees)');

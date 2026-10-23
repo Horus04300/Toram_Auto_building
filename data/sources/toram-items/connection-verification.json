@@ -1,0 +1,125 @@
+{
+  "status": "PASS",
+  "cacheVersion": "77596232",
+  "catalog": {
+    "path": "items.77596232.connected.json",
+    "bytes": 55049465,
+    "sha256": "aae63f4e2195832623752f2e7501036a65dba6d8cb1a34e68d1b5d611aaa7c66"
+  },
+  "checks": [
+    "11723 unique IDs; six locales, each 11631 names and 10888 descriptions",
+    "all original master fields, raw record hex, 44600 slots and Korean strings unchanged",
+    "18439 float32 option values independently recomputed",
+    "696 element and 12 avatar-skill references resolved in all six locales",
+    "589 condition groups, 704 targets, no UI/bonus scope disagreement",
+    "12 signed negative template IDs and 29 negative-template selections",
+    "all ten connection input source sizes and SHA256 verified",
+    "1699 item recipes and 380 non-item operation targets separated",
+    "offline regeneration byte-identical",
+    "34 portable native connection/classification pseudocode hashes verified against method indices"
+  ],
+  "untemplatedOptionCountsByCapId": {
+    "193": 1,
+    "201": 146,
+    "202": 27,
+    "204": 109,
+    "207": 9,
+    "209": 39,
+    "210": 39,
+    "211": 37,
+    "212": 20,
+    "213": 20,
+    "214": 15,
+    "215": 17,
+    "216": 9,
+    "217": 13,
+    "218": 11,
+    "219": 13,
+    "220": 8,
+    "221": 8,
+    "222": 28,
+    "223": 12,
+    "230": 78,
+    "236": 9,
+    "237": 9,
+    "244": 21,
+    "245": 123,
+    "246": 9,
+    "247": 1,
+    "248": 17,
+    "249": 1
+  },
+  "limitations": [
+    "Independent verification of extracted data and native-derived references; final game UI unobserved.",
+    "Does not verify app calculations, owned item instances, unknown flags, model joins or opaque drop fields."
+  ],
+  "selfTests": [
+    {
+      "command": "python tools/extraction/extract-toram-item-assets.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: feedback decode, UTF-8, count/truncation/trailing-byte validation"
+    },
+    {
+      "command": "python tools/extraction/audit-toram-item-references.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: signed Int16 enums, aliases, absent versus empty text, no invented names"
+    },
+    {
+      "command": "python tools/extraction/extract-toram-item-reference-texts.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: raw text/EOF, unresolved IDs, bracket/dollar/default skill tags, no observed UI claim"
+    },
+    {
+      "command": "python tools/extraction/extract-toram-item-relations.py --self-test",
+      "exitCode": 0,
+      "output": "Item relations self-test PASS: five layouts, negative values, bounds, EOF, round trips and separate recipe namespaces"
+    },
+    {
+      "command": "python tools/extraction/extract-toram-item-classification.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: native branch boundaries, unsigned ranges, overlapping classes, default slots and int32 validation"
+    },
+    {
+      "command": "python tools/extraction/connect-toram-item-data.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: condition counts, empty-slot distinction, invalid/nested groups and negative templates"
+    },
+    {
+      "command": "python tools/extraction/capture-toram-item-constants.py --self-test",
+      "exitCode": 0,
+      "output": "PASS: fixed array intervals, UTF-16 strings and invalid lengths"
+    },
+    {
+      "command": "python tools/extraction/extract-toram-localizations.py --self-test",
+      "exitCode": 0,
+      "output": "localization extraction self-test PASS (manifest bounds/EOF, revision byte order, signed IDs, duplicate skill rows, template formats)"
+    },
+    {
+      "command": "python tools/extraction/prepare-toram-localization-trace.py --self-test",
+      "exitCode": 0,
+      "output": "localization trace preparation self-test PASS"
+    },
+    {
+      "command": "node tools/extraction/audit-toram-crysta-links.mjs --self-test",
+      "exitCode": 0,
+      "output": "crysta link audit self-test PASS (scaling, conflicts, conditions, category, alias separation, duplicates, name hints)"
+    }
+  ],
+  "repositoryChecks": [
+    {
+      "command": "npm run verify:architecture",
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "npm run ai:audit",
+      "exitCode": 0,
+      "status": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "exitCode": 0,
+      "status": "PASS"
+    }
+  ]
+}

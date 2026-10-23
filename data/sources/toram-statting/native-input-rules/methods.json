@@ -1,0 +1,2206 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 79
+  },
+  "methods": [
+    {
+      "class": "SmithGrant",
+      "name": "get_isElement",
+      "method_definition_index": 69889,
+      "token": "0x06011102",
+      "metadata_declaration_range": {
+        "offset": 6261220,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51920376,
+      "pointer_slot_va": "0x7fff623d3df8",
+      "runtime_va": "0x7fff5fc75450",
+      "rva": "0xa25450",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b81280100004885c074128378180276128378"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "Awake",
+      "method_definition_index": 69890,
+      "token": "0x06011103",
+      "metadata_declaration_range": {
+        "offset": 6261256,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920384,
+      "pointer_slot_va": "0x7fff623d3e00",
+      "runtime_va": "0x7fff5fc6d8b0",
+      "rva": "0xa1d8b0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803d5b69970200488bf97537488d0d8f9c7e"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "Start",
+      "method_definition_index": 69891,
+      "token": "0x06011104",
+      "metadata_declaration_range": {
+        "offset": 6261292,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920392,
+      "pointer_slot_va": "0x7fff623d3e08",
+      "runtime_va": "0x7fff5fc74930",
+      "rva": "0xa24930",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2033d2488bd9e81015000033d2488bcbe826e3"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "Update",
+      "method_definition_index": 69892,
+      "token": "0x06011105",
+      "metadata_declaration_range": {
+        "offset": 6261328,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920400,
+      "pointer_slot_va": "0x7fff623d3e10",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "code_preview_hex": "c20000cccccccccccccccccccccccccc33d2e979d43c02cc"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "Reset",
+      "method_definition_index": 69893,
+      "token": "0x06011106",
+      "metadata_declaration_range": {
+        "offset": 6261364,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920408,
+      "pointer_slot_va": "0x7fff623d3e18",
+      "runtime_va": "0x7fff5fc72c70",
+      "rva": "0xa22c70",
+      "status": "mapped",
+      "code_preview_hex": "41554883ec40803d9c159702004c8be90f8597000000488d"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "SetEquipEnhance",
+      "method_definition_index": 69894,
+      "token": "0x06011107",
+      "metadata_declaration_range": {
+        "offset": 6261400,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920416,
+      "pointer_slot_va": "0x7fff623d3e20",
+      "runtime_va": "0x7fff5fc73150",
+      "rva": "0xa23150",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30803dbd10970200488bd9755b488d0db7e178"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitWeaponSelect",
+      "method_definition_index": 69895,
+      "token": "0x06011108",
+      "metadata_declaration_range": {
+        "offset": 6261436,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920424,
+      "pointer_slot_va": "0x7fff623d3e28",
+      "runtime_va": "0x7fff5fc719e0",
+      "rva": "0xa219e0",
+      "status": "mapped",
+      "code_preview_hex": "40534881ecc0000000803d2b28970200488bd90f85eb0000"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitSlotSelect",
+      "method_definition_index": 69896,
+      "token": "0x06011109",
+      "metadata_declaration_range": {
+        "offset": 6261472,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920432,
+      "pointer_slot_va": "0x7fff623d3e30",
+      "runtime_va": "0x7fff5fc70b70",
+      "rva": "0xa20b70",
+      "status": "mapped",
+      "code_preview_hex": "405556488d6c24b14881ece8000000803d9636970200488b"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitMaterialTypeSelect",
+      "method_definition_index": 69897,
+      "token": "0x0601110a",
+      "metadata_declaration_range": {
+        "offset": 6261508,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920440,
+      "pointer_slot_va": "0x7fff623d3e38",
+      "runtime_va": "0x7fff5fc70260",
+      "rva": "0xa20260",
+      "status": "mapped",
+      "code_preview_hex": "4055564154488d6c24b94881ecf0000000803da53f970200"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitDetailSelect",
+      "method_definition_index": 69898,
+      "token": "0x0601110b",
+      "metadata_declaration_range": {
+        "offset": 6261544,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920448,
+      "pointer_slot_va": "0x7fff623d3e40",
+      "runtime_va": "0x7fff5fc6f4c0",
+      "rva": "0xa1f4c0",
+      "status": "mapped",
+      "code_preview_hex": "405541564157488d6c24b94881ecc0000000803d454d9702"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitCompleteWindow",
+      "method_definition_index": 69899,
+      "token": "0x0601110c",
+      "metadata_declaration_range": {
+        "offset": 6261580,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "result",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "properties",
+          "type_index": 9854,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920456,
+      "pointer_slot_va": "0x7fff623d3e48",
+      "runtime_va": "0x7fff5fc6ef50",
+      "rva": "0xa1ef50",
+      "status": "mapped",
+      "code_preview_hex": "4057415441554883ec50803dbe529702004d8be00fb6fa4c"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "SetSelected",
+      "method_definition_index": 69900,
+      "token": "0x0601110d",
+      "metadata_declaration_range": {
+        "offset": 6261616,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "step",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920464,
+      "pointer_slot_va": "0x7fff623d3e50",
+      "runtime_va": "0x7fff5fc73f30",
+      "rva": "0xa23f30",
+      "status": "mapped",
+      "code_preview_hex": "405355574881ec80000000803dde02970200418be84863fa"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "SetRequireMaterial",
+      "method_definition_index": 69901,
+      "token": "0x0601110e",
+      "metadata_declaration_range": {
+        "offset": 6261652,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920472,
+      "pointer_slot_va": "0x7fff623d3e58",
+      "runtime_va": "0x7fff5fc738d0",
+      "rva": "0xa238d0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec60803d4409970200488bf9752b488d0d57f37e"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "getEmptySlotCount",
+      "method_definition_index": 69902,
+      "token": "0x0601110f",
+      "metadata_declaration_range": {
+        "offset": 6261688,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920480,
+      "pointer_slot_va": "0x7fff623d3e60",
+      "runtime_va": "0x7fff5fc75100",
+      "rva": "0xa25100",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418564883ec20803d11f1960200488bd97543488d"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantCheckButton",
+      "method_definition_index": 69903,
+      "token": "0x06011110",
+      "metadata_declaration_range": {
+        "offset": 6261724,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920488,
+      "pointer_slot_va": "0x7fff623d3e68",
+      "runtime_va": "0x7fff5fc72770",
+      "rva": "0xa22770",
+      "status": "mapped",
+      "code_preview_hex": "41574883ec30803da61a9702004c8bf9752b488d0d07407c"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToSlotSelectFromCheck",
+      "method_definition_index": 69904,
+      "token": "0x06011111",
+      "metadata_declaration_range": {
+        "offset": 6261760,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920496,
+      "pointer_slot_va": "0x7fff623d3e70",
+      "runtime_va": "0x7fff5fc74ba0",
+      "rva": "0xa24ba0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b89a80000004885c9743533d2e8"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantBeforeStartButton",
+      "method_definition_index": 69905,
+      "token": "0x06011112",
+      "metadata_declaration_range": {
+        "offset": 6261796,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920504,
+      "pointer_slot_va": "0x7fff623d3e78",
+      "runtime_va": "0x7fff5fc72250",
+      "rva": "0xa22250",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec40803dc71f970200488bf9755b488d0d27457c"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToBeforeStartPanel",
+      "method_definition_index": 69906,
+      "token": "0x06011113",
+      "metadata_declaration_range": {
+        "offset": 6261832,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920512,
+      "pointer_slot_va": "0x7fff623d3e80",
+      "runtime_va": "0x7fff5fc74980",
+      "rva": "0xa24980",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c2410488974241848897c242041544156"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantStartButton",
+      "method_definition_index": 69907,
+      "token": "0x06011114",
+      "metadata_declaration_range": {
+        "offset": 6261868,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920520,
+      "pointer_slot_va": "0x7fff623d3e88",
+      "runtime_va": "0x7fff5fc72920",
+      "rva": "0xa22920",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2080b95801000000488bd97554c68158010000"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToSlotFromWarning",
+      "method_definition_index": 69908,
+      "token": "0x06011115",
+      "metadata_declaration_range": {
+        "offset": 6261904,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920528,
+      "pointer_slot_va": "0x7fff623d3e90",
+      "runtime_va": "0x7fff5fc74b10",
+      "rva": "0xa24b10",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b89a80000004885c9747133d2e8"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantWarningButton",
+      "method_definition_index": 69909,
+      "token": "0x06011116",
+      "metadata_declaration_range": {
+        "offset": 6261940,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920536,
+      "pointer_slot_va": "0x7fff623d3e98",
+      "runtime_va": "0x7fff5fc729a0",
+      "rva": "0xa229a0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2080b95801000000488bd97569c68158010000"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToWeaponSelectFromComplete",
+      "method_definition_index": 69910,
+      "token": "0x06011117",
+      "metadata_declaration_range": {
+        "offset": 6261976,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920544,
+      "pointer_slot_va": "0x7fff623d3ea0",
+      "runtime_va": "0x7fff5fc74c00",
+      "rva": "0xa24c00",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20488bd9488b49284885"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantWeaponSelected",
+      "method_definition_index": 69911,
+      "token": "0x06011118",
+      "metadata_declaration_range": {
+        "offset": 6262012,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920552,
+      "pointer_slot_va": "0x7fff623d3ea8",
+      "runtime_va": "0x7fff5fc72a30",
+      "rva": "0xa22a30",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803de817970200488bd97543488d0d473d7c"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToWeaponSelect",
+      "method_definition_index": 69912,
+      "token": "0x06011119",
+      "metadata_declaration_range": {
+        "offset": 6262048,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920560,
+      "pointer_slot_va": "0x7fff623d3eb0",
+      "runtime_va": "0x7fff5fc74e00",
+      "rva": "0xa24e00",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d19f4960200488bd97537488d0d77197c"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnDetailButton",
+      "method_definition_index": 69913,
+      "token": "0x0601111a",
+      "metadata_declaration_range": {
+        "offset": 6262084,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "detailValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920568,
+      "pointer_slot_va": "0x7fff623d3eb8",
+      "runtime_va": "0x7fff5fc721e0",
+      "rva": "0xa221e0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2033d2488bd9e8e016000033d2488bcbe866e0"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ConnectWaitManufactureGuard",
+      "method_definition_index": 69914,
+      "token": "0x0601111b",
+      "metadata_declaration_range": {
+        "offset": 6262120,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51920576,
+      "pointer_slot_va": "0x7fff623d3ec0",
+      "runtime_va": "0x7fff5fc6e550",
+      "rva": "0xa1e550",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dc65c970200488bf97513488d"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ConnectWaitManufacture",
+      "method_definition_index": 69915,
+      "token": "0x0601111c",
+      "metadata_declaration_range": {
+        "offset": 6262156,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51920584,
+      "pointer_slot_va": "0x7fff623d3ec8",
+      "runtime_va": "0x7fff5fc6e5c0",
+      "rva": "0xa1e5c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d575c970200488bf97513488d"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "getUsableSlotCount",
+      "method_definition_index": 69916,
+      "token": "0x0601111d",
+      "metadata_declaration_range": {
+        "offset": 6262192,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920592,
+      "pointer_slot_va": "0x7fff623d3ed0",
+      "runtime_va": "0x7fff5fc75320",
+      "rva": "0xa25320",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30488b89400100004885c90f840d01000033d2"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "getSuccessSkillRate",
+      "method_definition_index": 69917,
+      "token": "0x0601111e",
+      "metadata_declaration_range": {
+        "offset": 6262228,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920600,
+      "pointer_slot_va": "0x7fff623d3ed8",
+      "runtime_va": "0x7fff5fc75270",
+      "rva": "0xa25270",
+      "status": "mapped",
+      "code_preview_hex": "4889742418574883ec20488b894001000033ff4885c90f84"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToWeaponeSelectFromCheckDialog",
+      "method_definition_index": 69918,
+      "token": "0x0601111f",
+      "metadata_declaration_range": {
+        "offset": 6262264,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920608,
+      "pointer_slot_va": "0x7fff623d3ee0",
+      "runtime_va": "0x7fff5fc74f70",
+      "rva": "0xa24f70",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b89a80000004885c9740b33d24883c428e9c5"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToSlotSelectFromMaterialTypeSelect",
+      "method_definition_index": 69919,
+      "token": "0x06011120",
+      "metadata_declaration_range": {
+        "offset": 6262300,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920616,
+      "pointer_slot_va": "0x7fff623d3ee8",
+      "runtime_va": "0x7fff5fc74bf0",
+      "rva": "0xa24bf0",
+      "status": "mapped",
+      "code_preview_hex": "33d2e979bfffffcccccccccccccccccc48895c2408488974"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "ToMaterialSelectFromDetail",
+      "method_definition_index": 69920,
+      "token": "0x06011121",
+      "metadata_declaration_range": {
+        "offset": 6262336,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920624,
+      "pointer_slot_va": "0x7fff623d3ef0",
+      "runtime_va": "0x7fff5fc74ad0",
+      "rva": "0xa24ad0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2033d2488bd9e880b7ffff488b8bb800000048"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "CheckManufactureMaterial",
+      "method_definition_index": 69921,
+      "token": "0x06011122",
+      "metadata_declaration_range": {
+        "offset": 6262372,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "require",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "have",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51920632,
+      "pointer_slot_va": "0x7fff623d3ef8",
+      "runtime_va": "0x7fff5fc6e540",
+      "rva": "0xa1e540",
+      "status": "mapped",
+      "code_preview_hex": "413bd00f9ec0c3cccccccccccccccccc48895c2408574883"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "CheckManufactureMaterial",
+      "method_definition_index": 69922,
+      "token": "0x06011123",
+      "metadata_declaration_range": {
+        "offset": 6262408,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 6654,
+          "exact_byval_name": null
+        },
+        {
+          "name": "startIndex",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "count",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "have",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51920640,
+      "pointer_slot_va": "0x7fff623d3f00",
+      "runtime_va": "0x7fff5fc6e4a0",
+      "rva": "0xa1e4a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803d735d970200418b"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "GetUsePotentialPoint",
+      "method_definition_index": 69923,
+      "token": "0x06011124",
+      "metadata_declaration_range": {
+        "offset": 6262444,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920648,
+      "pointer_slot_va": "0x7fff623d3f08",
+      "runtime_va": "0x7fff5fc6ecf0",
+      "rva": "0xa1ecf0",
+      "status": "mapped",
+      "code_preview_hex": "4533c033d2e906000000cccccccccccc8954241048894c24"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "GetUsePotentialPoint",
+      "method_definition_index": 69924,
+      "token": "0x06011125",
+      "metadata_declaration_range": {
+        "offset": 6262480,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "exclusionType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920656,
+      "pointer_slot_va": "0x7fff623d3f10",
+      "runtime_va": "0x7fff5fc6ed00",
+      "rva": "0xa1ed00",
+      "status": "mapped",
+      "code_preview_hex": "8954241048894c2408534883ec70803d1555970200488bd9"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "EnhanceGetPropertyPosition",
+      "method_definition_index": 69925,
+      "token": "0x06011126",
+      "metadata_declaration_range": {
+        "offset": 6262516,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "item",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "property",
+          "type_index": 9968,
+          "exact_byval_name": null
+        },
+        {
+          "name": "changeProperties",
+          "type_index": 9069,
+          "exact_byval_name": null
+        },
+        {
+          "name": "newProperties",
+          "type_index": 9069,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920664,
+      "pointer_slot_va": "0x7fff623d3f18",
+      "runtime_va": "0x7fff5fc6e630",
+      "rva": "0xa1e630",
+      "status": "mapped",
+      "code_preview_hex": "4c894c24204c8944241853415541564883ec50803de15b97"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "CalcUsePotentialPoint",
+      "method_definition_index": 69926,
+      "token": "0x06011127",
+      "metadata_declaration_range": {
+        "offset": 6262552,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "customItem",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "changeProperties",
+          "type_index": 9968,
+          "exact_byval_name": null
+        },
+        {
+          "name": "newProperties",
+          "type_index": 9968,
+          "exact_byval_name": null
+        },
+        {
+          "name": "exclusionType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51920672,
+      "pointer_slot_va": "0x7fff623d3f20",
+      "runtime_va": "0x7fff5fc6db10",
+      "rva": "0xa1db10",
+      "status": "mapped",
+      "code_preview_hex": "488bc44c8940184889501048894808535657415441554156"
+    },
+    {
+      "class": "SmithGrant",
+      "name": ".ctor",
+      "method_definition_index": 69927,
+      "token": "0x06011128",
+      "metadata_declaration_range": {
+        "offset": 6262588,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920680,
+      "pointer_slot_va": "0x7fff623d3f28",
+      "runtime_va": "0x7fff5fc74fe0",
+      "rva": "0xa24fe0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d3cf2960200488bf97537488d"
+    },
+    {
+      "class": "SmithGrant",
+      "name": ".cctor",
+      "method_definition_index": 69928,
+      "token": "0x06011129",
+      "metadata_declaration_range": {
+        "offset": 6262624,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920688,
+      "pointer_slot_va": "0x7fff623d3f30",
+      "runtime_va": "0x7fff5fc74fa0",
+      "rva": "0xa24fa0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d83f29602007513488d0d24f47d02e8978480"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "get_DetailConsumptionPotential",
+      "method_definition_index": 70037,
+      "token": "0x06011196",
+      "metadata_declaration_range": {
+        "offset": 6266548,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921560,
+      "pointer_slot_va": "0x7fff623d4298",
+      "runtime_va": "0x7fff5f5442e0",
+      "rva": "0x2f42e0",
+      "status": "mapped",
+      "code_preview_hex": "8b81b4000000c3cccccccccccccccccc48895c2408574883"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "set_DetailConsumptionPotential",
+      "method_definition_index": 70038,
+      "token": "0x06011197",
+      "metadata_declaration_range": {
+        "offset": 6266584,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921568,
+      "pointer_slot_va": "0x7fff623d42a0",
+      "runtime_va": "0x7fff5f544360",
+      "rva": "0x2f4360",
+      "status": "mapped",
+      "code_preview_hex": "8991b4000000c3cccccccccccccccccc48895c2408574883"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "get_WeaponPotential",
+      "method_definition_index": 70039,
+      "token": "0x06011198",
+      "metadata_declaration_range": {
+        "offset": 6266620,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921576,
+      "pointer_slot_va": "0x7fff623d42a8",
+      "runtime_va": "0x7fff5f6313f0",
+      "rva": "0x3e13f0",
+      "status": "mapped",
+      "code_preview_hex": "8b81c8000000c3ccccccccccccccccccf30f104138c3cccc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "set_WeaponPotential",
+      "method_definition_index": 70040,
+      "token": "0x06011199",
+      "metadata_declaration_range": {
+        "offset": 6266656,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921584,
+      "pointer_slot_va": "0x7fff623d42b0",
+      "runtime_va": "0x7fff5fc87ac0",
+      "rva": "0xa37ac0",
+      "status": "mapped",
+      "code_preview_hex": "8991c8000000c3cccccccccccccccccc40534883ec20803d"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "get_DetailValue",
+      "method_definition_index": 70041,
+      "token": "0x0601119a",
+      "metadata_declaration_range": {
+        "offset": 6266692,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921592,
+      "pointer_slot_va": "0x7fff623d42b8",
+      "runtime_va": "0x7fff5f637320",
+      "rva": "0x3e7320",
+      "status": "mapped",
+      "code_preview_hex": "8b81a0000000c3cccccccccccccccccc0fb781d8000000c3"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "set_DetailValue",
+      "method_definition_index": 70042,
+      "token": "0x0601119b",
+      "metadata_declaration_range": {
+        "offset": 6266728,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921600,
+      "pointer_slot_va": "0x7fff623d42c0",
+      "runtime_va": "0x7fff5f6373d0",
+      "rva": "0x3e73d0",
+      "status": "mapped",
+      "code_preview_hex": "8991a0000000c3cccccccccccccccccc668991d8000000c3"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "get_ItemId",
+      "method_definition_index": 70043,
+      "token": "0x0601119c",
+      "metadata_declaration_range": {
+        "offset": 6266764,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921608,
+      "pointer_slot_va": "0x7fff623d42c8",
+      "runtime_va": "0x7fff5fc87ab0",
+      "rva": "0xa37ab0",
+      "status": "mapped",
+      "code_preview_hex": "8b81cc000000c3cccccccccccccccccc8991c8000000c3cc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "set_ItemId",
+      "method_definition_index": 70044,
+      "token": "0x0601119d",
+      "metadata_declaration_range": {
+        "offset": 6266800,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921616,
+      "pointer_slot_va": "0x7fff623d42d0",
+      "runtime_va": "0x7fff5f8cbc10",
+      "rva": "0x67bc10",
+      "status": "mapped",
+      "code_preview_hex": "8991cc000000c3cccccccccccccccccc40534883ec20803d"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "get_remainPotential",
+      "method_definition_index": 70045,
+      "token": "0x0601119e",
+      "metadata_declaration_range": {
+        "offset": 6266836,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921624,
+      "pointer_slot_va": "0x7fff623d42d8",
+      "runtime_va": "0x7fff5f982700",
+      "rva": "0x732700",
+      "status": "mapped",
+      "code_preview_hex": "8b81d0000000c3cccccccccccccccccc4883ec28488b8918"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "set_remainPotential",
+      "method_definition_index": 70046,
+      "token": "0x0601119f",
+      "metadata_declaration_range": {
+        "offset": 6266872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921632,
+      "pointer_slot_va": "0x7fff623d42e0",
+      "runtime_va": "0x7fff5f9828e0",
+      "rva": "0x7328e0",
+      "status": "mapped",
+      "code_preview_hex": "8991d0000000c3cccccccccccccccccc8991d4000000c3cc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "Awake",
+      "method_definition_index": 70047,
+      "token": "0x060111a0",
+      "metadata_declaration_range": {
+        "offset": 6266908,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921640,
+      "pointer_slot_va": "0x7fff623d42e8",
+      "runtime_va": "0x7fff5fc84770",
+      "rva": "0xa34770",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803dd9fa950200488bf9752b488d0dcf2d7d"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "Start",
+      "method_definition_index": 70048,
+      "token": "0x060111a1",
+      "metadata_declaration_range": {
+        "offset": 6266944,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921648,
+      "pointer_slot_va": "0x7fff623d42f0",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "code_preview_hex": "c20000cccccccccccccccccccccccccc33d2e979d43c02cc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "Update",
+      "method_definition_index": 70049,
+      "token": "0x060111a2",
+      "metadata_declaration_range": {
+        "offset": 6266980,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921656,
+      "pointer_slot_va": "0x7fff623d42f8",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "code_preview_hex": "c20000cccccccccccccccccccccccccc33d2e979d43c02cc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetWeaponData",
+      "method_definition_index": 70050,
+      "token": "0x060111a3",
+      "metadata_declaration_range": {
+        "offset": 6267016,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "name",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "potential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "grantnum",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "buttonEnabled",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921664,
+      "pointer_slot_va": "0x7fff623d4300",
+      "runtime_va": "0x7fff5fc86680",
+      "rva": "0xa36680",
+      "status": "mapped",
+      "code_preview_hex": "48895c24185556574883ec20803dc4db950200498bf84963"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetWeaponEmptyData",
+      "method_definition_index": 70051,
+      "token": "0x060111a4",
+      "metadata_declaration_range": {
+        "offset": 6267052,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921672,
+      "pointer_slot_va": "0x7fff623d4308",
+      "runtime_va": "0x7fff5fc86880",
+      "rva": "0xa36880",
+      "status": "mapped",
+      "code_preview_hex": "48895c2420574883ec20803dc7d9950200488bd97537488d"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetFixedValue",
+      "method_definition_index": 70052,
+      "token": "0x060111a5",
+      "metadata_declaration_range": {
+        "offset": 6267088,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fixedVal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921680,
+      "pointer_slot_va": "0x7fff623d4310",
+      "runtime_va": "0x7fff5fc859a0",
+      "rva": "0xa359a0",
+      "status": "mapped",
+      "code_preview_hex": "8991d40000008991d8000000c3cccccc48895c2408488974"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetMaterialList",
+      "method_definition_index": 70053,
+      "token": "0x060111a6",
+      "metadata_declaration_range": {
+        "offset": 6267124,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "page",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921688,
+      "pointer_slot_va": "0x7fff623d4318",
+      "runtime_va": "0x7fff5fc859b0",
+      "rva": "0xa359b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20488b818000000033db"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetRequire",
+      "method_definition_index": 70054,
+      "token": "0x060111a7",
+      "metadata_declaration_range": {
+        "offset": 6267160,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "requireMaterial",
+          "type_index": 10343,
+          "exact_byval_name": null
+        },
+        {
+          "name": "requirePotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921696,
+      "pointer_slot_va": "0x7fff623d4320",
+      "runtime_va": "0x7fff5fc85c90",
+      "rva": "0xa35c90",
+      "status": "mapped",
+      "code_preview_hex": "488bc4448940184889501048894808535657415441554156"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetDetailType",
+      "method_definition_index": 70055,
+      "token": "0x060111a8",
+      "metadata_declaration_range": {
+        "offset": 6267196,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "enhanceType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isElement",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51921704,
+      "pointer_slot_va": "0x7fff623d4328",
+      "runtime_va": "0x7fff5fc85790",
+      "rva": "0xa35790",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803dafea"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetDetailValue",
+      "method_definition_index": 70056,
+      "token": "0x060111a9",
+      "metadata_declaration_range": {
+        "offset": 6267232,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "enhanceValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921712,
+      "pointer_slot_va": "0x7fff623d4330",
+      "runtime_va": "0x7fff5fc85820",
+      "rva": "0xa35820",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418564883ec50803d25ea9502008bda"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetConsumptionPotential",
+      "method_definition_index": 70057,
+      "token": "0x060111aa",
+      "metadata_declaration_range": {
+        "offset": 6267268,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "onePotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "usedPotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921720,
+      "pointer_slot_va": "0x7fff623d4338",
+      "runtime_va": "0x7fff5fc856e0",
+      "rva": "0xa356e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d66eb950200418b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetRequireMaterialTypeAndValue",
+      "method_definition_index": 70058,
+      "token": "0x060111ab",
+      "metadata_declaration_range": {
+        "offset": 6267304,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "requireValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921728,
+      "pointer_slot_va": "0x7fff623d4340",
+      "runtime_va": "0x7fff5fc85a40",
+      "rva": "0xa35a40",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c2410488974241848897c242041564883"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetTitle",
+      "method_definition_index": 70059,
+      "token": "0x060111ac",
+      "metadata_declaration_range": {
+        "offset": 6267340,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "localize_key",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921736,
+      "pointer_slot_va": "0x7fff623d4348",
+      "runtime_va": "0x7fff5fc86550",
+      "rva": "0xa36550",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488b5920488b89e80000004885c974204533"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetTitle",
+      "method_definition_index": 70060,
+      "token": "0x060111ad",
+      "metadata_declaration_range": {
+        "offset": 6267376,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "localize_uuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921744,
+      "pointer_slot_va": "0x7fff623d4350",
+      "runtime_va": "0x7fff5fc86590",
+      "rva": "0xa36590",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803dbddc9502008bfa488bd97513"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "ShowCheckWindow",
+      "method_definition_index": 70061,
+      "token": "0x060111ae",
+      "metadata_declaration_range": {
+        "offset": 6267412,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isMaterialOK",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921752,
+      "pointer_slot_va": "0x7fff623d4358",
+      "runtime_va": "0x7fff5fc86a90",
+      "rva": "0xa36a90",
+      "status": "mapped",
+      "code_preview_hex": "48896c242041564883ec20803dbdd7950200440fb6f2488b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CloseCheckWIndow",
+      "method_definition_index": 70062,
+      "token": "0x060111af",
+      "metadata_declaration_range": {
+        "offset": 6267448,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921760,
+      "pointer_slot_va": "0x7fff623d4360",
+      "runtime_va": "0x7fff5fc84c10",
+      "rva": "0xa34c10",
+      "status": "mapped",
+      "code_preview_hex": "40554883ec20803d43f6950200488be97513488d0d8fac7c"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "OnPlus",
+      "method_definition_index": 70063,
+      "token": "0x060111b0",
+      "metadata_declaration_range": {
+        "offset": 6267484,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921768,
+      "pointer_slot_va": "0x7fff623d4368",
+      "runtime_va": "0x7fff5fc855c0",
+      "rva": "0xa355c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20448b81a40000004533c9b201488b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "OnPlusMax",
+      "method_definition_index": 70064,
+      "token": "0x060111b1",
+      "metadata_declaration_range": {
+        "offset": 6267520,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921776,
+      "pointer_slot_va": "0x7fff623d4370",
+      "runtime_va": "0x7fff5fc854b0",
+      "rva": "0xa354b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20448b81a40000004533c9b201488b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "OnMinus",
+      "method_definition_index": 70065,
+      "token": "0x060111b2",
+      "metadata_declaration_range": {
+        "offset": 6267556,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921784,
+      "pointer_slot_va": "0x7fff623d4378",
+      "runtime_va": "0x7fff5fc85360",
+      "rva": "0xa35360",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20448b81a40000004533c933d2488b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "OnMinusMax",
+      "method_definition_index": 70066,
+      "token": "0x060111b3",
+      "metadata_declaration_range": {
+        "offset": 6267592,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921792,
+      "pointer_slot_va": "0x7fff623d4380",
+      "runtime_va": "0x7fff5fc85240",
+      "rva": "0xa35240",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20448b81a40000004533c933d2488b"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "FromOnDetail",
+      "method_definition_index": 70067,
+      "token": "0x060111b4",
+      "metadata_declaration_range": {
+        "offset": 6267628,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921800,
+      "pointer_slot_va": "0x7fff623d4388",
+      "runtime_va": "0x7fff5fc84d00",
+      "rva": "0xa34d00",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d54f5950200488bd97513488d0dff8c7c"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "getEnhanceMax",
+      "method_definition_index": 70068,
+      "token": "0x060111b5",
+      "metadata_declaration_range": {
+        "offset": 6267664,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isUpper",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "checkType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921808,
+      "pointer_slot_va": "0x7fff623d4390",
+      "runtime_va": "0x7fff5fc87510",
+      "rva": "0xa37510",
+      "status": "mapped",
+      "code_preview_hex": "48895c242056415641574881ec90000000803d3acd950200"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "UpdateDetailVal",
+      "method_definition_index": 70069,
+      "token": "0x060111b6",
+      "metadata_declaration_range": {
+        "offset": 6267700,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921816,
+      "pointer_slot_va": "0x7fff623d4398",
+      "runtime_va": "0x7fff5fc86bf0",
+      "rva": "0xa36bf0",
+      "status": "mapped",
+      "code_preview_hex": "40535741574883ec70803d63d6950200488bf90f85a30000"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "GetCurrentRequireMaterialPoint",
+      "method_definition_index": 70070,
+      "token": "0x060111b7",
+      "metadata_declaration_range": {
+        "offset": 6267736,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921824,
+      "pointer_slot_va": "0x7fff623d43a0",
+      "runtime_va": "0x7fff5fc84d80",
+      "rva": "0xa34d80",
+      "status": "mapped",
+      "code_preview_hex": "4055564883ec78803dd6f4950200488bf1751f488d0d6e80"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CheckOverRateType",
+      "method_definition_index": 70071,
+      "token": "0x060111b8",
+      "metadata_declaration_range": {
+        "offset": 6267772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921832,
+      "pointer_slot_va": "0x7fff623d43a8",
+      "runtime_va": "0x7fff5fc84bf0",
+      "rva": "0xa34bf0",
+      "status": "mapped",
+      "code_preview_hex": "8d42ea83f80a7707a8017503b001c383fa0c0f94c0c3cccc"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CalcUnderstandSkill",
+      "method_definition_index": 70072,
+      "token": "0x060111b9",
+      "metadata_declaration_range": {
+        "offset": 6267808,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "usePoint",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "materialType",
+          "type_index": 20116,
+          "exact_byval_name": "Toram.Common.Items.MaterialType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921840,
+      "pointer_slot_va": "0x7fff623d43b0",
+      "runtime_va": "0x7fff5fc84a80",
+      "rva": "0xa34a80",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec208bda4183f8050f872b0100004963c04c8d05"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CalcCoefficientMitigation",
+      "method_definition_index": 70073,
+      "token": "0x060111ba",
+      "metadata_declaration_range": {
+        "offset": 6267844,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "coefficient",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921848,
+      "pointer_slot_va": "0x7fff623d43b8",
+      "runtime_va": "0x7fff5fc84960",
+      "rva": "0xa34960",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803deaf8"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": ".ctor",
+      "method_definition_index": 70074,
+      "token": "0x060111bb",
+      "metadata_declaration_range": {
+        "offset": 6267880,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921856,
+      "pointer_slot_va": "0x7fff623d43c0",
+      "runtime_va": "0x7fff5fc87320",
+      "rva": "0xa37320",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d35cf950200488bf9752b488d"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "<CalcCoefficientMitigation>b__76_0",
+      "method_definition_index": 70075,
+      "token": "0x060111bc",
+      "metadata_declaration_range": {
+        "offset": 6267916,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "skill",
+          "type_index": 24617,
+          "exact_byval_name": "SkillId"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921864,
+      "pointer_slot_va": "0x7fff623d43c8",
+      "runtime_va": "0x7fff5fc86bb0",
+      "rva": "0xa36bb0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488b89e00000008bda4885c9742133d2e885"
+    },
+    {
+      "class": "SmithGrant_nested",
+      "name": "<InitSlotSelect>b__41_0",
+      "method_definition_index": 69977,
+      "token": "0x0601115a",
+      "metadata_declaration_range": {
+        "offset": 6264388,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 41732,
+          "exact_byval_name": "requireData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921080,
+      "pointer_slot_va": "0x7fff623d40b8",
+      "runtime_va": "0x7fff5fc794e0",
+      "rva": "0xa294e0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27425807a2c0075128b4230034228750a85"
+    },
+    {
+      "class": "SmithGrant_nested",
+      "name": "<getEmptySlotCount>b__47_0",
+      "method_definition_index": 69981,
+      "token": "0x0601115e",
+      "metadata_declaration_range": {
+        "offset": 6264532,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 41732,
+          "exact_byval_name": "requireData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921112,
+      "pointer_slot_va": "0x7fff623d40d8",
+      "runtime_va": "0x7fff5fc794e0",
+      "rva": "0xa294e0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27425807a2c0075128b4230034228750a85"
+    }
+  ],
+  "limitations": [
+    "Metadata declaration offsets are not code addresses; only pointer-table values establish native locations.",
+    "NULL pointers remain unresolved; generic or shared implementations are not inferred.",
+    "Mapping establishes saved pointer identity, not observed execution or a call edge.",
+    "The source capture was sequential and non-atomic; no process access was performed by this parser."
+  ]
+}

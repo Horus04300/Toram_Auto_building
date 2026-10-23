@@ -3,7 +3,7 @@ import { createRequire } from 'node:module';
 import { readFile } from 'node:fs/promises';
 import vm from 'node:vm';
 const require = createRequire(import.meta.url);
-const food = require('../../../assets/js/data/my-room-food.js');
+const food = require('../../../web/src/data/my-room-food.js');
 assert.equal(food.recipes.length, 33);
 assert.equal(food.recipes.flatMap(r => r.names).length, 39);
 assert.deepEqual(food.get('CRIT').values, [2,4,6,8,10,14,18,22,26,30]);
@@ -20,7 +20,7 @@ for (const recipe of food.recipes) {
   }
 }
 const window = { ToramFoodCatalog:food, getBaseContext() { return { options:this.ToramCalculationInputScope.kernelInput.options }; } };
-vm.runInNewContext(await readFile(new URL('../../../assets/js/application-use-cases.js', import.meta.url),'utf8'), {window});
+vm.runInNewContext(await readFile(new URL('../../../web/src/application/application-use-cases.js', import.meta.url),'utf8'), {window});
 const input = {build:{equipment:{},externalOptions:[{key:'STR',value:5}],myRoomFood:[{id:'STR',level:10},{id:'ELEM_P',level:10},{id:'MAXHP',level:6},{id:'AGGRO_MINUS',level:10},{id:'PHYS_RES',level:10}]}};
 const snapshot = window.ToramApplication.CreateCalculationSnapshot(input);
 assert.deepEqual(JSON.parse(JSON.stringify(snapshot.baseContext.options)), [{key:'STR',value:5},{key:'STR',value:30},{key:'ELEM_P',value:15},{key:'MAXHP',value:2600},{key:'MAXHP',value:1000},{key:'MAXMP',value:100}]);

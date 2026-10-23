@@ -1,0 +1,8 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobActionManager-SetMobLevel-7fff5fe25eb0.c
++++ 20432.c
+@@ -1,4 +1,4 @@
+ {
+-  *(int *)(self + 400) = level;
++  *(int *)(self + 400) = value;
+   return;
+ }

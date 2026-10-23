@@ -49,7 +49,7 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/mononofu.js`: 통과
+- `node --check web/src/data/skills/mononofu.js`: 통과
 - `node tools/verification/audit-stack-source-links.mjs --tree Mononofu --require-s1`: 23/23 통과
 - `node tools/tests/skills/test-mononofu-regression.mjs`: 통과
 - 기존 Blade/Martial/Shot/Magic/Halberd S4/S5 회귀: 통과

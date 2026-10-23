@@ -1,0 +1,1065 @@
+[
+  {
+    "type_definition_index": 4025,
+    "name": "FunctionLimitManager",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24884508,
+      "size": 88
+    },
+    "byval_type_index": 16228,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 8142,
+      "exact_byval_name": null
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 18087,
+        "name": "limitedFunction",
+        "type_index": 3398,
+        "exact_byval_name": null,
+        "token": "0x040046a8",
+        "range": {
+          "offset": 22276056,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 18088,
+        "name": "cdnlimitedFunction",
+        "type_index": 3398,
+        "exact_byval_name": null,
+        "token": "0x040046a9",
+        "range": {
+          "offset": 22276068,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 18089,
+        "name": "cdnGamesystemFlagVersion",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040046aa",
+        "range": {
+          "offset": 22276080,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 34987,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060088ac",
+        "range": {
+          "offset": 5004748,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34988,
+        "name": "DownloadCsv",
+        "return_type": {
+          "type_index": 18073,
+          "exact_byval_name": "System.Collections.IEnumerator"
+        },
+        "parameters": [
+          {
+            "name": "version",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x060088ad",
+        "range": {
+          "offset": 5004784,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34989,
+        "name": "UpdateLimitedFunction",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateFunction",
+            "type_index": 10198,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060088ae",
+        "range": {
+          "offset": 5004820,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34990,
+        "name": "AddLimitedFunction",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "flag",
+            "type_index": 16407,
+            "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+          },
+          {
+            "name": "isLimit",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x060088af",
+        "range": {
+          "offset": 5004856,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34991,
+        "name": "AddLimitedFunction",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "flag",
+            "type_index": 32847,
+            "exact_byval_name": "CDNGameSystemFlag"
+          },
+          {
+            "name": "isLimit",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x060088b0",
+        "range": {
+          "offset": 5004892,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34992,
+        "name": "addLimitedFunction",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "function",
+            "type_index": 3397,
+            "exact_byval_name": null
+          },
+          {
+            "name": "flag",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "isLimit",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x060088b1",
+        "range": {
+          "offset": 5004928,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34993,
+        "name": "Clear",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060088b2",
+        "range": {
+          "offset": 5004964,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34994,
+        "name": "IsLimited",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "limitedType",
+            "type_index": 16407,
+            "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+          }
+        ],
+        "token": "0x060088b3",
+        "range": {
+          "offset": 5005000,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34995,
+        "name": "IsLimited",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "limitedType",
+            "type_index": 32847,
+            "exact_byval_name": "CDNGameSystemFlag"
+          }
+        ],
+        "token": "0x060088b4",
+        "range": {
+          "offset": 5005036,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34996,
+        "name": "GetValue",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "limitedType",
+            "type_index": 16407,
+            "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+          },
+          {
+            "name": "param",
+            "type_index": 9238,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060088b5",
+        "range": {
+          "offset": 5005072,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34997,
+        "name": "GetValue",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "limitedType",
+            "type_index": 32847,
+            "exact_byval_name": "CDNGameSystemFlag"
+          },
+          {
+            "name": "param",
+            "type_index": 9238,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060088b6",
+        "range": {
+          "offset": 5005108,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34998,
+        "name": "getValue",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "function",
+            "type_index": 3397,
+            "exact_byval_name": null
+          },
+          {
+            "name": "limitedType",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "param",
+            "type_index": 9238,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060088b7",
+        "range": {
+          "offset": 5005144,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 34999,
+        "name": "ShowLimitedFunctionMessage",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "callback",
+            "type_index": 11533,
+            "exact_byval_name": "System.Action"
+          }
+        ],
+        "token": "0x060088b8",
+        "range": {
+          "offset": 5005180,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 35000,
+        "name": "ShowLimitedFunctionMessageCoroutine",
+        "return_type": {
+          "type_index": 18073,
+          "exact_byval_name": "System.Collections.IEnumerator"
+        },
+        "parameters": [
+          {
+            "name": "callback",
+            "type_index": 11533,
+            "exact_byval_name": "System.Action"
+          }
+        ],
+        "token": "0x060088b9",
+        "range": {
+          "offset": 5005216,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 35001,
+        "name": "ContainsFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "limitedType",
+            "type_index": 16407,
+            "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+          }
+        ],
+        "token": "0x060088ba",
+        "range": {
+          "offset": 5005252,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 12896,
+    "name": "Toram.Common.Mob.MonsterPropertyType",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25665156,
+      "size": 88
+    },
+    "byval_type_index": 21221,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 15358,
+      "exact_byval_name": "System.Enum"
+    },
+    "is_enum": true,
+    "fields": [
+      {
+        "field_index": 67939,
+        "name": "value__",
+        "type_index": 18814,
+        "exact_byval_name": null,
+        "token": "0x04001903",
+        "range": {
+          "offset": 22874280,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 67940,
+        "name": "None",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001904",
+        "range": {
+          "offset": 22874292,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639005,
+          "offset": 20344669,
+          "preview_hex": "00020406080a0c0e",
+          "int32_value": 0,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67941,
+        "name": "AbnormalResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001905",
+        "range": {
+          "offset": 22874304,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639006,
+          "offset": 20344670,
+          "preview_hex": "020406080a0c0e10",
+          "int32_value": 1,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67942,
+        "name": "AbnormalDamageIncrease",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001906",
+        "range": {
+          "offset": 22874316,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639007,
+          "offset": 20344671,
+          "preview_hex": "0406080a0c0e1014",
+          "int32_value": 2,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67943,
+        "name": "AbnormalAppliedDamageIncrease",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001907",
+        "range": {
+          "offset": 22874328,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639008,
+          "offset": 20344672,
+          "preview_hex": "06080a0c0e10141a",
+          "int32_value": 3,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67944,
+        "name": "SpecificWeaponBaseDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001908",
+        "range": {
+          "offset": 22874340,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639009,
+          "offset": 20344673,
+          "preview_hex": "080a0c0e10141a1c",
+          "int32_value": 4,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67945,
+        "name": "DamageLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001909",
+        "range": {
+          "offset": 22874352,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639010,
+          "offset": 20344674,
+          "preview_hex": "0a0c0e10141a1c1e",
+          "int32_value": 5,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67946,
+        "name": "CriticalResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190a",
+        "range": {
+          "offset": 22874364,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639011,
+          "offset": 20344675,
+          "preview_hex": "0c0e10141a1c1e20",
+          "int32_value": 6,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67947,
+        "name": "PartCutCorrection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190b",
+        "range": {
+          "offset": 22874376,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639012,
+          "offset": 20344676,
+          "preview_hex": "0e10141a1c1e2022",
+          "int32_value": 7,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67948,
+        "name": "BodyCutCorrection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190c",
+        "range": {
+          "offset": 22874388,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639013,
+          "offset": 20344677,
+          "preview_hex": "10141a1c1e202224",
+          "int32_value": 8,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67949,
+        "name": "MotionSpeed",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190d",
+        "range": {
+          "offset": 22874400,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639014,
+          "offset": 20344678,
+          "preview_hex": "141a1c1e20222426",
+          "int32_value": 10,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67950,
+        "name": "FootAttack",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190e",
+        "range": {
+          "offset": 22874412,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639015,
+          "offset": 20344679,
+          "preview_hex": "1a1c1e2022242628",
+          "int32_value": 13,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67951,
+        "name": "HpLock",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190f",
+        "range": {
+          "offset": 22874424,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639016,
+          "offset": 20344680,
+          "preview_hex": "1c1e20222426282a",
+          "int32_value": 14,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67952,
+        "name": "DistanceResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001910",
+        "range": {
+          "offset": 22874436,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639017,
+          "offset": 20344681,
+          "preview_hex": "1e20222426282a2c",
+          "int32_value": 15,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67953,
+        "name": "FunnelFlag",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001911",
+        "range": {
+          "offset": 22874448,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639018,
+          "offset": 20344682,
+          "preview_hex": "20222426282a2c2e",
+          "int32_value": 16,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67954,
+        "name": "EventCircle",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001912",
+        "range": {
+          "offset": 22874460,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639019,
+          "offset": 20344683,
+          "preview_hex": "222426282a2c2e3c",
+          "int32_value": 17,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67955,
+        "name": "ScreenEffect",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001913",
+        "range": {
+          "offset": 22874472,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639020,
+          "offset": 20344684,
+          "preview_hex": "2426282a2c2e3c3e",
+          "int32_value": 18,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67956,
+        "name": "ScriptAction",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001914",
+        "range": {
+          "offset": 22874484,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639021,
+          "offset": 20344685,
+          "preview_hex": "26282a2c2e3c3e40",
+          "int32_value": 19,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67957,
+        "name": "ResistMultiDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001915",
+        "range": {
+          "offset": 22874496,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639022,
+          "offset": 20344686,
+          "preview_hex": "282a2c2e3c3e4042",
+          "int32_value": 20,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67958,
+        "name": "IdSetting",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001916",
+        "range": {
+          "offset": 22874508,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639023,
+          "offset": 20344687,
+          "preview_hex": "2a2c2e3c3e404244",
+          "int32_value": 21,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67959,
+        "name": "MotionChange",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001917",
+        "range": {
+          "offset": 22874520,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639024,
+          "offset": 20344688,
+          "preview_hex": "2c2e3c3e40424450",
+          "int32_value": 22,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67960,
+        "name": "AreaHate",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001918",
+        "range": {
+          "offset": 22874532,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639025,
+          "offset": 20344689,
+          "preview_hex": "2e3c3e4042445052",
+          "int32_value": 23,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67961,
+        "name": "HighRaidStatus",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001919",
+        "range": {
+          "offset": 22874544,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639026,
+          "offset": 20344690,
+          "preview_hex": "3c3e404244505254",
+          "int32_value": 30,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67962,
+        "name": "DPSLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191a",
+        "range": {
+          "offset": 22874556,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639027,
+          "offset": 20344691,
+          "preview_hex": "3e40424450525464",
+          "int32_value": 31,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67963,
+        "name": "HighRaidFlag",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191b",
+        "range": {
+          "offset": 22874568,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639028,
+          "offset": 20344692,
+          "preview_hex": "4042445052546466",
+          "int32_value": 32,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67964,
+        "name": "MaxDamageRateLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191c",
+        "range": {
+          "offset": 22874580,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639029,
+          "offset": 20344693,
+          "preview_hex": "4244505254646668",
+          "int32_value": 33,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67965,
+        "name": "MinDamageRateLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191d",
+        "range": {
+          "offset": 22874592,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639030,
+          "offset": 20344694,
+          "preview_hex": "445052546466686a",
+          "int32_value": 34,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67966,
+        "name": "StatusCollection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191e",
+        "range": {
+          "offset": 22874604,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639031,
+          "offset": 20344695,
+          "preview_hex": "5052546466686a80",
+          "int32_value": 40,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67967,
+        "name": "SpecificWeaponLastDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191f",
+        "range": {
+          "offset": 22874616,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639032,
+          "offset": 20344696,
+          "preview_hex": "52546466686a80b4",
+          "int32_value": 41,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67968,
+        "name": "NormalElementWeaponDamageResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001920",
+        "range": {
+          "offset": 22874628,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639033,
+          "offset": 20344697,
+          "preview_hex": "546466686a80b400",
+          "int32_value": 42,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67969,
+        "name": "LifeGauge",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001921",
+        "range": {
+          "offset": 22874640,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639034,
+          "offset": 20344698,
+          "preview_hex": "6466686a80b40002",
+          "int32_value": 50,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67970,
+        "name": "GuardGauge",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001922",
+        "range": {
+          "offset": 22874652,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639035,
+          "offset": 20344699,
+          "preview_hex": "66686a80b4000204",
+          "int32_value": 51,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67971,
+        "name": "TreasureHuntMobTypeData",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001923",
+        "range": {
+          "offset": 22874664,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639036,
+          "offset": 20344700,
+          "preview_hex": "686a80b400020408",
+          "int32_value": 52,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67972,
+        "name": "GemCartDamageCheck",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001924",
+        "range": {
+          "offset": 22874676,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639037,
+          "offset": 20344701,
+          "preview_hex": "6a80b40002040810",
+          "int32_value": 53,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67973,
+        "name": "LifeReduceDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001925",
+        "range": {
+          "offset": 22874688,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639038,
+          "offset": 20344702,
+          "preview_hex": "80b4000204081020",
+          "int32_value": 90,
+          "encoded_size": 2
+        }
+      }
+    ],
+    "methods": []
+  }
+]

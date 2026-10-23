@@ -1,0 +1,999 @@
+{
+  "format": "toram-auto-build-document",
+  "schemaVersion": 2,
+  "documentType": "saved-build",
+  "name": "마법) 지팡이 크법 세팅",
+  "createdAt": "2026-10-11T22:46:46.790Z",
+  "updatedAt": "2026-10-11T22:56:31.638Z",
+  "build": {
+    "character": {
+      "level": 325,
+      "attributes": {
+        "STR": 73,
+        "INT": 510,
+        "VIT": 1,
+        "AGI": 1,
+        "DEX": 1,
+        "CRT": 255
+      }
+    },
+    "equipment": {
+      "mainWeapon": {
+        "type": "지팡이",
+        "attack": 730,
+        "refinement": 15,
+        "stability": 60,
+        "options": [
+          {
+            "key": "CRIT",
+            "value": 32
+          },
+          {
+            "key": "CDMG",
+            "value": 24
+          },
+          {
+            "key": "MATKP",
+            "value": 10
+          },
+          {
+            "key": "ELEM_AWAKENING",
+            "value": 1
+          },
+          {
+            "key": "ELEM_P",
+            "value": 24
+          }
+        ],
+        "crystas": [
+          "디알크",
+          "환주의 변경백"
+        ],
+        "lockedCrystaSlots": [
+          false,
+          false
+        ]
+      },
+      "subWeapon": {
+        "type": "방패",
+        "attack": 0,
+        "refinement": 15,
+        "stability": 0,
+        "options": [
+          {
+            "key": "CRIT_P",
+            "value": 100
+          },
+          {
+            "key": "WATKP",
+            "value": 25
+          }
+        ],
+        "crystas": [],
+        "lockedCrystaSlots": []
+      },
+      "armor": {
+        "type": "경량옷",
+        "attack": null,
+        "refinement": null,
+        "stability": null,
+        "options": [
+          {
+            "key": "CRIT",
+            "value": 32
+          },
+          {
+            "key": "CDMG",
+            "value": 24
+          },
+          {
+            "key": "CDMG_P",
+            "value": 12
+          },
+          {
+            "key": "MATKP",
+            "value": 10
+          }
+        ],
+        "crystas": [
+          "메르제하르",
+          "호뢰파섬"
+        ],
+        "lockedCrystaSlots": [
+          false,
+          false
+        ]
+      },
+      "additional": {
+        "type": null,
+        "attack": null,
+        "refinement": null,
+        "stability": null,
+        "options": [
+          {
+            "key": "MATKP",
+            "value": 13
+          },
+          {
+            "key": "MOTIONSPEED",
+            "value": 5
+          },
+          {
+            "key": "CSPD_P",
+            "value": 15
+          }
+        ],
+        "crystas": [
+          "데라단비트",
+          "라지 페루루"
+        ],
+        "lockedCrystaSlots": [
+          false,
+          false
+        ]
+      },
+      "special": {
+        "type": null,
+        "attack": null,
+        "refinement": null,
+        "stability": null,
+        "options": [
+          {
+            "key": "CRIT_P",
+            "value": 60
+          },
+          {
+            "key": "MAXHP",
+            "value": 1500
+          },
+          {
+            "key": "MAXMP",
+            "value": 300
+          }
+        ],
+        "crystas": [
+          "에투왈",
+          "기계신 메이플"
+        ],
+        "lockedCrystaSlots": [
+          false,
+          false
+        ]
+      }
+    },
+    "externalOptions": [
+      {
+        "key": "ASPD",
+        "value": 1000
+      },
+      {
+        "key": "MAXMP",
+        "value": 500
+      },
+      {
+        "key": "CSPD",
+        "value": 700
+      }
+    ],
+    "myRoomFood": [
+      {
+        "id": "CRIT",
+        "level": 10
+      },
+      {
+        "id": "MAXMP",
+        "level": 10
+      },
+      {
+        "id": "STR",
+        "level": 10
+      },
+      {
+        "id": "INT",
+        "level": 10
+      },
+      null
+    ],
+    "guildFoodBuff": true,
+    "skillLevels": {
+      "Blade": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0
+      },
+      "Shot": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 5,
+        "17": 10,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0,
+        "23": 0,
+        "24": 0
+      },
+      "Magic": {
+        "0": 5,
+        "1": 5,
+        "2": 5,
+        "3": 7,
+        "4": 5,
+        "5": 0,
+        "6": 10,
+        "7": 5,
+        "8": 5,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 10,
+        "13": 10,
+        "14": 5,
+        "15": 10,
+        "16": 8,
+        "17": 5,
+        "18": 10,
+        "19": 5,
+        "20": 5,
+        "21": 0,
+        "22": 10,
+        "23": 10
+      },
+      "Martial": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0
+      },
+      "Halberd": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 10,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0
+      },
+      "Mononofu": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0
+      },
+      "DualSword": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0
+      },
+      "Crusher": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "Sprite": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0
+      },
+      "Shield": {
+        "0": 10,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      },
+      "Dagger": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      },
+      "Knight": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0
+      },
+      "Priest": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 5,
+        "6": 5,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 5,
+        "12": 5,
+        "13": 10,
+        "14": 0
+      },
+      "Hunter": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0
+      },
+      "Assassin": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0
+      },
+      "Wizard": {
+        "0": 10,
+        "1": 0,
+        "2": 5,
+        "3": 10,
+        "4": 5,
+        "5": 10,
+        "6": 5,
+        "7": 5,
+        "8": 10,
+        "9": 0,
+        "10": 10,
+        "11": 5,
+        "12": 10,
+        "13": 10,
+        "14": 0
+      },
+      "Guard": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0
+      },
+      "DarkPower": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      },
+      "MagicBlade": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0
+      },
+      "Barehand": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      },
+      "Ninja": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0
+      },
+      "Partisan": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "Necromancer": {
+        "0": 5,
+        "1": 10,
+        "2": 10,
+        "3": 0,
+        "4": 5,
+        "5": 10,
+        "6": 10,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      },
+      "Survival": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0
+      },
+      "Support": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0
+      },
+      "Battle": {
+        "0": 10,
+        "1": 5,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 5,
+        "7": 0,
+        "8": 0,
+        "9": 10,
+        "10": 0,
+        "11": 0,
+        "12": 10,
+        "13": 0,
+        "14": 0
+      },
+      "Minstrel": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0
+      },
+      "Dancer": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      },
+      "Golem": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0
+      },
+      "Smith": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0,
+        "15": 0,
+        "16": 0,
+        "17": 0,
+        "18": 0,
+        "19": 0,
+        "20": 0,
+        "21": 0,
+        "22": 0
+      },
+      "Alchemy": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0,
+        "7": 0,
+        "8": 0,
+        "9": 0,
+        "10": 0,
+        "11": 0,
+        "12": 0,
+        "13": 0,
+        "14": 0
+      },
+      "Tamer": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "4": 0,
+        "5": 0,
+        "6": 0
+      }
+    },
+    "activeBuffs": {
+      "Blade:20": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:3": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:5": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:6": {
+        "active": true,
+        "stacks": 0
+      },
+      "Support:7": {
+        "active": true,
+        "stacks": 0
+      },
+      "Support:8": {
+        "active": true,
+        "stacks": 0
+      },
+      "Support:9": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:10": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:11": {
+        "active": false,
+        "stacks": 0
+      },
+      "Support:12": {
+        "active": false,
+        "stacks": 0
+      },
+      "DarkPower:6": {
+        "active": false,
+        "stacks": 1
+      },
+      "Dancer:5": {
+        "active": false,
+        "stacks": 0
+      },
+      "Golem:0": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:0": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:1": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:2": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:3": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:4": {
+        "active": false,
+        "stacks": 0
+      },
+      "Minstrel:5": {
+        "active": false,
+        "stacks": 0
+      },
+      "Blade:21": {
+        "active": false,
+        "stacks": 0
+      },
+      "DualSword:11": {
+        "active": false,
+        "stacks": 0
+      },
+      "DualSword:12": {
+        "active": false,
+        "stacks": 0
+      },
+      "Halberd:19": {
+        "active": true,
+        "stacks": 3
+      },
+      "Halberd:17": {
+        "active": true,
+        "stacks": 0
+      },
+      "Mononofu:15": {
+        "active": false,
+        "stacks": 0
+      },
+      "Mononofu:16": {
+        "active": false,
+        "stacks": 0
+      },
+      "Knight:3": {
+        "active": false,
+        "stacks": 0
+      },
+      "Knight:2": {
+        "active": false,
+        "stacks": 0
+      },
+      "Martial:10": {
+        "active": false,
+        "stacks": 0
+      },
+      "Martial:17": {
+        "active": false,
+        "stacks": 0
+      },
+      "Shot:22": {
+        "active": false,
+        "stacks": 0
+      },
+      "Magic:22": {
+        "active": true,
+        "stacks": 0
+      },
+      "Assassin:5": {
+        "active": false,
+        "stacks": 0
+      },
+      "Assassin:6": {
+        "active": false,
+        "stacks": 0
+      },
+      "Assassin:9": {
+        "active": false,
+        "stacks": 0
+      },
+      "Shield:7": {
+        "active": false,
+        "stacks": 0
+      },
+      "Shield:10": {
+        "active": false,
+        "stacks": 0
+      },
+      "Shield:11": {
+        "active": false,
+        "stacks": 0
+      },
+      "Shield:12": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:0": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:1": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:7": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:8": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:12": {
+        "active": false,
+        "stacks": 0
+      },
+      "Priest:14": {
+        "active": false,
+        "stacks": 0
+      },
+      "Hunter:9": {
+        "active": false,
+        "stacks": 0
+      },
+      "Wizard:0": {
+        "active": true,
+        "stacks": 0
+      },
+      "Wizard:7": {
+        "active": false,
+        "stacks": 0
+      },
+      "Wizard:8": {
+        "active": true,
+        "stacks": 0
+      },
+      "Wizard:12": {
+        "active": true,
+        "stacks": 0
+      },
+      "Wizard:14": {
+        "active": false,
+        "stacks": 0
+      },
+      "DarkPower:7": {
+        "active": false,
+        "stacks": 0
+      },
+      "Partisan:7": {
+        "active": false,
+        "stacks": 0
+      }
+    },
+    "combo": [
+      {
+        "skillId": "Magic:6",
+        "tag": "none",
+        "includeSpecialAttack": false,
+        "inputs": {
+          "remainingMp": 0
+        }
+      },
+      {
+        "skillId": "Magic:11",
+        "tag": "smite",
+        "includeSpecialAttack": false,
+        "inputs": {
+          "charge": 200
+        }
+      },
+      {
+        "skillId": "Magic:4",
+        "tag": "smite",
+        "includeSpecialAttack": false,
+        "inputs": {}
+      }
+    ]
+  },
+  "scenario": {
+    "target": {
+      "bossLevel": 320,
+      "bossDef": 640,
+      "bossMdef": 320,
+      "bossCritResist": 15,
+      "bossPhysResist": 42,
+      "bossMagResist": 52
+    },
+    "conditions": {},
+    "optimizationPreferences": {
+      "rangeOverride": "SHORT",
+      "requirements": {
+        "maxHp": null,
+        "maxMp": null,
+        "amprBeforeDual": null,
+        "normalAttackCrit": null,
+        "aspd": null
+      },
+      "bannedCrystas": [
+        "오로로 콜론"
+      ]
+    }
+  }
+}

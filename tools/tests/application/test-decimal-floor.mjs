@@ -2,13 +2,13 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { spawnSync } from 'node:child_process';
 import vm from 'node:vm';
-const root = new URL('../../../', import.meta.url);
+const root = new URL('../../..', import.meta.url);
 const read = path => readFile(new URL(path, root), 'utf8');
 const context = { window:null, console };
 context.window = context;
 vm.createContext(context);
-vm.runInContext((await read('assets/js/optimization/solver-worker.js')).match(/const BASE_ASPD_MAP = \{[^}]+\};/)[0],context);
-for (const name of ['stat-registry','calculation-policies','calculator']) vm.runInContext(await read(`assets/js/${name}.js`),context);
+vm.runInContext((await read('web/src/ui/crysta-ui.js')).match(/const BASE_ASPD_MAP = \{[^}]+\};/)[0],context);
+for (const name of ['calculation/stat-registry','calculation/calculation-policies','calculation/calculator']) vm.runInContext(await read(`web/src/${name}.js`),context);
 const math = context.ToramExactMath;
 for (const [a,p,expected] of [[25,16,29],[50,14,57],[45,40,63],[-25,16,-29],[25,16.48,29],[25,15.999999999999,28]]) {
   assert.equal(math.percent(a,p),expected,`${a} + ${p}%`);
@@ -46,8 +46,8 @@ for(const item of cases) {
   const result=context.ToramCalculationKernel.evaluateContext(item.baseContext,[]);
   assert.equal(result.optimizationDamageFactor,item.expected,item.id);
 }
-const native=spawnSync('cargo',['run','--offline','--quiet','--manifest-path','src-tauri/Cargo.toml','--bin','crysta_native_summary'],{
-  cwd:new URL('../../../',import.meta.url), input:JSON.stringify({cases}),encoding:'utf8',maxBuffer:4*1024*1024
+const native=spawnSync('cargo',['run','--offline','--quiet','--manifest-path','desktop/Cargo.toml','--bin','crysta_native_summary'],{
+  cwd:new URL('../../..',import.meta.url), input:JSON.stringify({cases}),encoding:'utf8',maxBuffer:4*1024*1024
 });
 assert.equal(native.status,0,native.stderr);
 const results=JSON.parse(native.stdout);

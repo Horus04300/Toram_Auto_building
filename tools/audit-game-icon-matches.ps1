@@ -1,7 +1,7 @@
 param(
-  [string]$SkillRoot = (Join-Path $PSScriptRoot '..\assets\icons\skills'),
-  [string]$GameIconRoot = (Join-Path $PSScriptRoot '..\assets\game-data\ui\game-icons'),
-  [string]$OutputPath = (Join-Path $PSScriptRoot '..\assets\source-data\game-icon-skill-match-candidates.json'),
+  [string]$SkillRoot = (Join-Path $PSScriptRoot '..\web\public\icons\skills'),
+  [string]$GameIconRoot = (Join-Path $PSScriptRoot '..\data\sources\game-ui\game-icons'),
+  [string]$OutputPath = (Join-Path $PSScriptRoot '..\data\sources\game-icon-skill-match-candidates.json'),
   [ValidateRange(1, 10)][int]$Top = 3,
   [switch]$Force
 )

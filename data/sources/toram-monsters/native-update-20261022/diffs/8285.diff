@@ -1,0 +1,23 @@
+--- assets\source-data\toram-monsters\native-rules\MobBattleStatus-get_GuardProbability-7fff5fe33800.c
++++ 8285.c
+@@ -27,5 +27,5 @@
+           return iVar5;
+         }
+-        iVar4 = MobPropertyMaster_get_ValueA((undefined *)plStackX_8,(undefined *)0x0);
++        iVar4 = CALL3(plStackX_8,0);
+         iVar5 = iVar5 + iVar4;
+       }
+@@ -33,5 +33,5 @@
+         if (*(int *)(*(longlong *)(self + 0x10) + 0x4c) < 100) {
+           if (*(longlong *)(self + 0x18) == 0) goto LABEL0;
+-          cVar2 = CALL3(*(longlong *)(self + 0x18),0xe);
++          cVar2 = CALL4(*(longlong *)(self + 0x18),0xe);
+           if (cVar2 != '\0') {
+             bVar3 = MobStatusMasterEx_CheckMultiFlag
+@@ -54,5 +54,5 @@
+   }
+ LABEL0:
+-  CALL4();
++  CALL5();
+   pcVar1 = (code *)swi(3);
+   iVar5 = (*pcVar1)();

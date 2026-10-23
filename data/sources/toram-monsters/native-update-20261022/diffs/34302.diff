@@ -1,0 +1,588 @@
+--- assets\source-data\toram-monsters\native-schema\_LoadMapInfo_d__94-MoveNext-7fff6037e4c0.c
++++ 34302.c
+@@ -9,11 +9,10 @@
+   longlong *plVar8;
+   longlong lVar9;
+-  undefined *self_00;
+-  longlong *plVar10;
+-  undefined8 uVar11;
+-  longlong *plVar12;
+-  undefined *puVar13;
+-  longlong lVar14;
+-  undefined8 uVar15;
++  undefined *puVar10;
++  longlong *plVar11;
++  undefined8 uVar12;
++  longlong *plVar13;
++  undefined8 uVar14;
++  longlong lVar15;
+   undefined8 uVar16;
+   int aiStackX_8 [2];
+@@ -33,5 +32,5 @@
+     CALL0(&GLOBAL11);
+     CALL0(&GLOBAL12);
+-    CALL0(GLOBAL13);
++    CALL0(&GLOBAL13);
+     CALL0(&GLOBAL14);
+     CALL0(&GLOBAL15);
+@@ -82,5 +81,5 @@
+   }
+   iVar1 = *(int *)(self + 0x10);
+-  plVar12 = (longlong *)0x0;
++  plVar13 = (longlong *)0x0;
+   lVar9 = *(longlong *)(self + 0x30);
+   if (iVar1 != 0) {
+@@ -89,16 +88,16 @@
+       if (*(longlong *)(self + 0x38) == 0) goto LABEL0;
+       if (*(char *)(*(longlong *)(self + 0x38) + 0x10) == '\0') {
+-        plVar10 = (longlong *)CALL1(GLOBAL9,1);
++        plVar11 = (longlong *)CALL1(GLOBAL9,1);
+         lVar9 = *(longlong *)(self + 0x60);
+-        if (plVar10 == (longlong *)0x0) goto LABEL0;
++        if (plVar11 == (longlong *)0x0) goto LABEL0;
+         if ((lVar9 != 0) &&
+-           (lVar14 = CALL2(lVar9,*(undefined8 *)(*plVar10 + 0x40)), lVar14 == 0)) {
+-          uVar16 = CALL3();
+-          CALL4(uVar16,0);
++           (lVar15 = CALL2(lVar9,*(undefined8 *)(*plVar11 + 0x40)), lVar15 == 0)) {
++          uVar14 = CALL3();
++          CALL4(uVar14,0);
+           pcVar2 = (code *)swi(3);
+           bVar5 = (*pcVar2)();
+           return bVar5;
+         }
+-        if ((int)plVar10[3] == 0) {
++        if ((int)plVar11[3] == 0) {
+           CALL5();
+           pcVar2 = (code *)swi(3);
+@@ -106,12 +105,12 @@
+           return bVar5;
+         }
+-        plVar10[4] = lVar9;
+-        CALL6();
+-        _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL54,(undefined *)plVar10);
++        plVar11[4] = lVar9;
++        il2cpp_write_barrier_0();
++        CALL6(GLOBAL54,plVar11);
+         if (*(int *)(self + 0x70) < 5) {
+-          plVar12 = (longlong *)CALL1(GLOBAL9,1);
++          plVar13 = (longlong *)CALL1(GLOBAL9,1);
+           aiStackX_8[0] = *(int *)(self + 0x70) + 1;
+           lVar9 = CALL7(GLOBAL8,aiStackX_8);
+-          if (plVar12 == (longlong *)0x0) {
++          if (plVar13 == (longlong *)0x0) {
+             CALL8();
+             pcVar2 = (code *)swi(3);
+@@ -120,12 +119,12 @@
+           }
+           if ((lVar9 != 0) &&
+-             (lVar14 = CALL2(lVar9,*(undefined8 *)(*plVar12 + 0x40)), lVar14 == 0)) {
+-            uVar16 = CALL3();
+-            CALL4(uVar16,0);
++             (lVar15 = CALL2(lVar9,*(undefined8 *)(*plVar13 + 0x40)), lVar15 == 0)) {
++            uVar14 = CALL3();
++            CALL4(uVar14,0);
+             pcVar2 = (code *)swi(3);
+             bVar5 = (*pcVar2)();
+             return bVar5;
+           }
+-          if ((int)plVar12[3] == 0) {
++          if ((int)plVar13[3] == 0) {
+             CALL5();
+             pcVar2 = (code *)swi(3);
+@@ -133,27 +132,27 @@
+             return bVar5;
+           }
+-          plVar12[4] = lVar9;
+-          CALL6();
+-          _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL50,(undefined *)plVar12);
+-          uVar16 = CALL9(GLOBAL24);
+-          CALL10(uVar16,GLOBAL59,0);
+-          *(undefined8 *)(self + 0x18) = uVar16;
+-          CALL6();
++          plVar13[4] = lVar9;
++          il2cpp_write_barrier_0();
++          CALL6(GLOBAL50,plVar13,0);
++          uVar14 = CALL9(GLOBAL24);
++          CALL10(uVar14,GLOBAL59,0);
++          *(undefined8 *)(self + 0x18) = uVar14;
++          il2cpp_write_barrier_0();
+           *(undefined4 *)(self + 0x10) = 2;
+           return 1;
+         }
+-        puVar13 = (undefined *)CALL9(GLOBAL21);
+-        _loadFieldData_d__125_System_IDisposable_Dispose(puVar13,(undefined *)0x0);
+-        *(undefined **)(self + 0x40) = puVar13;
+-        CALL6();
++        uVar14 = CALL9(GLOBAL21);
++        CALL6(uVar14,0);
++        *(undefined8 *)(self + 0x40) = uVar14;
++        il2cpp_write_barrier_0();
+         if (*(longlong *)(self + 0x40) == 0) goto LABEL0;
+         *(undefined1 *)(*(longlong *)(self + 0x40) + 0x10) = 0;
+-        puVar13 = (undefined *)CALL11(GLOBAL15);
+-        if (puVar13 == (undefined *)0x0) goto LABEL0;
+-        plVar10 = (longlong *)LocalizeManager_Get(puVar13,(undefined *)0x0,(undefined *)0x0);
+-        if (plVar10 != (longlong *)0x0) {
+-          if ((*(byte *)(*plVar10 + 0x130) < *(byte *)(GLOBAL16 + 0x130)) ||
++        puVar10 = (undefined *)CALL11(GLOBAL15);
++        if (puVar10 == (undefined *)0x0) goto LABEL0;
++        plVar11 = (longlong *)LocalizeManager_Get(puVar10,(undefined *)0x0,(undefined *)0x0);
++        if (plVar11 != (longlong *)0x0) {
++          if ((*(byte *)(*plVar11 + 0x130) < *(byte *)(GLOBAL16 + 0x130)) ||
+              (*(longlong *)
+-               (*(longlong *)(*plVar10 + 200) + -8 +
++               (*(longlong *)(*plVar11 + 200) + -8 +
+                (ulonglong)*(byte *)(GLOBAL16 + 0x130) * 8) != GLOBAL16)) {
+             bVar3 = false;
+@@ -163,36 +162,36 @@
+           }
+           if (bVar3) {
+-            plVar12 = plVar10;
++            plVar13 = plVar11;
+           }
+           lVar9 = CALL11(GLOBAL12);
+-          if (plVar12 == (longlong *)0x0) goto LABEL0;
+-          uVar7 = CALL12(plVar12,GLOBAL44,0);
+-          uVar15 = CALL12(plVar12,GLOBAL38,0);
+-          uVar16 = *(undefined8 *)(self + 0x40);
+-          uVar11 = CALL9(GLOBAL2);
+-          CALL13(uVar11,uVar16,GLOBAL20,0);
++          if (plVar13 == (longlong *)0x0) goto LABEL0;
++          uVar7 = CALL12(plVar13,GLOBAL44,0);
++          uVar16 = CALL12(plVar13,GLOBAL38,0);
++          uVar14 = *(undefined8 *)(self + 0x40);
++          uVar12 = CALL9(GLOBAL2);
++          CALL13(uVar12,uVar14,GLOBAL20,0);
+           if (lVar9 == 0) goto LABEL0;
+-          CALL14(lVar9,uVar7,uVar15,uVar11,0);
++          CALL14(lVar9,uVar7,uVar16,uVar12,0);
+           goto LABEL1;
+         }
+       }
+       else {
+-        lVar14 = CALL11(GLOBAL14);
+-        if (lVar14 == 0) goto LABEL0;
++        lVar15 = CALL11(GLOBAL14);
++        if (lVar15 == 0) goto LABEL0;
+         in_stack_ffffffffffffffb8 = in_stack_ffffffffffffffb8 & GLOBAL60;
+         plVar6 = (longlong *)
+-                 CALL15(lVar14,*(undefined8 *)(self + 0x60),*(undefined8 *)(self + 0x68),4
++                 CALL15(lVar15,*(undefined8 *)(self + 0x60),*(undefined8 *)(self + 0x68),4
+                                   ,in_stack_ffffffffffffffb8,1,0);
+-        plVar10 = plVar12;
++        plVar11 = plVar13;
+         if ((plVar6 != (longlong *)0x0) && (*plVar6 == GLOBAL7)) {
+-          plVar10 = plVar6;
++          plVar11 = plVar6;
+         }
+         if (self[0x48] != '\0') {
+-          lVar14 = CALL11(GLOBAL14);
++          lVar15 = CALL11(GLOBAL14);
+           aiStackX_8[0] = *(int *)(self + 0x58);
+-          uVar16 = *(undefined8 *)(self + 0x60);
++          uVar14 = *(undefined8 *)(self + 0x60);
+           uVar7 = CALL7(GLOBAL8,aiStackX_8);
+           uVar7 = CALL16(GLOBAL57,uVar7,0);
+-          if (lVar14 == 0) {
++          if (lVar15 == 0) {
+             CALL8();
+             pcVar2 = (code *)swi(3);
+@@ -201,7 +200,7 @@
+           }
+           plVar8 = (longlong *)
+-                   CALL15(lVar14,uVar16,uVar7,0,
++                   CALL15(lVar15,uVar14,uVar7,0,
+                                     in_stack_ffffffffffffffb8 & GLOBAL60,1,0);
+-          plVar6 = plVar12;
++          plVar6 = plVar13;
+           if (plVar8 != (longlong *)0x0) {
+             if ((*(byte *)(*plVar8 + 0x130) < *(byte *)(GLOBAL17 + 0x130)) ||
+@@ -224,12 +223,12 @@
+           if (cVar4 != '\0') {
+             if (plVar6 == (longlong *)0x0) goto LABEL0;
+-            uVar16 = CALL19(plVar6,0);
+-            *(undefined8 *)(self + 0x50) = uVar16;
+-            CALL6();
+-          }
+-        }
+-        lVar14 = CALL11(GLOBAL14);
+-        if (lVar14 == 0) goto LABEL0;
+-        CALL20(lVar14,*(undefined8 *)(self + 0x60),0,0);
++            uVar14 = CALL19(plVar6,0);
++            *(undefined8 *)(self + 0x50) = uVar14;
++            il2cpp_write_barrier_0();
++          }
++        }
++        lVar15 = CALL11(GLOBAL14);
++        if (lVar15 == 0) goto LABEL0;
++        CALL20(lVar15,*(undefined8 *)(self + 0x60),0,0);
+         if (*(longlong *)(self + 0x38) == 0) goto LABEL0;
+         if (*(char *)(*(longlong *)(self + 0x38) + 0x10) != '\0') {
+@@ -237,14 +236,14 @@
+             CALL17();
+           }
+-          cVar4 = CALL18(plVar10);
++          cVar4 = CALL18(plVar11);
+           if (cVar4 != '\0') {
+-            if (plVar10 != (longlong *)0x0) {
+-              CALL21(plVar10,1,0);
+-              lVar14 = CALL22(plVar10,0);
+-              if ((lVar9 != 0) && (uVar16 = CALL23(lVar9,0), lVar14 != 0)) {
+-                CALL24(lVar14,uVar16,0);
+-                uVar16 = CALL25(plVar10,GLOBAL6);
+-                *(undefined8 *)(lVar9 + 0x20) = uVar16;
+-                CALL6();
++            if (plVar11 != (longlong *)0x0) {
++              CALL21(plVar11,1,0);
++              lVar15 = CALL22(plVar11,0);
++              if ((lVar9 != 0) && (uVar14 = CALL23(lVar9,0), lVar15 != 0)) {
++                CALL24(lVar15,uVar14,0);
++                uVar14 = CALL25(plVar11,GLOBAL6);
++                *(undefined8 *)(lVar9 + 0x20) = uVar14;
++                il2cpp_write_barrier_0();
+                 if (self[0x48] == '\0') {
+                   return 0;
+@@ -261,15 +260,15 @@
+           }
+         }
+-        puVar13 = (undefined *)CALL9(GLOBAL23);
+-        _loadFieldData_d__125_System_IDisposable_Dispose(puVar13,(undefined *)0x0);
+-        if (puVar13 == (undefined *)0x0) goto LABEL0;
+-        puVar13[0x10] = 0;
+-        self_00 = (undefined *)CALL11(GLOBAL15);
+-        if (self_00 == (undefined *)0x0) goto LABEL0;
+-        plVar10 = (longlong *)LocalizeManager_Get(self_00,(undefined *)0x0,(undefined *)0x0);
+-        if (plVar10 != (longlong *)0x0) {
+-          if ((*(byte *)(*plVar10 + 0x130) < *(byte *)(GLOBAL16 + 0x130)) ||
++        lVar9 = CALL9(GLOBAL23);
++        CALL6(lVar9);
++        if (lVar9 == 0) goto LABEL0;
++        *(undefined1 *)(lVar9 + 0x10) = 0;
++        puVar10 = (undefined *)CALL11(GLOBAL15);
++        if (puVar10 == (undefined *)0x0) goto LABEL0;
++        plVar11 = (longlong *)LocalizeManager_Get(puVar10,(undefined *)0x0,(undefined *)0x0);
++        if (plVar11 != (longlong *)0x0) {
++          if ((*(byte *)(*plVar11 + 0x130) < *(byte *)(GLOBAL16 + 0x130)) ||
+              (*(longlong *)
+-               (*(longlong *)(*plVar10 + 200) + -8 +
++               (*(longlong *)(*plVar11 + 200) + -8 +
+                (ulonglong)*(byte *)(GLOBAL16 + 0x130) * 8) != GLOBAL16)) {
+             bVar3 = false;
+@@ -279,14 +278,14 @@
+           }
+           if (bVar3) {
+-            plVar12 = plVar10;
+-          }
+-          lVar9 = CALL11(GLOBAL12);
+-          if (plVar12 == (longlong *)0x0) goto LABEL0;
+-          uVar16 = CALL12(plVar12,GLOBAL44,0);
+-          uVar7 = CALL12(plVar12,GLOBAL38,0);
+-          uVar15 = CALL9(GLOBAL2);
+-          CALL13(uVar15,puVar13,GLOBAL22,0);
+-          if (lVar9 == 0) goto LABEL0;
+-          CALL14(lVar9,uVar16,uVar7,uVar15,0);
++            plVar13 = plVar11;
++          }
++          lVar15 = CALL11(GLOBAL12);
++          if (plVar13 == (longlong *)0x0) goto LABEL0;
++          uVar14 = CALL12(plVar13,GLOBAL44,0);
++          uVar7 = CALL12(plVar13,GLOBAL38,0);
++          uVar16 = CALL9(GLOBAL2);
++          CALL13(uVar16,lVar9,GLOBAL22,0);
++          if (lVar15 == 0) goto LABEL0;
++          CALL14(lVar15,uVar14,uVar7,uVar16,0);
+           goto LABEL2;
+         }
+@@ -304,5 +303,5 @@
+         if (*(char *)(*(longlong *)(self + 0x40) + 0x10) == '\0') {
+           *(undefined8 *)(self + 0x18) = 0;
+-          CALL6();
++          il2cpp_write_barrier_0();
+           *(undefined4 *)(self + 0x10) = 3;
+           return 1;
+@@ -324,25 +323,25 @@
+   *(undefined4 *)(self + 0x10) = 0xffffffff;
+   self[0x48] = 0;
+-  CALL6();
++  il2cpp_write_barrier_0();
+   *(undefined4 *)(self + 0x58) = 0xffffffff;
+   *(undefined8 *)(self + 0x60) = GLOBAL53;
+-  CALL6();
++  il2cpp_write_barrier_0();
+   *(undefined8 *)(self + 0x68) = GLOBAL53;
+-  CALL6();
++  il2cpp_write_barrier_0();
+   iVar1 = *(int *)(self + 0x20);
+   switch(iVar1) {
+   case 4:
+-    *(undefined8 *)(self + 0x60) = uRam00007fff62458310;
+-    CALL6();
++    *(undefined8 *)(self + 0x60) = uRam00007ffe9c951c28;
++    il2cpp_write_barrier_0();
+     aiStackX_8[0] = 0;
+     uVar7 = CALL7(GLOBAL8,aiStackX_8);
+-    uVar16 = uRam00007fff62467fc8;
++    uVar14 = uRam00007ffe9c962268;
+     goto LABEL4;
+   case 5:
+-    *(undefined8 *)(self + 0x60) = uRam00007fff62458498;
+-    CALL6();
++    *(undefined8 *)(self + 0x60) = uRam00007ffe9c951db0;
++    il2cpp_write_barrier_0();
+     aiStackX_8[0] = CONCAT31(aiStackX_8[0]._1_3_,self[0x24]);
+     uVar7 = CALL7(GLOBAL5,aiStackX_8);
+-    uVar16 = uRam00007fff623f7b60;
++    uVar14 = uRam00007ffe9c8f1d08;
+     goto LABEL4;
+   case 6:
+@@ -352,15 +351,15 @@
+     aiStackX_8[0] = *(int *)(self + 0x28) / 1000;
+     *(int *)(self + 0x58) = aiStackX_8[0];
+-    uVar16 = CALL7(GLOBAL8,aiStackX_8);
+-    uVar16 = CALL16(GLOBAL36,uVar16,0);
+-    *(undefined8 *)(self + 0x60) = uVar16;
+-    CALL6();
++    uVar14 = CALL7(GLOBAL8,aiStackX_8);
++    uVar14 = CALL16(GLOBAL36,uVar14,0);
++    *(undefined8 *)(self + 0x60) = uVar14;
++    il2cpp_write_barrier_0();
+     auStackX_18[0] = *(undefined4 *)(self + 0x28);
+-    uVar16 = CALL7(GLOBAL8,auStackX_18);
+-    uVar16 = CALL16(GLOBAL58,uVar16,0);
+-    *(undefined8 *)(self + 0x68) = uVar16;
+-    CALL6();
+-    lVar14 = CALL11(GLOBAL11);
+-    if (lVar14 == 0) {
++    uVar14 = CALL7(GLOBAL8,auStackX_18);
++    uVar14 = CALL16(GLOBAL58,uVar14,0);
++    *(undefined8 *)(self + 0x68) = uVar14;
++    il2cpp_write_barrier_0();
++    lVar15 = CALL11(GLOBAL11);
++    if (lVar15 == 0) {
+       CALL8();
+       pcVar2 = (code *)swi(3);
+@@ -368,74 +367,74 @@
+       return bVar5;
+     }
+-    self[0x48] = *(int *)(lVar14 + 0x28) != *(int *)(self + 0x58);
++    self[0x48] = *(int *)(lVar15 + 0x28) != *(int *)(self + 0x58);
+     break;
+   case 8:
+-    *(undefined8 *)(self + 0x60) = uRam00007fff62458250;
+-    CALL6();
++    *(undefined8 *)(self + 0x60) = uRam00007ffe9c951b68;
++    il2cpp_write_barrier_0();
+     aiStackX_8[0] = 0;
+     uVar7 = CALL7(GLOBAL8,aiStackX_8);
+-    uVar16 = uRam00007fff624635b8;
++    uVar14 = uRam00007ffe9c95d858;
+ LABEL4:
+-    uVar16 = CALL16(uVar16,uVar7,0);
+-code_r0x7fff6037ef38:
+-    *(undefined8 *)(self + 0x68) = uVar16;
+-    CALL6();
++    uVar14 = CALL16(uVar14,uVar7,0);
++code_r0x7ffe9a874aa8:
++    *(undefined8 *)(self + 0x68) = uVar14;
++    il2cpp_write_barrier_0();
+     break;
+   case 10:
+-    *(undefined8 *)(self + 0x60) = uRam00007fff624586e8;
+-    CALL6();
+-    *(undefined8 *)(self + 0x68) = uRam00007fff62471fd8;
+-    CALL6();
++    *(undefined8 *)(self + 0x60) = uRam00007ffe9c952010;
++    il2cpp_write_barrier_0();
++    *(undefined8 *)(self + 0x68) = uRam00007ffe9c96b9b8;
++    il2cpp_write_barrier_0();
+     break;
+   default:
+     if (iVar1 == 0x11) {
+       *(undefined8 *)(self + 0x60) = GLOBAL47;
+-      CALL6();
++      il2cpp_write_barrier_0();
+       aiStackX_8[0] = 0;
+       uVar7 = CALL7(GLOBAL8,aiStackX_8);
+-      uVar16 = GLOBAL34;
++      uVar14 = GLOBAL34;
+       goto LABEL4;
+     }
+     switch(iVar1) {
+     case 0x16:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff62458000;
+-      CALL6();
+-      lVar14 = CALL11(uRam00007fff6245c360);
+-      if (lVar14 == 0) goto LABEL0;
+-      plVar12 = *(longlong **)(lVar14 + 0x28);
+-      if (plVar12 != (longlong *)0x0) {
+-        if (((*(byte *)(lRam00007fff6244df18 + 0x130) <= *(byte *)(*plVar12 + 0x130)) &&
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c951918;
++      il2cpp_write_barrier_0();
++      lVar15 = CALL11(GLOBAL13);
++      if (lVar15 == 0) goto LABEL0;
++      plVar13 = *(longlong **)(lVar15 + 0x28);
++      if (plVar13 != (longlong *)0x0) {
++        if (((*(byte *)(lRam00007ffe9c9465d0 + 0x130) <= *(byte *)(*plVar13 + 0x130)) &&
+             (*(longlong *)
+-              (*(longlong *)(*plVar12 + 200) + -8 +
+-              (ulonglong)*(byte *)(lRam00007fff6244df18 + 0x130) * 8) == lRam00007fff6244df18)) &&
+-           ((char)plVar12[0xf] == '\x01')) {
+-          uVar16 = CALL28(self + 0x28,0);
+-          uVar16 = CALL29(uRam00007fff6246a0a8,uVar16,0);
+-          goto code_r0x7fff6037ef38;
+-        }
+-      }
+-      *(undefined8 *)(self + 0x68) = uRam00007fff6246a178;
+-      CALL6();
++              (*(longlong *)(*plVar13 + 200) + -8 +
++              (ulonglong)*(byte *)(lRam00007ffe9c9465d0 + 0x130) * 8) == lRam00007ffe9c9465d0)) &&
++           ((char)plVar13[0xf] == '\x01')) {
++          uVar14 = CALL28(self + 0x28,0);
++          uVar14 = CALL29(uRam00007ffe9c963a88,uVar14,0);
++          goto code_r0x7ffe9a874aa8;
++        }
++      }
++      *(undefined8 *)(self + 0x68) = uRam00007ffe9c963b58;
++      il2cpp_write_barrier_0();
+       break;
+     default:
+       goto LABEL5;
+     case 0x1b:
+-      uVar16 = CALL30(uRam00007fff62444220,0);
++      uVar14 = CALL30(uRam00007ffe9c93db38,0);
+       if (*(int *)(GLOBAL10 + 0xe0) == 0) {
+         CALL17();
+       }
+-      plVar10 = (longlong *)CALL31(uVar16,0);
+-      if (plVar10 != (longlong *)0x0) {
+-        if (*plVar10 == GLOBAL7) {
+-          plVar12 = plVar10;
+-        }
+-        if (plVar12 != (longlong *)0x0) {
+-          CALL21(plVar12,1,0);
+-          lVar14 = CALL22(plVar12,0);
+-          if ((lVar9 != 0) && (uVar16 = CALL23(lVar9,0), lVar14 != 0)) {
+-            CALL24(lVar14,uVar16,0);
+-            uVar16 = CALL25(plVar12,GLOBAL6);
+-            *(undefined8 *)(lVar9 + 0x20) = uVar16;
+-            CALL6();
++      plVar11 = (longlong *)CALL31(uVar14,0);
++      if (plVar11 != (longlong *)0x0) {
++        if (*plVar11 == GLOBAL7) {
++          plVar13 = plVar11;
++        }
++        if (plVar13 != (longlong *)0x0) {
++          CALL21(plVar13,1,0);
++          lVar15 = CALL22(plVar13,0);
++          if ((lVar9 != 0) && (uVar14 = CALL23(lVar9,0), lVar15 != 0)) {
++            CALL24(lVar15,uVar14,0);
++            uVar14 = CALL25(plVar13,GLOBAL6);
++            *(undefined8 *)(lVar9 + 0x20) = uVar14;
++            il2cpp_write_barrier_0();
+             return 0;
+           }
+@@ -444,46 +443,46 @@
+       goto LABEL0;
+     case 0x1e:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff62458498;
+-      CALL6();
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c951db0;
++      il2cpp_write_barrier_0();
+       aiStackX_8[0] = (uint)(byte)self[0x24] + ((byte)self[0x24] / 10) * -10;
+       uVar7 = CALL7(GLOBAL8,aiStackX_8);
+-      uVar16 = uRam00007fff623f7a90;
++      uVar14 = uRam00007ffe9c8f1c38;
+       goto LABEL4;
+     case 0x1f:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff624580c8;
+-      CALL6();
+-      uVar16 = CALL32(self + 0x24,0);
+-      uVar16 = CALL29(uRam00007fff62400410,uVar16,0);
+-      goto code_r0x7fff6037ef38;
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c9519e0;
++      il2cpp_write_barrier_0();
++      uVar14 = CALL32(self + 0x24,0);
++      uVar14 = CALL29(uRam00007ffe9c8f9cd0,uVar14,0);
++      goto code_r0x7ffe9a874aa8;
+     case 0x20:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff62458620;
+-      CALL6();
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c951f40;
++      il2cpp_write_barrier_0();
+       if (*(int *)(self + 0x28) == 0x17250) {
+-        *(undefined8 *)(self + 0x68) = uRam00007fff6246b388;
+-        CALL6();
++        *(undefined8 *)(self + 0x68) = uRam00007ffe9c964d68;
++        il2cpp_write_barrier_0();
+       }
+       else {
+-        *(undefined8 *)(self + 0x68) = uRam00007fff6246b2c0;
+-        CALL6();
++        *(undefined8 *)(self + 0x68) = uRam00007ffe9c964ca0;
++        il2cpp_write_barrier_0();
+       }
+       break;
+     case 0x21:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff62458188;
+-      CALL6();
+-      *(undefined8 *)(self + 0x68) = uRam00007fff6241a8e0;
+-      CALL6();
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c951aa0;
++      il2cpp_write_barrier_0();
++      *(undefined8 *)(self + 0x68) = uRam00007ffe9c9141a0;
++      il2cpp_write_barrier_0();
+       break;
+     case 0x22:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff624587a8;
+-      CALL6();
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c9520d8;
++      il2cpp_write_barrier_0();
+       aiStackX_8[0] = *(int *)(self + 0x28);
+       uVar7 = CALL7(GLOBAL8,aiStackX_8);
+-      uVar16 = uRam00007fff62437f38;
++      uVar14 = uRam00007ffe9c931850;
+       goto LABEL4;
+     case 0x24:
+-      *(undefined8 *)(self + 0x60) = uRam00007fff62458560;
+-      CALL6();
+-      *(undefined8 *)(self + 0x68) = uRam00007fff6244ee10;
+-      CALL6();
++      *(undefined8 *)(self + 0x60) = uRam00007ffe9c951e78;
++      il2cpp_write_barrier_0();
++      *(undefined8 *)(self + 0x68) = uRam00007ffe9c948728;
++      il2cpp_write_barrier_0();
+     }
+   }
+@@ -493,19 +492,19 @@
+     return 0;
+   }
+-  puVar13 = (undefined *)CALL9(GLOBAL19);
+-  _loadFieldData_d__125_System_IDisposable_Dispose(puVar13,(undefined *)0x0);
+-  *(undefined **)(self + 0x38) = puVar13;
+-  CALL6();
++  uVar14 = CALL9(GLOBAL19);
++  CALL6(uVar14,0);
++  *(undefined8 *)(self + 0x38) = uVar14;
++  il2cpp_write_barrier_0();
+   if (*(longlong *)(self + 0x38) != 0) {
+     *(undefined1 *)(*(longlong *)(self + 0x38) + 0x10) = 0;
+-    lVar14 = CALL11(GLOBAL14);
+-    uVar16 = *(undefined8 *)(self + 0x60);
++    lVar15 = CALL11(GLOBAL14);
++    uVar14 = *(undefined8 *)(self + 0x60);
+     uVar7 = *(undefined8 *)(self + 0x38);
+-    uVar15 = CALL9(GLOBAL1);
+-    CALL33(uVar15,uVar7,GLOBAL18,0);
+-    if ((lVar14 != 0) && (uVar16 = CALL34(lVar14,uVar16,1,uVar15,0), lVar9 != 0)) {
+-      uVar16 = CALL35(lVar9,uVar16,0);
+-      *(undefined8 *)(self + 0x18) = uVar16;
+-      CALL6();
++    uVar16 = CALL9(GLOBAL1);
++    CALL33(uVar16,uVar7,GLOBAL18,0);
++    if ((lVar15 != 0) && (uVar14 = CALL34(lVar15,uVar14,1,uVar16,0), lVar9 != 0)) {
++      uVar14 = CALL35(lVar9,uVar14,0);
++      *(undefined8 *)(self + 0x18) = uVar14;
++      il2cpp_write_barrier_0();
+       *(undefined4 *)(self + 0x10) = 1;
+       return 1;

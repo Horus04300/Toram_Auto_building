@@ -1,0 +1,39 @@
+--- assets\source-data\toram-monsters\native-schema\MobStatusMaster-CreateStatusMaster-7fff5fe6a780.c
++++ 9204.c
+@@ -33,22 +33,22 @@
+   CALL2(uVar9,GLOBAL8);
+   *(undefined8 *)(puVar8 + 0x80) = uVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   uVar9 = CALL1(GLOBAL10);
+   CALL2(uVar9,GLOBAL8);
+   *(undefined8 *)(puVar8 + 0x88) = uVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   uVar9 = CALL1(GLOBAL11);
+   CALL2(uVar9,GLOBAL7);
+   *(undefined8 *)(puVar8 + 0x90) = uVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   uVar9 = CALL1(GLOBAL9);
+   CALL2(uVar9,GLOBAL6);
+   *(undefined8 *)(puVar8 + 0x98) = uVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   uVar9 = CALL1(GLOBAL12);
+-  CALL4(uVar9,0);
++  CALL3(uVar9,0);
+   *(undefined8 *)(puVar8 + 0xa0) = uVar9;
+-  CALL3();
+-  _loadFieldData_d__125_System_IDisposable_Dispose(puVar8,(undefined *)0x0);
++  il2cpp_write_barrier_0();
++  CALL4(puVar8,0);
+   *(int *)(puVar8 + 0xb0) = fieldId;
+   if (reader == (undefined *)0x0) {
+@@ -71,5 +71,5 @@
+                     (reader,*(undefined8 *)(*(longlong *)reader + 0x2a0));
+   *(undefined8 *)(puVar8 + 0x20) = uVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   sVar4 = (**(code **)(*(longlong *)reader + 0x208))
+                     (reader,*(undefined8 *)(*(longlong *)reader + 0x210));

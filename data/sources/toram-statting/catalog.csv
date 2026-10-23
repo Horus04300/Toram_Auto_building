@@ -1,0 +1,74 @@
+dictionary,id,bonusId,elementId,enumName,kr,us,UsePotential,Coefficient,MaterialCategory,AbilityCategory,Rate,BaseMax,UpperMax,LowerMax,OverRate,DoubleUse,materialName,projectStatId,projectUnit,displayMultiplierFloat32
+EnhanceCost,1,1,,bStr,STR+{0},STR +{0},5,50,2,1,1.0,20,50,50,1,0,Beast,STR,flat,1.0
+EnhanceCost,6,6,,bStrRate,STR+{0}%,STR +{0}%,10,100,2,1,0.0,10,10,10,1,0,Beast,STRP,percent,1.0
+EnhanceCost,2,2,,bInt,INT+{0},INT +{0},5,50,3,1,1.0,20,50,50,1,0,Wood,INT,flat,1.0
+EnhanceCost,7,7,,bIntRate,INT+{0}%,INT +{0}%,10,100,3,1,0.0,10,10,10,1,0,Wood,INTP,percent,1.0
+EnhanceCost,3,3,,bVit,VIT+{0},VIT +{0},5,50,0,1,1.0,20,50,50,1,0,Metal,VIT,flat,1.0
+EnhanceCost,8,8,,bVitRate,VIT+{0}%,VIT +{0}%,10,100,0,1,0.0,10,10,10,1,0,Metal,VITP,percent,1.0
+EnhanceCost,4,4,,bAgi,AGI+{0},AGI +{0},5,50,1,1,1.0,20,50,50,1,0,Cloth,AGI,flat,1.0
+EnhanceCost,9,9,,bAgiRate,AGI+{0}%,AGI +{0}%,10,100,1,1,0.0,10,10,10,1,0,Cloth,AGIP,percent,1.0
+EnhanceCost,5,5,,bDex,DEX+{0},DEX +{0},5,50,4,1,1.0,20,50,50,1,0,Drug,DEX,flat,1.0
+EnhanceCost,10,10,,bDexRate,DEX+{0}%,DEX +{0}%,10,100,4,1,0.0,10,10,10,1,0,Drug,DEXP,percent,1.0
+EnhanceCost,17,17,,bAtk,ATK+{0},ATK +{0},3,33,2,3,1.0,20,50,50,1,1,Beast,ATK,flat,1.0
+EnhanceCost,18,18,,bAtkRate,ATK+{0}%,ATK +{0}%,10,100,2,3,0.5,10,25,25,1,1,Beast,ATKP,percent,1.0
+EnhanceCost,40,40,,bCritical,크리티컬률+{0},Critical Rate +{0},1,10,5,8,1.0,20,50,20,1,0,Magic,CRIT,flat,1.0
+EnhanceCost,41,41,,bCriticalRate,크리티컬률+{0}%,Critical Rate +{0}%,1,10,5,8,1.0,20,50,20,1,0,Magic,CRITP,percent,1.0
+EnhanceCost,42,42,,bCriticalDmg,크리티컬대미지+{0},Critical Damage +{0},3,33,5,8,0.3499999940395355,20,30,30,1,0,Magic,CDMG,flat,1.0
+EnhanceCost,43,43,,bCriticalDmgRate,크리티컬대미지+{0}%,Critical Damage +{0}%,10,100,5,8,0.1899999976158142,10,15,15,1,0,Magic,CDMGP,percent,1.0
+EnhanceCost,19,19,,bMatk,MATK+{0},MATK +{0},3,33,3,3,1.0,20,50,50,1,1,Wood,MATK,flat,1.0
+EnhanceCost,20,20,,bMatkRate,MATK+{0}%,MATK +{0}%,10,100,3,3,0.5,10,25,25,1,1,Wood,MATKP,percent,1.0
+EnhanceCost,21,21,,bSta,안정률+{0}%,Stability +{0}%,20,200,4,3,0.1899999976158142,5,10,10,1,0,Drug,STABILITY,percent,1.0
+EnhanceCost,22,22,,bHit,명중+{0},Accuracy +{0},10,100,4,5,0.6899999976158142,10,30,30,2,1,Drug,ACC,flat,1.0
+EnhanceCost,23,23,,bHitRate,명중+{0}%,Accuracy +{0}%,20,200,4,5,0.1899999976158142,5,10,10,1,1,Drug,ACCP,flat,1.0
+EnhanceCost,24,24,,bFlee,회피+{0},Dodge +{0},10,100,1,6,0.6899999976158142,10,30,30,2,2,Cloth,FLEE,flat,1.0
+EnhanceCost,25,25,,bFleeRate,회피+{0}%,Dodge +{0}%,20,200,1,6,0.1899999976158142,5,10,10,1,2,Cloth,FLEEP,flat,1.0
+EnhanceCost,26,26,,bDef,DEF+{0},DEF +{0},3,33,0,4,1.0,20,50,50,10,2,Metal,DEF,flat,1.0
+EnhanceCost,27,27,,bDefRate,DEF+{0}%,DEF +{0}%,10,100,0,4,0.3499999940395355,10,20,20,1,2,Metal,DEFP,flat,1.0
+EnhanceCost,28,28,,bMdef,MDEF+{0},MDEF +{0},3,33,0,4,1.0,20,50,50,10,2,Metal,MDEF,flat,1.0
+EnhanceCost,29,29,,bMdefRate,MDEF+{0}%,MDEF +{0}%,10,100,0,4,0.3499999940395355,10,20,20,1,2,Metal,MDEFP,flat,1.0
+EnhanceCost,30,30,,bAspd,공격속도+{0},Attack Speed +{0},1,3,1,7,1.0,20,50,50,16,0,Cloth,ASPD,flat,1.0
+EnhanceCost,31,31,,bAspdRate,공격속도+{0}%,Attack Speed +{0}%,1,10,1,7,0.1899999976158142,20,25,25,1,0,Cloth,ASPD_P,percent,1.0
+EnhanceCost,32,32,,bCspd,시전속도+{0},Cast Speed +{0},1,3,4,7,1.0,20,50,50,16,0,Drug,CSPD,flat,1.0
+EnhanceCost,33,33,,bCspdRate,시전속도+{0}%,Cast Speed +{0}%,1,10,4,7,0.1899999976158142,20,25,25,1,0,Drug,CSPD_P,percent,1.0
+EnhanceCost,34,34,,bHpRecovery,HP 자연회복+{0},Natural HP Regen +{0},5,50,0,2,1.0,20,50,50,1,2,Metal,HP_REGEN,flat,1.0
+EnhanceCost,35,35,,bHpRecoveryRate,HP 자연회복+{0}%,Natural HP Regen +{0}%,10,100,0,2,0.0,10,10,10,1,2,Metal,HP_REGENP,flat,1.0
+EnhanceCost,36,36,,bMpRecovery,MP 자연회복+{0},Natural MP Regen +{0},10,100,3,2,0.5,10,25,25,1,2,Wood,MP_REGEN,flat,1.0
+EnhanceCost,37,37,,bMpRecoveryRate,MP 자연회복+{0}%,Natural MP Regen +{0}%,20,200,3,2,0.0,5,5,5,1,2,Wood,MP_REGENP,flat,1.0
+EnhanceCost,44,44,,bAntiVirus,이상내성+{0}%,Ailment Resistance +{0}%,20,200,5,10,0.1899999976158142,5,10,10,1,0,Magic,AILMENT_RES,flat,1.0
+EnhanceCost,45,45,,bGuard,Guard 회복+{0}%,Guard Recharge +{0}%,20,200,5,10,0.1899999976158142,5,10,5,1,0,Magic,GUARD_RECHARGE,flat,1.0
+EnhanceCost,46,46,,bGuardPower,Guard력+{0}%,Guard Power +{0}%,20,200,5,10,0.1899999976158142,5,10,5,1,0,Magic,GUARD_POWER,flat,1.0
+EnhanceCost,47,47,,bAvoid,Avoid 회복+{0}%,Evasion Recharge +{0}%,20,200,5,10,0.1899999976158142,5,10,5,1,0,Magic,AVOID_RECHARGE,flat,1.0
+EnhanceCost,49,49,,bPowerResist,물리내성+{0}%,Physical Resistance +{0}%,10,100,0,4,0.3499999940395355,10,20,20,1,2,Metal,PHYS_RES,flat,1.0
+EnhanceCost,50,50,,bMagicResist,마법내성+{0}%,Magic Resistance +{0}%,10,100,3,4,0.3499999940395355,10,20,20,1,2,Wood,MAG_RES,flat,1.0
+EnhanceCost,51,51,,bPowerResistBreaker,물리관통+{0}%,Physical Pierce +{0}%,20,200,2,3,0.4000000059604645,5,15,15,1,1,Beast,PHYS_PIERCE,percent,1.0
+EnhanceCost,52,52,,bMagicResistBreaker,마법관통+{0}%,Magic Pierce +{0}%,20,200,3,3,0.4000000059604645,5,15,15,1,1,Wood,MAG_PIERCE,percent,1.0
+EnhanceCost,53,53,,bFireKiller,불속성 대미지+{0}%,+{0}% damage to Fire,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,FIRE_DMG,flat,1.0
+EnhanceCost,54,54,,bAquaKiller,물속성 대미지+{0}%,+{0}% damage to Water,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,WATER_DMG,flat,1.0
+EnhanceCost,55,55,,bWindKiller,바람속성 대미지+{0}%,+{0}% damage to Wind,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,WIND_DMG,flat,1.0
+EnhanceCost,56,56,,bEarthKiller,땅속성 대미지+{0}%,+{0}% damage to Earth,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,EARTH_DMG,flat,1.0
+EnhanceCost,57,57,,bLightKiller,빛속성 대미지+{0}%,+{0}% damage to Light,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,LIGHT_DMG,flat,1.0
+EnhanceCost,58,58,,bDarkKiller,어둠속성 대미지+{0}%,+{0}% damage to Dark,5,50,5,9,0.3499999940395355,20,30,30,1,1,Magic,DARK_DMG,flat,1.0
+EnhanceCost,71,71,,bFireShield,불내성+{0}%,Fire Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,FIRE_RES,flat,1.0
+EnhanceCost,72,72,,bAquaShield,물내성+{0}%,Water Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,WATER_RES,flat,1.0
+EnhanceCost,73,73,,bWindShield,바람내성+{0}%,Wind Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,WIND_RES,flat,1.0
+EnhanceCost,74,74,,bEarthShield,땅내성+{0}%,Earth Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,EARTH_RES,flat,1.0
+EnhanceCost,75,75,,bLightShield,빛내성+{0}%,Light Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,LIGHT_RES,flat,1.0
+EnhanceCost,76,76,,bDarkShield,어둠내성+{0}%,Dark Resistance +{0}%,5,50,5,9,0.6899999976158142,20,40,40,1,2,Magic,DARK_RES,flat,1.0
+EnhanceCost,62,62,,bHateRate,어그로+{0}%,Aggro +{0}%,6,67,5,10,0.5,15,30,15,1,0,Magic,AGGRO,flat,1.0
+EnhanceCost,12,12,,bMaxHpTo10,최대 HP+{0},MaxHP +{0},3,33,0,2,1.0,20,50,50,16,0,Metal,MAXHP,flat,10.0
+EnhanceCost,13,13,,bMaxHpRate,최대 HP+{0}%,MaxHP +{0}%,10,100,0,2,0.3499999940395355,10,20,20,1,0,Metal,MAXHPP,percent,1.0
+EnhanceCost,110,110,,bMaxMpTo10,최대 MP+{0},MaxMP +{0},6,67,3,2,0.5,15,30,15,1,0,Wood,MAXMP,flat,10.0
+EnhanceCost,121,121,,bSurroundingsResist,주위경감+{0}%,Reduce Dmg\n(Foe Epicenter) +{0}%,3,30,0,4,1.0,0,30,0,1,2,Metal,AROUND_RES,flat,1.0
+EnhanceCost,122,122,,bRangeResist,범위경감+{0}%,Reduce Dmg\n(Player Epicenter) +{0}%,3,30,0,4,1.0,0,30,0,1,2,Metal,AREA_RES,flat,1.0
+EnhanceCost,123,123,,bLineResist,직선경감+{0}%,Reduce Dmg\n(Straight Line) +{0}%,3,30,2,4,1.0,0,30,0,1,2,Beast,LINE_RED,flat,1.0
+EnhanceCost,124,124,,bMoveAttackResist,돌진경감+{0}%,Reduce Dmg (Charge) +{0}%,3,30,2,4,1.0,0,30,0,1,2,Beast,CHARGE_RED,flat,1.0
+EnhanceCost,125,125,,bVerticalResist,운석경감+{0}%,Reduce Dmg (Meteor) +{0}%,2,20,4,4,1.0,0,30,0,1,2,Drug,,,1.0
+EnhanceCost,126,126,,bBreathResist,탄환경감+{0}%,Reduce Dmg (Bullet) +{0}%,2,20,3,4,1.0,0,30,0,1,2,Wood,BULLET_RES,flat,1.0
+EnhanceCost,127,127,,bTranslationResist,사인경감+{0}%,Reduce Dmg (Bowling) +{0}%,2,20,3,4,1.0,0,30,0,1,2,Wood,,,1.0
+EnhanceCost,128,128,,bWallResist,장판경감+{0}%,Reduce Dmg (Floor) +{0}%,2,20,4,4,1.0,0,30,0,1,2,Drug,AOE_RES,flat,1.0
+EnhanceElementCost,1,65,1,bElement,불,Fire,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0
+EnhanceElementCost,2,65,2,bElement,물,Water,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0
+EnhanceElementCost,3,65,3,bElement,바람,Wind,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0
+EnhanceElementCost,4,65,4,bElement,땅,Earth,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0
+EnhanceElementCost,5,65,5,bElement,빛,Light,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0
+EnhanceElementCost,6,65,6,bElement,어둠,Dark,100,300,5,11,0.0,1,1,0,1,0,Magic,,,1.0

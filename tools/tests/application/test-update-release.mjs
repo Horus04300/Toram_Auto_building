@@ -9,11 +9,11 @@ assert.throws(() => verifyVersion(root, 'v0.0.1'), /tag/);
 assert.equal(verifyVersion(root, `v${version}`), version);
 const dir = mkdtempSync(resolve(tmpdir(), 'toram-version-test-'));
 try {
-  mkdirSync(resolve(dir, 'src-tauri'));
-  for (const path of ['package.json', 'package-lock.json', 'src-tauri/Cargo.toml', 'src-tauri/Cargo.lock', 'src-tauri/tauri.conf.json']) {
+  mkdirSync(resolve(dir, 'desktop'));
+  for (const path of ['package.json', 'package-lock.json', 'desktop/Cargo.toml', 'desktop/Cargo.lock', 'desktop/tauri.conf.json']) {
     writeFileSync(resolve(dir, path), readFileSync(resolve(root, path)));
   }
-  const configPath = resolve(dir, 'src-tauri/tauri.conf.json');
+  const configPath = resolve(dir, 'desktop/tauri.conf.json');
   const config = JSON.parse(readFileSync(configPath));
   config.version = '0.0.1';
   writeFileSync(configPath, JSON.stringify(config));

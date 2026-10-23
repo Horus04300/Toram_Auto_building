@@ -1,0 +1,91 @@
+--- assets\source-data\toram-monsters\native-rules\BossMobBattleStatus-get_NecessaryHit-7fff5fdb22b0.c
++++ 7218.c
+@@ -4,14 +4,13 @@
+   longlong *plVar3;
+   char cVar4;
+-  int iVar5;
+-  longlong lVar6;
+-  int iVar7;
++  byte bVar5;
++  int iVar6;
++  longlong lVar7;
++  int iVar8;
+   undefined8 uStack_50;
+-  undefined8 uStack_48;
++  undefined8 *puStack_48;
+   longlong *plStack_40;
+-  undefined4 uStack_38;
+-  undefined4 uStack_34;
+-  undefined4 uStack_30;
+-  undefined4 uStack_2c;
++  undefined8 uStack_38;
++  undefined8 *puStack_30;
+   longlong *plStack_28;
+   if (GLOBAL0 == '\0') {
+@@ -24,43 +23,40 @@
+     GLOBAL0 = '\x01';
+   }
+-  iVar7 = 0;
++  iVar8 = 0;
+   if ((*(longlong *)(self + 0x30) != 0) &&
+-     (lVar6 = CALL1(*(longlong *)(self + 0x30),GLOBAL2), lVar6 != 0)) {
+-    CALL2(&uStack_50,lVar6);
+-    uStack_38 = (undefined4)uStack_50;
+-    uStack_34 = uStack_50._4_4_;
+-    uStack_30 = (undefined4)uStack_48;
+-    uStack_2c = uStack_48._4_4_;
++     (lVar7 = CALL1(*(longlong *)(self + 0x30),GLOBAL2), lVar7 != 0)) {
++    CALL2(&uStack_50,lVar7);
++    uStack_38 = uStack_50;
++    puStack_30 = puStack_48;
+     plStack_28 = plStack_40;
+     uStack_50 = 0;
+-    uStack_48 = &uStack_38;
+-    while (cVar4 = CALL3(&uStack_38,GLOBAL4), plVar3 = plStack_28,
+-          cVar4 != '\0') {
++    puStack_48 = &uStack_38;
++    while (cVar4 = CALL3(&uStack_38), plVar3 = plStack_28, cVar4 != '\0') {
+       if (plStack_28 == (longlong *)0x0) goto LABEL0;
+-      cVar4 = CALL4(plStack_28,0);
+-      if (cVar4 == '\0') {
+-        lVar6 = *plVar3;
+-        iVar5 = (**(code **)(lVar6 + 0x178))(plVar3,*(undefined8 *)(lVar6 + 0x180));
+-        iVar7 = iVar7 + iVar5;
++      bVar5 = MobPartsStatus_get_IsDead((undefined *)plStack_28,(undefined *)0x0);
++      if (bVar5 == 0) {
++        lVar7 = *plVar3;
++        iVar6 = (**(code **)(lVar7 + 0x178))(plVar3,*(undefined8 *)(lVar7 + 0x180));
++        iVar8 = iVar8 + iVar6;
+       }
+     }
+-    CALL5(&uStack_38,GLOBAL3);
++    CALL4(&uStack_38,GLOBAL3);
+     if (*(longlong *)(self + 0x10) != 0) {
+-      iVar5 = *(int *)(*(longlong *)(self + 0x10) + 0x38);
++      iVar6 = *(int *)(*(longlong *)(self + 0x10) + 0x38);
+       sVar1 = *(short *)(self + 0x28);
+       if (*(int *)(GLOBAL1 + 0xe0) == 0) {
+-        CALL6();
++        CALL5();
+       }
+-      iVar5 = Toram_Common_Rooms_BossDifficultyLevelMethods_GetStatusRate
+-                        (iVar5,(int)sVar1,(undefined *)0x0);
+-      return iVar5 + iVar7;
++      iVar6 = Toram_Common_Rooms_BossDifficultyLevelMethods_GetStatusRate
++                        (iVar6,(int)sVar1,(undefined *)0x0);
++      return iVar6 + iVar8;
+     }
+   }
++  CALL6();
++LABEL0:
++  CALL6();
+   CALL7();
+-LABEL0:
+-  CALL7();
+-  CALL8();
+   pcVar2 = (code *)swi(3);
+-  iVar7 = (*pcVar2)();
+-  return iVar7;
++  iVar8 = (*pcVar2)();
++  return iVar8;
+ }

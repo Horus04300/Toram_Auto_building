@@ -1,13 +1,13 @@
 // Optional real-browser integration gate. Native install is mocked; this is not upgrade E2E.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
-import { readFile } from 'node:fs/promises';
+import { readFile, mkdir } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 if (!process.env.CODEX_PLAYWRIGHT_PATH) throw new Error('Set CODEX_PLAYWRIGHT_PATH to the installed playwright module.');
 const { chromium } = require(process.env.CODEX_PLAYWRIGHT_PATH);
-const root = resolve(import.meta.dirname, '../..', 'dist');
+const root = resolve(import.meta.dirname, '../..', 'build/desktop');
 const mime = { '.html':'text/html', '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css', '.json':'application/json', '.svg':'image/svg+xml' };
 const server = createServer(async (req, res) => {
   try {
@@ -73,7 +73,9 @@ try {
   assert.equal(saved.lastSession.build.character.level, 321);
   assert.equal(saved.lastSession.update, undefined);
   assert.equal(await native.evaluate(() => document.body.inert), false);
-  await native.screenshot({ path:resolve(root, 'update-ui-check.png') });
+  const output = resolve(import.meta.dirname, '../../build/tmp');
+  await mkdir(output, { recursive:true });
+  await native.screenshot({ path:resolve(output, 'update-ui-check.png') });
   assert.deepEqual(errors, []);
   console.log('Real browser update UI: PASS (web unavailable, startup, text-only notes, paused consent/cancel, download editing, final flush; native install mocked)');
 } finally {

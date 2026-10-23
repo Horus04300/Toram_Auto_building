@@ -7,14 +7,14 @@ import { createRequire } from 'node:module';
 const require=createRequire(import.meta.url);
 if(!process.env.CODEX_PLAYWRIGHT_PATH) throw new Error('Set CODEX_PLAYWRIGHT_PATH');
 const {chromium}=require(process.env.CODEX_PLAYWRIGHT_PATH);
-const output=resolve('src-tauri/target/desktop-e2e',String(Date.now()));
+const output=resolve('desktop/target/desktop-e2e',String(Date.now()));
 const local=resolve(output,'local'), profile=resolve(output,'webview');
 await mkdir(local,{recursive:true}); await mkdir(profile,{recursive:true});
 const endpoint='http://127.0.0.1:9224';
 // Never attach to an existing user process.
 try { await fetch(endpoint+'/json/version'); throw new Error('CDP port 9224 is already occupied'); }
 catch(e) { if(e.message.includes('occupied')) throw e; }
-const executable=resolve('src-tauri/target/release/toram-online-auto-build-calculator.exe');
+const executable=resolve('desktop/target/release/toram-online-auto-build-calculator.exe');
 let child,browser,page;
 const report={output,executable,checks:[],errors:[],dialogs:[]};
 const delay=ms=>new Promise(r=>setTimeout(r,ms));

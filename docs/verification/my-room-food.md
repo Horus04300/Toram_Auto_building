@@ -12,8 +12,8 @@
 
 ## 코드·저장 경계
 
-- `assets/js/data/my-room-food.js`: 33개 통합 효과, 39개 원래 요리명, 원문 레벨별 전체 값, 연결 여부, 정규화.
-- `assets/js/my-room-food-ui.js`: 고정 행, 영문 효과 선택, Lv.1~10, 읽기 전용 제공량, 빠른 선택. 기존 외부 버프/범용 옵션은 계속 수동 추가할 수 있다.
+- `web/src/data/my-room-food.js`: 33개 통합 효과, 39개 원래 요리명, 원문 레벨별 전체 값, 연결 여부, 정규화.
+- `web/src/ui/my-room-food-ui.js`: 고정 행, 영문 효과 선택, Lv.1~10, 읽기 전용 제공량, 빠른 선택. 기존 외부 버프/범용 옵션은 계속 수동 추가할 수 있다.
 - `BuildDraft.myRoomFood`: `{id,level}` 또는 null 5개. 기존 schema v2의 선택 필드이며 요리 정보가 없는 저장은 빈 5칸으로 복원한다. 값·이름은 저장에 중복하지 않고 카탈로그에서 파생한다. 잘못된 ID/뒤쪽 중복은 빈 칸, 레벨은 정수 1~10으로 보정한다.
 - `BuildDraft.guildFoodBuff`: schema v2 선택 boolean. 누락은 true, 명시 false는 해제로 저장·복원한다. Application에서 MAXHP/MAXMP 옵션을 한 번 합산한다. 외부 버프의 수동 입력값을 임의로 제거하지 않는다.
 - Application에서만 음식 입력을 옵션으로 변환해 기존 계산 커널에 전달한다. STR/INT/VIT/AGI/DEX, ATK/MATK/WATK, CRIT, MAXHP/MAXMP/AMPR, 통합 ELEM_P를 연결한다.
@@ -27,7 +27,7 @@
 - `npm run verify:entry`: 86개 classic script 로딩 순서/브라우저·Tauri URL 통과.
 - `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
 - `npm run test:regression`: 70개 프로세스 종료 성공, 실제 69개 통과·Native 저장 E2E 1개 SKIP (`TORAM_E2E_CDP` 미설정).
-- `cargo test --manifest-path src-tauri/Cargo.toml settings_repository`: 저장 단위 테스트 3개 통과.
+- `cargo test --manifest-path desktop/Cargo.toml settings_repository`: 저장 단위 테스트 3개 통과.
 - `node tools/verification/verify-food-browser.mjs`: 실제 headless Edge에서 고정 5칸, 빠른 선택·첫 빈 칸 채우기, 중복 비활성화, 레벨 변경/상한, 읽기 전용, 새로고침 복원, STR/CRIT/MP/ELEM_P 계산 반영, 보존 효과 미연결, 구형 저장 복원, 390px 화면 범위 검증 통과. 데스크톱/모바일 스크린샷 육안 확인.
 - 브라우저 검증은 `CODEX_PLAYWRIGHT_PATH`에 설치된 Playwright 경로를 지정한다. `FOOD_QA_DIR` 지정 시 스크린샷을 그 경로에 저장한다.
 - 설치본 빌드·Native 실제 요리 저장 E2E·배포는 실행하지 않았다.

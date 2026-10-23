@@ -1,0 +1,485 @@
+{
+  "authority": "static selected saved-native functions plus frozen recipe/item catalogs; not native creation outcome execution",
+  "checkedDate": "2026-10-21",
+  "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "methods": [
+    {
+      "class": "ItemDBData",
+      "name": "get_Potential",
+      "method_definition_index": 18163,
+      "token": "0x060046f4",
+      "metadata_declaration_range": {
+        "offset": 4399084,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51506568,
+      "pointer_slot_va": "0x7fff6236ed88",
+      "runtime_va": "0x7fff600745c0",
+      "rva": "0xe245c0",
+      "status": "mapped",
+      "code_preview_hex": "0fb7414cc3cccccccccccccccccccccc0fb7413ac3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "ItemDBData-get_Potential-7fff600745c0.c",
+      "pseudocodeSha256": "76cff1c29426b571c5e120106e90de13fc2dc9ffb03c2de8b1701492c2fde5cd",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "MasterItemDataManager",
+      "name": "GetMasterItemData",
+      "method_definition_index": 18464,
+      "token": "0x06004821",
+      "metadata_declaration_range": {
+        "offset": 4409920,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 19005,
+        "exact_byval_name": "ItemDBData"
+      },
+      "pointer_slot_offset": 51508976,
+      "pointer_slot_va": "0x7fff6236f6f0",
+      "runtime_va": "0x7fff600847d0",
+      "rva": "0xe347d0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d13155602008bfa488bd9751f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MasterItemDataManager-GetMasterItemData-7fff600847d0.c",
+      "pseudocodeSha256": "b7a1b9f7de7d680c31ef709912e345f21d25029762197df2992ae59a99bd39ea",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "loadRecipe",
+      "method_definition_index": 70152,
+      "token": "0x06011209",
+      "metadata_declaration_range": {
+        "offset": 6270688,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "recipeManager",
+          "type_index": 23262,
+          "exact_byval_name": "RecipeDBDataManager"
+        },
+        {
+          "name": "category",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "proficiency",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isShop",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 10642
+      },
+      "pointer_slot_offset": 51922480,
+      "pointer_slot_va": "0x7fff623d4630",
+      "runtime_va": "0x7fff5fc95f00",
+      "rva": "0xa45f00",
+      "status": "mapped",
+      "code_preview_hex": "48896c24104889742418574883ec30803d6ee3940200418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-loadRecipe-7fff5fc95f00.c",
+      "pseudocodeSha256": "334c92e06099e789a8f4ec1e3c80c366a5df8dbfbff91f1ffa6d09354d86a4d3",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "<>c",
+      "name": "<loadRecipe>b__60_0",
+      "method_definition_index": 70209,
+      "token": "0x06011242",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 23259,
+          "exact_byval_name": "RecipeDBData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51922936,
+      "pointer_slot_va": "0x7fff623d47f8",
+      "runtime_va": "0x7fff5fc972c0",
+      "rva": "0xa472c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803de0cf940200488bda7513488d0d1f337c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "__c-_loadRecipe_b__60_0-7fff5fc972c0.c",
+      "pseudocodeSha256": "a909248b2d51ee625e6d5be61dad8853b75e98c085144bb60cc772ac7823db60",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "RecipeDBData",
+      "name": ".ctor",
+      "method_definition_index": 70285,
+      "token": "0x0601128e",
+      "metadata_declaration_range": {
+        "offset": 6275476,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "recipeId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "type",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "releaseLv",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "price",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "difficulty",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "createId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "createVal",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "category",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "materialDatas",
+          "type_index": 11169
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51923544,
+      "pointer_slot_va": "0x7fff623d4a58",
+      "runtime_va": "0x7fff5fc99490",
+      "rva": "0xa49490",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d10ae",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "RecipeDBData-_ctor-7fff5fc99490.c",
+      "pseudocodeSha256": "ad4b115c86bda9612c0344aa191b04b6216d6e36f6e7118af14304f4666cf2c5",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "RecipeDBDataManager",
+      "name": "GetData",
+      "method_definition_index": 70296,
+      "token": "0x06011299",
+      "metadata_declaration_range": {
+        "offset": 6275872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "category",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "proficiency",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isShop",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "isSmith",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 10642
+      },
+      "pointer_slot_offset": 51923632,
+      "pointer_slot_va": "0x7fff623d4ab0",
+      "runtime_va": "0x7fff5fc97ef0",
+      "rva": "0xa47ef0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803db8c3",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "RecipeDBDataManager-GetData-7fff5fc97ef0.c",
+      "pseudocodeSha256": "4ffb29e9cc8e98c87ad3516011b8ba38c6d40b1250503c4ad8cfe0903e2f9a7a",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "RecipeDBDataManager",
+      "name": "getData",
+      "method_definition_index": 70295,
+      "token": "0x06011298",
+      "metadata_declaration_range": {
+        "offset": 6275836,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "datas",
+          "type_index": 10642
+        },
+        {
+          "name": "proficiency",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isShop",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "isSmith",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 10642
+      },
+      "pointer_slot_offset": 51923624,
+      "pointer_slot_va": "0x7fff623d4aa8",
+      "runtime_va": "0x7fff5fc98a70",
+      "rva": "0xa48a70",
+      "status": "mapped",
+      "code_preview_hex": "44884c2420535557415441554881eca0000000803d38b894",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "RecipeDBDataManager-getData-7fff5fc98a70.partial.c",
+      "pseudocodeSha256": "531e7d1ea7fd2a4916dfcd60671209f7240090458c2bc359f311a9ade7d9786b",
+      "scope": "partial control flow; early player difficulty branch only"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnManufactureStartButton",
+      "method_definition_index": 70174,
+      "token": "0x0601121f",
+      "metadata_declaration_range": {
+        "offset": 6271480,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922656,
+      "pointer_slot_va": "0x7fff623d46e0",
+      "runtime_va": "0x7fff5fc92860",
+      "rva": "0xa42860",
+      "status": "mapped",
+      "code_preview_hex": "41564883ec20803d2b1a9502004c8bf17543488d0d173f7a",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-OnManufactureStartButton-7fff5fc92860.c",
+      "pseudocodeSha256": "03b73360f15678aa26d3b84dc676d33a2f78cf859dd6045201acdf572b109750",
+      "scope": "selected saved-native function"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "EquipmentProductionConnect",
+      "method_definition_index": 70180,
+      "token": "0x06011225",
+      "metadata_declaration_range": {
+        "offset": 6271696,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "takeController",
+          "type_index": 25676,
+          "exact_byval_name": "TakeController"
+        },
+        {
+          "name": "takeUid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922704,
+      "pointer_slot_va": "0x7fff623d4710",
+      "runtime_va": "0x7fff5fc8d8a0",
+      "rva": "0xa3d8a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803de269",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithManufacture-EquipmentProductionConnect-7fff5fc8d8a0.c",
+      "pseudocodeSha256": "2283cbe88a96326740f6e15f51e54f224d9f8d9d464ff83af1224e339429c825",
+      "scope": "selected saved-native function"
+    }
+  ],
+  "limitations": [
+    "Crafting +30% rounding and creation stat bonus were not found in these selected client entry points.",
+    "getData partial decompile has lower unreachable/PIC warnings; only earlier player Difficulty filter is cited.",
+    "Current event/proficiency/server eligibility and slot/failed-craft potential outcomes remain unverified."
+  ],
+  "files": [
+    {
+      "file": "__c-_loadRecipe_b__60_0-7fff5fc972c0.c",
+      "size": 764,
+      "sha256": "a909248b2d51ee625e6d5be61dad8853b75e98c085144bb60cc772ac7823db60"
+    },
+    {
+      "file": "base-profiles.json",
+      "size": 12154,
+      "sha256": "ae5fec13a2b8673d47bf671a94e9eacf8a4a1454d63f8553caca0cb461185e4e"
+    },
+    {
+      "file": "extract-base-profiles.py",
+      "size": 4346,
+      "sha256": "92e606103a41fbe31e2a51aca7133445e27a054b0cc8418d086c01ca0ddf2c44"
+    },
+    {
+      "file": "ItemDBData-get_Potential-7fff600745c0.c",
+      "size": 198,
+      "sha256": "76cff1c29426b571c5e120106e90de13fc2dc9ffb03c2de8b1701492c2fde5cd"
+    },
+    {
+      "file": "MasterItemDataManager-GetMasterItemData-7fff600847d0.c",
+      "size": 2013,
+      "sha256": "b7a1b9f7de7d680c31ef709912e345f21d25029762197df2992ae59a99bd39ea"
+    },
+    {
+      "file": "metadata.json",
+      "size": 97284,
+      "sha256": "582c74523bf28d01f1c79ab4617beb1cbf3bf4d19fcf809e9cfba26bca1acad9"
+    },
+    {
+      "file": "method-map.json",
+      "size": 206725,
+      "sha256": "6fdcce2e717d7ee02080f3f5f1266d99dd4976e7d156f5f7863566b8f94ac0c3"
+    },
+    {
+      "file": "README.md",
+      "size": 4721,
+      "sha256": "b9f7e96dc87ea781bb31222e5d72fb060230e5f81a0b494eb415d6967a4314dc"
+    },
+    {
+      "file": "RecipeDBData-_ctor-7fff5fc99490.c",
+      "size": 1327,
+      "sha256": "ad4b115c86bda9612c0344aa191b04b6216d6e36f6e7118af14304f4666cf2c5"
+    },
+    {
+      "file": "RecipeDBDataManager-GetData-7fff5fc97ef0.c",
+      "size": 1383,
+      "sha256": "4ffb29e9cc8e98c87ad3516011b8ba38c6d40b1250503c4ad8cfe0903e2f9a7a"
+    },
+    {
+      "file": "RecipeDBDataManager-getData-7fff5fc98a70.partial.c",
+      "size": 19577,
+      "sha256": "531e7d1ea7fd2a4916dfcd60671209f7240090458c2bc359f311a9ade7d9786b"
+    },
+    {
+      "file": "self-check.py",
+      "size": 807,
+      "sha256": "9ca830a7cd3a7a258d3fabf3ba56391175b27ae08d7a547372c67579f1722e1a"
+    },
+    {
+      "file": "SmithManufacture-EquipmentProductionConnect-7fff5fc8d8a0.c",
+      "size": 949,
+      "sha256": "2283cbe88a96326740f6e15f51e54f224d9f8d9d464ff83af1224e339429c825"
+    },
+    {
+      "file": "SmithManufacture-loadRecipe-7fff5fc95f00.c",
+      "size": 1994,
+      "sha256": "334c92e06099e789a8f4ec1e3c80c366a5df8dbfbff91f1ffa6d09354d86a4d3"
+    },
+    {
+      "file": "SmithManufacture-OnManufactureStartButton-7fff5fc92860.c",
+      "size": 4550,
+      "sha256": "03b73360f15678aa26d3b84dc676d33a2f78cf859dd6045201acdf572b109750"
+    },
+    {
+      "file": "TraceToramCrafting.java",
+      "size": 8452,
+      "sha256": "201e6f54f202cf8877970c5e7c80160f67204700c7642c069b10a292e661d60e"
+    }
+  ]
+}

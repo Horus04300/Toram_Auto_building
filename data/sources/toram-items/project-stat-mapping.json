@@ -1,0 +1,612 @@
+{
+  "schemaVersion": 1,
+  "statMapping": [
+    {
+      "capId": 1,
+      "enumName": "bStr",
+      "statId": "STR",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 2,
+      "enumName": "bInt",
+      "statId": "INT",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 3,
+      "enumName": "bVit",
+      "statId": "VIT",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 4,
+      "enumName": "bAgi",
+      "statId": "AGI",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 5,
+      "enumName": "bDex",
+      "statId": "DEX",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 6,
+      "enumName": "bStrRate",
+      "statId": "STRP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 7,
+      "enumName": "bIntRate",
+      "statId": "INTP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 8,
+      "enumName": "bVitRate",
+      "statId": "VITP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 9,
+      "enumName": "bAgiRate",
+      "statId": "AGIP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 10,
+      "enumName": "bDexRate",
+      "statId": "DEXP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 11,
+      "enumName": "bMaxHp",
+      "statId": "MAXHP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 12,
+      "enumName": "bMaxHpTo10",
+      "statId": "MAXHP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 13,
+      "enumName": "bMaxHpRate",
+      "statId": "MAXHPP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 14,
+      "enumName": "bMaxMp",
+      "statId": "MAXMP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 110,
+      "enumName": "bMaxMpTo10",
+      "statId": "MAXMP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 15,
+      "enumName": "bEqAtk",
+      "statId": "WATK",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 16,
+      "enumName": "bEqAtkRate",
+      "statId": "WATKP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 17,
+      "enumName": "bAtk",
+      "statId": "ATK",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 18,
+      "enumName": "bAtkRate",
+      "statId": "ATKP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 19,
+      "enumName": "bMatk",
+      "statId": "MATK",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 20,
+      "enumName": "bMatkRate",
+      "statId": "MATKP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 21,
+      "enumName": "bSta",
+      "statId": "STABILITY",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 22,
+      "enumName": "bHit",
+      "statId": "ACC",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 23,
+      "enumName": "bHitRate",
+      "statId": "ACCP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 24,
+      "enumName": "bFlee",
+      "statId": "FLEE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 25,
+      "enumName": "bFleeRate",
+      "statId": "FLEEP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 26,
+      "enumName": "bDef",
+      "statId": "DEF",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 27,
+      "enumName": "bDefRate",
+      "statId": "DEFP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 28,
+      "enumName": "bMdef",
+      "statId": "MDEF",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 29,
+      "enumName": "bMdefRate",
+      "statId": "MDEFP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 30,
+      "enumName": "bAspd",
+      "statId": "ASPD",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 31,
+      "enumName": "bAspdRate",
+      "statId": "ASPD_P",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 32,
+      "enumName": "bCspd",
+      "statId": "CSPD",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 33,
+      "enumName": "bCspdRate",
+      "statId": "CSPD_P",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 34,
+      "enumName": "bHpRecovery",
+      "statId": "HP_REGEN",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 35,
+      "enumName": "bHpRecoveryRate",
+      "statId": "HP_REGENP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 36,
+      "enumName": "bMpRecovery",
+      "statId": "MP_REGEN",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 37,
+      "enumName": "bMpRecoveryRate",
+      "statId": "MP_REGENP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 38,
+      "enumName": "bAtkMpRecovery",
+      "statId": "AMPR",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 39,
+      "enumName": "bAtkMpRecoveryRate",
+      "statId": "AMPRP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 40,
+      "enumName": "bCritical",
+      "statId": "CRIT",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 41,
+      "enumName": "bCriticalRate",
+      "statId": "CRITP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 42,
+      "enumName": "bCriticalDmg",
+      "statId": "CDMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 43,
+      "enumName": "bCriticalDmgRate",
+      "statId": "CDMGP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 44,
+      "enumName": "bAntiVirus",
+      "statId": "AILMENT_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 45,
+      "enumName": "bGuard",
+      "statId": "GUARD_RECHARGE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 46,
+      "enumName": "bGuardPower",
+      "statId": "GUARD_POWER",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 47,
+      "enumName": "bAvoid",
+      "statId": "AVOID_RECHARGE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 49,
+      "enumName": "bPowerResist",
+      "statId": "PHYS_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 50,
+      "enumName": "bMagicResist",
+      "statId": "MAG_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 51,
+      "enumName": "bPowerResistBreaker",
+      "statId": "PHYS_PIERCE",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 52,
+      "enumName": "bMagicResistBreaker",
+      "statId": "MAG_PIERCE",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 53,
+      "enumName": "bFireKiller",
+      "statId": "FIRE_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 54,
+      "enumName": "bAquaKiller",
+      "statId": "WATER_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 55,
+      "enumName": "bWindKiller",
+      "statId": "WIND_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 56,
+      "enumName": "bEarthKiller",
+      "statId": "EARTH_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 57,
+      "enumName": "bLightKiller",
+      "statId": "LIGHT_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 58,
+      "enumName": "bDarkKiller",
+      "statId": "DARK_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 59,
+      "enumName": "bNormalKiller",
+      "statId": "NEUTRAL_DMG",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 62,
+      "enumName": "bHateRate",
+      "statId": "AGGRO",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 63,
+      "enumName": "bExpRate",
+      "statId": "EXP",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 64,
+      "enumName": "bDropRate",
+      "statId": "DROP_RATE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 71,
+      "enumName": "bFireShield",
+      "statId": "FIRE_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 72,
+      "enumName": "bAquaShield",
+      "statId": "WATER_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 73,
+      "enumName": "bWindShield",
+      "statId": "WIND_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 74,
+      "enumName": "bEarthShield",
+      "statId": "EARTH_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 75,
+      "enumName": "bLightShield",
+      "statId": "LIGHT_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 76,
+      "enumName": "bDarkShield",
+      "statId": "DARK_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 77,
+      "enumName": "bNormalShield",
+      "statId": "NEUTRAL_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 104,
+      "enumName": "bMotionSpeed",
+      "statId": "MOTIONSPEED",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 105,
+      "enumName": "bLongRange",
+      "statId": "LRW",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 107,
+      "enumName": "bShortRange",
+      "statId": "SRW",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 111,
+      "enumName": "bFirstAttack",
+      "statId": "UNSHEATHE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 112,
+      "enumName": "bFirstAttackRate",
+      "statId": "UNSHEATHEP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 121,
+      "enumName": "bSurroundingsResist",
+      "statId": "AROUND_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 122,
+      "enumName": "bRangeResist",
+      "statId": "AREA_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 123,
+      "enumName": "bLineResist",
+      "statId": "LINE_RED",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 124,
+      "enumName": "bMoveAttackResist",
+      "statId": "CHARGE_RED",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 126,
+      "enumName": "bBreathResist",
+      "statId": "BULLET_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 128,
+      "enumName": "bWallResist",
+      "statId": "AOE_RES",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 135,
+      "enumName": "bAbsoluteHitRate",
+      "statId": "ABS_ACC",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 136,
+      "enumName": "bAbsoluteFreeRate",
+      "statId": "ABS_DODGE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 144,
+      "enumName": "bAvoidbreaker",
+      "statId": "ANTICIPATE",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 145,
+      "enumName": "bGuardbreaker",
+      "statId": "GUARD_BREAK",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 153,
+      "enumName": "bPhysicalPursuit",
+      "statId": "PHYS_PURSUIT",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 154,
+      "enumName": "bMagicPursuit",
+      "statId": "MAG_PURSUIT",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 159,
+      "enumName": "bPhysicalBarrier",
+      "statId": "PHYS_BARR",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 160,
+      "enumName": "bMagicBarrier",
+      "statId": "MAG_BARR",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 161,
+      "enumName": "bRateBarrier",
+      "statId": "FRAC_BARR",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 162,
+      "enumName": "bBarrierSpeed",
+      "statId": "BARR_SPEED",
+      "registryUnit": "flat"
+    },
+    {
+      "capId": 48,
+      "enumName": "bRespawn",
+      "statId": "REVIVE_TIME",
+      "scope": "crystas"
+    },
+    {
+      "capId": 127,
+      "enumName": "bTranslationResist",
+      "statId": "TRANSLATION_RES",
+      "scope": "crystas"
+    },
+    {
+      "capId": 129,
+      "enumName": "bWiddResist",
+      "statId": "WIDD_RES",
+      "scope": "crystas"
+    },
+    {
+      "capId": 130,
+      "enumName": "bExplosionResist",
+      "statId": "EXPLOSION_RES",
+      "scope": "crystas"
+    },
+    {
+      "capId": 137,
+      "enumName": "bSelfDmgRate",
+      "statId": "SELF_DMG_RATE",
+      "scope": "crystas"
+    },
+    {
+      "capId": 140,
+      "enumName": "bItemDelay",
+      "statId": "ITEM_DELAY",
+      "scope": "crystas"
+    },
+    {
+      "capId": 155,
+      "enumName": "bDamageReflection",
+      "statId": "REFLECT",
+      "scope": "crystas"
+    },
+    {
+      "capId": 164,
+      "enumName": "bGrantStopTumble",
+      "statId": "STOP_TUMBLE",
+      "scope": "crystas"
+    },
+    {
+      "capId": 165,
+      "enumName": "bGrantStopStun",
+      "statId": "STOP_STUN",
+      "scope": "crystas"
+    },
+    {
+      "capId": 168,
+      "enumName": "bVitToAtk",
+      "statId": "ATK_UP_VIT",
+      "scope": "crystas"
+    },
+    {
+      "capId": 174,
+      "enumName": "bAgiToMAtk",
+      "statId": "MATK_UP_AGI",
+      "scope": "crystas"
+    }
+  ],
+  "additionalMappingEvidence": "native-crysta-lineage/README.md; existing float32 display rules; effects without a kernel model remain notModeled"
+}

@@ -1,3 +1,4 @@
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -6,28 +7,28 @@ import vm from 'node:vm';
 
 const root = resolve(import.meta.dirname, '../../..');
 const fixture = JSON.parse(await readFile(resolve(root, 'tools/fixtures/crysta-native-runtime-26min-revenir.json'), 'utf8'));
-const nativeClientSource = await readFile(resolve(root, 'assets/js/optimization/native-client.js'), 'utf8');
+const nativeClientSource = await readFile(resolve(root, 'desktop/adapters/optimization-client.js'), 'utf8');
 const nativeCommandSource = (await Promise.all([
-  readFile(resolve(root, 'src-tauri/src/tauri_commands.rs'), 'utf8'),
-  readFile(resolve(root, 'src-tauri/src/optimization/service.rs'), 'utf8')
+  readFile(resolve(root, 'desktop/src/tauri_commands.rs'), 'utf8'),
+  readFile(resolve(root, 'desktop/src/optimization/service.rs'), 'utf8')
 ])).join('\n');
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const evaluator = require(resolve(root, 'assets/js/build-evaluator.js'));
-const compiler = require(resolve(root, 'assets/js/optimization/problem-compiler.js'));
-const optimizer = require(resolve(root, 'assets/js/optimization/exact-solver.js'));
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
+const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
+const compiler = require(resolve(root, 'web/src/optimization/problem-compiler.js'));
+const optimizer = require(resolve(root, 'web/src/optimization/candidate-preparation.js'));
 
 const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
 vm.createContext(context);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), context, { filename:'calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 const kernel = context.window.ToramCalculationKernel.evaluateContext;
 
 const dataContext = {};
 vm.createContext(dataContext);
-vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8')}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
 
 assert.equal(fixture.schema, 'toram.d4-native-runtime-fixture.v1');
 assert.equal(fixture.evidence.reportedWallTimeMinutes, 26);
@@ -83,7 +84,7 @@ function resolvePolveros(mainType) {
 const oneHandPolveros = resolvePolveros('한손검');
 assert.equal(oneHandPolveros.statDelta.LRW, 9, 'Polveros long-range damage is unconditional');
 assert.equal(oneHandPolveros.statDelta.SRW, undefined, 'Polveros short-range damage must not apply to a one-hand sword');
-assert.ok(oneHandPolveros.resolvedConditionMetadata.inactive.some(condition => condition.main === '자동활'), 'the inactive bow-only condition must be retained for audit');
+assert.ok(oneHandPolveros.resolvedConditionMetadata.inactive.some(condition => condition.eitherWeapon?.includes('자동활')), 'the inactive native weapon condition must be retained for audit');
 const bowPolveros = resolvePolveros('자동활');
 assert.equal(bowPolveros.statDelta.LRW, 9, 'Polveros long-range damage remains active with a bow');
 assert.equal(bowPolveros.statDelta.SRW, 9, 'Polveros short-range damage applies only with a bow');
@@ -106,7 +107,7 @@ const unknownLocked = compileWith(unknownSlots, [false, false, false, false, fal
 assert.ok(unknownLocked.diagnostics.some(item => item.code === 'UNKNOWN_LOCKED_CRYSTA'), 'unknown locked crysta must remain visible as a compiler diagnostic for locks');
 const relevantKeys = optimizer.deriveRelevantKeys(compiled, registry, adapter);
 assert.ok(relevantKeys.includes('SRW') && !relevantKeys.includes('LRW'), '근거리 루브닐 최적화는 SRW만 거리 대미지 축으로 사용해야 한다');
-const prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, pareto:{ maxComparisons:1000000 } });
+const prepared = optimizer.prepareProblem(compiled, { registry, relevantKeys, pareto:{ maxComparisons:20000000 } });
 assert.ok(prepared.metadata.paretoReports.every(report => report.complete), 'runtime input fixture requires complete Pareto preparation before runtime measurements');
 for(const group of compiled.groups){
   for(let i=1;i<group.packages.length;i++)assert.ok(group.packages[i-1].id.localeCompare(group.packages[i].id,'ko')<=0,'cached collator preserves package ordering');

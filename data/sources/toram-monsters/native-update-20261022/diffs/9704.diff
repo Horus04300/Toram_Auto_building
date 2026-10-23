@@ -1,0 +1,66 @@
+--- assets\source-data\toram-monsters\native-target\MobPropertyCut-get_CutAttack-7fff5fe83bb0.c
++++ 9704.c
+@@ -28,11 +28,11 @@
+     CALL3(lVar5,uVar7,GLOBAL3,0);
+     *(longlong *)(*(longlong *)(GLOBAL4 + 0xb8) + 8) = lVar5;
+-    CALL4();
++    il2cpp_write_barrier_0();
+   }
+   lVar2 = GLOBAL1;
+   if (*(longlong *)(GLOBAL1 + 0x38) == 0) {
+-    CALL5(GLOBAL1);
++    CALL4(GLOBAL1);
+   }
+-  lVar5 = CALL6(uVar6,lVar5,*(undefined8 *)(*(longlong *)(lVar2 + 0x38) + 0x10));
++  lVar5 = CALL5(uVar6,lVar5,*(undefined8 *)(*(longlong *)(lVar2 + 0x38) + 0x10));
+   if (GLOBAL5 == '\0') {
+     CALL0(&GLOBAL6,0);
+@@ -44,28 +44,28 @@
+   }
+   if (lVar5 == 0) {
+-    uVar6 = CALL7(GLOBAL11);
+-    uVar6 = CALL8(uVar6,0);
+-    uVar7 = CALL7(&GLOBAL6);
+-    CALL9(uVar6,uVar7);
++    uVar6 = CALL6(GLOBAL11);
++    uVar6 = CALL7(uVar6,0);
++    uVar7 = CALL6(&GLOBAL6);
++    CALL8(uVar6,uVar7);
+ LABEL0:
+     uVar6 = GLOBAL6;
+-    uVar7 = CALL10();
+-    CALL9(uVar7,uVar6);
++    uVar7 = CALL9();
++    CALL8(uVar7,uVar6);
+ LABEL1:
+-    CALL11();
++    CALL10();
+   }
+   else {
+     iVar8 = 0;
+-    lVar5 = CALL12(0,GLOBAL8,lVar5);
++    lVar5 = CALL11(0,GLOBAL8,lVar5);
+     while (lVar5 != 0) {
+-      cVar3 = CALL12(0,GLOBAL10);
++      cVar3 = CALL11(0,GLOBAL10);
+       if (cVar3 == '\0') {
+         if (lVar5 != 0) {
+-          CALL13(0,GLOBAL7);
++          CALL12(0,GLOBAL7);
+         }
+         return iVar8;
+       }
+       if (lVar5 == 0) goto LABEL1;
+-      iVar4 = CALL12(0,GLOBAL9);
++      iVar4 = CALL11(0,GLOBAL9);
+       if (0xffffffff < (ulonglong)((longlong)iVar8 + (longlong)iVar4 + 0x80000000))
+       goto LABEL0;
+@@ -73,6 +73,6 @@
+     }
+   }
+-  CALL11();
+-  CALL14();
++  CALL10();
++  CALL13();
+   pcVar1 = (code *)swi(3);
+   iVar8 = (*pcVar1)();

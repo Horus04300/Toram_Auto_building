@@ -1,0 +1,94 @@
+{
+  "authority": "saved-native-static-analysis; client pre-start warning calculation, not server RNG",
+  "sourceSnapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "image_base": "0x7fff5f250000",
+  "methods": [
+    {
+      "class": "SmithGrant",
+      "name": "OnGrantBeforeStartButton",
+      "method_definition_index": 69905,
+      "token": "0x06011112",
+      "metadata_declaration_range": {
+        "offset": 6261796,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920504,
+      "pointer_slot_va": "0x7fff623d3e78",
+      "runtime_va": "0x7fff5fc72250",
+      "rva": "0xa22250",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec40803dc71f970200488bf9755b488d0d27457c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-OnGrantBeforeStartButton-7fff5fc72250.c",
+      "pseudocodeSha256": "1a219543eb1201d27268157fe8b94a9b2b1d4e24fe38e2d4b004cc3bff432a54"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "getSuccessSkillRate",
+      "method_definition_index": 69917,
+      "token": "0x0601111e",
+      "metadata_declaration_range": {
+        "offset": 6262228,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920600,
+      "pointer_slot_va": "0x7fff623d3ed8",
+      "runtime_va": "0x7fff5fc75270",
+      "rva": "0xa25270",
+      "status": "mapped",
+      "code_preview_hex": "4889742418574883ec20488b894001000033ff4885c90f84",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-getSuccessSkillRate-7fff5fc75270.c",
+      "pseudocodeSha256": "50b550f7fd3fc55314d8bfe66561874bd6f47cb8e085d2d08c9790b95439c98c"
+    }
+  ],
+  "constants": {
+    "0x7fff61b52cfc": {
+      "hexLE": "0000c842",
+      "float32": 100.0
+    },
+    "0x7fff61b538a8": {
+      "hexLE": "33331340",
+      "float32": 2.299999952316284
+    }
+  },
+  "masterPotentialGetter": {
+    "class": "ItemDBData",
+    "name": "get_Potential",
+    "token": "0x060046f4",
+    "va": "0x7fff600745c0",
+    "rva": "0xe245c0",
+    "mappedBytesHex": "0fb7414cc3",
+    "meaning": "loads 16-bit field at +0x4c; positive master potential domain"
+  },
+  "denominator": "max(masterItemPotential,currentWeaponPotential)",
+  "operation": [
+    "D=max(masterItemPotential,currentWeaponPotential)",
+    "a=f32(f32(100)/f32(D))",
+    "b=f32(a*f32(cost-currentWeaponPotential))",
+    "c=f32(b*f32(2.3))",
+    "integerResult=trunc(f32(f32(100+skillBonus)-c))"
+  ],
+  "lowerClamp": "max(0,integerResult); values>=100 skip warning branch",
+  "serverSuccess": "not observed or established",
+  "scriptSha256": "74cb7b8b4cdeb9009004121a878f05428ae97b6819c86e5cc9090e2798bd3c70",
+  "reproduction": "Use TraceToramStattingSimulation.java with retained method-map.json; saved snapshot identity and private Ghidra settings as native-schema.",
+  "methodMapSha256": "82fe1aea0a07bb10763f5a215edfa211e952869412aa5fb9eb112131da469b70"
+}

@@ -1,0 +1,9 @@
+--- assets\source-data\toram-monsters\native-highraid-target\HighRaidBossBattleStatus-SetMobStatus-7fff5f4d33d0.c
++++ 73026.c
+@@ -4,5 +4,5 @@
+   ulonglong uVar3;
+   uint uVar4;
+-  *(undefined **)(self + 0x28) = mobStatus;
++  *(undefined **)(self + 0x28) = value;
+   if (GLOBAL0 != 0) {
+     uVar4 = (uint)((ulonglong)(self + 0x28) >> 0xc);

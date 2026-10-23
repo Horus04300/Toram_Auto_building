@@ -1,0 +1,246 @@
+{
+  "authority": "passive-targeted-item-formatter-constants",
+  "pid": 14220,
+  "moduleBase": "0x7fff5f250000",
+  "moduleSha256": "a3faf7156734768a3ff7349d4b94de029b68b823d974bf52f92bbc77f93f46dd",
+  "capturedUtc": "2026-10-17T06:16:54.636438+00:00",
+  "processAccess": "PROCESS_QUERY_INFORMATION | PROCESS_VM_READ",
+  "bytesRead": 553,
+  "limitList": [
+    96,
+    103,
+    108,
+    109,
+    115,
+    120
+  ],
+  "initializerFieldName": "EF2BA7DAEFA8D8337BDEE29DF61E5561A05950B2A3D56083A008941EBD1AEBE5",
+  "initializerToken": "0x400d46f",
+  "strings": {
+    "negativeReplacement": "+",
+    "empty": "",
+    "positiveColor": "[ffffff]",
+    "negativeColor": "[ff8888]",
+    "zeroColor": "[888888]",
+    "colorFormat": "{0}{1}[ffffff]",
+    "skillDefaultTag": "N",
+    "skillBracketPrefix": "[N]",
+    "skillUnknownName": "???"
+  },
+  "reads": [
+    {
+      "address": "0x7fff5fff5e00",
+      "bytes": 24,
+      "purpose": "GetBonusTime code identity",
+      "hex": "40534883ec20803d41fa5e02008bd9752b488d0d30a44502"
+    },
+    {
+      "address": "0x7fff62450248",
+      "bytes": 8,
+      "purpose": "BonusManager TypeInfo reference",
+      "hex": "800c1eb28b020000"
+    },
+    {
+      "address": "0x28bb21e0d38",
+      "bytes": 8,
+      "purpose": "BonusManager static_fields",
+      "hex": "605898858b020000"
+    },
+    {
+      "address": "0x28b85985870",
+      "bytes": 8,
+      "purpose": "BonusManager.limitList",
+      "hex": "00bf0a688d020000"
+    },
+    {
+      "address": "0x28d680abf00",
+      "bytes": 32,
+      "purpose": "limitList array header",
+      "hex": "d0ecdeb28b020000000000000000000000000000000000000600000000000000"
+    },
+    {
+      "address": "0x28d680abf20",
+      "bytes": 24,
+      "purpose": "limitList six int32 values",
+      "hex": "60000000670000006c0000006d0000007300000078000000"
+    },
+    {
+      "address": "0x7fff6244c0e0",
+      "bytes": 8,
+      "purpose": "limitList initializer RuntimeFieldHandle",
+      "hex": "586c67508c020000"
+    },
+    {
+      "address": "0x28c50676c58",
+      "bytes": 32,
+      "purpose": "Initializer FieldInfo",
+      "hex": "3038b8888c02000098d54962ff7f000010f355508c0200007c2e06006fd40004"
+    },
+    {
+      "address": "0x28c88b83830",
+      "bytes": 65,
+      "purpose": "Compiler SHA256 field name",
+      "hex": "4546324241374441454641384438333337424445453239444636314535353631413035393530423241334435363038334130303839343145424431414542453500"
+    },
+    {
+      "address": "0x7fff6241a898",
+      "bytes": 8,
+      "purpose": "negativeReplacement literal reference",
+      "hex": "004e98858b020000"
+    },
+    {
+      "address": "0x28b85984e00",
+      "bytes": 20,
+      "purpose": "negativeReplacement string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28b85984e14",
+      "bytes": 2,
+      "purpose": "negativeReplacement UTF-16",
+      "hex": "2b00"
+    },
+    {
+      "address": "0x7fff623f7f60",
+      "bytes": 8,
+      "purpose": "empty literal reference",
+      "hex": "405f98858b020000"
+    },
+    {
+      "address": "0x28b85985f40",
+      "bytes": 20,
+      "purpose": "empty string header",
+      "hex": "d0b325b08b020000000000000000000000000000"
+    },
+    {
+      "address": "0x7fff624263c8",
+      "bytes": 8,
+      "purpose": "positiveColor literal reference",
+      "hex": "9099e7678d020000"
+    },
+    {
+      "address": "0x28d67e79990",
+      "bytes": 20,
+      "purpose": "positiveColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d67e799a4",
+      "bytes": 16,
+      "purpose": "positiveColor UTF-16",
+      "hex": "5b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7fff62425428",
+      "bytes": 8,
+      "purpose": "negativeColor literal reference",
+      "hex": "b02a10028d020000"
+    },
+    {
+      "address": "0x28d02102ab0",
+      "bytes": 20,
+      "purpose": "negativeColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d02102ac4",
+      "bytes": 16,
+      "purpose": "negativeColor UTF-16",
+      "hex": "5b006600660038003800380038005d00"
+    },
+    {
+      "address": "0x7fff6241c668",
+      "bytes": 8,
+      "purpose": "zeroColor literal reference",
+      "hex": "70850c038d020000"
+    },
+    {
+      "address": "0x28d030c8570",
+      "bytes": 20,
+      "purpose": "zeroColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d030c8584",
+      "bytes": 16,
+      "purpose": "zeroColor UTF-16",
+      "hex": "5b003800380038003800380038005d00"
+    },
+    {
+      "address": "0x7fff62401c80",
+      "bytes": 8,
+      "purpose": "colorFormat literal reference",
+      "hex": "c056c8018d020000"
+    },
+    {
+      "address": "0x28d01c856c0",
+      "bytes": 20,
+      "purpose": "colorFormat string header",
+      "hex": "d0b325b08b02000000000000000000000e000000"
+    },
+    {
+      "address": "0x28d01c856d4",
+      "bytes": 28,
+      "purpose": "colorFormat UTF-16",
+      "hex": "7b0030007d007b0031007d005b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7fff624727d0",
+      "bytes": 8,
+      "purpose": "skillDefaultTag literal reference",
+      "hex": "e0c6d1668d020000"
+    },
+    {
+      "address": "0x28d66d1c6e0",
+      "bytes": 20,
+      "purpose": "skillDefaultTag string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28d66d1c6f4",
+      "bytes": 2,
+      "purpose": "skillDefaultTag UTF-16",
+      "hex": "4e00"
+    },
+    {
+      "address": "0x7fff62421fc8",
+      "bytes": 8,
+      "purpose": "skillBracketPrefix literal reference",
+      "hex": "10d5e3678d020000"
+    },
+    {
+      "address": "0x28d67e3d510",
+      "bytes": 20,
+      "purpose": "skillBracketPrefix string header",
+      "hex": "d0b325b08b020000000000000000000003000000"
+    },
+    {
+      "address": "0x28d67e3d524",
+      "bytes": 6,
+      "purpose": "skillBracketPrefix UTF-16",
+      "hex": "5b004e005d00"
+    },
+    {
+      "address": "0x7fff624408b0",
+      "bytes": 8,
+      "purpose": "skillUnknownName literal reference",
+      "hex": "f0e958678d020000"
+    },
+    {
+      "address": "0x28d6758e9f0",
+      "bytes": 20,
+      "purpose": "skillUnknownName string header",
+      "hex": "d0b325b08b020000000000000000000003000000"
+    },
+    {
+      "address": "0x28d6758ea04",
+      "bytes": 6,
+      "purpose": "skillUnknownName UTF-16",
+      "hex": "3f003f003f00"
+    }
+  ],
+  "limitations": [
+    "Sequential read of the fixed references only; not an atomic snapshot or general heap dump.",
+    "No player inventory, account information, function execution or target modification."
+  ]
+}

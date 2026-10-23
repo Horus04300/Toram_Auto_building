@@ -1,9 +1,16 @@
 node_modules/
-dist/
-src-tauri/target/
-src-tauri/gen/schemas/
+__pycache__/
+/build/
+desktop/target/
+engine/target/
+/data/sources/toram-items/pipeline/
+/data/sources/toram-monsters/pipeline/
+desktop/gen/schemas/
 
 # Updater private signing material must live outside this repository.
 *.key
 *.key.password
-release-assets/
+
+# Home server credentials and private account database.
+server/.env
+server/data/

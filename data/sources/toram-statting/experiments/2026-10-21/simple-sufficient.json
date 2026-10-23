@@ -1,0 +1,1469 @@
+{
+  "case": {
+    "equipmentType": 8,
+    "rounding": "combined-floor",
+    "frame": "atk-dte-stat",
+    "profile": {
+      "equipmentType": 8,
+      "label": "발도검",
+      "basePotential": 67,
+      "startingPotential": 128,
+      "craftStatBonus": 41,
+      "craftingRoundingModel": "combined-floor",
+      "startingPotentialNativeVerified": false,
+      "gameItemIds": [
+        25144
+      ],
+      "statterLevel": 325,
+      "statterTEC": 255,
+      "grantSkills": [
+        10,
+        10,
+        10
+      ],
+      "crafterAppStatBudget": 840,
+      "slotPenalty": "excluded from reference profile"
+    },
+    "positives": {
+      "18": 16,
+      "53": 24,
+      "6": 10
+    },
+    "negatives": {
+      "34": -32,
+      "36": -16,
+      "25": -7
+    },
+    "routes": {
+      "best": {
+        "negative-first": {
+          "warningPercent": 76,
+          "afterPotential": -147,
+          "steps": [
+            {
+              "34": -32,
+              "36": -16,
+              "25": -7
+            },
+            {
+              "18": 16,
+              "53": 24,
+              "6": 10
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "negative-first",
+          "prefixActions": 0,
+          "negativeGroups": 1
+        },
+        "combined": {
+          "warningPercent": 76,
+          "afterPotential": -147,
+          "steps": [
+            {
+              "34": -32,
+              "36": -16,
+              "25": -7
+            },
+            {
+              "18": 16,
+              "53": 24,
+              "6": 10
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "negative-first",
+          "prefixActions": 0,
+          "negativeGroups": 1
+        },
+        "baseline": {
+          "warningPercent": 76,
+          "afterPotential": -147,
+          "steps": [
+            {
+              "34": -32,
+              "36": -16,
+              "25": -7
+            },
+            {
+              "18": 16,
+              "53": 24,
+              "6": 10
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "negative-first",
+          "prefixActions": 0,
+          "negativeGroups": 1
+        },
+        "drain": {
+          "warningPercent": 64,
+          "afterPotential": -127,
+          "steps": [
+            {
+              "6": 1
+            },
+            {
+              "6": 2
+            },
+            {
+              "6": 3
+            },
+            {
+              "6": 4
+            },
+            {
+              "6": 5
+            },
+            {
+              "6": 6
+            },
+            {
+              "6": 7
+            },
+            {
+              "6": 8
+            },
+            {
+              "6": 9
+            },
+            {
+              "6": 10
+            },
+            {
+              "34": -32,
+              "36": -16,
+              "25": -7
+            },
+            {
+              "18": 16,
+              "53": 24
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "drain",
+          "prefixActions": 10,
+          "negativeGroups": 1
+        },
+        "mixed": {
+          "warningPercent": 75,
+          "afterPotential": -147,
+          "steps": [
+            {
+              "53": 1,
+              "34": -1
+            },
+            {
+              "34": -32,
+              "36": -16,
+              "25": -7
+            },
+            {
+              "18": 16,
+              "53": 24,
+              "6": 10
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "mixed",
+          "prefixActions": 2,
+          "negativeGroups": "mixed-then-remainder"
+        }
+      },
+      "prefixStatesGenerated": 234,
+      "negativeSchedulesAttempted": 300,
+      "completedRoutes": 300,
+      "uniqueCompletedRoutes": 300
+    }
+  },
+  "traces": {
+    "baseline": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 8,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 34,
+              "value": -32
+            },
+            {
+              "bonusId": 36,
+              "value": -16
+            },
+            {
+              "bonusId": 25,
+              "value": -7
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 16
+            },
+            {
+              "bonusId": 53,
+              "value": 24
+            },
+            {
+              "bonusId": 6,
+              "value": 10
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 8,
+          "label": "발도검",
+          "basePotential": 67,
+          "startingPotential": 128,
+          "craftStatBonus": 41,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            25144
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 128,
+            "afterPotential": 405,
+            "rowCosts": [
+              {
+                "bonusId": 34,
+                "old": 0,
+                "new": -32,
+                "delta": -32,
+                "cost": -79
+              },
+              {
+                "bonusId": 36,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 25,
+                "old": 0,
+                "new": -7,
+                "delta": -7,
+                "cost": -73
+              }
+            ],
+            "rowCostSum": -231,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": -277,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 887,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              }
+            ]
+          },
+          {
+            "beforePotential": 405,
+            "afterPotential": -147,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 16,
+                "delta": 16,
+                "cost": 220
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 24,
+                "delta": 24,
+                "cost": 140
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 10,
+                "delta": 10,
+                "cost": 100
+              }
+            ],
+            "rowCostSum": 460,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 552,
+            "warningPercent": 76,
+            "warningIntegerBeforeUpperBound": 76,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1,
+              "3": 1,
+              "9": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              },
+              {
+                "bonusId": 18,
+                "value": 16
+              },
+              {
+                "bonusId": 53,
+                "value": 24
+              },
+              {
+                "bonusId": 6,
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 76,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "negative-first": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 8,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 34,
+              "value": -32
+            },
+            {
+              "bonusId": 36,
+              "value": -16
+            },
+            {
+              "bonusId": 25,
+              "value": -7
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 16
+            },
+            {
+              "bonusId": 53,
+              "value": 24
+            },
+            {
+              "bonusId": 6,
+              "value": 10
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 8,
+          "label": "발도검",
+          "basePotential": 67,
+          "startingPotential": 128,
+          "craftStatBonus": 41,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            25144
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 128,
+            "afterPotential": 405,
+            "rowCosts": [
+              {
+                "bonusId": 34,
+                "old": 0,
+                "new": -32,
+                "delta": -32,
+                "cost": -79
+              },
+              {
+                "bonusId": 36,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 25,
+                "old": 0,
+                "new": -7,
+                "delta": -7,
+                "cost": -73
+              }
+            ],
+            "rowCostSum": -231,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": -277,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 887,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              }
+            ]
+          },
+          {
+            "beforePotential": 405,
+            "afterPotential": -147,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 16,
+                "delta": 16,
+                "cost": 220
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 24,
+                "delta": 24,
+                "cost": 140
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 10,
+                "delta": 10,
+                "cost": 100
+              }
+            ],
+            "rowCostSum": 460,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 552,
+            "warningPercent": 76,
+            "warningIntegerBeforeUpperBound": 76,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1,
+              "3": 1,
+              "9": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              },
+              {
+                "bonusId": 18,
+                "value": 16
+              },
+              {
+                "bonusId": 53,
+                "value": 24
+              },
+              {
+                "bonusId": 6,
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 76,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "drain": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 8,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 6,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 8
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 9
+            }
+          ],
+          [
+            {
+              "bonusId": 6,
+              "value": 10
+            }
+          ],
+          [
+            {
+              "bonusId": 34,
+              "value": -32
+            },
+            {
+              "bonusId": 36,
+              "value": -16
+            },
+            {
+              "bonusId": 25,
+              "value": -7
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 16
+            },
+            {
+              "bonusId": 53,
+              "value": 24
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 8,
+          "label": "발도검",
+          "basePotential": 67,
+          "startingPotential": 128,
+          "craftStatBonus": 41,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            25144
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 128,
+            "afterPotential": 118,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 372,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 118,
+            "afterPotential": 108,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 370,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "beforePotential": 108,
+            "afterPotential": 98,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 368,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "beforePotential": 98,
+            "afterPotential": 88,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 366,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 4
+              }
+            ]
+          },
+          {
+            "beforePotential": 88,
+            "afterPotential": 78,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 363,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 5
+              }
+            ]
+          },
+          {
+            "beforePotential": 78,
+            "afterPotential": 68,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 360,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "beforePotential": 68,
+            "afterPotential": 58,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 356,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "beforePotential": 58,
+            "afterPotential": 48,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 324,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 8
+              }
+            ]
+          },
+          {
+            "beforePotential": 48,
+            "afterPotential": 38,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 8,
+                "new": 9,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 290,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 9
+              }
+            ]
+          },
+          {
+            "beforePotential": 38,
+            "afterPotential": 28,
+            "rowCosts": [
+              {
+                "bonusId": 6,
+                "old": 9,
+                "new": 10,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.0,
+            "totalCost": 10,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 256,
+            "categoryCounts": {
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 10
+              }
+            ]
+          },
+          {
+            "beforePotential": 28,
+            "afterPotential": 305,
+            "rowCosts": [
+              {
+                "bonusId": 34,
+                "old": 0,
+                "new": -32,
+                "delta": -32,
+                "cost": -79
+              },
+              {
+                "bonusId": 36,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 25,
+                "old": 0,
+                "new": -7,
+                "delta": -7,
+                "cost": -73
+              }
+            ],
+            "rowCostSum": -231,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": -277,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1207,
+            "categoryCounts": {
+              "1": 1,
+              "2": 2,
+              "6": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 10
+              },
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              }
+            ]
+          },
+          {
+            "beforePotential": 305,
+            "afterPotential": -127,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 16,
+                "delta": 16,
+                "cost": 220
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 24,
+                "delta": 24,
+                "cost": 140
+              }
+            ],
+            "rowCostSum": 360,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 432,
+            "warningPercent": 64,
+            "warningIntegerBeforeUpperBound": 64,
+            "categoryCounts": {
+              "1": 1,
+              "2": 2,
+              "6": 1,
+              "3": 1,
+              "9": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 6,
+                "value": 10
+              },
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              },
+              {
+                "bonusId": 18,
+                "value": 16
+              },
+              {
+                "bonusId": 53,
+                "value": 24
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 64,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "mixed": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 8,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 53,
+              "value": 1
+            },
+            {
+              "bonusId": 34,
+              "value": -1
+            }
+          ],
+          [
+            {
+              "bonusId": 34,
+              "value": -32
+            },
+            {
+              "bonusId": 36,
+              "value": -16
+            },
+            {
+              "bonusId": 25,
+              "value": -7
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 16
+            },
+            {
+              "bonusId": 53,
+              "value": 24
+            },
+            {
+              "bonusId": 6,
+              "value": 10
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 8,
+          "label": "발도검",
+          "basePotential": 67,
+          "startingPotential": 128,
+          "craftStatBonus": 41,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            25144
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 128,
+            "afterPotential": 126,
+            "rowCosts": [
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 5
+              },
+              {
+                "bonusId": 34,
+                "old": 0,
+                "new": -1,
+                "delta": -1,
+                "cost": -3
+              }
+            ],
+            "rowCostSum": 2,
+            "multiplierFloat32": 1.0,
+            "totalCost": 2,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 386,
+            "categoryCounts": {
+              "9": 1,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 53,
+                "value": 1
+              },
+              {
+                "bonusId": 34,
+                "value": -1
+              }
+            ]
+          },
+          {
+            "beforePotential": 126,
+            "afterPotential": 399,
+            "rowCosts": [
+              {
+                "bonusId": 34,
+                "old": -1,
+                "new": -32,
+                "delta": -31,
+                "cost": -76
+              },
+              {
+                "bonusId": 36,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 25,
+                "old": 0,
+                "new": -7,
+                "delta": -7,
+                "cost": -73
+              }
+            ],
+            "rowCostSum": -228,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": -273,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 888,
+            "categoryCounts": {
+              "9": 1,
+              "2": 2,
+              "6": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 53,
+                "value": 1
+              },
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              }
+            ]
+          },
+          {
+            "beforePotential": 399,
+            "afterPotential": -147,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 16,
+                "delta": 16,
+                "cost": 220
+              },
+              {
+                "bonusId": 53,
+                "old": 1,
+                "new": 24,
+                "delta": 23,
+                "cost": 135
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 10,
+                "delta": 10,
+                "cost": 100
+              }
+            ],
+            "rowCostSum": 455,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 546,
+            "warningPercent": 75,
+            "warningIntegerBeforeUpperBound": 75,
+            "categoryCounts": {
+              "9": 1,
+              "2": 2,
+              "6": 1,
+              "3": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 53,
+                "value": 24
+              },
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              },
+              {
+                "bonusId": 18,
+                "value": 16
+              },
+              {
+                "bonusId": 6,
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 75,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "combined": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 8,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 34,
+              "value": -32
+            },
+            {
+              "bonusId": 36,
+              "value": -16
+            },
+            {
+              "bonusId": 25,
+              "value": -7
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 16
+            },
+            {
+              "bonusId": 53,
+              "value": 24
+            },
+            {
+              "bonusId": 6,
+              "value": 10
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 8,
+          "label": "발도검",
+          "basePotential": 67,
+          "startingPotential": 128,
+          "craftStatBonus": 41,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            25144
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 128,
+            "afterPotential": 405,
+            "rowCosts": [
+              {
+                "bonusId": 34,
+                "old": 0,
+                "new": -32,
+                "delta": -32,
+                "cost": -79
+              },
+              {
+                "bonusId": 36,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 25,
+                "old": 0,
+                "new": -7,
+                "delta": -7,
+                "cost": -73
+              }
+            ],
+            "rowCostSum": -231,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": -277,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 887,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              }
+            ]
+          },
+          {
+            "beforePotential": 405,
+            "afterPotential": -147,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 16,
+                "delta": 16,
+                "cost": 220
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 24,
+                "delta": 24,
+                "cost": 140
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 10,
+                "delta": 10,
+                "cost": 100
+              }
+            ],
+            "rowCostSum": 460,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 552,
+            "warningPercent": 76,
+            "warningIntegerBeforeUpperBound": 76,
+            "categoryCounts": {
+              "2": 2,
+              "6": 1,
+              "3": 1,
+              "9": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 34,
+                "value": -32
+              },
+              {
+                "bonusId": 36,
+                "value": -16
+              },
+              {
+                "bonusId": 25,
+                "value": -7
+              },
+              {
+                "bonusId": 18,
+                "value": 16
+              },
+              {
+                "bonusId": 53,
+                "value": 24
+              },
+              {
+                "bonusId": 6,
+                "value": 10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 76,
+        "serverOutcomesSimulated": false
+      }
+    }
+  }
+}

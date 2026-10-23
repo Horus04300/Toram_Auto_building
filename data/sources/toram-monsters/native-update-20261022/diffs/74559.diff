@@ -1,0 +1,13 @@
+--- assets\source-data\toram-monsters\native-schema\UI3DNameManager-Initialize-7fff5f7bf850.c
++++ 74559.c
+@@ -4,7 +4,7 @@
+   ulonglong uVar3;
+   uint uVar4;
+-  *(undefined **)(self + 0xc0) = itemTextManager;
+-  CALL0();
+-  *(undefined **)(self + 200) = playerDataManager;
++  *(undefined **)(self + 0xc0) = userName;
++  il2cpp_write_barrier_0();
++  *(undefined **)(self + 200) = banId;
+   if (GLOBAL0 != 0) {
+     uVar4 = (uint)((ulonglong)(self + 200) >> 0xc);

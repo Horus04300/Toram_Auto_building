@@ -1,0 +1,2336 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 84
+  },
+  "methods": [
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "get_PropertyType",
+      "method_definition_index": 9731,
+      "token": "0x06002604",
+      "metadata_declaration_range": {
+        "offset": 4095532,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21221,
+        "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+      },
+      "pointer_slot_offset": 51439112,
+      "pointer_slot_va": "0x7fff6235e608",
+      "runtime_va": "0x7fff5faf3df0",
+      "rva": "0x8a3df0",
+      "status": "mapped",
+      "code_preview_hex": "b820000000c3cccccccccccccccccccc488b81c000000048"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedHpFlag",
+      "method_definition_index": 9732,
+      "token": "0x06002605",
+      "metadata_declaration_range": {
+        "offset": 4095568,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439120,
+      "pointer_slot_va": "0x7fff6235e610",
+      "runtime_va": "0x7fff5fe84960",
+      "rva": "0xc34960",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d7305760200488bd97513488d0d4f8e58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedNecessaryHitFlag",
+      "method_definition_index": 9733,
+      "token": "0x06002606",
+      "metadata_declaration_range": {
+        "offset": 4095604,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439128,
+      "pointer_slot_va": "0x7fff6235e618",
+      "runtime_va": "0x7fff5fe84a40",
+      "rva": "0xc34a40",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d9304760200488bd97513488d0d6f8d58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedDefFlag",
+      "method_definition_index": 9734,
+      "token": "0x06002607",
+      "metadata_declaration_range": {
+        "offset": 4095640,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439136,
+      "pointer_slot_va": "0x7fff6235e620",
+      "runtime_va": "0x7fff5fe848f0",
+      "rva": "0xc348f0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803de305760200488bd97513488d0dbf8e58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedMagicDefFlag",
+      "method_definition_index": 9735,
+      "token": "0x06002608",
+      "metadata_declaration_range": {
+        "offset": 4095676,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439144,
+      "pointer_slot_va": "0x7fff6235e628",
+      "runtime_va": "0x7fff5fe849d0",
+      "rva": "0xc349d0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d0305760200488bd97513488d0ddf8d58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedCutAttackFlag",
+      "method_definition_index": 9736,
+      "token": "0x06002609",
+      "metadata_declaration_range": {
+        "offset": 4095712,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439152,
+      "pointer_slot_va": "0x7fff6235e630",
+      "runtime_va": "0x7fff5fe84810",
+      "rva": "0xc34810",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dc306760200488bd97513488d0d9f8f58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": "FixedCutMagicAttackFlag",
+      "method_definition_index": 9737,
+      "token": "0x0600260a",
+      "metadata_declaration_range": {
+        "offset": 4095748,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439160,
+      "pointer_slot_va": "0x7fff6235e638",
+      "runtime_va": "0x7fff5fe84880",
+      "rva": "0xc34880",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d5306760200488bd97513488d0d2f8f58"
+    },
+    {
+      "class": "MobPropertyHighRaidCalcExceptionFlag",
+      "name": ".ctor",
+      "method_definition_index": 9738,
+      "token": "0x0600260b",
+      "metadata_declaration_range": {
+        "offset": 4095784,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51439168,
+      "pointer_slot_va": "0x7fff6235e640",
+      "runtime_va": "0x7fff5fe832d0",
+      "rva": "0xc332d0",
+      "status": "mapped",
+      "code_preview_hex": "33d2e919050000cccccccccccccccccc48895c2408565741"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_No",
+      "method_definition_index": 33628,
+      "token": "0x0600835d",
+      "metadata_declaration_range": {
+        "offset": 4955824,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51630288,
+      "pointer_slot_va": "0x7fff6238d0d0",
+      "runtime_va": "0x7fff5f4dfc90",
+      "rva": "0x28fc90",
+      "status": "mapped",
+      "code_preview_hex": "0fb64110c3cccccccccccccccccccccc885110c3cccccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_No",
+      "method_definition_index": 33629,
+      "token": "0x0600835e",
+      "metadata_declaration_range": {
+        "offset": 4955860,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630296,
+      "pointer_slot_va": "0x7fff6238d0d8",
+      "runtime_va": "0x7fff5f4dfca0",
+      "rva": "0x28fca0",
+      "status": "mapped",
+      "code_preview_hex": "885110c3cccccccccccccccccccccccc885111c3cccccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_FieldId",
+      "method_definition_index": 33630,
+      "token": "0x0600835f",
+      "metadata_declaration_range": {
+        "offset": 4955896,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51630304,
+      "pointer_slot_va": "0x7fff6238d0e0",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "code_preview_hex": "8b4114c3cccccccccccccccccccccccc4883c130488911e9"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_FieldId",
+      "method_definition_index": 33631,
+      "token": "0x06008360",
+      "metadata_declaration_range": {
+        "offset": 4955932,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630312,
+      "pointer_slot_va": "0x7fff6238d0e8",
+      "runtime_va": "0x7fff5f4dfcc0",
+      "rva": "0x28fcc0",
+      "status": "mapped",
+      "code_preview_hex": "895114c3cccccccccccccccccccccccc48895c2410574883"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_RoomId",
+      "method_definition_index": 33632,
+      "token": "0x06008361",
+      "metadata_declaration_range": {
+        "offset": 4955968,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51630320,
+      "pointer_slot_va": "0x7fff6238d0f0",
+      "runtime_va": "0x7fff5f4d9d40",
+      "rva": "0x289d40",
+      "status": "mapped",
+      "code_preview_hex": "8b4118c3cccccccccccccccccccccccc40534883ec30488b"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_RoomId",
+      "method_definition_index": 33633,
+      "token": "0x06008362",
+      "metadata_declaration_range": {
+        "offset": 4956004,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630328,
+      "pointer_slot_va": "0x7fff6238d0f8",
+      "runtime_va": "0x7fff5f50e3d0",
+      "rva": "0x2be3d0",
+      "status": "mapped",
+      "code_preview_hex": "895118c3cccccccccccccccccccccccc48896c2418574883"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_RaidFlag",
+      "method_definition_index": 33634,
+      "token": "0x06008363",
+      "metadata_declaration_range": {
+        "offset": 4956040,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51630336,
+      "pointer_slot_va": "0x7fff6238d100",
+      "runtime_va": "0x7fff5f594050",
+      "rva": "0x344050",
+      "status": "mapped",
+      "code_preview_hex": "0fb6411cc3cccccccccccccccccccccc0fb6411bc3cccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_RaidFlag",
+      "method_definition_index": 33635,
+      "token": "0x06008364",
+      "metadata_declaration_range": {
+        "offset": 4956076,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630344,
+      "pointer_slot_va": "0x7fff6238d108",
+      "runtime_va": "0x7fff5f594190",
+      "rva": "0x344190",
+      "status": "mapped",
+      "code_preview_hex": "88511cc3cccccccccccccccccccccccc88511bc3cccccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_MonsterId",
+      "method_definition_index": 33636,
+      "token": "0x06008365",
+      "metadata_declaration_range": {
+        "offset": 4956112,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51630352,
+      "pointer_slot_va": "0x7fff6238d110",
+      "runtime_va": "0x7fff5f4d3280",
+      "rva": "0x283280",
+      "status": "mapped",
+      "code_preview_hex": "8b4120c3cccccccccccccccccccccccc895120c3cccccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_MonsterId",
+      "method_definition_index": 33637,
+      "token": "0x06008366",
+      "metadata_declaration_range": {
+        "offset": 4956148,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630360,
+      "pointer_slot_va": "0x7fff6238d118",
+      "runtime_va": "0x7fff5f4d3290",
+      "rva": "0x283290",
+      "status": "mapped",
+      "code_preview_hex": "895120c3cccccccccccccccccccccccc48895c240848896c"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_MonsterUuid",
+      "method_definition_index": 33638,
+      "token": "0x06008367",
+      "metadata_declaration_range": {
+        "offset": 4956184,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51630368,
+      "pointer_slot_va": "0x7fff6238d120",
+      "runtime_va": "0x7fff5f5aa420",
+      "rva": "0x35a420",
+      "status": "mapped",
+      "code_preview_hex": "8b4124c3cccccccccccccccccccccccc48895c2408574883"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_MonsterUuid",
+      "method_definition_index": 33639,
+      "token": "0x06008368",
+      "metadata_declaration_range": {
+        "offset": 4956220,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630376,
+      "pointer_slot_va": "0x7fff6238d128",
+      "runtime_va": "0x7fff5f5aa5d0",
+      "rva": "0x35a5d0",
+      "status": "mapped",
+      "code_preview_hex": "895124c3cccccccccccccccccccccccc40564883ec50803d"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_BaseLevel",
+      "method_definition_index": 33640,
+      "token": "0x06008369",
+      "metadata_declaration_range": {
+        "offset": 4956256,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51630384,
+      "pointer_slot_va": "0x7fff6238d130",
+      "runtime_va": "0x7fff5fee7e80",
+      "rva": "0xc97e80",
+      "status": "mapped",
+      "code_preview_hex": "0fb74128c3cccccccccccccccccccccc0fb7412ac3cccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_BaseLevel",
+      "method_definition_index": 33641,
+      "token": "0x0600836a",
+      "metadata_declaration_range": {
+        "offset": 4956292,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630392,
+      "pointer_slot_va": "0x7fff6238d138",
+      "runtime_va": "0x7fff5fee7ea0",
+      "rva": "0xc97ea0",
+      "status": "mapped",
+      "code_preview_hex": "66895128c3cccccccccccccccccccccc6689512ac3cccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "get_MinLevel",
+      "method_definition_index": 33642,
+      "token": "0x0600836b",
+      "metadata_declaration_range": {
+        "offset": 4956328,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51630400,
+      "pointer_slot_va": "0x7fff6238d140",
+      "runtime_va": "0x7fff5fee7e90",
+      "rva": "0xc97e90",
+      "status": "mapped",
+      "code_preview_hex": "0fb7412ac3cccccccccccccccccccccc66895128c3cccccc"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": "set_MinLevel",
+      "method_definition_index": 33643,
+      "token": "0x0600836c",
+      "metadata_declaration_range": {
+        "offset": 4956364,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630408,
+      "pointer_slot_va": "0x7fff6238d148",
+      "runtime_va": "0x7fff5fee7eb0",
+      "rva": "0xc97eb0",
+      "status": "mapped",
+      "code_preview_hex": "6689512ac3cccccccccccccccccccccc0fb7c2c1e010410f"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": ".ctor",
+      "method_definition_index": 33644,
+      "token": "0x0600836d",
+      "metadata_declaration_range": {
+        "offset": 4956400,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "no",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "fieldId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "raidFlag",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "monsterId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "monsterUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "baseLevel",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "minLevel",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630416,
+      "pointer_slot_va": "0x7fff6238d150",
+      "runtime_va": "0x7fff60362ac0",
+      "rva": "0x1112ac0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec200fb6da41"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": ".ctor",
+      "method_definition_index": 34987,
+      "token": "0x060088ac",
+      "metadata_declaration_range": {
+        "offset": 5004748,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641160,
+      "pointer_slot_va": "0x7fff6238fb48",
+      "runtime_va": "0x7fff603e7ba0",
+      "rva": "0x1197ba0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803df2f91f0200488bf9752b488d"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "DownloadCsv",
+      "method_definition_index": 34988,
+      "token": "0x060088ad",
+      "metadata_declaration_range": {
+        "offset": 5004784,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "version",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51641168,
+      "pointer_slot_va": "0x7fff6238fb50",
+      "runtime_va": "0x7fff603e7560",
+      "rva": "0x1197560",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d2e002002008bf2"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "UpdateLimitedFunction",
+      "method_definition_index": 34989,
+      "token": "0x060088ae",
+      "metadata_declaration_range": {
+        "offset": 5004820,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "updateFunction",
+          "type_index": 10198,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641176,
+      "pointer_slot_va": "0x7fff6238fb58",
+      "runtime_va": "0x7fff603e7a10",
+      "rva": "0x1197a10",
+      "status": "mapped",
+      "code_preview_hex": "4889742418574883ec20803d84fb1f0200488bfa488bf175"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "AddLimitedFunction",
+      "method_definition_index": 34990,
+      "token": "0x060088af",
+      "metadata_declaration_range": {
+        "offset": 5004856,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "flag",
+          "type_index": 16407,
+          "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+        },
+        {
+          "name": "isLimit",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641184,
+      "pointer_slot_va": "0x7fff6238fb60",
+      "runtime_va": "0x7fff603e7340",
+      "rva": "0x1197340",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803d4b02"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "AddLimitedFunction",
+      "method_definition_index": 34991,
+      "token": "0x060088b0",
+      "metadata_declaration_range": {
+        "offset": 5004892,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "flag",
+          "type_index": 32847,
+          "exact_byval_name": "CDNGameSystemFlag"
+        },
+        {
+          "name": "isLimit",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641192,
+      "pointer_slot_va": "0x7fff6238fb68",
+      "runtime_va": "0x7fff603e73f0",
+      "rva": "0x11973f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803d9b01"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "addLimitedFunction",
+      "method_definition_index": 34992,
+      "token": "0x060088b1",
+      "metadata_declaration_range": {
+        "offset": 5004928,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "function",
+          "type_index": 3397,
+          "exact_byval_name": null
+        },
+        {
+          "name": "flag",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isLimit",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641200,
+      "pointer_slot_va": "0x7fff6238fb70",
+      "runtime_va": "0x7fff603e7c60",
+      "rva": "0x1197c60",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803d2bf9"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "Clear",
+      "method_definition_index": 34993,
+      "token": "0x060088b2",
+      "metadata_declaration_range": {
+        "offset": 5004964,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641208,
+      "pointer_slot_va": "0x7fff6238fb78",
+      "runtime_va": "0x7fff603e74a0",
+      "rva": "0x11974a0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dfa00200200488bd97513488d0d075c01"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "IsLimited",
+      "method_definition_index": 34994,
+      "token": "0x060088b3",
+      "metadata_declaration_range": {
+        "offset": 5005000,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "limitedType",
+          "type_index": 16407,
+          "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641216,
+      "pointer_slot_va": "0x7fff6238fb80",
+      "runtime_va": "0x7fff603e77c0",
+      "rva": "0x11977c0",
+      "status": "mapped",
+      "code_preview_hex": "4889742410574883ec20803dd7fd1f02008bf2488bf9752b"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "IsLimited",
+      "method_definition_index": 34995,
+      "token": "0x060088b4",
+      "metadata_declaration_range": {
+        "offset": 5005036,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "limitedType",
+          "type_index": 32847,
+          "exact_byval_name": "CDNGameSystemFlag"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641224,
+      "pointer_slot_va": "0x7fff6238fb88",
+      "runtime_va": "0x7fff603e7720",
+      "rva": "0x1197720",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d78fe1f02008bfa488bd9751f"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "GetValue",
+      "method_definition_index": 34996,
+      "token": "0x060088b5",
+      "metadata_declaration_range": {
+        "offset": 5005072,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "limitedType",
+          "type_index": 16407,
+          "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+        },
+        {
+          "name": "param",
+          "type_index": 9238,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641232,
+      "pointer_slot_va": "0x7fff6238fb90",
+      "runtime_va": "0x7fff603e75e0",
+      "rva": "0x11975e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803db4ff1f0200498b"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "GetValue",
+      "method_definition_index": 34997,
+      "token": "0x060088b6",
+      "metadata_declaration_range": {
+        "offset": 5005108,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "limitedType",
+          "type_index": 32847,
+          "exact_byval_name": "CDNGameSystemFlag"
+        },
+        {
+          "name": "param",
+          "type_index": 9238,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641240,
+      "pointer_slot_va": "0x7fff6238fb98",
+      "runtime_va": "0x7fff603e7680",
+      "rva": "0x1197680",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803d14ff1f0200498b"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "getValue",
+      "method_definition_index": 34998,
+      "token": "0x060088b7",
+      "metadata_declaration_range": {
+        "offset": 5005144,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "function",
+          "type_index": 3397,
+          "exact_byval_name": null
+        },
+        {
+          "name": "limitedType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "param",
+          "type_index": 9238,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641248,
+      "pointer_slot_va": "0x7fff6238fba0",
+      "runtime_va": "0x7fff603e7d10",
+      "rva": "0x1197d10",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742418574883ec20803d84f81f0200498b"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "ShowLimitedFunctionMessage",
+      "method_definition_index": 34999,
+      "token": "0x060088b8",
+      "metadata_declaration_range": {
+        "offset": 5005180,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "callback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51641256,
+      "pointer_slot_va": "0x7fff6238fba8",
+      "runtime_va": "0x7fff603e7960",
+      "rva": "0x1197960",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d35fc1f0200488b"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "ShowLimitedFunctionMessageCoroutine",
+      "method_definition_index": 35000,
+      "token": "0x060088b9",
+      "metadata_declaration_range": {
+        "offset": 5005216,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "callback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51641264,
+      "pointer_slot_va": "0x7fff6238fbb0",
+      "runtime_va": "0x7fff603e78f0",
+      "rva": "0x11978f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dabfc1f0200488bfa7513488d"
+    },
+    {
+      "class": "FunctionLimitManager",
+      "name": "ContainsFlag",
+      "method_definition_index": 35001,
+      "token": "0x060088ba",
+      "metadata_declaration_range": {
+        "offset": 5005252,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "limitedType",
+          "type_index": 16407,
+          "exact_byval_name": "Toram.Common.Systems.GameSystemFlag"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51641272,
+      "pointer_slot_va": "0x7fff6238fbb8",
+      "runtime_va": "0x7fff603e7500",
+      "rva": "0x1197500",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d9c002002008bfa488bd97513"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "get_IsCancel",
+      "method_definition_index": 50294,
+      "token": "0x0600c477",
+      "metadata_declaration_range": {
+        "offset": 5555800,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51763616,
+      "pointer_slot_va": "0x7fff623ad9a0",
+      "runtime_va": "0x7fff5f649f60",
+      "rva": "0x3f9f60",
+      "status": "mapped",
+      "code_preview_hex": "0fb68118010000c3cccccccccccccccc0fb68119010000c3"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "set_IsCancel",
+      "method_definition_index": 50295,
+      "token": "0x0600c478",
+      "metadata_declaration_range": {
+        "offset": 5555836,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763624,
+      "pointer_slot_va": "0x7fff623ad9a8",
+      "runtime_va": "0x7fff5f663810",
+      "rva": "0x413810",
+      "status": "mapped",
+      "code_preview_hex": "889118010000c3cccccccccccccccccc889119010000c3cc"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "get_IsClose",
+      "method_definition_index": 50296,
+      "token": "0x0600c479",
+      "metadata_declaration_range": {
+        "offset": 5555872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51763632,
+      "pointer_slot_va": "0x7fff623ad9b0",
+      "runtime_va": "0x7fff5f649f70",
+      "rva": "0x3f9f70",
+      "status": "mapped",
+      "code_preview_hex": "0fb68119010000c3cccccccccccccccc40534883ec20803d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "set_IsClose",
+      "method_definition_index": 50297,
+      "token": "0x0600c47a",
+      "metadata_declaration_range": {
+        "offset": 5555908,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763640,
+      "pointer_slot_va": "0x7fff623ad9b8",
+      "runtime_va": "0x7fff5f663820",
+      "rva": "0x413820",
+      "status": "mapped",
+      "code_preview_hex": "889119010000c3cccccccccccccccccc889128010000c3cc"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "get_DifficultyState",
+      "method_definition_index": 50298,
+      "token": "0x0600c47b",
+      "metadata_declaration_range": {
+        "offset": 5555944,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21689,
+        "exact_byval_name": "System.Object"
+      },
+      "pointer_slot_offset": 51763648,
+      "pointer_slot_va": "0x7fff623ad9c0",
+      "runtime_va": "0x7fff5f52a070",
+      "rva": "0x2da070",
+      "status": "mapped",
+      "code_preview_hex": "488b8120010000c3cccccccccccccccc40534883ec20488b"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "set_DifficultyState",
+      "method_definition_index": 50299,
+      "token": "0x0600c47c",
+      "metadata_declaration_range": {
+        "offset": 5555980,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 21689,
+          "exact_byval_name": "System.Object"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763656,
+      "pointer_slot_va": "0x7fff623ad9c8",
+      "runtime_va": "0x7fff5f663800",
+      "rva": "0x413800",
+      "status": "mapped",
+      "code_preview_hex": "4881c120010000488911e9b18fe1ffcc889118010000c3cc"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "get_IsEmployMercenary",
+      "method_definition_index": 50300,
+      "token": "0x0600c47d",
+      "metadata_declaration_range": {
+        "offset": 5556016,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51763664,
+      "pointer_slot_va": "0x7fff623ad9d0",
+      "runtime_va": "0x7fff5f6637f0",
+      "rva": "0x4137f0",
+      "status": "mapped",
+      "code_preview_hex": "0fb68128010000c3cccccccccccccccc4881c12001000048"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "set_IsEmployMercenary",
+      "method_definition_index": 50301,
+      "token": "0x0600c47e",
+      "metadata_declaration_range": {
+        "offset": 5556052,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763672,
+      "pointer_slot_va": "0x7fff623ad9d8",
+      "runtime_va": "0x7fff5f663830",
+      "rva": "0x413830",
+      "status": "mapped",
+      "code_preview_hex": "889128010000c3cccccccccccccccccc48895c2408488974"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "Awake",
+      "method_definition_index": 50302,
+      "token": "0x0600c47f",
+      "metadata_declaration_range": {
+        "offset": 5556088,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763680,
+      "pointer_slot_va": "0x7fff623ad9e0",
+      "runtime_va": "0x7fff5f65e330",
+      "rva": "0x40e330",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803d8038f80200488bf97537488d0d1ffdd9"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "Start",
+      "method_definition_index": 50303,
+      "token": "0x0600c480",
+      "metadata_declaration_range": {
+        "offset": 5556124,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763688,
+      "pointer_slot_va": "0x7fff623ad9e8",
+      "runtime_va": "0x7fff5f661970",
+      "rva": "0x411970",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d4102f80200488bd9752b488d0dd78adf"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "Update",
+      "method_definition_index": 50304,
+      "token": "0x0600c481",
+      "metadata_declaration_range": {
+        "offset": 5556160,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763696,
+      "pointer_slot_va": "0x7fff623ad9f0",
+      "runtime_va": "0x7fff5f662f70",
+      "rva": "0x412f70",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec50803d42ecf70200488bd90f858b000000488d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDestroy",
+      "method_definition_index": 50305,
+      "token": "0x0600c482",
+      "metadata_declaration_range": {
+        "offset": 5556196,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763704,
+      "pointer_slot_va": "0x7fff623ad9f8",
+      "runtime_va": "0x7fff5f65fb30",
+      "rva": "0x40fb30",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d8520f802007513488d0d6cdedf02e807d9e1"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "Initialize",
+      "method_definition_index": 50306,
+      "token": "0x0600c483",
+      "metadata_declaration_range": {
+        "offset": 5556232,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "highRaidNo",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "emergency",
+          "type_index": 15220,
+          "exact_byval_name": "Toram.Common.Parameters.EmergencyPositionData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763712,
+      "pointer_slot_va": "0x7fff623ada00",
+      "runtime_va": "0x7fff5f65f670",
+      "rva": "0x40f670",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418574883ec50803d3b25f80200498b"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultyDown",
+      "method_definition_index": 50307,
+      "token": "0x0600c484",
+      "metadata_declaration_range": {
+        "offset": 5556268,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763720,
+      "pointer_slot_va": "0x7fff623ada08",
+      "runtime_va": "0x7fff5f65fb80",
+      "rva": "0x40fb80",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000fb0fbf81740100003b81900100007d0e0f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultyUp",
+      "method_definition_index": 50308,
+      "token": "0x0600c485",
+      "metadata_declaration_range": {
+        "offset": 5556304,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763728,
+      "pointer_slot_va": "0x7fff623ada10",
+      "runtime_va": "0x7fff5f65fc10",
+      "rva": "0x40fc10",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000050fbf81740100003b81940100007e0e0f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultySDown",
+      "method_definition_index": 50309,
+      "token": "0x0600c486",
+      "metadata_declaration_range": {
+        "offset": 5556340,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763736,
+      "pointer_slot_va": "0x7fff623ada18",
+      "runtime_va": "0x7fff5f65fbb0",
+      "rva": "0x40fbb0",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000f60fbf81740100003b81900100007d0e0f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultySUp",
+      "method_definition_index": 50310,
+      "token": "0x0600c487",
+      "metadata_declaration_range": {
+        "offset": 5556376,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763744,
+      "pointer_slot_va": "0x7fff623ada20",
+      "runtime_va": "0x7fff5f65fbe0",
+      "rva": "0x40fbe0",
+      "status": "mapped",
+      "code_preview_hex": "668381740100000a0fbf81740100003b81940100007e0e0f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnOpenBossData",
+      "method_definition_index": 50311,
+      "token": "0x0600c488",
+      "metadata_declaration_range": {
+        "offset": 5556412,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763752,
+      "pointer_slot_va": "0x7fff623ada28",
+      "runtime_va": "0x7fff5f65ff40",
+      "rva": "0x40ff40",
+      "status": "mapped",
+      "code_preview_hex": "4533c0418d5001e9e4e9ffffcccccccc48895c2408574883"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnBattleReady",
+      "method_definition_index": 50312,
+      "token": "0x0600c489",
+      "metadata_declaration_range": {
+        "offset": 5556448,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763760,
+      "pointer_slot_va": "0x7fff623ada30",
+      "runtime_va": "0x7fff5f65f8c0",
+      "rva": "0x40f8c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803df522f80200488bd9754f488d0d4f52dd"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnEmploy",
+      "method_definition_index": 50313,
+      "token": "0x0600c48a",
+      "metadata_declaration_range": {
+        "offset": 5556484,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763768,
+      "pointer_slot_va": "0x7fff623ada38",
+      "runtime_va": "0x7fff5f65fc40",
+      "rva": "0x40fc40",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b89480100004885c97426488b11"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnItemList",
+      "method_definition_index": 50314,
+      "token": "0x0600c48b",
+      "metadata_declaration_range": {
+        "offset": 5556520,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763776,
+      "pointer_slot_va": "0x7fff623ada40",
+      "runtime_va": "0x7fff5f65fc90",
+      "rva": "0x40fc90",
+      "status": "mapped",
+      "code_preview_hex": "4533c0418d5002e994ecffffcccccccc40534883ec20803d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "WaitRoomData",
+      "method_definition_index": 50315,
+      "token": "0x0600c48c",
+      "metadata_declaration_range": {
+        "offset": 5556556,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51763784,
+      "pointer_slot_va": "0x7fff623ada48",
+      "runtime_va": "0x7fff5f6635c0",
+      "rva": "0x4135c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803df2e5f70200488bf97513488d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "UIInit",
+      "method_definition_index": 50316,
+      "token": "0x0600c48d",
+      "metadata_declaration_range": {
+        "offset": 5556592,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763792,
+      "pointer_slot_va": "0x7fff623ada50",
+      "runtime_va": "0x7fff5f661b80",
+      "rva": "0x411b80",
+      "status": "mapped",
+      "code_preview_hex": "488bc4488958104889702048894808574154415541564157"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "ChangePanel",
+      "method_definition_index": 50317,
+      "token": "0x0600c48e",
+      "metadata_declaration_range": {
+        "offset": 5556628,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "panelState",
+          "type_index": 38541,
+          "exact_byval_name": "PanelState"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763800,
+      "pointer_slot_va": "0x7fff623ada58",
+      "runtime_va": "0x7fff5f65e930",
+      "rva": "0x40e930",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec50488bf989912c010000"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "UpdateDifficultyLabel",
+      "method_definition_index": 50318,
+      "token": "0x0600c48f",
+      "metadata_declaration_range": {
+        "offset": 5556664,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763808,
+      "pointer_slot_va": "0x7fff623ada60",
+      "runtime_va": "0x7fff5f662d80",
+      "rva": "0x412d80",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418574883ec20803d34eef70200488bd9751f488d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "CloseShortcutPanel",
+      "method_definition_index": 50319,
+      "token": "0x0600c490",
+      "metadata_declaration_range": {
+        "offset": 5556700,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763816,
+      "pointer_slot_va": "0x7fff623ada68",
+      "runtime_va": "0x7fff5f65ee10",
+      "rva": "0x40ee10",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec40803da92df80200488bd97513488d0d87ebdf"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "BattleReadyCancel",
+      "method_definition_index": 50320,
+      "token": "0x0600c491",
+      "metadata_declaration_range": {
+        "offset": 5556736,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763824,
+      "pointer_slot_va": "0x7fff623ada70",
+      "runtime_va": "0x7fff5f65e600",
+      "rva": "0x40e600",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dba35f80200488bd9751f488d0d6770dc"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "ReturnPreviousState",
+      "method_definition_index": 50321,
+      "token": "0x0600c492",
+      "metadata_declaration_range": {
+        "offset": 5556772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763832,
+      "pointer_slot_va": "0x7fff623ada78",
+      "runtime_va": "0x7fff5f661740",
+      "rva": "0x411740",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d7b04f80200751f488d0da218e102e8f5"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "ChangeActiveMenuButton",
+      "method_definition_index": 50322,
+      "token": "0x0600c493",
+      "metadata_declaration_range": {
+        "offset": 5556808,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "isActive",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763840,
+      "pointer_slot_va": "0x7fff623ada80",
+      "runtime_va": "0x7fff5f65e830",
+      "rva": "0x40e830",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20488b811001000033db"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "ChangeActiveEmployButton",
+      "method_definition_index": 50323,
+      "token": "0x0600c494",
+      "metadata_declaration_range": {
+        "offset": 5556844,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763848,
+      "pointer_slot_va": "0x7fff623ada88",
+      "runtime_va": "0x7fff5f65e6e0",
+      "rva": "0x40e6e0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803ddc34f80200488bf97513488d0d1fd2df"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "ChangeEmployButtonPos",
+      "method_definition_index": 50324,
+      "token": "0x0600c495",
+      "metadata_declaration_range": {
+        "offset": 5556880,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51763856,
+      "pointer_slot_va": "0x7fff623ada90",
+      "runtime_va": "0x7fff5f65e8c0",
+      "rva": "0x40e8c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803df932f80200488bf97513488d"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OpenBossDataWindow",
+      "method_definition_index": 50325,
+      "token": "0x0600c496",
+      "metadata_declaration_range": {
+        "offset": 5556916,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763864,
+      "pointer_slot_va": "0x7fff623ada98",
+      "runtime_va": "0x7fff5f6600e0",
+      "rva": "0x4100e0",
+      "status": "mapped",
+      "code_preview_hex": "40555357488d6c24b94881ecf0000000803dd41af8020048"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "CreateStatusElement",
+      "method_definition_index": 50326,
+      "token": "0x0600c497",
+      "metadata_declaration_range": {
+        "offset": 5556952,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "isDebug",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "pos",
+          "type_index": 29032,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "itemDropType",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "propValTotal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "colorTotal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isRedText",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51763872,
+      "pointer_slot_va": "0x7fff623adaa0",
+      "runtime_va": "0x7fff5f65ef40",
+      "rva": "0x40ef40",
+      "status": "mapped",
+      "code_preview_hex": "48895c241855415641574883ec60803d772cf80200418be9"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "GetDropItemName",
+      "method_definition_index": 50327,
+      "token": "0x0600c498",
+      "metadata_declaration_range": {
+        "offset": 5556988,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "db",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isDebug",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "isRedText",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "valTotal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "colorTotal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51763880,
+      "pointer_slot_va": "0x7fff623adaa8",
+      "runtime_va": "0x7fff5f65f3c0",
+      "rva": "0x40f3c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24184889742420574883ec30803df227"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "SetLeftButtonType",
+      "method_definition_index": 50328,
+      "token": "0x0600c499",
+      "metadata_declaration_range": {
+        "offset": 5557024,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 40661,
+          "exact_byval_name": "ActionSystemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763888,
+      "pointer_slot_va": "0x7fff623adab0",
+      "runtime_va": "0x7fff5f661830",
+      "rva": "0x411830",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d9103f802008bda751f488d0d4097df02"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "SetRightButtonType",
+      "method_definition_index": 50329,
+      "token": "0x0600c49a",
+      "metadata_declaration_range": {
+        "offset": 5557060,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 40661,
+          "exact_byval_name": "ActionSystemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763896,
+      "pointer_slot_va": "0x7fff623adab8",
+      "runtime_va": "0x7fff5f6618d0",
+      "rva": "0x4118d0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803df202f802008bda751f488d0da096df02"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OpenItemList",
+      "method_definition_index": 50330,
+      "token": "0x0600c49b",
+      "metadata_declaration_range": {
+        "offset": 5557096,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763904,
+      "pointer_slot_va": "0x7fff623adac0",
+      "runtime_va": "0x7fff5f6610f0",
+      "rva": "0x4110f0",
+      "status": "mapped",
+      "code_preview_hex": "488bc44889480853565741544155415641574881ecd00000"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "CheckUseItem",
+      "method_definition_index": 50331,
+      "token": "0x0600c49c",
+      "metadata_declaration_range": {
+        "offset": 5557132,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763912,
+      "pointer_slot_va": "0x7fff623adac8",
+      "runtime_va": "0x7fff5f65eb50",
+      "rva": "0x40eb50",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803d6b30f802008bfa"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OpenGemCheckWindow",
+      "method_definition_index": 50332,
+      "token": "0x0600c49d",
+      "metadata_declaration_range": {
+        "offset": 5557168,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763920,
+      "pointer_slot_va": "0x7fff623adad0",
+      "runtime_va": "0x7fff5f660ee0",
+      "rva": "0x410ee0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418554883ec20803de10cf802008bea488bd9754f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "AddOrbGemList",
+      "method_definition_index": 50333,
+      "token": "0x0600c49e",
+      "metadata_declaration_range": {
+        "offset": 5557204,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763928,
+      "pointer_slot_va": "0x7fff623adad8",
+      "runtime_va": "0x7fff5f65e200",
+      "rva": "0x40e200",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dc239f802008bfa488bd9751f"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnLeftTopButton",
+      "method_definition_index": 50334,
+      "token": "0x0600c49f",
+      "metadata_declaration_range": {
+        "offset": 5557240,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763936,
+      "pointer_slot_va": "0x7fff623adae0",
+      "runtime_va": "0x7fff5f65fca0",
+      "rva": "0x40fca0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d271ff80200488bd97537488d0df7e7da"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnRightTopButton",
+      "method_definition_index": 50335,
+      "token": "0x0600c4a0",
+      "metadata_declaration_range": {
+        "offset": 5557276,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763944,
+      "pointer_slot_va": "0x7fff623adae8",
+      "runtime_va": "0x7fff5f660090",
+      "rva": "0x410090",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d3a1bf802007513488d0d0cd9df02e8a7d3e1"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnOpenShortcutPanel",
+      "method_definition_index": 50336,
+      "token": "0x0600c4a1",
+      "metadata_declaration_range": {
+        "offset": 5557312,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "shortcutManager",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763952,
+      "pointer_slot_va": "0x7fff623adaf0",
+      "runtime_va": "0x7fff5f65ff50",
+      "rva": "0x40ff50",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec40803d751cf80200488bfa488bd975"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": ".ctor",
+      "method_definition_index": 50337,
+      "token": "0x0600c4a2",
+      "metadata_declaration_range": {
+        "offset": 5557348,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763960,
+      "pointer_slot_va": "0x7fff623adaf8",
+      "runtime_va": "0x7fff5f663630",
+      "rva": "0x413630",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d96e5f70200488bf9755b488d"
+    }
+  ],
+  "limitations": [
+    "Metadata declaration offsets are not code addresses; only pointer-table values establish native locations.",
+    "NULL pointers remain unresolved; generic or shared implementations are not inferred.",
+    "Mapping establishes saved pointer identity, not observed execution or a call edge.",
+    "The source capture was sequential and non-atomic; no process access was performed by this parser."
+  ]
+}

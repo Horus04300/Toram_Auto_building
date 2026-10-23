@@ -1,17 +1,20 @@
+import { frontendSourcePath } from '../../support/frontend-paths.mjs';
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS } from '../../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
+const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const scripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
+const scripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 const context = { window:{}, console };
 context.window.window = context.window;
 vm.createContext(context);
-for (const path of scripts) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'assets/js/skill-data-validator.js'), 'utf8'), context, { filename:'assets/js/skill-data-validator.js' });
+for (const path of scripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-data-validator.js'), 'utf8'), context, { filename:'web/src/calculation/skill-data-validator.js' });
 
 const audit = context.window.ToramSkillData.audit();
 assert.deepEqual([...audit.errors], [], `스킬 데이터 감사 오류:\n${[...audit.errors].join('\n')}`);

@@ -9,13 +9,13 @@ context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments:() => ({}) };
 vm.createContext(context);
 
-for (const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skills/blade.js', 'assets/js/data/skills/mononofu.js', 'assets/js/data/skills/shot.js', 'assets/js/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/blade.js', 'web/src/data/skills/mononofu.js', 'web/src/data/skills/shot.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
 // Keep this fixture's original calculation-rule-only Mononofu scope.
 delete context.window.TORAM_SKILL_EFFECT_TREE_DATA.Mononofu;
 context.BASE_ASPD_MAP = { '한손검':100, '자동활':30 };
-for (const path of ['assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'assets/js/calculator.js' });
+for (const path of ['web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'web/src/calculation/calculator.js' });
 
 const effects = context.window.ToramSkillEffects;
 const kernel = context.window.ToramCalculationKernel;

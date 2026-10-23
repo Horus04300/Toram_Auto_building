@@ -8,9 +8,11 @@
 
 사용자 정밀 계산 → JS 문제 준비 → 남은 예산/Channel을 Native에 전달 → 안전한 노드 묶음 실행 → frontier·incumbent·counter 병합 → 결과/continuation.
 
-`assets/js/optimization/native-client.js`가 준비 시작부터 사용한 시간을 차감해 `remainingBudgetMs`를 보낸다. `src-tauri/src/optimization/service.rs`가 job 제어와 최대 4개 continuation session의 oldest eviction을 소유한다. `src-tauri/src/optimization/solver.rs`의 NativeSearchSession이 탐색 상태를 보유한다.
+`desktop/adapters/optimization-client.js`가 준비 시작부터 사용한 시간을 차감해 `remainingBudgetMs`를 보낸다. `desktop/src/optimization/service.rs`가 job 제어와 최대 4개 continuation session의 oldest eviction을 소유한다. `engine/src/solver.rs`의 NativeSearchSession이 탐색 상태를 보유한다.
 
-제품 정밀 계산은 30초 slice를 자동 연결하며 exact·일시정지·취소·오류까지 진행한다. 사용자 대기 시간은 실제 준비/실행 누적 시간에 더하지 않는다. 일반 Worker에는 Native frontier 재개 계약이 없다.
+Native 정밀 계산은 30초 slice를 연결하며 exact·일시정지·취소·오류를 구분한다. 사용자 대기 시간은 실행 시간에 더하지 않는다. 웹은 공용 Rust 코어의 WASM 세션을 Worker에 보관한다.
+
+WASM 미리보기는 `NativeSearchSession::new`의 초기해와 후보/트리 준비만 사용하고 탐색 노드를 방문하지 않는다. 결과는 `heuristic`이며 인증 upper/gap을 노출하지 않는다. 같은 입력의 정밀 실행은 해당 세션을 이어받는다. Worker의 짧은 노드 묶음 사이에서 pause/resume을 처리하고, cancel/입력 변경은 Worker와 세션을 폐기한다. JS 탐색 fallback은 두지 않는다.
 
 ## 2. 중단과 결과
 

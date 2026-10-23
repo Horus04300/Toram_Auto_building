@@ -5,13 +5,13 @@ import { measureComputation } from '../../support/crysta-computation-measurement
 
 // Drive the actual product Native client with a deterministic monotonic clock.
 // Setup, transfer, restoration, evaluation, cache bookkeeping and resume must all precede stop.
-const source = await readFile(new URL('../../../assets/js/optimization/native-client.js', import.meta.url), 'utf8');
+const source = await readFile(new URL('../../../desktop/adapters/optimization-client.js', import.meta.url), 'utf8');
 let clock = 100, resumes = 0, evaluations = 0, failure = false;
 const tick = ms => { clock += ms; };
 const context = { console, window:null,
   ToramStatRegistry:{}, ToramCalculationKernel:{},
   ToramBuildEvaluator:{ evaluateAggregate() { tick(7); evaluations++; return { constraints:{ feasible:true } }; } },
-  ToramCrystaOptimizationGlobalOptimizer:{ deriveRelevantKeys() { tick(2); return ['ATK']; }, prepareProblem(problem) { tick(3); return problem; } },
+  ToramCrystaOptimizationCandidates:{ deriveRelevantKeys() { tick(2); return ['ATK']; }, prepareProblem(problem) { tick(3); return problem; } },
   __TAURI__:{ core:{ Channel:class {}, async invoke(command) {
     await Promise.resolve(); // Include asynchronous delivery, not just the immediate invoke return.
     if (command === 'crysta_hardware_profile') { tick(5); return { logicalThreads:2 }; }
@@ -30,6 +30,7 @@ const context = { console, window:null,
 };
 context.window = context;
 vm.createContext(context);
+vm.runInContext(await readFile(new URL('../../../web/src/optimization/rust-bridge.js', import.meta.url), 'utf8'), context);
 const loadClient = () => { vm.runInContext(source, context); return context.ToramCrystaOptimizationNativeClient; };
 const compile = () => {
   tick(13);

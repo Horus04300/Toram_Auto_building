@@ -1,0 +1,29 @@
+{
+  "authority": "saved runtime PE/metadata static scoped Ghidra; no current game execution, no REA retained Evidence ID",
+  "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "mappedSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "rules": {
+    "level": "GuildRaidRoomData.SetCurrentHpCount(byte n) -> CurrentLevel=max(40,n*4). ReceiveBossSymbolData currentHpGauge &255 similarly sets CurrentLevel; GuildRaidLevel is independent short max(40,maxHpGauge*4). Constructor stores the supplied Level without further scaling.",
+    "def": "base=trunc(f32(f32(i32(rawDef*Level))*0.009999999776482582)); raw multiplication is signed i32 BEFORE f32. Then property40 Def collection applies trunc(f32(f32(f32(1+rate)*f32(base))+f32(constant))); then adds registered living parts; then buff/status changes.",
+    "mdef": "same as DEF with rawMdef and property40 Mdef collection.",
+    "necessaryHit": "trunc(f32(f32(f32(f32(Level)*1.5f)*f32(rawHit))*0.009999999776482582)); then property40 NecessaryHit collection then living parts sum.",
+    "physicalResistance": "rawCutAttack + i32(Level/10) + sum(registered nondead part bodyCut physical correction). No direct property40 or type32 check in this getter.",
+    "magicalResistance": "rawCutMagicAttack + i32(Level/10) + sum(registered nondead part bodyCut magical correction). No direct property40 or type32 check in this getter.",
+    "criticalResistance": "Generic MobPropertyCriticalResist.GetCriticalResist reads first type6 property Values[0]; no GuildRaid/level/type40 adjustment in this generic function. Runtime status/buffs can reduce it. Guild status.Get_Property returns merged own+server property manager.",
+    "propertyOrder": "Guild InitializeMobProperty adds original master properties first, server random-property array afterwards.",
+    "serverBonuses": "GetMobGuildRaidBonus uses server random-property Id/Lv/Flag list and GuildRaidLevel. Id201 adds property6, Id202/203/204 add property40 Def/Mdef/NecessaryHit constants from GuildRaidLevel*randomLv; exact current server selection absent.",
+    "parts": "Guild action manager constructs ordinary MobPartsStatus(master,hp,roomDifficulty), not HighRaidMobPartsStatus. Base part getters use ordinary difficulty multipliers. Delegates return zero for IsDead Hp==0, otherwise part getters; cut delegates sum part.bodyCut. Room difficulty0 has not been proven in this pass; future guild part target values must be unresolved rather than applying HighRaid level scaling. Current six primary families have no parts.",
+    "hp": "Requires hpGage n stored separately from Level at +0x50; raw master MaxHp not used. x=i32(n*4); a=trunc(f32(f32(f32(i32(x*x))/f32(2.4))+f32(x+81))); b=f32(f32(f32(x)/10)+30); c=f32(f32(a)*b); q=Math.Round(double(f32(f32(i32(n*n))/100f)),2,MidpointRounding.ToEven); HP=trunc((q+50d)*double(c)). All q in n0..255 independently checked equal n*n/100 double.",
+    "hpFromLevel": "Only Level>=44 divisible4 permits n=Level/4 via CurrentLevel path. Level40 corresponds n0..10, so HP cannot be chosen uniquely. Formula exceeds signed i32 at n132 (Level528); do not claim valid positive HP above that boundary.",
+    "progression": "CurrentHpCount/MaxHpGauge are received from server symbol/synchronization data; updated held-data MaxHpCount is copied from server held objects. Bounded inspected client paths establish count->level, not a universal clearCount->nextMaxHpCount increment."
+  },
+  "limitations": [
+    "No game process access or active gameplay observed.",
+    "No current guild/server random-property selection captured; default target is explicitly an unmodified static scenario.",
+    "Actual game entry cap and per-success increment schedule are not established; byte representability is not a game cap claim.",
+    "HP depends on remaining HP gauge count, distinct from maximum raid level; level40 is ambiguous.",
+    "Ordinary room difficulty for future guild part records remains unresolved.",
+    "Integer overflow outside relevant safe ranges must not be extrapolated as positive stats."
+  ]
+}

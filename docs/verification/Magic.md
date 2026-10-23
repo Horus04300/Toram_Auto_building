@@ -1,6 +1,6 @@
 # 매직 스킬트리 검증 기록
 
-- 검증일: 2026-08-21
+- 검증일: 2026-08-21; 활성 결계 계산 연결 보완: 2026-10-14
 - 원문: `docs/sources/skills/Magic.txt`
 - SHA-256: `6cf37b1cbeb79f246871c5e2a557b0bb4b13d645303c6cc2eb7ee2cc32fe26de`
 - 범위: `Magic:0`~`Magic:23`, 총 24개
@@ -26,7 +26,7 @@
 - 크로노스 시프트는 콤보 내 마지막 매직 공격의 실제 MP와 공격 프로필을 복사하며, 복사 공격에는 새 콤보 피해 배율을 적용하지 않는다.
 - 매직 캐논은 0~200 충전량을 받아 20단위 분할과 100 초과 순환을 최대 5타로 계산한다. 폴은 명중한 주요/1차 분할 운석 수를 받아 후속 운석 타수를 계산한다.
 - 매직 나이프 Lv.10의 추가 4타, 스펠 튜닝 애로의 확정 크리·더블샷 표기 및 임팩트의 넥스트 퀵·리인포스를 입력으로 연결했다.
-- 결계는 지속 버프로 표시하되 위치·내구도·피격 흡수는 자동 계산하지 않는다. 이겔은 특수 공격을 선택 계산할 수 있다.
+- 결계는 지팡이/메인 마도구의 수동 ON에서 `MOTIONSPEED = 5+2*Lv`를 빌드·최적화 입력에 전달한다. 위치·내구도·피격 흡수는 자동 계산하지 않는다. 이겔은 특수 공격을 선택 계산할 수 있다.
 
 ## S5 회귀
 
@@ -37,6 +37,7 @@
 - 매직 캐논 153충전의 5타 분할 계수, 폴의 명중 운석 수에 따른 분할타, 매직 나이프 Lv.10 추가타.
 - 임팩트/게달의 다음 MP 반감 및 게달 확정 크리의 1회 소비.
 - 체인 캐스트의 애로 후 영창 감소, 크로노스 시프트의 이전 매직 MP·공격 복사.
+- 결계 Lv.0/1/10·ON/OFF·무기 제한과 행동속도 +25% 전달. `test-crysta-native-exact.mjs`는 실제 oo o 저장 입력의 잠긴 +4%·MP 2000/등가 ASPD 10000·JS raw 87개·Native 직렬/세션의 ON/OFF 일치를 확인한다. 이전 불가능 판정 정정은 [Native 회귀](../../tools/tests/optimization/test-crysta-native-exact.mjs)에 기록했다.
 
 ## 전투 시뮬레이터 범위로 보류
 
@@ -53,11 +54,13 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/magic.js`: 통과
-- `node --check assets/js/skill-effect-engine.js`: 통과
-- `node --check assets/js/combo-sequence-engine.js`: 통과
+- `node --check web/src/data/skills/magic.js`: 통과
+- `node --check web/src/calculation/skill-effect-engine.js`: 통과
+- `node --check web/src/calculation/combo-sequence-engine.js`: 통과
 - `node tools/verification/audit-stack-source-links.mjs --tree Magic --require-s1`: 24/24 통과
 - `node tools/tests/skills/test-magic-rules.mjs`: 통과
 - `node tools/tests/skills/test-magic-regression.mjs`: 통과
+- `node tools/tests/skills/test-definition-precedence.mjs`: 통과. 결계의 `stat/MOTIONSPEED` 변경만 역변환하면 이전 세 snapshot hash가 모두 복원됨을 확인한 후 기준을 갱신했다.
+- `node tools/tests/optimization/test-crysta-native-exact.mjs`: 결계 ON/OFF 실제 입력과 JS/Native 일치 통과.
 - 기존 Blade/Martial/Shot S4/S5 회귀: 통과
 - `git diff --check`: 통과

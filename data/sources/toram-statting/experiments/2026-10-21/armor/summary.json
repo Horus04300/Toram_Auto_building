@@ -1,0 +1,94 @@
+{
+  "schema": "toram.statting-survey.v1",
+  "seed": 20261021,
+  "samplesPerCategoryFrame": 12,
+  "equipmentFilter": [
+    20
+  ],
+  "frameFilter": [
+    "armor-atk-crit",
+    "armor-atk-crit-stat",
+    "armor-matk-crit",
+    "armor-atk-dte",
+    "armor-matk-dte",
+    "armor-atk-crit-four-neg",
+    "armor-matk-crit-four-neg"
+  ],
+  "scope": "fixed legal targets in declared frames; monotone nonzero ordinary options; no crafting RNG, reversal, or battle-score optimization",
+  "startingPotentialStatus": "source-model combined-floor and separate-floor sensitivity; native final crafting arithmetic remains unknown",
+  "nativeWarningModel": "retained client pre-start warning only, not server outcome probability",
+  "nativeMethodHashesChecked": 36,
+  "totals": {
+    "inputCases": 83,
+    "prefixStatesGenerated": 59849,
+    "negativeSchedulesAttempted": 67082,
+    "completedRoutes": 12675,
+    "uniqueCompletedRoutes": 12195,
+    "noRouteFound": 61,
+    "foundExecutableRoute": 22,
+    "all100Found": 3
+  },
+  "winnerFamilies": {
+    "drain-split": 18,
+    "drain": 2,
+    "mixed": 2
+  },
+  "comparisons": {
+    "betterThanBaseline": 22,
+    "baselineEqual": 61,
+    "negativeOrderingImproves": 0,
+    "splitWithoutDrainImproves": 1,
+    "drainAddsImprovement": 22,
+    "mixedAddsImprovement": 2
+  },
+  "supportedSurveyOptionIds": [
+    6,
+    7,
+    18,
+    20,
+    35,
+    37,
+    40,
+    42,
+    43,
+    51,
+    52,
+    53
+  ],
+  "excludedSpecialIds": [
+    12,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32,
+    65
+  ],
+  "sensitivity": {
+    "pairedCases": 0,
+    "differentWarningScores": 0,
+    "maxWarningDifferencePoints": 0
+  },
+  "oracle": {
+    "cases": 12,
+    "edges": 492202,
+    "matches": 12,
+    "maxDifferencePoints": 0
+  },
+  "elapsedSeconds": 13.78401500000109,
+  "sources": {
+    "catalog.json": "afe674904815b7367f49967e7ad0f3028a7dff1d889f4aa84f90b6e6163ea3e1",
+    "native-crafting\\base-profiles.json": "ae5fec13a2b8673d47bf671a94e9eacf8a4a1454d63f8553caca0cb461185e4e",
+    "native-stat-budget\\budget.325.json": "eacf541603fe3453de1bf4115fa69e63d27f5ad318e584f57bff9a772bc5b39a",
+    "native-success\\index.json": "02ba36c08c5000754e36726fa26978350068277700f0be426ee89c98e6488e2b"
+  },
+  "toolHashes": {
+    "catalog_sweep.py": "46b84d1ee68474adae1df1ca73a4f70efe4873ab4dfc098d346d2042eb7386b4",
+    "experiment.py": "552d830db1909b3e48a645805685b43af63516f697ba7d501f707640ec72d246",
+    "native_model.py": "0ecd2e8d49f2bbf416fd3888deaecbdf980ea1473d3b1c2d8f0779cc96925665",
+    "routes.py": "31a58f6a4a0043d5554e2d2acdfff8ea2819e9082d06a5435b8ad1e6d80f137c",
+    "self_check.py": "6ae9e8d077a4ee2425c389428fe5282c1c44e30a2ec75341a5f73826ab7a50b4",
+    "simulate.py": "86ce883966639e965b22d921d7ac31a7021748a11255b3e75bdf91d926b12c05"
+  }
+}

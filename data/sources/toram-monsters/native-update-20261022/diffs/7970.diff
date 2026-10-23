@@ -1,0 +1,40 @@
+--- assets\source-data\toram-monsters\native-highraid-target\HighRaidMobPartsStatus-get_MagicDef-7fff5fe2ff80.c
++++ 7970.c
+@@ -3,18 +3,19 @@
+   code *pcVar2;
+   char cVar3;
+-  int iVar4;
+-  longlong alStackX_8 [4];
++  byte bVar4;
++  int iVar5;
++  undefined *apuStackX_8 [4];
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+     GLOBAL0 = '\x01';
+   }
+-  alStackX_8[0] = 0;
++  apuStackX_8[0] = (undefined *)0x0;
+   if ((*(longlong *)(self + 0x28) == 0) ||
+      (lVar1 = *(longlong *)(*(longlong *)(self + 0x28) + 0xa0), lVar1 == 0)) goto LABEL0;
+-  cVar3 = CALL1(lVar1,0x20,alStackX_8,GLOBAL1);
++  cVar3 = CALL1(lVar1,0x20,apuStackX_8,GLOBAL1);
+   if (cVar3 != '\0') {
+-    if (alStackX_8[0] == 0) goto LABEL0;
+-    cVar3 = CALL2(alStackX_8[0],0);
+-    if (cVar3 != '\0') {
++    if (apuStackX_8[0] == (undefined *)0x0) goto LABEL0;
++    bVar4 = MobPropertyHighRaidCalcExceptionFlag_FixedMagicDefFlag(apuStackX_8[0],(undefined *)0x0);
++    if (bVar4 != 0) {
+       if (*(longlong *)(self + 0x28) != 0) {
+         return *(int *)(*(longlong *)(self + 0x28) + 0x40);
+@@ -28,7 +29,7 @@
+   }
+ LABEL0:
+-  CALL3();
++  CALL2();
+   pcVar2 = (code *)swi(3);
+-  iVar4 = (*pcVar2)();
+-  return iVar4;
++  iVar5 = (*pcVar2)();
++  return iVar5;
+ }

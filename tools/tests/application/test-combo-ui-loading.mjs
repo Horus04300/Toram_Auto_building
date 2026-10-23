@@ -25,11 +25,20 @@ const document = { readyState: 'loading', addEventListener() {} };
 const context = { window, document, console };
 vm.createContext(context);
 
-vm.runInContext(await readFile(resolve(root, 'assets/js/skill-effect-engine.js'), 'utf8'), context, { filename: 'assets/js/skill-effect-engine.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-effect-engine.js'), 'utf8'), context, { filename: 'web/src/calculation/skill-effect-engine.js' });
 assert.doesNotThrow(() => window.ToramSkillEffects.profile('Demo:0', { level: 1 }, {}, {}, {}), '빈 등록 슬롯 뒤의 스킬도 엔진 프로필을 만들 수 있어야 합니다.');
 assert.doesNotThrow(() => window.ToramSkillEffects.profile('Demo:0', { level: 1 }, {}, {}, { activeBuffs: { 'Demo:1': { active: true, stacks: 0 } } }), '계산 효과가 없는 액티브 버프가 켜져도 콤보 스킬 프로필은 만들어져야 합니다.');
 
-vm.runInContext(await readFile(resolve(root, 'assets/js/combo-ui.js'), 'utf8'), context, { filename: 'assets/js/combo-ui.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/ui/combo-ui.js'), 'utf8'), context, { filename: 'web/src/ui/combo-ui.js' });
 assert.deepEqual(Array.from(window.ToramComboUi.getAvailableSkills(), (item) => item.id), ['Demo:0'], '빈 등록 슬롯은 콤보 스킬 목록에서 무시해야 합니다.');
+
+const nineEntries = Array.from({ length:9 }, (_, index) => ({ skillId:'Demo:0', tag:'none', inputs:{ position:index + 1 } }));
+window.ToramComboUi.restore(nineEntries);
+assert.equal(window.ToramComboUi.getEntries().length, 9, '9번째 콤보 칸을 복원할 때 버리면 안 됩니다.');
+assert.equal(window.ToramComboUi.getEntries()[8].inputs.position, 9, '9번째 칸의 입력도 보존해야 합니다.');
+window.ToramComboUi.restore(window.ToramComboUi.getEntries());
+assert.equal(window.ToramComboUi.getEntries().length, 9, '저장용 입력을 다시 복원해도 9칸을 유지해야 합니다.');
+window.ToramComboUi.restore([...nineEntries, nineEntries[0]]);
+assert.equal(window.ToramComboUi.getEntries().length, 9, '10번째 칸은 현재 지원 범위 밖입니다.');
 
 console.log('Combo UI null-definition regression: PASS');

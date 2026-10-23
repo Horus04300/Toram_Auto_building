@@ -12,15 +12,15 @@
 
 - `npm run verify:architecture`: PASS.
 - `npm run test:regression`: 69개 프로세스 종료 성공. 68개 통과, 실제 native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정으로 SKIP.
-- `cargo fmt --manifest-path src-tauri/Cargo.toml --check`: PASS.
-- `cargo test --locked --manifest-path src-tauri/Cargo.toml`: 79개 통과.
-- `cargo clippy --locked --manifest-path src-tauri/Cargo.toml --all-targets -- -D warnings`: PASS.
+- `cargo fmt --manifest-path desktop/Cargo.toml --check`: PASS.
+- `cargo test --locked --manifest-path desktop/Cargo.toml`: 79개 통과.
+- `cargo clippy --locked --manifest-path desktop/Cargo.toml --all-targets -- -D warnings`: PASS.
 - `node tools/verification/audit-stack-source-links.mjs --require-s1`: S1 427/427 통과.
 - `npm run desktop:prepare`, `node tools/release-version.mjs`: PASS.
 - `node tools/verification/verify-update-browser.mjs`: 실제 Edge 화면 PASS, native 설치는 mock.
 - `npm run ai:audit`: PASS.
 
-로그는 `src-tauri/target/release-r0-0.6.5.log`, `release-rust-0.6.5.log`에 보관한다.
+로그는 `desktop/target/release-r0-0.6.5.log`, `release-rust-0.6.5.log`에 보관한다.
 
 추가 검증: `node tools/verification/audit-browser-e2e.mjs` 실제 Edge 15개 통과. `node tools/verification/audit-weapon-stat-recommendations.mjs --single-slot`은 110개 exact/oracle/재계산·상한 검사와 JS/Rust 10,010건 비교를 통과했다. 외부 계수 및 Native 불일치는 0이다.
 
@@ -59,12 +59,12 @@
 
 ## 시험 환경과 증거
 
-Windows x64의 실제 설치 앱과 WebView2를 사용했다. 격리 폴더는 `src-tauri/target/upgrade-0.6.4-to-0.6.5/`이며, 그 아래 공백 포함 제품명 폴더에 0.6.4를 `/S /NS /UPDATE /D=<격리 설치 경로>`로 설치했다. 기존 제품 레지스트리는 먼저 백업했다. NSIS의 기존 설치 경로 탐색이 격리 설치 위치를 사용하도록 실제 설치 프로그램이 등록한 상태에서 업데이트했다.
+Windows x64의 실제 설치 앱과 WebView2를 사용했다. 격리 폴더는 `desktop/target/upgrade-0.6.4-to-0.6.5/`이며, 그 아래 공백 포함 제품명 폴더에 0.6.4를 `/S /NS /UPDATE /D=<격리 설치 경로>`로 설치했다. 기존 제품 레지스트리는 먼저 백업했다. NSIS의 기존 설치 경로 탐색이 격리 설치 위치를 사용하도록 실제 설치 프로그램이 등록한 상태에서 업데이트했다.
 
 `LOCALAPPDATA=<격리 루트>/local`, `WEBVIEW2_USER_DATA_FOLDER=<격리 루트>/webview`, 로컬 CDP 9226을 사용했다. named build 경로가 정확히 `<격리 루트>/local/ToramOnlineAutoBuildCalculator`인지 앱 native IPC로 검사했다. 실제 사용자 앱과 프로필에 시험 입력을 넣지 않았다.
 
 `CODEX_PLAYWRIGHT_PATH`는 설치된 Playwright 경로로 지정한다. `node tools/verification/audit-release-upgrade.mjs prepare`가 출발 버전 데이터를 준비하고, `upgrade`가 실제 공개 버전 상승을 검증한다. 이미 설치·저장한 시험 디렉터리를 재사용하거나 다른 앱의 CDP에 연결하지 않도록 실행 전 격리 상태를 확인한다.
 
-로컬 증거는 격리 루트의 `prepare-report.json`, `upgrade-report.json`, `before.json`, `expected-after.json`, `after.json`, `native-storage-0.6.5.log`, `cleanup-report.json`, `0.6.4-update-available.png`, `0.6.5-updated.png`에 있다. 전체 CI 대기는 `src-tauri/target/release-ci-0.6.5.log`에 기록했다.
+로컬 증거는 격리 루트의 `prepare-report.json`, `upgrade-report.json`, `before.json`, `expected-after.json`, `after.json`, `native-storage-0.6.5.log`, `cleanup-report.json`, `0.6.4-update-available.png`, `0.6.5-updated.png`에 있다. 전체 CI 대기는 `desktop/target/release-ci-0.6.5.log`에 기록했다.
 
 이번 실제 설치 Gate는 이 Windows 환경의 정상 공개 업데이트·동의 취소·데이터 보존 경로를 검증한다. 네트워크/저장/변조 실패 회귀는 앞선 자동 업데이트 감사와 구분하며, 모든 OS 오류의 복구나 rollback을 보장하지 않는다.

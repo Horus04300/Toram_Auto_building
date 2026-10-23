@@ -10,12 +10,12 @@ assert.equal(compilerOptions.noEmit, true, '기본 타입 검사는 런타임 �
 assert.equal(compilerOptions.allowJs, false, '기존 JavaScript 전체를 검증 대상으로 강제하지 않습니다.');
 
 const sources = [
-  'frontend/contracts/boundary-dtos.d.ts',
-  'frontend/contracts/boundary-dto-fixtures.ts',
-  'frontend/runtime/tauri-build-storage-adapter.ts',
-  'frontend/domain/calculation-contracts.ts',
-  'frontend/application/ports.ts',
-  'frontend/contracts/calculation-contract-fixtures.ts'
+  'web/src/contracts/boundary-dtos.d.ts',
+  'web/src/contracts/boundary-dto-fixtures.ts',
+  'desktop/adapters/saved-build-storage.ts',
+  'web/src/domain/calculation-contracts.ts',
+  'web/src/application/ports.ts',
+  'web/src/contracts/calculation-contract-fixtures.ts'
 ];
 for (const path of sources) {
   const source = await readFile(resolve(root, path), 'utf8');

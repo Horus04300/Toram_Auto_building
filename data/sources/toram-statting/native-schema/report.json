@@ -1,0 +1,136 @@
+{
+  "schema": "toram.statting-native-schema.v1",
+  "source": "GrantData static constructor",
+  "catalogInitializer": "GrantData-_cctor-7fff5fc80d10.c",
+  "catalogInitializerSha256": "8cdf553f62c52a2f2368eef37fe2b4562deb7eeceae8c9625572eb7bb0ed2bcb",
+  "struct": "Toram.Common.Productions.EnhanceProperties2",
+  "structBytes": 40,
+  "fields": [
+    {
+      "name": "UsePotential",
+      "offset": 0,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "Coefficient",
+      "offset": 4,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "MaterialCategory",
+      "offset": 8,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "AbilityCategory",
+      "offset": 12,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "Rate",
+      "offset": 16,
+      "bytes": 4,
+      "type": "float32"
+    },
+    {
+      "name": "BaseMax",
+      "offset": 20,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "UpperMax",
+      "offset": 24,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "LowerMax",
+      "offset": 28,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "OverRate",
+      "offset": 32,
+      "bytes": 4,
+      "type": "int32"
+    },
+    {
+      "name": "DoubleUse",
+      "offset": 36,
+      "bytes": 4,
+      "type": "int32"
+    }
+  ],
+  "dictionaryFields": [
+    {
+      "name": "EnhanceCost",
+      "staticOffset": 0,
+      "key": "BonusType int32",
+      "expectedRecords": 67
+    },
+    {
+      "name": "EnhanceElementCost",
+      "staticOffset": 8,
+      "key": "ElementType",
+      "expectedRecords": 6
+    }
+  ],
+  "initializerConstructorCalls": 73,
+  "initializerDictionaryAdds": 73,
+  "limitLevel": 210,
+  "readonlyConstants": [
+    {
+      "va": "0x7fff61b52b18",
+      "mappedOffset": 43002648,
+      "rawHex": "0000803f",
+      "float32": 1.0
+    },
+    {
+      "va": "0x7fff61b52b4c",
+      "mappedOffset": 43002700,
+      "rawHex": "0000003f",
+      "float32": 0.5
+    },
+    {
+      "va": "0x7fff61b52cc4",
+      "mappedOffset": 43003076,
+      "rawHex": "cdcccc3e",
+      "float32": 0.4000000059604645
+    },
+    {
+      "va": "0x7fff61b52f48",
+      "mappedOffset": 43003720,
+      "rawHex": "3333b33e",
+      "float32": 0.3499999940395355
+    },
+    {
+      "va": "0x7fff61b538b0",
+      "mappedOffset": 43006128,
+      "rawHex": "5c8f423e",
+      "float32": 0.1899999976158142
+    },
+    {
+      "va": "0x7fff61b538b4",
+      "mappedOffset": 43006132,
+      "rawHex": "d7a3303f",
+      "float32": 0.6899999976158142
+    }
+  ],
+  "typeInfoIdentity": {
+    "va": "0x7fff62420f50",
+    "mappedBytesHex": "3184002000000000",
+    "encodedUsage": "0x20008431",
+    "decodeTypeIndex": 16920,
+    "typeName": "GrantData"
+  },
+  "unknowns": [
+    "AbilityCategory display names are not encoded as a named enum.",
+    "Final potential cost, negative restoration and category penalty must use consumer rules, not sum UsePotential alone."
+  ]
+}

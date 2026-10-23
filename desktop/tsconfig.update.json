@@ -1,0 +1,6 @@
+{
+  "extends": "./tsconfig.storage.json",
+  "compilerOptions": { "outFile": "../build/generated/desktop/update.js" },
+  "files": ["../web/src/contracts/update-boundary.d.ts", "./adapters/update.ts"],
+  "include": []
+}

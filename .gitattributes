@@ -1,2 +1,10 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+# Preserve reviewed hashes across Windows checkouts.
+data/sources/toram-items/** -text
+web/public/game-data/items/** -text
+data/sources/toram-monsters/** -text
+data/sources/toram-statting/** -text
+web/public/game-data/bosses/** -text
+tools/extraction/toram-boss-pipeline-contract.json -text
+web/src/calculation/stat-registry.js text eol=lf

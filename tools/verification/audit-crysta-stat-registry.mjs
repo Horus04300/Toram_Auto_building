@@ -1,17 +1,20 @@
+import { frontendSourcePath } from '../support/frontend-paths.mjs';
+import { readCrystaDataSource } from '../support/crysta-catalog-source.mjs';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS } from '../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../web/src/classic-script-manifest.mjs';
+const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
 const root = resolve(import.meta.dirname, '../..');
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
+const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 const context = { window:{ skillSimulatorState:{ getInvestments:() => ({}) } }, console };
 context.window.window = context.window;
 vm.createContext(context);
-for (const path of dataScripts) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+for (const path of dataScripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
 const skillKeys = new Set();
 function visit(value) {

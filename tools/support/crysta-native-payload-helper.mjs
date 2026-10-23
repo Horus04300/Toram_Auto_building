@@ -2,9 +2,8 @@
 // production public API or duplicating its field allowlist.
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-const source = await readFile(new URL('../../assets/js/optimization/native-client.js', import.meta.url), 'utf8');
-const anchor = '  var client = new NativeParallelClient();';
-assert.equal(source.split(anchor).length, 2);
+const source = await readFile(new URL('../../web/src/optimization/rust-bridge.js', import.meta.url), 'utf8');
 const context = {};
-new Function('window', source.replace(anchor, '  root.projectNativeProblem = nativeProblem;\n' + anchor))(context);
-export const projectNativeProblem = context.projectNativeProblem;
+new Function('window', source)(context);
+export const projectNativeProblem = context.ToramCrystaOptimizationRustBridge.projectProblem;
+assert.equal(typeof projectNativeProblem, 'function');

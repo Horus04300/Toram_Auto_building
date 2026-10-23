@@ -4,8 +4,8 @@
 
 - 대상: 플레이어 빌드·전투·대미지·MP·콤보에 영향을 주는 427개 스킬
 - 제외: `Smith`, `Alchemy`, `Tamer` 트리. 제작·합성·펫 전용 기능은 현재 계산 범위 밖이다.
-- 출처: `skill_effect_source_links.json`의 트리별 원문 URL. 값·조건·패치 시점이 확인되지 않은 데이터는 추정하지 않는다.
-- 카탈로그: `assets/js/data/skill-combat-catalog.js`가 스킬트리 원본에서 모든 대상의 ID·이름·출처를 생성한다.
+- 출처: `data/sources/skill-effect-source-links.json`의 트리별 원문 URL. 값·조건·패치 시점이 확인되지 않은 데이터는 추정하지 않는다.
+- 카탈로그: `web/src/data/skill-combat-catalog.js`가 스킬트리 원본에서 모든 대상의 ID·이름·출처를 생성한다.
 
 ## 데이터 상태
 
@@ -15,7 +15,7 @@
 
 ## 스킬 정의 계약
 
-기본 정의는 `skill-effect-data.js`의 `skills`에 두고, 트리별 정의는 `assets/js/data/skills/*.js`가 등록기(`skill-effect-registry.js`)에 추가한다. 두 집합은 합쳐서 카탈로그 ID와 정확히 하나씩 대응한다. `verified`가 되려면 아래 항목 중 해당하는 모든 항목을 기록한다.
+기본 정의는 `skill-effect-data.js`의 `skills`에 두고, 트리별 정의는 `web/src/data/skills/*.js`가 등록기(`skill-effect-registry.js`)에 추가한다. 두 집합은 합쳐서 카탈로그 ID와 정확히 하나씩 대응한다. `verified`가 되려면 아래 항목 중 해당하는 모든 항목을 기록한다.
 
 ```js
 {
@@ -81,7 +81,7 @@
 
 ## 콤보 공통 규칙
 
-`assets/js/data/combo-rule-data.js`는 사용자가 제공한 게임 내 콤보 도움말 본문을 구조화한 데이터다. 다음 10개 태그를 저장한다: 연속공격, 충전, 신속, 강타, 심안, 집념, 무적, 흡혈, 강인, 반사.
+`web/src/data/combo-rule-data.js`는 사용자가 제공한 게임 내 콤보 도움말 본문을 구조화한 데이터다. 다음 10개 태그를 저장한다: 연속공격, 충전, 신속, 강타, 심안, 집념, 무적, 흡혈, 강인, 반사.
 
 - 두 번째 스킬부터 태그를 붙일 수 있고, 대미지 태그는 버프 스킬에 적용하지 않는다.
 - 태그가 적용된 공격의 대미지 배율은 모든 증감 반영 뒤 10%~150%로 제한한다.

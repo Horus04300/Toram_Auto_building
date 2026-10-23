@@ -1,0 +1,15 @@
+# HighRaid target stat evidence
+
+Static, scoped Ghidra decompilation of the existing saved `GameAssembly.snapshot.dll`; no current game execution, process attachment, server calls, or REA retained evidence ID. Byte identities, method declaration ranges/native VAs and every retained file SHA-256 are in `index.json` and `report.json`.
+
+- `HighRaidBossBattleStatus` uses an independent integer level stored at `+0x30`. `BaseLevel` initializes its UI selection; `MinLevel` sets the minimum. The maximum comes from `FunctionLimitManager.GetValue(GameSystemFlag.LevelLimit = 15, out maximum)`, so it is not a fixed master field and its current number is not established here. A signed-short input bound is a storage constraint, not an in-game maximum claim.
+- With no exception property and before dynamic parts/buffs/ailments, DEF/MDEF are `trunc(float32(level) * float32(raw / 100f))`, with float32 at each conversion and operation. Necessary hit is `trunc(float32(float32(level) * 1.5f) * float32(raw / 100f))`.
+- Physical/magic cut are **raw minus** `trunc(float32(level) * -0.03999999910593033f)`; the negative constant means this increases resistance with level. Unbroken parts add their cut bonus afterwards.
+- HP is `trunc((rawHP / 100f) * ((level + 81 + (level*level)/2.4f) * (level/10f + 30f)) * (level > 149 ? 1.5f : 1f))`, following native float32 operation order. `level*level` is integer multiplication before conversion. This is not a guarantee for overflow outside captured relevant levels.
+- Property type 32 selects a fixed-stat exception. Its selected `Values[0]` mask bits are HP 1, hit 2, DEF 4, MDEF 8, physical cut 16, magical cut 32. The base getter selects the first accepted insertion record with no UID argument; raw parser ordering must match before using the first exported record. Altadar `101100:1` and Merzehal `90965:1` have no such property and no parts.
+- Example checks by independent float32 translation: Altadar Lv290, raw HP380/DEF600/MDEF600/hit175/cuts14 -> HP11909278, DEF1740, MDEF1740, hit761, cuts25; Merzehal initial variant 90965:1 Lv325 raw HP280/DEF600/MDEF600/hit175/cuts14 -> HP11659309, DEF1950, MDEF1950, hit853, cuts27. These are static arithmetic checks, not gameplay observations.
+- Final DEF/MDEF can further include unbroken part sums, percentage buffs and abnormal state 10. The UI can apply a selected static phase baseline, but must disclose this boundary.
+
+Five scoped generation batches are retained as `TraceToramHighRaid*.java` plus their `methods*.json`; `report.json` identifies the batch for each output family. Ghidra import was `-noanalysis` and focused function decompilation only, against SHA-guarded saved PE. Exact constants with mapped-image offsets and raw bytes are in `constants.json`.
+
+HighRaid part DEF/MDEF/hit are individually level-scaled with their own type32 fixed flags. Each part rounds before summation. `SetPartsMaster` checks the owning parts dictionary; it does not reject id 0. Full upstream scene registration is not established; show the all-unbroken baseline as such.

@@ -1,60 +1,73 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
 import vm from 'node:vm';
 
-const root = resolve(import.meta.dirname, '../../..');
-const calls = [];
-let nativeFails = true;
-const context = {
-  console,
-  Promise,
-  window:{
-    ToramCrystaOptimizationNativeClient:{
-      isAvailable:() => true,
-      optimize:() => { calls.push('native.optimize'); return nativeFails ? Promise.reject(new Error('native start failed')) : Promise.resolve({ status:'exact', engine:'rust-native' }); },
-      resume:() => { calls.push('native.resume'); return Promise.resolve({ status:'exact', continuationId:null }); },
-      cancel:reason => { calls.push(`native.cancel:${reason}`); return true; },
-      pause:() => { calls.push('native.pause'); return true; },
-      disposeContinuation:() => { calls.push('native.dispose'); return Promise.resolve(true); },
-      hasContinuation:() => true,
-      isRunning:() => false
-    },
-    ToramCrystaOptimizationWorkerClient:{
-      optimize:() => { calls.push('worker.optimize'); return Promise.resolve({ status:'bounded', engine:'js-worker' }); },
-      cancel:reason => { calls.push(`worker.cancel:${reason}`); return true; },
-      isRunning:() => false
-    }
+const calls = [], workers = [];
+let nativeAvailable = true, nativeFails = false;
+class FakeWorker {
+  constructor(url) { this.url = url; this.messages = []; workers.push(this); }
+  postMessage(message) { this.messages.push(message); }
+  terminate() { this.terminated = true; }
+  result(result, version = this.messages.filter(message => message.version).at(-1).version) {
+    this.onmessage({ data:{ type:'result', version, result } });
+  }
+}
+const root = { console, Worker:FakeWorker, WebAssembly:{},
+  ToramCrystaOptimizationNativeClient:{
+    isAvailable:() => nativeAvailable, isRunning:() => false, hasContinuation:() => false,
+    optimize:async () => { calls.push('native'); if (nativeFails) throw new Error('native failed'); return { status:'exact', engine:'rust-native' }; },
+    cancel:() => false, pause:() => false, disposeContinuation:async () => false
   }
 };
-context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/optimization/execution-adapter.js'), 'utf8'), context, { filename:'optimization/execution-adapter.js' });
-
-const adapter = context.window.ToramCrystaOptimizationExecutionAdapter;
-assert.equal(adapter.schema, 'toram.crysta-execution-adapter.v1');
-assert.equal(adapter.isAvailable(), true);
-
-const fallback = await adapter.execute({ id:'fixture' }, {}, { canFallback:() => true });
-assert.equal(fallback.engine, 'js-worker', 'native launch failure must use the established Worker fallback');
-assert.deepEqual(calls.slice(0, 2), ['native.optimize', 'worker.optimize']);
-
-calls.length = 0;
-const stale = await adapter.execute({ id:'stale' }, {}, { canFallback:() => false });
-assert.equal(stale, null, 'a stale request must not launch a fallback Worker');
-assert.deepEqual(calls, ['native.optimize']);
-
-calls.length = 0;
-nativeFails = false;
-const native = await adapter.execute({ id:'native' }, {}, {});
-assert.equal(native.engine, 'rust-native', 'a completed native result must stay native');
-assert.deepEqual(calls, ['native.optimize']);
-
-calls.length = 0;
+root.window = root;
+const context = vm.createContext(root);
+for (const file of ['wasm-client.js','execution-adapter.js']) {
+  vm.runInContext(await readFile(new URL('../../../web/src/optimization/' + file, import.meta.url), 'utf8'), context);
+}
+const adapter = root.ToramCrystaOptimizationExecutionAdapter;
+assert.equal(adapter.schema, 'toram.crysta-execution-adapter.v2');
+assert.equal((await adapter.execute({})).engine, 'rust-native');
+nativeFails = true;
+await assert.rejects(adapter.execute({}), /native failed/);
+assert.equal(workers.length, 0, 'native errors must not silently start another solver');
+nativeAvailable = false;
+const problem = { id:'fixture' };
+const preview = adapter.preview(problem);
+assert.equal(workers.length, 1);
+const worker = workers[0];
+assert.equal(worker.url, 'assets/js/optimization/wasm-worker.js');
+assert.equal(worker.messages[0].mode, 'preview');
+worker.result({ status:'heuristic', engine:'rust-wasm', continuationId:'wasm-session' });
+assert.equal((await preview).status, 'heuristic');
+assert.equal(adapter.hasContinuation(), true);
+const precise = adapter.execute(problem);
+assert.equal(workers.length, 1, 'precision must reuse the preview session');
+assert.equal(worker.messages.at(-1).type, 'resume');
+const preciseVersion = worker.messages.at(-1).version;
 assert.equal(adapter.pause(), true);
-await adapter.resume({}, {});
-assert.equal(adapter.cancel('fixture cancel'), true);
+assert.equal(worker.messages.at(-1).type, 'pause');
+worker.result({ status:'paused', continuationId:'wasm-session' }, preciseVersion);
+assert.equal((await precise).status, 'paused');
+assert.equal(adapter.hasContinuation(), true);
+const resumed = adapter.resume();
+worker.result({ status:'exact', engine:'rust-wasm', exact:true, continuationId:null });
+assert.equal((await resumed).status, 'exact');
+assert.equal(adapter.hasContinuation(), false);
+assert.equal((await adapter.execute(problem)).status, 'exact');
+assert.equal(workers.length, 1, 'unchanged exact result can be reused');
 await adapter.disposeContinuation();
-assert.deepEqual(calls, ['native.pause', 'native.resume', 'native.cancel:fixture cancel', 'worker.cancel:fixture cancel', 'native.dispose']);
-
-console.log('CrystaOptimization execution adapter: PASS (native preference, Worker fallback, cancellation, pause/resume, continuation disposal)');
+assert.equal(worker.terminated, true);
+const pending = adapter.execute({ id:'new' });
+assert.equal(adapter.isRunning(), true);
+assert.equal(adapter.cancel('test'), true);
+const cancelled = await pending;
+assert.equal(cancelled.status, 'cancelled');
+assert.equal(cancelled.upperBound, null);
+assert.equal(adapter.hasContinuation(), false);
+assert.equal(adapter.isRunning(), false);
+const failed = adapter.execute({ id:'error' });
+workers.at(-1).onerror({ message:'wasm load failed' });
+await assert.rejects(failed, /wasm load failed/);
+assert.equal(adapter.isRunning(), false);
+assert.equal(workers.at(-1).terminated, true);
+console.log('Rust execution: PASS (Native preference, errors without JS fallback, WASM preview reuse, pause/resume, exact cache, cancellation, failed-load cleanup)');

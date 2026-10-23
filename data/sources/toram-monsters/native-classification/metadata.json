@@ -1,0 +1,880 @@
+[
+  {
+    "type_definition_index": 3825,
+    "name": "HighRaidBossMasterData",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24866908,
+      "size": 88
+    },
+    "byval_type_index": 17479,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 16873,
+        "name": "<No>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041ea",
+        "range": {
+          "offset": 22261488,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16874,
+        "name": "<FieldId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041eb",
+        "range": {
+          "offset": 22261500,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16875,
+        "name": "<RoomId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ec",
+        "range": {
+          "offset": 22261512,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16876,
+        "name": "<RaidFlag>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041ed",
+        "range": {
+          "offset": 22261524,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16877,
+        "name": "<MonsterId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ee",
+        "range": {
+          "offset": 22261536,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16878,
+        "name": "<MonsterUuid>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ef",
+        "range": {
+          "offset": 22261548,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16879,
+        "name": "<BaseLevel>k__BackingField",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x040041f0",
+        "range": {
+          "offset": 22261560,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16880,
+        "name": "<MinLevel>k__BackingField",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x040041f1",
+        "range": {
+          "offset": 22261572,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 33628,
+        "name": "get_No",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600835d",
+        "range": {
+          "offset": 4955824,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33629,
+        "name": "set_No",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600835e",
+        "range": {
+          "offset": 4955860,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33630,
+        "name": "get_FieldId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x0600835f",
+        "range": {
+          "offset": 4955896,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33631,
+        "name": "set_FieldId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008360",
+        "range": {
+          "offset": 4955932,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33632,
+        "name": "get_RoomId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008361",
+        "range": {
+          "offset": 4955968,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33633,
+        "name": "set_RoomId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008362",
+        "range": {
+          "offset": 4956004,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33634,
+        "name": "get_RaidFlag",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06008363",
+        "range": {
+          "offset": 4956040,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33635,
+        "name": "set_RaidFlag",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06008364",
+        "range": {
+          "offset": 4956076,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33636,
+        "name": "get_MonsterId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008365",
+        "range": {
+          "offset": 4956112,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33637,
+        "name": "set_MonsterId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008366",
+        "range": {
+          "offset": 4956148,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33638,
+        "name": "get_MonsterUuid",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008367",
+        "range": {
+          "offset": 4956184,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33639,
+        "name": "set_MonsterUuid",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008368",
+        "range": {
+          "offset": 4956220,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33640,
+        "name": "get_BaseLevel",
+        "return_type": {
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06008369",
+        "range": {
+          "offset": 4956256,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33641,
+        "name": "set_BaseLevel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836a",
+        "range": {
+          "offset": 4956292,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33642,
+        "name": "get_MinLevel",
+        "return_type": {
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x0600836b",
+        "range": {
+          "offset": 4956328,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33643,
+        "name": "set_MinLevel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836c",
+        "range": {
+          "offset": 4956364,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33644,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "no",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "fieldId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "roomId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "raidFlag",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "monsterId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "monsterUuid",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "baseLevel",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          },
+          {
+            "name": "minLevel",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836d",
+        "range": {
+          "offset": 4956400,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 3828,
+    "name": "HighRaidRewardData",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24867172,
+      "size": 88
+    },
+    "byval_type_index": 17490,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 16887,
+        "name": "<No>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041f8",
+        "range": {
+          "offset": 22261656,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16888,
+        "name": "<RewardNo>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041f9",
+        "range": {
+          "offset": 22261668,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16889,
+        "name": "<Cost>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041fa",
+        "range": {
+          "offset": 22261680,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16890,
+        "name": "<Type>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041fb",
+        "range": {
+          "offset": 22261692,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16891,
+        "name": "<Value>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041fc",
+        "range": {
+          "offset": 22261704,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16892,
+        "name": "<Num>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041fd",
+        "range": {
+          "offset": 22261716,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16893,
+        "name": "<Flag>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041fe",
+        "range": {
+          "offset": 22261728,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 33661,
+        "name": "get_No",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600837e",
+        "range": {
+          "offset": 4957012,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33662,
+        "name": "set_No",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600837f",
+        "range": {
+          "offset": 4957048,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33663,
+        "name": "get_RewardNo",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06008380",
+        "range": {
+          "offset": 4957084,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33664,
+        "name": "set_RewardNo",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06008381",
+        "range": {
+          "offset": 4957120,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33665,
+        "name": "get_Cost",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008382",
+        "range": {
+          "offset": 4957156,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33666,
+        "name": "set_Cost",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008383",
+        "range": {
+          "offset": 4957192,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33667,
+        "name": "get_Type",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06008384",
+        "range": {
+          "offset": 4957228,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33668,
+        "name": "set_Type",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06008385",
+        "range": {
+          "offset": 4957264,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33669,
+        "name": "get_Value",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008386",
+        "range": {
+          "offset": 4957300,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33670,
+        "name": "set_Value",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008387",
+        "range": {
+          "offset": 4957336,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33671,
+        "name": "get_Num",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008388",
+        "range": {
+          "offset": 4957372,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33672,
+        "name": "set_Num",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008389",
+        "range": {
+          "offset": 4957408,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33673,
+        "name": "get_Flag",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600838a",
+        "range": {
+          "offset": 4957444,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33674,
+        "name": "set_Flag",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600838b",
+        "range": {
+          "offset": 4957480,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33675,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "no",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "rewardNo",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "cost",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "type",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "num",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "flag",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600838c",
+        "range": {
+          "offset": 4957516,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 4809,
+    "name": "FieldScriptCommand",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24953500,
+      "size": 88
+    },
+    "byval_type_index": 15851,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 15358,
+      "exact_byval_name": "System.Enum"
+    },
+    "is_enum": true,
+    "fields": [
+      {
+        "field_index": 22139,
+        "name": "value__",
+        "type_index": 18814,
+        "exact_byval_name": null,
+        "token": "0x0400567c",
+        "range": {
+          "offset": 22324680,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 22270,
+        "name": "BossMenu",
+        "type_index": 15853,
+        "exact_byval_name": null,
+        "token": "0x040056ff",
+        "range": {
+          "offset": 22326252,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 8221,
+          "offset": 9713885,
+          "preview_hex": "810481068108810a",
+          "int32_value": 130,
+          "encoded_size": 2
+        }
+      }
+    ],
+    "methods": []
+  }
+]

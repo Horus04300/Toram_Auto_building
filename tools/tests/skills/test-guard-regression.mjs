@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
 const root=resolve(import.meta.dirname, '../../..'),context={window:{},console};context.window.window=context.window;context.window.skillSimulatorState={getInvestments:()=>({Guard:{}})};vm.createContext(context);
-for(const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skills/guard.js', 'assets/js/skill-effect-engine.js'])vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
+for(const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/guard.js', 'web/src/calculation/skill-effect-engine.js'])vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
 // This fixture isolates the calculation-rule variant, as before consolidation.
 delete context.window.TORAM_SKILL_EFFECT_TREE_DATA.Guard;
 const E=context.window.ToramSkillEffects,ids=Array.from({length:6},(_,i)=>`Guard:${i}`),base=armorType=>({mainType:'한손검',subType:'방패',armorType,level:300}),levels=(value)=>context.window.skillSimulatorState.getInvestments=()=>({Guard:Object.fromEntries(ids.map(id=>[id.slice(6),value]))}),ok=(x,m)=>{if(!x)throw Error(m)},find=(effects,key)=>effects.find(effect=>effect.key===key).value;

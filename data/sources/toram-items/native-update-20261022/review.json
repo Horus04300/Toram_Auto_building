@@ -1,0 +1,3016 @@
+{
+  "authority": "static-comparison-of-previous-reviewed-C-and-passive-runtime-snapshot-decompilation",
+  "reviewedOn": "2026-10-22",
+  "reviewedInstallationSha256": "c0f666aa071136bfae7ada61135ba01fc2907c3987945a86cce5909c6011fbff",
+  "mappedImageSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+  "peSnapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+  "imageBase": "0x7ffe99740000",
+  "decompiler": "Ghidra12.1.4 selected-function headless fresh database; fifth and final run with306 selected methods,85 item evidence files",
+  "functionCount": 85,
+  "normalizedStructureEqualCount": 39,
+  "normalization": "Comments/whitespace, absolute DAT/FUN/LAB/function addresses by first occurrence, shared CheckEquipItem symbol alias, known GC write-barrier thunk name. This compares structure only; referenced values are separate evidence.",
+  "observations": [
+    "ResourceManager.AssetDecrypt loop, signed bit arithmetic, reverse 4-byte XOR chaining and key operand retain the previous structure.",
+    "ItemDBData.CreateItemData and SetItemDataProperty retain binary-reader virtual slots, record field widths/order, two ten-slot signed16 arrays and positive-cap BonusLines construction.",
+    "MasterItemDataManager item/property count loops and property-to-item lookup failure remain; per-language ItemText and ItemProperty text loaders retain IDs/UTF8 text pairing.",
+    "BonusManager.GetBonusTime, static dictionaries and CheckEquipLimitBonusId retain the previous structure. Immutable float bytes and six interval initializer integers are separately re-read in immutable-constants.json.",
+    "funcEquipTypeLimit retains the switch cases96..103/108..109/115..120, line+0x14 signed16 count, condition skip counter+0x3c and additive counter+0x74.",
+    "Item classification bounds, ItemData Function/SlotMax and shared getter offsets, default slot selection1..5 remain; pointer-cast enum signatures and shared-method symbol aliases change decompiler spelling.",
+    "BonusData static category lists, .ctor duration classifier key1/field+0x44, BonusScriptManager delegate registrations209..224/255 and positive-cap registrations retain the previous logic.",
+    "funcSetTime, timeCheck, funcSetBonus, funcSetBuff and SetDurationBonus preserve signed operand, zero-operand workvalue semantics, duration type/group/time fields and replacement behavior.",
+    "PlayerStatusBase.SetEquip retains ordinary subequipment types17/18/19/23, element exceptions8/10 and katana skill gates0x56>0 and0x53>9. MainPlayer.localUseItem still creates instantaneous BonusData and applies duration/debuff/event paths.",
+    "UI AddCapProperty retains cap65 special text, signed-template cases48/188/166..175, avatar cap189 handling and negative-sign replacement. WeaponPropertys retains equipment fields and pre-existing presentation branches.",
+    "Asset/download/localization state-machine wrappers retain cache lookup, conditional loading, branch-dependent download path construction and publication/retry states in compared decompilation. Dynamic server-selected branches are not observed."
+  ],
+  "analysisRepair": "The first two decompilation runs misidentified GC helper calls as PIC branches and removed reachable cctor tails. A fresh database explicitly defined helper chain RVAs0x22c900→0x1a0270→0x242110 as returning void. The restored BonusManager/BonusData/SkillTextManagerData cctors match their old structure; this was an analysis artifact, not a game-rule deletion. The final map uses actual class methods instead of ten previous code-sharing aliases and corrects the Math.Round return prototype.",
+  "targetedConstants": {
+    "path": "assets/source-data/toram-items/native-update-20261022/formatter-constants.json",
+    "sha256": "5ea5ed8c487f6564a294e61cab636967091aae0897d2c6dbe3af4e590d989aee",
+    "result": "PASS: six interval integers, initializer compiler field name/token and all nine prior formatter strings match except the expected initializer-token relocation"
+  },
+  "requiredConsumerChange": "The immutable interval initializer field token changes0x400d46f→0x400d4e2; old formatter constants token cannot be reused unchanged in connect-toram-item-data.py.",
+  "limitations": [
+    "Static review does not execute native game functions, simulate combat, or establish every unselected runtime dependency.",
+    "Address-normalized equality is not full semantic or machine-code equality; absolute references and indirect generic/runtime helpers retain separate uncertainty.",
+    "Module snapshot excludes managed heap string objects; formatter-constants.json separately records a bounded1347-byte passive capture of the reviewed initializer and26 fixed string references. This is sequential, not atomic.",
+    "Final numeric culture, text color/layout, player equipment instances, unmodeled dynamic item effects and server branch selection keep their previous boundaries."
+  ],
+  "functions": [
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\BonusManager-CheckEquipLimitBonusId-7fff5fff3800.c",
+      "oldAddress": "0x7fff5fff3800",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15684,
+      "newIndex": 15686,
+      "class": "BonusManager",
+      "name": "CheckEquipLimitBonusId",
+      "token": "0x6003d47",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51519712,
+      "pointer_slot_va": "0x7ffe9c8620e0",
+      "runtime_va": "0x7ffe9a4e8c40",
+      "rva": "0xda8c40",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410564883ec20803da6545f02000fb7f17513488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15684.c",
+      "oldSha256": "fa13c7f306adb18aa07805c331e14c3a39db13fab614078a0a6efb2bc52c1b58",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15684.c",
+      "newSha256": "ccb27be92e7eb54e4f22d820930f4114893311e1ea0c15bff412385b5ee704ca",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\BonusManager-GetBonusTime-7fff5fff5e00.c",
+      "oldAddress": "0x7fff5fff5e00",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15683,
+      "newIndex": 15685,
+      "class": "BonusManager",
+      "name": "GetBonusTime",
+      "token": "0x6003d46",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "bonusType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "pointer_slot_offset": 51519704,
+      "pointer_slot_va": "0x7ffe9c8620d8",
+      "runtime_va": "0x7ffe9a4eb240",
+      "rva": "0xdab240",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803da92e5f02008bd9752b488d0db0d64502",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15683.c",
+      "oldSha256": "f9dd88a5e17db0d149d744df1524269f35c9cd1e8ea5c53cc7a4df87148b0be1",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15683.c",
+      "newSha256": "02e3e117f5be98d653784f6f59079dd96095001ff7ac290bde51de0737bb0843",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\BonusManager-GetCalcBonusValue-7fff5fff6020.c",
+      "oldAddress": "0x7fff5fff6020",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15730,
+      "newIndex": 15732,
+      "class": "BonusManager",
+      "name": "GetCalcBonusValue",
+      "token": "0x6003d75",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseVal",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51520080,
+      "pointer_slot_va": "0x7ffe9c862250",
+      "runtime_va": "0x7ffe9a4eb460",
+      "rva": "0xdab460",
+      "status": "mapped",
+      "code_preview_hex": "488bc4448948204489401889501048894808535657415641",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15730.c",
+      "oldSha256": "169ef88f12ac47ed0979b80e38bf40269645798b03b9129518d8536d5bbdf6bf",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15730.c",
+      "newSha256": "7d65743741effd6d865cc3db2cb99419ccaac59c0ae607e70e54c2e44be877b2",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\BonusManager-Initialize-7fff5fff6dc0.c",
+      "oldAddress": "0x7fff5fff6dc0",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15695,
+      "newIndex": 15697,
+      "class": "BonusManager",
+      "name": "Initialize",
+      "token": "0x6003d52",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519800,
+      "pointer_slot_va": "0x7ffe9c862138",
+      "runtime_va": "0x7ffe9a4ec200",
+      "rva": "0xdac200",
+      "status": "mapped",
+      "code_preview_hex": "4889742410574883ec20803def1e5f0200488bf2488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15695.c",
+      "oldSha256": "b29729e568dab3089a0e9910c7c14b8584aaa3f062158ac192174a95f92c0db4",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15695.c",
+      "newSha256": "7a4bf780efed8d406b953bb3418a34c18c2d866a1a2b5d8fbc1e4f8de6a65045",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\BonusManager-_cctor-7fff5fff8f60.c",
+      "oldAddress": "0x7fff5fff8f60",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15751,
+      "newIndex": 15753,
+      "class": "BonusManager",
+      "name": ".cctor",
+      "token": "0x6003d8a",
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51520248,
+      "pointer_slot_va": "0x7ffe9c8622f8",
+      "runtime_va": "0x7ffe9a4ee3a0",
+      "rva": "0xdae3a0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30803d84fd5e02007573488d0d52a54502e8d5",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15751.c",
+      "oldSha256": "b01d395c578989b49e488d0e5b124024781857f5b1a72f3e2dbf3df328b50e96",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15751.c",
+      "newSha256": "983c9cc23fc40316cff343576308bab303a770432d374dff2f5d45b29553056e",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ItemDBData-CreateItemData-7fff60074050.c",
+      "oldAddress": "0x7fff60074050",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18189,
+      "newIndex": 18208,
+      "class": "ItemDBData",
+      "name": "CreateItemData",
+      "token": "0x6004721",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "reader",
+          "type_index": 12631,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 19009,
+        "exact_byval_name": "ItemDBData"
+      },
+      "pointer_slot_offset": 51539888,
+      "pointer_slot_va": "0x7ffe9c866fb0",
+      "runtime_va": "0x7ffe9a5698a0",
+      "rva": "0xe298a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d964c570200488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18189.c",
+      "oldSha256": "b2192ea78a1f904b74abbe522e86487ced67c34c107e7b3b6f2c4a1292ee48d5",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18189.c",
+      "newSha256": "9729c55735737985dd8a275e49273d75d6271b6ba2b1b8c1a7fef906d673eddc",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ItemDBData-SetItemDataProperty-7fff60074300.c",
+      "oldAddress": "0x7fff60074300",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18190,
+      "newIndex": 18209,
+      "class": "ItemDBData",
+      "name": "SetItemDataProperty",
+      "token": "0x6004722",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "item",
+          "type_index": 19009,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "reader",
+          "type_index": 12631,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51539896,
+      "pointer_slot_va": "0x7ffe9c866fb8",
+      "runtime_va": "0x7ffe9a569b50",
+      "rva": "0xe29b50",
+      "status": "mapped",
+      "code_preview_hex": "40535641564883ec20803ded495702004c8bf2488bf1751f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18190.c",
+      "oldSha256": "e90f2a1fce91c2bde6be0583f2d2f6c5541ba8ca12a33b813d82c299ddc2bd8b",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18190.c",
+      "newSha256": "558813d8f811057b9b8ee0f67a02ab8efe3fef2c858d72e94e48268519e2b2d5",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ItemPropertyTextManager-Initialize-7fff5f557570.c",
+      "oldAddress": "0x7fff5f557570",
+      "oldTypeIndex": 5565,
+      "oldIndex": 46264,
+      "newIndex": 46300,
+      "class": "ItemPropertyTextManager",
+      "name": "Initialize",
+      "token": "0x600b4dd",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51764624,
+      "pointer_slot_va": "0x7ffe9c89dd90",
+      "runtime_va": "0x7ffe99a47610",
+      "rva": "0x307610",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410488974241848894c2408574154415541564157",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46264.c",
+      "oldSha256": "5b7c05794811bcab1ea7e578ff74737363a9d76708e69f205e805fd35a10bcaa",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46264.c",
+      "newSha256": "e9ac5ff09b3f03725f2b55d327d93aadc0fcc391d56aa6147223a340b5cb0c5c",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ItemTextManager-Initialize-7fff5f558950.c",
+      "oldAddress": "0x7fff5f558950",
+      "oldTypeIndex": 5570,
+      "oldIndex": 46278,
+      "newIndex": 46314,
+      "class": "ItemTextManager",
+      "name": "Initialize",
+      "token": "0x600b4eb",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51764736,
+      "pointer_slot_va": "0x7ffe9c89de00",
+      "runtime_va": "0x7ffe99a489f0",
+      "rva": "0x3089f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410488974241848894c2408574154415541564157",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46278.c",
+      "oldSha256": "b29ab9090b4102721c41546b66f292aef6de7adc3e53d3e2c58d8232f8b40235",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46278.c",
+      "newSha256": "99d97f67fe02fa668acac5f61851966b14a2e75012148d8376b330279abd6176",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\MasterItemDataManager-ReadItemData-7fff60084ca0.c",
+      "oldAddress": "0x7fff60084ca0",
+      "oldTypeIndex": 2040,
+      "oldIndex": 18461,
+      "newIndex": 18480,
+      "class": "MasterItemDataManager",
+      "name": "ReadItemData",
+      "token": "0x6004831",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51542064,
+      "pointer_slot_va": "0x7ffe9c867830",
+      "runtime_va": "0x7ffe9a57a7f0",
+      "rva": "0xe3a7f0",
+      "status": "mapped",
+      "code_preview_hex": "48894c240853565741544155415641574881ec8000000048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18461.c",
+      "oldSha256": "8923e920b2bc4e22f1667535f325609312f5ebcedcbc3d1822ccedfbd9f5be81",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18461.c",
+      "newSha256": "6061a04fcbae2ad5b4fc57aea59a5e04e7302a05a9032fbebd1e40c331b312c8",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\MasterItemDataManager-ReadItemProperty-7fff600850c0.c",
+      "oldAddress": "0x7fff600850c0",
+      "oldTypeIndex": 2040,
+      "oldIndex": 18462,
+      "newIndex": 18481,
+      "class": "MasterItemDataManager",
+      "name": "ReadItemProperty",
+      "token": "0x6004832",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51542072,
+      "pointer_slot_va": "0x7ffe9c867838",
+      "runtime_va": "0x7ffe9a57ac10",
+      "rva": "0xe3ac10",
+      "status": "mapped",
+      "code_preview_hex": "48895c241848894c240856574155415641574883ec70488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18462.c",
+      "oldSha256": "afed0aa6c5c97089a022f5359361da6ea43f746ce613b126bc4b749eef3327c8",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18462.c",
+      "newSha256": "d4bf26802c2558f325c5b476bd8767142453063256dca12eae5b3c43a1682ec9",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ResourceManager-AssetDecrypt-7fff5f5ddf90.c",
+      "oldAddress": "0x7fff5f5ddf90",
+      "oldTypeIndex": 5904,
+      "oldIndex": 48544,
+      "newIndex": 48590,
+      "class": "ResourceManager",
+      "name": "AssetDecrypt",
+      "token": "0x600bdcf",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 9988
+        },
+        {
+          "name": "key",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51782944,
+      "pointer_slot_va": "0x7ffe9c8a2520",
+      "runtime_va": "0x7ffe99ace2c0",
+      "rva": "0x38e2c0",
+      "status": "mapped",
+      "code_preview_hex": "4885c90f841601000041564883ec20448bf248897c24484c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "48544.c",
+      "oldSha256": "f6319a60b17586736da027b8e4b17c03282a8a62bef73d70afc8ac5d7561af55",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/48544.c",
+      "newSha256": "01572b479943a40fc1af9cbb6ddf989b561548fdf59cf6a927e943997bba8e14",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\ResourceManager-Initialize-7fff5f5e00d0.c",
+      "oldAddress": "0x7fff5f5e00d0",
+      "oldTypeIndex": 5904,
+      "oldIndex": 48536,
+      "newIndex": 48582,
+      "class": "ResourceManager",
+      "name": "Initialize",
+      "token": "0x600bdc7",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "url",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "result",
+          "type_index": 2407
+        }
+      ],
+      "return_type": {
+        "type_index": 18077,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51782880,
+      "pointer_slot_va": "0x7ffe9c8a24e0",
+      "runtime_va": "0x7ffe99ad0400",
+      "rva": "0x390400",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803dbe9c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "48536.c",
+      "oldSha256": "b9ef30f8f7bf6d3d99c8ab5f3e73cc629981c3711f8942f343ab75779980a5a5",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/48536.c",
+      "newSha256": "fe137b995ba3080815d61d5eddc36284aa0b33ec55bbef20988357a44e884e23",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\StageLoginDownloader-GetAssetDecryptData-7fff5f5443d0.c",
+      "oldAddress": "0x7fff5f5443d0",
+      "oldTypeIndex": 5522,
+      "oldIndex": 45870,
+      "newIndex": 45896,
+      "class": "StageLoginDownloader",
+      "name": "GetAssetDecryptData",
+      "token": "0x600b349",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "asset",
+          "type_index": 25835,
+          "exact_byval_name": "UnityEngine.TextAsset"
+        },
+        {
+          "name": "key",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 9988
+      },
+      "pointer_slot_offset": 51761392,
+      "pointer_slot_va": "0x7ffe9c89d0f0",
+      "runtime_va": "0x7ffe99a343d0",
+      "rva": "0x2f43d0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20418bf8488bc24885d2742d33d248895c2430",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45870.c",
+      "oldSha256": "eab23560b0379d862415d66e7fbeed6a0af1592f1fa41ece8efb4aa481b423fc",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45870.c",
+      "newSha256": "7e33eb92160fa112fc5d4b8da0a080a67f23fd51e9a0fa5e214d078352e02254",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-AddCapProperty-7fff5f9d2b20.c",
+      "oldAddress": "0x7fff5f9d2b20",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61751,
+      "newIndex": 61799,
+      "class": "UIItemProperty",
+      "name": "AddCapProperty",
+      "token": "0x600f168",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "isColor",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "id",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19034,
+          "exact_byval_name": "ItemPropertyTextManager"
+        },
+        {
+          "name": "systemManager",
+          "type_index": 25663,
+          "exact_byval_name": "SystemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888616,
+      "pointer_slot_va": "0x7ffe9c8bc1e8",
+      "runtime_va": "0x7ffe99ec34d0",
+      "rva": "0x7834d0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2420565741574883ec70803d2f86c10200498bf941",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61751.c",
+      "oldSha256": "0fa3a14da38fe455fc47859f6532b035f36a84a2fa1f85a58d040a6ba587c81a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61751.c",
+      "newSha256": "e13491df4bda63329fd01c751dba7af75c7db24aeabcb6880f160f7b85eeb0a3",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-AddCapProperty-7fff5f9d3200.c",
+      "oldAddress": "0x7fff5f9d3200",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61750,
+      "newIndex": 61798,
+      "class": "UIItemProperty",
+      "name": "AddCapProperty",
+      "token": "0x600f167",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19034,
+          "exact_byval_name": "ItemPropertyTextManager"
+        },
+        {
+          "name": "systemManager",
+          "type_index": 25663,
+          "exact_byval_name": "SystemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888608,
+      "pointer_slot_va": "0x7ffe9c8bc1e0",
+      "runtime_va": "0x7ffe99ec3bb0",
+      "rva": "0x783bb0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803d477f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61750.c",
+      "oldSha256": "0126a8e329827689aa4e9ec2645760a1df72ed9c01623487a670da3784c69281",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61750.c",
+      "newSha256": "6609b640eebdbaf4b30cfce9d7fba2b8c730588b41722ebc81e225d40bc4109c",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-AddCapPropertyNoColor-7fff5f9d2a90.c",
+      "oldAddress": "0x7fff5f9d2a90",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61749,
+      "newIndex": 61797,
+      "class": "UIItemProperty",
+      "name": "AddCapPropertyNoColor",
+      "token": "0x600f166",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19034,
+          "exact_byval_name": "ItemPropertyTextManager"
+        },
+        {
+          "name": "systemManager",
+          "type_index": 25663,
+          "exact_byval_name": "SystemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888600,
+      "pointer_slot_va": "0x7ffe9c8bc1d8",
+      "runtime_va": "0x7ffe99ec3440",
+      "rva": "0x783440",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803db686",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61749.c",
+      "oldSha256": "a1474d75bbe4ae2ff73324503abf82e52c482c34d0f895a7a3c48353f84f9e6b",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61749.c",
+      "newSha256": "850854c8624d255f2f43b9d79c16c724af30d5604c934a86fea5293bd61378a3",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-GetItemPropertysTextData-7fff5f9d46e0.c",
+      "oldAddress": "0x7fff5f9d46e0",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61752,
+      "newIndex": 61800,
+      "class": "UIItemProperty",
+      "name": "GetItemPropertysTextData",
+      "token": "0x600f169",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "capId",
+          "type_index": 10332
+        },
+        {
+          "name": "capVal",
+          "type_index": 10332
+        },
+        {
+          "name": "widthWord",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19034,
+          "exact_byval_name": "ItemPropertyTextManager"
+        },
+        {
+          "name": "systemManager",
+          "type_index": 25663,
+          "exact_byval_name": "SystemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888624,
+      "pointer_slot_va": "0x7ffe9c8bc1f0",
+      "runtime_va": "0x7ffe99ec5090",
+      "rva": "0x785090",
+      "status": "mapped",
+      "code_preview_hex": "4c894c24204489442418488954241048894c240853555741",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61752.c",
+      "oldSha256": "8077414673cda9ea11a96e735310a40111e7fa27a60598a724760f9e44f3042d",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61752.c",
+      "newSha256": "839a1ecb6851888f5d4a4cc9c9df74e01510686f8d9b2a8a02bb0e6199118beb",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-ItemDBProperty-7fff5f9d4bc0.c",
+      "oldAddress": "0x7fff5f9d4bc0",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61764,
+      "newIndex": 61812,
+      "class": "UIItemProperty",
+      "name": "ItemDBProperty",
+      "token": "0x600f175",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51888720,
+      "pointer_slot_va": "0x7ffe9c8bc250",
+      "runtime_va": "0x7ffe99ec5570",
+      "rva": "0x785570",
+      "status": "mapped",
+      "code_preview_hex": "48894c2408534883ec70803d9e65c102008bda757f488d0d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61764.c",
+      "oldSha256": "7b642cf1ad5cfcad326aab0f7573a322ee1489500baa44a6678dc323c873cca5",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61764.c",
+      "newSha256": "c6b3da81ddea250eb8d190f462a3839a4df561cbfc4718efde3ceb665b64b269",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-ItemPropertysData-7fff5f9d52a0.c",
+      "oldAddress": "0x7fff5f9d52a0",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61763,
+      "newIndex": 61811,
+      "class": "UIItemProperty",
+      "name": "ItemPropertysData",
+      "token": "0x600f174",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888712,
+      "pointer_slot_va": "0x7ffe9c8bc248",
+      "runtime_va": "0x7ffe99ec5c50",
+      "rva": "0x785c50",
+      "status": "mapped",
+      "code_preview_hex": "48895c2420574883ec30803dbd5ec10200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61763.c",
+      "oldSha256": "6e987a1d53bc593eabc169fa37d3ade96e0a86c5f369250f2e13be5a1e2bd9a3",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61763.c",
+      "newSha256": "547246a35e1129f04c13a7d459ee56af2227779280d9fc4151f8d5948fd66c6e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-ItemText-7fff5f9d5c40.c",
+      "oldAddress": "0x7fff5f9d5c40",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61765,
+      "newIndex": 61813,
+      "class": "UIItemProperty",
+      "name": "ItemText",
+      "token": "0x600f176",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51888728,
+      "pointer_slot_va": "0x7ffe9c8bc258",
+      "runtime_va": "0x7ffe99ec65f0",
+      "rva": "0x7865f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240856574154415641574883ec708bfa488bd9803d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61765.c",
+      "oldSha256": "087f9ef9f6aa7aab01583fe72b2f178e76e16f4329b55be1d05b705521f6c9f3",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61765.c",
+      "newSha256": "4abe0aea9444b1273ad4a0be89a3ce08046748bf0563ca41cfaaebe7df0bd35e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-trace\\UIItemProperty-_cctor-7fff5f9d8db0.c",
+      "oldAddress": "0x7fff5f9d8db0",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61776,
+      "newIndex": 61824,
+      "class": "UIItemProperty",
+      "name": ".cctor",
+      "token": "0x600f181",
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51888816,
+      "pointer_slot_va": "0x7ffe9c8bc2b0",
+      "runtime_va": "0x7ffe99ec9760",
+      "rva": "0x789760",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dbd23c10200752b488d0de2e6a402e815",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61776.c",
+      "oldSha256": "894f2c5fee26b1cfd2837eedc101d112678f9e0d99db8207701cc66bfe8ac90b",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61776.c",
+      "newSha256": "7299a9706df33362ff5cad9ed176cb83b546252119564589a6082d18ec21f26c",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\BonusManager-CreateBonus-7fff5fff4430.c",
+      "oldAddress": "0x7fff5fff4430",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15697,
+      "newIndex": 15699,
+      "class": "BonusManager",
+      "name": "CreateBonus",
+      "token": "0x6003d54",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusLines",
+          "type_index": 5977
+        },
+        {
+          "name": "exec",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "stack",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12836,
+        "exact_byval_name": "BonusData"
+      },
+      "pointer_slot_offset": 51519816,
+      "pointer_slot_va": "0x7ffe9c862148",
+      "runtime_va": "0x7ffe9a4e9870",
+      "rva": "0xda9870",
+      "status": "mapped",
+      "code_preview_hex": "44894c242053565741544155415641574881eca000000045",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15697.c",
+      "oldSha256": "65b29c8671f67159dbff304396f0494cb79fd665e03545724a0d4952b6def021",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15697.c",
+      "newSha256": "5e3658a5716c108f31ffb07b500b722407f6380b9e2b8a337037d0365f4eb5ef",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\BonusManager-CreateBonus-7fff5fff4910.c",
+      "oldAddress": "0x7fff5fff4910",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15696,
+      "newIndex": 15698,
+      "class": "BonusManager",
+      "name": "CreateBonus",
+      "token": "0x6003d53",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusLines",
+          "type_index": 5977
+        },
+        {
+          "name": "exec",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 12836,
+        "exact_byval_name": "BonusData"
+      },
+      "pointer_slot_offset": 51519808,
+      "pointer_slot_va": "0x7ffe9c862140",
+      "runtime_va": "0x7ffe9a4e9d50",
+      "rva": "0xda9d50",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d9643",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15696.c",
+      "oldSha256": "fd5b809375704e1de6b5edfb7055fbfbee990d3d667250a33b4c8aa7a8af4660",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15696.c",
+      "newSha256": "66a52912724d093b81a91d0ae4c60d8ce0c0b0ba388e4784cdae2356bc2f262d",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\BonusManager-CreateBonusParameter-7fff5fff4290.c",
+      "oldAddress": "0x7fff5fff4290",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15724,
+      "newIndex": 15726,
+      "class": "BonusManager",
+      "name": "CreateBonusParameter",
+      "token": "0x6003d6f",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 10332
+        },
+        {
+          "name": "val",
+          "type_index": 10332
+        }
+      ],
+      "return_type": {
+        "type_index": 6726
+      },
+      "pointer_slot_offset": 51520032,
+      "pointer_slot_va": "0x7ffe9c862220",
+      "runtime_va": "0x7ffe9a4e96d0",
+      "rva": "0xda96d0",
+      "status": "mapped",
+      "code_preview_hex": "415541564883ec28803d3c4a5f02004d8be84c8bf2753748",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15724.c",
+      "oldSha256": "96ed8f3ea776853284e4898b762ddd3f3b6d6c0df6522857bce808ded6b0a393",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15724.c",
+      "newSha256": "ff6020a4dd98c710d944228c66242f38fc7ab302306f8ba8a4de9fb76d4c8247",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\BonusManager-UpdateEquipLimitBonus-7fff5fff7c50.c",
+      "oldAddress": "0x7fff5fff7c50",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15703,
+      "newIndex": 15705,
+      "class": "BonusManager",
+      "name": "UpdateEquipLimitBonus",
+      "token": "0x6003d5a",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519864,
+      "pointer_slot_va": "0x7ffe9c862178",
+      "runtime_va": "0x7ffe9a4ed090",
+      "rva": "0xdad090",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408488974241048897c24184c8974242041574883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15703.c",
+      "oldSha256": "116afc24dacb9ad9ecdaf658ed017b9ca61ef7302546dbc8ace00868319c5596",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15703.c",
+      "newSha256": "82e57503c0e5bede20d1b6fd128c8f32ee3e96622804b0d672627e79d4b78b8f",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\BonusScriptManager-funcEquipTypeLimit-7fff60003070.c",
+      "oldAddress": "0x7fff60003070",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15867,
+      "newIndex": 15869,
+      "class": "BonusScriptManager",
+      "name": "funcEquipTypeLimit",
+      "token": "0x6003dfe",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "pointer_slot_offset": 51521176,
+      "pointer_slot_va": "0x7ffe9c862698",
+      "runtime_va": "0x7ffe9a4f84b0",
+      "rva": "0xdb84b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec204c8b4118",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15867.c",
+      "oldSha256": "6888f50974a4cd8cd11f0af34637bc420530528c845cc95b3064a459ba0ed99d",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15867.c",
+      "newSha256": "0cd916456f4637a385a82cb0f8ca5231ad49aff50101b14c58b60f7f92dea07e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillManager-GetAvatarSkillId-7fff60307220.c",
+      "oldAddress": "0x7fff60307220",
+      "oldTypeIndex": 3598,
+      "oldIndex": 31244,
+      "newIndex": 31266,
+      "class": "SkillManager",
+      "name": "GetAvatarSkillId",
+      "token": "0x6007a23",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "bonusValue",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51644352,
+      "pointer_slot_va": "0x7ffe9c8807c0",
+      "runtime_va": "0x7ffe9a7fcd90",
+      "rva": "0x10bcd90",
+      "status": "mapped",
+      "code_preview_hex": "83f90577284863c1488d156132f4fe8b8c82c0cd0b014803",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "31244.c",
+      "oldSha256": "d6f0293333b35c53dce003f4acf4857ece1ba1be91fb43ccb32a2d8d3f58952f",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/31244.c",
+      "newSha256": "d6f0293333b35c53dce003f4acf4857ece1ba1be91fb43ccb32a2d8d3f58952f",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManager-GetSkillName-7fff5f565370.c",
+      "oldAddress": "0x7fff5f565370",
+      "oldTypeIndex": 5606,
+      "oldIndex": 46470,
+      "newIndex": 46516,
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "token": "0x600b5b5",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "elementType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766352,
+      "pointer_slot_va": "0x7ffe9c89e450",
+      "runtime_va": "0x7ffe99a55540",
+      "rva": "0x315540",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d9e48080300418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46470.c",
+      "oldSha256": "a72da684c69299064cdfb10f9d78ffcb1af74496a07c09566abc18e87aead4c8",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46470.c",
+      "newSha256": "ca0601ae777f58f67a398831df47df62d715f0ed719af7085e3a12c72a032515",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManager-GetSkillName-7fff5f565430.c",
+      "oldAddress": "0x7fff5f565430",
+      "oldTypeIndex": 5606,
+      "oldIndex": 46469,
+      "newIndex": 46515,
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "token": "0x600b5b4",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "key",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766344,
+      "pointer_slot_va": "0x7ffe9c89e448",
+      "runtime_va": "0x7ffe99a55600",
+      "rva": "0x315600",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803ddd47080300498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46469.c",
+      "oldSha256": "cd638a8b4845c74bb70fe501b39b2ede0f51b86d4ad63887a92fbc505210b0fc",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46469.c",
+      "newSha256": "be626ceae44eb3962447e95f57cf8620beddab07b026805016c76171c43459d9",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManager-GetSkillName-7fff5f5654f0.c",
+      "oldAddress": "0x7fff5f5654f0",
+      "oldTypeIndex": 5606,
+      "oldIndex": 46468,
+      "newIndex": 46514,
+      "class": "SkillTextManager",
+      "name": "GetSkillName",
+      "token": "0x600b5b3",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766336,
+      "pointer_slot_va": "0x7ffe9c89e440",
+      "runtime_va": "0x7ffe99a556c0",
+      "rva": "0x3156c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d21470803008bfa488bd9752b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46468.c",
+      "oldSha256": "43696a7e1b2dc5c82d94e9c765ce25ca2ba3adf08403534578ad0d8bb9d34b37",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46468.c",
+      "newSha256": "5b0ba30acbfe661102861e005b8251690cf580704a9b6cb59da483f10f3f33fc",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManager-Initialize-7fff5f5655b0.c",
+      "oldAddress": "0x7fff5f5655b0",
+      "oldTypeIndex": 5606,
+      "oldIndex": 46464,
+      "newIndex": 46510,
+      "class": "SkillTextManager",
+      "name": "Initialize",
+      "token": "0x600b5af",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51766304,
+      "pointer_slot_va": "0x7ffe9c89e420",
+      "runtime_va": "0x7ffe99a55780",
+      "rva": "0x315780",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410488974241848894c2408574154415541564157",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46464.c",
+      "oldSha256": "7a0d735b1eb775cae201e611a6ee71b5a11bd0c5e025f9d035f14e5967cabd93",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46464.c",
+      "newSha256": "c68e655355f8f8cca8cccd037aec58f4d5fbeb7b5cf0fa52894ca6ea859ad937",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManagerData-CheckNameText-7fff5f563ff0.c",
+      "oldAddress": "0x7fff5f563ff0",
+      "oldTypeIndex": 5608,
+      "oldIndex": 46478,
+      "newIndex": 46524,
+      "class": "SkillTextManagerData",
+      "name": "CheckNameText",
+      "token": "0x600b5bd",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "name",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51766416,
+      "pointer_slot_va": "0x7ffe9c89e490",
+      "runtime_va": "0x7ffe99a541c0",
+      "rva": "0x3141c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c241848897c242041564883ec20803d225c08030048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46478.c",
+      "oldSha256": "fd88bb4a3f06dd253f82013732f4ddde23ea208609ef65459e229cd31315b616",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46478.c",
+      "newSha256": "9be7a322adcb0190e111a905988d07bf90cf71cc3bdf80a740351203a6de3d58",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManagerData-GetName-7fff5f5649d0.c",
+      "oldAddress": "0x7fff5f5649d0",
+      "oldTypeIndex": 5608,
+      "oldIndex": 46480,
+      "newIndex": 46526,
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "token": "0x600b5bf",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "key",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766432,
+      "pointer_slot_va": "0x7ffe9c89e4a0",
+      "runtime_va": "0x7ffe99a54ba0",
+      "rva": "0x314ba0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803d4a52080300488bfa488bd975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46480.c",
+      "oldSha256": "3a3a51dde404d7768f593c354a429533df954195890fe856799f2dd1d37bd620",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46480.c",
+      "newSha256": "32428302a33a3d811efda9daebafebdb8eb87f3d7d22ed72d89d35289153f539",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManagerData-GetName-7fff5f564a70.c",
+      "oldAddress": "0x7fff5f564a70",
+      "oldTypeIndex": 5608,
+      "oldIndex": 46481,
+      "newIndex": 46527,
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "token": "0x600b5c0",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766440,
+      "pointer_slot_va": "0x7ffe9c89e4a8",
+      "runtime_va": "0x7ffe99a54c40",
+      "rva": "0x314c40",
+      "status": "mapped",
+      "code_preview_hex": "4533c033d2e906000000cccccccccccc48895c2408574883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46481.c",
+      "oldSha256": "b7c75b8aa5baf1e62bafd0ee556afa632fd506a17cd9d13209d93634ec9a38d3",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46481.c",
+      "newSha256": "454cd72fae1c0399eb198759d46b2408eadbd92c6ca07d5f549029333ab4c195",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManagerData-GetName-7fff5f564a80.c",
+      "oldAddress": "0x7fff5f564a80",
+      "oldTypeIndex": 5608,
+      "oldIndex": 46479,
+      "newIndex": 46525,
+      "class": "SkillTextManagerData",
+      "name": "GetName",
+      "token": "0x600b5be",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "elementType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51766424,
+      "pointer_slot_va": "0x7ffe9c89e498",
+      "runtime_va": "0x7ffe99a54c50",
+      "rva": "0x314c50",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d99510803008bda488bf9751f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46479.c",
+      "oldSha256": "33cc98f4b7fd855a0eaeeb167c3234c8b190d9750a89324f3f52290cb1bc4e85",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46479.c",
+      "newSha256": "885adfc0be8dc6e652d5236a51d4e45c84126e74c0ce0f25cb06e78c78d6da25",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SkillTextManagerData-_cctor-7fff5f564b60.c",
+      "oldAddress": "0x7fff5f564b60",
+      "oldTypeIndex": 5608,
+      "oldIndex": 46491,
+      "newIndex": 46537,
+      "class": "SkillTextManagerData",
+      "name": ".cctor",
+      "token": "0x600b5ca",
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51766520,
+      "pointer_slot_va": "0x7ffe9c89e4f8",
+      "runtime_va": "0x7ffe99a54d30",
+      "rva": "0x314d30",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dc8500803007573488d0dd271ef02e845",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46491.c",
+      "oldSha256": "47ea9e001bdf6810f409094204e96c0d5116754acbd5a5e54b5dce3d0a0d4d9a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46491.c",
+      "newSha256": "e49528750a33cb8089d8afd487fe8d2025ff1923388954e67a670705a3e93803",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-connections\\SystemTextManager-Initialize-7fff5f568210.c",
+      "oldAddress": "0x7fff5f568210",
+      "oldTypeIndex": 5609,
+      "oldIndex": 46499,
+      "newIndex": 46545,
+      "class": "SystemTextManager",
+      "name": "Initialize",
+      "token": "0x600b5d2",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51766584,
+      "pointer_slot_va": "0x7ffe9c89e538",
+      "runtime_va": "0x7ffe99a583e0",
+      "rva": "0x3183e0",
+      "status": "mapped",
+      "code_preview_hex": "48894c240853565741544155415641574883ec70488bfa4c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "46499.c",
+      "oldSha256": "8f879839188f3a9eaaae825ab5a092fc61ee80595445c6146abf36ee4cd8fa16",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/46499.c",
+      "newSha256": "1cf75593fa9441f83f537ca3d6e9fc7c3c4a3043c87e8f2bfe8d12889cbce124",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemData-get_Function-7fff6007a1c0.c",
+      "oldAddress": "0x7fff6007a1c0",
+      "oldTypeIndex": 1998,
+      "oldIndex": 18030,
+      "newIndex": 18048,
+      "class": "ItemData",
+      "name": "get_Function",
+      "token": "0x6004681",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51538608,
+      "pointer_slot_va": "0x7ffe9c866ab0",
+      "runtime_va": "0x7ffe9a56fd10",
+      "rva": "0xe2fd10",
+      "status": "mapped",
+      "code_preview_hex": "0fb74142c3ccccccccccccccccccccccf64140020f97c0c3",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18030.c",
+      "oldSha256": "72cc3f9481b40685a08ccdb38e83cffc07960e0f42d5a39d7db71a137408f027",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18030.c",
+      "newSha256": "72cc3f9481b40685a08ccdb38e83cffc07960e0f42d5a39d7db71a137408f027",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemData-get_SlotMax-7fff6007a2d0.c",
+      "oldAddress": "0x7fff6007a2d0",
+      "oldTypeIndex": 1998,
+      "oldIndex": 18032,
+      "newIndex": 18050,
+      "class": "ItemData",
+      "name": "get_SlotMax",
+      "token": "0x6004683",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51538624,
+      "pointer_slot_va": "0x7ffe9c866ac0",
+      "runtime_va": "0x7ffe9a56fe20",
+      "rva": "0xe2fe20",
+      "status": "mapped",
+      "code_preview_hex": "8b413883e81183f80276050fb64144c332c0c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18032.c",
+      "oldSha256": "e837194f57645632aa1be09021f3614f4e8be13d09fb3a88ba03f37118c2fe84",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18032.c",
+      "newSha256": "e837194f57645632aa1be09021f3614f4e8be13d09fb3a88ba03f37118c2fe84",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckArmorAbility-7fff60074010.c",
+      "oldAddress": "0x7fff60074010",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18192,
+      "newIndex": 18211,
+      "class": "ItemDBData",
+      "name": "CheckArmorAbility",
+      "token": "0x6004724",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "armorItem",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "type",
+          "type_index": 33765,
+          "exact_byval_name": "ArmorAbility"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539912,
+      "pointer_slot_va": "0x7ffe9c866fc8",
+      "runtime_va": "0x7ffe9a569860",
+      "rva": "0xe29860",
+      "status": "mapped",
+      "code_preview_hex": "4885c9740c0fb6415324033ac20f94c0c332c0c3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18192.c",
+      "oldSha256": "7aa795ed61abfb86fa86f2229f9ac68fc11a94a4c51ce832a127791bdede34a1",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18192.c",
+      "newSha256": "411adf1bcfe2b9e265e928bcd400fbe22fa02903956a0ec2c7fc84ccaca78ffc",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckAvatarEquipItem-7fff5fd830b0.c",
+      "oldAddress": "0x7fff5fd830b0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18194,
+      "newIndex": 18213,
+      "class": "ItemDBData",
+      "name": "CheckAvatarEquipItem",
+      "token": "0x6004726",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539928,
+      "pointer_slot_va": "0x7ffe9c866fd8",
+      "runtime_va": "0x7ffe9a278270",
+      "rva": "0xb38270",
+      "status": "mapped",
+      "code_preview_hex": "83f9197d0332c0c383f91b0f9ec0c3cc8d41e183f8057703",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18194.c",
+      "oldSha256": "7e3f7ba0b82b3148cfe7f8459716cfa77ba7d14da52f377fb4168bcb849d9750",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18194.c",
+      "newSha256": "bdf7e546d8fee29aba3c5d85f454b7ca3bcdc5110ac7023090cf2353271e401b",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckCristaItem-7fff5fd830c0.c",
+      "oldAddress": "0x7fff5fd830c0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18196,
+      "newIndex": 18215,
+      "class": "ItemDBData",
+      "name": "CheckCristaItem",
+      "token": "0x6004728",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539944,
+      "pointer_slot_va": "0x7ffe9c866fe8",
+      "runtime_va": "0x7ffe9a278280",
+      "rva": "0xb38280",
+      "status": "mapped",
+      "code_preview_hex": "8d41e183f8057703b001c383f93d7d0332c0c383f9410f9e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18196.c",
+      "oldSha256": "3cbf1187b5b8c7ebb47d9caac4b0ec14fe47205f57d6e3c4585b49b1b049233c",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18196.c",
+      "newSha256": "111e40d39dbcba1f7a77b0b7ddfbabf2233cf323f35fe58b327517233a9f7428",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckEquipItem-7fff5fd830e0.c",
+      "oldAddress": "0x7fff5fd830e0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18193,
+      "newIndex": 18212,
+      "class": "ItemDBData",
+      "name": "CheckEquipItem",
+      "token": "0x6004725",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539920,
+      "pointer_slot_va": "0x7ffe9c866fd0",
+      "runtime_va": "0x7ffe9a2782a0",
+      "rva": "0xb382a0",
+      "status": "mapped",
+      "code_preview_hex": "83f9077d0332c0c383f91b0f9ec0c3cc83f93d7d0332c0c3",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18193.c",
+      "oldSha256": "db37ca88afca4e675c49222e446a83f06919564b4db4904fca528ebda2b59232",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18193.c",
+      "newSha256": "ded2df2900dac7474fe3a8f14a7900be3d92861253f119ae9d90fabbe62b1c3f",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckPowerUpCristaItem-7fff5fd830f0.c",
+      "oldAddress": "0x7fff5fd830f0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18197,
+      "newIndex": 18216,
+      "class": "ItemDBData",
+      "name": "CheckPowerUpCristaItem",
+      "token": "0x6004729",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539952,
+      "pointer_slot_va": "0x7ffe9c866ff0",
+      "runtime_va": "0x7ffe9a2782b0",
+      "rva": "0xb382b0",
+      "status": "mapped",
+      "code_preview_hex": "83f93d7d0332c0c383f9410f9ec0c3cc83f9320f94c283f9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18197.c",
+      "oldSha256": "4aeace839fffa5e0dace901f1207ba48131037fed4f58a557959fdcc06f66547",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18197.c",
+      "newSha256": "4751b1a507d7ae10e959077554f6bb1e68f45853387b5ed6919895d7b5918cf7",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckUseItem-7fff5fd83100.c",
+      "oldAddress": "0x7fff5fd83100",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18198,
+      "newIndex": 18217,
+      "class": "ItemDBData",
+      "name": "CheckUseItem",
+      "token": "0x600472a",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539960,
+      "pointer_slot_va": "0x7ffe9c866ff8",
+      "runtime_va": "0x7ffe9a2782c0",
+      "rva": "0xb382c0",
+      "status": "mapped",
+      "code_preview_hex": "83f9320f94c283f91e0f94c00ad083f9050fb6c2ba010000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18198.c",
+      "oldSha256": "b211444cfd8f7b8f740f3ecc551b9cda198a536e95f26960936f9025c0f22f11",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18198.c",
+      "newSha256": "b4a0c482b68470e33e76672a38d17575d9a1dcc3863847d40411236692b5ac6e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-CheckWeaponItem-7fff60074030.c",
+      "oldAddress": "0x7fff60074030",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18195,
+      "newIndex": 18214,
+      "class": "ItemDBData",
+      "name": "CheckWeaponItem",
+      "token": "0x6004727",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539936,
+      "pointer_slot_va": "0x7ffe9c866fe0",
+      "runtime_va": "0x7ffe9a569880",
+      "rva": "0xe29880",
+      "status": "mapped",
+      "code_preview_hex": "83f911740c83f9077c0783f9130f9ec0c332c0c3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18195.c",
+      "oldSha256": "8a5b9fa19a1fe204a219f6c22c3a45e1d04f8ea5863d303e6ab819c4d75ad2f8",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18195.c",
+      "newSha256": "916e3a43186094ce287ba192502f86798d942c7b0d4e02774571c09e0759f108",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-get_AvatarCategory-7fff60074550.c",
+      "oldAddress": "0x7fff60074550",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18188,
+      "newIndex": 18207,
+      "class": "ItemDBData",
+      "name": "get_AvatarCategory",
+      "token": "0x6004720",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51539880,
+      "pointer_slot_va": "0x7ffe9c866fa8",
+      "runtime_va": "0x7ffe9a569da0",
+      "rva": "0xe29da0",
+      "status": "mapped",
+      "code_preview_hex": "0fb641410fb64942c1e00803c1c3cccc40534883ec20803d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18188.c",
+      "oldSha256": "748689158287f48d8362bdb4275fd6b56081f3b6fd0beacfc796318c7e1fe390",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18188.c",
+      "newSha256": "748689158287f48d8362bdb4275fd6b56081f3b6fd0beacfc796318c7e1fe390",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-get_Function-7fff600745b0.c",
+      "oldAddress": "0x7fff600745b0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18151,
+      "newIndex": 18170,
+      "class": "ItemDBData",
+      "name": "get_Function",
+      "token": "0x60046fb",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51539584,
+      "pointer_slot_va": "0x7ffe9c866e80",
+      "runtime_va": "0x7ffe9a569e00",
+      "rva": "0xe29e00",
+      "status": "mapped",
+      "code_preview_hex": "0fb7413ec3cccccccccccccccccccccc0fb7414cc3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18151.c",
+      "oldSha256": "3da6608b0aa09d3c2e6429acf774b066d84a6c78cc8ee35e8ddb8aac846c8c2e",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18151.c",
+      "newSha256": "f8e6e9357dab1db2447483ddb7c80026c672ced4622c360a8baee7b672f336a7",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-get_Range-7fff5f51f680.c",
+      "oldAddress": "0x7fff5f51f680",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18155,
+      "newIndex": 18174,
+      "class": "ItemDBData",
+      "name": "get_Range",
+      "token": "0x60046ff",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51539616,
+      "pointer_slot_va": "0x7ffe9c866ea0",
+      "runtime_va": "0x7ffe99a0f680",
+      "rva": "0x2cf680",
+      "status": "mapped",
+      "code_preview_hex": "0fb64141c3ccccccccccccccccccccccf30f104128c3cccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18155.c",
+      "oldSha256": "663a3286f1ddcab2623a9aaa69501b0074d217cb7ab8a6135c9e092465a38ba8",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18155.c",
+      "newSha256": "b498b2d273a007f090fce777cc98df1a864463820b3980598d399f28cefe7267",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-get_SlotMax-7fff5f5970d0.c",
+      "oldAddress": "0x7fff5f5970d0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18157,
+      "newIndex": 18176,
+      "class": "ItemDBData",
+      "name": "get_SlotMax",
+      "token": "0x6004701",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51539632,
+      "pointer_slot_va": "0x7ffe9c866eb0",
+      "runtime_va": "0x7ffe99a87400",
+      "rva": "0x347400",
+      "status": "mapped",
+      "code_preview_hex": "0fb64142c3cccccccccccccccccccccc0fb64143c3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18157.c",
+      "oldSha256": "b772fe4617e6258492b93d88a52553387ae7014b1b8391cb4db206e7cb3b38d9",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18157.c",
+      "newSha256": "7be3d857836a96c83f323cf92d4767b4a755a84493da06a28bb67d5fd922f891",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-get_Stable-7fff5f597150.c",
+      "oldAddress": "0x7fff5f597150",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18153,
+      "newIndex": 18172,
+      "class": "ItemDBData",
+      "name": "get_Stable",
+      "token": "0x60046fd",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51539600,
+      "pointer_slot_va": "0x7ffe9c866e90",
+      "runtime_va": "0x7ffe99a87480",
+      "rva": "0x347480",
+      "status": "mapped",
+      "code_preview_hex": "0fb64140c3cccccccccccccccccccccc4c8bc98079320041",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18153.c",
+      "oldSha256": "4448ee0ae9c2209c29f834cc2be91cbe2da7c4a84fda028fce5ccd5a2cf94434",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18153.c",
+      "newSha256": "6809d04a5a3f9020977e4a5a27857f7e962805e3eb6004d69c7ae2369a871790",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemDBData-IsSubWeapon-7fff600742e0.c",
+      "oldAddress": "0x7fff600742e0",
+      "oldTypeIndex": 2004,
+      "oldIndex": 18191,
+      "newIndex": 18210,
+      "class": "ItemDBData",
+      "name": "IsSubWeapon",
+      "token": "0x6004723",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51539904,
+      "pointer_slot_va": "0x7ffe9c866fc0",
+      "runtime_va": "0x7ffe9a569b30",
+      "rva": "0xe29b30",
+      "status": "mapped",
+      "code_preview_hex": "83f90874108d41f183f804760883f917740332c0c3b001c3",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18191.c",
+      "oldSha256": "2537d882860c1d72154e172ced507ed4f6ee56a2b519eaf2d7316f80600b5b36",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18191.c",
+      "newSha256": "2537d882860c1d72154e172ced507ed4f6ee56a2b519eaf2d7316f80600b5b36",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemManager-GetItemEquipedType-7fff6007bc00.c",
+      "oldAddress": "0x7fff6007bc00",
+      "oldTypeIndex": 2031,
+      "oldIndex": 18247,
+      "newIndex": 18266,
+      "class": "ItemManager",
+      "name": "GetItemEquipedType",
+      "token": "0x600475b",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "uuid",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 33767,
+        "exact_byval_name": "EquipType"
+      },
+      "pointer_slot_offset": 51540352,
+      "pointer_slot_va": "0x7ffe9c867180",
+      "runtime_va": "0x7ffe9a571750",
+      "rva": "0xe31750",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284c8b41204d85c074634139502074534139502474",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18247.c",
+      "oldSha256": "ead7b9c489adda7c87b3e5e4babcd77e856de59794153a9931688449b59de4ff",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18247.c",
+      "newSha256": "229b2d5c6c4defdbc45b30ff325893597ca6380b3e37a76b762361eee83ca3f4",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\ItemManager-GetSelectItemEquipType-7fff5f9cb290.c",
+      "oldAddress": "0x7fff5f9cb290",
+      "oldTypeIndex": 2031,
+      "oldIndex": 18274,
+      "newIndex": 18293,
+      "class": "ItemManager",
+      "name": "GetSelectItemEquipType",
+      "token": "0x6004776",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemType",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 33767,
+        "exact_byval_name": "EquipType"
+      },
+      "pointer_slot_offset": 51540568,
+      "pointer_slot_va": "0x7ffe9c867258",
+      "runtime_va": "0x7ffe99ebbc40",
+      "rva": "0x77bc40",
+      "status": "mapped",
+      "code_preview_hex": "83c2f983fa1077344863c2488d15ae4388ff8b8c8280bc77",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "18274.c",
+      "oldSha256": "113a77cea0e9ed33657d021f37121f2ceea0507e57781112f53d12aef46a9aed",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/18274.c",
+      "newSha256": "f8edb228c0c313173de262d33920dc45d5e303e058d5baf468eb521dc625d09f",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-classification\\UIItemProperty-WeaponPropertys-7fff5f9d6cc0.c",
+      "oldAddress": "0x7fff5f9d6cc0",
+      "oldTypeIndex": 7684,
+      "oldIndex": 61768,
+      "newIndex": 61816,
+      "class": "UIItemProperty",
+      "name": "WeaponPropertys",
+      "token": "0x600f179",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "text",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "isPotentialZero",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "pointer_slot_offset": 51888752,
+      "pointer_slot_va": "0x7ffe9c8bc270",
+      "runtime_va": "0x7ffe99ec7670",
+      "rva": "0x787670",
+      "status": "mapped",
+      "code_preview_hex": "44884c24204889542410555657415441554156488dac2458",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "61768.c",
+      "oldSha256": "2614e797ae6106c6ae7b4671f8bc534288c5cdf66ca295e0cb46d0b538d57a0a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/61768.c",
+      "newSha256": "d175f2720a00bda9747a9d7980f07f6faedf968ac4658c3ec4aa98ec620b3ba6",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\AssetBundleManager_Initialize_StateMachine-MoveNext-7fff5f5cc180.c",
+      "oldAddress": "0x7fff5f5cc180",
+      "oldTypeIndex": 5779,
+      "oldIndex": 47885,
+      "newIndex": 47931,
+      "class": "AssetBundleManager/<Initialize>d__43",
+      "name": "MoveNext",
+      "token": "0x600bb3c",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51777672,
+      "pointer_slot_va": "0x7ffe9c8a1088",
+      "runtime_va": "0x7ffe99abc4b0",
+      "rva": "0x37c4b0",
+      "status": "mapped",
+      "code_preview_hex": "405541574883ec28803d23db010300488be90f858b000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "47885.c",
+      "oldSha256": "d0ff5b038545e0d5d19927f79cf253443b72caa7e10bd272ea4c78c0b8f53cd6",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/47885.c",
+      "newSha256": "e7ce4c2628e55ae9db6d8ffe458bfdd175fa3f5183a04f93b3980ba22d214379",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\AssetBundleManager_LoadCacheAssetBundle61_StateMachine-MoveNext-7fff5f5cc5a0.c",
+      "oldAddress": "0x7fff5f5cc5a0",
+      "oldTypeIndex": 5780,
+      "oldIndex": 47891,
+      "newIndex": 47937,
+      "class": "AssetBundleManager/<LoadCacheAssetBundle>d__61",
+      "name": "MoveNext",
+      "token": "0x600bb42",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51777720,
+      "pointer_slot_va": "0x7ffe9c8a10b8",
+      "runtime_va": "0x7ffe99abc8d0",
+      "rva": "0x37c8d0",
+      "status": "mapped",
+      "code_preview_hex": "405541564883ec38803d04d7010300488be90f85d3000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "47891.c",
+      "oldSha256": "b2c027892c64eb73ac3f8b0f0f22ebd9c1fe5a633cf59ca8d1882e4a273155f2",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/47891.c",
+      "newSha256": "48682e3483d6fa6fc871df5d0acc8bb0ac39cb5aaf7020bbdc165cda454aa9a8",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\AssetBundleManager_LoadCacheAssetBundle62_StateMachine-MoveNext-7fff5f5ccc60.c",
+      "oldAddress": "0x7fff5f5ccc60",
+      "oldTypeIndex": 5781,
+      "oldIndex": 47897,
+      "newIndex": 47943,
+      "class": "AssetBundleManager/<LoadCacheAssetBundle>d__62",
+      "name": "MoveNext",
+      "token": "0x600bb48",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51777768,
+      "pointer_slot_va": "0x7ffe9c8a10e8",
+      "runtime_va": "0x7ffe99abcf90",
+      "rva": "0x37cf90",
+      "status": "mapped",
+      "code_preview_hex": "405541564883ec38803d45d0010300488be90f85df000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "47897.c",
+      "oldSha256": "fe4a31a5eaf2f56f7271e7329f0c57d4befb9a439d6fd0b6f68e331db6c5b27a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/47897.c",
+      "newSha256": "493194e040ccc8249f5d69ae61f20d2e80d8af3b25731e4f9f9d1de108e1f8cf",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\AssetBundleManager_LoadCacheAssetBundle63_StateMachine-MoveNext-7fff5f5cd350.c",
+      "oldAddress": "0x7fff5f5cd350",
+      "oldTypeIndex": 5782,
+      "oldIndex": 47903,
+      "newIndex": 47949,
+      "class": "AssetBundleManager/<LoadCacheAssetBundle>d__63",
+      "name": "MoveNext",
+      "token": "0x600bb4e",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51777816,
+      "pointer_slot_va": "0x7ffe9c8a1118",
+      "runtime_va": "0x7ffe99abd680",
+      "rva": "0x37d680",
+      "status": "mapped",
+      "code_preview_hex": "405541564883ec38803d56c9010300488be90f85df000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "47903.c",
+      "oldSha256": "003a13b4f7cefd51854cfbe6221b2f13f310adc01faefd0add4582386b5602ce",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/47903.c",
+      "newSha256": "0839ed4bf7361621cc9f4d76f6ecd04fc00b04cd3daf7f0a85be6dc8de8d11b8",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\AssetBundleManager_LoadCacheAssetBundle64_StateMachine-MoveNext-7fff5f5cda40.c",
+      "oldAddress": "0x7fff5f5cda40",
+      "oldTypeIndex": 5783,
+      "oldIndex": 47909,
+      "newIndex": 47955,
+      "class": "AssetBundleManager/<LoadCacheAssetBundle>d__64",
+      "name": "MoveNext",
+      "token": "0x600bb54",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51777864,
+      "pointer_slot_va": "0x7ffe9c8a1148",
+      "runtime_va": "0x7ffe99abdd70",
+      "rva": "0x37dd70",
+      "status": "mapped",
+      "code_preview_hex": "405541564883ec38803d67c2010300488be90f85df000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "47909.c",
+      "oldSha256": "bc68837de71e420a941177aca6b034ed41feecf46b4ab175d042d57ff783c572",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/47909.c",
+      "newSha256": "9ee65a0ff22a154925792683a76a91811888e8caaf6bec33ecff16e2ec37df2a",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\DownloadManager_DownloadCacheAssetBundle_StateMachine-MoveNext-7fff5f5c72e0.c",
+      "oldAddress": "0x7fff5f5c72e0",
+      "oldTypeIndex": 5806,
+      "oldIndex": 48070,
+      "newIndex": 48116,
+      "class": "DownloadManager/<DownloadCacheAssetBundle>d__34",
+      "name": "MoveNext",
+      "token": "0x600bbf5",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51779152,
+      "pointer_slot_va": "0x7ffe9c8a1650",
+      "runtime_va": "0x7ffe99ab7610",
+      "rva": "0x377610",
+      "status": "mapped",
+      "code_preview_hex": "48894c2408535657415641574881ec900000000f29b42480",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "48070.c",
+      "oldSha256": "8c5c2e292c85ee85edc66638b634c0240b16a6dc386db98974d637a302ce5e91",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/48070.c",
+      "newSha256": "c4db99d0a7a236e6c9121d166d21742db1283fa4b9e603b380f1d59e70be8d16",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\InitGameSystem_Start_StateMachine-MoveNext-7fff5f54bb60.c",
+      "oldAddress": "0x7fff5f54bb60",
+      "oldTypeIndex": 5500,
+      "oldIndex": 45837,
+      "newIndex": 45863,
+      "class": "InitGameSystem/<Start>d__28",
+      "name": "MoveNext",
+      "token": "0x600b328",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51761128,
+      "pointer_slot_va": "0x7ffe9c89cfe8",
+      "runtime_va": "0x7ffe99a3bb60",
+      "rva": "0x2fbb60",
+      "status": "mapped",
+      "code_preview_hex": "4056574883ec58803d8ee1090300488bf10f85c703000048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45837.c",
+      "oldSha256": "68ca5ae272484a2f34961e76a71ce19cc6e03731443ab5eb6b3db2529513335a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45837.c",
+      "newSha256": "0eda74e97834e625fc2fa427f62ab7128413f9501bee8f87b264bb62fd262c24",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\ResourceManager_Initialize_StateMachine-MoveNext-7fff5f5ef400.c",
+      "oldAddress": "0x7fff5f5ef400",
+      "oldTypeIndex": 5892,
+      "oldIndex": 48712,
+      "newIndex": 48758,
+      "class": "ResourceManager/<Initialize>d__31",
+      "name": "MoveNext",
+      "token": "0x600be77",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51784288,
+      "pointer_slot_va": "0x7ffe9c8a2a60",
+      "runtime_va": "0x7ffe99adf730",
+      "rva": "0x39f730",
+      "status": "mapped",
+      "code_preview_hex": "4056574883ec48803dd8a9ff0200488bf90f85c700000048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "48712.c",
+      "oldSha256": "86df83d1c6a9f08dcaccf2e0e1c226bab1d15b5a4c24c490423bab091bb0ad5e",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/48712.c",
+      "newSha256": "1c64ff9d7f033cbe6309dcb3ce7d0cc546f39c137587fe95f025f219650b92ac",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\StageLoginDownloader_initLocalizeData_StateMachine-MoveNext-7fff5f5515f0.c",
+      "oldAddress": "0x7fff5f5515f0",
+      "oldTypeIndex": 5518,
+      "oldIndex": 45928,
+      "newIndex": 45954,
+      "class": "StageLoginDownloader/<initLocalizeData>d__17",
+      "name": "MoveNext",
+      "token": "0x600b383",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51761856,
+      "pointer_slot_va": "0x7ffe9c89d2c0",
+      "runtime_va": "0x7ffe99a415f0",
+      "rva": "0x3015f0",
+      "status": "mapped",
+      "code_preview_hex": "4056574883ec38803d1587090300488bf90f857b01000048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45928.c",
+      "oldSha256": "3ffa1a540b4fa2cc359536f8d0cb4dd5c01b5ec2b3dbe0bfe600380d0c37061c",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45928.c",
+      "newSha256": "3ccf6b927d75ee1cacd2b97d20ff43391e83d17bd4eff35701212b9778cbefa3",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\StageLoginDownloader_initResourceDownload_StateMachine-MoveNext-7fff5f5523b0.c",
+      "oldAddress": "0x7fff5f5523b0",
+      "oldTypeIndex": 5520,
+      "oldIndex": 45940,
+      "newIndex": 45966,
+      "class": "StageLoginDownloader/<initResourceDownload>d__14",
+      "name": "MoveNext",
+      "token": "0x600b38f",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51761952,
+      "pointer_slot_va": "0x7ffe9c89d320",
+      "runtime_va": "0x7ffe99a423b0",
+      "rva": "0x3023b0",
+      "status": "mapped",
+      "code_preview_hex": "415541574883ec38803d56790903004c8be90f8597000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45940.c",
+      "oldSha256": "7d800cc12113856d4a7bbe84125101471595b0248afa0ca73d50936623b0383e",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45940.c",
+      "newSha256": "f53eea2edf033100414bccbd6977a40a11ea351f541cfc7bc3bce55a94d5bf54",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\StageLoginDownloader_StartDownload_StateMachine-MoveNext-7fff5f54b0c0.c",
+      "oldAddress": "0x7fff5f54b0c0",
+      "oldTypeIndex": 5514,
+      "oldIndex": 45904,
+      "newIndex": 45930,
+      "class": "StageLoginDownloader/<StartDownload>d__13",
+      "name": "MoveNext",
+      "token": "0x600b36b",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51761664,
+      "pointer_slot_va": "0x7ffe9c89d200",
+      "runtime_va": "0x7ffe99a3b0c0",
+      "rva": "0x2fb0c0",
+      "status": "mapped",
+      "code_preview_hex": "4889742410574883ec20803d3eec090300488bf10f85a300",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45904.c",
+      "oldSha256": "f46bfa9adba3b9808b4109f042fc63f35a4ff302798bb1f2550d4d8088c06ae7",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45904.c",
+      "newSha256": "edc059013abf7247b71f4d2ff274d60c9c8c0128b7daf096fdf5e165a48332c3",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\StageLoginDownloader_Start_StateMachine-MoveNext-7fff5f54b860.c",
+      "oldAddress": "0x7fff5f54b860",
+      "oldTypeIndex": 5513,
+      "oldIndex": 45898,
+      "newIndex": 45924,
+      "class": "StageLoginDownloader/<Start>d__12",
+      "name": "MoveNext",
+      "token": "0x600b365",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51761616,
+      "pointer_slot_va": "0x7ffe9c89d1d0",
+      "runtime_va": "0x7ffe99a3b860",
+      "rva": "0x2fb860",
+      "status": "mapped",
+      "code_preview_hex": "4889742410574883ec20803d9de4090300488bf17543488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "45898.c",
+      "oldSha256": "15d1b62da4efcbcdcc5916c72a2e1d19a85fbefa70558dd1bc0bd7069c85d058",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/45898.c",
+      "newSha256": "39447554ee0dfa4f25e1fb3545ea40b3a8dbd306eb0f41b5607c5c73de965f0f",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-localization\\SystemManager-GetDownloadURL-7fff5f5e7aa0.c",
+      "oldAddress": "0x7fff5f5e7aa0",
+      "oldTypeIndex": 5915,
+      "oldIndex": 48831,
+      "newIndex": 48877,
+      "class": "SystemManager",
+      "name": "GetDownloadURL",
+      "token": "0x600beee",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51785240,
+      "pointer_slot_va": "0x7ffe9c8a2e18",
+      "runtime_va": "0x7ffe99ad7dd0",
+      "rva": "0x397dd0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418554883ec20803d5923000300488bd97573488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "48831.c",
+      "oldSha256": "04d561e0d842b15be3e75068be22d871177bb13b7a31beb22acbc9f8c66b890a",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/48831.c",
+      "newSha256": "fa64134deab0a1ed127283046621af57f14aa9f50655bd63589a8245d00c4380",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusData-UpdateBonusList-7fff5fff04d0.c",
+      "oldAddress": "0x7fff5fff04d0",
+      "oldTypeIndex": 1730,
+      "oldIndex": 15681,
+      "newIndex": 15683,
+      "class": "BonusData",
+      "name": "UpdateBonusList",
+      "token": "0x6003d44",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519688,
+      "pointer_slot_va": "0x7ffe9c8620c8",
+      "runtime_va": "0x7ffe9a4e5910",
+      "rva": "0xda5910",
+      "status": "mapped",
+      "code_preview_hex": "40554883ec30803dd7875f0200488be97573488d0d2f3246",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15681.c",
+      "oldSha256": "830ded30de9ff0bcb0390c092dc5cec279128d2eba5c4d77b87eba85259fadfc",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15681.c",
+      "newSha256": "884f7db373eeb169046c2a84c26f91b83d97d7a338b35e6c3044294efd4f9c5a",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusData-_cctor-7fff5fff0a40.c",
+      "oldAddress": "0x7fff5fff0a40",
+      "oldTypeIndex": 1730,
+      "oldIndex": 15682,
+      "newIndex": 15684,
+      "class": "BonusData",
+      "name": ".cctor",
+      "token": "0x6003d45",
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519696,
+      "pointer_slot_va": "0x7ffe9c8620d0",
+      "runtime_va": "0x7ffe9a4e5e80",
+      "rva": "0xda5e80",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d68825f0200755b488d0d62274602e8f5",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15682.c",
+      "oldSha256": "26620354f63471fd3b081fa8c0e4cfea93ce8f0ef334f9de49c3ec36dc8c7a18",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15682.c",
+      "newSha256": "1ca34bc6b4650337867a53c4858395a5017d583129de65512a135e780f560ea7",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusData-_ctor-7fff5fff25a0.c",
+      "oldAddress": "0x7fff5fff25a0",
+      "oldTypeIndex": 1730,
+      "oldIndex": 15679,
+      "newIndex": 15681,
+      "class": "BonusData",
+      "name": ".ctor",
+      "token": "0x6003d42",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "bonusLines",
+          "type_index": 5977
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519672,
+      "pointer_slot_va": "0x7ffe9c8620b8",
+      "runtime_va": "0x7ffe9a4e79e0",
+      "rva": "0xda79e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410488974241857415641574883ec40488bfa488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15679.c",
+      "oldSha256": "404e50aa1cbbd1f9e1a755b717464020d31f6bc464ceae1802d14a71bd371495",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15679.c",
+      "newSha256": "97e58a4f619fe3bd04fbe78c52515606d64e4d97b93e771ad540b0c0aa7fc25e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusManager-SetDurationBonus-7fff5fff7270.c",
+      "oldAddress": "0x7fff5fff7270",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15705,
+      "newIndex": 15707,
+      "class": "BonusManager",
+      "name": "SetDurationBonus",
+      "token": "0x6003d5c",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonus",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519880,
+      "pointer_slot_va": "0x7ffe9c862188",
+      "runtime_va": "0x7ffe9a4ec6b0",
+      "rva": "0xdac6b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803d471a5f0200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15705.c",
+      "oldSha256": "069c1f9260d743c15ee1d2a8608d68663e63a0a2e31f90ac3f347f3aafd5cb87",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15705.c",
+      "newSha256": "bcf04c8faf6bc9ac61d26ed63a0c78a321b29759959dc57f848be26644d3aa3c",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusManager-SetEquipBonus-7fff5fff73b0.c",
+      "oldAddress": "0x7fff5fff73b0",
+      "oldTypeIndex": 1735,
+      "oldIndex": 15701,
+      "newIndex": 15703,
+      "class": "BonusManager",
+      "name": "SetEquipBonus",
+      "token": "0x6003d58",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        },
+        {
+          "name": "bonus",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51519848,
+      "pointer_slot_va": "0x7ffe9c862168",
+      "runtime_va": "0x7ffe9a4ec7f0",
+      "rva": "0xdac7f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24188954241048894c2408565741564883ec60498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15701.c",
+      "oldSha256": "3efa90d028e1b0dfece275ea4784b54acc0751b9dc404f0694e8b3c83ad7fb2d",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15701.c",
+      "newSha256": "f56c6b4499f9db7528e8b725c6ad55d01ff25171ea2d3bb4d0c3fc671ebfb392",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptData-AddBonus-7fff60000230.c",
+      "oldAddress": "0x7fff60000230",
+      "oldTypeIndex": 1742,
+      "oldIndex": 15831,
+      "newIndex": 15833,
+      "class": "BonusScriptData",
+      "name": "AddBonus",
+      "token": "0x6003dda",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "val",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "instant",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51520888,
+      "pointer_slot_va": "0x7ffe9c862578",
+      "runtime_va": "0x7ffe9a4f5670",
+      "rva": "0xdb5670",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c241856415641574883ec20803daf8a5e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15831.c",
+      "oldSha256": "855dd4adfab8bf5728fa8d8a6ff9276bb9343ddde8c3d458d9a903d7f5fd8d70",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15831.c",
+      "newSha256": "45fe11f82e0c3030629bea7bd41f94df10ef8720d7e485f0aabf81e6b05c2d5f",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptData-AddBuff-7fff60000400.c",
+      "oldAddress": "0x7fff60000400",
+      "oldTypeIndex": 1742,
+      "oldIndex": 15832,
+      "newIndex": 15834,
+      "class": "BonusScriptData",
+      "name": "AddBuff",
+      "token": "0x6003ddb",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "val",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "instant",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51520896,
+      "pointer_slot_va": "0x7ffe9c862580",
+      "runtime_va": "0x7ffe9a4f5840",
+      "rva": "0xdb5840",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c241856415641574883ec20803de0885e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15832.c",
+      "oldSha256": "3d360555b705e4161a51077c44b4c20611ed19073e9af6c47052617893789a2b",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15832.c",
+      "newSha256": "2f4091a4f934dd3379108d4b47c85e34c95a7ac9e1398c35edeb625cc5b927c8",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-funcSetBonus-7fff60003610.c",
+      "oldAddress": "0x7fff60003610",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15862,
+      "newIndex": 15864,
+      "class": "BonusScriptManager",
+      "name": "funcSetBonus",
+      "token": "0x6003df9",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "pointer_slot_offset": 51521136,
+      "pointer_slot_va": "0x7ffe9c862670",
+      "runtime_va": "0x7ffe9a4f8a50",
+      "rva": "0xdb8a50",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38488b49204885d27435440fbf42144585c0750b48",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15862.c",
+      "oldSha256": "15ddffac7ad8d0000ff835634f862f66d5aadefbaad27fd9a45e99ae5fe62456",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15862.c",
+      "newSha256": "ca26d1583a2ce48b1a3f47fe00565cbc8a96ab27cda7064f92af3b0100c86a22",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-funcSetBuff-7fff60003660.c",
+      "oldAddress": "0x7fff60003660",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15865,
+      "newIndex": 15867,
+      "class": "BonusScriptManager",
+      "name": "funcSetBuff",
+      "token": "0x6003dfc",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "pointer_slot_offset": 51521160,
+      "pointer_slot_va": "0x7ffe9c862688",
+      "runtime_va": "0x7ffe9a4f8aa0",
+      "rva": "0xdb8aa0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38488b49204885d27435440fbf42144585c0750b48",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15865.c",
+      "oldSha256": "da0208ed044b9d6beff8b76e38e1af85c6a2d5c9c0968b0638cd1f6412e57e15",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15865.c",
+      "newSha256": "44fffab020d61d189bdf9b2b37909fd49ac30057d690b9b60466eea4862c23c9",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-funcSetTime-7fff60003eb0.c",
+      "oldAddress": "0x7fff60003eb0",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15858,
+      "newIndex": 15860,
+      "class": "BonusScriptManager",
+      "name": "funcSetTime",
+      "token": "0x6003df5",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "pointer_slot_offset": 51521104,
+      "pointer_slot_va": "0x7ffe9c862650",
+      "runtime_va": "0x7ffe9a4f92f0",
+      "rva": "0xdb92f0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec204885d2743a488b59204885db74310fbf4a14",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15858.c",
+      "oldSha256": "2c35f6fc9f42de339cb610737d8e1eaec89758e45acfec9a0c2560bdac081584",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15858.c",
+      "newSha256": "7d1b9053e78ac17f17ac01672928323374c079517a6299180ce69e2e9c8cf405",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-Run-7fff600016f0.c",
+      "oldAddress": "0x7fff600016f0",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15855,
+      "newIndex": 15857,
+      "class": "BonusScriptManager",
+      "name": "Run",
+      "token": "0x6003df2",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusScript",
+          "type_index": 12854,
+          "exact_byval_name": "BonusScriptData"
+        },
+        {
+          "name": "updateTime",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51521080,
+      "pointer_slot_va": "0x7ffe9c862638",
+      "runtime_va": "0x7ffe9a4f6b30",
+      "rva": "0xdb6b30",
+      "status": "mapped",
+      "code_preview_hex": "48896c24104889742418574883ec20803dfb755e0200410f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15855.c",
+      "oldSha256": "9bdd666a7e9af8f93d2451a5708621ec1a19b2ee1a5b66b225cecbfd15894a03",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15855.c",
+      "newSha256": "3dd2ff235d2a1649f8e291485976c851f478d0eec4b60e09285a850a92a64cd9",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-timeCheck-7fff60004260.c",
+      "oldAddress": "0x7fff60004260",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15856,
+      "newIndex": 15858,
+      "class": "BonusScriptManager",
+      "name": "timeCheck",
+      "token": "0x6003df3",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "updateTime",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51521088,
+      "pointer_slot_va": "0x7ffe9c862640",
+      "runtime_va": "0x7ffe9a4f96a0",
+      "rva": "0xdb96a0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30488b4120488bd90f297424204885c00f84da",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15856.c",
+      "oldSha256": "d4ab941a61c49bbd350e607eacafd4a6b4349c6ae0f7dce99d9d3ceaa0deaf3f",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15856.c",
+      "newSha256": "b337a80fe1d32bd12dc4f920468b2cf1debbcb424a538b356db7c4851ee5fa95",
+      "addressAndGcSymbolNormalizedStructureEqual": true
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\BonusScriptManager-_ctor-7fff600018d0.c",
+      "oldAddress": "0x7fff600018d0",
+      "oldTypeIndex": 1744,
+      "oldIndex": 15853,
+      "newIndex": 15855,
+      "class": "BonusScriptManager",
+      "name": ".ctor",
+      "token": "0x6003df0",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51521064,
+      "pointer_slot_va": "0x7ffe9c862628",
+      "runtime_va": "0x7ffe9a4f6d10",
+      "rva": "0xdb6d10",
+      "status": "mapped",
+      "code_preview_hex": "48895c24184889742420574883ec20803d1a745e0200488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15853.c",
+      "oldSha256": "23f08458f63f68a9a95f1a33b6722558804238ad5200db47c665dd46b148217e",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/15853.c",
+      "newSha256": "470889dd911d2abdce4bcd69e47cc515e5f3eea9444bb452975ea3dee5758669",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\MainPlayer-localUseItem-7fff5f8123e0.c",
+      "oldAddress": "0x7fff5f8123e0",
+      "oldTypeIndex": 604,
+      "oldIndex": 5053,
+      "newIndex": 5053,
+      "class": "MainPlayer",
+      "name": "localUseItem",
+      "token": "0x60013be",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "uuid",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12836,
+        "exact_byval_name": "BonusData"
+      },
+      "pointer_slot_offset": 51434648,
+      "pointer_slot_va": "0x7ffe9c84d498",
+      "runtime_va": "0x7ffe99d02750",
+      "rva": "0x5c2750",
+      "status": "mapped",
+      "code_preview_hex": "48895c24184889742420574883ec20803d9287dd02008bfa",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "5053.c",
+      "oldSha256": "0b323b1e9a87e7f5482d75721ecd24c774677806baefb0fe2965471ebb9f9ae9",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/5053.c",
+      "newSha256": "fdaa2b0fd938756b07aedfbba1e4a5def1ebb25aa6ba22daa467bfc40257b51e",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\PlayerStatusBase-SetEquip-7fff5ffadc70.c",
+      "oldAddress": "0x7fff5ffadc70",
+      "oldTypeIndex": 1476,
+      "oldIndex": 13752,
+      "newIndex": 13754,
+      "class": "PlayerStatusBase",
+      "name": "SetEquip",
+      "token": "0x60035bb",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        },
+        {
+          "name": "item",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51504256,
+      "pointer_slot_va": "0x7ffe9c85e480",
+      "runtime_va": "0x7ffe9a4a30b0",
+      "rva": "0xd630b0",
+      "status": "mapped",
+      "code_preview_hex": "8954241048894c240853565741544155415641574883ec70",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13752.c",
+      "oldSha256": "ccc7f6d5dbe321d0a3b811c097f158ba5c3c3f871b377df60a827a6b2d8052c0",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/13752.c",
+      "newSha256": "1b2b40a7ba4dbd659b5b1b65eb1e9e7fe95f658922a8a49decdaaf589de8e5e3",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    },
+    {
+      "oldPath": "assets\\source-data\\toram-items\\native-item-usage\\__c__DisplayClass59_0-_SetEquip_b__0-7fff5f6c18a0.c",
+      "oldAddress": "0x7fff5f6c18a0",
+      "oldTypeIndex": 8073,
+      "oldIndex": 64576,
+      "newIndex": 64624,
+      "class": "UIPetShopSellManager/<>c__DisplayClass67_0",
+      "name": "<OnSelectPet>b__0",
+      "token": "0x600fc71",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 39888,
+          "exact_byval_name": "SelectPetButton"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51911216,
+      "pointer_slot_va": "0x7ffe9c8c1a30",
+      "runtime_va": "0x7ffe99bb1be0",
+      "rva": "0x471be0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d2740e8b41103942100f94c04883c428c3e8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "64576.c",
+      "oldSha256": "cbf4b986dd9273980a4a9815df012c7d5002b388a161598410f24080a5d72648",
+      "newPath": "assets/source-data/toram-items/native-update-20261022/64576.c",
+      "newSha256": "05675856370c8b4a00abc3a6229a89a060608a75becb0974e6ab0cb86afa1ddf",
+      "addressAndGcSymbolNormalizedStructureEqual": false
+    }
+  ]
+}

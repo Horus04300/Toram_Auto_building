@@ -1,0 +1,62 @@
+--- assets\source-data\toram-monsters\native-target\MobBattleStatus-get_MagicDef-7fff5fe33950.c
++++ 8282.c
+@@ -2,33 +2,35 @@
+   code *pcVar1;
+   char cVar2;
+-  int iVar3;
++  byte bVar3;
+   int iVar4;
+-  float fVar5;
++  int iVar5;
++  float fVar6;
+   if (*(longlong *)(self + 0x10) != 0) {
+-    iVar4 = *(int *)(*(longlong *)(self + 0x10) + 0x40);
++    iVar5 = *(int *)(*(longlong *)(self + 0x10) + 0x40);
+     if (*(longlong *)(self + 0x20) != 0) {
+-      iVar3 = CALL0(*(longlong *)(self + 0x20),3);
+-      fVar5 = GLOBAL0;
+-      iVar4 = (int)(((float)iVar3 / GLOBAL1 + GLOBAL0) * (float)iVar4);
++      iVar4 = CALL0(*(longlong *)(self + 0x20),3);
++      fVar6 = GLOBAL0;
++      iVar5 = (int)(((float)iVar4 / GLOBAL1 + GLOBAL0) * (float)iVar5);
+       if (*(longlong *)(self + 0x18) != 0) {
+         cVar2 = CALL1(*(longlong *)(self + 0x18),10);
+         if (cVar2 != '\0') {
+-          iVar4 = (int)((float)iVar4 * GLOBAL2);
++          iVar5 = (int)((float)iVar5 * GLOBAL2);
+         }
+         if (*(longlong *)(self + 0x18) != 0) {
+           cVar2 = CALL1(*(longlong *)(self + 0x18),0x10);
+           if (cVar2 != '\0') {
+-            cVar2 = CALL2(*(undefined8 *)(self + 0x10),4);
+-            if (cVar2 == '\0') {
+-              fVar5 = GLOBAL3;
++            bVar3 = MobStatusMasterEx_CheckMultiFlag
++                              (*(undefined **)(self + 0x10),(undefined *)0x4,(undefined *)0x0);
++            if (bVar3 == 0) {
++              fVar6 = GLOBAL3;
+             }
+-            iVar4 = (int)((float)iVar4 * fVar5);
++            iVar5 = (int)((float)iVar5 * fVar6);
+           }
+           if (*(longlong *)(self + 0x18) != 0) {
+             cVar2 = CALL1(*(longlong *)(self + 0x18),0x16);
+             if (cVar2 != '\0') {
+-              iVar4 = (int)((float)iVar4 * GLOBAL2);
++              iVar5 = (int)((float)iVar5 * GLOBAL2);
+             }
+-            return iVar4;
++            return iVar5;
+           }
+         }
+@@ -36,7 +38,7 @@
+     }
+   }
+-  CALL3();
++  CALL2();
+   pcVar1 = (code *)swi(3);
+-  iVar4 = (*pcVar1)();
+-  return iVar4;
++  iVar5 = (*pcVar1)();
++  return iVar5;
+ }

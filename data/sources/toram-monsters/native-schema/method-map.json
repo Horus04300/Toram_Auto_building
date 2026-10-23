@@ -1,0 +1,2744 @@
+{
+  "image_base": "0x7fff5f250000",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "methods": [
+    {
+      "class": "MobMaster",
+      "name": "Awake",
+      "method_definition_index": 8580,
+      "token": "0x06002185",
+      "runtime_va": "0x7fff5fe48920",
+      "rva": "0xbf8920",
+      "status": "mapped",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "Start",
+      "method_definition_index": 8581,
+      "token": "0x06002186",
+      "runtime_va": "0x7fff5fe4a090",
+      "rva": "0xbfa090",
+      "status": "mapped",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "GetMobMaster",
+      "method_definition_index": 8582,
+      "token": "0x06002187",
+      "runtime_va": "0x7fff5fe48b20",
+      "rva": "0xbf8b20",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 20778,
+        "exact_byval_name": "MobStatusMaster"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "TryGetMaster",
+      "method_definition_index": 8583,
+      "token": "0x06002188",
+      "runtime_va": "0x7fff5fe4a1b0",
+      "rva": "0xbfa1b0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "master",
+          "type_index": 9282,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "GetUidMobMaster",
+      "method_definition_index": 8584,
+      "token": "0x06002189",
+      "runtime_va": "0x7fff5fe48c00",
+      "rva": "0xbf8c00",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "uid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 20778,
+        "exact_byval_name": "MobStatusMaster"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "GetUidMobMaster",
+      "method_definition_index": 8585,
+      "token": "0x0600218a",
+      "runtime_va": "0x7fff5fe48cf0",
+      "rva": "0xbf8cf0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "uid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 20778,
+        "exact_byval_name": "MobStatusMaster"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "ReadMaster",
+      "method_definition_index": 8586,
+      "token": "0x0600218b",
+      "runtime_va": "0x7fff5fe48ff0",
+      "rva": "0xbf8ff0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fieldId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobDbAsset",
+          "type_index": 25822,
+          "exact_byval_name": "UnityEngine.TextAsset"
+        },
+        {
+          "name": "popMobList",
+          "type_index": 10343,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "TryGetDropMaster",
+      "method_definition_index": 8587,
+      "token": "0x0600218c",
+      "runtime_va": "0x7fff5fe4a140",
+      "rva": "0xbfa140",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "dropMaster",
+          "type_index": 9080,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "LoadMobResource",
+      "method_definition_index": 8588,
+      "token": "0x0600218d",
+      "runtime_va": "0x7fff5fe48df0",
+      "rva": "0xbf8df0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "popMobList",
+          "type_index": 10343,
+          "exact_byval_name": null
+        },
+        {
+          "name": "callback",
+          "type_index": 2407,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "LoadMobResource",
+      "method_definition_index": 8589,
+      "token": "0x0600218e",
+      "runtime_va": "0x7fff5fe48f50",
+      "rva": "0xbf8f50",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "modelId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "result",
+          "type_index": 2407,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "LoadMobResource",
+      "method_definition_index": 8590,
+      "token": "0x0600218f",
+      "runtime_va": "0x7fff5fe48e90",
+      "rva": "0xbf8e90",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "modelId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "tag",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "result",
+          "type_index": 2407,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "RemoveMobResourceTag",
+      "method_definition_index": 8591,
+      "token": "0x06002190",
+      "runtime_va": "0x7fff5fe49f80",
+      "rva": "0xbf9f80",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "tag",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "CheckLoadedMobResource",
+      "method_definition_index": 8592,
+      "token": "0x06002191",
+      "runtime_va": "0x7fff5fe489d0",
+      "rva": "0xbf89d0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "modelId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": "CheckMobLevelExpWarning",
+      "method_definition_index": 8593,
+      "token": "0x06002192",
+      "runtime_va": "0x7fff5fe48a40",
+      "rva": "0xbf8a40",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "playerLevel",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobMaster",
+      "name": ".ctor",
+      "method_definition_index": 8594,
+      "token": "0x06002193",
+      "runtime_va": "0x7fff5fe4a220",
+      "rva": "0xbfa220",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_FieldId",
+      "method_definition_index": 9163,
+      "token": "0x060023cc",
+      "runtime_va": "0x7fff5f5362f0",
+      "rva": "0x2e62f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "set_FieldId",
+      "method_definition_index": 9164,
+      "token": "0x060023cd",
+      "runtime_va": "0x7fff5f536dd0",
+      "rva": "0x2e6dd0",
+      "status": "mapped",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Id",
+      "method_definition_index": 9165,
+      "token": "0x060023ce",
+      "runtime_va": "0x7fff5f4d3160",
+      "rva": "0x283160",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Uuid",
+      "method_definition_index": 9166,
+      "token": "0x060023cf",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_RoomId",
+      "method_definition_index": 9167,
+      "token": "0x060023d0",
+      "runtime_va": "0x7fff5f4dfbe0",
+      "rva": "0x28fbe0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Name",
+      "method_definition_index": 9168,
+      "token": "0x060023d1",
+      "runtime_va": "0x7fff5f4d3070",
+      "rva": "0x283070",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Level",
+      "method_definition_index": 9169,
+      "token": "0x060023d2",
+      "runtime_va": "0x7fff5f562610",
+      "rva": "0x312610",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Exp",
+      "method_definition_index": 9170,
+      "token": "0x060023d3",
+      "runtime_va": "0x7fff5f53cc00",
+      "rva": "0x2ecc00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MaxHp",
+      "method_definition_index": 9171,
+      "token": "0x060023d4",
+      "runtime_va": "0x7fff5f50ea40",
+      "rva": "0x2bea40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefNormal",
+      "method_definition_index": 9172,
+      "token": "0x060023d5",
+      "runtime_va": "0x7fff5f5752d0",
+      "rva": "0x3252d0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefSkill",
+      "method_definition_index": 9173,
+      "token": "0x060023d6",
+      "runtime_va": "0x7fff5f5971d0",
+      "rva": "0x3471d0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefMagic",
+      "method_definition_index": 9174,
+      "token": "0x060023d7",
+      "runtime_va": "0x7fff5f5971f0",
+      "rva": "0x3471f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_NecessaryHit",
+      "method_definition_index": 9175,
+      "token": "0x060023d8",
+      "runtime_va": "0x7fff5f50ea70",
+      "rva": "0x2bea70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Def",
+      "method_definition_index": 9176,
+      "token": "0x060023d9",
+      "runtime_va": "0x7fff5f50ea00",
+      "rva": "0x2bea00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MagicDef",
+      "method_definition_index": 9177,
+      "token": "0x060023da",
+      "runtime_va": "0x7fff5f507e40",
+      "rva": "0x2b7e40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_CutAttack",
+      "method_definition_index": 9178,
+      "token": "0x060023db",
+      "runtime_va": "0x7fff5f9c8730",
+      "rva": "0x778730",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 9179,
+      "token": "0x060023dc",
+      "runtime_va": "0x7fff5f597130",
+      "rva": "0x347130",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_GuardProbability",
+      "method_definition_index": 9180,
+      "token": "0x060023dd",
+      "runtime_va": "0x7fff5f9102b0",
+      "rva": "0x6c02b0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_AvoidProbability",
+      "method_definition_index": 9181,
+      "token": "0x060023de",
+      "runtime_va": "0x7fff5f51d670",
+      "rva": "0x2cd670",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MultiFlag",
+      "method_definition_index": 9182,
+      "token": "0x060023df",
+      "runtime_va": "0x7fff5f57cb00",
+      "rva": "0x32cb00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20673,
+        "exact_byval_name": "MobMultiFlag"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Element",
+      "method_definition_index": 9183,
+      "token": "0x060023e0",
+      "runtime_va": "0x7fff5f596fa0",
+      "rva": "0x346fa0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15203,
+        "exact_byval_name": "ElementType"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Model",
+      "method_definition_index": 9184,
+      "token": "0x060023e1",
+      "runtime_va": "0x7fff5f597310",
+      "rva": "0x347310",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Size",
+      "method_definition_index": 9185,
+      "token": "0x060023e2",
+      "runtime_va": "0x7fff5f5aa3c0",
+      "rva": "0x35a3c0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Scale",
+      "method_definition_index": 9186,
+      "token": "0x060023e3",
+      "runtime_va": "0x7fff5fdfc170",
+      "rva": "0xbac170",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Color1",
+      "method_definition_index": 9187,
+      "token": "0x060023e4",
+      "runtime_va": "0x7fff5f82f180",
+      "rva": "0x5df180",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Color2",
+      "method_definition_index": 9188,
+      "token": "0x060023e5",
+      "runtime_va": "0x7fff5f5dad90",
+      "rva": "0x38ad90",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Color3",
+      "method_definition_index": 9189,
+      "token": "0x060023e6",
+      "runtime_va": "0x7fff5f5dad80",
+      "rva": "0x38ad80",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MoveSpeed",
+      "method_definition_index": 9190,
+      "token": "0x060023e7",
+      "runtime_va": "0x7fff5faf8650",
+      "rva": "0x8a8650",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Persona",
+      "method_definition_index": 9191,
+      "token": "0x060023e8",
+      "runtime_va": "0x7fff5f520f70",
+      "rva": "0x2d0f70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_PersonaValue",
+      "method_definition_index": 9192,
+      "token": "0x060023e9",
+      "runtime_va": "0x7fff5f567340",
+      "rva": "0x317340",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ActionTotalProbability",
+      "method_definition_index": 9193,
+      "token": "0x060023ea",
+      "runtime_va": "0x7fff5f5442e0",
+      "rva": "0x2f42e0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "set_ActionTotalProbability",
+      "method_definition_index": 9194,
+      "token": "0x060023eb",
+      "runtime_va": "0x7fff5f544360",
+      "rva": "0x2f4360",
+      "status": "mapped",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ActionPattern",
+      "method_definition_index": 9195,
+      "token": "0x060023ec",
+      "runtime_va": "0x7fff5f5ab4e0",
+      "rva": "0x35b4e0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 3438,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExtensionActionPattern",
+      "method_definition_index": 9196,
+      "token": "0x060023ed",
+      "runtime_va": "0x7fff5f51d720",
+      "rva": "0x2cd720",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 3438,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_PartsList",
+      "method_definition_index": 9197,
+      "token": "0x060023ee",
+      "runtime_va": "0x7fff5f52a1f0",
+      "rva": "0x2da1f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 3414,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ModeList",
+      "method_definition_index": 9198,
+      "token": "0x060023ef",
+      "runtime_va": "0x7fff5f6281d0",
+      "rva": "0x3d81d0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 3441,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MobPropertyMaster",
+      "method_definition_index": 9199,
+      "token": "0x060023f0",
+      "runtime_va": "0x7fff5f505dc0",
+      "rva": "0x2b5dc0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20723,
+        "exact_byval_name": "MobPropertyManager"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_HyperModeGroup",
+      "method_definition_index": 9200,
+      "token": "0x060023f1",
+      "runtime_va": "0x7fff5f5361c0",
+      "rva": "0x2e61c0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20639,
+        "exact_byval_name": "MobHyperModeGroup"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "GetActionPattern",
+      "method_definition_index": 9201,
+      "token": "0x060023f2",
+      "runtime_va": "0x7fff5fe6ae50",
+      "rva": "0xc1ae50",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 20514,
+        "exact_byval_name": "MobActionPattern"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "SetMobPropertyMaster",
+      "method_definition_index": 9202,
+      "token": "0x060023f3",
+      "runtime_va": "0x7fff5fe6aee0",
+      "rva": "0xc1aee0",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "masterData",
+          "type_index": 10491,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "SetMobHyperModeGroup",
+      "method_definition_index": 9203,
+      "token": "0x060023f4",
+      "runtime_va": "0x7fff5f64ba80",
+      "rva": "0x3fba80",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "group",
+          "type_index": 20639,
+          "exact_byval_name": "MobHyperModeGroup"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "CreateStatusMaster",
+      "method_definition_index": 9204,
+      "token": "0x060023f5",
+      "runtime_va": "0x7fff5fe6a780",
+      "rva": "0xc1a780",
+      "status": "mapped",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "fieldId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "version",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "reader",
+          "type_index": 12628,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 20778,
+        "exact_byval_name": "MobStatusMaster"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": ".ctor",
+      "method_definition_index": 9205,
+      "token": "0x060023f6",
+      "runtime_va": "0x7fff5fe6af20",
+      "rva": "0xc1af20",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_UID",
+      "method_definition_index": 9663,
+      "token": "0x060025c0",
+      "runtime_va": "0x7fff5f4dfc90",
+      "rva": "0x28fc90",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "set_UID",
+      "method_definition_index": 9664,
+      "token": "0x060025c1",
+      "runtime_va": "0x7fff5f4dfca0",
+      "rva": "0x28fca0",
+      "status": "mapped",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_PropertyType",
+      "method_definition_index": 9665,
+      "token": "0x060025c2",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21221,
+        "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "set_PropertyType",
+      "method_definition_index": 9666,
+      "token": "0x060025c3",
+      "runtime_va": "0x7fff5f4dfcc0",
+      "rva": "0x28fcc0",
+      "status": "mapped",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_ValueA",
+      "method_definition_index": 9667,
+      "token": "0x060025c4",
+      "runtime_va": "0x7fff5fdee190",
+      "rva": "0xb9e190",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_ValueB",
+      "method_definition_index": 9668,
+      "token": "0x060025c5",
+      "runtime_va": "0x7fff5fdf5260",
+      "rva": "0xba5260",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_ValueC",
+      "method_definition_index": 9669,
+      "token": "0x060025c6",
+      "runtime_va": "0x7fff5fe85db0",
+      "rva": "0xc35db0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_ValueD",
+      "method_definition_index": 9670,
+      "token": "0x060025c7",
+      "runtime_va": "0x7fff5fe85de0",
+      "rva": "0xc35de0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_ValueE",
+      "method_definition_index": 9671,
+      "token": "0x060025c8",
+      "runtime_va": "0x7fff5fe85e10",
+      "rva": "0xc35e10",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "get_Values",
+      "method_definition_index": 9672,
+      "token": "0x060025c9",
+      "runtime_va": "0x7fff5f4d3090",
+      "rva": "0x283090",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10343,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": "set_Values",
+      "method_definition_index": 9673,
+      "token": "0x060025ca",
+      "runtime_va": "0x7fff5f4d3170",
+      "rva": "0x283170",
+      "status": "mapped",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 10343,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": ".ctor",
+      "method_definition_index": 9674,
+      "token": "0x060025cb",
+      "runtime_va": "0x7fff5fe85ab0",
+      "rva": "0xc35ab0",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": ".ctor",
+      "method_definition_index": 9675,
+      "token": "0x060025cc",
+      "runtime_va": "0x7fff5fe85ca0",
+      "rva": "0xc35ca0",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "uid",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "id",
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        },
+        {
+          "name": "a",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "b",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "c",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "d",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "e",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": ".ctor",
+      "method_definition_index": 9676,
+      "token": "0x060025cd",
+      "runtime_va": "0x7fff5fe85b10",
+      "rva": "0xc35b10",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "br",
+          "type_index": 12628,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobPropertyMaster",
+      "name": ".ctor",
+      "method_definition_index": 9677,
+      "token": "0x060025ce",
+      "runtime_va": "0x7fff5fe85940",
+      "rva": "0xc35940",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "master",
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "Initialize",
+      "method_definition_index": 46219,
+      "token": "0x0600b48c",
+      "runtime_va": "0x7fff5f555c00",
+      "rva": "0x305c00",
+      "status": "mapped",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9987,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "Get",
+      "method_definition_index": 46220,
+      "token": "0x0600b48d",
+      "runtime_va": "",
+      "rva": "",
+      "status": "null-unresolved",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 190,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "Clear",
+      "method_definition_index": 46221,
+      "token": "0x0600b48e",
+      "runtime_va": "0x7fff5f555930",
+      "rva": "0x305930",
+      "status": "mapped",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "GetName",
+      "method_definition_index": 46222,
+      "token": "0x0600b48f",
+      "runtime_va": "0x7fff5f555b60",
+      "rva": "0x305b60",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "uid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": "GetDatas",
+      "method_definition_index": 46223,
+      "token": "0x0600b490",
+      "runtime_va": "0x7fff5f555980",
+      "rva": "0x305980",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 3473,
+        "exact_byval_name": null
+      }
+    },
+    {
+      "class": "EnemyTextManager",
+      "name": ".ctor",
+      "method_definition_index": 46224,
+      "token": "0x0600b491",
+      "runtime_va": "0x7fff5f555f00",
+      "rva": "0x305f00",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_CommandId",
+      "method_definition_index": 8221,
+      "token": "0x0600201e",
+      "runtime_va": "0x7fff5fe32c20",
+      "rva": "0xbe2c20",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Attack",
+      "method_definition_index": 8222,
+      "token": "0x0600201f",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Stable",
+      "method_definition_index": 8223,
+      "token": "0x06002020",
+      "runtime_va": "0x7fff5f4dfbe0",
+      "rva": "0x28fbe0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Range",
+      "method_definition_index": 8224,
+      "token": "0x06002021",
+      "runtime_va": "0x7fff5f594000",
+      "rva": "0x344000",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Delay",
+      "method_definition_index": 8225,
+      "token": "0x06002022",
+      "runtime_va": "0x7fff5f555920",
+      "rva": "0x305920",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24497,
+        "exact_byval_name": "System.Single"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Element",
+      "method_definition_index": 8226,
+      "token": "0x06002023",
+      "runtime_va": "0x7fff5f4d3280",
+      "rva": "0x283280",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15203,
+        "exact_byval_name": "ElementType"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Crt",
+      "method_definition_index": 8227,
+      "token": "0x06002024",
+      "runtime_va": "0x7fff5f574c80",
+      "rva": "0x324c80",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_CrtDmg",
+      "method_definition_index": 8228,
+      "token": "0x06002025",
+      "runtime_va": "0x7fff5f562610",
+      "rva": "0x312610",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Flee",
+      "method_definition_index": 8229,
+      "token": "0x06002026",
+      "runtime_va": "0x7fff5f53cc00",
+      "rva": "0x2ecc00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Effect",
+      "method_definition_index": 8230,
+      "token": "0x06002027",
+      "runtime_va": "0x7fff5f50ea40",
+      "rva": "0x2bea40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_EffectGrant",
+      "method_definition_index": 8231,
+      "token": "0x06002028",
+      "runtime_va": "0x7fff5f50ea50",
+      "rva": "0x2bea50",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_EffectTime",
+      "method_definition_index": 8232,
+      "token": "0x06002029",
+      "runtime_va": "0x7fff5f50ea70",
+      "rva": "0x2bea70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_ActionType",
+      "method_definition_index": 8233,
+      "token": "0x0600202a",
+      "runtime_va": "0x7fff5f50ea00",
+      "rva": "0x2bea00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20525,
+        "exact_byval_name": "MobActionType"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Motion",
+      "method_definition_index": 8234,
+      "token": "0x0600202b",
+      "runtime_va": "0x7fff5f597150",
+      "rva": "0x347150",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_StartSoundTiming",
+      "method_definition_index": 8235,
+      "token": "0x0600202c",
+      "runtime_va": "0x7fff5f5bf340",
+      "rva": "0x36f340",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24497,
+        "exact_byval_name": "System.Single"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_StartSound",
+      "method_definition_index": 8236,
+      "token": "0x0600202d",
+      "runtime_va": "0x7fff5f597130",
+      "rva": "0x347130",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_AttackSoundTiming",
+      "method_definition_index": 8237,
+      "token": "0x0600202e",
+      "runtime_va": "0x7fff5f507cd0",
+      "rva": "0x2b7cd0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24497,
+        "exact_byval_name": "System.Single"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_AttackSound",
+      "method_definition_index": 8238,
+      "token": "0x0600202f",
+      "runtime_va": "0x7fff5f51d670",
+      "rva": "0x2cd670",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_HitEffectId",
+      "method_definition_index": 8239,
+      "token": "0x06002030",
+      "runtime_va": "0x7fff5f596fa0",
+      "rva": "0x346fa0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_HitEffectMotion",
+      "method_definition_index": 8240,
+      "token": "0x06002031",
+      "runtime_va": "0x7fff5f5d8b30",
+      "rva": "0x388b30",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Combo",
+      "method_definition_index": 8241,
+      "token": "0x06002032",
+      "runtime_va": "0x7fff5fe32c10",
+      "rva": "0xbe2c10",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Probability",
+      "method_definition_index": 8242,
+      "token": "0x06002033",
+      "runtime_va": "0x7fff5f82f180",
+      "rva": "0x5df180",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_CommonFlag",
+      "method_definition_index": 8243,
+      "token": "0x06002034",
+      "runtime_va": "0x7fff5fe32c30",
+      "rva": "0xbe2c30",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value1",
+      "method_definition_index": 8244,
+      "token": "0x06002035",
+      "runtime_va": "0x7fff5fe32e20",
+      "rva": "0xbe2e20",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value2",
+      "method_definition_index": 8245,
+      "token": "0x06002036",
+      "runtime_va": "0x7fff5fe32e80",
+      "rva": "0xbe2e80",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value3",
+      "method_definition_index": 8246,
+      "token": "0x06002037",
+      "runtime_va": "0x7fff5fe32eb0",
+      "rva": "0xbe2eb0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value4",
+      "method_definition_index": 8247,
+      "token": "0x06002038",
+      "runtime_va": "0x7fff5fe32ee0",
+      "rva": "0xbe2ee0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value5",
+      "method_definition_index": 8248,
+      "token": "0x06002039",
+      "runtime_va": "0x7fff5fe32f10",
+      "rva": "0xbe2f10",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value6",
+      "method_definition_index": 8249,
+      "token": "0x0600203a",
+      "runtime_va": "0x7fff5fe32f40",
+      "rva": "0xbe2f40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value7",
+      "method_definition_index": 8250,
+      "token": "0x0600203b",
+      "runtime_va": "0x7fff5fe32f70",
+      "rva": "0xbe2f70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value8",
+      "method_definition_index": 8251,
+      "token": "0x0600203c",
+      "runtime_va": "0x7fff5fe32fa0",
+      "rva": "0xbe2fa0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value9",
+      "method_definition_index": 8252,
+      "token": "0x0600203d",
+      "runtime_va": "0x7fff5fe32fd0",
+      "rva": "0xbe2fd0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value10",
+      "method_definition_index": 8253,
+      "token": "0x0600203e",
+      "runtime_va": "0x7fff5fe32c40",
+      "rva": "0xbe2c40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value11",
+      "method_definition_index": 8254,
+      "token": "0x0600203f",
+      "runtime_va": "0x7fff5fe32c70",
+      "rva": "0xbe2c70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value12",
+      "method_definition_index": 8255,
+      "token": "0x06002040",
+      "runtime_va": "0x7fff5fe32ca0",
+      "rva": "0xbe2ca0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value13",
+      "method_definition_index": 8256,
+      "token": "0x06002041",
+      "runtime_va": "0x7fff5fe32cd0",
+      "rva": "0xbe2cd0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value14",
+      "method_definition_index": 8257,
+      "token": "0x06002042",
+      "runtime_va": "0x7fff5fe32d00",
+      "rva": "0xbe2d00",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value15",
+      "method_definition_index": 8258,
+      "token": "0x06002043",
+      "runtime_va": "0x7fff5fe32d30",
+      "rva": "0xbe2d30",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value16",
+      "method_definition_index": 8259,
+      "token": "0x06002044",
+      "runtime_va": "0x7fff5fe32d60",
+      "rva": "0xbe2d60",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value17",
+      "method_definition_index": 8260,
+      "token": "0x06002045",
+      "runtime_va": "0x7fff5fe32d90",
+      "rva": "0xbe2d90",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value18",
+      "method_definition_index": 8261,
+      "token": "0x06002046",
+      "runtime_va": "0x7fff5fe32dc0",
+      "rva": "0xbe2dc0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value19",
+      "method_definition_index": 8262,
+      "token": "0x06002047",
+      "runtime_va": "0x7fff5fe32df0",
+      "rva": "0xbe2df0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "get_Value20",
+      "method_definition_index": 8263,
+      "token": "0x06002048",
+      "runtime_va": "0x7fff5fe32e50",
+      "rva": "0xbe2e50",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": "CreateActionPattern",
+      "method_definition_index": 8264,
+      "token": "0x06002049",
+      "runtime_va": "0x7fff5fe32440",
+      "rva": "0xbe2440",
+      "status": "mapped",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "version",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "reader",
+          "type_index": 12628,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 20514,
+        "exact_byval_name": "MobActionPattern"
+      }
+    },
+    {
+      "class": "MobActionPattern",
+      "name": ".ctor",
+      "method_definition_index": 8265,
+      "token": "0x0600204a",
+      "runtime_va": "0x7fff5fe32bb0",
+      "rva": "0xbe2bb0",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_ModeId",
+      "method_definition_index": 8634,
+      "token": "0x060021bb",
+      "runtime_va": "0x7fff5f4dfc90",
+      "rva": "0x28fc90",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_Trigger",
+      "method_definition_index": 8635,
+      "token": "0x060021bc",
+      "runtime_va": "0x7fff5fe4a4f0",
+      "rva": "0xbfa4f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_Value",
+      "method_definition_index": 8636,
+      "token": "0x060021bd",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_TargetMonsterId",
+      "method_definition_index": 8637,
+      "token": "0x060021be",
+      "runtime_va": "0x7fff5f4d9d40",
+      "rva": "0x289d40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_AuraModel",
+      "method_definition_index": 8638,
+      "token": "0x060021bf",
+      "runtime_va": "0x7fff5f4d9d30",
+      "rva": "0x289d30",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_AuraMotion",
+      "method_definition_index": 8639,
+      "token": "0x060021c0",
+      "runtime_va": "0x7fff5f4e1550",
+      "rva": "0x291550",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_AuraColor",
+      "method_definition_index": 8640,
+      "token": "0x060021c1",
+      "runtime_va": "0x7fff5f5aa420",
+      "rva": "0x35a420",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_IgnitionModel",
+      "method_definition_index": 8641,
+      "token": "0x060021c2",
+      "runtime_va": "0x7fff5f562610",
+      "rva": "0x312610",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_IgnitionMotion",
+      "method_definition_index": 8642,
+      "token": "0x060021c3",
+      "runtime_va": "0x7fff5f596fb0",
+      "rva": "0x346fb0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_IgnitionColor",
+      "method_definition_index": 8643,
+      "token": "0x060021c4",
+      "runtime_va": "0x7fff5f50ea40",
+      "rva": "0x2bea40",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_Flag",
+      "method_definition_index": 8644,
+      "token": "0x060021c5",
+      "runtime_va": "0x7fff5f50ea50",
+      "rva": "0x2bea50",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "get_Combo",
+      "method_definition_index": 8645,
+      "token": "0x060021c6",
+      "runtime_va": "0x7fff5fe4a4e0",
+      "rva": "0xbfa4e0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": "CreateModeData",
+      "method_definition_index": 8646,
+      "token": "0x060021c7",
+      "runtime_va": "0x7fff5fe4a340",
+      "rva": "0xbfa340",
+      "status": "mapped",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "reader",
+          "type_index": 12628,
+          "exact_byval_name": "System.IO.BinaryReader"
+        }
+      ],
+      "return_type": {
+        "type_index": 20661,
+        "exact_byval_name": "MobModeData"
+      }
+    },
+    {
+      "class": "MobModeData",
+      "name": ".ctor",
+      "method_definition_index": 8647,
+      "token": "0x060021c8",
+      "runtime_va": "0x7fff5f4d30f0",
+      "rva": "0x2830f0",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": ".ctor",
+      "method_definition_index": 36695,
+      "token": "0x06008f58",
+      "runtime_va": "0x7fff5f4eb770",
+      "rva": "0x29b770",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "<>1__state",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "System.IDisposable.Dispose",
+      "method_definition_index": 36696,
+      "token": "0x06008f59",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "MoveNext",
+      "method_definition_index": 36697,
+      "token": "0x06008f5a",
+      "runtime_va": "0x7fff603f3f50",
+      "rva": "0x11a3f50",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "System.Collections.Generic.IEnumerator<System.Object>.get_Current",
+      "method_definition_index": 36698,
+      "token": "0x06008f5b",
+      "runtime_va": "0x7fff5f4d3090",
+      "rva": "0x283090",
+      "status": "mapped",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21689,
+        "exact_byval_name": "System.Object"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "System.Collections.IEnumerator.Reset",
+      "method_definition_index": 36699,
+      "token": "0x06008f5c",
+      "runtime_va": "0x7fff603f42c0",
+      "rva": "0x11a42c0",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<loadFieldData>d__125",
+      "name": "System.Collections.IEnumerator.get_Current",
+      "method_definition_index": 36700,
+      "token": "0x06008f5d",
+      "runtime_va": "0x7fff5f4d3090",
+      "rva": "0x283090",
+      "status": "mapped",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21689,
+        "exact_byval_name": "System.Object"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": ".ctor",
+      "method_definition_index": 34300,
+      "token": "0x060085fd",
+      "runtime_va": "0x7fff5f4eb770",
+      "rva": "0x29b770",
+      "status": "mapped",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "<>1__state",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "System.IDisposable.Dispose",
+      "method_definition_index": 34301,
+      "token": "0x060085fe",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "MoveNext",
+      "method_definition_index": 34302,
+      "token": "0x060085ff",
+      "runtime_va": "0x7fff6037e4c0",
+      "rva": "0x112e4c0",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "System.Collections.Generic.IEnumerator<System.Object>.get_Current",
+      "method_definition_index": 34303,
+      "token": "0x06008600",
+      "runtime_va": "0x7fff5f4d3090",
+      "rva": "0x283090",
+      "status": "mapped",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21689,
+        "exact_byval_name": "System.Object"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "System.Collections.IEnumerator.Reset",
+      "method_definition_index": 34304,
+      "token": "0x06008601",
+      "runtime_va": "0x7fff6037f550",
+      "rva": "0x112f550",
+      "status": "mapped",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "<LoadMapInfo>d__94",
+      "name": "System.Collections.IEnumerator.get_Current",
+      "method_definition_index": 34305,
+      "token": "0x06008602",
+      "runtime_va": "0x7fff5f4d3090",
+      "rva": "0x283090",
+      "status": "mapped",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21689,
+        "exact_byval_name": "System.Object"
+      }
+    },
+    {
+      "class": "UI3DNameManager",
+      "name": "Initialize",
+      "method_definition_index": 55056,
+      "token": "0x0600d711",
+      "runtime_va": "0x7fff5f7bf850",
+      "rva": "0x56f850",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "playerDataManager",
+          "type_index": 22742,
+          "exact_byval_name": "PlayerDataManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "UI3DNameManager",
+      "name": "AddMobNameLabel",
+      "method_definition_index": 55058,
+      "token": "0x0600d713",
+      "runtime_va": "0x7fff5f7bdd20",
+      "rva": "0x56dd20",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "traceMobObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "UI3DNameManager",
+      "name": "ChangeMobNameLabel",
+      "method_definition_index": 55059,
+      "token": "0x0600d714",
+      "runtime_va": "0x7fff5f7bf310",
+      "rva": "0x56f310",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "tracePlayerObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "UIMobNameLabel",
+      "name": "Initialize",
+      "method_definition_index": 73973,
+      "token": "0x060120f6",
+      "runtime_va": "0x7fff5fdc0a80",
+      "rva": "0xb70a80",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "traceObject",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "UIMobNameLabel",
+      "name": "UpdateName",
+      "method_definition_index": 73975,
+      "token": "0x060120f8",
+      "runtime_va": "0x7fff5fdc4490",
+      "rva": "0xb74490",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "traceObject",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      }
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "get_MobName",
+      "method_definition_index": 7582,
+      "token": "0x06001d9f",
+      "runtime_va": "0x7fff5fe22e10",
+      "rva": "0xbd2e10",
+      "status": "mapped",
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      }
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "get_MobStatusMaster",
+      "method_definition_index": 7536,
+      "token": "0x06001d71",
+      "runtime_va": "0x7fff5fe22f70",
+      "rva": "0xbd2f70",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20778,
+        "exact_byval_name": "MobStatusMaster"
+      }
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Uuid",
+      "method_definition_index": 9166,
+      "token": "0x060023cf",
+      "runtime_va": "0x7fff5f4e44f0",
+      "rva": "0x2944f0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      }
+    },
+    {
+      "class": "MapInfo",
+      "name": "get_MobDb",
+      "method_definition_index": 34754,
+      "token": "0x060087c3",
+      "runtime_va": "0x7fff5f4eacb0",
+      "rva": "0x29acb0",
+      "status": "mapped",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25822,
+        "exact_byval_name": "UnityEngine.TextAsset"
+      }
+    },
+    {
+      "class": "LocalizeManager",
+      "name": "Get",
+      "method_definition_index": 46291,
+      "token": "0x0600b4d4",
+      "runtime_va": "0x7fff5f55ae30",
+      "rva": "0x30ae30",
+      "status": "mapped",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 34015,
+          "exact_byval_name": "LocalizeType"
+        }
+      ],
+      "return_type": {
+        "type_index": 25892,
+        "exact_byval_name": "TextManagerBase"
+      }
+    }
+  ]
+}

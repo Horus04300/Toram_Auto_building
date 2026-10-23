@@ -1,0 +1,9 @@
+--- assets\source-data\toram-monsters\native-classification\UIHighRaidEnterManager-OnDifficultySDown-7fff5f65fbb0.c
++++ 50309.c
+@@ -75,5 +75,5 @@
+                     if (lVar1 != 0) {
+                       if (GLOBAL3 == (code *)0x0) {
+-                        GLOBAL3 = (code *)CALL6(&UNK_7fff61c3c658,bVar8,0);
++                        GLOBAL3 = (code *)CALL6(&UNK_7ffe9c1339f8,bVar8,0);
+                       }
+                       (*GLOBAL3)(lVar1,bVar8);

@@ -1,0 +1,132 @@
+{
+  "schemaVersion": 1,
+  "authority": "reviewed-offline-native-code-plus-game-enum-and-catalog",
+  "cacheVersion": "77596232",
+  "source": {
+    "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+    "installedModuleSha256": "a3faf7156734768a3ff7349d4b94de029b68b823d974bf52f92bbc77f93f46dd",
+    "mappedModuleSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+    "peSnapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+    "imageBase": "0x7fff5f250000",
+    "ghidraVersion": "12.1.4",
+    "methodMapSha256": "238b7032d6a49faedd70ac34a3d3909e426909c95c913b1c1885931e3c381aa2"
+  },
+  "consumableTypeIds": [
+    2,
+    50
+  ],
+  "durationMarkers": {
+    "209": "runn_hp_heal",
+    "210": "runn_mp_heal",
+    "211": "runn_maxhp",
+    "212": "runn_maxmp",
+    "213": "runn_atk",
+    "214": "runn_matk",
+    "215": "runn_def",
+    "216": "runn_mdef",
+    "217": "runn_hit",
+    "218": "runn_flee",
+    "219": "runn_aspd",
+    "220": "runn_cspd",
+    "221": "runn_atkelm",
+    "222": "runn_defelm",
+    "223": "runn_antivirus"
+  },
+  "simpleBuffGrammar": {
+    "firstNonemptySlot": "exactly one duration marker with positive signed i16 duration",
+    "remainingNonemptySlots": "known positive capID with reviewed mapped stat; signed nonzero i16 operand; no conditions, state commands, repeat, workvalues or unknowns",
+    "durationUnit": "seconds; engine elapsed-time subtraction corroborated by localized item descriptions",
+    "zeroStatOperands": "forbidden: script operand0 refers to current workvalue, not literal0",
+    "sameGroup": "replace previous active item with same duration marker capID",
+    "activeSelection": "a calculator snapshot of active buffs, not item-use scheduling or expiry simulation"
+  },
+  "subEquipment": {
+    "ordinaryBonusTypeIds": [
+      17,
+      18,
+      19,
+      23
+    ],
+    "baseInputsSeparate": true,
+    "elementExceptions": [
+      8,
+      10
+    ],
+    "ignoredOrdinaryBonusTypeIds": [
+      8,
+      10,
+      15,
+      16
+    ],
+    "katanaElementGate": "GetSkillLv(0x56)>0 && GetSkillLv(0x53)>9; not modeled by ordinary stat import"
+  },
+  "evidence": [
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusData-_cctor-7fff5fff0a40.c",
+      "function": "BonusData..cctor",
+      "meaning": "Duration classifier list contains209..224 and255; .ctor maps that list through type key1 to DurationBonusType.",
+      "sha256": "26620354f63471fd3b081fa8c0e4cfea93ce8f0ef334f9de49c3ec36dc8c7a18"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusData-_ctor-7fff5fff25a0.c",
+      "function": "BonusData..ctor",
+      "meaning": "When a source line belongs to duration classifier key1, its capID is stored in BonusData+0x44; verified getter names that field DurationBonusType.",
+      "sha256": "404e50aa1cbbd1f9e1a755b717464020d31f6bc464ceae1802d14a71bd371495"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusScriptManager-_ctor-7fff600018d0.c",
+      "function": "BonusScriptManager..ctor",
+      "meaning": "209..224 and255 register the same delegate MethodInfo operand; ordinary positive cap ranges register another shared delegate.",
+      "sha256": "23f08458f63f68a9a95f1a33b6722558804238ad5200db47c665dd46b148217e"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusScriptManager-funcSetTime-7fff60003eb0.c",
+      "function": "BonusScriptManager.funcSetTime",
+      "meaning": "Copies capID to BonusScriptData.Type+0x30 and signed i16 operand to duration integer+0x48 and remaining float+0x4c.",
+      "sha256": "2c35f6fc9f42de339cb610737d8e1eaec89758e45acfec9a0c2560bdac081584"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusScriptManager-timeCheck-7fff60004260.c",
+      "function": "BonusScriptManager.timeCheck",
+      "meaning": "Subtracts elapsed engine time from remaining duration; catalog examples corroborate1800=30min and900=15min.",
+      "sha256": "d4ab941a61c49bbd350e607eacafd4a6b4349c6ae0f7dce99d9d3ceaa0deaf3f"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusScriptManager-funcSetBonus-7fff60003610.c",
+      "function": "BonusScriptManager.funcSetBonus",
+      "meaning": "Nonzero signed i16 is passed to AddBonus without display scaling; zero instead loads script workvalue+0x6c.",
+      "sha256": "15ddffac7ad8d0000ff835634f862f66d5aadefbaad27fd9a45e99ae5fe62456"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/MainPlayer-localUseItem-7fff5f8123e0.c",
+      "function": "MainPlayer.localUseItem",
+      "meaning": "Unified usable-item path reads BonusLines, CreateBonus(exec=1), then nonzero active duration goes to SetDurationBonus; no ItemType-specific buff branch here.",
+      "sha256": "0b323b1e9a87e7f5482d75721ecd24c774677806baefb0fe2965471ebb9f9ae9"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusManager-SetDurationBonus-7fff5fff7270.c",
+      "function": "BonusManager.SetDurationBonus",
+      "meaning": "Dictionary keyed by DurationBonusType adds a new group or removes the prior active entry and replaces the same key.",
+      "sha256": "069c1f9260d743c15ee1d2a8608d68663e63a0a2e31f90ac3f347f3aafd5cb87"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/PlayerStatusBase-SetEquip-7fff5ffadc70.c",
+      "function": "PlayerStatusBase.SetEquip",
+      "meaning": "Sub15/16 clear bonus;sub10 filters through whitelist{65};sub8 clears unless skill0x56>0 and0x53>9 then whitelist{65};other sub types take ordinary bonus route.",
+      "sha256": "ccc7f6d5dbe321d0a3b811c097f158ba5c3c3f871b377df60a827a6b2d8052c0"
+    },
+    {
+      "path": "assets/source-data/toram-items/native-item-usage/BonusManager-SetEquipBonus-7fff5fff73b0.c",
+      "function": "BonusManager.SetEquipBonus",
+      "meaning": "Installs ordinary bonus data for the selected EquipType; base attack, refinement and stability are separate status inputs.",
+      "sha256": "3efa90d028e1b0dfece275ea4784b54acc0751b9dc404f0694e8b3c83ad7fb2d"
+    }
+  ],
+  "limitations": [
+    "Only conservative static nonzero stat scripts are project-usable. Healing, repeat, status prevention, skill books, warps, unsupported stat conversions and conditional scripts are preserved but not evaluated.",
+    "Duration marker names do not constrain which stat follows: runn_hp_heal209 andrunn_mp_heal210 can hold pure stat buffs and are grouped by marker, not by stat key.",
+    "Localized prose can disagree with cap operands; no gameplay seasonal multiplier or calendar override was inferred.",
+    "Exact constructor delegate MethodInfo heap bindings lie outside preserved module and are unavailable; duration classification, time mutator, enums and item text are corroborated static evidence.",
+    "No game execution, consumption, client writes or actual combat/equipment-instance verification was performed."
+  ]
+}

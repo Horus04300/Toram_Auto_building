@@ -1,3 +1,4 @@
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -6,16 +7,16 @@ import vm from 'node:vm';
 
 const root = resolve(import.meta.dirname, '../../..');
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const evaluator = require(resolve(root, 'assets/js/build-evaluator.js'));
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
+const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
 
-const crystaSource = await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8');
+const crystaSource = await readCrystaDataSource(root);
 const dataContext = {};
 vm.createContext(dataContext);
 vm.runInContext(`${crystaSource}\nglobalThis.__crystas = crystaDataJson;`, dataContext);
 const crystaKeys = registry.collectCrystaKeys(dataContext.__crystas);
 const audit = registry.auditKeys(crystaKeys);
-assert.equal(crystaKeys.length, 87, '현재 크리스타 데이터의 스탯 키는 87종이어야 합니다.');
+assert.equal(crystaKeys.length, 94, 'ID 통합 크리스타의 계산/보존 스탯 키를 모두 유지해야 합니다.');
 assert.deepEqual(audit.unknown, [], '크리스타 스탯 키가 StatRegistry에서 조용히 누락되면 안 됩니다.');
 assert.ok(audit.modeled.includes('MAXHP') && audit.modeled.includes('AMPRP'), 'CrystaOptimization Utility 키가 계산 대상으로 등록돼야 합니다.');
 assert.ok(audit.preserved.includes('DROP_RATE'), '1차 CrystaOptimization 범위 밖 키도 삭제하지 않고 보존해야 합니다.');
@@ -24,8 +25,8 @@ const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
 vm.createContext(context);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), context, { filename:'calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 
 function base(overrides={}) {
   return Object.assign({
@@ -88,7 +89,7 @@ const invalid = evaluator.evaluate(invalidBuild, evaluator.createScenarioSnapsho
 assert.equal(invalid.constraints.feasible, false, '알 수 없는 스탯 키가 있으면 최적화 입력을 유효하다고 처리하면 안 됩니다.');
 assert.equal(invalid.diagnostics[0].key, 'NOT_A_REAL_STAT', '누락된 스탯 키 이름을 진단에 보존해야 합니다.');
 
-const evaluatorSource = await readFile(resolve(root, 'assets/js/build-evaluator.js'), 'utf8');
+const evaluatorSource = await readFile(resolve(root, 'web/src/calculation/build-evaluator.js'), 'utf8');
 assert.doesNotMatch(evaluatorSource, /\bdocument\b|localStorage/, 'BuildEvaluator 내부에서 DOM이나 localStorage를 읽으면 안 됩니다.');
 
 console.log('CrystaOptimization evaluator evaluation regressions: PASS');

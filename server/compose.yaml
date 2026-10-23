@@ -1,0 +1,15 @@
+services:
+  calculator:
+    build:
+      context: ..
+      dockerfile: server/Dockerfile
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - ./data:/app/server/data
+      - ./.env:/app/server/.env:ro
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL

@@ -50,7 +50,7 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/halberd.js`: 통과
+- `node --check web/src/data/skills/halberd.js`: 통과
 - `node tools/verification/audit-stack-source-links.mjs --tree Halberd --require-s1`: 22/22 통과
 - `node tools/tests/skills/test-halberd-rules.mjs`: 통과
 - `node tools/tests/skills/test-halberd-regression.mjs`: 통과

@@ -1,0 +1,18 @@
+--- assets\source-data\toram-monsters\native-rules\BossMobBattleStatus-_ctor-7fff5fdb1170.c
++++ 7210.c
+@@ -13,11 +13,11 @@
+   CALL2(uVar4,GLOBAL1);
+   *(undefined8 *)(self + 0x30) = uVar4;
+-  CALL3();
+-  CALL4(self,0);
++  il2cpp_write_barrier_0();
++  CALL3(self,0);
+   *(short *)(self + 0x28) = difficulty;
+   *(undefined **)(self + 0x10) = statusMaster;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x18) = abnormalManager;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x20) = buffManager;
+   if (GLOBAL3 != 0) {

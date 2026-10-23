@@ -1,0 +1,51 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidRoomData-GetMobGuildRaidBonus-7fff600df780.c
++++ 20640.c
+@@ -55,5 +55,5 @@
+     if (lVar10 == 0) goto LABEL1;
+     cVar6 = CALL5(lVar10,0);
+-    uVar8 = uRam00007fff6245c458;
++    uVar8 = uRam00007ffe9c954a58;
+     if (cVar6 != '\0') goto LABEL4;
+     iVar3 = *(int *)(lVar10 + 0x24);
+@@ -64,5 +64,5 @@
+         uVar8 = CALL1(GLOBAL11);
+         CALL7(uVar8,cVar14,0x29,0,100,0,0,0,0);
+-        if (lVar7 != 0) goto code_r0x7fff600df993;
++        if (lVar7 != 0) goto code_r0x7ffe9a5d5503;
+       }
+       goto LABEL1;
+@@ -71,5 +71,5 @@
+     case 0xc9:
+       lVar9 = CALL8(GLOBAL6,3);
+-      CALL9(lVar9,uRam00007fff62439520,0);
++      CALL9(lVar9,uRam00007ffe9c932cb0,0);
+       if (lVar9 == 0) goto LABEL1;
+       lVar10 = (ulonglong)*(byte *)(lVar10 + 0x28) - 1;
+@@ -116,5 +116,5 @@
+     case 0xcd:
+       lVar9 = CALL8(GLOBAL6,3);
+-      CALL9(lVar9,uRam00007fff624472c8,0);
++      CALL9(lVar9,uRam00007ffe9c940d68,0);
+       if (lVar9 == 0) goto LABEL1;
+       lVar10 = (ulonglong)*(byte *)(lVar10 + 0x28) - 1;
+@@ -132,5 +132,5 @@
+     case 0xce:
+       lVar9 = CALL8(GLOBAL6,3);
+-      CALL9(lVar9,uRam00007fff62439cc8,0);
++      CALL9(lVar9,uRam00007ffe9c933458,0);
+       if (lVar9 == 0) goto LABEL1;
+       lVar10 = (ulonglong)*(byte *)(lVar10 + 0x28) - 1;
+@@ -174,5 +174,5 @@
+       }
+       uVar8 = CALL14(uVar8,0);
+-      uVar8 = CALL15(uVar8,uRam00007fff62403138);
++      uVar8 = CALL15(uVar8,uRam00007ffe9c8fc1d8);
+       lVar10 = CALL16(uVar8);
+       uVar13 = 0;
+@@ -210,5 +210,5 @@
+   }
+   goto LABEL0;
+-code_r0x7fff600df993:
++code_r0x7ffe9a5d5503:
+   CALL10(lVar7);
+   uVar12 = uVar12 + 1;

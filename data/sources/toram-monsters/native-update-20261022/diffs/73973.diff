@@ -1,0 +1,156 @@
+--- assets\source-data\toram-monsters\native-schema\UIMobNameLabel-Initialize-7fff5fdc0a80.c
++++ 73973.c
+@@ -34,11 +34,11 @@
+   plVar1 = (longlong *)(self + 0x88);
+   *plVar1 = lVar7;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   if (*plVar1 == 0) goto LABEL0;
+-  uVar4 = CALL4(0x17,GLOBAL6,*plVar1,4);
++  uVar4 = CALL3(0x17,GLOBAL6,*plVar1,4);
+   self[0xf8] = uVar4;
+-  lVar7 = CALL5(GLOBAL8);
++  lVar7 = CALL4(GLOBAL8);
+   if (lVar7 == 0) goto LABEL0;
+-  iVar6 = CALL6(lVar7,0);
++  iVar6 = CALL5(lVar7,0);
+   if (iVar6 == 3) {
+ LABEL1:
+@@ -46,11 +46,11 @@
+   }
+   else {
+-    lVar7 = CALL5(GLOBAL8);
++    lVar7 = CALL4(GLOBAL8);
+     if (lVar7 == 0) goto LABEL0;
+-    iVar6 = CALL6(lVar7,0);
++    iVar6 = CALL5(lVar7,0);
+     if (iVar6 == 0x19) goto LABEL1;
+-    lVar7 = CALL5(GLOBAL8);
++    lVar7 = CALL4(GLOBAL8);
+     if (lVar7 == 0) goto LABEL0;
+-    iVar6 = CALL6(lVar7,0);
++    iVar6 = CALL5(lVar7,0);
+     if (iVar6 == 0x1a) goto LABEL1;
+   }
+@@ -60,7 +60,7 @@
+     GLOBAL12 = '\x01';
+   }
+-  lVar7 = CALL5(GLOBAL8);
++  lVar7 = CALL4(GLOBAL8);
+   if (lVar7 != 0) {
+-    iVar6 = CALL6(lVar7,0);
++    iVar6 = CALL5(lVar7,0);
+     if ((iVar6 == 0x20) && (plVar2 = (longlong *)*plVar1, plVar2 != (longlong *)0x0)) {
+       if ((*(byte *)(GLOBAL13 + 0x130) <= *(byte *)(*plVar2 + 0x130)) &&
+@@ -72,5 +72,5 @@
+              (*(longlong *)(*plVar2 + 200) + -8 +
+              (ulonglong)*(byte *)(GLOBAL13 + 0x130) * 8) != GLOBAL13)) {
+-          CALL7(plVar2);
++          CALL6(plVar2);
+           pcVar3 = (code *)swi(3);
+           (*pcVar3)();
+@@ -83,26 +83,26 @@
+     }
+     if (*plVar1 != 0) {
+-      lVar7 = CALL8(7,GLOBAL6);
++      lVar7 = CALL7(7,GLOBAL6);
+       uVar9 = **(undefined8 **)(GLOBAL9 + 0xb8);
+       if (lVar7 != 0) {
+         if (0 < *(int *)(lVar7 + 0x10)) {
+           if (*plVar1 == 0) goto LABEL0;
+-          cVar5 = CALL4(0x17,GLOBAL6,*plVar1,0x10);
++          cVar5 = CALL3(0x17,GLOBAL6,*plVar1,0x10);
+           if (cVar5 == '\0') {
+             if (*plVar1 == 0) goto LABEL0;
+-            lVar8 = CALL8(9,GLOBAL6);
++            lVar8 = CALL7(9,GLOBAL6);
+             if (lVar8 == 0) goto LABEL0;
+-            auStackX_10[0] = CALL8(1,GLOBAL5,lVar8);
+-            uVar9 = CALL9(auStackX_10,0);
+-            uVar9 = CALL10(GLOBAL11,uVar9,GLOBAL10,0);
++            auStackX_10[0] = CALL7(1,GLOBAL5,lVar8);
++            uVar9 = CALL8(auStackX_10,0);
++            uVar9 = CALL9(GLOBAL11,uVar9,GLOBAL10,0);
+           }
+-          uVar9 = CALL11(uVar9,lVar7,0);
++          uVar9 = CALL10(uVar9,lVar7,0);
+         }
+         if (*plVar1 != 0) {
+-          uVar10 = CALL12(0,GLOBAL6);
+-          CALL13(self,traceObject,uVar10,uVar9,1,0,0);
++          uVar10 = CALL11(0,GLOBAL6);
++          CALL12(self,traceObject,uVar10,uVar9,1,0,0);
+           *(undefined4 *)(self + 0xfc) = 0x3f800000;
+           if (*(longlong *)(self + 0x50) != 0) {
+-            lVar7 = CALL14(*(longlong *)(self + 0x50),0);
++            lVar7 = CALL13(*(longlong *)(self + 0x50),0);
+             if (GLOBAL14 == '\0') {
+               CALL0(&GLOBAL15);
+@@ -112,46 +112,46 @@
+               uStack_20 = 0;
+               uStack_28 = *(undefined8 *)(*(longlong *)(GLOBAL15 + 0xb8) + 8);
+-              CALL15(lVar7,&uStack_28,0);
++              CALL14(lVar7,&uStack_28,0);
+               if (*(longlong *)(self + 0x50) != 0) {
+-                CALL16(*(longlong *)(self + 0x50),0,0);
++                CALL15(*(longlong *)(self + 0x50),0,0);
+                 if (*(longlong *)(self + 0x90) != 0) {
+                   uVar9 = CALL2(*(longlong *)(self + 0x90),GLOBAL1);
+                   *(undefined8 *)(self + 0x98) = uVar9;
+-                  CALL3();
++                  il2cpp_write_barrier_0();
+                   if (*(longlong *)(self + 0x90) != 0) {
+-                    CALL16(*(longlong *)(self + 0x90),0,0);
++                    CALL15(*(longlong *)(self + 0x90),0,0);
+                     uVar9 = *(undefined8 *)(self + 0xe0);
+                     if (*(int *)(GLOBAL7 + 0xe0) == 0) {
+-                      CALL17();
++                      CALL16();
+                     }
+-                    cVar5 = CALL18(uVar9,0,0);
++                    cVar5 = CALL17(uVar9,0,0);
+                     if (cVar5 != '\0') {
+                       if (*(longlong *)(self + 0xe0) == 0) goto LABEL0;
+                       uVar9 = CALL2(*(longlong *)(self + 0xe0),GLOBAL1);
+                       *(undefined8 *)(self + 0xe8) = uVar9;
+-                      CALL3();
++                      il2cpp_write_barrier_0();
+                       if (*(longlong *)(self + 0xe0) == 0) goto LABEL0;
+-                      CALL16(*(longlong *)(self + 0xe0),0,0);
++                      CALL15(*(longlong *)(self + 0xe0),0,0);
+                     }
+                     if (*(longlong *)(self + 0xa0) != 0) {
+-                      CALL16(*(longlong *)(self + 0xa0),0,0);
++                      CALL15(*(longlong *)(self + 0xa0),0,0);
+                       if (*(longlong *)(self + 0xa0) != 0) {
+                         uVar9 = CALL2(*(longlong *)(self + 0xa0),GLOBAL3);
+                         *(undefined8 *)(self + 0xa8) = uVar9;
+-                        CALL3();
++                        il2cpp_write_barrier_0();
+                         if (*(longlong *)(self + 0xb8) != 0) {
+-                          CALL16(*(longlong *)(self + 0xb8),0,0);
++                          CALL15(*(longlong *)(self + 0xb8),0,0);
+                           if (*(longlong *)(self + 0xc0) != 0) {
+-                            CALL16(*(longlong *)(self + 0xc0),0,0);
++                            CALL15(*(longlong *)(self + 0xc0),0,0);
+                             if (*(longlong *)(self + 0xc0) != 0) {
+                               uVar9 = CALL2(*(longlong *)(self + 0xc0),GLOBAL3)
+                               ;
+                               *(undefined8 *)(self + 200) = uVar9;
+-                              CALL3();
++                              il2cpp_write_barrier_0();
+                               if (*(longlong *)(self + 0x128) != 0) {
+                                 uVar9 = CALL2(*(longlong *)(self + 0x128),
+                                                          GLOBAL4);
+                                 *(undefined8 *)(self + 0x130) = uVar9;
+-                                CALL3();
++                                il2cpp_write_barrier_0();
+                                 (**(code **)(*(longlong *)self + 0x1d8))
+                                           (self,*(undefined8 *)(*(longlong *)self + 0x1e0));
+@@ -173,5 +173,5 @@
+   }
+ LABEL0:
+-  CALL19();
++  CALL18();
+   pcVar3 = (code *)swi(3);
+   (*pcVar3)();

@@ -1,0 +1,90 @@
+{
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "calculatorInterface": [
+    {
+      "slotInDeclarationOrder": 0,
+      "method_index": 12340,
+      "name": "get_Lv",
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "parameters": [],
+      "token": "0x06003035",
+      "range": {
+        "offset": 4189456,
+        "size": 36
+      }
+    },
+    {
+      "slotInDeclarationOrder": 9,
+      "method_index": 12349,
+      "name": "get_Tec",
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "parameters": [],
+      "token": "0x0600303e",
+      "range": {
+        "offset": 4189780,
+        "size": 36
+      }
+    }
+  ],
+  "skillNameSources": {
+    "kr": {
+      "parsedSource": "build/tmp/toram-item-extraction/game/downloads/localizations/extracted/releaseB/GameScene_kr/Skill_kr.parsed.json",
+      "parsedSourceSha256": "270610d607a779e5f89195e27cb29689aae18e40cac73df3a584b5f48ca9388c",
+      "decodedSource": "build/tmp/toram-item-extraction/game/downloads/localizations/extracted/releaseB/GameScene_kr/Skill_kr.decoded.bin",
+      "decodedSourceSha256": "ee2e38acf7a78223ae26123ebfd5e36de197deddd56e3cd1489d2968f0e17023",
+      "rows": [
+        {
+          "skillId": 365,
+          "kind": 0,
+          "text": "장비 강화",
+          "decodedOffset": 5056
+        },
+        {
+          "skillId": 366,
+          "kind": 0,
+          "text": "정확한 강화",
+          "decodedOffset": 5075
+        },
+        {
+          "skillId": 367,
+          "kind": 0,
+          "text": "장인의 강화기술",
+          "decodedOffset": 5097
+        }
+      ]
+    },
+    "us": {
+      "parsedSource": "build/tmp/toram-item-extraction/game/downloads/localizations/extracted/releaseB/GameScene_us/Skill_us.parsed.json",
+      "parsedSourceSha256": "ab7d4d37bdfee5e2622186904eaa5b2fe34da6a14a0aee6206c68d5cdcc09edd",
+      "decodedSource": "build/tmp/toram-item-extraction/game/downloads/localizations/extracted/releaseB/GameScene_us/Skill_us.decoded.bin",
+      "decodedSourceSha256": "70880b26b65a0113d7a35930c951fbef14abf3ef0adbc58bb39211198ac8ce27",
+      "rows": [
+        {
+          "skillId": 365,
+          "kind": 0,
+          "text": "Customize Equipment",
+          "decodedOffset": 4331
+        },
+        {
+          "skillId": 366,
+          "kind": 0,
+          "text": "Accurate Customization",
+          "decodedOffset": 4356
+        },
+        {
+          "skillId": 367,
+          "kind": 0,
+          "text": "Expert's Customization",
+          "decodedOffset": 4384
+        }
+      ]
+    }
+  },
+  "sourceBoundary": "Names are linked by native skill ID and text kind0, not by fuzzy label matching."
+}

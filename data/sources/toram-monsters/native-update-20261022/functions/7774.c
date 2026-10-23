@@ -1,0 +1,53 @@
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int GuildRaidBossMobBattleStatus_CalcDef(undefined *self,undefined *status,undefined *methodInfo)
+
+{
+  code *pcVar1;
+  char cVar2;
+  int iVar3;
+  int iVar4;
+  longlong lVar5;
+  int iVar6;
+  longlong lStackX_10;
+  
+  if (DAT_7ffe9cadd516 == '\0') {
+    FUN_7ffe9996d590(&DAT_7ffe9c934418);
+    DAT_7ffe9cadd516 = '\x01';
+  }
+  lStackX_10 = 0;
+  if (status == (undefined *)0x0) {
+    iVar3 = GuildRaidBossMobBattleStatus_get_Def(self,(undefined *)0x0);
+    return iVar3;
+  }
+  iVar3 = GuildRaidBossMobBattleStatus_get_Def(self,(undefined *)0x0);
+  lVar5 = (**(code **)(*(longlong *)status + 0x1c8))
+                    (status,*(undefined8 *)(*(longlong *)status + 0x1d0));
+  if ((lVar5 != 0) && (*(longlong *)(lVar5 + 0x40) != 0)) {
+    cVar2 = FUN_7ffe9ad8e670(*(longlong *)(lVar5 + 0x40),0x428,&lStackX_10,_DAT_7ffe9c934418);
+    if (cVar2 == '\0') {
+      lVar5 = (**(code **)(*(longlong *)status + 0x1c8))
+                        (status,*(undefined8 *)(*(longlong *)status + 0x1d0));
+      if ((lVar5 == 0) || (*(longlong *)(lVar5 + 0x50) == 0)) goto LAB_7ffe9a31c80c;
+      FUN_7ffe9ad8e670(*(longlong *)(lVar5 + 0x50),0x428,&lStackX_10,_DAT_7ffe9c934418);
+    }
+    if (lStackX_10 != 0) {
+      iVar4 = func_0x7ffe9a7a2140(lStackX_10,0x52);
+      if (*(longlong *)(self + 0x20) == 0) goto LAB_7ffe9a31c80c;
+      iVar6 = (int)((float)*(int *)(*(longlong *)(self + 0x20) + 0x3c) * _DAT_7ffe9c049b4c);
+      if (iVar4 < iVar6) {
+        iVar6 = iVar4;
+      }
+      iVar3 = iVar3 - iVar6;
+    }
+    return iVar3;
+  }
+LAB_7ffe9a31c80c:
+  FUN_7ffe9996d7a0();
+  pcVar1 = (code *)swi(3);
+  iVar3 = (*pcVar1)();
+  return iVar3;
+}
+

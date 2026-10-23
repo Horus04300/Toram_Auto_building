@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
-const optimizer = require('../../../assets/js/optimization/exact-solver.js');
+const optimizer = require('../../../web/src/optimization/candidate-preparation.js');
 
 // Reference uses the unchanged public floating-point dominance predicate.
 function reference(packages, keys, maxComparisons) {

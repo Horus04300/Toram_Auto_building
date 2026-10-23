@@ -5,7 +5,7 @@ const root=resolve(import.meta.dirname, '../../..'), context={window:{},console}
 context.window.window=context.window;
 context.window.skillSimulatorState={getInvestments:()=>({Halberd:{}})};
 vm.createContext(context);
-for(const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skills/halberd.js', 'assets/js/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
+for(const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/halberd.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
 const effects=context.window.ToramSkillEffects, ids=Array.from({length:22},(_,id)=>`Halberd:${id}`);
 const base=(mainType='선풍창')=>({mainType,subType:'없음',level:300,strBase:400,dexBase:100,intBase:200,vitBase:100,agiBase:300,crtBase:50});
 const combat={STR:450,DEX:110,INT:250,VIT:120,AGI:320,ATK:1000,MATK:600,MAXHP:10000};

@@ -1,0 +1,30 @@
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+byte MobPropertyCriticalResist_TryGetValue
+               (undefined *self,undefined *mobAction,undefined *criticalParcent,
+               undefined *methodInfo)
+
+{
+  int iVar1;
+  int iVar2;
+  longlong lVar3;
+  
+  if (DAT_7fff625e4ee0 == '\0') {
+    FUN_7fff5f47d450(&DAT_7fff6240d7c8);
+    DAT_7fff625e4ee0 = '\x01';
+  }
+  lVar3 = FUN_7fff6068f640(*(undefined8 *)(self + 0x10),_DAT_7fff6240d7c8);
+  if (lVar3 != 0) {
+    iVar1 = FUN_7fff5fe83870(self,mobAction,0);
+    iVar2 = 0;
+    if (-1 < *(int *)criticalParcent - iVar1) {
+      iVar2 = *(int *)criticalParcent - iVar1;
+    }
+    *(int *)criticalParcent = iVar2;
+    return 1;
+  }
+  return 0;
+}
+

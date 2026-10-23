@@ -1,3 +1,4 @@
+import { readCrystaDataSource } from '../support/crysta-catalog-source.mjs';
 // Inventory only: formula families do not enable pruning or change candidates.
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
@@ -24,13 +25,13 @@ const classifiedOnly = {
   ...Object.fromEntries(['ATK', 'MATK'].flatMap(kind => ['STR', 'DEX', 'AGI', 'INT', 'VIT']
     .map(stat => [`${kind}_UP_${stat}`, `${kind} stat-up; Native candidate evaluation and outer bound supported`])))
 };
-const sourcePaths = ['assets/js/stat-registry.js', 'assets/js/data/crysta-data.js',
-  'src-tauri/src/optimization/stats.rs', 'src-tauri/src/optimization/evaluator.rs',
-  'assets/js/calculator.js', 'src-tauri/src/optimization/solver.rs', 'src-tauri/src/optimization/joint_supply.rs',
-  'assets/js/optimization/problem-compiler.js', 'assets/js/optimization/exact-solver.js',
+const sourcePaths = ['web/src/calculation/stat-registry.js', 'web/src/data/crysta-data.js',
+  'engine/src/stats.rs', 'engine/src/evaluator.rs',
+  'web/src/calculation/calculator.js', 'engine/src/solver.rs', 'engine/src/joint_supply.rs',
+  'web/src/optimization/problem-compiler.js', 'web/src/optimization/candidate-preparation.js',
   'tools/fixtures/crysta-saved-sword-shield-revenir-unlocked.json'];
 const sources = await Promise.all(sourcePaths.map(async path => {
-  const content = await readFile(resolve(root, path), 'utf8');
+  const content = path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8');
   return { path, content, sha256:createHash('sha256').update(content).digest('hex') };
 }));
 const sandbox = { console };
@@ -57,10 +58,10 @@ const rawRows = crystas.flatMap(crysta => [
   .map(([key, value]) => [registry.normalize(key) || key, Number(value)])) }));
 const rawKeys = [...new Set(rawRows.flatMap(row => Object.keys(row.stats)))].sort();
 const fixture = JSON.parse(sources.at(-1).content).resolvedExecutionContext;
-const worker = await readFile(resolve(root, 'assets/js/optimization/solver-worker.js'), 'utf8');
+const worker = await readFile(resolve(root, 'web/src/ui/crysta-ui.js'), 'utf8');
 vm.runInContext(worker.match(/const BASE_ASPD_MAP = \{[^}]+\};/u)[0], sandbox);
-for (const path of jsSources.filter(path => !['stat-registry.js', 'data/crysta-data.js'].includes(path))) {
-  vm.runInContext(await readFile(resolve(root, 'assets/js', path), 'utf8'), sandbox, { filename:path });
+for (const path of jsSources.filter(path => !['calculation/stat-registry.js', 'data/crysta-data.js'].includes(path))) {
+  vm.runInContext(await readFile(resolve(root, 'web/src', path), 'utf8'), sandbox, { filename:path });
 }
 const evaluator = sandbox.ToramBuildEvaluator;
 const scenario = evaluator.createScenarioSnapshot(fixture.baseContext, { requirements:fixture.scenarioRequirements });
@@ -69,7 +70,7 @@ const compiled = sandbox.ToramCrystaOptimizationProblemCompiler.compileCrystaPro
 });
 const evaluate = stats => evaluator.evaluateAggregate(compiled.baseContext, scenario, stats,
   sandbox.ToramCalculationKernel.evaluateContext);
-const optimizer = sandbox.ToramCrystaOptimizationGlobalOptimizer;
+const optimizer = sandbox.ToramCrystaOptimizationCandidates;
 const prepared = optimizer.prepareProblem(compiled, { registry,
   relevantKeys:optimizer.deriveRelevantKeys(compiled, registry, evaluate),
   pareto:{ maxComparisons:1000000 } });
@@ -104,7 +105,7 @@ const output = {
     preparedPackages:prepared.groups.map(group => ({ group:group.id, count:group.packages.length })),
     relevantKeys:prepared.metadata.modeledKeys }
 };
-await writeFile(resolve(root, 'docs/verification/crysta-joint-supply-inventory.json'), JSON.stringify(output, null, 2) + '\n');
+await writeFile(resolve(root, 'desktop/target/crysta-joint-supply-inventory.json'), JSON.stringify(output, null, 2) + '\n');
 console.log(JSON.stringify({ ...output.coverage, pairs:bundles.map(bundle => ({ id:bundle.id,
   raw:bundle.raw.keyPresence, both:bundle.raw.bothNonzero,
   preparedBoth:bundle.prepared.reduce((count, group) => count + group.bothNonzero, 0) })),

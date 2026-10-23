@@ -1,32 +1,35 @@
+import { frontendSourcePath } from '../../support/frontend-paths.mjs';
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS } from '../../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
+const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
 const root = resolve(import.meta.dirname, '../../..');
-const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('assets/js/data/'));
+const html = await readFile(resolve(root, 'web/index.html'), 'utf8');
+const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 let investments = { Battle:{ 12:10 }, MagicBlade:{ 6:10 }, Dagger:{ 5:10 } };
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
 context.window.window = context.window;
 vm.createContext(context);
-for (const path of dataScripts) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'assets/js/skill-effect-engine.js'), 'utf8'), context, { filename:'skill-effect-engine.js' });
-for (const path of ['assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+for (const path of dataScripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-effect-engine.js'), 'utf8'), context, { filename:'calculation/skill-effect-engine.js' });
+for (const path of ['web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 
-const calculatorSource = await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8');
+const calculatorSource = await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8');
 assert.match(calculatorSource, /skillConst:\s*appliedComboHit\s*\?\s*appliedComboHit\.skillConst\s*:\s*0/, '계산 기준 기본 공격 상수는 0이어야 합니다.');
-assert.match(await readFile(resolve(root, 'index.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, '계산 기준 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
+assert.match(await readFile(resolve(root, 'web/index.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, '계산 기준 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
 assert.match(calculatorSource, /scopedInput\.rangeOverride[\s\S]*ctx\.rangeType\s*=\s*scopedInput\.rangeOverride/, '사용자 거리 선택은 스킬 기본 거리 판정 뒤에 최종 적용돼야 합니다.');
-const comboUiSource = await readFile(resolve(root, 'assets/js/combo-ui.js'), 'utf8');
-const applicationUseCasesSource = await readFile(resolve(root, 'assets/js/application-use-cases.js'), 'utf8');
+const comboUiSource = await readFile(resolve(root, 'web/src/ui/combo-ui.js'), 'utf8');
+const applicationUseCasesSource = await readFile(resolve(root, 'web/src/application/application-use-cases.js'), 'utf8');
 assert.match(comboUiSource, /ToramApplication\.ApplyComboHit/, '콤보 타격 콤보 UI는 Application 유스케이스를 통해 타격을 전달해야 합니다.');
 assert.match(applicationUseCasesSource, /hitProfile:\{\s*damageType:selected\.damageType[\s\S]*flags:flags\s*\}/, '콤보 타격 Application 유스케이스는 결과 계산기로 타격 객체 전체를 전달해야 합니다.');
-const crystaUiSource = await readFile(resolve(root, 'assets/js/crysta-ui.js'), 'utf8');
-const optimizerSource = await readFile(resolve(root, 'assets/js/optimization-results.js'), 'utf8');
+const crystaUiSource = await readFile(resolve(root, 'web/src/ui/crysta-ui.js'), 'utf8');
+const optimizerSource = await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8');
 assert.match(crystaUiSource, /function validateCrystaInputs\(\)[\s\S]*!getCrystaByName\(value\)/, '입력 검증 목록에 없는 크리스타 이름을 검사해야 합니다.');
 assert.match(optimizerSource, /validateCrystaInputs[\s\S]*return;[\s\S]*revealResultTab/, '입력 검증 잘못된 이름은 결과 탭을 열기 전에 계산을 차단해야 합니다.');
 

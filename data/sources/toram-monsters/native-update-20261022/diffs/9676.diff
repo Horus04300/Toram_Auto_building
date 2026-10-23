@@ -1,0 +1,15 @@
+--- assets\source-data\toram-monsters\native-schema\MobPropertyMaster-_ctor-7fff5fe85b10.c
++++ 9676.c
+@@ -10,9 +10,9 @@
+     GLOBAL0 = '\x01';
+   }
+-  _loadFieldData_d__125_System_IDisposable_Dispose(self,(undefined *)0x0);
+-  lVar6 = CALL1(GLOBAL1,5);
++  CALL1(self,0);
++  lVar6 = CALL2(GLOBAL1,5);
+   plVar1 = (longlong *)(self + 0x18);
+   *plVar1 = lVar6;
+-  CALL2();
++  il2cpp_write_barrier_0();
+   if (br != (undefined *)0x0) {
+     uVar3 = (**(code **)(*(longlong *)br + 0x1d8))(br,*(undefined8 *)(*(longlong *)br + 0x1e0));

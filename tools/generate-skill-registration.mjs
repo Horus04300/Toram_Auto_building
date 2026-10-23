@@ -8,7 +8,7 @@ const trees = {
 };
 const metadata = {};
 for (const [treeId, fileName] of Object.entries(trees)) {
-  const source = await readFile(resolve(root, 'assets', 'source-data', 'skill-registration', `${fileName}.js`), 'utf8');
+  const source = await readFile(resolve(root, 'data', 'sources', 'skill-registration', `${fileName}.js`), 'utf8');
   const pattern = /\{\s*"id":\s*(\d+),[\s\S]*?"type":\s*"([^"]+)",[\s\S]*?"damagetype":\s*"([^"]+)"/g;
   const matches = [...source.matchAll(pattern)];
   if (!matches.length) throw new Error(`No skill metadata parsed: ${treeId}`);
@@ -21,5 +21,5 @@ for (const [treeId, fileName] of Object.entries(trees)) {
 }
 if (Object.keys(metadata).length !== 427) throw new Error(`Expected 427 skills, parsed ${Object.keys(metadata).length}`);
 const output = `/* 동료 견본에서 추출한 스킬 분류 메타데이터. 계산식은 링크 원문 검증 모듈에서 별도로 추가한다. */\n(function () {\n  'use strict';\n  window.TORAM_SKILL_REGISTRATION_METADATA = Object.freeze(${JSON.stringify(metadata, null, 2)});\n}());\n`;
-await writeFile(resolve(root, 'assets/js/data/skill-registration-metadata.js'), output, 'utf8');
+await writeFile(resolve(root, 'web/src/data/skill-registration-metadata.js'), output, 'utf8');
 console.log(`Generated metadata for ${Object.keys(metadata).length} skills.`);

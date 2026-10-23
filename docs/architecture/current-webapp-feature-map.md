@@ -23,7 +23,7 @@
 flowchart TB
     U[사용자]
 
-    subgraph UI[웹 UI · index.html + tabs.js]
+    subgraph UI[웹 UI · web/index.html + tabs.js]
         ST[스테이터스·타겟]
         EQ[장비·직접 옵션·크리스타·잠금·추천 제외]
         SK[스킬 투자]
@@ -123,15 +123,15 @@ flowchart LR
 
 | 기능 | 사용자 목적 | 주요 웹 코드 | Tauri/Rust 코드 |
 |---|---|---|---|
-| 스테이터스 | 레벨과 STR/INT/VIT/AGI/DEX/CRT 투자 설정 | `index.html`, `status-points.js`, `official-level-cap.js` | 없음 |
-| 타겟 | 보스 레벨·방어·내성·크리티컬 저항 설정 | `index.html`, `build-draft-store.js` | 없음 |
-| 장비 | 무기 유형·공격력·제련·안정률·직접 옵션 설정 | `index.html`, `crysta-ui.js`, `build-ui-controller.js` | 없음 |
+| 스테이터스 | 레벨과 STR/INT/VIT/AGI/DEX/CRT 투자 설정 | `web/index.html`, `status-points.js`, `official-level-cap.js` | 없음 |
+| 타겟 | 보스 레벨·방어·내성·크리티컬 저항 설정 | `web/index.html`, `build-draft-store.js` | 없음 |
+| 장비 | 무기 유형·공격력·제련·안정률·직접 옵션 설정 | `web/index.html`, `crysta-ui.js`, `build-ui-controller.js` | 없음 |
 | 크리스타 | 현재 장착, 조건·충돌 표시, 슬롯 잠금, 추천 제외 | `crysta-data.js`, `crysta-ui.js`, `calculation-policies.js` | 최적화 후보로 직렬화된 뒤 native 사용 |
 | 스킬 | 트리별 투자, 가져오기·내보내기, 계산 효과 제공 | `skill-tree.js`, `skill-effect-engine.js`, `data/skills/*` | 계산 결과를 크리스타 최적화 context로 받아 사용 |
 | 버프 | 습득·호환 가능한 액티브 버프와 스택, 외부 옵션 설정 | `active-buff-ui.js`, `skill-effect-engine.js` | 계산 결과를 크리스타 최적화 context로 받아 사용 |
 | 콤보 | 습득 스킬의 순서·태그·MP·타격별 계산 기준과 근/원거리 override 설정 | `combo-ui.js`, `optimization-preferences.js`, `combo-sequence-engine.js`, `combo-rule-data.js` | 선택된 계산 기준과 최종 거리 판정이 크리스타 최적화 context에 포함됨 |
 | 계산 | 동일 입력에 대해 최종 스탯·대미지·유틸리티 산출 | `application-use-cases.js`, `calculator.js`, `build-evaluator.js` | `optimization/evaluator.rs`가 최적화용 요약식을 동등하게 계산 |
-| 크리스타 최적화 최적화 | 결과 진입 시 빠른 초기해, 명시적 실행 시 8슬롯 정밀 탐색 | `assets/js/optimization/`, `optimization-results.js`, `optimizer-ui-controller.js`, `optimization-preferences.js` | `optimization/service.rs`, `optimization/solver.rs`, `optimization/evaluator.rs`, `optimization/parallel_runtime.rs` |
+| 크리스타 최적화 최적화 | 결과 진입 시 빠른 초기해, 명시적 실행 시 8슬롯 정밀 탐색 | `web/src/optimization/`, `optimization-results.js`, `optimizer-ui-controller.js`, `optimization-preferences.js` | `optimization/service.rs`, `optimization/solver.rs`, `optimization/evaluator.rs`, `optimization/parallel_runtime.rs` |
 | 결과 적용 | 추천 빌드를 현재 입력과 비교하고 잠금 슬롯을 보존하여 적용 | `optimization/recommendation-apply.js`, `optimization-results.js` | 없음 |
 | 세팅 관리 | 마지막 세션 복원, 이름 있는 저장, 가져오기·내보내기 | `settings-repository.js`, `settings-ui.js`, `build-state-snapshot.js` | `settings.rs`, `tauri_commands.rs` |
 
@@ -161,7 +161,7 @@ flowchart LR
 - 웹 전체 회귀: `npm run verify:architecture` 통과.
 - 전체 회귀 묶음: `npm run test:regression` 67/67 통과. 단, native 저장 E2E는 `TORAM_E2E_CDP`가 없어 건너뜀.
 - S1 출처 감사: `node tools/verification/audit-stack-source-links.mjs --require-s1` 통과, 427/427.
-- Rust: `cargo test --manifest-path src-tauri/Cargo.toml` 통과, 총 72개 테스트.
+- Rust: `cargo test --manifest-path desktop/Cargo.toml` 통과, 총 72개 테스트.
 - 배포 입력 생성: `npm run desktop:prepare` 통과, 산출 버전 0.6.3.
 - 실제 UI 점검: 로컬 배포본에서 6개 탭, 스킬/버프/콤보 빈 상태, 세팅 대화상자, 결과 탭 진입과 최적화 취소를 확인했다.
 

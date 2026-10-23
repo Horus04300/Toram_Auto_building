@@ -4,9 +4,9 @@
 
 ## 실행 경계
 
-- `src-tauri/src/update_service.rs`: Latest 확인, 버전 고정, 중복 요청 배제, 다운로드·서명 검증, 설치. `src-tauri/src/tauri_commands.rs`는 IPC만 제공한다.
-- `frontend/application/ports.ts`의 UpdateService → `frontend/runtime/tauri-update-adapter.ts` → native IPC. JS 출력은 `tsconfig.updater.json`으로 생성한다.
-- `assets/js/update-controller.js`는 일시적 상태, `assets/js/update-ui-controller.js`는 알림·동의, `assets/js/update-install-coordinator.js`는 계산 종료·저장 조정이다.
+- `desktop/src/update_service.rs`: Latest 확인, 버전 고정, 중복 요청 배제, 다운로드·서명 검증, 설치. `desktop/src/tauri_commands.rs`는 IPC만 제공한다.
+- `web/src/application/ports.ts`의 UpdateService → `desktop/adapters/update.ts` → native IPC. JS 출력은 `desktop/tsconfig.update.json`으로 생성한다.
+- `desktop/adapters/update/update-controller.js`는 일시적 상태, `desktop/adapters/update/ui-controller.js`는 알림·동의, `desktop/adapters/update/update-install-coordinator.js`는 계산 종료·저장 조정이다.
 - 시작 확인은 복원/UI 초기화 이후 비동기 실행한다. 업데이트 없음·확인 실패는 자동 알림을 띄우지 않는다. 수동 확인에는 결과/오류를 표시한다.
 - 다운로드는 사용자 승인 후에만 한다. 설치 직전 새 계산/continuation이 있으면 다시 동의를 받는다. 승인된 계산은 기존 cancel/dispose 경계에서 종료를 확인한다. 대기 중인 UI 작업도 무효화한다.
 - 다운로드 동안 편집 가능하다. 최종 설치 구간만 UI를 잠그고 SettingsRepository로 최신 Build/Scenario를 다시 저장한다. 저장·종료 실패 시 설치하지 않는다.
@@ -27,7 +27,7 @@
 1. package/Cargo/Tauri 및 두 lockfile 버전을 다음 일반 공개 버전으로 맞춘다. `node tools/release-version.mjs`로 확인한다. prerelease 채널을 만들지 않는다.
 2. 검토한 main 커밋에 같은 `vX.Y.Z` 태그를 만든다. `.github/workflows/release.yml`은 태그 push 또는 기존 태그를 지정한 수동 실행을 지원한다. 워크플로 작성 자체는 태그/공개 승인이 아니다.
 3. workflow는 architecture·regression, Rust fmt/test/clippy, x64 NSIS 서명 빌드, 실제 설치 파일의 공개키 검증을 거친다. 사용자가 별도 검증 생략을 요청한 수동 실행은 `skip_checks=true`로 Web/Rust 검사만 생략하며 빌드·서명·자산 준비는 유지한다. desktop storage SKIP은 실제 업그레이드 통과가 아니다.
-4. `tools/prepare-update-release.mjs`가 파일명을 공백 없는 ASCII 이름으로 정규화하고 `.sig`, `latest.json`을 `release-assets/`에 준비한다. private key는 포함하지 않는다. 실제 서명은 `src-tauri/src/bin/verify_updater_artifact.rs`로 검사한다.
+4. `tools/prepare-update-release.mjs`가 파일명을 공백 없는 ASCII 이름으로 정규화하고 `.sig`, `latest.json`을 `build/release/`에 준비한다. private key는 포함하지 않는다. 실제 서명은 `desktop/src/bin/verify_updater_artifact.rs`로 검사한다.
 5. 비공개 draft에 자산을 업로드하고 원격 파일명·크기를 확인한 뒤 일반 Latest로 공개한다. 이미 공개한 릴리스는 덮어쓰지 않는다. 실패한 draft는 문제를 수정한 후 같은 태그로 재실행 가능하다.
 6. Endpoint는 `https://github.com/Horus04300/Toram_Auto_building/releases/latest/download/latest.json`, platform은 `windows-x86_64`다. 설치 파일과 updater artifact는 동일 NSIS 파일이며 서명은 파일 내용으로 manifest에 넣는다.
 

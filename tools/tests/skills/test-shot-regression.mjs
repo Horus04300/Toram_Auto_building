@@ -7,7 +7,7 @@ const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Shot: {} }) };
 vm.createContext(context);
-for (const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skills/shot.js', 'assets/js/data/skill-registration-metadata.js', 'assets/js/data/skill-catalog-registration.js', 'assets/js/skill-effect-engine.js', 'assets/js/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/shot.js', 'web/src/data/skill-registration-metadata.js', 'web/src/data/skill-catalog-registration.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
 const effects = context.window.ToramSkillEffects;
 const ids = Array.from({ length:25 }, (_, id) => `Shot:${id}`);

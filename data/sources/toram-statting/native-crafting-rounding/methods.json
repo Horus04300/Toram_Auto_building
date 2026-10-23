@@ -1,0 +1,3463 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 111
+  },
+  "methods": [
+    {
+      "class": "ShopUtil",
+      "name": "InputSpina",
+      "method_definition_index": 69776,
+      "token": "0x06011091",
+      "metadata_declaration_range": {
+        "offset": 6257152,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919472,
+      "pointer_slot_va": "0x7fff623d3a70",
+      "runtime_va": "0x7fff5fc6cd40",
+      "rva": "0xa1cd40",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803d7e74970200488b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToCommaString",
+      "method_definition_index": 69777,
+      "token": "0x06011092",
+      "metadata_declaration_range": {
+        "offset": 6257188,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "intValue",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919480,
+      "pointer_slot_va": "0x7fff623d3a78",
+      "runtime_va": "0x7fff5fc6d000",
+      "rva": "0xa1d000",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dc871970200488bd9751f488d0d2f647e"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToCommaStringWithUnit",
+      "method_definition_index": 69778,
+      "token": "0x06011093",
+      "metadata_declaration_range": {
+        "offset": 6257224,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "intValue",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        },
+        {
+          "name": "unit",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919488,
+      "pointer_slot_va": "0x7fff623d3a80",
+      "runtime_va": "0x7fff5fc6ce20",
+      "rva": "0xa1ce20",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803da573970200488bda488bf975"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToSpinaString",
+      "method_definition_index": 69779,
+      "token": "0x06011094",
+      "metadata_declaration_range": {
+        "offset": 6257260,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "intValue",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919496,
+      "pointer_slot_va": "0x7fff623d3a88",
+      "runtime_va": "0x7fff5fc6d1e0",
+      "rva": "0xa1d1e0",
+      "status": "mapped",
+      "code_preview_hex": "40564883ec20803dea6f970200488bf17543488d0d4f627e"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToCommaString",
+      "method_definition_index": 69780,
+      "token": "0x06011095",
+      "metadata_declaration_range": {
+        "offset": 6257296,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "charCount",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "intValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919504,
+      "pointer_slot_va": "0x7fff623d3a90",
+      "runtime_va": "0x7fff5fc6cf60",
+      "rva": "0xa1cf60",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418894c2408574883ec20803d63729702008bfa75"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToCommaStringWithUnit",
+      "method_definition_index": 69781,
+      "token": "0x06011096",
+      "metadata_declaration_range": {
+        "offset": 6257332,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "charCount",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "intValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "unit",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919512,
+      "pointer_slot_va": "0x7fff623d3a98",
+      "runtime_va": "0x7fff5fc6cea0",
+      "rva": "0xa1cea0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24184889742420894c2408574883ec20803d1f7397"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToSpinaString",
+      "method_definition_index": 69782,
+      "token": "0x06011097",
+      "metadata_declaration_range": {
+        "offset": 6257368,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "charCount",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "intValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919520,
+      "pointer_slot_va": "0x7fff623d3aa0",
+      "runtime_va": "0x7fff5fc6d0b0",
+      "rva": "0xa1d0b0",
+      "status": "mapped",
+      "code_preview_hex": "894c2408574883ec20803d1a719702008bfa7543488d0df5"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "FloatToCommaString",
+      "method_definition_index": 69783,
+      "token": "0x06011098",
+      "metadata_declaration_range": {
+        "offset": 6257404,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "floatValue",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919528,
+      "pointer_slot_va": "0x7fff623d3aa8",
+      "runtime_va": "0x7fff5fc6b0e0",
+      "rva": "0xa1b0e0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38803df0909702000f297424200f28f0751f488d0d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "FloatToSpinaString",
+      "method_definition_index": 69784,
+      "token": "0x06011099",
+      "metadata_declaration_range": {
+        "offset": 6257440,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "floatValue",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919536,
+      "pointer_slot_va": "0x7fff623d3ab0",
+      "runtime_va": "0x7fff5fc6b150",
+      "rva": "0xa1b150",
+      "status": "mapped",
+      "code_preview_hex": "f30f5ac033d2e905000000cccccccccc4883ec38803d7190"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "FloatToSpinaString",
+      "method_definition_index": 69785,
+      "token": "0x0601109a",
+      "metadata_declaration_range": {
+        "offset": 6257476,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "floatValue",
+          "type_index": 14999,
+          "exact_byval_name": "System.Double"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919544,
+      "pointer_slot_va": "0x7fff623d3ab8",
+      "runtime_va": "0x7fff5fc6b160",
+      "rva": "0xa1b160",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38803d71909702000f297424200f28f07543488d0d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "FloatToCommaString",
+      "method_definition_index": 69786,
+      "token": "0x0601109b",
+      "metadata_declaration_range": {
+        "offset": 6257512,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "charCount",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "floatValue",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919552,
+      "pointer_slot_va": "0x7fff623d3ac0",
+      "runtime_va": "0x7fff5fc6b040",
+      "rva": "0xa1b040",
+      "status": "mapped",
+      "code_preview_hex": "894c2408534883ec30803d8d919702000f297424200f28f1"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "FloatToSpinaString",
+      "method_definition_index": 69787,
+      "token": "0x0601109c",
+      "metadata_declaration_range": {
+        "offset": 6257548,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "charCount",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "floatValue",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919560,
+      "pointer_slot_va": "0x7fff623d3ac8",
+      "runtime_va": "0x7fff5fc6b2c0",
+      "rva": "0xa1b2c0",
+      "status": "mapped",
+      "code_preview_hex": "894c24084883ec38803d0f8f9702000f297424200f28f175"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IntToSignedString",
+      "method_definition_index": 69788,
+      "token": "0x0601109d",
+      "metadata_declaration_range": {
+        "offset": 6257584,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "intValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919568,
+      "pointer_slot_va": "0x7fff623d3ad0",
+      "runtime_va": "0x7fff5fc6d060",
+      "rva": "0xa1d060",
+      "status": "mapped",
+      "code_preview_hex": "894c24084883ec28803d70719702007513488d0d20d87a02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetLocalizedMaterialName",
+      "method_definition_index": 69789,
+      "token": "0x0601109e",
+      "metadata_declaration_range": {
+        "offset": 6257620,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "stm",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919576,
+      "pointer_slot_va": "0x7fff623d3ad8",
+      "runtime_va": "0x7fff5fc6bf10",
+      "rva": "0xa1bf10",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803dba82970200488b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetMaterialIconName",
+      "method_definition_index": 69790,
+      "token": "0x0601109f",
+      "metadata_declaration_range": {
+        "offset": 6257656,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "materialId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919584,
+      "pointer_slot_va": "0x7fff623d3ae0",
+      "runtime_va": "0x7fff5fc6c580",
+      "rva": "0xa1c580",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d507c9702008bf9755b488d0d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetItemNameWithRefine",
+      "method_definition_index": 69791,
+      "token": "0x060110a0",
+      "metadata_declaration_range": {
+        "offset": 6257692,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "pdManager",
+          "type_index": 22742,
+          "exact_byval_name": "PlayerDataManager"
+        },
+        {
+          "name": "imanager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919592,
+      "pointer_slot_va": "0x7fff623d3ae8",
+      "runtime_va": "0x7fff5fc6bd20",
+      "rva": "0xa1bd20",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20498bf8488bc28bd948"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetItemNameWithRefine",
+      "method_definition_index": 69792,
+      "token": "0x060110a1",
+      "metadata_declaration_range": {
+        "offset": 6257728,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "imanager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919600,
+      "pointer_slot_va": "0x7fff623d3af0",
+      "runtime_va": "0x7fff5fc6bc00",
+      "rva": "0xa1bc00",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803dd185970200488bfa488bd975"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetItemNameWithColorRefine",
+      "method_definition_index": 69793,
+      "token": "0x060110a2",
+      "metadata_declaration_range": {
+        "offset": 6257764,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "imanager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919608,
+      "pointer_slot_va": "0x7fff623d3af8",
+      "runtime_va": "0x7fff5fc6bae0",
+      "rva": "0xa1bae0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec20803df286970200488bfa488bd975"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreatePopWindow",
+      "method_definition_index": 69794,
+      "token": "0x060110a3",
+      "metadata_declaration_range": {
+        "offset": 6257800,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "popupWindowObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "titleText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "messageText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "buttonText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "openCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "buttonCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919616,
+      "pointer_slot_va": "0x7fff623d3b00",
+      "runtime_va": "0x7fff5fc6a7c0",
+      "rva": "0xa1a7c0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec58488b84249000000048c744244000000000488944"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreatePopWindow",
+      "method_definition_index": 69795,
+      "token": "0x060110a4",
+      "metadata_declaration_range": {
+        "offset": 6257836,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "popupWindowObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "titleText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "messageText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "buttonText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "type",
+          "type_index": 39996,
+          "exact_byval_name": "popupWindowType"
+        },
+        {
+          "name": "openCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "buttonCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919624,
+      "pointer_slot_va": "0x7fff623d3b08",
+      "runtime_va": "0x7fff5fc6a810",
+      "rva": "0xa1a810",
+      "status": "mapped",
+      "code_preview_hex": "48895c241855415641574883ec40803dbf99970200498be9"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreatePopWindowYesNo",
+      "method_definition_index": 69796,
+      "token": "0x060110a5",
+      "metadata_declaration_range": {
+        "offset": 6257872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "popupWindowObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "titleText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "messageText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "openCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "buttonCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "cancelCallBack",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919632,
+      "pointer_slot_va": "0x7fff623d3b10",
+      "runtime_va": "0x7fff5fc6a550",
+      "rva": "0xa1a550",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418488974242041564883ec40803d79"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreateOperationFailurePopWindow",
+      "method_definition_index": 69797,
+      "token": "0x060110a6",
+      "metadata_declaration_range": {
+        "offset": 6257908,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "errorCode",
+          "type_index": 16390,
+          "exact_byval_name": "Toram.Common.GameReturnCode"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "openCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "buttonCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "control",
+          "type_index": 26617,
+          "exact_byval_name": "UIBasePanelControl"
+        },
+        {
+          "name": "message",
+          "type_index": 25273,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919640,
+      "pointer_slot_va": "0x7fff623d3b18",
+      "runtime_va": "0x7fff5fc6a0d0",
+      "rva": "0xa1a0d0",
+      "status": "mapped",
+      "code_preview_hex": "405355415441554883ec58803d04a19702004d8be14d8be8"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreatePopWindowTitleIcon",
+      "method_definition_index": 69798,
+      "token": "0x060110a7",
+      "metadata_declaration_range": {
+        "offset": 6257944,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "popupWindowObject",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "titleText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "messageText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "buttonText",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "spriteName",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "openCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        },
+        {
+          "name": "buttonCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919648,
+      "pointer_slot_va": "0x7fff623d3b20",
+      "runtime_va": "0x7fff5fc6a4e0",
+      "rva": "0xa1a4e0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec50488b84249800000048c74424400000000048"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "LoadPopupWindow",
+      "method_definition_index": 69799,
+      "token": "0x060110a8",
+      "metadata_declaration_range": {
+        "offset": 6257980,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51919656,
+      "pointer_slot_va": "0x7fff623d3b28",
+      "runtime_va": "0x7fff5fc6d670",
+      "rva": "0xa1d670",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d6c6b970200751f488d0dac697a02e8c7fd80"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "LoadPopupRewardWindow",
+      "method_definition_index": 69800,
+      "token": "0x060110a9",
+      "metadata_declaration_range": {
+        "offset": 6258016,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51919664,
+      "pointer_slot_va": "0x7fff623d3b30",
+      "runtime_va": "0x7fff5fc6d610",
+      "rva": "0xa1d610",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803dcd6b970200751f488d0d0c6a7a02e827fe80"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "LoadOperationFailureWindow",
+      "method_definition_index": 69801,
+      "token": "0x060110aa",
+      "metadata_declaration_range": {
+        "offset": 6258052,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51919672,
+      "pointer_slot_va": "0x7fff623d3b38",
+      "runtime_va": "0x7fff5fc6d5b0",
+      "rva": "0xa1d5b0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d2e6c970200751f488d0d6c6a7a02e887fe80"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetItemPropertyText",
+      "method_definition_index": 69802,
+      "token": "0x060110ab",
+      "metadata_declaration_range": {
+        "offset": 6258088,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919680,
+      "pointer_slot_va": "0x7fff623d3b40",
+      "runtime_va": "0x7fff5fc6be70",
+      "rva": "0xa1be70",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803d5f83"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetManufactureItemText",
+      "method_definition_index": 69803,
+      "token": "0x060110ac",
+      "metadata_declaration_range": {
+        "offset": 6258124,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919688,
+      "pointer_slot_va": "0x7fff623d3b48",
+      "runtime_va": "0x7fff5fc6c4e0",
+      "rva": "0xa1c4e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803df07c"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetWeaponItemPropertyText",
+      "method_definition_index": 69804,
+      "token": "0x060110ad",
+      "metadata_declaration_range": {
+        "offset": 6258160,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919696,
+      "pointer_slot_va": "0x7fff623d3b50",
+      "runtime_va": "0x7fff5fc6c850",
+      "rva": "0xa1c850",
+      "status": "mapped",
+      "code_preview_hex": "4c894c24205355564883ec70803d8979970200498bd8488b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetManufactureItemPropertyText",
+      "method_definition_index": 69805,
+      "token": "0x060110ae",
+      "metadata_declaration_range": {
+        "offset": 6258196,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemData",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        },
+        {
+          "name": "systemTextManager",
+          "type_index": 25650,
+          "exact_byval_name": "SystemTextManager"
+        },
+        {
+          "name": "itemTextManager",
+          "type_index": 19052,
+          "exact_byval_name": "ItemTextManager"
+        },
+        {
+          "name": "itemPropertyTextManager",
+          "type_index": 19030,
+          "exact_byval_name": "ItemPropertyTextManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919704,
+      "pointer_slot_va": "0x7fff623d3b58",
+      "runtime_va": "0x7fff5fc6c0b0",
+      "rva": "0xa1c0b0",
+      "status": "mapped",
+      "code_preview_hex": "405355564883ec50803d2e81970200498bd8488bf2488be9"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsEquipItem",
+      "method_definition_index": 69806,
+      "token": "0x060110af",
+      "metadata_declaration_range": {
+        "offset": 6258232,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919712,
+      "pointer_slot_va": "0x7fff623d3b60",
+      "runtime_va": "0x7fff5fc6d3c0",
+      "rva": "0xa1d3c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d216e9702008bd97513488d0d20d27e02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsModelEquipItem",
+      "method_definition_index": 69807,
+      "token": "0x060110b0",
+      "metadata_declaration_range": {
+        "offset": 6258268,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919720,
+      "pointer_slot_va": "0x7fff623d3b68",
+      "runtime_va": "0x7fff5fc6d430",
+      "rva": "0xa1d430",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803db26d9702008bd97513488d0db0d17e02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsWeaponItem",
+      "method_definition_index": 69808,
+      "token": "0x060110b1",
+      "metadata_declaration_range": {
+        "offset": 6258304,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919728,
+      "pointer_slot_va": "0x7fff623d3b70",
+      "runtime_va": "0x7fff5fc6d540",
+      "rva": "0xa1d540",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803da36c9702008bd97513488d0da0d07e02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsBodyItem",
+      "method_definition_index": 69809,
+      "token": "0x060110b2",
+      "metadata_declaration_range": {
+        "offset": 6258340,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919736,
+      "pointer_slot_va": "0x7fff623d3b78",
+      "runtime_va": "0x7fff5fc6d360",
+      "rva": "0xa1d360",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d846e9702008bd97513488d0d80d27e02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsArmsItem",
+      "method_definition_index": 69810,
+      "token": "0x060110b3",
+      "metadata_declaration_range": {
+        "offset": 6258376,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919744,
+      "pointer_slot_va": "0x7fff623d3b80",
+      "runtime_va": "0x7fff5fc6d350",
+      "rva": "0xa1d350",
+      "status": "mapped",
+      "code_preview_hex": "83f9077d0332c0c383f9110f9ec0c3cc40534883ec20803d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsArmorItem",
+      "method_definition_index": 69811,
+      "token": "0x060110b4",
+      "metadata_declaration_range": {
+        "offset": 6258412,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919752,
+      "pointer_slot_va": "0x7fff623d3b88",
+      "runtime_va": "0x7fff5fc6d340",
+      "rva": "0xa1d340",
+      "status": "mapped",
+      "code_preview_hex": "83f9140f94c0c3cccccccccccccccccc83f9077d0332c0c3"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsOptionItem",
+      "method_definition_index": 69812,
+      "token": "0x060110b5",
+      "metadata_declaration_range": {
+        "offset": 6258448,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919760,
+      "pointer_slot_va": "0x7fff623d3b90",
+      "runtime_va": "0x7fff5fc6d4c0",
+      "rva": "0xa1d4c0",
+      "status": "mapped",
+      "code_preview_hex": "83f9150f94c0c3cccccccccccccccccc40534883ec20803d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsNonModelItem",
+      "method_definition_index": 69813,
+      "token": "0x060110b6",
+      "metadata_declaration_range": {
+        "offset": 6258484,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919768,
+      "pointer_slot_va": "0x7fff623d3b98",
+      "runtime_va": "0x7fff5fc6d4a0",
+      "rva": "0xa1d4a0",
+      "status": "mapped",
+      "code_preview_hex": "8d41eea9faffffff750883f9177406b001c383f9170f94c0"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "IsPetCageItem",
+      "method_definition_index": 69814,
+      "token": "0x060110b7",
+      "metadata_declaration_range": {
+        "offset": 6258520,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51919776,
+      "pointer_slot_va": "0x7fff623d3ba0",
+      "runtime_va": "0x7fff5fc6d4d0",
+      "rva": "0xa1d4d0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d156d9702008bd97513488d0d10d17e02"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreateItemSelector",
+      "method_definition_index": 69815,
+      "token": "0x060110b8",
+      "metadata_declaration_range": {
+        "offset": 6258556,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        }
+      ],
+      "return_type": {
+        "type_index": 19050,
+        "exact_byval_name": "ItemSelector"
+      },
+      "pointer_slot_offset": 51919784,
+      "pointer_slot_va": "0x7fff623d3ba8",
+      "runtime_va": "0x7fff5fc69f20",
+      "rva": "0xa19f20",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec30803dc2a2970200488bf97537488d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetDBItemCaps",
+      "method_definition_index": 69816,
+      "token": "0x060110b9",
+      "metadata_declaration_range": {
+        "offset": 6258592,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "db",
+          "type_index": 19005,
+          "exact_byval_name": "ItemDBData"
+        }
+      ],
+      "return_type": {
+        "type_index": 6649,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 51919792,
+      "pointer_slot_va": "0x7fff623d3bb0",
+      "runtime_va": "0x7fff5fc6b400",
+      "rva": "0xa1b400",
+      "status": "mapped",
+      "code_preview_hex": "48896c2420564883ec20803de38d970200488be97543488d"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetPlayerAnimationNameByWeaponType",
+      "method_definition_index": 69817,
+      "token": "0x060110ba",
+      "metadata_declaration_range": {
+        "offset": 6258628,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "subWeaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "type",
+          "type_index": 22728,
+          "exact_byval_name": "PlayerAnimationType"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51919800,
+      "pointer_slot_va": "0x7fff623d3bb8",
+      "runtime_va": "0x7fff5fc6c790",
+      "rva": "0xa1c790",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d4f7a970200418b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "MaterialParamaterPointMax",
+      "method_definition_index": 69818,
+      "token": "0x060110bb",
+      "metadata_declaration_range": {
+        "offset": 6258664,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51919808,
+      "pointer_slot_va": "0x7fff623d3bc0",
+      "runtime_va": "0x7fff5fc6d6d0",
+      "rva": "0xa1d6d0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d1b6b9702007513488d0d9ce07e02e867fd80"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "MaterialPointMax",
+      "method_definition_index": 69819,
+      "token": "0x060110bc",
+      "metadata_declaration_range": {
+        "offset": 6258700,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51919816,
+      "pointer_slot_va": "0x7fff623d3bc8",
+      "runtime_va": "0x7fff5fc6d720",
+      "rva": "0xa1d720",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803dcc6a970200752b488d0d7c0d7a02e817fd80"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetOverSpina",
+      "method_definition_index": 69820,
+      "token": "0x060110bd",
+      "metadata_declaration_range": {
+        "offset": 6258736,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "checkSpina",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 18823,
+        "exact_byval_name": "System.Int64"
+      },
+      "pointer_slot_offset": 51919824,
+      "pointer_slot_va": "0x7fff623d3bd0",
+      "runtime_va": "0x7fff5fc6c780",
+      "rva": "0xa1c780",
+      "status": "mapped",
+      "code_preview_hex": "488d81008bd482c3cccccccccccccccc48895c2408488974"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetOverMaterialPoint",
+      "method_definition_index": 69821,
+      "token": "0x060110be",
+      "metadata_declaration_range": {
+        "offset": 6258772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "checkPoint",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 18823,
+        "exact_byval_name": "System.Int64"
+      },
+      "pointer_slot_offset": 51919832,
+      "pointer_slot_va": "0x7fff623d3bd8",
+      "runtime_va": "0x7fff5fc6c6e0",
+      "rva": "0xa1c6e0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd933c9e8301000004863d0482bda488b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "GetOverProcessingMaterialPoint",
+      "method_definition_index": 69822,
+      "token": "0x060110bf",
+      "metadata_declaration_range": {
+        "offset": 6258808,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "checkPoint",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        },
+        {
+          "name": "currentPoint",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 18823,
+        "exact_byval_name": "System.Int64"
+      },
+      "pointer_slot_offset": 51919840,
+      "pointer_slot_va": "0x7fff623d3be0",
+      "runtime_va": "0x7fff5fc6c700",
+      "rva": "0xa1c700",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803de27a970200488b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreateWindowOverSpina",
+      "method_definition_index": 69823,
+      "token": "0x060110c0",
+      "metadata_declaration_range": {
+        "offset": 6258844,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "checkSpina",
+          "type_index": 18823,
+          "exact_byval_name": "System.Int64"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "callback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919848,
+      "pointer_slot_va": "0x7fff623d3be8",
+      "runtime_va": "0x7fff5fc6ad90",
+      "rva": "0xa1ad90",
+      "status": "mapped",
+      "code_preview_hex": "4055415441574883ec50803d58949702004d8bf84c8be248"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CreateWindowOverMaterialPoint",
+      "method_definition_index": 69824,
+      "token": "0x060110c1",
+      "metadata_declaration_range": {
+        "offset": 6258880,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "checkPoint",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "cururentPoint",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "parent",
+          "type_index": 26259,
+          "exact_byval_name": "UnityEngine.Transform"
+        },
+        {
+          "name": "callback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 28081,
+        "exact_byval_name": "UIPopWindow"
+      },
+      "pointer_slot_offset": 51919856,
+      "pointer_slot_va": "0x7fff623d3bf0",
+      "runtime_va": "0x7fff5fc6aa30",
+      "rva": "0xa1aa30",
+      "status": "mapped",
+      "code_preview_hex": "40554154415541564883ec68803db7979702004d8be14d8b"
+    },
+    {
+      "class": "ShopUtil",
+      "name": "CheckOrbItem",
+      "method_definition_index": 69825,
+      "token": "0x060110c2",
+      "metadata_declaration_range": {
+        "offset": 6258916,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "errorCloseCallback",
+          "type_index": 11533,
+          "exact_byval_name": "System.Action"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51919864,
+      "pointer_slot_va": "0x7fff623d3bf8",
+      "runtime_va": "0x7fff5fc69ea0",
+      "rva": "0xa19ea0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d45a3970200488b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "get_IsMaterialSearchPopWindow",
+      "method_definition_index": 70145,
+      "token": "0x06011202",
+      "metadata_declaration_range": {
+        "offset": 6270436,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x884",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51922424,
+      "pointer_slot_va": "0x7fff623d45f8",
+      "runtime_va": "0x7fff5fa9b6b0",
+      "rva": "0x84b6b0",
+      "status": "mapped",
+      "code_preview_hex": "0fb68188010000c3cccccccccccccccc488bc44889580848"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "set_IsMaterialSearchPopWindow",
+      "method_definition_index": 70146,
+      "token": "0x06011203",
+      "metadata_declaration_range": {
+        "offset": 6270472,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922432,
+      "pointer_slot_va": "0x7fff623d4600",
+      "runtime_va": "0x7fff5fc96130",
+      "rva": "0xa46130",
+      "status": "mapped",
+      "code_preview_hex": "889188010000c3cccccccccccccccccc48895c2408574883"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "Awake",
+      "method_definition_index": 70147,
+      "token": "0x06011204",
+      "metadata_declaration_range": {
+        "offset": 6270508,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922440,
+      "pointer_slot_va": "0x7fff623d4608",
+      "runtime_va": "0x7fff5fc8bba0",
+      "rva": "0xa3bba0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803dd386950200488bf9754f488d0d3f2f7d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "getAccountLevel",
+      "method_definition_index": 70148,
+      "token": "0x06011205",
+      "metadata_declaration_range": {
+        "offset": 6270544,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922448,
+      "pointer_slot_va": "0x7fff623d4610",
+      "runtime_va": "0x7fff5fc95dd0",
+      "rva": "0xa45dd0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803da4e49402007513488d0d82587902e865"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "Start",
+      "method_definition_index": 70149,
+      "token": "0x06011206",
+      "metadata_declaration_range": {
+        "offset": 6270580,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c4",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922456,
+      "pointer_slot_va": "0x7fff623d4618",
+      "runtime_va": "0x7fff5fc956f0",
+      "rva": "0xa456f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d81eb940200488bf97513488d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "Update",
+      "method_definition_index": 70150,
+      "token": "0x06011207",
+      "metadata_declaration_range": {
+        "offset": 6270616,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922464,
+      "pointer_slot_va": "0x7fff623d4620",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "code_preview_hex": "c20000cccccccccccccccccccccccccc33d2e979d43c02cc"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnDestroy",
+      "method_definition_index": 70151,
+      "token": "0x06011208",
+      "metadata_declaration_range": {
+        "offset": 6270652,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc4",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922472,
+      "pointer_slot_va": "0x7fff623d4628",
+      "runtime_va": "0x7fff5fc91ed0",
+      "rva": "0xa41ed0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803da223950200488bd97513488d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "loadRecipe",
+      "method_definition_index": 70152,
+      "token": "0x06011209",
+      "metadata_declaration_range": {
+        "offset": 6270688,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "recipeManager",
+          "type_index": 23262,
+          "exact_byval_name": "RecipeDBDataManager"
+        },
+        {
+          "name": "category",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "proficiency",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isShop",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 10642,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 51922480,
+      "pointer_slot_va": "0x7fff623d4630",
+      "runtime_va": "0x7fff5fc95f00",
+      "rva": "0xa45f00",
+      "status": "mapped",
+      "code_preview_hex": "48896c24104889742418574883ec30803d6ee3940200418b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "InitTypeSelect",
+      "method_definition_index": 70153,
+      "token": "0x0601120a",
+      "metadata_declaration_range": {
+        "offset": 6270724,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922488,
+      "pointer_slot_va": "0x7fff623d4638",
+      "runtime_va": "0x7fff5fc8f1a0",
+      "rva": "0xa3f1a0",
+      "status": "mapped",
+      "code_preview_hex": "405557488d6c24d84881ec28010000803dcf50950200488b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "InitLevelSelectFromElement",
+      "method_definition_index": 70154,
+      "token": "0x0601120b",
+      "metadata_declaration_range": {
+        "offset": 6270760,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922496,
+      "pointer_slot_va": "0x7fff623d4640",
+      "runtime_va": "0x7fff5fc8e050",
+      "rva": "0xa3e050",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec30488bd98bfa488b49704885c9745a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "InitLevelSelect",
+      "method_definition_index": 70155,
+      "token": "0x0601120c",
+      "metadata_declaration_range": {
+        "offset": 6270796,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922504,
+      "pointer_slot_va": "0x7fff623d4648",
+      "runtime_va": "0x7fff5fc8e0d0",
+      "rva": "0xa3e0d0",
+      "status": "mapped",
+      "code_preview_hex": "405553574155488d6c24c14881ecf8000000803d9d619502"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "isSkipType",
+      "method_definition_index": 70156,
+      "token": "0x0601120d",
+      "metadata_declaration_range": {
+        "offset": 6270832,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "weaponTypeIndex",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51922512,
+      "pointer_slot_va": "0x7fff623d4650",
+      "runtime_va": "0x7fff5fc95e20",
+      "rva": "0xa45e20",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d5ae4940200488bd97537488d0ddfd47d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "InitWeaponSelectFromElement",
+      "method_definition_index": 70157,
+      "token": "0x0601120e",
+      "metadata_declaration_range": {
+        "offset": 6270868,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isSkip",
+          "type_index": 12882,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922520,
+      "pointer_slot_va": "0x7fff623d4658",
+      "runtime_va": "0x7fff5fc90590",
+      "rva": "0xa40590",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c2410488974241848897c242041564883"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "InitWeaponSelect",
+      "method_definition_index": 70158,
+      "token": "0x0601120f",
+      "metadata_declaration_range": {
+        "offset": 6270904,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isSkip",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922528,
+      "pointer_slot_va": "0x7fff623d4660",
+      "runtime_va": "0x7fff5fc90680",
+      "rva": "0xa40680",
+      "status": "mapped",
+      "code_preview_hex": "40555356574156488d6c24c04881ec40010000803dee3b95"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "CreateManufactureNextLevelElement",
+      "method_definition_index": 70159,
+      "token": "0x06011210",
+      "metadata_declaration_range": {
+        "offset": 6270940,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "nextLevel",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "category",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922536,
+      "pointer_slot_va": "0x7fff623d4668",
+      "runtime_va": "0x7fff5fc8d340",
+      "rva": "0xa3d340",
+      "status": "mapped",
+      "code_preview_hex": "48896c242057415641574883ec60803d346f950200458bf1"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "IsCreateNextLevelLabel",
+      "method_definition_index": 70160,
+      "token": "0x06011211",
+      "metadata_declaration_range": {
+        "offset": 6270976,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "category",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "nextLevel",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51922544,
+      "pointer_slot_va": "0x7fff623d4670",
+      "runtime_va": "0x7fff5fc918c0",
+      "rva": "0xa418c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803db929950200418bd88bfa751f"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "GetRecipeListByLevel",
+      "method_definition_index": 70161,
+      "token": "0x06011212",
+      "metadata_declaration_range": {
+        "offset": 6271012,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "recipeData",
+          "type_index": 10642,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 3314,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 51922552,
+      "pointer_slot_va": "0x7fff623d4678",
+      "runtime_va": "0x7fff5fc8de20",
+      "rva": "0xa3de20",
+      "status": "mapped",
+      "code_preview_hex": "40555641574883ec20803d5b649502004c8bfa7567488d0d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "GetRecipeListByItemType",
+      "method_definition_index": 70162,
+      "token": "0x06011213",
+      "metadata_declaration_range": {
+        "offset": 6271048,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "recipeData",
+          "type_index": 10642,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 3314,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 51922560,
+      "pointer_slot_va": "0x7fff623d4680",
+      "runtime_va": "0x7fff5fc8dbc0",
+      "rva": "0xa3dbc0",
+      "status": "mapped",
+      "code_preview_hex": "40555641554883ec20803dbc669502004c8bea7573488d0d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "GetCategoryName",
+      "method_definition_index": 70163,
+      "token": "0x06011214",
+      "metadata_declaration_range": {
+        "offset": 6271084,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25252,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51922568,
+      "pointer_slot_va": "0x7fff623d4688",
+      "runtime_va": "0x7fff5fc8d940",
+      "rva": "0xa3d940",
+      "status": "mapped",
+      "code_preview_hex": "89542410534883ec20803d3d69950200488bd9751f488d0d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "GetRecipeDataElementsCount",
+      "method_definition_index": 70164,
+      "token": "0x06011215",
+      "metadata_declaration_range": {
+        "offset": 6271120,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "recipeData",
+          "type_index": 10642,
+          "exact_byval_name": null
+        },
+        {
+          "name": "accountLevel",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51922576,
+      "pointer_slot_va": "0x7fff623d4690",
+      "runtime_va": "0x7fff5fc8dae0",
+      "rva": "0xa3dae0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d9367"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "CreateItemTypeWindow",
+      "method_definition_index": 70165,
+      "token": "0x06011216",
+      "metadata_declaration_range": {
+        "offset": 6271156,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "recipe",
+          "type_index": 3314,
+          "exact_byval_name": null
+        },
+        {
+          "name": "elem",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922584,
+      "pointer_slot_va": "0x7fff623d4698",
+      "runtime_va": "0x7fff5fc8c300",
+      "rva": "0xa3c300",
+      "status": "mapped",
+      "code_preview_hex": "488954241055574157488d6c24b94881ece0000000803d73"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SelectElement",
+      "method_definition_index": 70166,
+      "token": "0x06011217",
+      "metadata_declaration_range": {
+        "offset": 6271192,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922592,
+      "pointer_slot_va": "0x7fff623d46a0",
+      "runtime_va": "0x7fff5fc93920",
+      "rva": "0xa43920",
+      "status": "mapped",
+      "code_preview_hex": "40534154415641574883ec48803d5d09950200448bf2488b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SelectElementFirst",
+      "method_definition_index": 70167,
+      "token": "0x06011218",
+      "metadata_declaration_range": {
+        "offset": 6271228,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922600,
+      "pointer_slot_va": "0x7fff623d46a8",
+      "runtime_va": "0x7fff5fc93610",
+      "rva": "0xa43610",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c24184889742420574883ec20803d660c"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "selectElementWait",
+      "method_definition_index": 70168,
+      "token": "0x06011219",
+      "metadata_declaration_range": {
+        "offset": 6271264,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "waitTime",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922608,
+      "pointer_slot_va": "0x7fff623d46b0",
+      "runtime_va": "0x7fff5fc960a0",
+      "rva": "0xa460a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec30803ddce19402008bf2"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetRequiredMaterial",
+      "method_definition_index": 70169,
+      "token": "0x0601121a",
+      "metadata_declaration_range": {
+        "offset": 6271300,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922616,
+      "pointer_slot_va": "0x7fff623d46b8",
+      "runtime_va": "0x7fff5fc93e80",
+      "rva": "0xa43e80",
+      "status": "mapped",
+      "code_preview_hex": "89542410555357488d6c24b94881eca0000000803df90395"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "PopUpWindow",
+      "method_definition_index": 70170,
+      "token": "0x0601121b",
+      "metadata_declaration_range": {
+        "offset": 6271336,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922624,
+      "pointer_slot_va": "0x7fff623d46c0",
+      "runtime_va": "0x7fff5fc92f10",
+      "rva": "0xa42f10",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d7313950200488bf97513488d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnInfomationButton",
+      "method_definition_index": 70171,
+      "token": "0x0601121c",
+      "metadata_declaration_range": {
+        "offset": 6271372,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922632,
+      "pointer_slot_va": "0x7fff623d46c8",
+      "runtime_va": "0x7fff5fc91f70",
+      "rva": "0xa41f70",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d1823950200488bd97513488d0dcfab7c"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnRecipeButton",
+      "method_definition_index": 70172,
+      "token": "0x0601121d",
+      "metadata_declaration_range": {
+        "offset": 6271408,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922640,
+      "pointer_slot_va": "0x7fff623d46d0",
+      "runtime_va": "0x7fff5fc92e00",
+      "rva": "0xa42e00",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d8914950200488bd97513488d0d3f9d7c"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnManufactureButton",
+      "method_definition_index": 70173,
+      "token": "0x0601121e",
+      "metadata_declaration_range": {
+        "offset": 6271444,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922648,
+      "pointer_slot_va": "0x7fff623d46d8",
+      "runtime_va": "0x7fff5fc92080",
+      "rva": "0xa42080",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec40803d0a22950200488bd90f858b000000488d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnManufactureStartButton",
+      "method_definition_index": 70174,
+      "token": "0x0601121f",
+      "metadata_declaration_range": {
+        "offset": 6271480,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922656,
+      "pointer_slot_va": "0x7fff623d46e0",
+      "runtime_va": "0x7fff5fc92860",
+      "rva": "0xa42860",
+      "status": "mapped",
+      "code_preview_hex": "41564883ec20803d2b1a9502004c8bf17543488d0d173f7a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnManufactureCompleteButton",
+      "method_definition_index": 70175,
+      "token": "0x06011220",
+      "metadata_declaration_range": {
+        "offset": 6271516,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922664,
+      "pointer_slot_va": "0x7fff623d46e8",
+      "runtime_va": "0x7fff5fc92650",
+      "rva": "0xa42650",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d3c1c950200488bd9752b488d0d27417a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnMaterialSearchButon",
+      "method_definition_index": 70176,
+      "token": "0x06011221",
+      "metadata_declaration_range": {
+        "offset": 6271552,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c4",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922672,
+      "pointer_slot_va": "0x7fff623d46f0",
+      "runtime_va": "0x7fff5fc92a80",
+      "rva": "0xa42a80",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803d0d18950200488bf97567488d0df73c7a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "OnMyQuestRegister",
+      "method_definition_index": 70177,
+      "token": "0x06011222",
+      "metadata_declaration_range": {
+        "offset": 6271588,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922680,
+      "pointer_slot_va": "0x7fff623d46f8",
+      "runtime_va": "0x7fff5f4d3920",
+      "rva": "0x283920",
+      "status": "mapped",
+      "code_preview_hex": "c20000cccccccccccccccccccccccccc33d2e979d43c02cc"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ConnectWaitManufacture",
+      "method_definition_index": 70178,
+      "token": "0x06011223",
+      "metadata_declaration_range": {
+        "offset": 6271624,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c4",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922688,
+      "pointer_slot_va": "0x7fff623d4700",
+      "runtime_va": "0x7fff5fc8c290",
+      "rva": "0xa3c290",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dfa7f950200488bf97513488d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetSpriteAlpha",
+      "method_definition_index": 70179,
+      "token": "0x06011224",
+      "metadata_declaration_range": {
+        "offset": 6271660,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "spr",
+          "type_index": 28373,
+          "exact_byval_name": "UISprite"
+        },
+        {
+          "name": "toAlpha",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "time",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922696,
+      "pointer_slot_va": "0x7fff623d4708",
+      "runtime_va": "0x7fff5fc95650",
+      "rva": "0xa45650",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec40803d3bec940200488bfa0f297424"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "EquipmentProductionConnect",
+      "method_definition_index": 70180,
+      "token": "0x06011225",
+      "metadata_declaration_range": {
+        "offset": 6271696,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "takeController",
+          "type_index": 25676,
+          "exact_byval_name": "TakeController"
+        },
+        {
+          "name": "takeUid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51922704,
+      "pointer_slot_va": "0x7fff623d4710",
+      "runtime_va": "0x7fff5fc8d8a0",
+      "rva": "0xa3d8a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803de269"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ToTypeSelect",
+      "method_definition_index": 70181,
+      "token": "0x06011226",
+      "metadata_declaration_range": {
+        "offset": 6271732,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922712,
+      "pointer_slot_va": "0x7fff623d4718",
+      "runtime_va": "0x7fff5fc95780",
+      "rva": "0xa45780",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d11eb940200488bd9752b488d0df70f7a"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ToLevelSelect",
+      "method_definition_index": 70182,
+      "token": "0x06011227",
+      "metadata_declaration_range": {
+        "offset": 6271768,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922720,
+      "pointer_slot_va": "0x7fff623d4720",
+      "runtime_va": "0x7fff5fc95760",
+      "rva": "0xa45760",
+      "status": "mapped",
+      "code_preview_hex": "488b018b91600100004c8b80d001000048ffa0c8010000cc"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetEnableRecipeButton",
+      "method_definition_index": 70183,
+      "token": "0x06011228",
+      "metadata_declaration_range": {
+        "offset": 6271804,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "enable",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922728,
+      "pointer_slot_va": "0x7fff623d4728",
+      "runtime_va": "0x7fff5fc93e20",
+      "rva": "0xa43e20",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20488bd90fb6fa488b89a800000048"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetEnableInfomationButton",
+      "method_definition_index": 70184,
+      "token": "0x06011229",
+      "metadata_declaration_range": {
+        "offset": 6271840,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "enable",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922736,
+      "pointer_slot_va": "0x7fff623d4730",
+      "runtime_va": "0x7fff5fc93dc0",
+      "rva": "0xa43dc0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20488bd90fb6fa488b89b000000048"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SetEnableButton",
+      "method_definition_index": 70185,
+      "token": "0x0601122a",
+      "metadata_declaration_range": {
+        "offset": 6271876,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "button",
+          "type_index": 27342,
+          "exact_byval_name": "UIImageButton"
+        },
+        {
+          "name": "enable",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922744,
+      "pointer_slot_va": "0x7fff623d4738",
+      "runtime_va": "0x7fff5fc93d90",
+      "rva": "0xa43d90",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28450fb6c8488bc24885d274134533c0410fb6d148"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SaveCurrentCameraPosition",
+      "method_definition_index": 70186,
+      "token": "0x0601122b",
+      "metadata_declaration_range": {
+        "offset": 6271912,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "history",
+          "type_index": 9441,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922752,
+      "pointer_slot_va": "0x7fff623d4740",
+      "runtime_va": "0x7fff5fc93150",
+      "rva": "0xa43150",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30488b4970488bda4885c97439488b49204885"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SaveCurrentCameraPosition",
+      "method_definition_index": 70187,
+      "token": "0x0601122c",
+      "metadata_declaration_range": {
+        "offset": 6271948,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "history",
+          "type_index": 9008,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922760,
+      "pointer_slot_va": "0x7fff623d4748",
+      "runtime_va": "0x7fff5fc931b0",
+      "rva": "0xa431b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec40803dd910950200498b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "SaveCurrentCameraPosition",
+      "method_definition_index": 70188,
+      "token": "0x0601122d",
+      "metadata_declaration_range": {
+        "offset": 6271984,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lvType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "weapon",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "history",
+          "type_index": 9004,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922768,
+      "pointer_slot_va": "0x7fff623d4750",
+      "runtime_va": "0x7fff5fc92f80",
+      "rva": "0xa42f80",
+      "status": "mapped",
+      "code_preview_hex": "4053574154415541574883ec40803d0c13950200458bf945"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "LoadCameraPosition",
+      "method_definition_index": 70189,
+      "token": "0x0601122e",
+      "metadata_declaration_range": {
+        "offset": 6272020,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "history",
+          "type_index": 9441,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922776,
+      "pointer_slot_va": "0x7fff623d4758",
+      "runtime_va": "0x7fff5fc91a60",
+      "rva": "0xa41a60",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30488b4970488bda4885c9743c488b49204885"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "LoadCameraPosition",
+      "method_definition_index": 70190,
+      "token": "0x0601122f",
+      "metadata_declaration_range": {
+        "offset": 6272056,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "history",
+          "type_index": 9008,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922784,
+      "pointer_slot_va": "0x7fff623d4760",
+      "runtime_va": "0x7fff5fc91980",
+      "rva": "0xa41980",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec40803d0b29950200498b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "LoadCameraPosition",
+      "method_definition_index": 70191,
+      "token": "0x06011230",
+      "metadata_declaration_range": {
+        "offset": 6272092,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lv",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "history",
+          "type_index": 9004,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922792,
+      "pointer_slot_va": "0x7fff623d4768",
+      "runtime_va": "0x7fff5fc91ac0",
+      "rva": "0xa41ac0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec40803dc727"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "GetHistorySelectedWeapon",
+      "method_definition_index": 70192,
+      "token": "0x06011231",
+      "metadata_declaration_range": {
+        "offset": 6272128,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "weaponType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lv",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "history",
+          "type_index": 9004,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51922800,
+      "pointer_slot_va": "0x7fff623d4770",
+      "runtime_va": "0x7fff5fc8d9d0",
+      "rva": "0xa3d9d0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec30803dbd68950200498b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ManufactureIconTweenScaleSet",
+      "method_definition_index": 70193,
+      "token": "0x06011232",
+      "metadata_declaration_range": {
+        "offset": 6272164,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "obj",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "delay",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "no",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922808,
+      "pointer_slot_va": "0x7fff623d4778",
+      "runtime_va": "0x7fff5fc91c40",
+      "rva": "0xa41c40",
+      "status": "mapped",
+      "code_preview_hex": "488bc4488958184c89702055488d68a94881ecb000000080"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ScrollPositionAdjust",
+      "method_definition_index": 70194,
+      "token": "0x06011233",
+      "metadata_declaration_range": {
+        "offset": 6272200,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922816,
+      "pointer_slot_va": "0x7fff623d4780",
+      "runtime_va": "0x7fff5fc93260",
+      "rva": "0xa43260",
+      "status": "mapped",
+      "code_preview_hex": "48895c241055488bec4883ec60803d3110950200488bd975"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "ToWeaponeSelectFromCheckDialog",
+      "method_definition_index": 70195,
+      "token": "0x06011234",
+      "metadata_declaration_range": {
+        "offset": 6272236,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922824,
+      "pointer_slot_va": "0x7fff623d4788",
+      "runtime_va": "0x7fff5fc95870",
+      "rva": "0xa45870",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d29ea940200488bd97537488d0d37967b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "CheckManufactureMaterial",
+      "method_definition_index": 70196,
+      "token": "0x06011235",
+      "metadata_declaration_range": {
+        "offset": 6272272,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 6657,
+          "exact_byval_name": null
+        },
+        {
+          "name": "startIndex",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "count",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "recipe",
+          "type_index": 23259,
+          "exact_byval_name": "RecipeDBData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51922832,
+      "pointer_slot_va": "0x7fff623d4790",
+      "runtime_va": "0x7fff5fc8bf20",
+      "rva": "0xa3bf20",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c241856574154415541564883ec30803d"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": ".ctor",
+      "method_definition_index": 70197,
+      "token": "0x06011236",
+      "metadata_declaration_range": {
+        "offset": 6272308,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922840,
+      "pointer_slot_va": "0x7fff623d4798",
+      "runtime_va": "0x7fff5fc95bf0",
+      "rva": "0xa45bf0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803da7e6940200488bf90f858b00"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": ".cctor",
+      "method_definition_index": 70198,
+      "token": "0x06011237",
+      "metadata_declaration_range": {
+        "offset": 6272344,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922848,
+      "pointer_slot_va": "0x7fff623d47a0",
+      "runtime_va": "0x7fff5fc95b60",
+      "rva": "0xa45b60",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d3ce7940200752b488d0d429f7802e8d5"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "<SetRequiredMaterial>b__77_0",
+      "method_definition_index": 70199,
+      "token": "0x06011238",
+      "metadata_declaration_range": {
+        "offset": 6272380,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922856,
+      "pointer_slot_va": "0x7fff623d47a8",
+      "runtime_va": "0x7fff5fc95ad0",
+      "rva": "0xa45ad0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38488b91380100004885d27423837a18007623488b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "<SetRequiredMaterial>b__77_1",
+      "method_definition_index": 70200,
+      "token": "0x06011239",
+      "metadata_declaration_range": {
+        "offset": 6272416,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922864,
+      "pointer_slot_va": "0x7fff623d47b0",
+      "runtime_va": "0x7fff5fc95b10",
+      "rva": "0xa45b10",
+      "status": "mapped",
+      "code_preview_hex": "4883ec38488b91380100004885d27426837a18017626488b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "<OnMaterialSearchButon>b__84_0",
+      "method_definition_index": 70201,
+      "token": "0x0601123a",
+      "metadata_declaration_range": {
+        "offset": 6272452,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922872,
+      "pointer_slot_va": "0x7fff623d47b8",
+      "runtime_va": "0x7fff5fc95a60",
+      "rva": "0xa45a60",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d3de8940200488bd97513488d0d47947b"
+    },
+    {
+      "class": "SmithManufacture",
+      "name": "<EquipmentProductionConnect>b__88_0",
+      "method_definition_index": 70202,
+      "token": "0x0601123b",
+      "metadata_declaration_range": {
+        "offset": 6272488,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51922880,
+      "pointer_slot_va": "0x7fff623d47c0",
+      "runtime_va": "0x7fff5fc95a10",
+      "rva": "0xa45a10",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b89d80100004885c9742633d2e8"
+    }
+  ],
+  "limitations": [
+    "Metadata declaration offsets are not code addresses; only pointer-table values establish native locations.",
+    "NULL pointers remain unresolved; generic or shared implementations are not inferred.",
+    "Mapping establishes saved pointer identity, not observed execution or a call edge.",
+    "The source capture was sequential and non-atomic; no process access was performed by this parser."
+  ]
+}

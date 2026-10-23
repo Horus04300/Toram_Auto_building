@@ -1,0 +1,123 @@
+import { createEquipmentSelection, validateEquipmentSelection, resolveEquipmentOptions, subEquipmentUsesOptions } from '../application/item-catalog.mjs';
+
+export function createEquipmentItemUi(documentRef, catalog) {
+  const windowRef = documentRef.defaultView, selections = {};
+  const containers = { mainWeapon:'wpnOpts', subWeapon:'subOpts', armor:'armOpts', additional:'addOpts', special:'spcOpts' };
+  const kinds = { mainWeapon:'weapons', subWeapon:'weapons', armor:'armor', additional:'additional', special:'special' };
+  const summaries = {};
+  let panel, target, locale, search, results, preview, apply, rows = [], generation = 0, loading = false;
+  const node = id => documentRef.getElementById(id);
+  const registry = () => windowRef.ToramStatRegistry;
+  const context = () => ({ mainType:node('mainWeaponType').value, subType:node('subWeaponType').value, armorType:node('armorType').value });
+  function text(tag, value) { const element = documentRef.createElement(tag); element.textContent = value; return element; }
+  function freeze(value) {
+    if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); }
+    return value;
+  }
+  function changed() {
+    documentRef.dispatchEvent(new windowRef.CustomEvent('toram:build-options-changed'));
+    documentRef.dispatchEvent(new windowRef.CustomEvent('toram:persistent-state-changed'));
+  }
+  function renderSummary(slot) {
+    const box = summaries[slot];
+    if (!box) return;
+    box.replaceChildren();
+    const selection = selections[slot];
+    if (!selection) return;
+    box.append(text('p', `${selection.name ?? '(이름 없음)'} · #${selection.gameItemId} · ${selection.cacheVersion}`));
+    try {
+      const options = resolveEquipmentOptions(selection, slot, context(), registry());
+      if (slot === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) box.append(text('p', '이 보조 무기 종류의 원본 일반 옵션은 합산하지 않습니다. 수동 보정과 ATK·안정률·제련 입력은 유지합니다.'));
+      box.append(text('p', options.map(option => `${option.key} ${option.value > 0 ? '+' : ''}${option.value}${registry().get(option.key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ') || '현재 조건에서 추가 옵션 없음'));
+    } catch (error) { box.append(text('p', error.message)); }
+    const clear = text('button', '원본 장비 해제');
+    clear.type = 'button';
+    clear.addEventListener('click', () => { delete selections[slot]; renderSummary(slot); changed(); });
+    box.append(clear);
+  }
+  function renderList() {
+    generation++;
+    apply.disabled = true;
+    preview.textContent = '';
+    results.replaceChildren();
+    const query = search.value.trim().toLocaleLowerCase();
+    const filtered = rows.filter(row => `${row.name ?? ''} ${row.id}`.toLocaleLowerCase().includes(query));
+    for (const row of filtered) {
+      const option = text('option', `${row.name ?? '(이름 없음)'} · #${row.id}`);
+      option.value = String(row.id); results.append(option);
+    }
+    results.selectedIndex = -1;
+    preview.textContent = `${filtered.length}개. 목록에서 아이템을 선택해 주세요.`;
+  }
+  async function loadList() {
+    const current = ++generation, kind = kinds[target.value], language = locale.value;
+    loading = true; apply.disabled = true; rows = []; results.replaceChildren(); preview.textContent = '목록을 불러오는 중…';
+    try {
+      const loaded = await catalog.listItems(kind, language);
+      if (current !== generation) return;
+      loading = false; rows = loaded; renderList();
+    } catch (error) { if (current === generation) { loading = false; preview.textContent = error.message; } }
+  }
+  async function showItem() {
+    const current = ++generation;
+    apply.disabled = true;
+    if (!results.value) return;
+    try {
+      const item = await catalog.getItem(Number(results.value), locale.value);
+      if (current !== generation) return;
+      preview.textContent = `${item.name ?? '(이름 없음)'} · #${item.id} · ${item.cacheVersion}`;
+      const selection = createEquipmentSelection(item, target.value, context(), registry());
+      const options = resolveEquipmentOptions(selection, target.value, context(), registry());
+      if (target.value === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) preview.textContent += '\n이 보조 무기 종류의 원본 일반 옵션은 합산하지 않습니다. 수동 보정은 유지합니다.';
+      preview.textContent += '\n' + options.map(option => `${option.key}: ${option.value}${registry().get(option.key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ');
+      apply.disabled = false;
+    } catch (error) { if (current === generation) preview.textContent += '\n' + error.message; }
+  }
+  async function applyItem() {
+    const current = ++generation, slot = target.value, id = Number(results.value);
+    apply.disabled = true;
+    try {
+      const item = await catalog.getItem(id, locale.value);
+      if (current !== generation) return;
+      const selection = createEquipmentSelection(item, slot, context(), registry());
+      selections[slot] = selection;
+      renderSummary(slot); changed();
+      preview.textContent = `${item.name ?? '#' + id} 옵션 적용 완료. ATK·안정률·제련은 실제 장비 값을 입력해 주세요.`;
+      apply.disabled = false;
+    } catch (error) { if (current === generation) preview.textContent = error.message; }
+  }
+  return Object.freeze({
+    getSelection(slot) { return selections[slot] || null; },
+    restoreSelection(slot, selection) {
+      if (!Object.hasOwn(containers, slot)) {
+        if (selection) throw new Error('지원하지 않는 장비 칸입니다.');
+        return;
+      }
+      if (selection) {
+        validateEquipmentSelection(selection, registry(), slot);
+        selections[slot] = freeze(JSON.parse(JSON.stringify(selection)));
+      } else delete selections[slot];
+      renderSummary(slot);
+    },
+    bind() {
+      panel = node('gameItemEquipment');
+      if (!panel) return;
+      target = node('gameItemTarget'); locale = node('gameItemLocale'); search = node('gameItemSearch');
+      results = node('gameItemResults'); preview = node('gameItemPreview'); apply = node('gameItemApply');
+      for (const [slot, id] of Object.entries(containers)) {
+        summaries[slot] = documentRef.createElement('div');
+        summaries[slot].dataset.gameEquipment = slot;
+        node(id).before(summaries[slot]); renderSummary(slot);
+      }
+      node('gameItemLoad').addEventListener('click', loadList);
+      target.addEventListener('change', loadList); locale.addEventListener('change', loadList);
+      search.addEventListener('input', () => { if (!loading) renderList(); }); results.addEventListener('change', showItem);
+      apply.addEventListener('click', applyItem);
+      documentRef.addEventListener('change', event => {
+        if (!['mainWeaponType','subWeaponType','armorType'].includes(event.target.id)) return;
+        for (const slot of Object.keys(containers)) renderSummary(slot);
+        if (results.value) void showItem();
+      });
+    }
+  });
+}

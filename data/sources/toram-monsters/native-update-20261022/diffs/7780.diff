@@ -1,0 +1,33 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-TryGetCollectionValue-7fff5fe27870.c
++++ 7780.c
+@@ -3,5 +3,5 @@
+   char cVar2;
+   byte bVar3;
+-  longlong lStackX_8;
++  undefined *puStackX_8;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -10,16 +10,18 @@
+   *(undefined4 *)constant = 0;
+   *(undefined4 *)rate = 0;
+-  lStackX_8 = 0;
++  puStackX_8 = (undefined *)0x0;
+   if (*(longlong *)(self + 0x40) != 0) {
+-    cVar2 = CALL1(*(longlong *)(self + 0x40),0x28,&lStackX_8,GLOBAL1);
++    cVar2 = CALL1(*(longlong *)(self + 0x40),0x28,&puStackX_8,GLOBAL1);
+     bVar3 = 0;
+     if (cVar2 != '\0') {
+-      if (lStackX_8 == 0) goto LABEL0;
+-      bVar3 = CALL2(lStackX_8,(ulonglong)type & 0xffffffff,constant,rate,0);
++      if (puStackX_8 == (undefined *)0x0) goto LABEL0;
++      bVar3 = MobPropertyStatusCollection_TryGetValue
++                        (puStackX_8,(undefined *)((ulonglong)type & 0xffffffff),constant,rate,
++                         (undefined *)0x0);
+     }
+     return bVar3;
+   }
+ LABEL0:
+-  CALL3();
++  CALL2();
+   pcVar1 = (code *)swi(3);
+   bVar3 = (*pcVar1)();

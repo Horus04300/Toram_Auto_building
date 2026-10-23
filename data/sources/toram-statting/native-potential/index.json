@@ -1,0 +1,388 @@
+{
+  "kind": "saved-runtime-native-potential",
+  "sourceSnapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "functions": [
+    {
+      "class": "SmithGrant",
+      "name": "CalcUsePotentialPoint",
+      "method_definition_index": 69926,
+      "token": "0x06011127",
+      "metadata_declaration_range": {
+        "offset": 6262552,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "customItem",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "changeProperties",
+          "type_index": 9968
+        },
+        {
+          "name": "newProperties",
+          "type_index": 9968
+        },
+        {
+          "name": "exclusionType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51920672,
+      "pointer_slot_va": "0x7fff623d3f20",
+      "runtime_va": "0x7fff5fc6db10",
+      "rva": "0xa1db10",
+      "status": "mapped",
+      "code_preview_hex": "488bc44c8940184889501048894808535657415441554156",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-CalcUsePotentialPoint-7fff5fc6db10.c",
+      "sha256": "508dfc7e269ec0e2f348463dc2ae70a8eb6ec8f1d551964d4f838bd70a0bbdbb",
+      "generationBatch": "native"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "EnhanceGetPropertyPosition",
+      "method_definition_index": 69925,
+      "token": "0x06011126",
+      "metadata_declaration_range": {
+        "offset": 6262516,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "item",
+          "type_index": 19007,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "property",
+          "type_index": 9968
+        },
+        {
+          "name": "changeProperties",
+          "type_index": 9069
+        },
+        {
+          "name": "newProperties",
+          "type_index": 9069
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920664,
+      "pointer_slot_va": "0x7fff623d3f18",
+      "runtime_va": "0x7fff5fc6e630",
+      "rva": "0xa1e630",
+      "status": "mapped",
+      "code_preview_hex": "4c894c24204c8944241853415541564883ec50803de15b97",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-EnhanceGetPropertyPosition-7fff5fc6e630.c",
+      "sha256": "ed7d8cbfabe7655fd68f5729fbe073974d5475917b404896e18992e2894081bb",
+      "generationBatch": "native"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "GetUsePotentialPoint",
+      "method_definition_index": 69923,
+      "token": "0x06011124",
+      "metadata_declaration_range": {
+        "offset": 6262444,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920648,
+      "pointer_slot_va": "0x7fff623d3f08",
+      "runtime_va": "0x7fff5fc6ecf0",
+      "rva": "0xa1ecf0",
+      "status": "mapped",
+      "code_preview_hex": "4533c033d2e906000000cccccccccccc8954241048894c24",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-GetUsePotentialPoint-7fff5fc6ecf0.c",
+      "sha256": "cdcd32e262ae4ddfe18f66d8c16ab4b811b2436423720066f83bb165a94b09e6",
+      "generationBatch": "native"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "GetUsePotentialPoint",
+      "method_definition_index": 69924,
+      "token": "0x06011125",
+      "metadata_declaration_range": {
+        "offset": 6262480,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "exclusionType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920656,
+      "pointer_slot_va": "0x7fff623d3f10",
+      "runtime_va": "0x7fff5fc6ed00",
+      "rva": "0xa1ed00",
+      "status": "mapped",
+      "code_preview_hex": "8954241048894c2408534883ec70803d1555970200488bd9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-GetUsePotentialPoint-7fff5fc6ed00.c",
+      "sha256": "43bda6c109f7a37cde353242dfd715d3f24740e408847967e4ed27ac8b5535de",
+      "generationBatch": "native"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CheckOverRateType",
+      "method_definition_index": 70071,
+      "token": "0x060111b8",
+      "metadata_declaration_range": {
+        "offset": 6267772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921832,
+      "pointer_slot_va": "0x7fff623d43a8",
+      "runtime_va": "0x7fff5fc84bf0",
+      "rva": "0xa34bf0",
+      "status": "mapped",
+      "code_preview_hex": "8d42ea83f80a7707a8017503b001c383fa0c0f94c0c3cccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-CheckOverRateType-7fff5fc84bf0.c",
+      "sha256": "36b5f82b0e93457811cb106498a0c36c7710411dbac1e27c9e510cba596d136c",
+      "generationBatch": "native"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetConsumptionPotential",
+      "method_definition_index": 70057,
+      "token": "0x060111aa",
+      "metadata_declaration_range": {
+        "offset": 6267268,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "onePotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "usedPotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921720,
+      "pointer_slot_va": "0x7fff623d4338",
+      "runtime_va": "0x7fff5fc856e0",
+      "rva": "0xa356e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d66eb950200418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetConsumptionPotential-7fff5fc856e0.c",
+      "sha256": "4851600cd491b51592adc07ab83ebdae328aa8ef684a22f1ded2ba4b93dc23ee",
+      "generationBatch": "native"
+    },
+    {
+      "class": "PlayerDataManager",
+      "name": "get_PlayerStatus",
+      "method_definition_index": 13347,
+      "token": "0x06003424",
+      "metadata_declaration_range": {
+        "offset": 4225708,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 22771,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      "pointer_slot_offset": 51468040,
+      "pointer_slot_va": "0x7fff62365708",
+      "runtime_va": "0x7fff5ff8ac30",
+      "rva": "0xd3ac30",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803dcba8650200488bd97513488d0d17ad4b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerDataManager-get_PlayerStatus-7fff5ff8ac30.c",
+      "sha256": "45f9fad54a15519f1e4c00696ab70425a3b7f7d8744ec859b928d7a99eb15944",
+      "generationBatch": "native-support"
+    },
+    {
+      "class": "UIItemListManager",
+      "name": "CheckWeaponItem",
+      "method_definition_index": 73321,
+      "token": "0x06011e6a",
+      "metadata_declaration_range": {
+        "offset": 6384772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33756,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51947832,
+      "pointer_slot_va": "0x7fff623da938",
+      "runtime_va": "0x7fff5fd83130",
+      "rva": "0xb33130",
+      "status": "mapped",
+      "code_preview_hex": "83f91174128d41f983f80c7703b001c383f9170f94c0c332",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIItemListManager-CheckWeaponItem-7fff5fd83130.c",
+      "sha256": "6eac39dbfc8c2818d427a9edfb39b51d830c59a7eff886a713c1a7ebb655dca2",
+      "generationBatch": "native-support"
+    }
+  ],
+  "files": [
+    {
+      "file": "constants.json",
+      "size": 496,
+      "sha256": "180eab97e262a085f076ade047d164810e800506fad5e0ab1bd1694c7c2d4203"
+    },
+    {
+      "file": "metadata-support.json",
+      "size": 57491,
+      "sha256": "f66d09dd6a3659bd929667e405366b1cc3ce56e52a8780209cec06dad63374e9"
+    },
+    {
+      "file": "metadata.json",
+      "size": 53566,
+      "sha256": "2ab1b6c872e9c9541fd87473db2ab1d77277e641354a1f595731187b661e8b3c"
+    },
+    {
+      "file": "methods-support.json",
+      "size": 179285,
+      "sha256": "12f9301ffbdc7a846fa31fbaac23a8ce4813d5bd3a050f56f713c992741dbd2a"
+    },
+    {
+      "file": "methods.json",
+      "size": 65494,
+      "sha256": "82fe1aea0a07bb10763f5a215edfa211e952869412aa5fb9eb112131da469b70"
+    },
+    {
+      "file": "PlayerDataManager-get_PlayerStatus-7fff5ff8ac30.c",
+      "size": 1776,
+      "sha256": "45f9fad54a15519f1e4c00696ab70425a3b7f7d8744ec859b928d7a99eb15944"
+    },
+    {
+      "file": "README.md",
+      "size": 4189,
+      "sha256": "9ecd05d2fa5ad9a4f1bdf0d6b0585faf8442653b45e4310e28c0d930a78e4096"
+    },
+    {
+      "file": "report.json",
+      "size": 4301,
+      "sha256": "1483900b5cb398ac852ad595763b4cc7dd355d16213296a13753435994c7af97"
+    },
+    {
+      "file": "self-check.py",
+      "size": 1888,
+      "sha256": "2d41fc84faae56ba8fbc4ddeb242e538210ef08b74b274126bb707d509a08968"
+    },
+    {
+      "file": "SmithGrant-CalcUsePotentialPoint-7fff5fc6db10.c",
+      "size": 13177,
+      "sha256": "508dfc7e269ec0e2f348463dc2ae70a8eb6ec8f1d551964d4f838bd70a0bbdbb"
+    },
+    {
+      "file": "SmithGrant-EnhanceGetPropertyPosition-7fff5fc6e630.c",
+      "size": 9977,
+      "sha256": "ed7d8cbfabe7655fd68f5729fbe073974d5475917b404896e18992e2894081bb"
+    },
+    {
+      "file": "SmithGrant-GetUsePotentialPoint-7fff5fc6ecf0.c",
+      "size": 3140,
+      "sha256": "cdcd32e262ae4ddfe18f66d8c16ab4b811b2436423720066f83bb165a94b09e6"
+    },
+    {
+      "file": "SmithGrant-GetUsePotentialPoint-7fff5fc6ed00.c",
+      "size": 3166,
+      "sha256": "43bda6c109f7a37cde353242dfd715d3f24740e408847967e4ed27ac8b5535de"
+    },
+    {
+      "file": "SmithGrantInfoWindow-CheckOverRateType-7fff5fc84bf0.c",
+      "size": 288,
+      "sha256": "36b5f82b0e93457811cb106498a0c36c7710411dbac1e27c9e510cba596d136c"
+    },
+    {
+      "file": "SmithGrantInfoWindow-SetConsumptionPotential-7fff5fc856e0.c",
+      "size": 953,
+      "sha256": "4851600cd491b51592adc07ab83ebdae328aa8ef684a22f1ded2ba4b93dc23ee"
+    },
+    {
+      "file": "TraceToramPotential.java",
+      "size": 7239,
+      "sha256": "447f56de5177e81d6bd76a167a4698bbf181e5b27114d8eceebecd540b97c46f"
+    },
+    {
+      "file": "TraceToramPotentialSupport.java",
+      "size": 7089,
+      "sha256": "7f76efccb12201e36e0d93ce7c13907012ccc009b1284c696944d05f713e9fa2"
+    },
+    {
+      "file": "UIItemListManager-CheckWeaponItem-7fff5fd83130.c",
+      "size": 327,
+      "sha256": "6eac39dbfc8c2818d427a9edfb39b51d830c59a7eff886a713c1a7ebb655dca2"
+    }
+  ]
+}

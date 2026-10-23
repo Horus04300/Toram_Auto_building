@@ -1,0 +1,784 @@
+--- assets\source-data\toram-monsters\native-target\EnemyMobActionManagerBase-Damaged-7fff5fe197c0.c
++++ 7646.c
+@@ -9,14 +9,13 @@
+   undefined4 uVar8;
+   int iVar9;
+-  undefined4 uVar10;
+-  longlong *plVar11;
+-  longlong lVar12;
+-  undefined8 *puVar13;
+-  longlong *plVar14;
+-  longlong lVar15;
+-  undefined8 uVar16;
+-  undefined *puVar17;
+-  bool bVar18;
+-  float fVar19;
++  longlong *plVar10;
++  longlong lVar11;
++  undefined8 *puVar12;
++  longlong *plVar13;
++  longlong lVar14;
++  undefined8 uVar15;
++  undefined *puVar16;
++  bool bVar17;
++  float fVar18;
+   undefined8 in_stack_ffffffffffffff38;
+   longlong *plStack_a8;
+@@ -71,9 +70,9 @@
+   }
+   if (self[0x149] != '\0') {
+-    uVar16 = *(undefined8 *)(self + 0x30);
++    uVar15 = *(undefined8 *)(self + 0x30);
+     if (*(int *)(GLOBAL22 + 0xe0) == 0) {
+       CALL1();
+     }
+-    cVar4 = CALL2(uVar16,0,0);
++    cVar4 = CALL2(uVar15,0,0);
+     if (cVar4 != '\0') {
+       (**(code **)(*(longlong *)self + 0x608))
+@@ -108,11 +107,11 @@
+   if (*(int *)(damageData + 0x14) != 0) {
+     if (actor == (undefined *)0x0) goto LABEL0;
+-    plVar11 = (longlong *)CALL7(actor,GLOBAL13);
++    plVar10 = (longlong *)CALL7(actor,GLOBAL13);
+     if ((damageData[0x22] != '\0') || (damageData[0x21] != '\0')) {
+-      uVar16 = *(undefined8 *)(self + 200);
++      uVar15 = *(undefined8 *)(self + 200);
+       if (*(int *)(GLOBAL22 + 0xe0) == 0) {
+         CALL1();
+       }
+-      cVar5 = CALL8(uVar16,0,0);
++      cVar5 = CALL8(uVar15,0,0);
+       if (cVar5 != '\0') {
+         cVar5 = CALL9(self,0x21,&lStack_98,GLOBAL9);
+@@ -123,21 +122,21 @@
+             if (cVar5 == '\0') goto LABEL1;
+             if (lStack_88 == 0) goto LABEL0;
+-            fVar19 = (float)CALL10(lStack_88,0);
++            fVar18 = (float)CALL10(lStack_88,0);
+           }
+           else {
+             if (lStack_90 == 0) goto LABEL0;
+-            fVar19 = (float)CALL10(lStack_90,0);
++            fVar18 = (float)CALL10(lStack_90,0);
+           }
+         }
+         else {
+           if (lStack_98 == 0) goto LABEL0;
+-          fVar19 = (float)CALL10(lStack_98,0);
+-        }
+-        if (fVar19 != 0.0) {
+-          lVar15 = *(longlong *)(self + 200);
+-          lVar12 = CALL11(GLOBAL5,3);
+-          puVar13 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
+-          if (lVar12 == 0) goto LABEL0;
+-          if (*(int *)(lVar12 + 0x18) == 0) {
++          fVar18 = (float)CALL10(lStack_98,0);
++        }
++        if (fVar18 != 0.0) {
++          lVar14 = *(longlong *)(self + 200);
++          lVar11 = CALL11(GLOBAL5,3);
++          puVar12 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
++          if (lVar11 == 0) goto LABEL0;
++          if (*(int *)(lVar11 + 0x18) == 0) {
+ LABEL2:
+             CALL13();
+@@ -146,19 +145,19 @@
+             return;
+           }
+-          uVar16 = puVar13[1];
+-          *(undefined8 *)(lVar12 + 0x20) = *puVar13;
+-          *(undefined8 *)(lVar12 + 0x28) = uVar16;
+-          puVar13 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
+-          if (*(uint *)(lVar12 + 0x18) < 2) goto LABEL2;
+-          uVar16 = puVar13[1];
+-          *(undefined8 *)(lVar12 + 0x30) = *puVar13;
+-          *(undefined8 *)(lVar12 + 0x38) = uVar16;
+-          puVar13 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
+-          if (*(uint *)(lVar12 + 0x18) < 3) goto LABEL2;
+-          uVar16 = puVar13[1];
+-          *(undefined8 *)(lVar12 + 0x40) = *puVar13;
+-          *(undefined8 *)(lVar12 + 0x48) = uVar16;
+-          if (lVar15 == 0) goto LABEL0;
+-          CALL14(lVar15,0xbbb,0,actor,CONCAT44(uVar8,fVar19),lVar12,0);
++          uVar15 = puVar12[1];
++          *(undefined8 *)(lVar11 + 0x20) = *puVar12;
++          *(undefined8 *)(lVar11 + 0x28) = uVar15;
++          puVar12 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
++          if (*(uint *)(lVar11 + 0x18) < 2) goto LABEL2;
++          uVar15 = puVar12[1];
++          *(undefined8 *)(lVar11 + 0x30) = *puVar12;
++          *(undefined8 *)(lVar11 + 0x38) = uVar15;
++          puVar12 = (undefined8 *)CALL12(&uStack_68,0x7fffffff,0);
++          if (*(uint *)(lVar11 + 0x18) < 3) goto LABEL2;
++          uVar15 = puVar12[1];
++          *(undefined8 *)(lVar11 + 0x40) = *puVar12;
++          *(undefined8 *)(lVar11 + 0x48) = uVar15;
++          if (lVar14 == 0) goto LABEL0;
++          CALL14(lVar14,0xbbb,0,actor,CONCAT44(uVar8,fVar18),lVar11,0);
+         }
+       }
+@@ -168,46 +167,46 @@
+       CALL1();
+     }
+-    cVar5 = CALL8(plVar11,0,0);
++    cVar5 = CALL8(plVar10,0,0);
+     if (cVar5 == '\0') {
+       if (action == (undefined *)0x0) goto LABEL0;
+     }
+     else {
+-      if ((((plVar11 == (longlong *)0x0) ||
+-           (plVar14 = (longlong *)
+-                      (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0)),
+-           plVar14 == (longlong *)0x0)) ||
+-          (lVar15 = (**(code **)(*plVar14 + 0x1b8))(plVar14,*(undefined8 *)(*plVar14 + 0x1c0)),
+-          lVar15 == 0)) || (*(longlong *)(lVar15 + 0x68) == 0)) goto LABEL0;
+-      cVar5 = CALL15(*(longlong *)(lVar15 + 0x68),0x447,&lStack_a0,GLOBAL7);
++      if ((((plVar10 == (longlong *)0x0) ||
++           (plVar13 = (longlong *)
++                      (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0)),
++           plVar13 == (longlong *)0x0)) ||
++          (lVar14 = (**(code **)(*plVar13 + 0x1b8))(plVar13,*(undefined8 *)(*plVar13 + 0x1c0)),
++          lVar14 == 0)) || (*(longlong *)(lVar14 + 0x68) == 0)) goto LABEL0;
++      cVar5 = CALL15(*(longlong *)(lVar14 + 0x68),0x447,&lStack_a0,GLOBAL7);
+       if (cVar5 != '\0') {
+         if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0)) goto LABEL0;
+         if (*(char *)(*(longlong *)(lStack_a0 + 0x10) + 0x18) != '\0') {
+-          plVar14 = (longlong *)
+-                    (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-          if ((plVar14 == (longlong *)0x0) ||
+-             (lVar15 = (**(code **)(*plVar14 + 0x1c8))(plVar14,*(undefined8 *)(*plVar14 + 0x1d0)),
+-             lVar15 == 0)) goto LABEL0;
+-          cVar5 = CALL16(lVar15,0x443,0);
++          plVar13 = (longlong *)
++                    (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++          if ((plVar13 == (longlong *)0x0) ||
++             (lVar14 = (**(code **)(*plVar13 + 0x1c8))(plVar13,*(undefined8 *)(*plVar13 + 0x1d0)),
++             lVar14 == 0)) goto LABEL0;
++          cVar5 = CALL16(lVar14,0x443,0);
+           if ((cVar5 != '\0') && (*(int *)(damageData + 0x14) == 2)) {
+-            plVar14 = (longlong *)
+-                      (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-            if (((plVar14 == (longlong *)0x0) ||
+-                (lVar15 = (**(code **)(*plVar14 + 0x1c8))(plVar14,*(undefined8 *)(*plVar14 + 0x1d0))
+-                , lVar15 == 0)) || (*(longlong *)(lVar15 + 0x50) == 0)) goto LABEL0;
+-            cVar5 = CALL15(*(longlong *)(lVar15 + 0x50),0x447,&plStack_a8,
++            plVar13 = (longlong *)
++                      (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++            if (((plVar13 == (longlong *)0x0) ||
++                (lVar14 = (**(code **)(*plVar13 + 0x1c8))(plVar13,*(undefined8 *)(*plVar13 + 0x1d0))
++                , lVar14 == 0)) || (*(longlong *)(lVar14 + 0x50) == 0)) goto LABEL0;
++            cVar5 = CALL15(*(longlong *)(lVar14 + 0x50),0x447,&plStack_a8,
+                                      GLOBAL6);
+             if (cVar5 == '\0') {
+               if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0)) goto LABEL0;
+               uVar1 = *(undefined1 *)(*(longlong *)(lStack_a0 + 0x10) + 0x18);
+-              plVar14 = (longlong *)CALL17(GLOBAL12);
+-              CALL18(plVar14,uVar1,0);
+-              plStack_a8 = plVar14;
+-              plVar14 = (longlong *)
+-                        (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-              if ((plVar14 == (longlong *)0x0) ||
+-                 (lVar15 = (**(code **)(*plVar14 + 0x1c8))
+-                                     (plVar14,*(undefined8 *)(*plVar14 + 0x1d0)), lVar15 == 0))
++              plVar13 = (longlong *)CALL17(GLOBAL12);
++              CALL18(plVar13,uVar1,0);
++              plStack_a8 = plVar13;
++              plVar13 = (longlong *)
++                        (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++              if ((plVar13 == (longlong *)0x0) ||
++                 (lVar14 = (**(code **)(*plVar13 + 0x1c8))
++                                     (plVar13,*(undefined8 *)(*plVar13 + 0x1d0)), lVar14 == 0))
+               goto LABEL0;
+-              CALL19(lVar15,plStack_a8,0,0);
++              CALL19(lVar14,plStack_a8,0,0);
+             }
+             if (plStack_a8 == (longlong *)0x0) goto LABEL0;
+@@ -230,12 +229,12 @@
+                         (action,*(undefined8 *)(*(longlong *)action + 400));
+       if (iVar7 == 0x4c5) {
+-        lVar15 = *(longlong *)action;
+-        if ((*(byte *)(GLOBAL11 + 0x130) <= *(byte *)(lVar15 + 0x130)) &&
++        lVar14 = *(longlong *)action;
++        if ((*(byte *)(GLOBAL11 + 0x130) <= *(byte *)(lVar14 + 0x130)) &&
+            (*(longlong *)
+-             (*(longlong *)(lVar15 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL11 + 0x130) * 8
++             (*(longlong *)(lVar14 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL11 + 0x130) * 8
+              ) == GLOBAL11)) {
+-          if ((*(byte *)(lVar15 + 0x130) < *(byte *)(GLOBAL11 + 0x130)) ||
++          if ((*(byte *)(lVar14 + 0x130) < *(byte *)(GLOBAL11 + 0x130)) ||
+              (*(longlong *)
+-               (*(longlong *)(lVar15 + 200) + -8 +
++               (*(longlong *)(lVar14 + 200) + -8 +
+                (ulonglong)*(byte *)(GLOBAL11 + 0x130) * 8) != GLOBAL11)) {
+             CALL20(action);
+@@ -246,7 +245,7 @@
+           cVar5 = CALL21(action,self,0);
+           if (cVar5 != '\0') {
+-            lVar15 = (**(code **)(*plVar11 + 0x2a8))(plVar11,*(undefined8 *)(*plVar11 + 0x2b0));
+-            if (lVar15 == 0) goto LABEL0;
+-            CALL22(lVar15,8);
++            lVar14 = (**(code **)(*plVar10 + 0x2a8))(plVar10,*(undefined8 *)(*plVar10 + 0x2b0));
++            if (lVar14 == 0) goto LABEL0;
++            CALL22(lVar14,8);
+             if (*(longlong *)(self + 0x80) == 0) goto LABEL0;
+             CALL22(*(longlong *)(self + 0x80),8);
+@@ -254,11 +253,11 @@
+         }
+       }
+-      plVar14 = (longlong *)
+-                (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-      if ((plVar14 == (longlong *)0x0) ||
+-         (lVar15 = (**(code **)(*plVar14 + 0x1c8))(plVar14,*(undefined8 *)(*plVar14 + 0x1d0)),
+-         lVar15 == 0)) goto LABEL0;
+-      cVar5 = CALL23(lVar15,0x34c,&plStack_a8,0);
+-      plVar14 = plStack_a8;
++      plVar13 = (longlong *)
++                (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++      if ((plVar13 == (longlong *)0x0) ||
++         (lVar14 = (**(code **)(*plVar13 + 0x1c8))(plVar13,*(undefined8 *)(*plVar13 + 0x1d0)),
++         lVar14 == 0)) goto LABEL0;
++      cVar5 = CALL23(lVar14,0x34c,&plStack_a8,0);
++      plVar13 = plStack_a8;
+       if ((cVar5 != '\0') &&
+          ((*(int *)(damageData + 0x18) != 1 && (0 < *(int *)(damageData + 0x84))))) {
+@@ -277,17 +276,17 @@
+           return;
+         }
+-        uVar16 = CALL24(self,0);
+-        cVar5 = CALL25(plVar14,uVar16,*(undefined4 *)(action + 0x10),0);
++        uVar15 = CALL24(self,0);
++        cVar5 = CALL25(plVar13,uVar15,*(undefined4 *)(action + 0x10),0);
+         if (cVar5 != '\0') {
+-          CALL26(plVar14,*(undefined4 *)(action + 0x10),0);
++          CALL26(plVar13,*(undefined4 *)(action + 0x10),0);
+           *(uint *)(damageData + 0x70) = *(uint *)(damageData + 0x70) | 0x10;
+         }
+       }
+-      plVar14 = (longlong *)
+-                (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-      if (((plVar14 == (longlong *)0x0) ||
+-          (lVar15 = (**(code **)(*plVar14 + 0x1b8))(plVar14,*(undefined8 *)(*plVar14 + 0x1c0)),
+-          lVar15 == 0)) || (*(longlong *)(lVar15 + 0x68) == 0)) goto LABEL0;
+-      cVar5 = CALL15(*(longlong *)(lVar15 + 0x68),0x3d3,&lStack_a0,GLOBAL7);
++      plVar13 = (longlong *)
++                (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++      if (((plVar13 == (longlong *)0x0) ||
++          (lVar14 = (**(code **)(*plVar13 + 0x1b8))(plVar13,*(undefined8 *)(*plVar13 + 0x1c0)),
++          lVar14 == 0)) || (*(longlong *)(lVar14 + 0x68) == 0)) goto LABEL0;
++      cVar5 = CALL15(*(longlong *)(lVar14 + 0x68),0x3d3,&lStack_a0,GLOBAL7);
+       if (cVar5 != '\0') {
+         if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0)) goto LABEL0;
+@@ -297,28 +296,28 @@
+                (*(longlong *)(*(longlong *)action + 200) + -8 +
+                (ulonglong)*(byte *)(GLOBAL23 + 0x130) * 8) != GLOBAL23)) {
+-            bVar18 = false;
++            bVar17 = false;
+           }
+           else {
+-            bVar18 = true;
+-          }
+-          plVar14 = (longlong *)0x0;
+-          if (bVar18) {
+-            plVar14 = (longlong *)action;
+-          }
+-          cVar5 = CALL27(plVar14,0,0);
++            bVar17 = true;
++          }
++          plVar13 = (longlong *)0x0;
++          if (bVar17) {
++            plVar13 = (longlong *)action;
++          }
++          cVar5 = CALL27(plVar13,0,0);
+           if (cVar5 != '\0') {
+-            if (plVar14 == (longlong *)0x0) goto LABEL0;
+-            iVar7 = (**(code **)(*plVar14 + 0x588))(plVar14,*(undefined8 *)(*plVar14 + 0x590));
++            if (plVar13 == (longlong *)0x0) goto LABEL0;
++            iVar7 = (**(code **)(*plVar13 + 0x588))(plVar13,*(undefined8 *)(*plVar13 + 0x590));
+             if ((iVar7 == 0x1e) &&
+-               (iVar7 = (**(code **)(*plVar14 + 0x188))(plVar14,*(undefined8 *)(*plVar14 + 400)),
++               (iVar7 = (**(code **)(*plVar13 + 0x188))(plVar13,*(undefined8 *)(*plVar13 + 400)),
+                iVar7 != 0xf)) {
+-              plVar14 = (longlong *)
+-                        (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-              if ((plVar14 == (longlong *)0x0) ||
+-                 (lVar15 = (**(code **)(*plVar14 + 0x1f8))
+-                                     (plVar14,*(undefined8 *)(*plVar14 + 0x200)), lVar15 == 0))
++              plVar13 = (longlong *)
++                        (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++              if ((plVar13 == (longlong *)0x0) ||
++                 (lVar14 = (**(code **)(*plVar13 + 0x1f8))
++                                     (plVar13,*(undefined8 *)(*plVar13 + 0x200)), lVar14 == 0))
+               goto LABEL0;
+-              lVar15 = CALL28(lVar15,0);
+-              if ((lVar15 != 0) && (*(int *)(lVar15 + 0x38) == 9)) {
++              lVar14 = CALL28(lVar14,0);
++              if ((lVar14 != 0) && (*(int *)(lVar14 + 0x38) == 9)) {
+                 iVar7 = (**(code **)(*(longlong *)action + 0x188))
+                                   (action,*(undefined8 *)(*(longlong *)action + 400));
+@@ -334,14 +333,14 @@
+                     return;
+                   }
+-                  bVar18 = action[0x128] == '\0';
++                  bVar17 = action[0x128] == '\0';
+                 }
+                 else {
+                   iVar7 = CALL29(action,0);
+-                  bVar18 = iVar7 == 0;
++                  bVar17 = iVar7 == 0;
+                 }
+-                if ((bVar18) && (*(int *)(damageData + 0x14) != 0)) {
++                if ((bVar17) && (*(int *)(damageData + 0x14) != 0)) {
+                   if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0))
+                   goto LABEL0;
+-                  CALL30(plVar11,*(undefined1 *)(*(longlong *)(lStack_a0 + 0x10) + 0x18),0
++                  CALL30(plVar10,*(undefined1 *)(*(longlong *)(lStack_a0 + 0x10) + 0x18),0
+                                   );
+                 }
+@@ -351,24 +350,24 @@
+         }
+       }
+-      plVar14 = (longlong *)
+-                (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-      if (((plVar14 == (longlong *)0x0) ||
+-          (lVar15 = (**(code **)(*plVar14 + 0x1b8))(plVar14,*(undefined8 *)(*plVar14 + 0x1c0)),
+-          lVar15 == 0)) || (*(longlong *)(lVar15 + 0x68) == 0)) goto LABEL0;
+-      cVar5 = CALL15(*(longlong *)(lVar15 + 0x68),0x68,&lStack_a0,GLOBAL7);
++      plVar13 = (longlong *)
++                (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++      if (((plVar13 == (longlong *)0x0) ||
++          (lVar14 = (**(code **)(*plVar13 + 0x1b8))(plVar13,*(undefined8 *)(*plVar13 + 0x1c0)),
++          lVar14 == 0)) || (*(longlong *)(lVar14 + 0x68) == 0)) goto LABEL0;
++      cVar5 = CALL15(*(longlong *)(lVar14 + 0x68),0x68,&lStack_a0,GLOBAL7);
+       if (cVar5 != '\0') {
+         if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0)) goto LABEL0;
+         if ((*(char *)(*(longlong *)(lStack_a0 + 0x10) + 0x18) != '\0') &&
+            (0 < *(int *)(damageData + 0x84))) {
+-          plVar14 = (longlong *)
+-                    (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-          if ((plVar14 == (longlong *)0x0) ||
+-             (lVar15 = (**(code **)(*plVar14 + 0x1f8))(plVar14,*(undefined8 *)(*plVar14 + 0x200)),
+-             lVar15 == 0)) goto LABEL0;
+-          lVar15 = CALL28(lVar15,0);
+-          if ((lVar15 != 0) &&
+-             (((*(int *)(lVar15 + 0x38) - 0xeU < 2 &&
+-               (lVar15 = CALL31(action,GLOBAL15), lVar15 != 0)) &&
+-              (cVar5 = CALL32(2,GLOBAL15,lVar15), cVar5 != '\0')))) {
++          plVar13 = (longlong *)
++                    (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++          if ((plVar13 == (longlong *)0x0) ||
++             (lVar14 = (**(code **)(*plVar13 + 0x1f8))(plVar13,*(undefined8 *)(*plVar13 + 0x200)),
++             lVar14 == 0)) goto LABEL0;
++          lVar14 = CALL28(lVar14,0);
++          if ((lVar14 != 0) &&
++             (((*(int *)(lVar14 + 0x38) - 0xeU < 2 &&
++               (lVar14 = CALL31(action,GLOBAL15), lVar14 != 0)) &&
++              (cVar5 = CALL32(2,GLOBAL15,lVar14), cVar5 != '\0')))) {
+             if (((*(byte *)(GLOBAL23 + 0x130) <= *(byte *)(*(longlong *)action + 0x130)) &&
+                 (*(longlong *)
+@@ -376,49 +375,49 @@
+                   (ulonglong)*(byte *)(GLOBAL23 + 0x130) * 8) == GLOBAL23)) &&
+                (cVar5 = CALL33(action,0x400,0), cVar5 == '\0')) {
+-              plVar14 = (longlong *)
+-                        (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-              if ((plVar14 == (longlong *)0x0) ||
+-                 (lVar15 = (**(code **)(*plVar14 + 0x1c8))
+-                                     (plVar14,*(undefined8 *)(*plVar14 + 0x1d0)), lVar15 == 0))
++              plVar13 = (longlong *)
++                        (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++              if ((plVar13 == (longlong *)0x0) ||
++                 (lVar14 = (**(code **)(*plVar13 + 0x1c8))
++                                     (plVar13,*(undefined8 *)(*plVar13 + 0x1d0)), lVar14 == 0))
+               goto LABEL0;
+-              cVar5 = CALL23(lVar15,0x7f,&plStack_a8);
++              cVar5 = CALL23(lVar14,0x7f,&plStack_a8);
+               if (cVar5 == '\0') {
+                 if ((lStack_a0 == 0) || (*(longlong *)(lStack_a0 + 0x10) == 0))
+                 goto LABEL0;
+                 uVar1 = *(undefined1 *)(*(longlong *)(lStack_a0 + 0x10) + 0x18);
+-                uVar16 = (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-                plVar14 = (longlong *)CALL17(GLOBAL4);
+-                CALL34(plVar14,uVar1,uVar16,0);
+-                plStack_a8 = plVar14;
+-                plVar14 = (longlong *)
+-                          (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0))
++                uVar15 = (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++                plVar13 = (longlong *)CALL17(GLOBAL4);
++                CALL34(plVar13,uVar1,uVar15,0);
++                plStack_a8 = plVar13;
++                plVar13 = (longlong *)
++                          (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0))
+                 ;
+-                if ((plVar14 == (longlong *)0x0) ||
+-                   (lVar15 = (**(code **)(*plVar14 + 0x1c8))
+-                                       (plVar14,*(undefined8 *)(*plVar14 + 0x1d0)), lVar15 == 0))
++                if ((plVar13 == (longlong *)0x0) ||
++                   (lVar14 = (**(code **)(*plVar13 + 0x1c8))
++                                       (plVar13,*(undefined8 *)(*plVar13 + 0x1d0)), lVar14 == 0))
+                 goto LABEL0;
+-                CALL19(lVar15,plStack_a8,0,0);
++                CALL19(lVar14,plStack_a8,0,0);
+               }
+               if (plStack_a8 == (longlong *)0x0) goto LABEL0;
+               bVar2 = *(byte *)(GLOBAL4 + 0x130);
+               if (((*(byte *)(*plStack_a8 + 0x130) < bVar2) ||
+-                  (lVar15 = *(longlong *)(*plStack_a8 + 200),
+-                  *(longlong *)(lVar15 + -8 + (ulonglong)bVar2 * 8) != GLOBAL4)) ||
++                  (lVar14 = *(longlong *)(*plStack_a8 + 200),
++                  *(longlong *)(lVar14 + -8 + (ulonglong)bVar2 * 8) != GLOBAL4)) ||
+                  (plStack_a8 == (longlong *)0x0)) goto LABEL0;
+-              plVar14 = (longlong *)0x0;
+-              if (*(longlong *)(lVar15 + -8 + (ulonglong)bVar2 * 8) == GLOBAL4) {
+-                plVar14 = plStack_a8;
++              plVar13 = (longlong *)0x0;
++              if (*(longlong *)(lVar14 + -8 + (ulonglong)bVar2 * 8) == GLOBAL4) {
++                plVar13 = plStack_a8;
+               }
+-              (**(code **)(*plVar14 + 0x2a8))(plVar14,*(undefined8 *)(*plVar14 + 0x2b0));
++              (**(code **)(*plVar13 + 0x2a8))(plVar13,*(undefined8 *)(*plVar13 + 0x2b0));
+             }
+           }
+         }
+       }
+-      plVar14 = (longlong *)
+-                (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-      if ((plVar14 == (longlong *)0x0) ||
+-         (lVar15 = (**(code **)(*plVar14 + 0x1c8))(plVar14,*(undefined8 *)(*plVar14 + 0x1d0)),
+-         lVar15 == 0)) goto LABEL0;
+-      cVar5 = CALL23(lVar15,0x22e,&plStack_a8,0);
++      plVar13 = (longlong *)
++                (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++      if ((plVar13 == (longlong *)0x0) ||
++         (lVar14 = (**(code **)(*plVar13 + 0x1c8))(plVar13,*(undefined8 *)(*plVar13 + 0x1d0)),
++         lVar14 == 0)) goto LABEL0;
++      cVar5 = CALL23(lVar14,0x22e,&plStack_a8,0);
+       if (cVar5 != '\0') {
+         if ((*(byte *)(*(longlong *)action + 0x130) < *(byte *)(GLOBAL23 + 0x130)) ||
+@@ -426,14 +425,14 @@
+              (*(longlong *)(*(longlong *)action + 200) + -8 +
+              (ulonglong)*(byte *)(GLOBAL23 + 0x130) * 8) != GLOBAL23)) {
+-          bVar18 = false;
++          bVar17 = false;
+         }
+         else {
+-          bVar18 = true;
+-        }
+-        puVar17 = (undefined *)0x0;
+-        if (bVar18) {
+-          puVar17 = action;
+-        }
+-        cVar5 = CALL27(puVar17,0,0);
++          bVar17 = true;
++        }
++        puVar16 = (undefined *)0x0;
++        if (bVar17) {
++          puVar16 = action;
++        }
++        cVar5 = CALL27(puVar16,0,0);
+         if ((cVar5 != '\0') &&
+            ((*(longlong *)(damageData + 0x28) == 0 ||
+@@ -472,5 +471,5 @@
+             }
+             cVar5 = CALL35(plStack_a8,2);
+-            plVar14 = plStack_a8;
++            plVar13 = plStack_a8;
+             if (cVar5 != '\0') {
+               if (plStack_a8 == (longlong *)0x0) goto LABEL0;
+@@ -486,21 +485,21 @@
+               }
+               if (0.0 < *(float *)((longlong)plStack_a8 + 0x14)) {
+-                uVar16 = (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0));
+-                if (plVar14 == (longlong *)0x0) goto LABEL0;
+-                if ((*(byte *)(*plVar14 + 0x130) < *(byte *)(GLOBAL19 + 0x130)) ||
++                uVar15 = (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0));
++                if (plVar13 == (longlong *)0x0) goto LABEL0;
++                if ((*(byte *)(*plVar13 + 0x130) < *(byte *)(GLOBAL19 + 0x130)) ||
+                    (*(longlong *)
+-                     (*(longlong *)(*plVar14 + 200) + -8 +
++                     (*(longlong *)(*plVar13 + 200) + -8 +
+                      (ulonglong)*(byte *)(GLOBAL19 + 0x130) * 8) != GLOBAL19)) {
+-                  CALL20(plVar14);
++                  CALL20(plVar13);
+                   pcVar3 = (code *)swi(3);
+                   (*pcVar3)();
+                   return;
+                 }
+-                iVar7 = CALL36(plVar14,puVar17,uVar16,0);
++                iVar7 = CALL36(plVar13,puVar16,uVar15,0);
+                 if (0 < iVar7) {
+-                  lVar15 = CALL37(0);
+-                  if ((lVar15 == 0) || (lVar15 = CALL38(lVar15,0), lVar15 == 0))
++                  lVar14 = CALL37(0);
++                  if ((lVar14 == 0) || (lVar14 = CALL38(lVar14,0), lVar14 == 0))
+                   goto LABEL0;
+-                  CALL39(lVar15,0xc9,iVar7,0);
++                  CALL39(lVar14,0xc9,iVar7,0);
+                 }
+                 *(uint *)(damageData + 0x70) = *(uint *)(damageData + 0x70) | 0x2000;
+@@ -510,24 +509,24 @@
+         }
+       }
+-      CALL40(plVar11,action,damageData,0);
+-      CALL41(plVar11,action,damageData,0);
+-    }
+-    CALL42(action,plVar11,self,damageData,0);
+-    uVar8 = CALL43(self,*(undefined4 *)(damageData + 0x84),plVar11,0);
++      CALL40(plVar10,action,damageData,0);
++      CALL41(plVar10,action,damageData,0);
++    }
++    CALL42(action,plVar10,self,damageData,0);
++    uVar8 = CALL43(self,*(undefined4 *)(damageData + 0x84),plVar10,0);
+     iVar7 = CALL44(action,self,uVar8,0);
+     iVar9 = (**(code **)(*(longlong *)action + 0x188))
+                       (action,*(undefined8 *)(*(longlong *)action + 400));
+     if ((iVar9 == 0x3ec) && ((damageData[0x74] & 1) != 0)) {
+-      lVar15 = *(longlong *)(self + 0x78);
+-      if (lVar15 == 0) goto LABEL0;
+-      if (iVar7 < *(int *)(lVar15 + 0x14)) goto LABEL4;
+-      iVar7 = *(int *)(lVar15 + 0x14) + -1;
++      lVar14 = *(longlong *)(self + 0x78);
++      if (lVar14 == 0) goto LABEL0;
++      if (iVar7 < *(int *)(lVar14 + 0x14)) goto LABEL4;
++      iVar7 = *(int *)(lVar14 + 0x14) + -1;
+     }
+     else {
+ LABEL4:
+-      lVar15 = *(longlong *)(self + 0x78);
+-      if (lVar15 == 0) goto LABEL0;
+-    }
+-    CALL45(lVar15,*(int *)(lVar15 + 0x14) - iVar7,0);
++      lVar14 = *(longlong *)(self + 0x78);
++      if (lVar14 == 0) goto LABEL0;
++    }
++    CALL45(lVar14,*(int *)(lVar14 + 0x14) - iVar7,0);
+     if (*(longlong *)(self + 0x80) == 0) goto LABEL0;
+     CALL46(*(longlong *)(self + 0x80),0);
+@@ -537,13 +536,13 @@
+         CALL1();
+       }
+-      cVar5 = CALL8(plVar11,0,0);
++      cVar5 = CALL8(plVar10,0,0);
+       if (cVar5 != '\0') {
+-        if ((plVar11 == (longlong *)0x0) ||
+-           (plVar11 = (longlong *)
+-                      (**(code **)(*plVar11 + 0x298))(plVar11,*(undefined8 *)(*plVar11 + 0x2a0)),
+-           plVar11 == (longlong *)0x0)) goto LABEL0;
+-        lVar15 = (**(code **)(*plVar11 + 0x208))(plVar11,*(undefined8 *)(*plVar11 + 0x210));
+-        if ((lVar15 != 0) &&
+-           (cVar5 = CALL47(lVar15,*(undefined4 *)(damageData + 0x8c),0), cVar5 != '\0')
++        if ((plVar10 == (longlong *)0x0) ||
++           (plVar10 = (longlong *)
++                      (**(code **)(*plVar10 + 0x298))(plVar10,*(undefined8 *)(*plVar10 + 0x2a0)),
++           plVar10 == (longlong *)0x0)) goto LABEL0;
++        lVar14 = (**(code **)(*plVar10 + 0x208))(plVar10,*(undefined8 *)(*plVar10 + 0x210));
++        if ((lVar14 != 0) &&
++           (cVar5 = CALL47(lVar14,*(undefined4 *)(damageData + 0x8c),0), cVar5 != '\0')
+            ) {
+           *(undefined4 *)(damageData + 0x8c) = 0;
+@@ -558,5 +557,4 @@
+   }
+   if (*(int *)(damageData + 0x14) != 0) {
+-    uVar8 = 0;
+     CALL50(self,actor,action,damageData,0);
+     CALL51(self,actor,action,0);
+@@ -576,10 +574,10 @@
+     if (iVar7 == 0x4c3) {
+ LABEL5:
+-      uVar10 = (**(code **)(*(longlong *)action + 0x188))
+-                         (action,*(undefined8 *)(*(longlong *)action + 400));
++      uVar8 = (**(code **)(*(longlong *)action + 0x188))
++                        (action,*(undefined8 *)(*(longlong *)action + 400));
+       if (*(int *)(GLOBAL24 + 0xe0) == 0) {
+         CALL1();
+       }
+-      cVar5 = CALL56(uVar10,0);
++      cVar5 = CALL56(uVar8,0);
+       if ((cVar5 != '\0') &&
+          (cVar5 = (**(code **)(*(longlong *)action + 0x308))
+@@ -591,20 +589,22 @@
+                             (action,*(undefined8 *)(*(longlong *)action + 0x1b0));
+           if (iVar7 == 1) {
+-            lVar15 = *(longlong *)(self + 0x70);
+-            if ((lVar15 == 0) || (*(longlong *)(self + 0x78) == 0)) goto LABEL0;
+-            uVar16 = CONCAT44(uVar8,(uint)*(byte *)(lVar15 + 0x36));
+-            CALL57(*(longlong *)(self + 0x78),1,*(undefined1 *)(lVar15 + 0x34),
+-                                *(undefined1 *)(lVar15 + 0x35),uVar16,0);
+-            uVar8 = (undefined4)((ulonglong)uVar16 >> 0x20);
++            lVar14 = *(longlong *)(self + 0x70);
++            if ((lVar14 == 0) || (*(undefined **)(self + 0x78) == (undefined *)0x0))
++            goto LABEL0;
++            MobStatus_CalcExpDef
++                      (*(undefined **)(self + 0x78),(undefined *)0x1,(uint)*(byte *)(lVar14 + 0x34),
++                       (uint)*(byte *)(lVar14 + 0x35),(uint)*(byte *)(lVar14 + 0x36),
++                       (undefined *)0x0);
+           }
+           iVar7 = (**(code **)(*(longlong *)action + 0x1a8))
+                             (action,*(undefined8 *)(*(longlong *)action + 0x1b0));
+           if (iVar7 == 2) {
+-            lVar15 = *(longlong *)(self + 0x70);
+-            if ((lVar15 == 0) || (*(longlong *)(self + 0x78) == 0)) goto LABEL0;
+-            uVar16 = CONCAT44(uVar8,(uint)*(byte *)(lVar15 + 0x36));
+-            CALL57(*(longlong *)(self + 0x78),2,*(undefined1 *)(lVar15 + 0x34),
+-                                *(undefined1 *)(lVar15 + 0x35),uVar16,0);
+-            uVar8 = (undefined4)((ulonglong)uVar16 >> 0x20);
++            lVar14 = *(longlong *)(self + 0x70);
++            if ((lVar14 == 0) || (*(undefined **)(self + 0x78) == (undefined *)0x0))
++            goto LABEL0;
++            MobStatus_CalcExpDef
++                      (*(undefined **)(self + 0x78),(undefined *)0x2,(uint)*(byte *)(lVar14 + 0x34),
++                       (uint)*(byte *)(lVar14 + 0x35),(uint)*(byte *)(lVar14 + 0x36),
++                       (undefined *)0x0);
+           }
+           iVar7 = (**(code **)(*(longlong *)action + 0x1a8))
+@@ -612,9 +612,10 @@
+           if (iVar7 != 3) goto LABEL6;
+         }
+-        lVar15 = *(longlong *)(self + 0x70);
+-        if ((lVar15 == 0) || (*(longlong *)(self + 0x78) == 0)) goto LABEL0;
+-        CALL57(*(longlong *)(self + 0x78),0,*(undefined1 *)(lVar15 + 0x34),
+-                            *(undefined1 *)(lVar15 + 0x35),
+-                            CONCAT44(uVar8,(uint)*(byte *)(lVar15 + 0x36)),0);
++        lVar14 = *(longlong *)(self + 0x70);
++        if ((lVar14 == 0) || (*(undefined **)(self + 0x78) == (undefined *)0x0))
++        goto LABEL0;
++        MobStatus_CalcExpDef
++                  (*(undefined **)(self + 0x78),(undefined *)0x0,(uint)*(byte *)(lVar14 + 0x34),
++                   (uint)*(byte *)(lVar14 + 0x35),(uint)*(byte *)(lVar14 + 0x36),(undefined *)0x0);
+       }
+     }
+@@ -632,5 +633,5 @@
+           return;
+         }
+-        cVar5 = CALL58(action,self,0);
++        cVar5 = CALL57(action,self,0);
+         goto LABEL7;
+       }
+@@ -650,5 +651,5 @@
+           return;
+         }
+-        cVar5 = CALL59(action,0);
++        cVar5 = CALL58(action,0);
+         goto LABEL7;
+       }
+@@ -656,14 +657,14 @@
+                         (action,*(undefined8 *)(*(longlong *)action + 400));
+       if (iVar7 == 0x22a) goto LABEL5;
+-      lVar15 = *(longlong *)action;
+-      if ((*(byte *)(lVar15 + 0x130) < *(byte *)(GLOBAL25 + 0x130)) ||
++      lVar14 = *(longlong *)action;
++      if ((*(byte *)(lVar14 + 0x130) < *(byte *)(GLOBAL25 + 0x130)) ||
+          (*(longlong *)
+-           (*(longlong *)(lVar15 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL25 + 0x130) * 8)
++           (*(longlong *)(lVar14 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL25 + 0x130) * 8)
+           != GLOBAL25)) {
+-        iVar7 = (**(code **)(lVar15 + 0x188))(action,*(undefined8 *)(lVar15 + 400));
++        iVar7 = (**(code **)(lVar14 + 0x188))(action,*(undefined8 *)(lVar14 + 400));
+         if ((iVar7 != 0x12d) || ((damageData[0x74] & 2) != 0)) goto LABEL7;
+       }
+       else {
+-        cVar5 = CALL60(action,0);
++        cVar5 = CALL59(action,0);
+ LABEL7:
+         if (cVar5 != '\0') goto LABEL5;
+@@ -683,5 +684,5 @@
+         return;
+       }
+-      CALL61(action,0);
++      CALL60(action,0);
+     }
+     iVar7 = (**(code **)(*(longlong *)action + 0x188))
+@@ -697,5 +698,5 @@
+         return;
+       }
+-      CALL62(action,0);
++      CALL61(action,0);
+     }
+   }
+@@ -704,26 +705,26 @@
+     if (0 < *(int *)(damageData + 0x84)) {
+       if (*(longlong *)(self + 0x20) != 0) {
+-        puVar13 = (undefined8 *)CALL63(&uStack_68,*(longlong *)(self + 0x20),0);
+-        uStack_80 = *puVar13;
+-        fStack_78 = *(float *)(puVar13 + 1);
+-        if ((actor != (undefined *)0x0) && (lVar15 = CALL64(actor,0), lVar15 != 0)) {
+-          puVar13 = (undefined8 *)CALL63(&uStack_68,lVar15,0);
+-          fStack_78 = fStack_78 - *(float *)(puVar13 + 1);
+-          lVar15 = *(longlong *)(self + 0x48);
++        puVar12 = (undefined8 *)CALL62(&uStack_68,*(longlong *)(self + 0x20),0);
++        uStack_80 = *puVar12;
++        fStack_78 = *(float *)(puVar12 + 1);
++        if ((actor != (undefined *)0x0) && (lVar14 = CALL63(actor,0), lVar14 != 0)) {
++          puVar12 = (undefined8 *)CALL62(&uStack_68,lVar14,0);
++          fStack_78 = fStack_78 - *(float *)(puVar12 + 1);
++          lVar14 = *(longlong *)(self + 0x48);
+           iVar7 = *(int *)(damageData + 0x84);
+-          uStack_68 = CONCAT44(uStack_80._4_4_ - (float)((ulonglong)*puVar13 >> 0x20),
+-                               (float)uStack_80 - (float)*puVar13);
++          uStack_68 = CONCAT44(uStack_80._4_4_ - (float)((ulonglong)*puVar12 >> 0x20),
++                               (float)uStack_80 - (float)*puVar12);
+           fStack_60 = fStack_78;
+-          lVar12 = (**(code **)(*(longlong *)self + 0x518))
++          lVar11 = (**(code **)(*(longlong *)self + 0x518))
+                              (self,*(undefined8 *)(*(longlong *)self + 0x520));
+-          if (lVar12 != 0) {
+-            iVar9 = CALL32(0,GLOBAL16,lVar12);
+-            puVar13 = (undefined8 *)CALL65(&uStack_80,&uStack_68,0);
+-            if (lVar15 != 0) {
+-              uStack_68 = *puVar13;
+-              fStack_60 = *(float *)(puVar13 + 1);
+-              uVar16 = CALL66(lVar15,GLOBAL26,(float)iVar7 / (float)iVar9,
++          if (lVar11 != 0) {
++            iVar9 = CALL32(0,GLOBAL16,lVar11);
++            puVar12 = (undefined8 *)CALL64(&uStack_80,&uStack_68,0);
++            if (lVar14 != 0) {
++              uStack_68 = *puVar12;
++              fStack_60 = *(float *)(puVar12 + 1);
++              uVar15 = CALL65(lVar14,GLOBAL26,(float)iVar7 / (float)iVar9,
+                                         &uStack_68,0);
+-              CALL67(self,uVar16,0);
++              CALL66(self,uVar15,0);
+               return;
+             }
+@@ -732,5 +733,5 @@
+       }
+ LABEL0:
+-      CALL68();
++      CALL67();
+       pcVar3 = (code *)swi(3);
+       (*pcVar3)();
+@@ -739,24 +740,24 @@
+   }
+   else {
+-    uVar16 = *(undefined8 *)(self + 0x58);
++    uVar15 = *(undefined8 *)(self + 0x58);
+     if (*(int *)(GLOBAL22 + 0xe0) == 0) {
+       CALL1();
+     }
+-    cVar4 = CALL69(uVar16,0);
++    cVar4 = CALL68(uVar15,0);
+     if (cVar4 != '\0') {
+-      plVar11 = *(longlong **)(self + 0x58);
+-      if (plVar11 == (longlong *)0x0) goto LABEL0;
+-      (**(code **)(*plVar11 + 0x1d8))(plVar11,*(undefined8 *)(*plVar11 + 0x1e0));
+-    }
+-    uVar16 = *(undefined8 *)(self + 0x68);
++      plVar10 = *(longlong **)(self + 0x58);
++      if (plVar10 == (longlong *)0x0) goto LABEL0;
++      (**(code **)(*plVar10 + 0x1d8))(plVar10,*(undefined8 *)(*plVar10 + 0x1e0));
++    }
++    uVar15 = *(undefined8 *)(self + 0x68);
+     if (*(int *)(GLOBAL22 + 0xe0) == 0) {
+       CALL1();
+     }
+-    cVar4 = CALL69(uVar16,0);
++    cVar4 = CALL68(uVar15,0);
+     if (cVar4 != '\0') {
+       if (*(longlong *)(self + 0x68) == 0) goto LABEL0;
+-      CALL70(*(longlong *)(self + 0x68),0);
+-    }
+-    CALL71(self,id,0);
++      CALL69(*(longlong *)(self + 0x68),0);
++    }
++    CALL70(self,id,0);
+   }
+   return;

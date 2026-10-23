@@ -2,7 +2,7 @@ param(
   [string]$Root = (Split-Path -Parent $PSScriptRoot)
 )
 $ErrorActionPreference = 'Stop'
-$linksPath = Join-Path $Root 'skill_effect_source_links.json'
+$linksPath = Join-Path $Root 'data/sources/skill-effect-source-links.json'
 $outDir = Join-Path $Root 'docs\sources\skills'
 New-Item -ItemType Directory -Force -Path $outDir | Out-Null
 $links = (Get-Content -LiteralPath $linksPath -Raw | ConvertFrom-Json).sources

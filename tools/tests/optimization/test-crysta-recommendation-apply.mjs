@@ -24,7 +24,7 @@ const documentRef = { getElementById:id => nodes.get(id) || null, defaultView:{ 
 const context = { window:null, document:documentRef, Event:FakeEvent, ToramApp:{ crystaUi:{ refreshAllCrystaInfo() { refreshes++; } } } };
 context.window = context;
 vm.createContext(context);
-vm.runInContext(readFileSync(resolve(root, 'assets/js/optimization/recommendation-apply.js'), 'utf8'), context, { filename:'optimization/recommendation-apply.js' });
+vm.runInContext(readFileSync(resolve(root, 'web/src/optimization/recommendation-apply.js'), 'utf8'), context, { filename:'optimization/recommendation-apply.js' });
 
 const result = {
   bestBuild:{ packages:[

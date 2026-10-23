@@ -1,3 +1,4 @@
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -7,14 +8,14 @@ import { spawn } from 'node:child_process';
 const root = resolve(import.meta.dirname, '../../..');
 const fixture = JSON.parse(await readFile(resolve(root, 'tools/fixtures/crysta-native-runtime-26min-revenir.json'), 'utf8'));
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
-const compiler = require(resolve(root, 'assets/js/optimization/problem-compiler.js'));
-const crystaSource = await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8');
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
+const compiler = require(resolve(root, 'web/src/optimization/problem-compiler.js'));
+const crystaSource = await readCrystaDataSource(root);
 const crystas = Function(`${crystaSource}\nreturn crystaDataJson;`)();
 
 function runNative(problem) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'src-tauri/Cargo.toml', '--bin', 'crysta_native_parallel'], { cwd:root, stdio:['pipe', 'pipe', 'pipe'] });
+    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'desktop/Cargo.toml', '--bin', 'crysta_native_parallel'], { cwd:root, stdio:['pipe', 'pipe', 'pipe'] });
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += chunk; });
     child.stderr.on('data', chunk => { stderr += chunk; });

@@ -1,0 +1,11 @@
+--- assets\source-data\toram-monsters\native-target\MobStatus-_ctor-7fff5fe6b810.c
++++ 9137.c
+@@ -15,6 +15,6 @@
+   CALL2(uVar1,GLOBAL1);
+   *(undefined8 *)(self + 0x30) = uVar1;
+-  CALL3();
+-  CALL4(self,0);
++  il2cpp_write_barrier_0();
++  CALL3(self,0);
+   *(int *)(self + 0x38) = mobid;
+   *(undefined2 *)(self + 0x3c) = 0;

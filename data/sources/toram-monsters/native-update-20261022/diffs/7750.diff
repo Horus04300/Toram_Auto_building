@@ -1,0 +1,9 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-get_MaxHp-7fff5fe288f0.c
++++ 7750.c
+@@ -21,5 +21,5 @@
+     CALL1();
+   }
+-  dVar4 = System_Math_Round((double)fVar3,2,(undefined *)0x0,(undefined *)0x0);
++  dVar4 = System_Math_Round((double)fVar3,2,0,(undefined *)0x0);
+   return (int)((dVar4 + GLOBAL4) *
+               (double)((float)(int)((float)(iVar1 * iVar1) / GLOBAL5 +

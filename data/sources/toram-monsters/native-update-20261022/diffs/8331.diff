@@ -1,0 +1,231 @@
+--- assets\source-data\toram-monsters\native-classification\MobFactory-CreateMobObject-7fff5fe35980.c
++++ 8331.c
+@@ -4,18 +4,19 @@
+   char cVar3;
+   byte bVar4;
+-  char cVar5;
+-  int iVar6;
++  byte bVar5;
++  byte bVar6;
+   int iVar7;
+   int iVar8;
+   int iVar9;
+   int iVar10;
+-  undefined *puVar11;
+-  longlong lVar12;
++  int iVar11;
++  undefined *puVar12;
+   longlong lVar13;
+-  undefined8 uVar14;
+-  uint uVar15;
++  longlong lVar14;
++  undefined8 uVar15;
+   uint uVar16;
+   uint uVar17;
+-  bool bVar18;
++  uint uVar18;
++  bool bVar19;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -26,112 +27,112 @@
+     GLOBAL0 = '\x01';
+   }
+-  puVar11 = (undefined *)CALL1(mobId,0);
++  puVar12 = (undefined *)CALL1(mobId,0);
+   if (*(int *)(GLOBAL4 + 0xe0) == 0) {
+     CALL2();
+   }
+-  cVar3 = CALL3(puVar11,0);
++  cVar3 = CALL3(puVar12,0);
+   if (cVar3 != '\0') {
+     return (undefined *)0x0;
+   }
+-  lVar12 = CALL4(GLOBAL5);
+-  if (lVar12 != 0) {
+-    iVar6 = CALL5(lVar12,0);
+-    if (iVar6 == 0) {
+-      bVar18 = false;
++  lVar13 = CALL4(GLOBAL5);
++  if (lVar13 != 0) {
++    iVar7 = CALL5(lVar13,0);
++    if (iVar7 == 0) {
++      bVar19 = false;
+     }
+     else {
+-      lVar12 = CALL4(GLOBAL5);
+-      if (lVar12 == 0) goto LABEL0;
+-      iVar6 = CALL5(lVar12,0);
+-      bVar18 = iVar6 != 7;
++      lVar13 = CALL4(GLOBAL5);
++      if (lVar13 == 0) goto LABEL0;
++      iVar7 = CALL5(lVar13,0);
++      bVar19 = iVar7 != 7;
+     }
+-    bVar4 = CALL6(statusMaster,4);
+-    bVar4 = bVar4 & bVar18;
+-    cVar3 = CALL6(statusMaster,0x10);
+-    uVar17 = 0x100;
+-    cVar5 = CALL6(statusMaster);
+-    lVar12 = CALL4(GLOBAL5);
+-    if (lVar12 != 0) {
+-      iVar6 = CALL5(lVar12);
+-      if (iVar6 == 3) {
+-        uVar15 = 1;
++    bVar4 = MobStatusMasterEx_CheckMultiFlag(statusMaster,(undefined *)0x4,(undefined *)0x0);
++    bVar4 = bVar4 & bVar19;
++    bVar5 = MobStatusMasterEx_CheckMultiFlag(statusMaster,(undefined *)0x10,(undefined *)0x0);
++    uVar18 = 0x100;
++    bVar6 = MobStatusMasterEx_CheckMultiFlag(statusMaster,(undefined *)0x100,(undefined *)0x0);
++    lVar13 = CALL4(GLOBAL5);
++    if (lVar13 != 0) {
++      iVar7 = CALL5(lVar13);
++      if (iVar7 == 3) {
++        uVar16 = 1;
+       }
+       else {
+-        lVar12 = CALL4(GLOBAL5);
+-        if (lVar12 == 0) goto LABEL0;
+-        iVar6 = CALL5(lVar12);
+-        uVar15 = (uint)(iVar6 == 0x19);
++        lVar13 = CALL4(GLOBAL5);
++        if (lVar13 == 0) goto LABEL0;
++        iVar7 = CALL5(lVar13);
++        uVar16 = (uint)(iVar7 == 0x19);
+       }
+-      lVar12 = CALL4(GLOBAL5);
+-      if (lVar12 != 0) {
+-        iVar6 = CALL5(lVar12);
+-        lVar12 = CALL4(GLOBAL5);
+-        if (lVar12 != 0) {
+-          iVar7 = CALL5(lVar12);
+-          lVar12 = CALL4(GLOBAL5);
+-          if (lVar12 != 0) {
+-            iVar8 = CALL5(lVar12);
+-            lVar12 = CALL4(GLOBAL5);
+-            if (lVar12 != 0) {
+-              iVar9 = CALL5();
+-              lVar12 = CALL4(GLOBAL5);
+-              if (lVar12 != 0) {
+-                iVar10 = CALL5(lVar12,0);
+-                if (iVar10 == 0x1d) {
+-                  uVar16 = 0x8100;
++      lVar13 = CALL4(GLOBAL5);
++      if (lVar13 != 0) {
++        iVar7 = CALL5(lVar13);
++        lVar13 = CALL4(GLOBAL5);
++        if (lVar13 != 0) {
++          iVar8 = CALL5(lVar13);
++          lVar13 = CALL4(GLOBAL5);
++          if (lVar13 != 0) {
++            iVar9 = CALL5(lVar13);
++            lVar13 = CALL4(GLOBAL5);
++            if (lVar13 != 0) {
++              iVar10 = CALL5();
++              lVar13 = CALL4(GLOBAL5);
++              if (lVar13 != 0) {
++                iVar11 = CALL5(lVar13,0);
++                if (iVar11 == 0x1d) {
++                  uVar17 = 0x8100;
+                 }
+                 else {
+-                  uVar17 = 0;
+-                  uVar16 = 0x8000;
++                  uVar18 = 0;
++                  uVar17 = 0x8000;
+                 }
+                 if (entourage == 0) {
+-                  uVar16 = uVar17;
++                  uVar17 = uVar18;
+                 }
+-                uVar17 = uVar16 | (uint)(iVar9 == 0x28) << 0xb |
+-                         (uint)(iVar7 == 0x1a) << 6 | (uint)(iVar6 == 0x13) << 5 | uVar15 * 8 |
+-                         (uint)bVar4 | -(uint)(cVar5 != '\0') & 4 | -(uint)(cVar3 != '\0') & 2 |
+-                         (uint)(iVar8 == 0x1c) << 7;
+-                lVar12 = CALL4(GLOBAL5);
+-                if (lVar12 != 0) {
+-                  iVar6 = CALL5(lVar12,0);
+-                  if ((iVar6 == 0x20) && (uVar17 = bVar4 + 0x200, 0x30da4 < mobId)) {
+-                    uVar17 = bVar4 + 0x200;
++                uVar18 = uVar17 | (uint)(iVar10 == 0x28) << 0xb |
++                         (uint)(iVar8 == 0x1a) << 6 | (uint)(iVar7 == 0x13) << 5 | uVar16 * 8 |
++                         (uint)bVar4 | -(uint)(bVar6 != 0) & 4 | -(uint)(bVar5 != 0) & 2 |
++                         (uint)(iVar9 == 0x1c) << 7;
++                lVar13 = CALL4(GLOBAL5);
++                if (lVar13 != 0) {
++                  iVar7 = CALL5(lVar13,0);
++                  if ((iVar7 == 0x20) && (uVar18 = bVar4 + 0x200, 0x30da4 < mobId)) {
++                    uVar18 = bVar4 + 0x200;
+                     if (mobId < 0x30da8) {
+-                      uVar17 = bVar4 + 0x200 | 0x20;
++                      uVar18 = bVar4 + 0x200 | 0x20;
+                     }
+                     else if ((0x30e08 < mobId) && (mobId < 0x30e0c)) {
+-                      uVar17 = uVar17 | 0x8020;
++                      uVar18 = uVar18 | 0x8020;
+                     }
+                   }
+-                  lVar12 = CALL4(GLOBAL5);
+-                  if (lVar12 != 0) {
+-                    iVar6 = CALL5(lVar12,0);
+-                    if ((iVar6 == 0x12) && (uVar17 = 0x10, mobId != 2)) {
+-                      uVar17 = 0x11;
++                  lVar13 = CALL4(GLOBAL5);
++                  if (lVar13 != 0) {
++                    iVar7 = CALL5(lVar13,0);
++                    if ((iVar7 == 0x12) && (uVar18 = 0x10, mobId != 2)) {
++                      uVar18 = 0x11;
+                     }
+-                    lVar12 = CALL4(GLOBAL5);
+-                    if (lVar12 != 0) {
+-                      iVar6 = CALL5(lVar12,0);
+-                      if ((iVar6 == 0x27) && (uVar17 = 0x400, bVar4 != 0)) {
+-                        uVar17 = 0x401;
++                    lVar13 = CALL4(GLOBAL5);
++                    if (lVar13 != 0) {
++                      iVar7 = CALL5(lVar13,0);
++                      if ((iVar7 == 0x27) && (uVar18 = 0x400, bVar4 != 0)) {
++                        uVar18 = 0x401;
+                       }
+                       MobFactory_AddComponentMobActionManager
+-                                (puVar11,(undefined *)(ulonglong)uVar17,(undefined *)0x0);
+-                      if (puVar11 != (undefined *)0x0) {
+-                        lVar12 = CALL7(puVar11,GLOBAL1);
+-                        lVar13 = CALL8(puVar11,GLOBAL2);
++                                (puVar12,(undefined *)(ulonglong)uVar18,(undefined *)0x0);
++                      if (puVar12 != (undefined *)0x0) {
++                        lVar13 = CALL6(puVar12,GLOBAL1);
++                        lVar14 = CALL7(puVar12,GLOBAL2);
+                         if (*(int *)(GLOBAL4 + 0xe0) == 0) {
+                           CALL2();
+                         }
+-                        cVar3 = CALL9(lVar13,0,0);
++                        cVar3 = CALL8(lVar14,0,0);
+                         if (cVar3 == '\0') {
+-                          return puVar11;
++                          return puVar12;
+                         }
+-                        if (lVar13 != 0) {
+-                          uVar1 = *(undefined8 *)(lVar13 + 0x30);
+-                          uVar14 = CALL10(puVar11,1,GLOBAL3);
+-                          if (lVar12 != 0) {
+-                            CALL11(lVar12,uVar1,uVar14,0);
+-                            return puVar11;
++                        if (lVar14 != 0) {
++                          uVar1 = *(undefined8 *)(lVar14 + 0x30);
++                          uVar15 = CALL9(puVar12,1,GLOBAL3);
++                          if (lVar13 != 0) {
++                            CALL10(lVar13,uVar1,uVar15,0);
++                            return puVar12;
+                           }
+                         }
+@@ -148,7 +149,7 @@
+   }
+ LABEL0:
+-  CALL12();
++  CALL11();
+   pcVar2 = (code *)swi(3);
+-  puVar11 = (undefined *)(*pcVar2)();
+-  return puVar11;
++  puVar12 = (undefined *)(*pcVar2)();
++  return puVar12;
+ }

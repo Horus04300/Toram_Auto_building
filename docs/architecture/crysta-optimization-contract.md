@@ -63,14 +63,15 @@ MAXMP→AMPR, 평타 CRIT와 기대 대미지, ASPD→행동속도, HP/MP 비례
 
 계측에 따라 노드 과다이면 표현/상한, 평가 비용이면 조밀 벡터·증분 평가, 작업 실행 비용이면 지속 스레드 풀을 검토한다. 어느 방향도 새 실측 없이 우선 채택하지 않는다. 중첩 inclusive 시간은 합산하지 않는다.
 
-Gate 0~E의 상세 실패 근거는 `docs/handoff/d4-gate0-to-gatee-worklog.md`, 강한 초기해의 상세는 `docs/architecture/optimization-seed-search-design.md`, 초기 병렬 실험은 `docs/architecture/parallel-optimization-design.md`에서 해당 주제만 읽는다.
+이전 JS 추천기와 실험 로그는 삭제했다. 현재 변경은 공용 Rust 코어·실제 제품 후보 준비와 실행 회귀로 검증한다.
 
 ## 6. 검증 진입점과 기록
 
-- `tools/tests/optimization/test-crysta-evaluator.mjs`, `tools/tests/optimization/test-crysta-search-oracle.mjs`: 평가·oracle·상한.
-- `tools/tests/optimization/test-crysta-utility-dependencies.mjs`, `tools/tests/optimization/test-crysta-pair-frontier.mjs`: Utility/Pair.
-- `tools/tests/optimization/test-crysta-rust-native-parity.mjs`: JS/Rust 평가 동치.
-- `tools/tests/optimization/test-crysta-real-candidates.mjs`, `tools/benchmarks/benchmark-crysta-exact.mjs`: 실제 후보 회귀와 반복 계측.
-- 실행 제어: `docs/architecture/native-optimization-runtime.md`.
+- 공용 Rust: engine/src/의 평가·탐색 단위 테스트(완전탐색, 안전 상한, 동점, 병렬, 중단/재개).
+- 제품 후보 준비: tools/tests/optimization/test-crysta-candidate-projection.mjs, test-crysta-integer-pareto.mjs.
+- 실제 WASM: tools/tests/optimization/test-crysta-wasm.mjs. 독립 소형 완전탐색은 tools/support/crysta-exhaustive-oracle.mjs이며 추천 정책·가지치기·캐시가 없다.
+- Native: tools/tests/optimization/test-crysta-native-exact.mjs, test-crysta-native-locks.mjs, test-crysta-utility-caps.mjs.
+- JS/Rust 평가: tools/tests/optimization/test-crysta-rust-native-parity.mjs. 후보 삭제·동점 검사와 평가 동치를 구분한다.
+- 실행 제어: docs/architecture/native-optimization-runtime.md.
 
 영향받는 Gate를 선택해 명령·입력·PASS/SKIP/미실행을 보고한다. 현재 handoff에는 채택 여부·현재 계약·검증 요약만 갱신하고 긴 계측 결과를 누적하지 않는다. 이 문서는 12 KiB 이하로 유지한다.

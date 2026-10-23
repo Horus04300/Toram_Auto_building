@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-22",
+  "evidenceKind": "saved-runtime-image-metadata-token-map-focused-ghidra-static-comparison",
+  "reviewConclusion": "No new material changes observed in reviewed boss extraction/classification/static-target contracts.",
+  "reviewScope": "221 selected functions including 10 Toram.Common difficulty helpers; not all runtime behavior.",
+  "runtimeGameplayVerified": false,
+  "materialContractChangesObserved": false,
+  "functions": 221,
+  "addressNormalizedSame": 137,
+  "representationDiffs": 84,
+  "difficultyTables": {
+    "arrays": 10,
+    "elements": 50,
+    "exactBlobBytes": 200,
+    "allSame": true
+  },
+  "numericConstants": {
+    "observations": 15,
+    "allSame": true
+  },
+  "source": {
+    "mappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+    "oldMetadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+    "newMetadataSha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9",
+    "oldMappedSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+    "newMappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+    "ghidraLog": "build/tmp/update-pipeline-20261022/ghidra-review-5.log"
+  },
+  "limits": [
+    "Static selected-function comparison does not prove equality of all callees or runtime gameplay.",
+    "Server caps/randomProperty/active parts and combat state were not acquired.",
+    "Existing HighRaid physical cut uses part MagicCut in both versions; do not extend ordinary physical BodyCut rules without checking."
+  ],
+  "developmentApplied": false,
+  "pipelineContractModified": false
+}

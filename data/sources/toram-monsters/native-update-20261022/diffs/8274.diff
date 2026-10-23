@@ -1,0 +1,12 @@
+--- assets\source-data\toram-monsters\native-target\MobBattleStatus-_ctor-7fff5f58c670.c
++++ 8274.c
+@@ -6,7 +6,7 @@
+   CALL0(self,0);
+   *(undefined **)(self + 0x10) = statusMaster;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x18) = abnormalManager;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x20) = buffManager;
+   if (GLOBAL0 != 0) {

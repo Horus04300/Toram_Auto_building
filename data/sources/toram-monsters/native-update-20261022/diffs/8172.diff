@@ -1,0 +1,45 @@
+--- assets\source-data\toram-monsters\native-rules\MobActionManager-OnSetStatus-7fff5fe31db0.c
++++ 8172.c
+@@ -27,12 +27,12 @@
+     CALL2(lVar10,0);
+     *(undefined8 *)(lVar10 + 0x10) = uVar3;
+-    CALL3();
++    il2cpp_write_barrier_0();
+     *(undefined8 *)(lVar10 + 0x18) = uVar4;
+-    CALL3();
++    il2cpp_write_barrier_0();
+     *(undefined8 *)(lVar10 + 0x20) = uVar5;
+-    CALL3();
++    il2cpp_write_barrier_0();
+ LABEL0:
+     *(longlong *)(self + 0x158) = lVar10;
+-    CALL3();
++    il2cpp_write_barrier_0();
+     uVar9 = (**(code **)(*(longlong *)self + 0x5d8))
+                       (self,4,*(undefined8 *)(*(longlong *)self + 0x5e0));
+@@ -40,5 +40,5 @@
+     return;
+   }
+-  lVar11 = CALL4(GLOBAL4);
++  lVar11 = CALL3(GLOBAL4);
+   if (lVar11 != 0) {
+     plVar6 = *(longlong **)(lVar11 + 0x28);
+@@ -48,5 +48,5 @@
+            (*(longlong *)(*plVar6 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL2 + 0x130) * 8)
+           != GLOBAL2)) {
+-        CALL5(plVar6);
++        CALL4(plVar6);
+         pcVar7 = (code *)swi(3);
+         (*pcVar7)();
+@@ -60,9 +60,9 @@
+       uVar5 = *(undefined8 *)(self + 0x70);
+       lVar10 = CALL1(GLOBAL1);
+-      CALL6(lVar10,uVar5,uVar4,uVar3,uVar1,uVar2,(int)lVar11,0);
++      CALL5(lVar10,uVar5,uVar4,uVar3,uVar1,uVar2,(int)lVar11,0);
+       goto LABEL0;
+     }
+   }
+-  CALL7();
++  CALL6();
+   pcVar7 = (code *)swi(3);
+   (*pcVar7)();

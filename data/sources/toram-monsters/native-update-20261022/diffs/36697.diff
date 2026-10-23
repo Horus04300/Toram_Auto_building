@@ -1,0 +1,156 @@
+--- assets\source-data\toram-monsters\native-schema\_loadFieldData_d__125-MoveNext-7fff603f3f50.c
++++ 36697.c
+@@ -1,13 +1,13 @@
+ {
+-  code *pcVar1;
+-  char cVar2;
+-  byte bVar3;
++  undefined8 uVar1;
++  code *pcVar2;
++  char cVar3;
++  byte bVar4;
+   int fieldId;
+-  undefined *puVar4;
+-  longlong lVar5;
+-  undefined *self_00;
+-  undefined *callback;
+-  undefined8 uVar6;
+-  longlong lVar7;
++  undefined8 uVar5;
++  longlong lVar6;
++  undefined *puVar7;
++  undefined8 uVar8;
++  longlong lVar9;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -24,45 +24,43 @@
+     GLOBAL0 = '\x01';
+   }
+-  lVar7 = *(longlong *)(self + 0x28);
++  lVar9 = *(longlong *)(self + 0x28);
+   if (*(int *)(self + 0x10) == 0) {
+     *(undefined4 *)(self + 0x10) = 0xffffffff;
+-    puVar4 = (undefined *)CALL1(GLOBAL9);
+-    _loadFieldData_d__125_System_IDisposable_Dispose(puVar4,(undefined *)0x0);
+-    *(undefined **)(self + 0x30) = puVar4;
+-    CALL2();
++    uVar5 = CALL1(GLOBAL9);
++    CALL2(uVar5,0);
++    *(undefined8 *)(self + 0x30) = uVar5;
++    il2cpp_write_barrier_0();
+     if (*(longlong *)(self + 0x30) == 0) goto LABEL0;
+     *(undefined1 *)(*(longlong *)(self + 0x30) + 0x10) = 1;
+-    lVar5 = CALL3(GLOBAL5);
+-    if (lVar5 == 0) goto LABEL0;
+-    *(undefined8 *)(self + 0x40) = *(undefined8 *)(lVar5 + 0x20);
+-    CALL2();
+-    uVar6 = *(undefined8 *)(self + 0x40);
++    lVar6 = CALL3(GLOBAL5);
++    if (lVar6 == 0) goto LABEL0;
++    *(undefined8 *)(self + 0x40) = *(undefined8 *)(lVar6 + 0x20);
++    il2cpp_write_barrier_0();
++    uVar5 = *(undefined8 *)(self + 0x40);
+     if (*(int *)(GLOBAL2 + 0xe0) == 0) {
+       CALL4();
+     }
+-    cVar2 = CALL5(uVar6,0,0);
+-    if (cVar2 != '\0') {
+-      puVar4 = (undefined *)CALL3(GLOBAL4);
+-      lVar5 = CALL3(GLOBAL5);
+-      if (lVar5 != 0) {
+-        fieldId = CALL6(lVar5,0);
+-        if ((*(longlong *)(self + 0x40) != 0) && (puVar4 != (undefined *)0x0)) {
+-          bVar3 = MobMaster_ReadMaster
+-                            (puVar4,fieldId,*(undefined **)(*(longlong *)(self + 0x40) + 0x48),
++    cVar3 = CALL5(uVar5,0,0);
++    if (cVar3 != '\0') {
++      puVar7 = (undefined *)CALL3(GLOBAL4);
++      lVar6 = CALL3(GLOBAL5);
++      if (lVar6 != 0) {
++        fieldId = CALL6(lVar6,0);
++        if ((*(longlong *)(self + 0x40) != 0) && (puVar7 != (undefined *)0x0)) {
++          bVar4 = MobMaster_ReadMaster
++                            (puVar7,fieldId,*(undefined **)(*(longlong *)(self + 0x40) + 0x48),
+                              *(undefined **)(self + 0x20),(undefined *)0x0);
+-          if (bVar3 == 0) {
+-            _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL11,(undefined *)0x0);
++          if (bVar4 == 0) {
++            CALL2(GLOBAL11,0);
+           }
+-          self_00 = (undefined *)CALL3(GLOBAL4);
+-          puVar4 = *(undefined **)(self + 0x20);
+-          uVar6 = *(undefined8 *)(self + 0x30);
+-          callback = (undefined *)CALL1(GLOBAL1);
+-          CALL7(callback,uVar6,GLOBAL8);
+-          if ((self_00 != (undefined *)0x0) &&
+-             (puVar4 = MobMaster_LoadMobResource(self_00,puVar4,callback,(undefined *)0x0),
+-             lVar7 != 0)) {
+-            uVar6 = CALL8(lVar7,puVar4,0);
+-            *(undefined8 *)(self + 0x18) = uVar6;
+-            CALL2();
++          lVar6 = CALL3(GLOBAL4);
++          uVar5 = *(undefined8 *)(self + 0x20);
++          uVar1 = *(undefined8 *)(self + 0x30);
++          uVar8 = CALL1(GLOBAL1);
++          CALL7(uVar8,uVar1,GLOBAL8,0);
++          if ((lVar6 != 0) && (uVar5 = CALL8(lVar6,uVar5,uVar8,0), lVar9 != 0)) {
++            uVar5 = CALL9(lVar9,uVar5,0);
++            *(undefined8 *)(self + 0x18) = uVar5;
++            il2cpp_write_barrier_0();
+             *(undefined4 *)(self + 0x10) = 1;
+             return 1;
+@@ -80,26 +78,27 @@
+     if (*(longlong *)(self + 0x30) == 0) goto LABEL0;
+     if (*(char *)(*(longlong *)(self + 0x30) + 0x10) == '\0') {
+-      _loadFieldData_d__125_System_IDisposable_Dispose(GLOBAL10,(undefined *)0x0);
++      CALL2(GLOBAL10);
+     }
+-    lVar5 = CALL9(GLOBAL7);
++    lVar6 = CALL10(GLOBAL7);
++    if ((*(undefined **)(self + 0x40) == (undefined *)0x0) ||
++       (puVar7 = MapInfo_GetMobPopPoint(*(undefined **)(self + 0x40),(undefined *)0x0), lVar6 == 0))
++    goto LABEL0;
++    CALL11(lVar6,puVar7,0);
++    lVar6 = CALL10(GLOBAL6);
++    if (lVar6 == 0) goto LABEL0;
++    CALL12(lVar6,0);
++    lVar6 = CALL10(GLOBAL6);
+     if ((*(longlong *)(self + 0x40) == 0) ||
+-       (uVar6 = CALL10(*(longlong *)(self + 0x40),0), lVar5 == 0)) goto LABEL0;
+-    CALL11(lVar5,uVar6,0);
+-    lVar5 = CALL9(GLOBAL6);
+-    if (lVar5 == 0) goto LABEL0;
+-    CALL12(lVar5,0);
+-    lVar5 = CALL9(GLOBAL6);
+-    if ((*(longlong *)(self + 0x40) == 0) ||
+-       (uVar6 = CALL13(*(longlong *)(self + 0x40),0), lVar5 == 0)) goto LABEL0;
+-    CALL14(lVar5,uVar6,0);
++       (uVar5 = CALL13(*(longlong *)(self + 0x40),0), lVar6 == 0)) goto LABEL0;
++    CALL14(lVar6,uVar5,0);
+   }
+-  if (lVar7 != 0) {
+-    *(undefined1 *)(lVar7 + 0x5a) = 1;
++  if (lVar9 != 0) {
++    *(undefined1 *)(lVar9 + 0x5a) = 1;
+     if (self[0x38] != '\0') {
+-      CALL15(*(undefined8 *)(lVar7 + 0x30),0);
++      CALL15(*(undefined8 *)(lVar9 + 0x30),0);
+     }
+-    lVar7 = CALL3(GLOBAL3);
+-    if (lVar7 != 0) {
+-      CALL16(lVar7,0,0);
++    lVar9 = CALL3(GLOBAL3);
++    if (lVar9 != 0) {
++      CALL16(lVar9,0,0);
+       return 0;
+     }
+@@ -107,6 +106,6 @@
+ LABEL0:
+   CALL17();
+-  pcVar1 = (code *)swi(3);
+-  bVar3 = (*pcVar1)();
+-  return bVar3;
++  pcVar2 = (code *)swi(3);
++  bVar4 = (*pcVar2)();
++  return bVar4;
+ }

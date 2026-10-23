@@ -1,0 +1,564 @@
+{
+  "case": {
+    "equipmentType": 20,
+    "rounding": "combined-floor",
+    "frame": "armor-atk-dte",
+    "profile": {
+      "equipmentType": 20,
+      "label": "방어구",
+      "basePotential": 63,
+      "startingPotential": 132,
+      "craftStatBonus": 51,
+      "craftingRoundingModel": "combined-floor",
+      "startingPotentialNativeVerified": false,
+      "gameItemIds": [
+        20155
+      ],
+      "statterLevel": 325,
+      "statterTEC": 255,
+      "grantSkills": [
+        10,
+        10,
+        10
+      ],
+      "crafterAppStatBudget": 840,
+      "slotPenalty": "excluded from reference profile"
+    },
+    "positives": {
+      "18": 9,
+      "53": 20,
+      "6": 9
+    },
+    "negatives": {
+      "20": -16,
+      "52": -9,
+      "35": -10
+    },
+    "routes": {
+      "best": {
+        "mixed": {
+          "warningPercent": 6,
+          "afterPotential": -261,
+          "steps": [
+            {
+              "18": 1,
+              "35": -1
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "18": 9,
+              "53": 20,
+              "6": 9
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "mixed",
+          "prefixActions": 2,
+          "negativeGroups": "mixed-then-remainder"
+        },
+        "combined": {
+          "warningPercent": 6,
+          "afterPotential": -261,
+          "steps": [
+            {
+              "18": 1,
+              "35": -1
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "18": 9,
+              "53": 20,
+              "6": 9
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "mixed",
+          "prefixActions": 2,
+          "negativeGroups": "mixed-then-remainder"
+        }
+      },
+      "prefixStatesGenerated": 140,
+      "negativeSchedulesAttempted": 300,
+      "completedRoutes": 26,
+      "uniqueCompletedRoutes": 26
+    }
+  },
+  "traces": {
+    "mixed": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            },
+            {
+              "bonusId": 35,
+              "value": -1
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 9
+            },
+            {
+              "bonusId": 53,
+              "value": 20
+            },
+            {
+              "bonusId": 6,
+              "value": 9
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 115,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -1,
+                "delta": -1,
+                "cost": -3
+              }
+            ],
+            "rowCostSum": 17,
+            "multiplierFloat32": 1.0,
+            "totalCost": 17,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 360,
+            "categoryCounts": {
+              "3": 1,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 35,
+                "value": -1
+              }
+            ]
+          },
+          {
+            "beforePotential": 115,
+            "afterPotential": 391,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": -1,
+                "new": -10,
+                "delta": -9,
+                "cost": -27
+              }
+            ],
+            "rowCostSum": -191,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": -276,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 942,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              }
+            ]
+          },
+          {
+            "beforePotential": 391,
+            "afterPotential": -261,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 9,
+                "delta": 8,
+                "cost": 160
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 20,
+                "delta": 20,
+                "cost": 200
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 9,
+                "delta": 9,
+                "cost": 90
+              }
+            ],
+            "rowCostSum": 450,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 652,
+            "warningPercent": 6,
+            "warningIntegerBeforeUpperBound": 6,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "9": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 53,
+                "value": 20
+              },
+              {
+                "bonusId": 6,
+                "value": 9
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 6,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "combined": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            },
+            {
+              "bonusId": 35,
+              "value": -1
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 9
+            },
+            {
+              "bonusId": 53,
+              "value": 20
+            },
+            {
+              "bonusId": 6,
+              "value": 9
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 115,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -1,
+                "delta": -1,
+                "cost": -3
+              }
+            ],
+            "rowCostSum": 17,
+            "multiplierFloat32": 1.0,
+            "totalCost": 17,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 360,
+            "categoryCounts": {
+              "3": 1,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 35,
+                "value": -1
+              }
+            ]
+          },
+          {
+            "beforePotential": 115,
+            "afterPotential": 391,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": -1,
+                "new": -10,
+                "delta": -9,
+                "cost": -27
+              }
+            ],
+            "rowCostSum": -191,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": -276,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 942,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              }
+            ]
+          },
+          {
+            "beforePotential": 391,
+            "afterPotential": -261,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 9,
+                "delta": 8,
+                "cost": 160
+              },
+              {
+                "bonusId": 53,
+                "old": 0,
+                "new": 20,
+                "delta": 20,
+                "cost": 200
+              },
+              {
+                "bonusId": 6,
+                "old": 0,
+                "new": 9,
+                "delta": 9,
+                "cost": 90
+              }
+            ],
+            "rowCostSum": 450,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 652,
+            "warningPercent": 6,
+            "warningIntegerBeforeUpperBound": 6,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "9": 1,
+              "1": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 53,
+                "value": 20
+              },
+              {
+                "bonusId": 6,
+                "value": 9
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 6,
+        "serverOutcomesSimulated": false
+      }
+    }
+  }
+}

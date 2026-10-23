@@ -1,0 +1,113 @@
+--- assets\source-data\toram-monsters\native-target\BossMobBattleStatus-get_MagicDef-7fff5fdb1de0.c
++++ 7220.c
+@@ -1,14 +1,13 @@
+ {
+   short sVar1;
+-  undefined4 uVar2;
+-  code *pcVar3;
+-  float fVar4;
+-  longlong *plVar5;
+-  char cVar6;
+-  byte bVar7;
++  code *pcVar2;
++  float fVar3;
++  longlong *plVar4;
++  char cVar5;
++  byte bVar6;
++  int iVar7;
+   int iVar8;
+-  int iVar9;
+-  longlong lVar10;
+-  int iVar11;
++  longlong lVar9;
++  int iVar10;
+   undefined8 uStack_70;
+   undefined8 *puStack_68;
+@@ -26,15 +25,16 @@
+     GLOBAL0 = '\x01';
+   }
+-  iVar11 = 0;
++  iVar10 = 0;
+   if (*(longlong *)(self + 0x10) != 0) {
+-    uVar2 = *(undefined4 *)(*(longlong *)(self + 0x10) + 0x40);
++    iVar7 = *(int *)(*(longlong *)(self + 0x10) + 0x40);
+     sVar1 = *(short *)(self + 0x28);
+     if (*(int *)(GLOBAL1 + 0xe0) == 0) {
+       CALL1();
+     }
+-    iVar8 = CALL2(uVar2,(int)sVar1,0);
++    iVar7 = Toram_Common_Rooms_BossDifficultyLevelMethods_GetStatusRate
++                      (iVar7,(int)sVar1,(undefined *)0x0);
+     if ((*(longlong *)(self + 0x30) != 0) &&
+-       (lVar10 = CALL3(*(longlong *)(self + 0x30),GLOBAL2), lVar10 != 0)) {
+-      CALL4(&uStack_70,lVar10,GLOBAL6);
++       (lVar9 = CALL2(*(longlong *)(self + 0x30),GLOBAL2), lVar9 != 0)) {
++      CALL3(&uStack_70,lVar9,GLOBAL6);
+       uStack_58 = uStack_70;
+       puStack_50 = puStack_68;
+@@ -42,30 +42,30 @@
+       uStack_70 = 0;
+       puStack_68 = &uStack_58;
+-      while (cVar6 = CALL5(&uStack_58), plVar5 = plStack_48, cVar6 != '\0') {
++      while (cVar5 = CALL4(&uStack_58), plVar4 = plStack_48, cVar5 != '\0') {
+         if (plStack_48 == (longlong *)0x0) goto LABEL0;
+-        bVar7 = MobPartsStatus_get_IsDead((undefined *)plStack_48,(undefined *)0x0);
+-        if (bVar7 == 0) {
+-          lVar10 = *plVar5;
+-          iVar9 = (**(code **)(lVar10 + 0x198))(plVar5,*(undefined8 *)(lVar10 + 0x1a0));
+-          iVar11 = iVar11 + iVar9;
++        bVar6 = MobPartsStatus_get_IsDead((undefined *)plStack_48,(undefined *)0x0);
++        if (bVar6 == 0) {
++          lVar9 = *plVar4;
++          iVar8 = (**(code **)(lVar9 + 0x198))(plVar4,*(undefined8 *)(lVar9 + 0x1a0));
++          iVar10 = iVar10 + iVar8;
+         }
+       }
+-      CALL6(&uStack_58,GLOBAL3);
++      CALL5(&uStack_58,GLOBAL3);
+       if (*(longlong *)(self + 0x20) != 0) {
+-        iVar9 = CALL7(*(longlong *)(self + 0x20),3);
+-        iVar11 = (int)(((float)iVar9 / GLOBAL7 + GLOBAL8) *
+-                      (float)(iVar8 + iVar11));
++        iVar8 = CALL6(*(longlong *)(self + 0x20),3);
++        iVar10 = (int)(((float)iVar8 / GLOBAL7 + GLOBAL8) *
++                      (float)(iVar7 + iVar10));
+         if (*(longlong *)(self + 0x18) != 0) {
+-          cVar6 = CALL8(*(longlong *)(self + 0x18),10);
+-          fVar4 = GLOBAL9;
+-          if (cVar6 != '\0') {
+-            iVar11 = (int)((float)iVar11 * GLOBAL9);
++          cVar5 = CALL7(*(longlong *)(self + 0x18),10);
++          fVar3 = GLOBAL9;
++          if (cVar5 != '\0') {
++            iVar10 = (int)((float)iVar10 * GLOBAL9);
+           }
+           if (*(longlong *)(self + 0x18) != 0) {
+-            cVar6 = CALL8(*(longlong *)(self + 0x18),0x16);
+-            if (cVar6 != '\0') {
+-              iVar11 = (int)((float)iVar11 * fVar4);
++            cVar5 = CALL7(*(longlong *)(self + 0x18),0x16);
++            if (cVar5 != '\0') {
++              iVar10 = (int)((float)iVar10 * fVar3);
+             }
+-            return iVar11;
++            return iVar10;
+           }
+         }
+@@ -73,10 +73,10 @@
+     }
+   }
++  CALL8();
++LABEL0:
++  CALL8();
+   CALL9();
+-LABEL0:
+-  CALL9();
+-  CALL10();
+-  pcVar3 = (code *)swi(3);
+-  iVar11 = (*pcVar3)();
+-  return iVar11;
++  pcVar2 = (code *)swi(3);
++  iVar10 = (*pcVar2)();
++  return iVar10;
+ }

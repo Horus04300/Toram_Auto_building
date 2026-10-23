@@ -1,0 +1,102 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\MobPropertyStatusCollection-TryGetValue-7fff5fe86c30.c
++++ 9802.c
+@@ -5,7 +5,6 @@
+   char cVar4;
+   byte bVar5;
+-  undefined *self_00;
+-  undefined8 uVar6;
+-  longlong lVar7;
++  longlong lVar6;
++  undefined8 uVar7;
+   longlong alStack_38 [2];
+   undefined8 uStack_28;
+@@ -23,59 +22,59 @@
+     GLOBAL0 = '\x01';
+   }
+-  self_00 = (undefined *)CALL1(GLOBAL9);
+-  GuildRaidRoomData_LoadAsset(self_00,(undefined *)0x0);
+-  if (self_00 == (undefined *)0x0) {
+-    CALL2();
++  lVar6 = CALL1(GLOBAL9);
++  CALL2(lVar6,0);
++  if (lVar6 == 0) {
++    CALL3();
+ LABEL0:
++    CALL4();
++LABEL1:
++    CALL4();
++LABEL2:
+     CALL3();
+-LABEL1:
++LABEL3:
+     CALL3();
+-LABEL2:
+-    CALL2();
+-LABEL3:
+-    CALL2();
+ LABEL4:
+-    CALL2();
++    CALL3();
+ LABEL5:
+-    CALL2();
++    CALL3();
+ LABEL6:
+-    CALL2();
+-    CALL4();
++    CALL3();
++    CALL5();
+     pcVar2 = (code *)swi(3);
+     bVar5 = (*pcVar2)();
+     return bVar5;
+   }
+-  *(int *)(self_00 + 0x10) = (int)type;
++  *(int *)(lVar6 + 0x10) = (int)type;
+   *(undefined4 *)constant = 0;
+   *(undefined4 *)rate = 0;
+-  lVar7 = *(longlong *)(self + 0x10);
+-  if ((lVar7 != 0) && (0 < *(int *)(lVar7 + 0x18))) {
+-    uVar6 = CALL1(GLOBAL2);
+-    CALL5(uVar6,self_00,GLOBAL8,0);
+-    lVar7 = CALL6(lVar7,uVar6,GLOBAL1);
+-    if (lVar7 != 0) {
+-      alStack_38[0] = CALL7(0,GLOBAL4,lVar7);
++  lVar1 = *(longlong *)(self + 0x10);
++  if ((lVar1 != 0) && (0 < *(int *)(lVar1 + 0x18))) {
++    uVar7 = CALL1(GLOBAL2);
++    CALL6(uVar7,lVar6,GLOBAL8,0);
++    lVar6 = CALL7(lVar1,uVar7,GLOBAL1);
++    if (lVar6 != 0) {
++      alStack_38[0] = CALL8(0,GLOBAL4,lVar6);
+       fVar3 = GLOBAL10;
+       uStack_28 = 0;
+       plStack_20 = alStack_38;
+       while (alStack_38[0] != 0) {
+-        cVar4 = CALL7(0,GLOBAL6);
++        cVar4 = CALL8(0,GLOBAL6);
+         if (cVar4 == '\0') {
+           if (alStack_38[0] != 0) {
+-            CALL8(0,GLOBAL3);
++            CALL9(0,GLOBAL3);
+           }
+           return 1;
+         }
+         if (alStack_38[0] == 0) goto LABEL5;
+-        lVar7 = CALL7(0,GLOBAL5);
+-        if (lVar7 == 0) goto LABEL4;
+-        lVar1 = *(longlong *)(lVar7 + 0x18);
++        lVar6 = CALL8(0,GLOBAL5);
++        if (lVar6 == 0) goto LABEL4;
++        lVar1 = *(longlong *)(lVar6 + 0x18);
+         if (lVar1 == 0) goto LABEL3;
+         if (*(uint *)(lVar1 + 0x18) < 2) goto LABEL0;
+         *(int *)constant = *(int *)constant + *(int *)(lVar1 + 0x24);
+-        lVar7 = *(longlong *)(lVar7 + 0x18);
+-        if (lVar7 == 0) goto LABEL2;
+-        if (*(uint *)(lVar7 + 0x18) < 3) goto LABEL1;
+-        *(float *)rate = (float)*(int *)(lVar7 + 0x28) / fVar3 + *(float *)rate;
++        lVar6 = *(longlong *)(lVar6 + 0x18);
++        if (lVar6 == 0) goto LABEL2;
++        if (*(uint *)(lVar6 + 0x18) < 3) goto LABEL1;
++        *(float *)rate = (float)*(int *)(lVar6 + 0x28) / fVar3 + *(float *)rate;
+       }
+       goto LABEL6;

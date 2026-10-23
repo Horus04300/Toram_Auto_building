@@ -1,0 +1,417 @@
+{
+  "authority": "passive-targeted-item-formatter-constants",
+  "pid": 14220,
+  "moduleBase": "0x7fff5f250000",
+  "moduleSha256": "a3faf7156734768a3ff7349d4b94de029b68b823d974bf52f92bbc77f93f46dd",
+  "capturedUtc": "2026-10-17T06:18:36.000574+00:00",
+  "processAccess": "PROCESS_QUERY_INFORMATION | PROCESS_VM_READ",
+  "bytesRead": 975,
+  "limitList": [
+    96,
+    103,
+    108,
+    109,
+    115,
+    120
+  ],
+  "initializerFieldName": "EF2BA7DAEFA8D8337BDEE29DF61E5561A05950B2A3D56083A008941EBD1AEBE5",
+  "initializerToken": "0x400d46f",
+  "strings": {
+    "negativeReplacement": "+",
+    "empty": "",
+    "positiveColor": "[ffffff]",
+    "negativeColor": "[ff8888]",
+    "zeroColor": "[888888]",
+    "colorFormat": "{0}{1}[ffffff]",
+    "skillDefaultTag": "N",
+    "skillBracketPrefix": "[N]",
+    "skillUnknownName": "???",
+    "platformCode": "pc",
+    "versionFilePrefix1": "?",
+    "versionFilePrefix2": "RevisionInfoBinary.bytes",
+    "commonAssetBundleName": "CommonAssetBundle",
+    "localizePrefix1": "Localize/",
+    "localizePrefix2": "/Stamp",
+    "localizePrefix3": "/GameScene_",
+    "languageFileSuffix": "_",
+    "assetBundleUrlFormat": "{0}{1}.unity3d"
+  },
+  "reads": [
+    {
+      "address": "0x7fff5fff5e00",
+      "bytes": 24,
+      "purpose": "GetBonusTime code identity",
+      "hex": "40534883ec20803d41fa5e02008bd9752b488d0d30a44502"
+    },
+    {
+      "address": "0x7fff62450248",
+      "bytes": 8,
+      "purpose": "BonusManager TypeInfo reference",
+      "hex": "800c1eb28b020000"
+    },
+    {
+      "address": "0x28bb21e0d38",
+      "bytes": 8,
+      "purpose": "BonusManager static_fields",
+      "hex": "605898858b020000"
+    },
+    {
+      "address": "0x28b85985870",
+      "bytes": 8,
+      "purpose": "BonusManager.limitList",
+      "hex": "00bf0a688d020000"
+    },
+    {
+      "address": "0x28d680abf00",
+      "bytes": 32,
+      "purpose": "limitList array header",
+      "hex": "d0ecdeb28b020000000000000000000000000000000000000600000000000000"
+    },
+    {
+      "address": "0x28d680abf20",
+      "bytes": 24,
+      "purpose": "limitList six int32 values",
+      "hex": "60000000670000006c0000006d0000007300000078000000"
+    },
+    {
+      "address": "0x7fff6244c0e0",
+      "bytes": 8,
+      "purpose": "limitList initializer RuntimeFieldHandle",
+      "hex": "586c67508c020000"
+    },
+    {
+      "address": "0x28c50676c58",
+      "bytes": 32,
+      "purpose": "Initializer FieldInfo",
+      "hex": "3038b8888c02000098d54962ff7f000010f355508c0200007c2e06006fd40004"
+    },
+    {
+      "address": "0x28c88b83830",
+      "bytes": 65,
+      "purpose": "Compiler SHA256 field name",
+      "hex": "4546324241374441454641384438333337424445453239444636314535353631413035393530423241334435363038334130303839343145424431414542453500"
+    },
+    {
+      "address": "0x7fff6241a898",
+      "bytes": 8,
+      "purpose": "negativeReplacement literal reference",
+      "hex": "004e98858b020000"
+    },
+    {
+      "address": "0x28b85984e00",
+      "bytes": 20,
+      "purpose": "negativeReplacement string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28b85984e14",
+      "bytes": 2,
+      "purpose": "negativeReplacement UTF-16",
+      "hex": "2b00"
+    },
+    {
+      "address": "0x7fff623f7f60",
+      "bytes": 8,
+      "purpose": "empty literal reference",
+      "hex": "405f98858b020000"
+    },
+    {
+      "address": "0x28b85985f40",
+      "bytes": 20,
+      "purpose": "empty string header",
+      "hex": "d0b325b08b020000000000000000000000000000"
+    },
+    {
+      "address": "0x7fff624263c8",
+      "bytes": 8,
+      "purpose": "positiveColor literal reference",
+      "hex": "9099e7678d020000"
+    },
+    {
+      "address": "0x28d67e79990",
+      "bytes": 20,
+      "purpose": "positiveColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d67e799a4",
+      "bytes": 16,
+      "purpose": "positiveColor UTF-16",
+      "hex": "5b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7fff62425428",
+      "bytes": 8,
+      "purpose": "negativeColor literal reference",
+      "hex": "b02a10028d020000"
+    },
+    {
+      "address": "0x28d02102ab0",
+      "bytes": 20,
+      "purpose": "negativeColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d02102ac4",
+      "bytes": 16,
+      "purpose": "negativeColor UTF-16",
+      "hex": "5b006600660038003800380038005d00"
+    },
+    {
+      "address": "0x7fff6241c668",
+      "bytes": 8,
+      "purpose": "zeroColor literal reference",
+      "hex": "70850c038d020000"
+    },
+    {
+      "address": "0x28d030c8570",
+      "bytes": 20,
+      "purpose": "zeroColor string header",
+      "hex": "d0b325b08b020000000000000000000008000000"
+    },
+    {
+      "address": "0x28d030c8584",
+      "bytes": 16,
+      "purpose": "zeroColor UTF-16",
+      "hex": "5b003800380038003800380038005d00"
+    },
+    {
+      "address": "0x7fff62401c80",
+      "bytes": 8,
+      "purpose": "colorFormat literal reference",
+      "hex": "c056c8018d020000"
+    },
+    {
+      "address": "0x28d01c856c0",
+      "bytes": 20,
+      "purpose": "colorFormat string header",
+      "hex": "d0b325b08b02000000000000000000000e000000"
+    },
+    {
+      "address": "0x28d01c856d4",
+      "bytes": 28,
+      "purpose": "colorFormat UTF-16",
+      "hex": "7b0030007d007b0031007d005b006600660066006600660066005d00"
+    },
+    {
+      "address": "0x7fff624727d0",
+      "bytes": 8,
+      "purpose": "skillDefaultTag literal reference",
+      "hex": "e0c6d1668d020000"
+    },
+    {
+      "address": "0x28d66d1c6e0",
+      "bytes": 20,
+      "purpose": "skillDefaultTag string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28d66d1c6f4",
+      "bytes": 2,
+      "purpose": "skillDefaultTag UTF-16",
+      "hex": "4e00"
+    },
+    {
+      "address": "0x7fff62421fc8",
+      "bytes": 8,
+      "purpose": "skillBracketPrefix literal reference",
+      "hex": "10d5e3678d020000"
+    },
+    {
+      "address": "0x28d67e3d510",
+      "bytes": 20,
+      "purpose": "skillBracketPrefix string header",
+      "hex": "d0b325b08b020000000000000000000003000000"
+    },
+    {
+      "address": "0x28d67e3d524",
+      "bytes": 6,
+      "purpose": "skillBracketPrefix UTF-16",
+      "hex": "5b004e005d00"
+    },
+    {
+      "address": "0x7fff624408b0",
+      "bytes": 8,
+      "purpose": "skillUnknownName literal reference",
+      "hex": "f0e958678d020000"
+    },
+    {
+      "address": "0x28d6758e9f0",
+      "bytes": 20,
+      "purpose": "skillUnknownName string header",
+      "hex": "d0b325b08b020000000000000000000003000000"
+    },
+    {
+      "address": "0x28d6758ea04",
+      "bytes": 6,
+      "purpose": "skillUnknownName UTF-16",
+      "hex": "3f003f003f00"
+    },
+    {
+      "address": "0x7fff6243aa20",
+      "bytes": 8,
+      "purpose": "platformCode literal reference",
+      "hex": "80c2d1668d020000"
+    },
+    {
+      "address": "0x28d66d1c280",
+      "bytes": 20,
+      "purpose": "platformCode string header",
+      "hex": "d0b325b08b020000000000000000000002000000"
+    },
+    {
+      "address": "0x28d66d1c294",
+      "bytes": 4,
+      "purpose": "platformCode UTF-16",
+      "hex": "70006300"
+    },
+    {
+      "address": "0x7fff624405a0",
+      "bytes": 8,
+      "purpose": "versionFilePrefix1 literal reference",
+      "hex": "c008c7668d020000"
+    },
+    {
+      "address": "0x28d66c708c0",
+      "bytes": 20,
+      "purpose": "versionFilePrefix1 string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28d66c708d4",
+      "bytes": 2,
+      "purpose": "versionFilePrefix1 UTF-16",
+      "hex": "3f00"
+    },
+    {
+      "address": "0x7fff6245b758",
+      "bytes": 8,
+      "purpose": "versionFilePrefix2 literal reference",
+      "hex": "a015986a8d020000"
+    },
+    {
+      "address": "0x28d6a9815a0",
+      "bytes": 20,
+      "purpose": "versionFilePrefix2 string header",
+      "hex": "d0b325b08b020000000000000000000018000000"
+    },
+    {
+      "address": "0x28d6a9815b4",
+      "bytes": 48,
+      "purpose": "versionFilePrefix2 UTF-16",
+      "hex": "5200650076006900730069006f006e0049006e0066006f00420069006e006100720079002e0062007900740065007300"
+    },
+    {
+      "address": "0x7fff62410400",
+      "bytes": 8,
+      "purpose": "commonAssetBundleName literal reference",
+      "hex": "000db86a8d020000"
+    },
+    {
+      "address": "0x28d6ab80d00",
+      "bytes": 20,
+      "purpose": "commonAssetBundleName string header",
+      "hex": "d0b325b08b020000000000000000000011000000"
+    },
+    {
+      "address": "0x28d6ab80d14",
+      "bytes": 34,
+      "purpose": "commonAssetBundleName UTF-16",
+      "hex": "43006f006d006d006f006e0041007300730065007400420075006e0064006c006500"
+    },
+    {
+      "address": "0x7fff62446cb0",
+      "bytes": 8,
+      "purpose": "localizePrefix1 literal reference",
+      "hex": "009fd1668d020000"
+    },
+    {
+      "address": "0x28d66d19f00",
+      "bytes": 20,
+      "purpose": "localizePrefix1 string header",
+      "hex": "d0b325b08b020000000000000000000009000000"
+    },
+    {
+      "address": "0x28d66d19f14",
+      "bytes": 18,
+      "purpose": "localizePrefix1 UTF-16",
+      "hex": "4c006f00630061006c0069007a0065002f00"
+    },
+    {
+      "address": "0x7fff624255f0",
+      "bytes": 8,
+      "purpose": "localizePrefix2 literal reference",
+      "hex": "407b976a8d020000"
+    },
+    {
+      "address": "0x28d6a977b40",
+      "bytes": 20,
+      "purpose": "localizePrefix2 string header",
+      "hex": "d0b325b08b020000000000000000000006000000"
+    },
+    {
+      "address": "0x28d6a977b54",
+      "bytes": 12,
+      "purpose": "localizePrefix2 UTF-16",
+      "hex": "2f005300740061006d007000"
+    },
+    {
+      "address": "0x7fff624252d0",
+      "bytes": 8,
+      "purpose": "localizePrefix3 literal reference",
+      "hex": "4048b1018d020000"
+    },
+    {
+      "address": "0x28d01b14840",
+      "bytes": 20,
+      "purpose": "localizePrefix3 string header",
+      "hex": "d0b325b08b02000000000000000000000b000000"
+    },
+    {
+      "address": "0x28d01b14854",
+      "bytes": 22,
+      "purpose": "localizePrefix3 UTF-16",
+      "hex": "2f00470061006d0065005300630065006e0065005f00"
+    },
+    {
+      "address": "0x7fff6242d448",
+      "bytes": 8,
+      "purpose": "languageFileSuffix literal reference",
+      "hex": "a065aa018d020000"
+    },
+    {
+      "address": "0x28d01aa65a0",
+      "bytes": 20,
+      "purpose": "languageFileSuffix string header",
+      "hex": "d0b325b08b020000000000000000000001000000"
+    },
+    {
+      "address": "0x28d01aa65b4",
+      "bytes": 2,
+      "purpose": "languageFileSuffix UTF-16",
+      "hex": "5f00"
+    },
+    {
+      "address": "0x7fff62401a10",
+      "bytes": 8,
+      "purpose": "assetBundleUrlFormat literal reference",
+      "hex": "8020916a8d020000"
+    },
+    {
+      "address": "0x28d6a912080",
+      "bytes": 20,
+      "purpose": "assetBundleUrlFormat string header",
+      "hex": "d0b325b08b02000000000000000000000e000000"
+    },
+    {
+      "address": "0x28d6a912094",
+      "bytes": 28,
+      "purpose": "assetBundleUrlFormat UTF-16",
+      "hex": "7b0030007d007b0031007d002e0075006e0069007400790033006400"
+    }
+  ],
+  "limitations": [
+    "Sequential read of the fixed references only; not an atomic snapshot or general heap dump.",
+    "No player inventory, account information, function execution or target modification."
+  ]
+}

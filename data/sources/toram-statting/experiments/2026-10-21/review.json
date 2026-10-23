@@ -1,0 +1,173 @@
+{
+  "schema": "toram.statting-survey-review.v1",
+  "nativeMethodHashesChecked": 36,
+  "main": {
+    "inputCases": 1670,
+    "uniqueCompletedRoutes": 1199301,
+    "traceReplaysChecked": 36,
+    "baselinePositiveImproved": 258,
+    "pureDrainImprovesOverNegativeFamilies": 695,
+    "mixedImprovesOverOtherFamilies": 0,
+    "atLeastWarning": {
+      "80": 656,
+      "90": 600,
+      "95": 571,
+      "99": 548,
+      "100": 544
+    },
+    "frames": {
+      "atk-crit-stat": {
+        "cases": 360,
+        "atLeast90": 73,
+        "bestWarning": 100
+      },
+      "atk-dte-crit": {
+        "cases": 360,
+        "atLeast90": 42,
+        "bestWarning": 100
+      },
+      "atk-dte-stat": {
+        "cases": 350,
+        "atLeast90": 272,
+        "bestWarning": 100
+      },
+      "atk-four-crit": {
+        "cases": 360,
+        "atLeast90": 135,
+        "bestWarning": 100
+      },
+      "matk-crit-stat": {
+        "cases": 120,
+        "atLeast90": 6,
+        "bestWarning": 100
+      },
+      "matk-dte-stat": {
+        "cases": 120,
+        "atLeast90": 72,
+        "bestWarning": 100
+      }
+    },
+    "positiveBaselineExample": {
+      "equipmentType": 13,
+      "rounding": "separate-floor",
+      "frame": "atk-four-crit",
+      "positives": {
+        "18": 9,
+        "43": 12,
+        "42": 18,
+        "40": 26,
+        "41": 27
+      },
+      "negatives": {
+        "34": -32,
+        "36": -16,
+        "25": -7
+      },
+      "baseline": 1,
+      "combined": 100,
+      "winnerFamily": "drain",
+      "actions": 9,
+      "prefixStatesGenerated": 2377,
+      "negativeSchedulesAttempted": 802,
+      "completedRoutes": 5711,
+      "uniqueCompletedRoutes": 5711,
+      "scores": {
+        "negative-first-split": 14,
+        "combined": 100,
+        "negative-first": 1,
+        "baseline": 1,
+        "drain-split": 100,
+        "drain": 100,
+        "mixed": 42,
+        "mixed-split": 57
+      }
+    }
+  },
+  "armor": {
+    "inputCases": 83,
+    "uniqueCompletedRoutes": 12195,
+    "traceReplaysChecked": 27,
+    "baselinePositiveImproved": 1,
+    "pureDrainImprovesOverNegativeFamilies": 21,
+    "mixedImprovesOverOtherFamilies": 2,
+    "atLeastWarning": {
+      "80": 5,
+      "90": 4,
+      "95": 4,
+      "99": 3,
+      "100": 3
+    },
+    "frames": {
+      "armor-atk-crit": {
+        "cases": 12,
+        "atLeast90": 3,
+        "bestWarning": 100
+      },
+      "armor-atk-crit-four-neg": {
+        "cases": 12,
+        "atLeast90": 1,
+        "bestWarning": 100
+      },
+      "armor-atk-crit-stat": {
+        "cases": 12,
+        "atLeast90": 0,
+        "bestWarning": 0
+      },
+      "armor-atk-dte": {
+        "cases": 11,
+        "atLeast90": 0,
+        "bestWarning": 6
+      },
+      "armor-matk-crit": {
+        "cases": 12,
+        "atLeast90": 0,
+        "bestWarning": 55
+      },
+      "armor-matk-crit-four-neg": {
+        "cases": 12,
+        "atLeast90": 0,
+        "bestWarning": 85
+      },
+      "armor-matk-dte": {
+        "cases": 12,
+        "atLeast90": 0,
+        "bestWarning": 14
+      }
+    },
+    "positiveBaselineExample": {
+      "equipmentType": 20,
+      "rounding": "combined-floor",
+      "frame": "armor-atk-crit",
+      "positives": {
+        "18": 8,
+        "43": 9,
+        "42": 18,
+        "40": 18
+      },
+      "negatives": {
+        "20": -16,
+        "52": -9,
+        "35": -10
+      },
+      "baseline": 3,
+      "combined": 100,
+      "winnerFamily": "drain",
+      "actions": 10,
+      "prefixStatesGenerated": 662,
+      "negativeSchedulesAttempted": 474,
+      "completedRoutes": 1238,
+      "uniqueCompletedRoutes": 822,
+      "scores": {
+        "negative-first": 3,
+        "combined": 100,
+        "negative-first-split": 6,
+        "baseline": 3,
+        "drain": 100,
+        "drain-split": 100,
+        "mixed": 58,
+        "mixed-split": 63
+      }
+    }
+  },
+  "existingEvaluatorSourceHashesChecked": 4
+}

@@ -1,0 +1,1899 @@
+{
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "types": [
+    {
+      "type_definition_index": 930,
+      "name": "MobTypeFlag",
+      "image": "Assembly-CSharp.dll",
+      "range": {
+        "offset": 24612148,
+        "size": 88
+      },
+      "byval_type_index": 34392,
+      "declaring_type": {
+        "type_index": 20630,
+        "exact_byval_name": "MobFactory"
+      },
+      "parent_type": {
+        "type_index": 15358,
+        "exact_byval_name": "System.Enum"
+      },
+      "is_enum": true,
+      "fields": [
+        {
+          "field_index": 5360,
+          "name": "value__",
+          "type_index": 18814,
+          "exact_byval_name": null,
+          "token": "0x040014f1",
+          "range": {
+            "offset": 22123332,
+            "size": 12
+          }
+        },
+        {
+          "field_index": 5361,
+          "name": "Mob",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f2",
+          "range": {
+            "offset": 22123344,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1256,
+            "offset": 9706920,
+            "preview_hex": "0002040810204080",
+            "int32_value": 0,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5362,
+          "name": "Boss",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f3",
+          "range": {
+            "offset": 22123356,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1257,
+            "offset": 9706921,
+            "preview_hex": "0204081020408080",
+            "int32_value": 1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5363,
+          "name": "Dungeon",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f4",
+          "range": {
+            "offset": 22123368,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1258,
+            "offset": 9706922,
+            "preview_hex": "0408102040808081",
+            "int32_value": 2,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5364,
+          "name": "Defence",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f5",
+          "range": {
+            "offset": 22123380,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1259,
+            "offset": 9706923,
+            "preview_hex": "0810204080808100",
+            "int32_value": 4,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5365,
+          "name": "Wave",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f6",
+          "range": {
+            "offset": 22123392,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1260,
+            "offset": 9706924,
+            "preview_hex": "1020408080810082",
+            "int32_value": 8,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5366,
+          "name": "Rezero",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f7",
+          "range": {
+            "offset": 22123404,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1261,
+            "offset": 9706925,
+            "preview_hex": "2040808081008200",
+            "int32_value": 16,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5367,
+          "name": "TreasureHunt",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f8",
+          "range": {
+            "offset": 22123416,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1262,
+            "offset": 9706926,
+            "preview_hex": "4080808100820084",
+            "int32_value": 32,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5368,
+          "name": "NewWave",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014f9",
+          "range": {
+            "offset": 22123428,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1263,
+            "offset": 9706927,
+            "preview_hex": "8080810082008400",
+            "int32_value": 64,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5369,
+          "name": "HighRaid",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014fa",
+          "range": {
+            "offset": 22123440,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1265,
+            "offset": 9706929,
+            "preview_hex": "8100820084008800",
+            "int32_value": 128,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5370,
+          "name": "GuildRaid",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014fb",
+          "range": {
+            "offset": 22123452,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1267,
+            "offset": 9706931,
+            "preview_hex": "8200840088009000",
+            "int32_value": 256,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5371,
+          "name": "Moba",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014fc",
+          "range": {
+            "offset": 22123464,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1269,
+            "offset": 9706933,
+            "preview_hex": "840088009000c001",
+            "int32_value": 512,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5372,
+          "name": "BCollabo",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014fd",
+          "range": {
+            "offset": 22123476,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1271,
+            "offset": 9706935,
+            "preview_hex": "88009000c0010000",
+            "int32_value": 1024,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5373,
+          "name": "ScoreAttack",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014fe",
+          "range": {
+            "offset": 22123488,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1273,
+            "offset": 9706937,
+            "preview_hex": "9000c00100000000",
+            "int32_value": 2048,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5374,
+          "name": "Entourage",
+          "type_index": 34393,
+          "exact_byval_name": null,
+          "token": "0x040014ff",
+          "range": {
+            "offset": 22123500,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1275,
+            "offset": 9706939,
+            "preview_hex": "c00100000000803f",
+            "int32_value": 32768,
+            "encoded_size": 4
+          }
+        }
+      ],
+      "methods": []
+    },
+    {
+      "type_definition_index": 946,
+      "name": "MobTypeFlag",
+      "image": "Assembly-CSharp.dll",
+      "range": {
+        "offset": 24613556,
+        "size": 88
+      },
+      "byval_type_index": 34414,
+      "declaring_type": {
+        "type_index": 20653,
+        "exact_byval_name": "MobManager"
+      },
+      "parent_type": {
+        "type_index": 15358,
+        "exact_byval_name": "System.Enum"
+      },
+      "is_enum": true,
+      "fields": [
+        {
+          "field_index": 5440,
+          "name": "value__",
+          "type_index": 18814,
+          "exact_byval_name": null,
+          "token": "0x04001541",
+          "range": {
+            "offset": 22124292,
+            "size": 12
+          }
+        },
+        {
+          "field_index": 5441,
+          "name": "Mob",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001542",
+          "range": {
+            "offset": 22124304,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1297,
+            "offset": 9706961,
+            "preview_hex": "0002040810204000",
+            "int32_value": 0,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5442,
+          "name": "Boss",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001543",
+          "range": {
+            "offset": 22124316,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1298,
+            "offset": 9706962,
+            "preview_hex": "0204081020400002",
+            "int32_value": 1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5443,
+          "name": "Dungeon",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001544",
+          "range": {
+            "offset": 22124328,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1299,
+            "offset": 9706963,
+            "preview_hex": "0408102040000204",
+            "int32_value": 2,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5444,
+          "name": "Defence",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001545",
+          "range": {
+            "offset": 22124340,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1300,
+            "offset": 9706964,
+            "preview_hex": "081020400002040e",
+            "int32_value": 4,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5445,
+          "name": "Wave",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001546",
+          "range": {
+            "offset": 22124352,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1301,
+            "offset": 9706965,
+            "preview_hex": "1020400002040e4f",
+            "int32_value": 8,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5446,
+          "name": "Rezero",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001547",
+          "range": {
+            "offset": 22124364,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1302,
+            "offset": 9706966,
+            "preview_hex": "20400002040e4f6e",
+            "int32_value": 16,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5447,
+          "name": "TreasureHunt",
+          "type_index": 34415,
+          "exact_byval_name": null,
+          "token": "0x04001548",
+          "range": {
+            "offset": 22124376,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1303,
+            "offset": 9706967,
+            "preview_hex": "400002040e4f6e46",
+            "int32_value": 32,
+            "encoded_size": 1
+          }
+        }
+      ],
+      "methods": []
+    },
+    {
+      "type_definition_index": 966,
+      "name": "MobMultiFlag",
+      "image": "Assembly-CSharp.dll",
+      "range": {
+        "offset": 24615316,
+        "size": 88
+      },
+      "byval_type_index": 20673,
+      "declaring_type": {
+        "type_index": -1,
+        "exact_byval_name": null
+      },
+      "parent_type": {
+        "type_index": 15358,
+        "exact_byval_name": "System.Enum"
+      },
+      "is_enum": true,
+      "fields": [
+        {
+          "field_index": 5511,
+          "name": "value__",
+          "type_index": 18814,
+          "exact_byval_name": null,
+          "token": "0x04001588",
+          "range": {
+            "offset": 22125144,
+            "size": 12
+          }
+        },
+        {
+          "field_index": 5512,
+          "name": "UnderActive",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001589",
+          "range": {
+            "offset": 22125156,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1319,
+            "offset": 9706983,
+            "preview_hex": "0204081020408080",
+            "int32_value": 1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5513,
+          "name": "OverActive",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158a",
+          "range": {
+            "offset": 22125168,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1320,
+            "offset": 9706984,
+            "preview_hex": "0408102040808081",
+            "int32_value": 2,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5514,
+          "name": "Boss",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158b",
+          "range": {
+            "offset": 22125180,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1321,
+            "offset": 9706985,
+            "preview_hex": "0810204080808100",
+            "int32_value": 4,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5515,
+          "name": "Parts",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158c",
+          "range": {
+            "offset": 22125192,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1322,
+            "offset": 9706986,
+            "preview_hex": "1020408080810082",
+            "int32_value": 8,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5516,
+          "name": "Dungeon",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158d",
+          "range": {
+            "offset": 22125204,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1323,
+            "offset": 9706987,
+            "preview_hex": "2040808081008200",
+            "int32_value": 16,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5517,
+          "name": "FixedDirection",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158e",
+          "range": {
+            "offset": 22125216,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1324,
+            "offset": 9706988,
+            "preview_hex": "40808081008200c0",
+            "int32_value": 32,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 5518,
+          "name": "InvalidKnockBack",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400158f",
+          "range": {
+            "offset": 22125228,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1325,
+            "offset": 9706989,
+            "preview_hex": "808081008200c000",
+            "int32_value": 64,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5519,
+          "name": "InvalidSuction",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001590",
+          "range": {
+            "offset": 22125240,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1327,
+            "offset": 9706991,
+            "preview_hex": "81008200c0008000",
+            "int32_value": 128,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5520,
+          "name": "MoWeek",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001591",
+          "range": {
+            "offset": 22125252,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1329,
+            "offset": 9706993,
+            "preview_hex": "8200c0008000c001",
+            "int32_value": 256,
+            "encoded_size": 2
+          }
+        },
+        {
+          "field_index": 5521,
+          "name": "UnableToTarget",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001592",
+          "range": {
+            "offset": 22125264,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1331,
+            "offset": 9706995,
+            "preview_hex": "c0008000c0010000",
+            "int32_value": 16384,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5522,
+          "name": "ApparentDeath",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001593",
+          "range": {
+            "offset": 22125276,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1335,
+            "offset": 9706999,
+            "preview_hex": "c0010000c0020000",
+            "int32_value": 32768,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5523,
+          "name": "FallingInvalid",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001594",
+          "range": {
+            "offset": 22125288,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1339,
+            "offset": 9707003,
+            "preview_hex": "c0020000c0040000",
+            "int32_value": 65536,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5524,
+          "name": "HeightLimit",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001595",
+          "range": {
+            "offset": 22125300,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1343,
+            "offset": 9707007,
+            "preview_hex": "c0040000c0080000",
+            "int32_value": 131072,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5525,
+          "name": "HateTransmission",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001596",
+          "range": {
+            "offset": 22125312,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1347,
+            "offset": 9707011,
+            "preview_hex": "c0080000c0100000",
+            "int32_value": 262144,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5526,
+          "name": "PartDisplayDisabled",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001597",
+          "range": {
+            "offset": 22125324,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1351,
+            "offset": 9707015,
+            "preview_hex": "c0100000c0200000",
+            "int32_value": 524288,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5527,
+          "name": "TargetSize",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001598",
+          "range": {
+            "offset": 22125336,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1355,
+            "offset": 9707019,
+            "preview_hex": "c0200000c0400000",
+            "int32_value": 1048576,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5528,
+          "name": "MultiTarget",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x04001599",
+          "range": {
+            "offset": 22125348,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1359,
+            "offset": 9707023,
+            "preview_hex": "c0400000c0800000",
+            "int32_value": 2097152,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5529,
+          "name": "NearNotRoomEntreeStagingClear",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400159a",
+          "range": {
+            "offset": 22125360,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1363,
+            "offset": 9707027,
+            "preview_hex": "c0800000c8000000",
+            "int32_value": 4194304,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5530,
+          "name": "ActionStartFloorCorrection",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400159b",
+          "range": {
+            "offset": 22125372,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1367,
+            "offset": 9707031,
+            "preview_hex": "c8000000d0000000",
+            "int32_value": 67108864,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5531,
+          "name": "AssistMoveCorrection",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400159c",
+          "range": {
+            "offset": 22125384,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1371,
+            "offset": 9707035,
+            "preview_hex": "d0000000f0000000",
+            "int32_value": 134217728,
+            "encoded_size": 4
+          }
+        },
+        {
+          "field_index": 5532,
+          "name": "ActionEndFloorCorrection",
+          "type_index": 20675,
+          "exact_byval_name": null,
+          "token": "0x0400159d",
+          "range": {
+            "offset": 22125396,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 1375,
+            "offset": 9707039,
+            "preview_hex": "f000000020000001",
+            "int32_value": 268435456,
+            "encoded_size": 5
+          }
+        }
+      ],
+      "methods": []
+    },
+    {
+      "type_definition_index": 6714,
+      "name": "DifficultyState",
+      "image": "Assembly-CSharp.dll",
+      "range": {
+        "offset": 25121140,
+        "size": 88
+      },
+      "byval_type_index": 37605,
+      "declaring_type": {
+        "type_index": 26691,
+        "exact_byval_name": "UIBossSymbolManager"
+      },
+      "parent_type": {
+        "type_index": 15358,
+        "exact_byval_name": "System.Enum"
+      },
+      "is_enum": true,
+      "fields": [
+        {
+          "field_index": 33739,
+          "name": "value__",
+          "type_index": 18814,
+          "exact_byval_name": null,
+          "token": "0x040083cc",
+          "range": {
+            "offset": 22463880,
+            "size": 12
+          }
+        },
+        {
+          "field_index": 33740,
+          "name": "Easy",
+          "type_index": 37606,
+          "exact_byval_name": null,
+          "token": "0x040083cd",
+          "range": {
+            "offset": 22463892,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 11069,
+            "offset": 9716733,
+            "preview_hex": "0100020406000204",
+            "int32_value": -1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 33741,
+          "name": "Normal",
+          "type_index": 37606,
+          "exact_byval_name": null,
+          "token": "0x040083ce",
+          "range": {
+            "offset": 22463904,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 11070,
+            "offset": 9716734,
+            "preview_hex": "0002040600020400",
+            "int32_value": 0,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 33742,
+          "name": "Hard",
+          "type_index": 37606,
+          "exact_byval_name": null,
+          "token": "0x040083cf",
+          "range": {
+            "offset": 22463916,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 11071,
+            "offset": 9716735,
+            "preview_hex": "0204060002040002",
+            "int32_value": 1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 33743,
+          "name": "Lunatic",
+          "type_index": 37606,
+          "exact_byval_name": null,
+          "token": "0x040083d0",
+          "range": {
+            "offset": 22463928,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 11072,
+            "offset": 9716736,
+            "preview_hex": "0406000204000204",
+            "int32_value": 2,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 33744,
+          "name": "Ultimate",
+          "type_index": 37606,
+          "exact_byval_name": null,
+          "token": "0x040083d1",
+          "range": {
+            "offset": 22463940,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 11073,
+            "offset": 9716737,
+            "preview_hex": "0600020400020400",
+            "int32_value": 3,
+            "encoded_size": 1
+          }
+        }
+      ],
+      "methods": []
+    },
+    {
+      "type_definition_index": 11618,
+      "name": "Toram.Common.Field.FieldRoomType",
+      "image": "Toram.Common.dll",
+      "range": {
+        "offset": 25552692,
+        "size": 88
+      },
+      "byval_type_index": 15838,
+      "declaring_type": {
+        "type_index": -1,
+        "exact_byval_name": null
+      },
+      "parent_type": {
+        "type_index": 15358,
+        "exact_byval_name": "System.Enum"
+      },
+      "is_enum": true,
+      "fields": [
+        {
+          "field_index": 63686,
+          "name": "value__",
+          "type_index": 18814,
+          "exact_byval_name": null,
+          "token": "0x04000866",
+          "range": {
+            "offset": 22823244,
+            "size": 12
+          }
+        },
+        {
+          "field_index": 63687,
+          "name": "Mmo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000867",
+          "range": {
+            "offset": 22823256,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637693,
+            "offset": 20343357,
+            "preview_hex": "00020406080a0c0e",
+            "int32_value": 0,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63688,
+          "name": "Event",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000868",
+          "range": {
+            "offset": 22823268,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637694,
+            "offset": 20343358,
+            "preview_hex": "020406080a0c0e10",
+            "int32_value": 1,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63689,
+          "name": "Mo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000869",
+          "range": {
+            "offset": 22823280,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637695,
+            "offset": 20343359,
+            "preview_hex": "0406080a0c0e1012",
+            "int32_value": 2,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63690,
+          "name": "MoWave",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086a",
+          "range": {
+            "offset": 22823292,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637696,
+            "offset": 20343360,
+            "preview_hex": "06080a0c0e101214",
+            "int32_value": 3,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63691,
+          "name": "MoDungeon",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086b",
+          "range": {
+            "offset": 22823304,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637697,
+            "offset": 20343361,
+            "preview_hex": "080a0c0e10121416",
+            "int32_value": 4,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63692,
+          "name": "GuildHome",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086c",
+          "range": {
+            "offset": 22823316,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637698,
+            "offset": 20343362,
+            "preview_hex": "0a0c0e1012141618",
+            "int32_value": 5,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63693,
+          "name": "PartyMmo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086d",
+          "range": {
+            "offset": 22823328,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637699,
+            "offset": 20343363,
+            "preview_hex": "0c0e10121416181a",
+            "int32_value": 6,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63694,
+          "name": "GameEvent",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086e",
+          "range": {
+            "offset": 22823340,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637700,
+            "offset": 20343364,
+            "preview_hex": "0e10121416181a1c",
+            "int32_value": 7,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63695,
+          "name": "MoWeeklyDefence",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400086f",
+          "range": {
+            "offset": 22823352,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637701,
+            "offset": 20343365,
+            "preview_hex": "10121416181a1c1e",
+            "int32_value": 8,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63696,
+          "name": "Obsolete_9",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000870",
+          "range": {
+            "offset": 22823364,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637702,
+            "offset": 20343366,
+            "preview_hex": "121416181a1c1e20",
+            "int32_value": 9,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63697,
+          "name": "House",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000871",
+          "range": {
+            "offset": 22823376,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637703,
+            "offset": 20343367,
+            "preview_hex": "1416181a1c1e2022",
+            "int32_value": 10,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63698,
+          "name": "GmBossRoom",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000872",
+          "range": {
+            "offset": 22823388,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637704,
+            "offset": 20343368,
+            "preview_hex": "16181a1c1e202224",
+            "int32_value": 11,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63699,
+          "name": "MiniGameLobby",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000873",
+          "range": {
+            "offset": 22823400,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637705,
+            "offset": 20343369,
+            "preview_hex": "181a1c1e20222426",
+            "int32_value": 12,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63700,
+          "name": "MiniGame",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000874",
+          "range": {
+            "offset": 22823412,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637706,
+            "offset": 20343370,
+            "preview_hex": "1a1c1e2022242628",
+            "int32_value": 13,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63701,
+          "name": "RaidMo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000875",
+          "range": {
+            "offset": 22823424,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637707,
+            "offset": 20343371,
+            "preview_hex": "1c1e20222426282a",
+            "int32_value": 14,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63702,
+          "name": "SummerSea",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000876",
+          "range": {
+            "offset": 22823436,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637708,
+            "offset": 20343372,
+            "preview_hex": "1e20222426282a2c",
+            "int32_value": 15,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63703,
+          "name": "Global",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000877",
+          "range": {
+            "offset": 22823448,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637709,
+            "offset": 20343373,
+            "preview_hex": "20222426282a2c2e",
+            "int32_value": 16,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63704,
+          "name": "HouseRhythm",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000878",
+          "range": {
+            "offset": 22823460,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637710,
+            "offset": 20343374,
+            "preview_hex": "222426282a2c2e30",
+            "int32_value": 17,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63705,
+          "name": "RezeroCollaboration",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000879",
+          "range": {
+            "offset": 22823472,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637711,
+            "offset": 20343375,
+            "preview_hex": "2426282a2c2e3032",
+            "int32_value": 18,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63706,
+          "name": "TreasureHunt",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087a",
+          "range": {
+            "offset": 22823484,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637712,
+            "offset": 20343376,
+            "preview_hex": "26282a2c2e303234",
+            "int32_value": 19,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63707,
+          "name": "SummerSeaMo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087b",
+          "range": {
+            "offset": 22823496,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637713,
+            "offset": 20343377,
+            "preview_hex": "282a2c2e30323436",
+            "int32_value": 20,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63708,
+          "name": "None",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087c",
+          "range": {
+            "offset": 22823508,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637714,
+            "offset": 20343378,
+            "preview_hex": "2a2c2e3032343638",
+            "int32_value": 21,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63709,
+          "name": "HouseBlackKnight",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087d",
+          "range": {
+            "offset": 22823520,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637715,
+            "offset": 20343379,
+            "preview_hex": "2c2e30323436383a",
+            "int32_value": 22,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63710,
+          "name": "GameEventMmo",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087e",
+          "range": {
+            "offset": 22823532,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637716,
+            "offset": 20343380,
+            "preview_hex": "2e30323436383a3c",
+            "int32_value": 23,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63711,
+          "name": "PvP",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400087f",
+          "range": {
+            "offset": 22823544,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637717,
+            "offset": 20343381,
+            "preview_hex": "30323436383a3c3e",
+            "int32_value": 24,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63712,
+          "name": "WaveRaid",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000880",
+          "range": {
+            "offset": 22823556,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637718,
+            "offset": 20343382,
+            "preview_hex": "323436383a3c3e40",
+            "int32_value": 25,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63713,
+          "name": "NewWave",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000881",
+          "range": {
+            "offset": 22823568,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637719,
+            "offset": 20343383,
+            "preview_hex": "3436383a3c3e4042",
+            "int32_value": 26,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63714,
+          "name": "Special",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000882",
+          "range": {
+            "offset": 22823580,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637720,
+            "offset": 20343384,
+            "preview_hex": "36383a3c3e404244",
+            "int32_value": 27,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63715,
+          "name": "HighRaid",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000883",
+          "range": {
+            "offset": 22823592,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637721,
+            "offset": 20343385,
+            "preview_hex": "383a3c3e40424446",
+            "int32_value": 28,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63716,
+          "name": "GuildRaid",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000884",
+          "range": {
+            "offset": 22823604,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637722,
+            "offset": 20343386,
+            "preview_hex": "3a3c3e4042444648",
+            "int32_value": 29,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63717,
+          "name": "GuildRaidLobby",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000885",
+          "range": {
+            "offset": 22823616,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637723,
+            "offset": 20343387,
+            "preview_hex": "3c3e40424446484a",
+            "int32_value": 30,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63718,
+          "name": "HouseCardGame",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000886",
+          "range": {
+            "offset": 22823628,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637724,
+            "offset": 20343388,
+            "preview_hex": "3e40424446484a4c",
+            "int32_value": 31,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63719,
+          "name": "Moba",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000887",
+          "range": {
+            "offset": 22823640,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637725,
+            "offset": 20343389,
+            "preview_hex": "40424446484a4c4e",
+            "int32_value": 32,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63720,
+          "name": "HouseCraneGame",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000888",
+          "range": {
+            "offset": 22823652,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637726,
+            "offset": 20343390,
+            "preview_hex": "424446484a4c4e50",
+            "int32_value": 33,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63721,
+          "name": "HousePetRace",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000889",
+          "range": {
+            "offset": 22823664,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637727,
+            "offset": 20343391,
+            "preview_hex": "4446484a4c4e5052",
+            "int32_value": 34,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63722,
+          "name": "NCollaboration",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088a",
+          "range": {
+            "offset": 22823676,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637728,
+            "offset": 20343392,
+            "preview_hex": "46484a4c4e505254",
+            "int32_value": 35,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63723,
+          "name": "HouseMahjong",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088b",
+          "range": {
+            "offset": 22823688,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637729,
+            "offset": 20343393,
+            "preview_hex": "484a4c4e50525456",
+            "int32_value": 36,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63724,
+          "name": "HalloweenEvent",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088c",
+          "range": {
+            "offset": 22823700,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637730,
+            "offset": 20343394,
+            "preview_hex": "4a4c4e5052545600",
+            "int32_value": 37,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63725,
+          "name": "Obsolete_38",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088d",
+          "range": {
+            "offset": 22823712,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637731,
+            "offset": 20343395,
+            "preview_hex": "4c4e505254560002",
+            "int32_value": 38,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63726,
+          "name": "BCollaboration",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088e",
+          "range": {
+            "offset": 22823724,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637732,
+            "offset": 20343396,
+            "preview_hex": "4e50525456000204",
+            "int32_value": 39,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63727,
+          "name": "ScoreAttack",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x0400088f",
+          "range": {
+            "offset": 22823736,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637733,
+            "offset": 20343397,
+            "preview_hex": "5052545600020406",
+            "int32_value": 40,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63728,
+          "name": "NaCollaboration",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000890",
+          "range": {
+            "offset": 22823748,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637734,
+            "offset": 20343398,
+            "preview_hex": "5254560002040608",
+            "int32_value": 41,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63729,
+          "name": "Roguelike",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000891",
+          "range": {
+            "offset": 22823760,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637735,
+            "offset": 20343399,
+            "preview_hex": "545600020406080a",
+            "int32_value": 42,
+            "encoded_size": 1
+          }
+        },
+        {
+          "field_index": 63730,
+          "name": "Max",
+          "type_index": 15841,
+          "exact_byval_name": null,
+          "token": "0x04000892",
+          "range": {
+            "offset": 22823772,
+            "size": 12
+          },
+          "default": {
+            "type_index": 18791,
+            "data_index": 10637736,
+            "offset": 20343400,
+            "preview_hex": "5600020406080a0c",
+            "int32_value": 43,
+            "encoded_size": 1
+          }
+        }
+      ],
+      "methods": []
+    }
+  ]
+}

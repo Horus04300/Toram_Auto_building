@@ -1,13 +1,16 @@
+import { frontendSourcePath } from '../../support/frontend-paths.mjs';
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS } from '../../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
+const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const dataScripts = CLASSIC_SCRIPT_PATHS
-  .filter((path) => path.startsWith('assets/js/data/'));
+  .filter((path) => path.startsWith('web/src/data/'));
 const investmentLevels = new Proxy({}, { get: () => new Proxy({}, { get: () => 10 }) });
 const document = {
   readyState: 'complete',
@@ -32,9 +35,9 @@ const context = { window, document, console };
 vm.createContext(context);
 
 for (const path of dataScripts) {
-  vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
+  vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename: path });
 }
-vm.runInContext(await readFile(resolve(root, 'assets/js/active-buff-ui.js'), 'utf8'), context, { filename: 'assets/js/active-buff-ui.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/ui/active-buff-ui.js'), 'utf8'), context, { filename: 'web/src/ui/active-buff-ui.js' });
 
 const rawSkills = window.TORAM_SKILL_EFFECT_DATA.skills.concat(window.ToramSkillEffectRegistry.all());
 const duplicateStackBuffIds = [...new Set(rawSkills.filter((skill) => skill.stackControl).map((skill) => skill.id))]

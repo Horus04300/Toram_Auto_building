@@ -1,21 +1,21 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { CLASSIC_SCRIPT_PATHS } from '../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const read = path => readFile(resolve(root, path), 'utf8');
-const html = await read('index.html');
-const tabs = await read('assets/js/tabs.js');
-const bindings = await read('assets/js/ui-bootstrap.js');
-const buildUi = await read('assets/js/build-ui-controller.js');
-const optimizer = await read('assets/js/optimization-results.js');
-const optimizerUi = await read('assets/js/optimizer-ui-controller.js');
-const settingsUi = await read('assets/js/settings-ui.js');
-const application = await read('assets/js/application-use-cases.js');
-const features = await read('assets/js/ui-bootstrap.js');
-const comboUi = await read('assets/js/combo-ui.js');
-const skillUi = await read('assets/js/skill-tree.js');
+const html = await read('web/index.html');
+const tabs = await read('web/src/ui/tabs.js');
+const bindings = await read('web/src/ui/ui-bootstrap.js');
+const buildUi = await read('web/src/ui/build-ui-controller.js');
+const optimizer = await read('web/src/ui/optimization-results.js');
+const optimizerUi = await read('web/src/ui/optimizer-ui-controller.js');
+const settingsUi = await read('web/src/ui/settings-ui.js');
+const application = await read('web/src/application/application-use-cases.js');
+const features = await read('web/src/ui/ui-bootstrap.js');
+const comboUi = await read('web/src/ui/combo-ui.js');
+const skillUi = await read('web/src/ui/skill-tree.js');
 
 for (const id of ['stats', 'target', 'equipment', 'external-buffs', 'crysta-blacklist']) {
   assert.match(html, new RegExp(`data-ui-section="${id}"`), `탭 이동 대상 ${id}는 명시적 식별자가 있어야 합니다.`);
@@ -29,7 +29,7 @@ assert.match(bindings, /app\.optimizerUi\.initialize\(\)/, '공통 UI 부트스�
 assert.doesNotMatch(bindings, /addOptionRow|updateSubWeaponList/, '공통 UI 부트스트랩은 세부 빌드 입력 이벤트를 직접 소유하면 안 됩니다.');
 assert.match(optimizer, /ToramApplication\.CreateCalculationSnapshot/, '최적화 계산 조립은 Application API를 통해야 합니다.');
 assert.match(optimizer, /runPreviewSafe/, '결과 탭용 Greedy 빠른 추천 진입점이 있어야 합니다.');
-assert.match(optimizer, /findCrystaOptimizationGreedyInitialSolution/, '빠른 추천은 정밀 전역 탐색과 별도 경로를 사용해야 합니다.');
+assert.match(optimizer, /ToramCrystaOptimizationExecutionAdapter\.preview/, '빠른 추천은 Rust 초기해를 사용해야 합니다.');
 assert.match(tabs, /buttons\.results[\s\S]*toram:preview/, '결과 탭은 정밀 계산 대신 빠른 추천만 요청해야 합니다.');
 assert.match(bindings, /toram:preview[\s\S]*runPreviewSafe/, '빠른 추천 UI 이벤트를 최적화 진입점에 연결해야 합니다.');
 assert.match(html, /id="optimizationRunPreciseOptimization"/, '결과 탭에 명시적인 정밀 계산 버튼이 있어야 합니다.');
@@ -47,8 +47,8 @@ assert.doesNotMatch(settingsUi.replace(/^.*$/m, ''), /ToramBuildSettings|ToramBu
 for (const feature of ['build:app.buildUi', 'skills:root.ToramSkillUi', 'buffs:root.ToramActiveBuffs', 'combo:root.ToramComboUi', 'optimizer:app.optimizerUi', 'settings:root.ToramBuildFileUi']) {
   assert.ok(features.includes(feature), `UI feature registry에 ${feature}가 있어야 합니다.`);
 }
-assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/optimization-results.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/optimizer-ui-controller.js'), '최적화 UI 컨트롤러는 core 뒤에 로드돼야 합니다.');
-assert.ok(CLASSIC_SCRIPT_PATHS.includes('assets/js/optimization-preferences.js'), '거리·요구조건 저장 모듈이 앱에 포함돼야 합니다.');
-assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/build-ui-controller.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/ui-bootstrap.js'), 'Build UI 컨트롤러는 공통 부트스트랩 전에 로드돼야 합니다.');
+assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/ui/optimization-results.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/ui/optimizer-ui-controller.js'), '최적화 UI 컨트롤러는 core 뒤에 로드돼야 합니다.');
+assert.ok(CLASSIC_SCRIPT_PATHS.includes('assets/js/ui/optimization-preferences.js'), '거리·요구조건 저장 모듈이 앱에 포함돼야 합니다.');
+assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/ui/build-ui-controller.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/ui/ui-bootstrap.js'), 'Build UI 컨트롤러는 공통 부트스트랩 전에 로드돼야 합니다.');
 
 console.log('UI boundary UI feature boundary verification: PASS');

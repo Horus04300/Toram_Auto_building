@@ -1,0 +1,9 @@
+--- assets\source-data\toram-monsters\native-target\MobPropertyPartCutCorrection-_ctor-7fff5fe832d0.c
++++ 9779.c
+@@ -9,5 +9,5 @@
+   CALL2(uVar1,GLOBAL1);
+   *(undefined8 *)(self + 0x10) = uVar1;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   return;
+ }

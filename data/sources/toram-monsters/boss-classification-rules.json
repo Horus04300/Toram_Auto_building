@@ -1,0 +1,71 @@
+{
+  "schema": "toram.boss-classification-rules.v1",
+  "precedence": [
+    "guild-raid-boss",
+    "high-raid-boss",
+    "dungeon-boss",
+    "field-boss",
+    "entry-boss",
+    "unresolved"
+  ],
+  "entryModels": {
+    "field-boss": "single: no difficulty; keep raw phases/map provenance separate from selectable difficulty",
+    "entry-boss": "difficulty-select: ordinary difficulty family; per-boss availability is not assumed",
+    "high-raid-boss": "level-select: preserve BaseLevel/MinLevel; do not convert to Easy/Normal/Hard presets",
+    "other": "unresolved",
+    "guild-raid-boss": "level-select: current combat level from remaining HP gauges, not ordinary difficulty or HighRaid scaling"
+  },
+  "highRaidLevelEvidence": "HighRaidRoomData.get_MobDifficultyLevel returns 0 while get_AreaLevel reads a separate level; UIHighRaidEnterManager changes a selected numeric level. Runtime range is not materialized.",
+  "categories": {
+    "high-raid-boss": {
+      "kr": "고난이도 레이드 보스",
+      "rule": "HighRaidBossMaster fieldId+roomId+monsterUuid; primary monsterId/UUID must match the map master"
+    },
+    "dungeon-boss": {
+      "kr": "던전 보스",
+      "rule": "MobMultiFlag.Boss=4 and Dungeon=16"
+    },
+    "field-boss": {
+      "kr": "필드 보스",
+      "rule": "Boss=4, exact MobPopPoint.monsterDatabaseID and ancestor mmo_{master.roomId}"
+    },
+    "entry-boss": {
+      "kr": "입장 보스",
+      "rule": "Boss=4 and explicit BossMenu event entry targets the exact fieldId+roomId"
+    },
+    "unresolved": {
+      "kr": "분류 미연결",
+      "rule": "No positive source route; never infer from absence or monster name"
+    },
+    "guild-raid-boss": {
+      "kr": "길드 레이드 보스",
+      "rule": "Reviewed guild-raid-bosses.json main anchors with exact field/room/UUID/model/element, and explicit same-identity mode references; live field/MobList is server-owned."
+    }
+  },
+  "bossMenu": {
+    "enum": "FieldScriptCommand.BossMenu",
+    "opcode": 130,
+    "source": "FieldScriptLoader.ReadEventIndex and OnBossMenuCommand.MoveNext",
+    "header": "byte scriptVersion, int16 eventCount, int32 absoluteOffsets[eventCount]",
+    "scope": "Event roots plus reviewed scriptVersion16 ProgressQuest/Check control-flow edges; stop at unknown opcodes and dynamic ReadInt operands; never scan payload bytes",
+    "targetPrefix": "version<14: int16 fieldId; version14: int32 fieldId; version>=15: byte commandVersion, byte unusedRaw, int32 fieldId; then byte roomId",
+    "invalidOffsets": "Retain unusable event slots separately; never use them as classification evidence",
+    "controlFlowEvidence": "native-entry-flow/README.md"
+  },
+  "fieldPopEvidence": {
+    "native": "FieldRoomType.Mmo=0, FieldManager.IsMmo, MapInfo.GetMobPopPoint, MobFactory.CreateMmoMobObject/CreateMobObject",
+    "serialized": "Exact MobPopPoint reference and mmo room ancestry, not merely a room existing on the map",
+    "boundary": "Static source-route classification. Scene naming correspondence is supported by serialized hierarchy and native Mmo contracts; active runtime room selection was not observed."
+  },
+  "limitations": [
+    "One game UUID can have multiple classifications in different maps/variants.",
+    "HighRaid is an explicit game subsystem; do not label every event or High Difficulty name as HighRaid.",
+    "Entry classification does not authorize ordinary difficulty multipliers for every battle subclass.",
+    "Boss phases, parts, final battle stats and currently available server events remain separate."
+  ],
+  "guildRaidEvidence": [
+    "native-guildraid-links/README.md",
+    "native-guildraid-target/README.md",
+    "guild-raid-bosses.json"
+  ]
+}

@@ -1,0 +1,272 @@
+--- assets\source-data\toram-monsters\native-guildraid-links\GuildRaidBossMobActionManager-OnSetStatus-7fff5fe25940.c
++++ 7733.c
+@@ -1,24 +1,22 @@
+ {
+-  undefined4 uVar1;
+-  longlong *plVar2;
+-  undefined8 uVar3;
++  longlong *plVar1;
++  undefined *statusMaster;
++  undefined *abnormalManager;
++  undefined *buffManager;
++  longlong lVar2;
++  code *pcVar3;
+   undefined8 uVar4;
+-  undefined8 uVar5;
+-  code *pcVar6;
+-  char cVar7;
+-  int iVar8;
+-  longlong lVar9;
+-  undefined8 uVar10;
+-  undefined8 uVar11;
+-  ulonglong uVar12;
+-  longlong lVar13;
+-  undefined8 *puVar14;
+-  ushort uVar15;
+-  longlong lVar16;
+-  uint uVar17;
++  char cVar5;
++  int iVar6;
++  longlong lVar7;
++  undefined *puVar8;
++  undefined *self_00;
++  ulonglong uVar9;
++  undefined8 *puVar10;
++  ushort uVar11;
++  longlong lVar12;
++  uint uVar13;
+   longlong lStackX_18;
+   undefined8 uStackX_20;
+-  undefined8 in_stack_ffffffffffffff48;
+-  undefined4 uVar18;
+   undefined8 uStack_80;
+   undefined8 uStack_78;
+@@ -31,5 +29,4 @@
+   undefined8 uStack_40;
+   undefined8 uStack_38;
+-  uVar18 = (undefined4)((ulonglong)in_stack_ffffffffffffff48 >> 0x20);
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -57,82 +54,83 @@
+   uStack_68 = 0;
+   uStack_60 = 0;
+-  lVar9 = CALL1(GLOBAL15);
+-  if (lVar9 != 0) {
+-    plVar2 = *(longlong **)(lVar9 + 0x28);
+-    uVar10 = 0;
+-    if (plVar2 != (longlong *)0x0) {
+-      uVar10 = 0;
+-      if ((*(byte *)(GLOBAL9 + 0x130) <= *(byte *)(*plVar2 + 0x130)) &&
++  lVar7 = CALL1(GLOBAL15);
++  if (lVar7 != 0) {
++    plVar1 = *(longlong **)(lVar7 + 0x28);
++    puVar8 = (undefined *)0x0;
++    if (plVar1 != (longlong *)0x0) {
++      puVar8 = (undefined *)0x0;
++      if ((*(byte *)(GLOBAL9 + 0x130) <= *(byte *)(*plVar1 + 0x130)) &&
+          (*(longlong *)
+-           (*(longlong *)(*plVar2 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL9 + 0x130) * 8)
++           (*(longlong *)(*plVar1 + 200) + -8 + (ulonglong)*(byte *)(GLOBAL9 + 0x130) * 8)
+           == GLOBAL9)) {
+-        uVar10 = CALL2(plVar2,0);
+-        uVar18 = 0;
+-        CALL3(plVar2,self + 0x194,self + 0x198,self + 0x19c,0);
++        puVar8 = GuildRaidRoomData_GetMobGuildRaidBonus((undefined *)plVar1,(undefined *)0x0);
++        CALL2(plVar1,self + 0x194,self + 0x198,self + 0x19c,0);
+       }
+     }
+-    uVar3 = *(undefined8 *)(self + 0x70);
+-    uVar4 = *(undefined8 *)(self + 0x80);
+-    uVar5 = *(undefined8 *)(self + 0x88);
+-    uVar1 = *(undefined4 *)(self + 400);
+-    uVar11 = CALL4(GLOBAL8);
+-    CALL5(uVar11,uVar3,uVar4,uVar5,CONCAT44(uVar18,uVar1),uVar10,0);
+-    *(undefined8 *)(self + 0x180) = uVar11;
+-    CALL6();
++    statusMaster = *(undefined **)(self + 0x70);
++    abnormalManager = *(undefined **)(self + 0x80);
++    buffManager = *(undefined **)(self + 0x88);
++    iVar6 = *(int *)(self + 400);
++    self_00 = (undefined *)CALL3(GLOBAL8);
++    GuildRaidBossMobBattleStatus__ctor
++              (self_00,statusMaster,abnormalManager,buffManager,iVar6,puVar8,(undefined *)0x0);
++    *(undefined **)(self + 0x180) = self_00;
++    il2cpp_write_barrier_0();
+     if (*(longlong *)(self + 0x180) != 0) {
+       *(undefined4 *)(*(longlong *)(self + 0x180) + 0x50) = *(undefined4 *)(self + 0x178);
+       if (*(longlong *)(self + 0x180) != 0) {
+         *(undefined8 *)(*(longlong *)(self + 0x180) + 0x38) = *(undefined8 *)(self + 0x78);
+-        CALL6();
+-        cVar7 = CALL7(self,0x5a,&lStackX_18,GLOBAL3);
+-        if (cVar7 != '\0') {
++        il2cpp_write_barrier_0();
++        cVar5 = CALL4(self,0x5a,&lStackX_18,GLOBAL3);
++        if (cVar5 != '\0') {
+           if (lStackX_18 == 0) goto LABEL0;
+           *(undefined **)(lStackX_18 + 0x18) = self;
+-          CALL6();
++          il2cpp_write_barrier_0();
+           if (lStackX_18 == 0) goto LABEL0;
+-          uVar12 = CALL8(lStackX_18,0);
+-          uStackX_20 = uVar12;
+-          lVar9 = CALL9(GLOBAL16);
+-          if (lVar9 == 0) goto LABEL0;
+-          lVar9 = CALL10(lVar9,uVar12 & 0xffffffff,0);
+-          uVar17 = 0;
+-          if ((lVar9 != 0) && (*(longlong *)(lVar9 + 0x18) != 0)) {
+-            iVar8 = uStackX_20._4_4_;
+-            lVar16 = GLOBAL7;
+-            for (; (int)uVar17 < (int)*(uint *)(lVar9 + 0x18); uVar17 = uVar17 + 1) {
+-              if (*(uint *)(lVar9 + 0x18) <= uVar17) {
+-                CALL11();
++          uVar9 = CALL5(lStackX_18,0);
++          uStackX_20 = uVar9;
++          lVar7 = CALL6(GLOBAL16);
++          if (lVar7 == 0) goto LABEL0;
++          lVar7 = CALL7(lVar7,uVar9 & 0xffffffff,0);
++          uVar13 = 0;
++          if ((lVar7 != 0) && (*(longlong *)(lVar7 + 0x18) != 0)) {
++            iVar6 = uStackX_20._4_4_;
++            lVar12 = GLOBAL7;
++            for (; (int)uVar13 < (int)*(uint *)(lVar7 + 0x18); uVar13 = uVar13 + 1) {
++              if (*(uint *)(lVar7 + 0x18) <= uVar13) {
++                CALL8();
+                 goto LABEL1;
+               }
+-              plVar2 = *(longlong **)(lVar9 + 0x20 + (longlong)(int)uVar17 * 8);
+-              if (plVar2 == (longlong *)0x0) goto LABEL0;
+-              if (*(char *)((longlong)plVar2 + 0x151) == '\0') {
+-                lVar13 = plVar2[0xe];
++              plVar1 = *(longlong **)(lVar7 + 0x20 + (longlong)(int)uVar13 * 8);
++              if (plVar1 == (longlong *)0x0) goto LABEL0;
++              if (*(char *)((longlong)plVar1 + 0x151) == '\0') {
++                puVar8 = (undefined *)plVar1[0xe];
+               }
+               else {
+-                if (plVar2[0x1f] == 0) goto LABEL0;
+-                lVar13 = CALL12(plVar2[0x1f],0);
+-                lVar16 = GLOBAL7;
++                if ((undefined *)plVar1[0x1f] == (undefined *)0x0) goto LABEL0;
++                puVar8 = EnemyMobActionManagerBase_get_MobStatusMaster
++                                   ((undefined *)plVar1[0x1f],(undefined *)0x0);
++                lVar12 = GLOBAL7;
+               }
+-              if (lVar13 == 0) goto LABEL0;
+-              if (*(int *)(lVar13 + 0x10) != iVar8) {
+-                lVar13 = *plVar2;
+-                if ((*(byte *)(lVar16 + 0x130) <= *(byte *)(lVar13 + 0x130)) &&
++              if (puVar8 == (undefined *)0x0) goto LABEL0;
++              if (*(int *)(puVar8 + 0x10) != iVar6) {
++                lVar2 = *plVar1;
++                if ((*(byte *)(lVar12 + 0x130) <= *(byte *)(lVar2 + 0x130)) &&
+                    (*(longlong *)
+-                     (*(longlong *)(lVar13 + 200) + -8 + (ulonglong)*(byte *)(lVar16 + 0x130) * 8)
+-                    == lVar16)) {
++                     (*(longlong *)(lVar2 + 200) + -8 + (ulonglong)*(byte *)(lVar12 + 0x130) * 8) ==
++                    lVar12)) {
+                   if (lStackX_18 == 0) goto LABEL0;
+-                  if ((*(byte *)(lVar13 + 0x130) < *(byte *)(lVar16 + 0x130)) ||
++                  if ((*(byte *)(lVar2 + 0x130) < *(byte *)(lVar12 + 0x130)) ||
+                      (*(longlong *)
+-                       (*(longlong *)(lVar13 + 200) + -8 + (ulonglong)*(byte *)(lVar16 + 0x130) * 8)
+-                      != lVar16)) {
+-                    CALL13(plVar2);
+-                    pcVar6 = (code *)swi(3);
+-                    (*pcVar6)();
++                       (*(longlong *)(lVar2 + 200) + -8 + (ulonglong)*(byte *)(lVar12 + 0x130) * 8)
++                      != lVar12)) {
++                    CALL9(plVar1);
++                    pcVar3 = (code *)swi(3);
++                    (*pcVar3)();
+                     return;
+                   }
+-                  *(longlong **)(lStackX_18 + 0x20) = plVar2;
+-                  CALL6();
+-                  lVar16 = GLOBAL7;
++                  *(longlong **)(lStackX_18 + 0x20) = plVar1;
++                  il2cpp_write_barrier_0();
++                  lVar12 = GLOBAL7;
+                 }
+               }
+@@ -141,8 +139,8 @@
+         }
+         if (*(longlong *)(self + 0x168) != 0) {
+-          iVar8 = CALL14(*(longlong *)(self + 0x168),GLOBAL2);
+-          if (0 < iVar8) {
++          iVar6 = CALL10(*(longlong *)(self + 0x168),GLOBAL2);
++          if (0 < iVar6) {
+             if (*(longlong *)(self + 0x168) == 0) goto LABEL0;
+-            CALL15(&uStack_58,*(longlong *)(self + 0x168),GLOBAL1);
++            CALL11(&uStack_58,*(longlong *)(self + 0x168),GLOBAL1);
+             uStack_80 = uStack_58;
+             uStack_78 = uStack_50;
+@@ -150,37 +148,37 @@
+             uStack_68 = uStack_40;
+             uStack_60 = uStack_38;
+-            while (cVar7 = CALL16(&uStack_80,GLOBAL5), uVar10 = uStack_68,
+-                  cVar7 != '\0') {
+-              plVar2 = *(longlong **)(self + 0x180);
+-              uVar12 = uStack_70 & 0xff;
+-              if (plVar2 == (longlong *)0x0) {
++            while (cVar5 = CALL12(&uStack_80,GLOBAL5), uVar4 = uStack_68,
++                  cVar5 != '\0') {
++              plVar1 = *(longlong **)(self + 0x180);
++              uVar9 = uStack_70 & 0xff;
++              if (plVar1 == (longlong *)0x0) {
+ LABEL1:
+-                CALL17();
+-                CALL18();
+-                pcVar6 = (code *)swi(3);
+-                (*pcVar6)();
++                CALL13();
++                CALL14();
++                pcVar3 = (code *)swi(3);
++                (*pcVar3)();
+                 return;
+               }
+-              lVar9 = *plVar2;
+-              uVar15 = 0;
+-              if (*(ushort *)(lVar9 + 0x12e) != 0) {
++              lVar7 = *plVar1;
++              uVar11 = 0;
++              if (*(ushort *)(lVar7 + 0x12e) != 0) {
+                 do {
+-                  if (*(longlong *)(*(longlong *)(lVar9 + 0xb0) + (ulonglong)uVar15 * 0x10) ==
++                  if (*(longlong *)(*(longlong *)(lVar7 + 0xb0) + (ulonglong)uVar11 * 0x10) ==
+                       GLOBAL10) {
+-                    puVar14 = (undefined8 *)
+-                              (lVar9 + 0x138 +
++                    puVar10 = (undefined8 *)
++                              (lVar7 + 0x138 +
+                               (longlong)
+-                              (*(int *)(*(longlong *)(lVar9 + 0xb0) + 8 + (ulonglong)uVar15 * 0x10)
++                              (*(int *)(*(longlong *)(lVar7 + 0xb0) + 8 + (ulonglong)uVar11 * 0x10)
+                               + 1) * 0x10);
+                     goto LABEL2;
+                   }
+-                  uVar15 = uVar15 + 1;
+-                } while (uVar15 < *(ushort *)(lVar9 + 0x12e));
++                  uVar11 = uVar11 + 1;
++                } while (uVar11 < *(ushort *)(lVar7 + 0x12e));
+               }
+-              puVar14 = (undefined8 *)CALL19(plVar2,GLOBAL10,1);
++              puVar10 = (undefined8 *)CALL15(plVar1,GLOBAL10,1);
+ LABEL2:
+-              (*(code *)*puVar14)(plVar2,uVar12,uVar10,puVar14[1]);
++              (*(code *)*puVar10)(plVar1,uVar9,uVar4,puVar10[1]);
+             }
+-            CALL20(&uStack_80,GLOBAL4);
++            CALL16(&uStack_80,GLOBAL4);
+           }
+           return;
+@@ -190,7 +188,7 @@
+   }
+ LABEL0:
+-  CALL17();
+-  pcVar6 = (code *)swi(3);
+-  (*pcVar6)();
++  CALL13();
++  pcVar3 = (code *)swi(3);
++  (*pcVar3)();
+   return;
+ }

@@ -1,0 +1,29 @@
+--- assets\source-data\toram-monsters\native-highraid-target\HighRaidBossBattleStatus-_ctor-7fff5fe2d5a0.c
++++ 7926.c
+@@ -1,8 +1,4 @@
+ {
+   undefined8 uVar1;
+-  short returnCode;
+-  undefined *methodInfo_00;
+-  returnCode = (short)abnormalStateManager;
+-  methodInfo_00 = buffManager;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -13,12 +9,12 @@
+   CALL2(uVar1,GLOBAL1);
+   *(undefined8 *)(self + 0x38) = uVar1;
+-  CALL3();
+-  HighRaidRoomData_LoadAsset(self,0,returnCode,methodInfo_00);
++  il2cpp_write_barrier_0();
++  CALL3(self,0);
+   *(undefined **)(self + 0x10) = statusMaster;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x18) = abnormalStateManager;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x20) = buffManager;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(int *)(self + 0x30) = level;
+   return;

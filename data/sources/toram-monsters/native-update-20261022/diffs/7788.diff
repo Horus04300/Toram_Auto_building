@@ -1,0 +1,63 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus___c-_get_CutMagicAttack_b__15_0-7fff5fe3afa0.c
++++ 7788.c
+@@ -42,11 +42,11 @@
+           CALL4(lVar6,uVar8,GLOBAL3,0);
+           *(longlong *)(*(longlong *)(GLOBAL4 + 0xb8) + 0x10) = lVar6;
+-          CALL5();
++          il2cpp_write_barrier_0();
+         }
+         lVar2 = GLOBAL1;
+         if (*(longlong *)(GLOBAL1 + 0x38) == 0) {
+-          CALL6(GLOBAL1);
++          CALL5(GLOBAL1);
+         }
+-        lVar6 = CALL7(uVar7,lVar6,*(undefined8 *)(*(longlong *)(lVar2 + 0x38) + 0x10));
++        lVar6 = CALL6(uVar7,lVar6,*(undefined8 *)(*(longlong *)(lVar2 + 0x38) + 0x10));
+         if (GLOBAL5 == '\0') {
+           CALL1(&GLOBAL6,0);
+@@ -58,12 +58,12 @@
+         }
+         if (lVar6 == 0) {
+-          uVar7 = CALL8(GLOBAL11);
+-          uVar7 = CALL9(uVar7,0);
+-          uVar8 = CALL8(&GLOBAL6);
+-          CALL10(uVar7,uVar8);
++          uVar7 = CALL7(GLOBAL11);
++          uVar7 = CALL8(uVar7,0);
++          uVar8 = CALL7(&GLOBAL6);
++          CALL9(uVar7,uVar8);
+ LABEL1:
+           uVar7 = GLOBAL6;
+-          uVar8 = CALL11();
+-          CALL10(uVar8,uVar7);
++          uVar8 = CALL10();
++          CALL9(uVar8,uVar7);
+ LABEL2:
+           CALL0();
+@@ -71,15 +71,15 @@
+         else {
+           iVar9 = 0;
+-          lVar6 = CALL12(0,GLOBAL8,lVar6);
++          lVar6 = CALL11(0,GLOBAL8,lVar6);
+           while (lVar6 != 0) {
+-            cVar4 = CALL12(0,GLOBAL10);
++            cVar4 = CALL11(0,GLOBAL10);
+             if (cVar4 == '\0') {
+               if (lVar6 != 0) {
+-                CALL13(0,GLOBAL7);
++                CALL12(0,GLOBAL7);
+               }
+               return iVar9;
+             }
+             if (lVar6 == 0) goto LABEL2;
+-            iVar5 = CALL12(0,GLOBAL9);
++            iVar5 = CALL11(0,GLOBAL9);
+             if (0xffffffff < (ulonglong)((longlong)iVar9 + (longlong)iVar5 + 0x80000000))
+             goto LABEL1;
+@@ -88,5 +88,5 @@
+         }
+         CALL0();
+-        CALL14();
++        CALL13();
+         pcVar1 = (code *)swi(3);
+         iVar9 = (*pcVar1)();

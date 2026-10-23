@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 
-const source = readFileSync(new URL('../../../assets/js/ui-bootstrap.js', import.meta.url), 'utf8');
+const source = readFileSync(new URL('../../../web/src/ui/ui-bootstrap.js', import.meta.url), 'utf8');
 for (const readyState of ['loading', 'interactive', 'complete']) {
   const counts = { build:0, optimizer:0, preview:0, calculation:0 };
   const listeners = new Map();

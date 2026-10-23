@@ -1,0 +1,2099 @@
+[
+  {
+    "type_definition_index": 1104,
+    "name": "MobPropertyHighRaidCalcExceptionFlag",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24627460,
+      "size": 88
+    },
+    "byval_type_index": 20717,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 20706,
+      "exact_byval_name": "MobPropertyBase"
+    },
+    "is_enum": false,
+    "fields": [],
+    "methods": [
+      {
+        "method_index": 9731,
+        "name": "get_PropertyType",
+        "return_type": {
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        },
+        "parameters": [],
+        "token": "0x06002604",
+        "range": {
+          "offset": 4095532,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9732,
+        "name": "FixedHpFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06002605",
+        "range": {
+          "offset": 4095568,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9733,
+        "name": "FixedNecessaryHitFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06002606",
+        "range": {
+          "offset": 4095604,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9734,
+        "name": "FixedDefFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06002607",
+        "range": {
+          "offset": 4095640,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9735,
+        "name": "FixedMagicDefFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06002608",
+        "range": {
+          "offset": 4095676,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9736,
+        "name": "FixedCutAttackFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06002609",
+        "range": {
+          "offset": 4095712,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9737,
+        "name": "FixedCutMagicAttackFlag",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0600260a",
+        "range": {
+          "offset": 4095748,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9738,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600260b",
+        "range": {
+          "offset": 4095784,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 3825,
+    "name": "HighRaidBossMasterData",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24866908,
+      "size": 88
+    },
+    "byval_type_index": 17479,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 16873,
+        "name": "<No>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041ea",
+        "range": {
+          "offset": 22261488,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16874,
+        "name": "<FieldId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041eb",
+        "range": {
+          "offset": 22261500,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16875,
+        "name": "<RoomId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ec",
+        "range": {
+          "offset": 22261512,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16876,
+        "name": "<RaidFlag>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x040041ed",
+        "range": {
+          "offset": 22261524,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16877,
+        "name": "<MonsterId>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ee",
+        "range": {
+          "offset": 22261536,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16878,
+        "name": "<MonsterUuid>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x040041ef",
+        "range": {
+          "offset": 22261548,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16879,
+        "name": "<BaseLevel>k__BackingField",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x040041f0",
+        "range": {
+          "offset": 22261560,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 16880,
+        "name": "<MinLevel>k__BackingField",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x040041f1",
+        "range": {
+          "offset": 22261572,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 33628,
+        "name": "get_No",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600835d",
+        "range": {
+          "offset": 4955824,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33629,
+        "name": "set_No",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600835e",
+        "range": {
+          "offset": 4955860,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33630,
+        "name": "get_FieldId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x0600835f",
+        "range": {
+          "offset": 4955896,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33631,
+        "name": "set_FieldId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008360",
+        "range": {
+          "offset": 4955932,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33632,
+        "name": "get_RoomId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008361",
+        "range": {
+          "offset": 4955968,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33633,
+        "name": "set_RoomId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008362",
+        "range": {
+          "offset": 4956004,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33634,
+        "name": "get_RaidFlag",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06008363",
+        "range": {
+          "offset": 4956040,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33635,
+        "name": "set_RaidFlag",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06008364",
+        "range": {
+          "offset": 4956076,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33636,
+        "name": "get_MonsterId",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008365",
+        "range": {
+          "offset": 4956112,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33637,
+        "name": "set_MonsterId",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008366",
+        "range": {
+          "offset": 4956148,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33638,
+        "name": "get_MonsterUuid",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06008367",
+        "range": {
+          "offset": 4956184,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33639,
+        "name": "set_MonsterUuid",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06008368",
+        "range": {
+          "offset": 4956220,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33640,
+        "name": "get_BaseLevel",
+        "return_type": {
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06008369",
+        "range": {
+          "offset": 4956256,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33641,
+        "name": "set_BaseLevel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836a",
+        "range": {
+          "offset": 4956292,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33642,
+        "name": "get_MinLevel",
+        "return_type": {
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x0600836b",
+        "range": {
+          "offset": 4956328,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33643,
+        "name": "set_MinLevel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836c",
+        "range": {
+          "offset": 4956364,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 33644,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "no",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "fieldId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "roomId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "raidFlag",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "monsterId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "monsterUuid",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "baseLevel",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          },
+          {
+            "name": "minLevel",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x0600836d",
+        "range": {
+          "offset": 4956400,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 6124,
+    "name": "UIHighRaidEnterManager",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 25069220,
+      "size": 88
+    },
+    "byval_type_index": 27232,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 26611,
+      "exact_byval_name": "UIBasePanel"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 29258,
+        "name": "mainPanelAnchor",
+        "type_index": 27355,
+        "exact_byval_name": null,
+        "token": "0x0400724b",
+        "range": {
+          "offset": 22410108,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29259,
+        "name": "partyPanelAnchor",
+        "type_index": 27355,
+        "exact_byval_name": null,
+        "token": "0x0400724c",
+        "range": {
+          "offset": 22410120,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29260,
+        "name": "panelObj",
+        "type_index": 10195,
+        "exact_byval_name": null,
+        "token": "0x0400724d",
+        "range": {
+          "offset": 22410132,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29261,
+        "name": "recommLevelLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x0400724e",
+        "range": {
+          "offset": 22410144,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29262,
+        "name": "bossNameLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x0400724f",
+        "range": {
+          "offset": 22410156,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29263,
+        "name": "difficultSelectButtons",
+        "type_index": 10195,
+        "exact_byval_name": null,
+        "token": "0x04007250",
+        "range": {
+          "offset": 22410168,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29264,
+        "name": "difflicultNumLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x04007251",
+        "range": {
+          "offset": 22410180,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29265,
+        "name": "infoButton",
+        "type_index": 27343,
+        "exact_byval_name": null,
+        "token": "0x04007252",
+        "range": {
+          "offset": 22410192,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29266,
+        "name": "readyButton",
+        "type_index": 27343,
+        "exact_byval_name": null,
+        "token": "0x04007253",
+        "range": {
+          "offset": 22410204,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29267,
+        "name": "readyButtonLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x04007254",
+        "range": {
+          "offset": 22410216,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29268,
+        "name": "partyMemberObj",
+        "type_index": 10195,
+        "exact_byval_name": null,
+        "token": "0x04007255",
+        "range": {
+          "offset": 22410228,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29269,
+        "name": "bossStatusLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x04007256",
+        "range": {
+          "offset": 22410240,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29270,
+        "name": "centerPanelObj",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007257",
+        "range": {
+          "offset": 22410252,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29271,
+        "name": "errLabel",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007258",
+        "range": {
+          "offset": 22410264,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29272,
+        "name": "employButton",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007259",
+        "range": {
+          "offset": 22410276,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29273,
+        "name": "statusScrollWindow",
+        "type_index": 28260,
+        "exact_byval_name": null,
+        "token": "0x0400725a",
+        "range": {
+          "offset": 22410288,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29274,
+        "name": "statusScrollElement",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x0400725b",
+        "range": {
+          "offset": 22410300,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29275,
+        "name": "statusPropElement",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x0400725c",
+        "range": {
+          "offset": 22410312,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29276,
+        "name": "dropSettingIcon",
+        "type_index": 10970,
+        "exact_byval_name": null,
+        "token": "0x0400725d",
+        "range": {
+          "offset": 22410324,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29277,
+        "name": "dropItemIcon",
+        "type_index": 27336,
+        "exact_byval_name": null,
+        "token": "0x0400725e",
+        "range": {
+          "offset": 22410336,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29278,
+        "name": "dropItemLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x0400725f",
+        "range": {
+          "offset": 22410348,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29279,
+        "name": "statusExDropElement",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007260",
+        "range": {
+          "offset": 22410360,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29280,
+        "name": "statusExPlusElement",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007261",
+        "range": {
+          "offset": 22410372,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29281,
+        "name": "lineElement",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007262",
+        "range": {
+          "offset": 22410384,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29282,
+        "name": "gemPanelIcon",
+        "type_index": 28374,
+        "exact_byval_name": null,
+        "token": "0x04007263",
+        "range": {
+          "offset": 22410396,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29283,
+        "name": "itemPopUpLabel",
+        "type_index": 27410,
+        "exact_byval_name": null,
+        "token": "0x04007264",
+        "range": {
+          "offset": 22410408,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29284,
+        "name": "gemPropertyLabel",
+        "type_index": 27395,
+        "exact_byval_name": null,
+        "token": "0x04007265",
+        "range": {
+          "offset": 22410420,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29285,
+        "name": "itemButton",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007266",
+        "range": {
+          "offset": 22410432,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29286,
+        "name": "menuButtons",
+        "type_index": 10926,
+        "exact_byval_name": null,
+        "token": "0x04007267",
+        "range": {
+          "offset": 22410444,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29287,
+        "name": "<IsCancel>k__BackingField",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x04007268",
+        "range": {
+          "offset": 22410456,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29288,
+        "name": "<IsClose>k__BackingField",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x04007269",
+        "range": {
+          "offset": 22410468,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29289,
+        "name": "<DifficultyState>k__BackingField",
+        "type_index": 21690,
+        "exact_byval_name": null,
+        "token": "0x0400726a",
+        "range": {
+          "offset": 22410480,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29290,
+        "name": "<IsEmployMercenary>k__BackingField",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x0400726b",
+        "range": {
+          "offset": 22410492,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29291,
+        "name": "panelState",
+        "type_index": 38542,
+        "exact_byval_name": null,
+        "token": "0x0400726c",
+        "range": {
+          "offset": 22410504,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29292,
+        "name": "shortcutManager",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x0400726d",
+        "range": {
+          "offset": 22410516,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29293,
+        "name": "openShortcut",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x0400726e",
+        "range": {
+          "offset": 22410528,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29294,
+        "name": "playerDataManager",
+        "type_index": 22743,
+        "exact_byval_name": null,
+        "token": "0x0400726f",
+        "range": {
+          "offset": 22410540,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29295,
+        "name": "enterBasePanel",
+        "type_index": 27230,
+        "exact_byval_name": null,
+        "token": "0x04007270",
+        "range": {
+          "offset": 22410552,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29296,
+        "name": "isInit",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x04007271",
+        "range": {
+          "offset": 22410564,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29297,
+        "name": "roomData",
+        "type_index": 17492,
+        "exact_byval_name": null,
+        "token": "0x04007272",
+        "range": {
+          "offset": 22410576,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29298,
+        "name": "loadingTimer",
+        "type_index": 24498,
+        "exact_byval_name": null,
+        "token": "0x04007273",
+        "range": {
+          "offset": 22410588,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29299,
+        "name": "loadingObject",
+        "type_index": 16368,
+        "exact_byval_name": null,
+        "token": "0x04007274",
+        "range": {
+          "offset": 22410600,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29300,
+        "name": "connectTimer",
+        "type_index": 24498,
+        "exact_byval_name": null,
+        "token": "0x04007275",
+        "range": {
+          "offset": 22410612,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29301,
+        "name": "difficulty",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x04007276",
+        "range": {
+          "offset": 22410624,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29302,
+        "name": "beforeDifficulty",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x04007277",
+        "range": {
+          "offset": 22410636,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29303,
+        "name": "baseDifficulty",
+        "type_index": 18775,
+        "exact_byval_name": null,
+        "token": "0x04007278",
+        "range": {
+          "offset": 22410648,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29304,
+        "name": "itemTextManager",
+        "type_index": 19053,
+        "exact_byval_name": null,
+        "token": "0x04007279",
+        "range": {
+          "offset": 22410660,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29305,
+        "name": "enemyTextManager",
+        "type_index": 15307,
+        "exact_byval_name": null,
+        "token": "0x0400727a",
+        "range": {
+          "offset": 22410672,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29306,
+        "name": "difficultyNum",
+        "type_index": 18816,
+        "exact_byval_name": null,
+        "token": "0x0400727b",
+        "range": {
+          "offset": 22410684,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10350,
+          "offset": 9716014,
+          "preview_hex": "0a80c83c0a000204",
+          "int32_value": 5,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 29307,
+        "name": "minDifficulty",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x0400727c",
+        "range": {
+          "offset": 22410696,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29308,
+        "name": "maxDifficulty",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x0400727d",
+        "range": {
+          "offset": 22410708,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29309,
+        "name": "basePoint",
+        "type_index": 18816,
+        "exact_byval_name": null,
+        "token": "0x0400727e",
+        "range": {
+          "offset": 22410720,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10351,
+          "offset": 9716015,
+          "preview_hex": "80c83c0a00020405",
+          "int32_value": 100,
+          "encoded_size": 2
+        }
+      },
+      {
+        "field_index": 29310,
+        "name": "basePartsPoint",
+        "type_index": 18816,
+        "exact_byval_name": null,
+        "token": "0x0400727f",
+        "range": {
+          "offset": 22410732,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10353,
+          "offset": 9716017,
+          "preview_hex": "3c0a000204051e00",
+          "int32_value": 30,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 29311,
+        "name": "isPartner",
+        "type_index": 12862,
+        "exact_byval_name": null,
+        "token": "0x04007280",
+        "range": {
+          "offset": 22410744,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29312,
+        "name": "highRaidNo",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x04007281",
+        "range": {
+          "offset": 22410756,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29313,
+        "name": "CanEmployScenarioNum",
+        "type_index": 18816,
+        "exact_byval_name": null,
+        "token": "0x04007282",
+        "range": {
+          "offset": 22410768,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10354,
+          "offset": 9716018,
+          "preview_hex": "0a000204051e0002",
+          "int32_value": 5,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 29314,
+        "name": "gemList",
+        "type_index": 3562,
+        "exact_byval_name": null,
+        "token": "0x04007283",
+        "range": {
+          "offset": 22410780,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29315,
+        "name": "nowSelectGemData",
+        "type_index": 38540,
+        "exact_byval_name": null,
+        "token": "0x04007284",
+        "range": {
+          "offset": 22410792,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29316,
+        "name": "selectedGemList",
+        "type_index": 6920,
+        "exact_byval_name": null,
+        "token": "0x04007285",
+        "range": {
+          "offset": 22410804,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29317,
+        "name": "selectedOrbGemList",
+        "type_index": 6920,
+        "exact_byval_name": null,
+        "token": "0x04007286",
+        "range": {
+          "offset": 22410816,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29318,
+        "name": "gemScrollCamera",
+        "type_index": 26736,
+        "exact_byval_name": null,
+        "token": "0x04007287",
+        "range": {
+          "offset": 22410828,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29319,
+        "name": "gemPopUpWindow",
+        "type_index": 16450,
+        "exact_byval_name": null,
+        "token": "0x04007288",
+        "range": {
+          "offset": 22410840,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29320,
+        "name": "itemListWindow",
+        "type_index": 28260,
+        "exact_byval_name": null,
+        "token": "0x04007289",
+        "range": {
+          "offset": 22410852,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 29321,
+        "name": "itemListWindowAnchor",
+        "type_index": 27355,
+        "exact_byval_name": null,
+        "token": "0x0400728a",
+        "range": {
+          "offset": 22410864,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 50294,
+        "name": "get_IsCancel",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0600c477",
+        "range": {
+          "offset": 5555800,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50295,
+        "name": "set_IsCancel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x0600c478",
+        "range": {
+          "offset": 5555836,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50296,
+        "name": "get_IsClose",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0600c479",
+        "range": {
+          "offset": 5555872,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50297,
+        "name": "set_IsClose",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x0600c47a",
+        "range": {
+          "offset": 5555908,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50298,
+        "name": "get_DifficultyState",
+        "return_type": {
+          "type_index": 21689,
+          "exact_byval_name": "System.Object"
+        },
+        "parameters": [],
+        "token": "0x0600c47b",
+        "range": {
+          "offset": 5555944,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50299,
+        "name": "set_DifficultyState",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 21689,
+            "exact_byval_name": "System.Object"
+          }
+        ],
+        "token": "0x0600c47c",
+        "range": {
+          "offset": 5555980,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50300,
+        "name": "get_IsEmployMercenary",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0600c47d",
+        "range": {
+          "offset": 5556016,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50301,
+        "name": "set_IsEmployMercenary",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x0600c47e",
+        "range": {
+          "offset": 5556052,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50302,
+        "name": "Awake",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c47f",
+        "range": {
+          "offset": 5556088,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50303,
+        "name": "Start",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c480",
+        "range": {
+          "offset": 5556124,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50304,
+        "name": "Update",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c481",
+        "range": {
+          "offset": 5556160,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50305,
+        "name": "OnDestroy",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c482",
+        "range": {
+          "offset": 5556196,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50306,
+        "name": "Initialize",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "highRaidNo",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "emergency",
+            "type_index": 15220,
+            "exact_byval_name": "Toram.Common.Parameters.EmergencyPositionData"
+          }
+        ],
+        "token": "0x0600c483",
+        "range": {
+          "offset": 5556232,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50307,
+        "name": "OnDifficultyDown",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c484",
+        "range": {
+          "offset": 5556268,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50308,
+        "name": "OnDifficultyUp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c485",
+        "range": {
+          "offset": 5556304,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50309,
+        "name": "OnDifficultySDown",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c486",
+        "range": {
+          "offset": 5556340,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50310,
+        "name": "OnDifficultySUp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c487",
+        "range": {
+          "offset": 5556376,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50311,
+        "name": "OnOpenBossData",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c488",
+        "range": {
+          "offset": 5556412,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50312,
+        "name": "OnBattleReady",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c489",
+        "range": {
+          "offset": 5556448,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50313,
+        "name": "OnEmploy",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c48a",
+        "range": {
+          "offset": 5556484,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50314,
+        "name": "OnItemList",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c48b",
+        "range": {
+          "offset": 5556520,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50315,
+        "name": "WaitRoomData",
+        "return_type": {
+          "type_index": 18073,
+          "exact_byval_name": "System.Collections.IEnumerator"
+        },
+        "parameters": [],
+        "token": "0x0600c48c",
+        "range": {
+          "offset": 5556556,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50316,
+        "name": "UIInit",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c48d",
+        "range": {
+          "offset": 5556592,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50317,
+        "name": "ChangePanel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "panelState",
+            "type_index": 38541,
+            "exact_byval_name": "PanelState"
+          }
+        ],
+        "token": "0x0600c48e",
+        "range": {
+          "offset": 5556628,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50318,
+        "name": "UpdateDifficultyLabel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c48f",
+        "range": {
+          "offset": 5556664,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50319,
+        "name": "CloseShortcutPanel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c490",
+        "range": {
+          "offset": 5556700,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50320,
+        "name": "BattleReadyCancel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c491",
+        "range": {
+          "offset": 5556736,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50321,
+        "name": "ReturnPreviousState",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c492",
+        "range": {
+          "offset": 5556772,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50322,
+        "name": "ChangeActiveMenuButton",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "isActive",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x0600c493",
+        "range": {
+          "offset": 5556808,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50323,
+        "name": "ChangeActiveEmployButton",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c494",
+        "range": {
+          "offset": 5556844,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50324,
+        "name": "ChangeEmployButtonPos",
+        "return_type": {
+          "type_index": 18073,
+          "exact_byval_name": "System.Collections.IEnumerator"
+        },
+        "parameters": [],
+        "token": "0x0600c495",
+        "range": {
+          "offset": 5556880,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50325,
+        "name": "OpenBossDataWindow",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c496",
+        "range": {
+          "offset": 5556916,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50326,
+        "name": "CreateStatusElement",
+        "return_type": {
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        "parameters": [
+          {
+            "name": "isDebug",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          },
+          {
+            "name": "pos",
+            "type_index": 29032,
+            "exact_byval_name": "UnityEngine.Vector3"
+          },
+          {
+            "name": "itemId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "itemDropType",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "propValTotal",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "colorTotal",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "isRedText",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x0600c497",
+        "range": {
+          "offset": 5556952,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50327,
+        "name": "GetDropItemName",
+        "return_type": {
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        "parameters": [
+          {
+            "name": "db",
+            "type_index": 19005,
+            "exact_byval_name": "ItemDBData"
+          },
+          {
+            "name": "itemId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "isDebug",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          },
+          {
+            "name": "isRedText",
+            "type_index": 12861,
+            "exact_byval_name": "System.Boolean"
+          },
+          {
+            "name": "valTotal",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "colorTotal",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0600c498",
+        "range": {
+          "offset": 5556988,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50328,
+        "name": "SetLeftButtonType",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 40661,
+            "exact_byval_name": "ActionSystemType"
+          }
+        ],
+        "token": "0x0600c499",
+        "range": {
+          "offset": 5557024,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50329,
+        "name": "SetRightButtonType",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 40661,
+            "exact_byval_name": "ActionSystemType"
+          }
+        ],
+        "token": "0x0600c49a",
+        "range": {
+          "offset": 5557060,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50330,
+        "name": "OpenItemList",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c49b",
+        "range": {
+          "offset": 5557096,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50331,
+        "name": "CheckUseItem",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "itemId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0600c49c",
+        "range": {
+          "offset": 5557132,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50332,
+        "name": "OpenGemCheckWindow",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "itemId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0600c49d",
+        "range": {
+          "offset": 5557168,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50333,
+        "name": "AddOrbGemList",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "itemId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0600c49e",
+        "range": {
+          "offset": 5557204,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50334,
+        "name": "OnLeftTopButton",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c49f",
+        "range": {
+          "offset": 5557240,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50335,
+        "name": "OnRightTopButton",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c4a0",
+        "range": {
+          "offset": 5557276,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50336,
+        "name": "OnOpenShortcutPanel",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "shortcutManager",
+            "type_index": 16367,
+            "exact_byval_name": "UnityEngine.GameObject"
+          }
+        ],
+        "token": "0x0600c4a1",
+        "range": {
+          "offset": 5557312,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 50337,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600c4a2",
+        "range": {
+          "offset": 5557348,
+          "size": 36
+        }
+      }
+    ]
+  }
+]

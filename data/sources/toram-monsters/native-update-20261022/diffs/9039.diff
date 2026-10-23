@@ -1,0 +1,13 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\MobPartsStatus-_ctor-7fff5fe66560.c
++++ 9039.c
+@@ -6,8 +6,8 @@
+     GLOBAL0 = '\x01';
+   }
+-  GuildRaidRoomData_LoadAsset(self,(undefined *)0x0);
++  CALL1(self,0);
+   *(short *)(self + 0x10) = difficulty;
+   *(undefined **)(self + 0x28) = statusMaster;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   if ((*(longlong *)(self + 0x28) != 0) &&
+      (lVar1 = *(longlong *)(*(longlong *)(self + 0x28) + 0xa0), lVar1 != 0)) {

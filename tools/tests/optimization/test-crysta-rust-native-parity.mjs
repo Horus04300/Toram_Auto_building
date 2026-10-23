@@ -1,3 +1,4 @@
+import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -7,7 +8,7 @@ import vm from 'node:vm';
 
 const root = resolve(import.meta.dirname, '../../..');
 const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'assets/js/stat-registry.js'));
+const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
 
 function base(overrides={}) {
   return Object.assign({
@@ -29,6 +30,7 @@ function base(overrides={}) {
 
 function matchesCondition(context, condition) {
   if (!condition) return true;
+  if (condition.eitherWeapon && !condition.eitherWeapon.includes(context.mainType) && !condition.eitherWeapon.includes(context.subType)) return false;
   return (!condition.main || condition.main.split('/').includes(context.mainType))
     && (!condition.sub || condition.sub.split('/').includes(context.subType))
     && (!condition.armor || condition.armor.split('/').includes(context.armorType));
@@ -47,7 +49,7 @@ function effectiveStats(crysta, context) {
 
 function runNative(cases) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--quiet', '--manifest-path', 'src-tauri/Cargo.toml', '--bin', 'crysta_native_summary'], { cwd:root, stdio:['pipe','pipe','pipe'] });
+    const child = spawn('cargo', ['run', '--quiet', '--manifest-path', 'desktop/Cargo.toml', '--bin', 'crysta_native_summary'], { cwd:root, stdio:['pipe','pipe','pipe'] });
     let stdout = '';
     let stderr = '';
     child.stdout.setEncoding('utf8');
@@ -75,11 +77,11 @@ const calculatorContext = { window:{ ToramStatRegistry:registry }, console };
 calculatorContext.window.window = calculatorContext.window;
 vm.createContext(calculatorContext);
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', calculatorContext);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculation-policies.js'), 'utf8'), calculatorContext, { filename:'calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), calculatorContext, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), calculatorContext, { filename:'calculation/calculation-policies.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), calculatorContext, { filename:'calculation/calculator.js' });
 const dataContext = {};
 vm.createContext(dataContext);
-vm.runInContext(`${await readFile(resolve(root, 'assets/js/data/crysta-data.js'), 'utf8')}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
 
 const allCrystas = dataContext.__crystas;
 const upgradedNames = new Set(allCrystas.map(item => item.prev).filter(Boolean));

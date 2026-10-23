@@ -6,12 +6,12 @@ import { verifyVersion } from './release-version.mjs';
 
 const root = resolve(import.meta.dirname, '..');
 const version = verifyVersion(root);
-const installer = resolve(root, `src-tauri/target/release/bundle/nsis/Toram Online Auto Build Calculator_${version}_x64-setup.exe`);
+const installer = resolve(root, `desktop/target/release/bundle/nsis/Toram Online Auto Build Calculator_${version}_x64-setup.exe`);
 const signature = installer + '.sig';
 assert.ok(statSync(installer).size > 0 && statSync(signature).size > 0, 'Installer and signature required');
-const verified = spawnSync('cargo', ['run', '--locked', '--quiet', '--manifest-path', resolve(root, 'src-tauri/Cargo.toml'), '--bin', 'verify_updater_artifact', '--', resolve(root, 'src-tauri/tauri.conf.json'), installer, signature], { stdio:'inherit' });
+const verified = spawnSync('cargo', ['run', '--locked', '--quiet', '--manifest-path', resolve(root, 'desktop/Cargo.toml'), '--bin', 'verify_updater_artifact', '--', resolve(root, 'desktop/tauri.conf.json'), installer, signature], { stdio:'inherit' });
 assert.equal(verified.status, 0, 'Artifact signature must match bundled public key');
-const output = resolve(root, 'release-assets');
+const output = resolve(root, 'build/release');
 mkdirSync(output, { recursive:true });
 // GitHub rewrites spaces in uploaded names. Use a predictable ASCII name in the manifest.
 const name = `ToramOnlineAutoBuildCalculator_${version}_x64-setup.exe`;

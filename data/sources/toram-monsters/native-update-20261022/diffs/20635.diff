@@ -1,0 +1,16 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidRoomData-RoomSynchronization-7fff600e0b40.c
++++ 20635.c
+@@ -26,5 +26,5 @@
+              (ulonglong)*(byte *)(GLOBAL1 + 0x130) * 8) == GLOBAL1)) {
+           *(longlong *)(self + 0x70) = plVar2[5];
+-          CALL3();
++          il2cpp_write_barrier_0();
+           *(ushort *)(self + 0xb2) = (ushort)*(byte *)(plVar2 + 6);
+           bVar1 = *(byte *)((longlong)plVar2 + 0x39);
+@@ -36,5 +36,5 @@
+           *(uint *)(self + 0xac) = uVar7;
+           *(ushort *)(self + 0xb6) = (ushort)*(byte *)((longlong)plVar2 + 0x31);
+-          GuildRaidRoomData_CheckItemUseProhibited(self,(undefined *)0x0);
++          CALL3(self,0);
+           self[0xc1] = (char)plVar2[7];
+           *(float *)(self + 0x90) = (float)*(int *)((longlong)plVar2 + 0x34);

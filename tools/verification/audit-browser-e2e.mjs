@@ -7,7 +7,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 if (!process.env.CODEX_PLAYWRIGHT_PATH) throw new Error('Set CODEX_PLAYWRIGHT_PATH');
 const { chromium } = require(process.env.CODEX_PLAYWRIGHT_PATH);
-const root = resolve('dist'), output = resolve('dist/e2e-audit');
+const root = resolve('build/desktop'), output = resolve('build/tmp/browser-e2e');
 await mkdir(output, { recursive:true });
 const server = createServer(async (req,res) => {
   try {

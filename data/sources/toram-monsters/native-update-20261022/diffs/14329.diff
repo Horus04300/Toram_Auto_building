@@ -1,0 +1,37 @@
+--- assets\source-data\toram-monsters\native-target\PlayerAttackBase-checkCriticalPercent-7fff5ffbdfb0.c
++++ 14329.c
+@@ -7,5 +7,5 @@
+   longlong lVar6;
+   int aiStackX_10 [2];
+-  longlong lStackX_18;
++  undefined *puStackX_18;
+   aiStackX_10[0] = criticalParcent;
+   if (GLOBAL0 == '\0') {
+@@ -15,5 +15,5 @@
+   lVar6 = GLOBAL1;
+   uVar4 = 0;
+-  lStackX_18 = 0;
++  puStackX_18 = (undefined *)0x0;
+   if (mobAction != (undefined *)0x0) {
+     lVar5 = *(longlong *)mobAction;
+@@ -34,14 +34,15 @@
+ LABEL0:
+     lVar6 = CALL2(*(undefined8 *)(lVar5 + 8),lVar6);
+-    cVar2 = (**(code **)(lVar6 + 8))(mobAction,6,&lStackX_18,lVar6);
++    cVar2 = (**(code **)(lVar6 + 8))(mobAction,6,&puStackX_18);
+     if (cVar2 != '\0') {
+-      if (lStackX_18 == 0) goto LABEL1;
+-      CALL3(lStackX_18,mobAction,aiStackX_10,0);
++      if (puStackX_18 == (undefined *)0x0) goto LABEL1;
++      MobPropertyCriticalResist_TryGetValue
++                (puStackX_18,mobAction,(undefined *)aiStackX_10,(undefined *)0x0);
+     }
+-    bVar3 = CALL4(self,100,aiStackX_10[0]);
++    bVar3 = CALL3(self,100,aiStackX_10[0]);
+     return bVar3;
+   }
+ LABEL1:
+-  CALL5();
++  CALL4();
+   pcVar1 = (code *)swi(3);
+   bVar3 = (*pcVar1)();

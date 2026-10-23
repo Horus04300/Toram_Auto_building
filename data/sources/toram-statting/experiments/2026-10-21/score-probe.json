@@ -1,0 +1,209 @@
+{
+  "schema": "toram.statting-existing-evaluator-probe.v1",
+  "scope": "physical normal attack, one-hand reference; candidate recipes filtered after exact arithmetic replay. No crysta optimization and no global build claim.",
+  "reference": {
+    "level": 325,
+    "fiveStatSum": 840,
+    "attributes": {
+      "STR": 510,
+      "DEX": 327,
+      "INT": 1,
+      "VIT": 1,
+      "AGI": 1
+    },
+    "weaponBaseItemId": 10188,
+    "weaponAttack": 730,
+    "refinement": 0,
+    "stability": 80,
+    "bossDef": 1000,
+    "fixedCritContributions": [
+      0,
+      50,
+      80
+    ],
+    "otherUtilityRequirements": "disabled for this isolated probe"
+  },
+  "evaluations": 144,
+  "selected": [
+    {
+      "fixedCrit": 0,
+      "minimumWarning": 90,
+      "eligibleCandidates": 0,
+      "best": null
+    },
+    {
+      "fixedCrit": 0,
+      "minimumWarning": 100,
+      "eligibleCandidates": 0,
+      "best": null
+    },
+    {
+      "fixedCrit": 50,
+      "minimumWarning": 90,
+      "eligibleCandidates": 12,
+      "best": {
+        "fixedCrit": 50,
+        "frame": "atk-crit-stat",
+        "positives": {
+          "6": 10,
+          "18": 9,
+          "40": 25,
+          "42": 21,
+          "43": 10
+        },
+        "negatives": {
+          "25": -7,
+          "34": -32,
+          "36": -16
+        },
+        "recipeWarningPercent": 100,
+        "expectedDamageFactor": 6338,
+        "normalAttackCrit": 100,
+        "criticalDamage": 304,
+        "meetsCrit100": true
+      }
+    },
+    {
+      "fixedCrit": 50,
+      "minimumWarning": 100,
+      "eligibleCandidates": 9,
+      "best": {
+        "fixedCrit": 50,
+        "frame": "atk-crit-stat",
+        "positives": {
+          "6": 10,
+          "18": 9,
+          "40": 25,
+          "42": 21,
+          "43": 10
+        },
+        "negatives": {
+          "25": -7,
+          "34": -32,
+          "36": -16
+        },
+        "recipeWarningPercent": 100,
+        "expectedDamageFactor": 6338,
+        "normalAttackCrit": 100,
+        "criticalDamage": 304,
+        "meetsCrit100": true
+      }
+    },
+    {
+      "fixedCrit": 80,
+      "minimumWarning": 90,
+      "eligibleCandidates": 16,
+      "best": {
+        "fixedCrit": 80,
+        "frame": "atk-crit-stat",
+        "positives": {
+          "6": 10,
+          "18": 9,
+          "40": 25,
+          "42": 21,
+          "43": 10
+        },
+        "negatives": {
+          "25": -7,
+          "34": -32,
+          "36": -16
+        },
+        "recipeWarningPercent": 100,
+        "expectedDamageFactor": 6338,
+        "normalAttackCrit": 130,
+        "criticalDamage": 304,
+        "meetsCrit100": true
+      }
+    },
+    {
+      "fixedCrit": 80,
+      "minimumWarning": 100,
+      "eligibleCandidates": 12,
+      "best": {
+        "fixedCrit": 80,
+        "frame": "atk-crit-stat",
+        "positives": {
+          "6": 10,
+          "18": 9,
+          "40": 25,
+          "42": 21,
+          "43": 10
+        },
+        "negatives": {
+          "25": -7,
+          "34": -32,
+          "36": -16
+        },
+        "recipeWarningPercent": 100,
+        "expectedDamageFactor": 6338,
+        "normalAttackCrit": 130,
+        "criticalDamage": 304,
+        "meetsCrit100": true
+      }
+    }
+  ],
+  "marginal": [
+    {
+      "fixedCrit": 0,
+      "before": {
+        "expectedDamageFactor": 4001,
+        "normalAttackCrit": 47,
+        "criticalDamage": 306,
+        "meetsCrit100": false
+      },
+      "after": {
+        "expectedDamageFactor": 4043,
+        "normalAttackCrit": 48,
+        "criticalDamage": 306,
+        "meetsCrit100": false
+      },
+      "deltaDamage": 42,
+      "scope": "battle marginal only; the modified recipe has not been re-planned"
+    },
+    {
+      "fixedCrit": 50,
+      "before": {
+        "expectedDamageFactor": 6095,
+        "normalAttackCrit": 97,
+        "criticalDamage": 306,
+        "meetsCrit100": false
+      },
+      "after": {
+        "expectedDamageFactor": 6137,
+        "normalAttackCrit": 98,
+        "criticalDamage": 306,
+        "meetsCrit100": false
+      },
+      "deltaDamage": 42,
+      "scope": "battle marginal only; the modified recipe has not been re-planned"
+    },
+    {
+      "fixedCrit": 80,
+      "before": {
+        "expectedDamageFactor": 6220,
+        "normalAttackCrit": 127,
+        "criticalDamage": 306,
+        "meetsCrit100": true
+      },
+      "after": {
+        "expectedDamageFactor": 6220,
+        "normalAttackCrit": 128,
+        "criticalDamage": 306,
+        "meetsCrit100": true
+      },
+      "deltaDamage": 0,
+      "scope": "battle marginal only; the modified recipe has not been re-planned"
+    }
+  ],
+  "elementalGate": {
+    "FIRE_DMG": "notModeled",
+    "ELEM_P": "calculated",
+    "note": "Raw DTE keys are preserved, not the generic ELEM_P contribution; target-element conversion must be verified before damage-ranked DTE recommendations."
+  },
+  "sourceHashes": {
+    "assets/js/application/application-use-cases.js": "06ddfe9945851a8f3c927f17b7255bdb87a2cc8fc4274d5a0d6104323dda1ab2",
+    "assets/js/calculation/calculator.js": "e8beb9d73035253ddf593d94f3bdc8ea17209e2ba12bd27383cb66a98dde0922",
+    "assets/js/calculation/build-evaluator.js": "5d190aa1ac74c2d953e9593a85fb675995335e7f9b7644dd9e8a89d390fab8e7",
+    "assets/js/calculation/stat-registry.js": "d41601989db8b4561ffa8bd54721f3101b767a870ef7a9b59c134a63567fef8f"
+  }
+}

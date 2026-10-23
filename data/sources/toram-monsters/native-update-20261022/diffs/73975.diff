@@ -1,0 +1,43 @@
+--- assets\source-data\toram-monsters\native-schema\UIMobNameLabel-UpdateName-7fff5fdc4490.c
++++ 73975.c
+@@ -22,24 +22,24 @@
+       uVar5 = CALL2(lVar3,GLOBAL1);
+       *(undefined8 *)(self + 0x88) = uVar5;
+-      CALL3();
++      il2cpp_write_barrier_0();
+       uVar5 = GLOBAL7;
+       if (*(longlong *)(self + 0x88) != 0) {
+-        lVar3 = CALL4(7,GLOBAL4);
++        lVar3 = CALL3(7,GLOBAL4);
+         if (lVar3 != 0) {
+           if (0 < *(int *)(lVar3 + 0x10)) {
+             if (*(longlong *)(self + 0x88) == 0) goto LABEL0;
+-            cVar2 = CALL5(0x17,GLOBAL4,*(longlong *)(self + 0x88),0x10);
++            cVar2 = CALL4(0x17,GLOBAL4,*(longlong *)(self + 0x88),0x10);
+             if (cVar2 == '\0') {
+               if (*(longlong *)(self + 0x88) == 0) goto LABEL0;
+-              lVar4 = CALL4(9,GLOBAL4);
++              lVar4 = CALL3(9,GLOBAL4);
+               if (lVar4 == 0) goto LABEL0;
+-              auStackX_10[0] = CALL4(1,GLOBAL2,lVar4);
+-              uVar5 = CALL6(auStackX_10,0);
+-              uVar5 = CALL7(GLOBAL6,uVar5,GLOBAL5,0);
++              auStackX_10[0] = CALL3(1,GLOBAL2,lVar4);
++              uVar5 = CALL5(auStackX_10,0);
++              uVar5 = CALL6(GLOBAL6,uVar5,GLOBAL5,0);
+             }
+-            uVar5 = CALL8(uVar5,lVar3,0);
++            uVar5 = CALL7(uVar5,lVar3,0);
+           }
+           if (*(longlong *)(self + 0x58) != 0) {
+-            CALL9(1,GLOBAL3,*(longlong *)(self + 0x58),uVar5);
++            CALL8(1,GLOBAL3,*(longlong *)(self + 0x58),uVar5);
+             return;
+           }
+@@ -49,5 +49,5 @@
+   }
+ LABEL0:
+-  CALL10();
++  CALL9();
+   pcVar1 = (code *)swi(3);
+   (*pcVar1)();

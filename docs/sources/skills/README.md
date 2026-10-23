@@ -1,6 +1,6 @@
 # 스킬 원문 캐시
 
-`skill_effect_source_links.json`에 등록된 원문을 로컬에 보관한 사본이다. 스킬 효과 데이터는 `sourceRef.file`과 `sourceRef.anchor`로 이 파일의 근거 문구를 직접 가리킨다.
+`data/sources/skill-effect-source-links.json`에 등록된 원문을 로컬에 보관한 사본이다. 스킬 효과 데이터는 `sourceRef.file`과 `sourceRef.anchor`로 이 파일의 근거 문구를 직접 가리킨다.
 
 - 갱신: `powershell -ExecutionPolicy Bypass -File tools/cache-skill-sources.ps1`
 - 스택 정의 대조: `node tools/audit-stack-source-links.mjs`

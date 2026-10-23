@@ -1,0 +1,59 @@
+--- assets\source-data\toram-monsters\native-highraid-target\HighRaidBossBattleStatus-get_MaxHp-7fff5fe2e520.c
++++ 7906.c
+@@ -3,9 +3,10 @@
+   code *pcVar2;
+   char cVar3;
+-  int iVar4;
+-  float fVar5;
++  byte bVar4;
++  int iVar5;
+   float fVar6;
+-  longlong alStackX_8 [4];
+-  alStackX_8[0] = 0;
++  float fVar7;
++  undefined *apuStackX_8 [4];
++  apuStackX_8[0] = (undefined *)0x0;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -14,9 +15,9 @@
+   if ((*(longlong *)(self + 0x10) == 0) ||
+      (lVar1 = *(longlong *)(*(longlong *)(self + 0x10) + 0xa0), lVar1 == 0)) goto LABEL0;
+-  cVar3 = CALL1(lVar1,0x20,alStackX_8,GLOBAL1);
++  cVar3 = CALL1(lVar1,0x20,apuStackX_8,GLOBAL1);
+   if (cVar3 != '\0') {
+-    if (alStackX_8[0] == 0) goto LABEL0;
+-    cVar3 = CALL2(alStackX_8[0],0);
+-    if (cVar3 != '\0') {
++    if (apuStackX_8[0] == (undefined *)0x0) goto LABEL0;
++    bVar4 = MobPropertyHighRaidCalcExceptionFlag_FixedHpFlag(apuStackX_8[0],(undefined *)0x0);
++    if (bVar4 != 0) {
+       if (*(longlong *)(self + 0x10) != 0) {
+         return *(int *)(*(longlong *)(self + 0x10) + 0x30);
+@@ -26,17 +27,17 @@
+   }
+   if (*(longlong *)(self + 0x10) != 0) {
+-    iVar4 = *(int *)(self + 0x30);
+-    fVar6 = (float)*(int *)(*(longlong *)(self + 0x10) + 0x30) / GLOBAL2;
+-    fVar5 = ((float)(iVar4 + 0x51) + (float)(iVar4 * iVar4) / GLOBAL3) *
+-            ((float)iVar4 / GLOBAL4 + GLOBAL5);
+-    if (0x95 < iVar4) {
+-      return (int)(fVar6 * fVar5 * GLOBAL6);
++    iVar5 = *(int *)(self + 0x30);
++    fVar7 = (float)*(int *)(*(longlong *)(self + 0x10) + 0x30) / GLOBAL2;
++    fVar6 = ((float)(iVar5 + 0x51) + (float)(iVar5 * iVar5) / GLOBAL3) *
++            ((float)iVar5 / GLOBAL4 + GLOBAL5);
++    if (0x95 < iVar5) {
++      return (int)(fVar7 * fVar6 * GLOBAL6);
+     }
+-    return (int)(fVar6 * fVar5 * GLOBAL7);
++    return (int)(fVar7 * fVar6 * GLOBAL7);
+   }
+ LABEL0:
+-  CALL3();
++  CALL2();
+   pcVar2 = (code *)swi(3);
+-  iVar4 = (*pcVar2)();
+-  return iVar4;
++  iVar5 = (*pcVar2)();
++  return iVar5;
+ }

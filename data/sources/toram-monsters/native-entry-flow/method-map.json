@@ -1,0 +1,307 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\update-pipeline-20261022\\installed-source\\global-metadata.dat",
+      "size": 27839980,
+      "sha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\update-pipeline-20261022\\snapshot\\GameAssembly.mapped.bin",
+      "size": 83296256,
+      "sha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\\uc870\uc5f0\uc6b0\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\update-pipeline-20261022\\snapshot\\capture.json",
+      "size": 2202,
+      "sha256": "b7e05d5b722f99793ae0636123d7ea31f1a6363fc22c110dde9e99d1e50c1c5b"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7ffe99740000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44358832,
+    "module_va": 140731517295792,
+    "name_offset": 44358968,
+    "name_va": 140731517295928,
+    "method_pointer_count": 75998,
+    "method_pointers_va": 140731524331184,
+    "method_pointers_offset": 51394224
+  },
+  "validation": {
+    "metadata_module_method_count": 75998,
+    "maximum_rid": 75998,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 359
+  },
+  "methods": [
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadInt",
+      "method_definition_index": 40987,
+      "token": "0x0600a01c",
+      "metadata_declaration_range": {
+        "offset": 5224756,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51722120,
+      "pointer_slot_va": "0x7ffe9c893788",
+      "runtime_va": "0x7ffe9a9fc4a0",
+      "rva": "0x12bc4a0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b49204885c974158b532c4533c0",
+      "oldIndex": "40987-FieldScriptLoader-ReadInt"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadShort",
+      "method_definition_index": 40988,
+      "token": "0x0600a01d",
+      "metadata_declaration_range": {
+        "offset": 5224792,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51722128,
+      "pointer_slot_va": "0x7ffe9c893790",
+      "runtime_va": "0x7ffe9a9fc640",
+      "rva": "0x12bc640",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b49204885c974158b532c4533c0",
+      "oldIndex": "40988-FieldScriptLoader-ReadShort"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadByte",
+      "method_definition_index": 40989,
+      "token": "0x0600a01e",
+      "metadata_declaration_range": {
+        "offset": 5224828,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51722136,
+      "pointer_slot_va": "0x7ffe9c893798",
+      "runtime_va": "0x7ffe9a9fc190",
+      "rva": "0x12bc190",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488bd1488b49204885c9741c4c63422c443b4118",
+      "oldIndex": "40989-FieldScriptLoader-ReadByte"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadInt",
+      "method_definition_index": 41005,
+      "token": "0x0600a02e",
+      "metadata_declaration_range": {
+        "offset": 5225404,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51722264,
+      "pointer_slot_va": "0x7ffe9c893818",
+      "runtime_va": "0x7ffe9a9fc4e0",
+      "rva": "0x12bc4e0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b492084d274454885c974294863",
+      "oldIndex": "41005-FieldScriptLoader-ReadInt"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadShort",
+      "method_definition_index": 41006,
+      "token": "0x0600a02f",
+      "metadata_declaration_range": {
+        "offset": 5225440,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51722272,
+      "pointer_slot_va": "0x7ffe9c893820",
+      "runtime_va": "0x7ffe9a9fc5b0",
+      "rva": "0x12bc5b0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b492084d274454885c974294863",
+      "oldIndex": "41006-FieldScriptLoader-ReadShort"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadByte",
+      "method_definition_index": 41007,
+      "token": "0x0600a030",
+      "metadata_declaration_range": {
+        "offset": 5225476,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51722280,
+      "pointer_slot_va": "0x7ffe9c893828",
+      "runtime_va": "0x7ffe9a9fc140",
+      "rva": "0x12bc140",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284c8bc9488b49204885c974184d63412c443b4118",
+      "oldIndex": "41007-FieldScriptLoader-ReadByte"
+    },
+    {
+      "class": "FieldScriptManager",
+      "name": "OnProgressQuestCommand",
+      "method_definition_index": 41096,
+      "token": "0x0600a089",
+      "metadata_declaration_range": {
+        "offset": 5228680,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "command",
+          "type_index": 15854,
+          "exact_byval_name": "FieldScriptCommand"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51722992,
+      "pointer_slot_va": "0x7ffe9c893af0",
+      "runtime_va": "0x7ffe9aa21e60",
+      "rva": "0x12e1e60",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20488bd948",
+      "oldIndex": "41096-FieldScriptManager-OnProgressQuestCommand"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "set_Position",
+      "method_definition_index": 40979,
+      "token": "0x0600a014",
+      "metadata_declaration_range": {
+        "offset": 5224468,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51722056,
+      "pointer_slot_va": "0x7ffe9c893748",
+      "runtime_va": "0x7ffe99ada220",
+      "rva": "0x39a220",
+      "status": "mapped",
+      "code_preview_hex": "89512cc3cccccccccccccccccccccccc899180000000c3cc",
+      "oldIndex": "40979-FieldScriptLoader-set_Position"
+    },
+    {
+      "class": "FieldScriptManager",
+      "name": "OnCheckCommand",
+      "method_definition_index": 41093,
+      "token": "0x0600a086",
+      "metadata_declaration_range": {
+        "offset": 5228572,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "command",
+          "type_index": 15854,
+          "exact_byval_name": "FieldScriptCommand"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51722968,
+      "pointer_slot_va": "0x7ffe9c893ad8",
+      "runtime_va": "0x7ffe9aa17f20",
+      "rva": "0x12d7f20",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20488bf948",
+      "oldIndex": "41093-FieldScriptManager-OnCheckCommand"
+    }
+  ],
+  "limitations": [
+    "Metadata declaration offsets are not code addresses; only pointer-table values establish native locations.",
+    "NULL pointers remain unresolved; generic or shared implementations are not inferred.",
+    "Mapping establishes saved pointer identity, not observed execution or a call edge.",
+    "The source capture was sequential and non-atomic; no process access was performed by this parser."
+  ],
+  "snapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+  "helperAddresses": [
+    "0x7ffe99982110",
+    "0x7ffe998e0270",
+    "0x7ffe9996c900"
+  ],
+  "callees": [],
+  "mappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1"
+}

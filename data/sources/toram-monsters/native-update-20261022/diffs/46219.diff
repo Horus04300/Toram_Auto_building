@@ -1,0 +1,49 @@
+--- assets\source-data\toram-monsters\native-schema\EnemyTextManager-Initialize-7fff5f555c00.c
++++ 46219.c
+@@ -5,6 +5,6 @@
+   longlong *plVar4;
+   undefined8 uVar5;
+-  undefined *self_00;
+-  int iVar6;
++  longlong lVar6;
++  int iVar7;
+   longlong *plStack_88;
+   int iStack_80;
+@@ -22,5 +22,5 @@
+     GLOBAL0 = '\x01';
+   }
+-  iVar6 = 0;
++  iVar7 = 0;
+   alStack_78[0] = 0;
+   plStack_88 = (longlong *)0x0;
+@@ -41,5 +41,5 @@
+       iStack_80 = (**(code **)(*plVar4 + 0x228))(plVar4,*(undefined8 *)(*plVar4 + 0x230));
+       while( true ) {
+-        if (iStack_80 <= iVar6) {
++        if (iStack_80 <= iVar7) {
+           if (plStack_88 != (longlong *)0x0) {
+             CALL5(0,GLOBAL4);
+@@ -59,16 +59,16 @@
+           break;
+         }
+-        uVar5 = (**(code **)(*plStack_88 + 0x298))();
++        uVar5 = (**(code **)(*plStack_88 + 0x298))(plStack_88,*(undefined8 *)(*plStack_88 + 0x2a0));
+         lVar3 = *(longlong *)(self + 0x18);
+-        self_00 = (undefined *)CALL2(GLOBAL6);
+-        _loadFieldData_d__125_System_IDisposable_Dispose(self_00,(undefined *)0x0);
+-        *(undefined8 *)(self_00 + 0x10) = uVar5;
+-        CALL7();
++        lVar6 = CALL2(GLOBAL6);
++        CALL7(lVar6,0);
++        *(undefined8 *)(lVar6 + 0x10) = uVar5;
++        il2cpp_write_barrier_0();
+         if (lVar3 == 0) {
+           CALL6();
+           goto LABEL0;
+         }
+-        CALL8(lVar3,uVar2,self_00,GLOBAL3);
+-        iVar6 = iVar6 + 1;
++        CALL8(lVar3,uVar2,lVar6,GLOBAL3);
++        iVar7 = iVar7 + 1;
+       }
+       CALL6();

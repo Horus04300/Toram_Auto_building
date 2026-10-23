@@ -20,21 +20,23 @@ const required = [
   'AGENTS.md', 'docs/handoff/current-development-handoff.md',
   'docs/ai-context-guide.md', 'docs/skill-tree-verification-standard.md',
   'docs/architecture/crysta-optimization-contract.md', 'docs/verification/unimplemented.md',
-  'assets/js/calculator.js', 'assets/js/optimization/exact-solver.js',
-  'assets/js/data/skill-tree-data.js', 'assets/source-data/coryn-skill-simulator/skill_tree_data.js',
-  'src-tauri/src/optimization/solver.rs', 'frontend/domain/calculation-contracts.ts',
+  'web/src/calculation/calculator.js', 'tools/support/crysta-exhaustive-oracle.mjs',
+  'web/src/optimization/candidate-preparation.js', 'web/src/optimization/wasm-worker.js',
+  'web/src/optimization/rust-bridge.js', 'engine/Cargo.toml',
+  'web/src/data/skill-tree-data.js', 'data/sources/coryn-skill-simulator/skill_tree_data.js',
+  'engine/src/solver.rs', 'web/src/domain/calculation-contracts.ts',
   'tools/run-regression-suite.mjs', 'tools/fixtures/crysta-native-runtime-26min-revenir.json',
 ];
 for (const path of required) assert(visible.has(path), `Required context hidden: ${path}`);
-for (const path of baseline.filter(path => /^(docs\/sources\/|assets\/source-data\/skill-registration\/)/.test(path))) {
+for (const path of baseline.filter(path => /^(docs\/sources\/|data\/sources\/skill-registration\/)/.test(path))) {
   assert(visible.has(path), `Source evidence hidden: ${path}`);
 }
 const excluded = [
-  'package-lock.json', 'src-tauri/Cargo.lock', 'assets/fonts/PretendardVariable.woff2',
-  'assets/source-data/game-icon-skill-match-candidates.json',
+  'package-lock.json', 'desktop/Cargo.lock', 'web/public/fonts/PretendardVariable.woff2',
+  'data/sources/game-icon-skill-match-candidates.json',
 ];
 for (const path of excluded) assert(!visible.has(path), `Noise still visible: ${path}`);
-assert(!filtered.some(path => /^(\.git|node_modules|dist|src-tauri\/target)\//.test(path)), 'Build/Git output visible');
+assert(!filtered.some(path => /^(\.git|node_modules|build|desktop\/target|engine\/target)\//.test(path)), 'Build/Git output visible');
 const handoff = 'docs/handoff/current-development-handoff.md';
 const handoffBytes = bytes([handoff]);
 assert(handoffBytes <= 12 * 1024, `Handoff exceeds 12 KiB: ${handoffBytes}`);
@@ -49,7 +51,7 @@ for (const [path, budget] of Object.entries(documentBudgets)) {
 // All backtick-quoted repository paths in these entry documents must resolve.
 for (const doc of ['AGENTS.md', handoff, 'docs/ai-context-guide.md', ...Object.keys(documentBudgets)]) {
   const content = readFileSync(resolve(root, doc), 'utf8');
-  for (const [, path] of content.matchAll(/`((?:docs|assets|frontend|src-tauri|tools)\/[^`\s*]+)`/g)) {
+  for (const [, path] of content.matchAll(/`((?:docs|web|desktop|engine|data|tools)\/[^`\s*]+)`/g)) {
     assert(statSync(resolve(root, path)), `Broken path in ${doc}: ${path}`);
   }
 }

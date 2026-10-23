@@ -5,11 +5,11 @@ import { fileURLToPath } from 'node:url';
 import vm from 'node:vm';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const selectorSource = await readFile(resolve(root, 'assets/js/crysta-ui.js'), 'utf8');
-const registrySource = await readFile(resolve(root, 'assets/js/stat-registry.js'), 'utf8');
+const selectorSource = await readFile(resolve(root, 'web/src/ui/crysta-ui.js'), 'utf8');
+const registrySource = await readFile(resolve(root, 'web/src/calculation/stat-registry.js'), 'utf8');
 const context = { globalThis:{} };
 vm.createContext(context);
-vm.runInContext(registrySource, context, { filename:'assets/js/stat-registry.js' });
+vm.runInContext(registrySource, context, { filename:'web/src/calculation/stat-registry.js' });
 const registry = context.globalThis.ToramStatRegistry;
 
 const expected = ['VITP', 'VIT', 'MAXHP', 'MAXHPP', 'MAXMP', 'AMPR', 'AMPRP', 'PHYS_RES', 'MAG_RES', 'DEF', 'DEFP', 'MDEF', 'MDEFP', 'FLEE', 'FLEEP', 'ACC', 'ACCP', 'HP_REGEN', 'HP_REGENP', 'MP_REGEN', 'MP_REGENP'];

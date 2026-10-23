@@ -6,7 +6,7 @@ const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/status-points.js'), 'utf8'), context, { filename: 'assets/js/status-points.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/ui/status-points.js'), 'utf8'), context, { filename: 'web/src/ui/status-points.js' });
 
 const points = context.window.ToramStatusPoints;
 function assert(condition, message) {
@@ -33,7 +33,7 @@ const providerContext = {
 };
 providerContext.window.window = providerContext.window;
 vm.createContext(providerContext);
-vm.runInContext(await readFile(resolve(root, 'assets/js/official-level-cap.js'), 'utf8'), providerContext, { filename: 'assets/js/official-level-cap.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/official-level-cap.js'), 'utf8'), providerContext, { filename: 'web/src/calculation/official-level-cap.js' });
 assert(providerContext.window.ToramOfficialLevelCap.extractConfirmedLevelCap('Lv上限「330」の開放') === 330, '완료된 공식 최대 레벨 공지를 읽어야 함');
 assert(providerContext.window.ToramOfficialLevelCap.extractConfirmedLevelCap('Lv上限「330」の開放予定') === 0, '개방 예정 공지는 현재 최대 레벨로 쓰면 안 됨');
 console.log('Official level-cap notice parser regressions: PASS');
@@ -59,7 +59,7 @@ const domContext = {
 };
 domContext.window.window = domContext.window;
 vm.createContext(domContext);
-vm.runInContext(await readFile(resolve(root, 'assets/js/status-points.js'), 'utf8'), domContext, { filename: 'assets/js/status-points.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/ui/status-points.js'), 'utf8'), domContext, { filename: 'web/src/ui/status-points.js' });
 assert(elements.charLevel.max === 325, '캐릭터 레벨 입력 상한을 공식 최대 레벨로 설정해야 함');
 assert(elements.statusPointSummary.textContent === '5 / 390', 'Lv.100 설계 화면은 최고 파라미터 Lv.325 훈장을 반영해야 함');
 assert(elements.statusPointSummary.title.includes('Lv.325 기준 +165pt'), '화면에 적용한 훈장 기준을 설명해야 함');

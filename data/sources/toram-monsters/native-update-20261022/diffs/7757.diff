@@ -1,0 +1,17 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-get_CutMagicAttack-7fff5fe27e80.c
++++ 7757.c
+@@ -30,11 +30,11 @@
+         CALL4(lVar6,uVar1,GLOBAL4,0);
+         *(longlong *)(*(longlong *)(GLOBAL5 + 0xb8) + 0x28) = lVar6;
+-        CALL5();
++        il2cpp_write_barrier_0();
+       }
+-      iVar3 = CALL6(uVar5,lVar6,GLOBAL2);
++      iVar3 = CALL5(uVar5,lVar6,GLOBAL2);
+       return *(int *)(self + 0x10) / 10 + iVar4 + iVar3;
+     }
+   }
+-  CALL7();
++  CALL6();
+   pcVar2 = (code *)swi(3);
+   iVar4 = (*pcVar2)();

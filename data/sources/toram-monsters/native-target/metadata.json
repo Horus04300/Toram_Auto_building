@@ -1,0 +1,1703 @@
+[
+  {
+    "type_definition_index": 903,
+    "name": "IMobStatusCalculator",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24609772,
+      "size": 88
+    },
+    "byval_type_index": 18240,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "is_enum": false,
+    "fields": [],
+    "methods": [
+      {
+        "method_index": 7990,
+        "name": "get_MaxHp",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f37",
+        "range": {
+          "offset": 4032856,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7991,
+        "name": "get_Level",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f38",
+        "range": {
+          "offset": 4032892,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7992,
+        "name": "get_NecessaryHit",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f39",
+        "range": {
+          "offset": 4032928,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7993,
+        "name": "get_Def",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3a",
+        "range": {
+          "offset": 4032964,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7994,
+        "name": "get_MagicDef",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3b",
+        "range": {
+          "offset": 4033000,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7995,
+        "name": "get_CutAttack",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3c",
+        "range": {
+          "offset": 4033036,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7996,
+        "name": "get_CutMagicAttack",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3d",
+        "range": {
+          "offset": 4033072,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7997,
+        "name": "get_GuardProbability",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3e",
+        "range": {
+          "offset": 4033108,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7998,
+        "name": "get_AvoidProbability",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f3f",
+        "range": {
+          "offset": 4033144,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 7999,
+        "name": "get_Element",
+        "return_type": {
+          "type_index": 15203,
+          "exact_byval_name": "ElementType"
+        },
+        "parameters": [],
+        "token": "0x06001f40",
+        "range": {
+          "offset": 4033180,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8000,
+        "name": "get_MoveSpeed",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f41",
+        "range": {
+          "offset": 4033216,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8001,
+        "name": "get_Persona",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001f42",
+        "range": {
+          "offset": 4033252,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8002,
+        "name": "get_PersonaValue",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f43",
+        "range": {
+          "offset": 4033288,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8003,
+        "name": "get_DamagePercent",
+        "return_type": {
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        "parameters": [],
+        "token": "0x06001f44",
+        "range": {
+          "offset": 4033324,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8004,
+        "name": "get_NecessaryFleePercent",
+        "return_type": {
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        "parameters": [],
+        "token": "0x06001f45",
+        "range": {
+          "offset": 4033360,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8005,
+        "name": "get_StablePercent",
+        "return_type": {
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        "parameters": [],
+        "token": "0x06001f46",
+        "range": {
+          "offset": 4033396,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8006,
+        "name": "get_ExpDefNormal",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f47",
+        "range": {
+          "offset": 4033432,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8007,
+        "name": "get_ExpDefSkill",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f48",
+        "range": {
+          "offset": 4033468,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8008,
+        "name": "get_ExpDefMagic",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001f49",
+        "range": {
+          "offset": 4033504,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8009,
+        "name": "get_Property",
+        "return_type": {
+          "type_index": 20723,
+          "exact_byval_name": "MobPropertyManager"
+        },
+        "parameters": [],
+        "token": "0x06001f4a",
+        "range": {
+          "offset": 4033540,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8010,
+        "name": "SetMobStatus",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "mobStatus",
+            "type_index": 20775,
+            "exact_byval_name": "MobStatus"
+          }
+        ],
+        "token": "0x06001f4b",
+        "range": {
+          "offset": 4033576,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8011,
+        "name": "CalcDef",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "type_index": 22771,
+            "exact_byval_name": "PlayerStatusBase"
+          }
+        ],
+        "token": "0x06001f4c",
+        "range": {
+          "offset": 4033612,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 8012,
+        "name": "CalcMdef",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [
+          {
+            "name": "status",
+            "type_index": 22771,
+            "exact_byval_name": "PlayerStatusBase"
+          }
+        ],
+        "token": "0x06001f4d",
+        "range": {
+          "offset": 4033648,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 1012,
+    "name": "MobPartsStatus",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24619364,
+      "size": 88
+    },
+    "byval_type_index": 20683,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 5674,
+        "name": "difficulty",
+        "type_index": 18780,
+        "exact_byval_name": null,
+        "token": "0x0400162b",
+        "range": {
+          "offset": 22127100,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5675,
+        "name": "partsCut",
+        "type_index": 20710,
+        "exact_byval_name": null,
+        "token": "0x0400162c",
+        "range": {
+          "offset": 22127112,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5676,
+        "name": "bodyCut",
+        "type_index": 20710,
+        "exact_byval_name": null,
+        "token": "0x0400162d",
+        "range": {
+          "offset": 22127124,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5677,
+        "name": "<statusMaster>k__BackingField",
+        "type_index": 20779,
+        "exact_byval_name": null,
+        "token": "0x0400162e",
+        "range": {
+          "offset": 22127136,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5678,
+        "name": "<Hp>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x0400162f",
+        "range": {
+          "offset": 22127148,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5679,
+        "name": "<LocalHp>k__BackingField",
+        "type_index": 18792,
+        "exact_byval_name": null,
+        "token": "0x04001630",
+        "range": {
+          "offset": 22127160,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 9027,
+        "name": "get_statusMaster",
+        "return_type": {
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        "parameters": [],
+        "token": "0x06002344",
+        "range": {
+          "offset": 4070188,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9028,
+        "name": "set_statusMaster",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 20778,
+            "exact_byval_name": "MobStatusMaster"
+          }
+        ],
+        "token": "0x06002345",
+        "range": {
+          "offset": 4070224,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9029,
+        "name": "get_Hp",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06002346",
+        "range": {
+          "offset": 4070260,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9030,
+        "name": "set_Hp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06002347",
+        "range": {
+          "offset": 4070296,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9031,
+        "name": "get_LocalHp",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06002348",
+        "range": {
+          "offset": 4070332,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9032,
+        "name": "set_LocalHp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06002349",
+        "range": {
+          "offset": 4070368,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9033,
+        "name": "get_IsDead",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0600234a",
+        "range": {
+          "offset": 4070404,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9034,
+        "name": "get_NecessaryHit",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x0600234b",
+        "range": {
+          "offset": 4070440,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9035,
+        "name": "get_Def",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x0600234c",
+        "range": {
+          "offset": 4070476,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9036,
+        "name": "get_MagicDef",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x0600234d",
+        "range": {
+          "offset": 4070512,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9037,
+        "name": "get_PartsCut",
+        "return_type": {
+          "type_index": 20709,
+          "exact_byval_name": "MobPropertyCut"
+        },
+        "parameters": [],
+        "token": "0x0600234e",
+        "range": {
+          "offset": 4070548,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9038,
+        "name": "get_BodyCut",
+        "return_type": {
+          "type_index": 20709,
+          "exact_byval_name": "MobPropertyCut"
+        },
+        "parameters": [],
+        "token": "0x0600234f",
+        "range": {
+          "offset": 4070584,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9039,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "statusMaster",
+            "type_index": 20778,
+            "exact_byval_name": "MobStatusMaster"
+          },
+          {
+            "name": "hp",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "difficulty",
+            "type_index": 18774,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06002350",
+        "range": {
+          "offset": 4070620,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9040,
+        "name": "ResetHp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06002351",
+        "range": {
+          "offset": 4070656,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9041,
+        "name": "SetLocalHp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "hp",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06002352",
+        "range": {
+          "offset": 4070692,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9042,
+        "name": "SetHp",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "hp",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06002353",
+        "range": {
+          "offset": 4070728,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 1085,
+    "name": "MobPropertyManager",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24625788,
+      "size": 88
+    },
+    "byval_type_index": 20723,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 5990,
+        "name": "MobPropertyMasterList",
+        "type_index": 3617,
+        "exact_byval_name": null,
+        "token": "0x04001767",
+        "range": {
+          "offset": 22130892,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 9657,
+        "name": "SetMasterData",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "mobUuid",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "mobId",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "master",
+            "type_index": 10491,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060025ba",
+        "range": {
+          "offset": 4092868,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9658,
+        "name": "TryGetProperties",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "type_index": 21221,
+            "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+          },
+          {
+            "name": "properties",
+            "type_index": 8907,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060025bb",
+        "range": {
+          "offset": 4092904,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9659,
+        "name": "GetMobPropertyMasters",
+        "return_type": {
+          "type_index": 10491,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060025bc",
+        "range": {
+          "offset": 4092940,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9660,
+        "name": "Clear",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060025bd",
+        "range": {
+          "offset": 4092976,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9661,
+        "name": "AddProperty",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "master",
+            "type_index": 20726,
+            "exact_byval_name": "MobPropertyMaster"
+          }
+        ],
+        "token": "0x060025be",
+        "range": {
+          "offset": 4093012,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9662,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060025bf",
+        "range": {
+          "offset": 4093048,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 1092,
+    "name": "MobPropertyBase",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24626404,
+      "size": 88
+    },
+    "byval_type_index": 20706,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 5994,
+        "name": "propertys",
+        "type_index": 6998,
+        "exact_byval_name": null,
+        "token": "0x0400176b",
+        "range": {
+          "offset": 22130940,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 9689,
+        "name": "get_PropertyType",
+        "return_type": {
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        },
+        "parameters": [],
+        "token": "0x060025da",
+        "range": {
+          "offset": 4094020,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9690,
+        "name": "TryAddProperty",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "master",
+            "type_index": 20726,
+            "exact_byval_name": "MobPropertyMaster"
+          }
+        ],
+        "token": "0x060025db",
+        "range": {
+          "offset": 4094056,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9691,
+        "name": "CheckAddable",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "master",
+            "type_index": 20726,
+            "exact_byval_name": "MobPropertyMaster"
+          }
+        ],
+        "token": "0x060025dc",
+        "range": {
+          "offset": 4094092,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9692,
+        "name": "GetValue",
+        "return_type": {
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        },
+        "parameters": [],
+        "token": "0x060025dd",
+        "range": {
+          "offset": 4094128,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9693,
+        "name": "GetValue",
+        "return_type": {
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x060025de",
+        "range": {
+          "offset": 4094164,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9694,
+        "name": "GetProperty",
+        "return_type": {
+          "type_index": 5530,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060025df",
+        "range": {
+          "offset": 4094200,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9695,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060025e0",
+        "range": {
+          "offset": 4094236,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 12896,
+    "name": "Toram.Common.Mob.MonsterPropertyType",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25665156,
+      "size": 88
+    },
+    "byval_type_index": 21221,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 15358,
+      "exact_byval_name": "System.Enum"
+    },
+    "is_enum": true,
+    "fields": [
+      {
+        "field_index": 67939,
+        "name": "value__",
+        "type_index": 18814,
+        "exact_byval_name": null,
+        "token": "0x04001903",
+        "range": {
+          "offset": 22874280,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 67940,
+        "name": "None",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001904",
+        "range": {
+          "offset": 22874292,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639005,
+          "offset": 20344669,
+          "preview_hex": "00020406080a0c0e",
+          "int32_value": 0,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67941,
+        "name": "AbnormalResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001905",
+        "range": {
+          "offset": 22874304,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639006,
+          "offset": 20344670,
+          "preview_hex": "020406080a0c0e10",
+          "int32_value": 1,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67942,
+        "name": "AbnormalDamageIncrease",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001906",
+        "range": {
+          "offset": 22874316,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639007,
+          "offset": 20344671,
+          "preview_hex": "0406080a0c0e1014",
+          "int32_value": 2,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67943,
+        "name": "AbnormalAppliedDamageIncrease",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001907",
+        "range": {
+          "offset": 22874328,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639008,
+          "offset": 20344672,
+          "preview_hex": "06080a0c0e10141a",
+          "int32_value": 3,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67944,
+        "name": "SpecificWeaponBaseDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001908",
+        "range": {
+          "offset": 22874340,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639009,
+          "offset": 20344673,
+          "preview_hex": "080a0c0e10141a1c",
+          "int32_value": 4,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67945,
+        "name": "DamageLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001909",
+        "range": {
+          "offset": 22874352,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639010,
+          "offset": 20344674,
+          "preview_hex": "0a0c0e10141a1c1e",
+          "int32_value": 5,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67946,
+        "name": "CriticalResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190a",
+        "range": {
+          "offset": 22874364,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639011,
+          "offset": 20344675,
+          "preview_hex": "0c0e10141a1c1e20",
+          "int32_value": 6,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67947,
+        "name": "PartCutCorrection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190b",
+        "range": {
+          "offset": 22874376,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639012,
+          "offset": 20344676,
+          "preview_hex": "0e10141a1c1e2022",
+          "int32_value": 7,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67948,
+        "name": "BodyCutCorrection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190c",
+        "range": {
+          "offset": 22874388,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639013,
+          "offset": 20344677,
+          "preview_hex": "10141a1c1e202224",
+          "int32_value": 8,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67949,
+        "name": "MotionSpeed",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190d",
+        "range": {
+          "offset": 22874400,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639014,
+          "offset": 20344678,
+          "preview_hex": "141a1c1e20222426",
+          "int32_value": 10,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67950,
+        "name": "FootAttack",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190e",
+        "range": {
+          "offset": 22874412,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639015,
+          "offset": 20344679,
+          "preview_hex": "1a1c1e2022242628",
+          "int32_value": 13,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67951,
+        "name": "HpLock",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400190f",
+        "range": {
+          "offset": 22874424,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639016,
+          "offset": 20344680,
+          "preview_hex": "1c1e20222426282a",
+          "int32_value": 14,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67952,
+        "name": "DistanceResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001910",
+        "range": {
+          "offset": 22874436,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639017,
+          "offset": 20344681,
+          "preview_hex": "1e20222426282a2c",
+          "int32_value": 15,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67953,
+        "name": "FunnelFlag",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001911",
+        "range": {
+          "offset": 22874448,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639018,
+          "offset": 20344682,
+          "preview_hex": "20222426282a2c2e",
+          "int32_value": 16,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67954,
+        "name": "EventCircle",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001912",
+        "range": {
+          "offset": 22874460,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639019,
+          "offset": 20344683,
+          "preview_hex": "222426282a2c2e3c",
+          "int32_value": 17,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67955,
+        "name": "ScreenEffect",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001913",
+        "range": {
+          "offset": 22874472,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639020,
+          "offset": 20344684,
+          "preview_hex": "2426282a2c2e3c3e",
+          "int32_value": 18,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67956,
+        "name": "ScriptAction",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001914",
+        "range": {
+          "offset": 22874484,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639021,
+          "offset": 20344685,
+          "preview_hex": "26282a2c2e3c3e40",
+          "int32_value": 19,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67957,
+        "name": "ResistMultiDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001915",
+        "range": {
+          "offset": 22874496,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639022,
+          "offset": 20344686,
+          "preview_hex": "282a2c2e3c3e4042",
+          "int32_value": 20,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67958,
+        "name": "IdSetting",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001916",
+        "range": {
+          "offset": 22874508,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639023,
+          "offset": 20344687,
+          "preview_hex": "2a2c2e3c3e404244",
+          "int32_value": 21,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67959,
+        "name": "MotionChange",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001917",
+        "range": {
+          "offset": 22874520,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639024,
+          "offset": 20344688,
+          "preview_hex": "2c2e3c3e40424450",
+          "int32_value": 22,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67960,
+        "name": "AreaHate",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001918",
+        "range": {
+          "offset": 22874532,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639025,
+          "offset": 20344689,
+          "preview_hex": "2e3c3e4042445052",
+          "int32_value": 23,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67961,
+        "name": "HighRaidStatus",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001919",
+        "range": {
+          "offset": 22874544,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639026,
+          "offset": 20344690,
+          "preview_hex": "3c3e404244505254",
+          "int32_value": 30,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67962,
+        "name": "DPSLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191a",
+        "range": {
+          "offset": 22874556,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639027,
+          "offset": 20344691,
+          "preview_hex": "3e40424450525464",
+          "int32_value": 31,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67963,
+        "name": "HighRaidFlag",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191b",
+        "range": {
+          "offset": 22874568,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639028,
+          "offset": 20344692,
+          "preview_hex": "4042445052546466",
+          "int32_value": 32,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67964,
+        "name": "MaxDamageRateLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191c",
+        "range": {
+          "offset": 22874580,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639029,
+          "offset": 20344693,
+          "preview_hex": "4244505254646668",
+          "int32_value": 33,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67965,
+        "name": "MinDamageRateLimit",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191d",
+        "range": {
+          "offset": 22874592,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639030,
+          "offset": 20344694,
+          "preview_hex": "445052546466686a",
+          "int32_value": 34,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67966,
+        "name": "StatusCollection",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191e",
+        "range": {
+          "offset": 22874604,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639031,
+          "offset": 20344695,
+          "preview_hex": "5052546466686a80",
+          "int32_value": 40,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67967,
+        "name": "SpecificWeaponLastDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x0400191f",
+        "range": {
+          "offset": 22874616,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639032,
+          "offset": 20344696,
+          "preview_hex": "52546466686a80b4",
+          "int32_value": 41,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67968,
+        "name": "NormalElementWeaponDamageResist",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001920",
+        "range": {
+          "offset": 22874628,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639033,
+          "offset": 20344697,
+          "preview_hex": "546466686a80b400",
+          "int32_value": 42,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67969,
+        "name": "LifeGauge",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001921",
+        "range": {
+          "offset": 22874640,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639034,
+          "offset": 20344698,
+          "preview_hex": "6466686a80b40002",
+          "int32_value": 50,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67970,
+        "name": "GuardGauge",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001922",
+        "range": {
+          "offset": 22874652,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639035,
+          "offset": 20344699,
+          "preview_hex": "66686a80b4000204",
+          "int32_value": 51,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67971,
+        "name": "TreasureHuntMobTypeData",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001923",
+        "range": {
+          "offset": 22874664,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639036,
+          "offset": 20344700,
+          "preview_hex": "686a80b400020408",
+          "int32_value": 52,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67972,
+        "name": "GemCartDamageCheck",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001924",
+        "range": {
+          "offset": 22874676,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639037,
+          "offset": 20344701,
+          "preview_hex": "6a80b40002040810",
+          "int32_value": 53,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67973,
+        "name": "LifeReduceDamage",
+        "type_index": 21223,
+        "exact_byval_name": null,
+        "token": "0x04001925",
+        "range": {
+          "offset": 22874688,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639038,
+          "offset": 20344702,
+          "preview_hex": "80b4000204081020",
+          "int32_value": 90,
+          "encoded_size": 2
+        }
+      }
+    ],
+    "methods": []
+  }
+]

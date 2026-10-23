@@ -1,0 +1,580 @@
+[
+  {
+    "type_definition_index": 1086,
+    "name": "MobPropertyMaster",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24625876,
+      "size": 88
+    },
+    "byval_type_index": 20726,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21689,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 5991,
+        "name": "<UID>k__BackingField",
+        "type_index": 13014,
+        "exact_byval_name": null,
+        "token": "0x04001768",
+        "range": {
+          "offset": 22130904,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5992,
+        "name": "<PropertyType>k__BackingField",
+        "type_index": 21222,
+        "exact_byval_name": null,
+        "token": "0x04001769",
+        "range": {
+          "offset": 22130916,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 5993,
+        "name": "<Values>k__BackingField",
+        "type_index": 10344,
+        "exact_byval_name": null,
+        "token": "0x0400176a",
+        "range": {
+          "offset": 22130928,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 9663,
+        "name": "get_UID",
+        "return_type": {
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x060025c0",
+        "range": {
+          "offset": 4093084,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9664,
+        "name": "set_UID",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x060025c1",
+        "range": {
+          "offset": 4093120,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9665,
+        "name": "get_PropertyType",
+        "return_type": {
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        },
+        "parameters": [],
+        "token": "0x060025c2",
+        "range": {
+          "offset": 4093156,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9666,
+        "name": "set_PropertyType",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 21221,
+            "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+          }
+        ],
+        "token": "0x060025c3",
+        "range": {
+          "offset": 4093192,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9667,
+        "name": "get_ValueA",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x060025c4",
+        "range": {
+          "offset": 4093228,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9668,
+        "name": "get_ValueB",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x060025c5",
+        "range": {
+          "offset": 4093264,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9669,
+        "name": "get_ValueC",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x060025c6",
+        "range": {
+          "offset": 4093300,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9670,
+        "name": "get_ValueD",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x060025c7",
+        "range": {
+          "offset": 4093336,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9671,
+        "name": "get_ValueE",
+        "return_type": {
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x060025c8",
+        "range": {
+          "offset": 4093372,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9672,
+        "name": "get_Values",
+        "return_type": {
+          "type_index": 10343,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060025c9",
+        "range": {
+          "offset": 4093408,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9673,
+        "name": "set_Values",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10343,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060025ca",
+        "range": {
+          "offset": 4093444,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9674,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060025cb",
+        "range": {
+          "offset": 4093480,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9675,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "uid",
+            "type_index": 13013,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "id",
+            "type_index": 21221,
+            "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+          },
+          {
+            "name": "a",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "b",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "c",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "d",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "e",
+            "type_index": 18791,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x060025cc",
+        "range": {
+          "offset": 4093516,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9676,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "br",
+            "type_index": 12628,
+            "exact_byval_name": "System.IO.BinaryReader"
+          }
+        ],
+        "token": "0x060025cd",
+        "range": {
+          "offset": 4093552,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9677,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "master",
+            "type_index": 20726,
+            "exact_byval_name": "MobPropertyMaster"
+          }
+        ],
+        "token": "0x060025ce",
+        "range": {
+          "offset": 4093588,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 1125,
+    "name": "MobPropertyStatusCollection",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24629308,
+      "size": 88
+    },
+    "byval_type_index": 20739,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 20706,
+      "exact_byval_name": "MobPropertyBase"
+    },
+    "is_enum": false,
+    "fields": [],
+    "methods": [
+      {
+        "method_index": 9801,
+        "name": "get_PropertyType",
+        "return_type": {
+          "type_index": 21221,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+        },
+        "parameters": [],
+        "token": "0x0600264a",
+        "range": {
+          "offset": 4098052,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9802,
+        "name": "TryGetValue",
+        "return_type": {
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 21218,
+            "exact_byval_name": "Toram.Common.Mob.MonsterPropertyStatusCollectionType"
+          },
+          {
+            "name": "constant",
+            "type_index": 9238,
+            "exact_byval_name": null
+          },
+          {
+            "name": "rate",
+            "type_index": 9354,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x0600264b",
+        "range": {
+          "offset": 4098088,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 9803,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29187,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600264c",
+        "range": {
+          "offset": 4098124,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 12895,
+    "name": "Toram.Common.Mob.MonsterPropertyStatusCollectionType",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25665068,
+      "size": 88
+    },
+    "byval_type_index": 21218,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 15358,
+      "exact_byval_name": "System.Enum"
+    },
+    "is_enum": true,
+    "fields": [
+      {
+        "field_index": 67931,
+        "name": "value__",
+        "type_index": 18814,
+        "exact_byval_name": null,
+        "token": "0x040018fb",
+        "range": {
+          "offset": 22874184,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 67932,
+        "name": "Def",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x040018fc",
+        "range": {
+          "offset": 22874196,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10638998,
+          "offset": 20344662,
+          "preview_hex": "020406080a0c0e00",
+          "int32_value": 1,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67933,
+        "name": "Mdef",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x040018fd",
+        "range": {
+          "offset": 22874208,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10638999,
+          "offset": 20344663,
+          "preview_hex": "0406080a0c0e0002",
+          "int32_value": 2,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67934,
+        "name": "CutAttack",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x040018fe",
+        "range": {
+          "offset": 22874220,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639000,
+          "offset": 20344664,
+          "preview_hex": "06080a0c0e000204",
+          "int32_value": 3,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67935,
+        "name": "CutMagicAttack",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x040018ff",
+        "range": {
+          "offset": 22874232,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639001,
+          "offset": 20344665,
+          "preview_hex": "080a0c0e00020406",
+          "int32_value": 4,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67936,
+        "name": "Guard",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x04001900",
+        "range": {
+          "offset": 22874244,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639002,
+          "offset": 20344666,
+          "preview_hex": "0a0c0e0002040608",
+          "int32_value": 5,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67937,
+        "name": "Avoid",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x04001901",
+        "range": {
+          "offset": 22874256,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639003,
+          "offset": 20344667,
+          "preview_hex": "0c0e00020406080a",
+          "int32_value": 6,
+          "encoded_size": 1
+        }
+      },
+      {
+        "field_index": 67938,
+        "name": "NecessaryHit",
+        "type_index": 21220,
+        "exact_byval_name": null,
+        "token": "0x04001902",
+        "range": {
+          "offset": 22874268,
+          "size": 12
+        },
+        "default": {
+          "type_index": 18791,
+          "data_index": 10639004,
+          "offset": 20344668,
+          "preview_hex": "0e00020406080a0c",
+          "int32_value": 7,
+          "encoded_size": 1
+        }
+      }
+    ],
+    "methods": []
+  }
+]

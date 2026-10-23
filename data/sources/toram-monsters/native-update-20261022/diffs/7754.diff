@@ -1,0 +1,123 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-get_Def-7fff5fe280a0.c
++++ 7754.c
+@@ -3,11 +3,12 @@
+   code *pcVar2;
+   char cVar3;
+-  int iVar4;
+-  undefined8 uVar5;
+-  longlong lVar6;
+-  int iVar7;
++  byte bVar4;
++  int iVar5;
++  undefined8 uVar6;
++  longlong lVar7;
++  int iVar8;
+   float afStackX_8 [4];
+   int aiStackX_18 [2];
+-  longlong lStackX_20;
++  undefined *puStackX_20;
+   longlong *aplStack_38 [2];
+   if (GLOBAL0 == '\0') {
+@@ -21,5 +22,5 @@
+   aplStack_38[0] = (longlong *)0x0;
+   if (*(longlong *)(self + 0x20) != 0) {
+-    iVar7 = (int)((float)(*(int *)(*(longlong *)(self + 0x20) + 0x3c) * *(int *)(self + 0x10)) *
++    iVar8 = (int)((float)(*(int *)(*(longlong *)(self + 0x20) + 0x3c) * *(int *)(self + 0x10)) *
+                  GLOBAL6);
+     if (GLOBAL7 == '\0') {
+@@ -28,5 +29,5 @@
+     }
+     afStackX_8[0] = 0.0;
+-    lStackX_20 = 0;
++    puStackX_20 = (undefined *)0x0;
+     aiStackX_18[0] = 0;
+     if (*(longlong *)(self + 0x40) == 0) {
+@@ -34,52 +35,54 @@
+       CALL1();
+       pcVar2 = (code *)swi(3);
+-      iVar7 = (*pcVar2)();
+-      return iVar7;
++      iVar8 = (*pcVar2)();
++      return iVar8;
+     }
+-    cVar3 = CALL2(*(longlong *)(self + 0x40),0x28,&lStackX_20,GLOBAL8);
++    cVar3 = CALL2(*(longlong *)(self + 0x40),0x28,&puStackX_20,GLOBAL8);
+     if (cVar3 != '\0') {
+-      if (lStackX_20 == 0) goto LABEL0;
+-      cVar3 = CALL3(lStackX_20,1,aiStackX_18,afStackX_8,0);
+-      if (cVar3 != '\0') {
+-        iVar7 = (int)((afStackX_8[0] + GLOBAL9) * (float)iVar7 + (float)aiStackX_18[0]);
++      if (puStackX_20 == (undefined *)0x0) goto LABEL0;
++      bVar4 = MobPropertyStatusCollection_TryGetValue
++                        (puStackX_20,(undefined *)0x1,(undefined *)aiStackX_18,
++                         (undefined *)afStackX_8,(undefined *)0x0);
++      if (bVar4 != 0) {
++        iVar8 = (int)((afStackX_8[0] + GLOBAL9) * (float)iVar8 + (float)aiStackX_18[0]);
+       }
+     }
+     if (*(longlong *)(self + 0x18) != 0) {
+-      uVar5 = CALL4(*(longlong *)(self + 0x18),GLOBAL1);
++      uVar6 = CALL3(*(longlong *)(self + 0x18),GLOBAL1);
+       if (*(int *)(GLOBAL5 + 0xe0) == 0) {
+-        CALL5(GLOBAL5);
++        CALL4(GLOBAL5);
+       }
+-      lVar6 = *(longlong *)(*(longlong *)(GLOBAL5 + 0xb8) + 0x10);
+-      if (lVar6 == 0) {
++      lVar7 = *(longlong *)(*(longlong *)(GLOBAL5 + 0xb8) + 0x10);
++      if (lVar7 == 0) {
+         if (*(int *)(GLOBAL5 + 0xe0) == 0) {
+-          CALL5(GLOBAL5);
++          CALL4(GLOBAL5);
+         }
+         uVar1 = **(undefined8 **)(GLOBAL5 + 0xb8);
+-        lVar6 = CALL6(GLOBAL3);
+-        CALL7(lVar6,uVar1,GLOBAL4,0);
+-        *(longlong *)(*(longlong *)(GLOBAL5 + 0xb8) + 0x10) = lVar6;
+-        CALL8();
++        lVar7 = CALL5(GLOBAL3);
++        CALL6(lVar7,uVar1,GLOBAL4,0);
++        *(longlong *)(*(longlong *)(GLOBAL5 + 0xb8) + 0x10) = lVar7;
++        il2cpp_write_barrier_0();
+       }
+-      iVar4 = CALL9(uVar5,lVar6,GLOBAL2);
+-      iVar7 = iVar7 + iVar4;
++      iVar5 = CALL7(uVar6,lVar7,GLOBAL2);
++      iVar8 = iVar8 + iVar5;
+       if (*(longlong *)(self + 0x30) != 0) {
+-        cVar3 = CALL10(*(longlong *)(self + 0x30),2,aplStack_38);
++        cVar3 = CALL8(*(longlong *)(self + 0x30),2,aplStack_38);
+         if (cVar3 != '\0') {
+           if (aplStack_38[0] == (longlong *)0x0) goto LABEL1;
+-          iVar4 = (**(code **)(*aplStack_38[0] + 0x1a8))
++          iVar5 = (**(code **)(*aplStack_38[0] + 0x1a8))
+                             (aplStack_38[0],*(undefined8 *)(*aplStack_38[0] + 0x1b0));
+-          iVar7 = (int)(((float)(iVar4 + 100) / GLOBAL10) * (float)iVar7);
++          iVar8 = (int)(((float)(iVar5 + 100) / GLOBAL10) * (float)iVar8);
+         }
+         if (*(longlong *)(self + 0x28) != 0) {
+-          cVar3 = CALL11(*(longlong *)(self + 0x28),10);
++          cVar3 = CALL9(*(longlong *)(self + 0x28),10);
+           if (cVar3 != '\0') {
+-            iVar7 = (int)((float)iVar7 * GLOBAL11);
++            iVar8 = (int)((float)iVar8 * GLOBAL11);
+           }
+           if (*(longlong *)(self + 0x28) != 0) {
+-            cVar3 = CALL11(*(longlong *)(self + 0x28),0x16);
++            cVar3 = CALL9(*(longlong *)(self + 0x28),0x16);
+             if (cVar3 != '\0') {
+-              iVar7 = (int)((float)iVar7 * GLOBAL11);
++              iVar8 = (int)((float)iVar8 * GLOBAL11);
+             }
+-            return iVar7;
++            return iVar8;
+           }
+         }
+@@ -90,5 +93,5 @@
+   CALL1();
+   pcVar2 = (code *)swi(3);
+-  iVar7 = (*pcVar2)();
+-  return iVar7;
++  iVar8 = (*pcVar2)();
++  return iVar8;
+ }

@@ -1,0 +1,113 @@
+--- assets\source-data\toram-monsters\native-target\BossMobActionManager-SetPartsMaster-7fff5fdb0650.c
++++ 7198.c
+@@ -1,13 +1,13 @@
+ {
+-  code *pcVar1;
+-  longlong lVar2;
++  longlong lVar1;
++  code *pcVar2;
+   longlong lVar3;
+-  ushort uVar4;
++  longlong lVar4;
++  ushort uVar5;
+   short difficulty;
+-  undefined8 *puVar5;
+-  longlong lVar6;
+-  undefined *self_00;
+-  longlong lVar7;
+-  longlong *plVar8;
++  undefined8 *puVar6;
++  undefined *puVar7;
++  longlong lVar8;
++  longlong *plVar9;
+   undefined8 unaff_RDI;
+   if (GLOBAL0 == '\0') {
+@@ -18,54 +18,54 @@
+     GLOBAL0 = '\x01';
+   }
+-  lVar6 = CALL1(GLOBAL4);
+-  if (lVar6 != 0) {
+-    difficulty = CALL2(lVar6,0);
+-    self_00 = (undefined *)CALL3(GLOBAL3);
+-    MobPartsStatus__ctor(self_00,master,hp,difficulty,(undefined *)0x0);
++  puVar7 = (undefined *)CALL1(GLOBAL4);
++  if (puVar7 != (undefined *)0x0) {
++    difficulty = RoomManager_GetAreaLevel(puVar7,(undefined *)0x0);
++    puVar7 = (undefined *)CALL2(GLOBAL3);
++    MobPartsStatus__ctor(puVar7,master,hp,difficulty,(undefined *)0x0);
+     if (*(longlong *)(self + 0x168) != 0) {
+-      CALL4(*(longlong *)(self + 0x168),id,self_00,GLOBAL1);
+-      lVar2 = GLOBAL2;
+-      lVar6 = *(longlong *)(self + 0x158);
+-      if (lVar6 != 0) {
+-        lVar7 = CALL5(lVar6,GLOBAL2);
+-        lVar3 = GLOBAL2;
+-        if (lVar7 == 0) {
+-          CALL6(lVar6,lVar2);
+-          pcVar1 = (code *)swi(3);
+-          (*pcVar1)();
++      CALL3(*(longlong *)(self + 0x168),id,puVar7,GLOBAL1);
++      lVar3 = GLOBAL2;
++      lVar1 = *(longlong *)(self + 0x158);
++      if (lVar1 != 0) {
++        lVar8 = CALL4(lVar1,GLOBAL2);
++        lVar4 = GLOBAL2;
++        if (lVar8 == 0) {
++          CALL5(lVar1,lVar3);
++          pcVar2 = (code *)swi(3);
++          (*pcVar2)();
+           return;
+         }
+-        plVar8 = (longlong *)CALL5(lVar6,GLOBAL2);
+-        if (plVar8 == (longlong *)0x0) {
+-          CALL6(lVar6,lVar3);
+-          pcVar1 = (code *)swi(3);
+-          (*pcVar1)();
++        plVar9 = (longlong *)CALL4(lVar1,GLOBAL2);
++        if (plVar9 == (longlong *)0x0) {
++          CALL5(lVar1,lVar4);
++          pcVar2 = (code *)swi(3);
++          (*pcVar2)();
+           return;
+         }
+-        lVar6 = *plVar8;
+-        uVar4 = 0;
+-        if (*(ushort *)(lVar6 + 0x12e) != 0) {
++        lVar1 = *plVar9;
++        uVar5 = 0;
++        if (*(ushort *)(lVar1 + 0x12e) != 0) {
+           do {
+-            if (*(longlong *)(*(longlong *)(lVar6 + 0xb0) + (ulonglong)uVar4 * 0x10) ==
++            if (*(longlong *)(*(longlong *)(lVar1 + 0xb0) + (ulonglong)uVar5 * 0x10) ==
+                 GLOBAL2) {
+-              puVar5 = (undefined8 *)
++              puVar6 = (undefined8 *)
+                        ((longlong)
+-                        (*(int *)(*(longlong *)(lVar6 + 0xb0) + 8 + (ulonglong)uVar4 * 0x10) + 1) *
+-                        0x10 + 0x138 + lVar6);
++                        (*(int *)(*(longlong *)(lVar1 + 0xb0) + 8 + (ulonglong)uVar5 * 0x10) + 1) *
++                        0x10 + 0x138 + lVar1);
+               goto LABEL0;
+             }
+-            uVar4 = uVar4 + 1;
+-          } while (uVar4 < *(ushort *)(lVar6 + 0x12e));
++            uVar5 = uVar5 + 1;
++          } while (uVar5 < *(ushort *)(lVar1 + 0x12e));
+         }
+-        puVar5 = (undefined8 *)CALL7(plVar8,GLOBAL2,1,id,unaff_RDI);
++        puVar6 = (undefined8 *)CALL6(plVar9,GLOBAL2,1,id,unaff_RDI);
+ LABEL0:
+-        (*(code *)*puVar5)(plVar8,id,self_00,puVar5[1]);
++        (*(code *)*puVar6)(plVar9,id,puVar7,puVar6[1]);
+         return;
+       }
+     }
+   }
+-  CALL8();
+-  pcVar1 = (code *)swi(3);
+-  (*pcVar1)();
++  CALL7();
++  pcVar2 = (code *)swi(3);
++  (*pcVar2)();
+   return;
+ }

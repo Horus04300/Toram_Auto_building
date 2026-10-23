@@ -19,7 +19,7 @@ const policyWindow = {
 policyWindow.window = policyWindow;
 const policyContext = { window:policyWindow, console };
 vm.createContext(policyContext);
-vm.runInContext(await read('assets/js/calculation-policies.js'), policyContext, { filename:'calculation-policies.js' });
+vm.runInContext(await read('web/src/calculation/calculation-policies.js'), policyContext, { filename:'calculation/calculation-policies.js' });
 
 const policies = policyWindow.ToramCalculationPolicies;
 assert.equal(policies.resolveSkillDefinition('Demo:0').value, 'base', '계산용 스킬 선택은 기존과 같이 첫 정의를 사용해야 합니다.');
@@ -44,7 +44,7 @@ applicationWindow.ToramBuildDraftStore = { read:() => ({
 applicationWindow.window = applicationWindow;
 const applicationContext = { window:applicationWindow, console };
 vm.createContext(applicationContext);
-vm.runInContext(await read('assets/js/application-use-cases.js'), applicationContext, { filename:'application-use-cases.js' });
+vm.runInContext(await read('web/src/application/application-use-cases.js'), applicationContext, { filename:'application/application-use-cases.js' });
 
 const application = applicationWindow.ToramApplication;
 const buildResult = application.CalculateBuild();
@@ -64,15 +64,15 @@ assert.equal(applied.rangeType, 'LONG');
 assert.equal(applied.embeddedActiveGlobalDamagePercent, 10);
 assert.equal(applied.skillName, '검증 공격');
 
-for (const path of ['assets/js/optimization-results.js', 'assets/js/active-buff-ui.js', 'assets/js/combo-ui.js']) {
+for (const path of ['web/src/ui/optimization-results.js', 'web/src/ui/active-buff-ui.js', 'web/src/ui/combo-ui.js']) {
   const source = await read(path);
   assert.match(source, /ToramApplication/, path + ': Application 유스케이스를 사용해야 합니다.');
 }
-const optimizerSource = await read('assets/js/optimization-results.js');
+const optimizerSource = await read('web/src/ui/optimization-results.js');
 assert.doesNotMatch(optimizerSource, /var baseCtx\s*=\s*getBaseContext\(\);[\s\S]*applyPassiveSkillStats\(baseCtx\)/, '최적화 UI가 계산 조립 순서를 직접 소유하면 안 됩니다.');
-const comboSource = await read('assets/js/combo-ui.js');
+const comboSource = await read('web/src/ui/combo-ui.js');
 assert.doesNotMatch(comboSource, /var base\s*=\s*window\.getBaseContext\(\);[\s\S]*window\.simulateWithCrystas/, '콤보 UI가 DOM 계산 조립을 직접 수행하면 안 됩니다.');
-const activeBuffSource = await read('assets/js/active-buff-ui.js');
+const activeBuffSource = await read('web/src/ui/active-buff-ui.js');
 assert.doesNotMatch(activeBuffSource, /var base\s*=\s*window\.getBaseContext\(\);[\s\S]*window\.simulateWithCrystas/, '버프 UI가 DOM 계산 조립을 직접 수행하면 안 됩니다.');
 
 console.log('Application Application use-case and policy verification: PASS');

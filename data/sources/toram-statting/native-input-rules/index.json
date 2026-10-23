@@ -1,0 +1,317 @@
+{
+  "authority": "saved-native-static-analysis; no process access or execution",
+  "sourceSnapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "image_base": "0x7fff5f250000",
+  "methods": [
+    {
+      "class": "SmithGrant",
+      "name": "getEmptySlotCount",
+      "method_definition_index": 69902,
+      "token": "0x0601110f",
+      "metadata_declaration_range": {
+        "offset": 6261688,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51920480,
+      "pointer_slot_va": "0x7fff623d3e60",
+      "runtime_va": "0x7fff5fc75100",
+      "rva": "0xa25100",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418564883ec20803d11f1960200488bd97543488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-getEmptySlotCount-7fff5fc75100.c",
+      "pseudocodeSha256": "6e84951cb7ec9a5e7884459e25de4be61a3cbcfb8a700a8774e745a6a83fd233"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "OnDetailButton",
+      "method_definition_index": 69913,
+      "token": "0x0601111a",
+      "metadata_declaration_range": {
+        "offset": 6262084,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "detailValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920568,
+      "pointer_slot_va": "0x7fff623d3eb8",
+      "runtime_va": "0x7fff5fc721e0",
+      "rva": "0xa221e0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec2033d2488bd9e8e016000033d2488bcbe866e0",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-OnDetailButton-7fff5fc721e0.c",
+      "pseudocodeSha256": "37f90b0708cebc685ec0f4359dcfa22a26ef35f1270cb88a14c52c0c23e127ae"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetWeaponData",
+      "method_definition_index": 70050,
+      "token": "0x060111a3",
+      "metadata_declaration_range": {
+        "offset": 6267016,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "name",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "potential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "grantnum",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "buttonEnabled",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921664,
+      "pointer_slot_va": "0x7fff623d4300",
+      "runtime_va": "0x7fff5fc86680",
+      "rva": "0xa36680",
+      "status": "mapped",
+      "code_preview_hex": "48895c24185556574883ec20803dc4db950200498bf84963",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetWeaponData-7fff5fc86680.c",
+      "pseudocodeSha256": "195ca3b58f9344a81f03bc34177e527a7aa9583b6327670f889d77c554bf9d85"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetFixedValue",
+      "method_definition_index": 70052,
+      "token": "0x060111a5",
+      "metadata_declaration_range": {
+        "offset": 6267088,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fixedVal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921680,
+      "pointer_slot_va": "0x7fff623d4310",
+      "runtime_va": "0x7fff5fc859a0",
+      "rva": "0xa359a0",
+      "status": "mapped",
+      "code_preview_hex": "8991d40000008991d8000000c3cccccc48895c2408488974",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetFixedValue-7fff5fc859a0.c",
+      "pseudocodeSha256": "0f56f6c37088734eb887048f3708581474217208231c0826e713319308683100"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetDetailValue",
+      "method_definition_index": 70056,
+      "token": "0x060111a9",
+      "metadata_declaration_range": {
+        "offset": 6267232,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "enhanceValue",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921712,
+      "pointer_slot_va": "0x7fff623d4330",
+      "runtime_va": "0x7fff5fc85820",
+      "rva": "0xa35820",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418564883ec50803d25ea9502008bda",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetDetailValue-7fff5fc85820.c",
+      "pseudocodeSha256": "0f738b40ee83c51368c04e5b39c11d08895b2a11e0e6e156065a3039ae6960d5"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "FromOnDetail",
+      "method_definition_index": 70067,
+      "token": "0x060111b4",
+      "metadata_declaration_range": {
+        "offset": 6267628,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921800,
+      "pointer_slot_va": "0x7fff623d4388",
+      "runtime_va": "0x7fff5fc84d00",
+      "rva": "0xa34d00",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d54f5950200488bd97513488d0dff8c7c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-FromOnDetail-7fff5fc84d00.c",
+      "pseudocodeSha256": "270d8e0b9a733f4f78e5d751ecfa30e6ced9ee4b397227023fee4e864f533e5a"
+    },
+    {
+      "class": "SmithGrant_nested",
+      "name": "<InitSlotSelect>b__41_0",
+      "method_definition_index": 69977,
+      "token": "0x0601115a",
+      "metadata_declaration_range": {
+        "offset": 6264388,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 41732,
+          "exact_byval_name": "requireData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921080,
+      "pointer_slot_va": "0x7fff623d40b8",
+      "runtime_va": "0x7fff5fc794e0",
+      "rva": "0xa294e0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27425807a2c0075128b4230034228750a85",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant_nested-_InitSlotSelect_b__41_0-7fff5fc794e0.c",
+      "pseudocodeSha256": "c835fe0f184dc0668a67dadf12579c3189eaa464a1f4f195ca1f8c2be3747f38"
+    },
+    {
+      "class": "SmithGrant_nested",
+      "name": "<getEmptySlotCount>b__47_0",
+      "method_definition_index": 69981,
+      "token": "0x0601115e",
+      "metadata_declaration_range": {
+        "offset": 6264532,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 41732,
+          "exact_byval_name": "requireData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921112,
+      "pointer_slot_va": "0x7fff623d40d8",
+      "runtime_va": "0x7fff5fc794e0",
+      "rva": "0xa294e0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27425807a2c0075128b4230034228750a85",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant_nested-_getEmptySlotCount_b__47_0-7fff5fc794e0.c",
+      "pseudocodeSha256": "c835fe0f184dc0668a67dadf12579c3189eaa464a1f4f195ca1f8c2be3747f38"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "file": "TraceToramInputRules.java",
+      "size": 7836,
+      "sha256": "503347e54443b42c99655142550c667a348fbdd4c218b08391bb2e74ca319850"
+    },
+    {
+      "file": "methods.json",
+      "size": 67207,
+      "sha256": "fae6ece92c1866c9d085952bb11c24cdfa90ace626c91b8df344fefb53522ea5"
+    },
+    {
+      "file": "metadata-support.json",
+      "size": 44537,
+      "sha256": "85179d7c6aad3947eacceae5d1fbb57d73ea8887c12130a0bedf93818d01a93c"
+    },
+    {
+      "file": "../native-potential/SmithGrant-CalcUsePotentialPoint-7fff5fc6db10.c",
+      "size": 13177,
+      "sha256": "508dfc7e269ec0e2f348463dc2ae70a8eb6ec8f1d551964d4f838bd70a0bbdbb"
+    },
+    {
+      "file": "../native-potential/SmithGrant-EnhanceGetPropertyPosition-7fff5fc6e630.c",
+      "size": 9977,
+      "sha256": "ed7d8cbfabe7655fd68f5729fbe073974d5475917b404896e18992e2894081bb"
+    },
+    {
+      "file": "../native-penalty/SmithGrantInfoWindow-UpdateDetailVal-7fff5fc86bf0.c",
+      "size": 9677,
+      "sha256": "24451b8adc89df80ac893fcfaa11768a4ae0154b9c461664cd56504d90793893"
+    }
+  ],
+  "crossReferences": [
+    "../native-potential/SmithGrant-CalcUsePotentialPoint-7fff5fc6db10.c",
+    "../native-potential/SmithGrant-EnhanceGetPropertyPosition-7fff5fc6e630.c",
+    "../native-penalty/SmithGrantInfoWindow-UpdateDetailVal-7fff5fc86bf0.c"
+  ]
+}

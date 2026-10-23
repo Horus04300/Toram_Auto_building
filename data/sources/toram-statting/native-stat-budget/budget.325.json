@@ -1,0 +1,130 @@
+{
+  "schema": "toram.crafter-stat-budget.v1",
+  "authority": "user-authorized-current-app-rule",
+  "characterLevel": 325,
+  "highestParameterLevel": 325,
+  "levelPoints": 650,
+  "emblemPoints": 165,
+  "fixedPoints": 25,
+  "appSumOfFiveBaseStats": 840,
+  "includesFiveMinimumPoints": true,
+  "nativeSpendableInvestment": 835,
+  "personalStats": {
+    "CRT": 1,
+    "LUK": 1,
+    "MEN": 1,
+    "TEC": 1
+  },
+  "nativeCaps": {
+    "beforeLimitBreak": 255,
+    "afterLimitBreakPrimary": 510,
+    "personal": 255,
+    "unlockCondition": "sum(min(stat,255)-1 for all9stats)>=500"
+  },
+  "allocationTemplate": {
+    "primary": 510,
+    "secondary": 327,
+    "otherThreePrimaries": 1
+  },
+  "allocationSequence": [
+    [
+      1,
+      1
+    ],
+    [
+      255,
+      1
+    ],
+    [
+      255,
+      247
+    ],
+    [
+      510,
+      247
+    ],
+    [
+      510,
+      327
+    ]
+  ],
+  "singleStat": {
+    "maximum": 510,
+    "potentialBonus": 51,
+    "formula": "trunc(stat/10)"
+  },
+  "pairedStats": {
+    "maximumSum": 837,
+    "potentialBonus": 41,
+    "formula": "trunc((statA+statB)/20)"
+  },
+  "categories": {
+    "oneHandSword": {
+      "stats": [
+        "STR",
+        "DEX"
+      ],
+      "bonus": 41
+    },
+    "staff": {
+      "stats": [
+        "INT"
+      ],
+      "bonus": 51
+    },
+    "twoHandSword": {
+      "stats": [
+        "STR"
+      ],
+      "bonus": 51
+    },
+    "magicDevice": {
+      "stats": [
+        "INT",
+        "AGI"
+      ],
+      "bonus": 41
+    },
+    "katana": {
+      "stats": [
+        "DEX",
+        "AGI"
+      ],
+      "bonus": 41
+    },
+    "bow": {
+      "stats": [
+        "STR",
+        "DEX"
+      ],
+      "bonus": 41
+    },
+    "halberd": {
+      "stats": [
+        "STR",
+        "AGI"
+      ],
+      "bonus": 41
+    },
+    "bowgun": {
+      "stats": [
+        "DEX"
+      ],
+      "bonus": 51
+    },
+    "knuckle": {
+      "stats": [
+        "AGI"
+      ],
+      "bonus": 51
+    },
+    "armor": {
+      "stats": [
+        "VIT"
+      ],
+      "bonus": 51
+    }
+  },
+  "bonusFormulaSource": "docs/statting.md (user-authored), cross-check native-crafting evidence for production formula",
+  "status": "allocation-and-app-budget-verified; no server emblem claim"
+}

@@ -1,0 +1,863 @@
+{
+  "startedAt": "2026-10-17T00:45:27.623Z",
+  "finishedAt": "2026-10-17T00:46:32.951Z",
+  "itemCount": 8448,
+  "apiTotal": 8448,
+  "uniqueIds": 8448,
+  "typeCounts": {
+    "1: [Usable]": 537,
+    "5: [2 Handed Sword]": 321,
+    "10: [Bowgun]": 310,
+    "210: [Enhancer Crysta (Red)]": 74,
+    "6: [Additional]": 1008,
+    "200: [Enhancer Crysta (Blue)]": 36,
+    "19: [Staff]": 331,
+    "13: [Knuckles]": 328,
+    "240: [Enhancer Crysta (Purple)]": 23,
+    "220: [Enhancer Crysta (Green)]": 46,
+    "22: [Armor Crysta]": 35,
+    "23: [Additional Crysta]": 46,
+    "8: [Armor]": 275,
+    "26: [Halberd]": 318,
+    "27: [Katana]": 292,
+    "15: [Magic Device]": 315,
+    "9: [Bow]": 303,
+    "4: [1 Handed Sword]": 357,
+    "14: [Material]": 2380,
+    "11: [Dagger]": 83,
+    "7: [Arrow]": 88,
+    "18: [Special]": 219,
+    "17: [Shield]": 192,
+    "20: [Normal Crysta]": 132,
+    "16: [Ore]": 20,
+    "3: [Piercer]": 25,
+    "230: [Enhancer Crysta (Yellow)]": 47,
+    "241: Registlet": 124,
+    "24: [Special Crysta]": 45,
+    "28: [Ninjutsu Scroll]": 8,
+    "21: [Weapon Crysta]": 39,
+    "0: ": 2,
+    "12: [Gem]": 52,
+    "2: [Refinement Support]": 37
+  },
+  "localCrystaCount": 425,
+  "sources": [
+    {
+      "url": "https://coryn.club/api/",
+      "finalUrl": "https://coryn.club/api/",
+      "filename": "raw/api-docs.html",
+      "fetchedAt": "2026-10-17T00:45:28.462Z",
+      "sha256": "aa2a17c26d86064fcbfe900cc9dc989705c2824cfbe93b8c1ac0e751ba68ec87",
+      "bytes": 25039,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    {
+      "url": "https://coryn.club/item.php?id=8416",
+      "finalUrl": "https://coryn.club/item.php?id=8416",
+      "filename": "raw/item-8416.html",
+      "fetchedAt": "2026-10-17T00:45:28.848Z",
+      "sha256": "9f9de00468c686ce79a9bcb3c4e811ade81294be3141cb144fd0aaf951ee8f82",
+      "bytes": 62714,
+      "contentType": "text/html; charset=UTF-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?id=8416",
+      "finalUrl": "https://coryn.club/api/v1/items.php?id=8416",
+      "filename": "raw/item-8416.json",
+      "fetchedAt": "2026-10-17T00:45:29.126Z",
+      "sha256": "c879ac3e59390430f04b23134379e010aa4975f278dfaa21891639694ecc48dd",
+      "bytes": 752,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?id=8416&lang=ja",
+      "finalUrl": "https://coryn.club/api/v1/items.php?id=8416&lang=ja",
+      "filename": "raw/item-8416-lang-ja.json",
+      "fetchedAt": "2026-10-17T00:45:29.427Z",
+      "sha256": "c879ac3e59390430f04b23134379e010aa4975f278dfaa21891639694ecc48dd",
+      "bytes": 752,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?id=8416&lang=ko",
+      "finalUrl": "https://coryn.club/api/v1/items.php?id=8416&lang=ko",
+      "filename": "raw/item-8416-lang-ko.json",
+      "fetchedAt": "2026-10-17T00:45:29.716Z",
+      "sha256": "c879ac3e59390430f04b23134379e010aa4975f278dfaa21891639694ecc48dd",
+      "bytes": 752,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=0",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=0",
+      "filename": "raw/items-00000.json",
+      "fetchedAt": "2026-10-17T00:45:29.990Z",
+      "sha256": "73cea043e9ff6c3bb4dd36813077eba7c3573eb6fb5fd52cf4a3e123822068a4",
+      "bytes": 15103,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=100",
+      "filename": "raw/items-00100.json",
+      "fetchedAt": "2026-10-17T00:45:30.856Z",
+      "sha256": "2cbdcb6e81e22c7567c09f20eaad61dc6dbd976014dc7f9ca4af3c0414f5c7df",
+      "bytes": 17098,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=200",
+      "filename": "raw/items-00200.json",
+      "fetchedAt": "2026-10-17T00:45:31.516Z",
+      "sha256": "d8444ace5a8bf38d76f257fdd751328585fcac640bd3376e4f411830824d8d47",
+      "bytes": 15016,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=300",
+      "filename": "raw/items-00300.json",
+      "fetchedAt": "2026-10-17T00:45:32.373Z",
+      "sha256": "88c962cd1875bbf0edcfe85bc07dfeebeac1a9966ceac2ee47de0f4042195871",
+      "bytes": 15306,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=400",
+      "filename": "raw/items-00400.json",
+      "fetchedAt": "2026-10-17T00:45:33.250Z",
+      "sha256": "129eeee123b02afc12c12a4e4c2b8b0c64a4df578af3432fea90fc3b55c39018",
+      "bytes": 15330,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=500",
+      "filename": "raw/items-00500.json",
+      "fetchedAt": "2026-10-17T00:45:33.909Z",
+      "sha256": "5cad10ff7b877d25e698da2909184e851a726b06002325a9ff5d0fd67c47a2b1",
+      "bytes": 15029,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=600",
+      "filename": "raw/items-00600.json",
+      "fetchedAt": "2026-10-17T00:45:34.779Z",
+      "sha256": "7940a98a1ed9b433581fe71530c542f12ff7b91794c9c87a648f105a21361097",
+      "bytes": 15099,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=700",
+      "filename": "raw/items-00700.json",
+      "fetchedAt": "2026-10-17T00:45:35.441Z",
+      "sha256": "a03fd7e173216dea5e8b75820dae9f093d8bd3fae1a42e7ba348b0ee41667a55",
+      "bytes": 15002,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=800",
+      "filename": "raw/items-00800.json",
+      "fetchedAt": "2026-10-17T00:45:36.089Z",
+      "sha256": "ba3c1eaa1561a38f5b4a5b690db44625accd14af7d46600d0e5409545a0c8b2c",
+      "bytes": 14824,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=900",
+      "filename": "raw/items-00900.json",
+      "fetchedAt": "2026-10-17T00:45:36.764Z",
+      "sha256": "f76a21eed274151bb873cf8a71079e488c277a1bb95c5bb9ac76dc28e83fc5b3",
+      "bytes": 14882,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1000",
+      "filename": "raw/items-01000.json",
+      "fetchedAt": "2026-10-17T00:45:37.419Z",
+      "sha256": "3da3cfaf3e039447fac350b8edffde3cbbcbd0e038c817787e2490e6260faed2",
+      "bytes": 14909,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1100",
+      "filename": "raw/items-01100.json",
+      "fetchedAt": "2026-10-17T00:45:38.077Z",
+      "sha256": "c759e8a9f10e4ad713c75bcbcbf86f418864400fd379e912f6ba44bd90d7f798",
+      "bytes": 15053,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1200",
+      "filename": "raw/items-01200.json",
+      "fetchedAt": "2026-10-17T00:45:38.952Z",
+      "sha256": "e12e34d0af673a183b9545e17b3e54401b668461ce4efdb587fb892ebbf33728",
+      "bytes": 15253,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1300",
+      "filename": "raw/items-01300.json",
+      "fetchedAt": "2026-10-17T00:45:39.835Z",
+      "sha256": "cc4e6875f0d224e4cb1087297ecf2039f244d03aff715f106ba557ac410a5fd4",
+      "bytes": 15246,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1400",
+      "filename": "raw/items-01400.json",
+      "fetchedAt": "2026-10-17T00:45:40.492Z",
+      "sha256": "a8c1b479c429832be4b3577519b103a44a633648478b60759d0121c5a8b2a4e1",
+      "bytes": 14971,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1500",
+      "filename": "raw/items-01500.json",
+      "fetchedAt": "2026-10-17T00:45:41.352Z",
+      "sha256": "c0faf08a51932a9f2605b5148dd8bc53f19494ab013f209725db27b181fe0a3f",
+      "bytes": 15011,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1600",
+      "filename": "raw/items-01600.json",
+      "fetchedAt": "2026-10-17T00:45:42.206Z",
+      "sha256": "178605779417043b137d3122c29a9b896830f80497c27e19ef350c6c57db307a",
+      "bytes": 14872,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1700",
+      "filename": "raw/items-01700.json",
+      "fetchedAt": "2026-10-17T00:45:42.882Z",
+      "sha256": "5edec5f2a47f7ba037eb44154e6a420b2b57e44cce3ebaa7237e5e0c2b277eea",
+      "bytes": 14900,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1800",
+      "filename": "raw/items-01800.json",
+      "fetchedAt": "2026-10-17T00:45:43.543Z",
+      "sha256": "d63994a41c260295382ed5ba89e14ff6acc1f9bf3bb5fcf837d845eb67804774",
+      "bytes": 14986,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=1900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=1900",
+      "filename": "raw/items-01900.json",
+      "fetchedAt": "2026-10-17T00:45:44.199Z",
+      "sha256": "013ef456592ed49a2a35f35de6b46cf7758d1a2a27fb34283a6113d9cec0843a",
+      "bytes": 15045,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2000",
+      "filename": "raw/items-02000.json",
+      "fetchedAt": "2026-10-17T00:45:45.072Z",
+      "sha256": "a22f1b9e44e9ca08c002e404949fa0350cab08bdb7e66feb96a68ba4e09c304b",
+      "bytes": 15312,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2100",
+      "filename": "raw/items-02100.json",
+      "fetchedAt": "2026-10-17T00:45:45.726Z",
+      "sha256": "f34c14998b9fd944bfdf7cf5d7a629e2341ae0571a574b16ab4ec98b3b115e86",
+      "bytes": 15194,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2200",
+      "filename": "raw/items-02200.json",
+      "fetchedAt": "2026-10-17T00:45:46.395Z",
+      "sha256": "09738fb63a45fe18a646777624017177f1675c0cf594cddac3e63b948eb005ce",
+      "bytes": 15014,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2300",
+      "filename": "raw/items-02300.json",
+      "fetchedAt": "2026-10-17T00:45:47.050Z",
+      "sha256": "3995e7359f8ed9715b8ee3b6c2c27cac09ba922954cda4ca14a203d2b27f9b84",
+      "bytes": 15141,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2400",
+      "filename": "raw/items-02400.json",
+      "fetchedAt": "2026-10-17T00:45:47.714Z",
+      "sha256": "7b54287edf894a06bebe0e54e80028a90f2085c758b565492fd3f29b48842597",
+      "bytes": 14922,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2500",
+      "filename": "raw/items-02500.json",
+      "fetchedAt": "2026-10-17T00:45:48.391Z",
+      "sha256": "61bd5af5d42d5e0499e0233b3fbebe5aa7187798fe69f213a8560f79623cfdc3",
+      "bytes": 14870,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2600",
+      "filename": "raw/items-02600.json",
+      "fetchedAt": "2026-10-17T00:45:49.042Z",
+      "sha256": "83311f9d4c38de373f9aff299a1f02c5c812d756fc7bff4860bd52bf84dd7fa5",
+      "bytes": 15049,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2700",
+      "filename": "raw/items-02700.json",
+      "fetchedAt": "2026-10-17T00:45:49.692Z",
+      "sha256": "8ef7e2a47d0796cd89eefe4af80bb2a74b25b908110e6b5e82df81843385a955",
+      "bytes": 14881,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2800",
+      "filename": "raw/items-02800.json",
+      "fetchedAt": "2026-10-17T00:45:50.349Z",
+      "sha256": "b3f9e17ad660526570e475dc0a4cc584b4c4145de3e826d13d03f9f19acf9f36",
+      "bytes": 15213,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=2900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=2900",
+      "filename": "raw/items-02900.json",
+      "fetchedAt": "2026-10-17T00:45:51.010Z",
+      "sha256": "e8b6ee30dbfca8f0af9ee93d3c31c2bd30eb3ce84ae2cc9bfd9b79715b0ba2bc",
+      "bytes": 15137,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3000",
+      "filename": "raw/items-03000.json",
+      "fetchedAt": "2026-10-17T00:45:51.675Z",
+      "sha256": "b4a5de1b8a35d724cc757b0c17cbdecb134cbf76e826726ad75dcc93ad5c63d3",
+      "bytes": 14975,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3100",
+      "filename": "raw/items-03100.json",
+      "fetchedAt": "2026-10-17T00:45:52.538Z",
+      "sha256": "8f867b1a1ccf8990ca29a08f82e1e0084e16fe8514bd4202bb2c39f883690818",
+      "bytes": 15161,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3200",
+      "filename": "raw/items-03200.json",
+      "fetchedAt": "2026-10-17T00:45:53.184Z",
+      "sha256": "d4dddeb870b237ae4ded7998a2ca702d2f48bbbee09baaafa78019157075dd88",
+      "bytes": 14956,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3300",
+      "filename": "raw/items-03300.json",
+      "fetchedAt": "2026-10-17T00:45:54.045Z",
+      "sha256": "028a59a8d46e2dc440c9f4a59bf9b99971bfd4e5e5c79160425f7f96d57b8976",
+      "bytes": 14824,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3400",
+      "filename": "raw/items-03400.json",
+      "fetchedAt": "2026-10-17T00:45:54.700Z",
+      "sha256": "ddfcfbf4a29b8b875ac8c3e250881c0617be965cd4ddefd37494b84d5c152f3f",
+      "bytes": 14890,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3500",
+      "filename": "raw/items-03500.json",
+      "fetchedAt": "2026-10-17T00:45:55.572Z",
+      "sha256": "c1c7f13205ab291efa3b87a82835b9e66f1b5eaa30b3015129b21c714ae3bf2d",
+      "bytes": 14916,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3600",
+      "filename": "raw/items-03600.json",
+      "fetchedAt": "2026-10-17T00:45:56.435Z",
+      "sha256": "5e23745f9ff36f9189865caa71ee80506a6028a93dd37743d92a3ae229a26f59",
+      "bytes": 15280,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3700",
+      "filename": "raw/items-03700.json",
+      "fetchedAt": "2026-10-17T00:45:57.287Z",
+      "sha256": "16ef02928f77d0ec09d06f6ee309b832ab39b6a42ed5aaa08796282093cda116",
+      "bytes": 15232,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3800",
+      "filename": "raw/items-03800.json",
+      "fetchedAt": "2026-10-17T00:45:58.136Z",
+      "sha256": "e9f61eb6bf11ca3f082e14cc7c8d6b53187ac71128122e9ddf2b23b78e220f27",
+      "bytes": 14860,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=3900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=3900",
+      "filename": "raw/items-03900.json",
+      "fetchedAt": "2026-10-17T00:45:58.808Z",
+      "sha256": "fcd1a7ae96bb4894139e3bc4f65a95e02ecd2f1ec217e7489092ce56fd3dedb2",
+      "bytes": 14907,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4000",
+      "filename": "raw/items-04000.json",
+      "fetchedAt": "2026-10-17T00:45:59.674Z",
+      "sha256": "e1248a71c99b457d3158dbd5bc45696a3a23bb171ab34025021e7b6aa278bce4",
+      "bytes": 14765,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4100",
+      "filename": "raw/items-04100.json",
+      "fetchedAt": "2026-10-17T00:46:00.529Z",
+      "sha256": "9a5e733b69282ae0019a2ea1843b8bcdaebcd70ede0653bb154c115d1cc2e02f",
+      "bytes": 14864,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4200",
+      "filename": "raw/items-04200.json",
+      "fetchedAt": "2026-10-17T00:46:01.392Z",
+      "sha256": "226a1416c027c8d852779854127972ff090d04b4130d0035f38554375a1b7c52",
+      "bytes": 15059,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4300",
+      "filename": "raw/items-04300.json",
+      "fetchedAt": "2026-10-17T00:46:02.059Z",
+      "sha256": "ae9573f9f1faa68da58f5f4930a05c1e9e21b3ff2eb096bdf7df95935d1b6331",
+      "bytes": 14857,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4400",
+      "filename": "raw/items-04400.json",
+      "fetchedAt": "2026-10-17T00:46:02.707Z",
+      "sha256": "82ee5f060924d9a3c3b43faa6827c991f1337294d9b8716e6f12dbac021019ea",
+      "bytes": 14902,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4500",
+      "filename": "raw/items-04500.json",
+      "fetchedAt": "2026-10-17T00:46:03.578Z",
+      "sha256": "a4859c4f83f5812f6e2254c8411c0ccf5329f61e10c6bfb781c07345d94f9db1",
+      "bytes": 15356,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4600",
+      "filename": "raw/items-04600.json",
+      "fetchedAt": "2026-10-17T00:46:04.453Z",
+      "sha256": "cf7ecf6f0c9538dae033a3e44a4104e52064b072e6ea9ccc910bf271e703cb64",
+      "bytes": 15165,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4700",
+      "filename": "raw/items-04700.json",
+      "fetchedAt": "2026-10-17T00:46:05.128Z",
+      "sha256": "f0c4df344b10c04711a4b8d84b0f0039b4400d254b9eed6cf2b0e427311a828a",
+      "bytes": 14900,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4800",
+      "filename": "raw/items-04800.json",
+      "fetchedAt": "2026-10-17T00:46:05.999Z",
+      "sha256": "63e75e7442d806f4a274f3f1c1c9928413507b7e7e0d7160d08cd5433ea3d0e2",
+      "bytes": 14960,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=4900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=4900",
+      "filename": "raw/items-04900.json",
+      "fetchedAt": "2026-10-17T00:46:06.670Z",
+      "sha256": "f8f13510e7e7544dde0c9d21a1d22e406c355ee0ae6026f54a0c9fa81700375d",
+      "bytes": 14746,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5000",
+      "filename": "raw/items-05000.json",
+      "fetchedAt": "2026-10-17T00:46:07.330Z",
+      "sha256": "f9c6cc05f5f1cbe218e00fd8c684657002e7f1357a32135189dc6c21255d1225",
+      "bytes": 14756,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5100",
+      "filename": "raw/items-05100.json",
+      "fetchedAt": "2026-10-17T00:46:07.974Z",
+      "sha256": "831c9bb6772c1296394cd0c9a477b8ddfe008f3a3f6b8c6201594b63983543c3",
+      "bytes": 14934,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5200",
+      "filename": "raw/items-05200.json",
+      "fetchedAt": "2026-10-17T00:46:08.650Z",
+      "sha256": "ede2fc83db5c63f6939d9fef3755f46a710231c8fbe29bdb270632bbad9863bd",
+      "bytes": 14808,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5300",
+      "filename": "raw/items-05300.json",
+      "fetchedAt": "2026-10-17T00:46:09.531Z",
+      "sha256": "3ad7a6afb03aa0b73d4139c057e2431dcfd16e83c6062fe2c317fd2565228003",
+      "bytes": 14977,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5400",
+      "filename": "raw/items-05400.json",
+      "fetchedAt": "2026-10-17T00:46:10.416Z",
+      "sha256": "5815cc5f1052c00a4fb3868941bea37fcb193befd1fc76e4f0782fff97f55ffd",
+      "bytes": 15244,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5500",
+      "filename": "raw/items-05500.json",
+      "fetchedAt": "2026-10-17T00:46:11.272Z",
+      "sha256": "e23b5873f8014ba262f30c10c3dac79db8e7d9fb600395004a38fbed8ad24834",
+      "bytes": 14863,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5600",
+      "filename": "raw/items-05600.json",
+      "fetchedAt": "2026-10-17T00:46:12.133Z",
+      "sha256": "d4629e911ffdcf757c13d2f55b57ccc26968678ec2f7e89ee1598c6c0eb45ba5",
+      "bytes": 14792,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5700",
+      "filename": "raw/items-05700.json",
+      "fetchedAt": "2026-10-17T00:46:12.995Z",
+      "sha256": "a86afc1418a0cec080105d13e53e994b3e2ad0c7d83f22209610069a5d1d396c",
+      "bytes": 14805,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5800",
+      "filename": "raw/items-05800.json",
+      "fetchedAt": "2026-10-17T00:46:13.859Z",
+      "sha256": "aa0fc4fbd74ac1218c7d334ef30ffca01d65f61091dc57ffefa8c1ba2ae7d141",
+      "bytes": 14749,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=5900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=5900",
+      "filename": "raw/items-05900.json",
+      "fetchedAt": "2026-10-17T00:46:14.536Z",
+      "sha256": "31648b09f57e5ea7589c2db3b8b70c54da9728d163ff746d7d8630a4ad93ccab",
+      "bytes": 14511,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6000",
+      "filename": "raw/items-06000.json",
+      "fetchedAt": "2026-10-17T00:46:15.412Z",
+      "sha256": "60e2be95c7edf07adf28a2766b5ae1be36b3ba546b4f9cbe2d800165ba2ab6dc",
+      "bytes": 14739,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6100",
+      "filename": "raw/items-06100.json",
+      "fetchedAt": "2026-10-17T00:46:16.292Z",
+      "sha256": "8239cb2f4d7d18a763608d6edbf0bafea112d56f01850091ec283deaf9c046e9",
+      "bytes": 14757,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6200",
+      "filename": "raw/items-06200.json",
+      "fetchedAt": "2026-10-17T00:46:16.946Z",
+      "sha256": "a915806d3c48c9607c688761943290bd45c7400a115d56c388775b01415eb118",
+      "bytes": 15092,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6300",
+      "filename": "raw/items-06300.json",
+      "fetchedAt": "2026-10-17T00:46:17.815Z",
+      "sha256": "d10f396b4776b74a1628214e96d79948e91cef9d0ebbce7317134f349dda0459",
+      "bytes": 14797,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6400",
+      "filename": "raw/items-06400.json",
+      "fetchedAt": "2026-10-17T00:46:18.697Z",
+      "sha256": "cf3f963468826d017cc6e1df9aaa0a719d821b309314aa3c2f8362a56c9779c7",
+      "bytes": 15004,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6500",
+      "filename": "raw/items-06500.json",
+      "fetchedAt": "2026-10-17T00:46:19.371Z",
+      "sha256": "2d2a4d0330470ea95a392b969a9d5f7dcbbb2bba8f092f3fe2e6cf73a850ea58",
+      "bytes": 14742,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6600",
+      "filename": "raw/items-06600.json",
+      "fetchedAt": "2026-10-17T00:46:20.022Z",
+      "sha256": "d87221df6534d255b514b466fd37f526cef6644dc6c0fca4e75d8506fcedc97b",
+      "bytes": 14725,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6700",
+      "filename": "raw/items-06700.json",
+      "fetchedAt": "2026-10-17T00:46:20.894Z",
+      "sha256": "7b308812e9b4d88fde7571897b7d5c583d948f830a5c4f5660255929e0b7b56d",
+      "bytes": 14693,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6800",
+      "filename": "raw/items-06800.json",
+      "fetchedAt": "2026-10-17T00:46:21.553Z",
+      "sha256": "ec0f6a0b49f44a152f398b8d7d17bd7fc4994b2b6bfa6dc3a6fe10604383158c",
+      "bytes": 14567,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=6900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=6900",
+      "filename": "raw/items-06900.json",
+      "fetchedAt": "2026-10-17T00:46:22.419Z",
+      "sha256": "cee4f2ae26b0290a821cef99b4005f766c0301c493fc34ec30d7bc5aead026e7",
+      "bytes": 14734,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7000",
+      "filename": "raw/items-07000.json",
+      "fetchedAt": "2026-10-17T00:46:23.089Z",
+      "sha256": "990c05c75de1b91bf3eb91df1c160df49c7c0cf484c92f048706b200cb28fee5",
+      "bytes": 14489,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7100",
+      "filename": "raw/items-07100.json",
+      "fetchedAt": "2026-10-17T00:46:23.750Z",
+      "sha256": "b3ddb4357c536b2b1891d56419e321912863d1605ee236f075738b437e2eb435",
+      "bytes": 14540,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7200",
+      "filename": "raw/items-07200.json",
+      "fetchedAt": "2026-10-17T00:46:24.406Z",
+      "sha256": "fba1921af6ae73307251da4fefdab2281e82aca4ea99525b948e01f9c09857fa",
+      "bytes": 15010,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7300",
+      "filename": "raw/items-07300.json",
+      "fetchedAt": "2026-10-17T00:46:25.066Z",
+      "sha256": "faabeed734710dfc7e81d9cb3480fac522c030ebdd9551cf82350ccd42baa390",
+      "bytes": 14728,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7400",
+      "filename": "raw/items-07400.json",
+      "fetchedAt": "2026-10-17T00:46:25.942Z",
+      "sha256": "46625e6378034961fe6e2a2f6d7c3db087eb4265a3906e2bbd08cc7688b800e8",
+      "bytes": 14421,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7500",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7500",
+      "filename": "raw/items-07500.json",
+      "fetchedAt": "2026-10-17T00:46:26.601Z",
+      "sha256": "8f5661ffd48a0d461c90db1e36f405874b96a7fbaf556f0cdb3e37c852ef3f7e",
+      "bytes": 14488,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7600",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7600",
+      "filename": "raw/items-07600.json",
+      "fetchedAt": "2026-10-17T00:46:27.269Z",
+      "sha256": "dbc2bb4f64c843868c2beeb922332900614755e0845569799c56fd0884fbd0f4",
+      "bytes": 14295,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7700",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7700",
+      "filename": "raw/items-07700.json",
+      "fetchedAt": "2026-10-17T00:46:27.935Z",
+      "sha256": "e9dd8b40fe7a5827735ff743457ad7322caf3580bea50d610e2a9cc0bb898d71",
+      "bytes": 14456,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7800",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7800",
+      "filename": "raw/items-07800.json",
+      "fetchedAt": "2026-10-17T00:46:28.608Z",
+      "sha256": "2c083c3665c56016e47692b590276729e6082253b273c627a26a0650c63b2fd2",
+      "bytes": 14389,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=7900",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=7900",
+      "filename": "raw/items-07900.json",
+      "fetchedAt": "2026-10-17T00:46:29.264Z",
+      "sha256": "c6733479a809b654fbb7c2a7ed4fc400e81a5678cd47d0e347956e59cae099af",
+      "bytes": 14325,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=8000",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=8000",
+      "filename": "raw/items-08000.json",
+      "fetchedAt": "2026-10-17T00:46:29.931Z",
+      "sha256": "b9820fa122b7254e4bb29a3e37126e8f2920617a6e865c4f7aa31aad1a002b33",
+      "bytes": 14319,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=8100",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=8100",
+      "filename": "raw/items-08100.json",
+      "fetchedAt": "2026-10-17T00:46:30.589Z",
+      "sha256": "6b8131693f759c118710afe3c890d9f5ff23b5435acf43742ff0df993a50915e",
+      "bytes": 14429,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=8200",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=8200",
+      "filename": "raw/items-08200.json",
+      "fetchedAt": "2026-10-17T00:46:31.248Z",
+      "sha256": "ab835deb6d67a4924ff5915af99cdc7b7d7a6d9b7e84cd7b7425387220e547d2",
+      "bytes": 14251,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=8300",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=8300",
+      "filename": "raw/items-08300.json",
+      "fetchedAt": "2026-10-17T00:46:31.917Z",
+      "sha256": "ddd763598282af30012f7150ae1ac85ed29b147e91e65811baef83005fd8f2a1",
+      "bytes": 14451,
+      "contentType": "application/json; charset=utf-8"
+    },
+    {
+      "url": "https://coryn.club/api/v1/items.php?limit=100&offset=8400",
+      "finalUrl": "https://coryn.club/api/v1/items.php?limit=100&offset=8400",
+      "filename": "raw/items-08400.json",
+      "fetchedAt": "2026-10-17T00:46:32.571Z",
+      "sha256": "d76b56f70f0353db68a98ef19b81316d1ec14d464ab7349ff1d7980134f1d5c3",
+      "bytes": 6929,
+      "contentType": "application/json; charset=utf-8"
+    }
+  ],
+  "limitations": [
+    "Coryn IDs are site database IDs. No game object ID mapping is established.",
+    "List responses omit stats. Only raw/item-8416.json is a stat-bearing exact-ID sample; do not treat absent list stats as an item having no stats.",
+    "Catalogue names are English. lang=ja and lang=ko are undocumented probes; compare retained bodies. They do not establish a supported localization API.",
+    "Existing Korean crysta data is preserved unchanged and has no verified game/Coryn ID linkage.",
+    "Paginated HTTP requests are not an atomic database snapshot; stable totals and unique IDs do not prove every record stayed unchanged."
+  ]
+}

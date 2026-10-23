@@ -1,0 +1,99 @@
+--- assets\source-data\toram-monsters\native-rules\BossMobBattleStatus-get_AvoidProbability-7fff5fdb1250.c
++++ 7224.c
+@@ -2,14 +2,16 @@
+   int iVar1;
+   code *pcVar2;
+-  char cVar3;
+-  int iVar4;
+-  longlong lVar5;
++  undefined *puVar3;
++  char cVar4;
++  byte bVar5;
+   int iVar6;
++  longlong lVar7;
++  int iVar8;
+   undefined8 uStack_50;
+   undefined8 *puStack_48;
+-  longlong lStack_40;
++  undefined *puStack_40;
+   undefined8 uStack_38;
+   undefined8 *puStack_30;
+-  longlong lStack_28;
++  undefined *puStack_28;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -20,37 +22,36 @@
+     GLOBAL0 = '\x01';
+   }
+-  iVar6 = 0;
++  iVar8 = 0;
+   if ((*(longlong *)(self + 0x30) != 0) &&
+-     (lVar5 = CALL1(*(longlong *)(self + 0x30),GLOBAL1), lVar5 != 0)) {
+-    CALL2(&uStack_50,lVar5,GLOBAL5);
++     (lVar7 = CALL1(*(longlong *)(self + 0x30),GLOBAL1), lVar7 != 0)) {
++    CALL2(&uStack_50,lVar7,GLOBAL5);
+     uStack_38 = uStack_50;
+     puStack_30 = puStack_48;
+-    lStack_28 = lStack_40;
++    puStack_28 = puStack_40;
+     uStack_50 = 0;
+     puStack_48 = &uStack_38;
+-    while (cVar3 = CALL3(&uStack_38,GLOBAL3), lVar5 = lStack_28, cVar3 != '\0')
+-    {
+-      if (lStack_28 == 0) goto LABEL0;
+-      cVar3 = CALL4(lStack_28,0);
+-      if (cVar3 == '\0') {
+-        if (*(longlong *)(lVar5 + 0x28) == 0) goto LABEL1;
+-        iVar6 = iVar6 + *(int *)(*(longlong *)(lVar5 + 0x28) + 0x50);
++    while (cVar4 = CALL3(&uStack_38), puVar3 = puStack_28, cVar4 != '\0') {
++      if (puStack_28 == (undefined *)0x0) goto LABEL0;
++      bVar5 = MobPartsStatus_get_IsDead(puStack_28,(undefined *)0x0);
++      if (bVar5 == 0) {
++        if (*(longlong *)(puVar3 + 0x28) == 0) goto LABEL1;
++        iVar8 = iVar8 + *(int *)(*(longlong *)(puVar3 + 0x28) + 0x50);
+       }
+     }
+-    CALL5(&uStack_38,GLOBAL2);
++    CALL4(&uStack_38,GLOBAL2);
+     if (*(longlong *)(self + 0x10) != 0) {
+       iVar1 = *(int *)(*(longlong *)(self + 0x10) + 0x50);
+       if (*(longlong *)(self + 0x20) != 0) {
+-        iVar4 = CALL6(*(longlong *)(self + 0x20),5);
+-        iVar4 = iVar6 + iVar1 + iVar4;
++        iVar6 = CALL5(*(longlong *)(self + 0x20),5);
++        iVar6 = iVar8 + iVar1 + iVar6;
+         if (*(longlong *)(self + 0x10) != 0) {
+           if (*(int *)(*(longlong *)(self + 0x10) + 0x50) < 100) {
+             if (*(longlong *)(self + 0x18) == 0) goto LABEL2;
+-            cVar3 = CALL7(*(longlong *)(self + 0x18),0xe);
+-            if (cVar3 != '\0') {
+-              iVar4 = (int)((float)iVar4 * GLOBAL6);
++            cVar4 = CALL6(*(longlong *)(self + 0x18),0xe);
++            if (cVar4 != '\0') {
++              iVar6 = (int)((float)iVar6 * GLOBAL6);
+             }
+           }
+-          return iVar4;
++          return iVar6;
+         }
+       }
+@@ -58,12 +59,12 @@
+   }
+ LABEL2:
++  CALL7();
++LABEL1:
++  CALL7();
++LABEL0:
++  CALL7();
+   CALL8();
+-LABEL1:
+-  CALL8();
+-LABEL0:
+-  CALL8();
+-  CALL9();
+   pcVar2 = (code *)swi(3);
+-  iVar6 = (*pcVar2)();
+-  return iVar6;
++  iVar8 = (*pcVar2)();
++  return iVar8;
+ }

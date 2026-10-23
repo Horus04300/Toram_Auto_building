@@ -1,10 +1,13 @@
+import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
+import { loadWasmModule } from '../../support/crysta-wasm-module.mjs';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { loadHeadlessEnvironment, root } from '../../support/crysta-headless-environment.mjs';
 
 const env = await loadHeadlessEnvironment({ invoke() { throw new Error('No native calls in projection oracle'); } });
-const { optimizer, registry, evaluator, kernel } = env;
+const { candidates:optimizer, registry, evaluator, kernel } = env;
+const wasm = await loadWasmModule();
 const fixture = JSON.parse(await readFile(resolve(root, 'tools/fixtures/crysta-saved-sword-shield-revenir-unlocked.json'), 'utf8'));
 const ctx = { ...fixture.resolvedExecutionContext.baseContext, strBase:500, dexBase:200, agiBase:100, intBase:100, vitBase:50, crtBase:0,
   mainType:'한손검', subType:'없음', armorType:'일반옷', wpnAtk:300, baseWpnAtkF:0,
@@ -42,8 +45,8 @@ function check(input, budget=1000000) {
     assert.ok(Number.isFinite(outcome.damage.expected),'Oracle input must produce a finite score');
     return outcome;
   };
-  const original = optimizer.exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
-  const reduced = optimizer.exhaustiveSearch(after,{prepared:true,evaluateStats:evaluate});
+  const original = exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
+  const reduced = exhaustiveSearch(after,{prepared:true,evaluateStats:evaluate});
   assert.equal(reduced.score,original.score);
   assert.equal(reduced.bestBuild?.id,original.bestBuild?.id,'Projection must preserve the lexical optimum');
   completions += original.evaluations;
@@ -97,13 +100,16 @@ const variableAfter=check(variable);
 for(const input of [variable,problem(ctx,[[{STRP:2},{STR:10}],[{CRITP:20},{CRIT:5}],[{ATKP:5},{ATK:100}]])]) {
   const prepared=optimizer.prepareProblem(input,{registry,relevantKeys:keys});
   const evaluate=stats=>evaluator.evaluateAggregate(input.baseContext,input.scenarioSnapshot,stats,kernel.evaluateContext);
-  const oracle=optimizer.exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
-  const actual=optimizer.optimize(prepared,{prepared:true,registry,relevantKeys:keys,timeLimitMs:30000});
-  assert.equal(actual.status,'exact');
-  assert.equal(actual.score,oracle.score);
-  assert.equal(actual.bestBuild?.id,oracle.bestBuild?.id,'Projected tree preserves lexical optimum');
-  const bounds=optimizer.verifyCandidateTreeUpperBounds(prepared,{prepared:true,registry,relevantKeys:keys});
-  assert.equal(bounds.violations.length,0,'Projected ordering must preserve raw ancestor upper bounds');
+  const oracle=exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
+  const bridge=env.context.ToramCrystaOptimizationRustBridge;
+  const session=new wasm.SearchSession(JSON.stringify(bridge.projectProblem(prepared)));
+  try {
+    while(!session.is_complete())session.step(256);
+    const actual=JSON.parse(session.snapshot());
+    assert.equal(actual.status,'exact');
+    assert.equal(actual.score,oracle.score);
+    assert.equal(actual.bestBuild?.id,oracle.bestBuild?.id,'Projected ordering preserves the Rust optimum');
+  } finally { session.free(); }
 }
 for(const id of ['ASPD','MAXHP','CDMG'])assert.equal(variableAfter.metadata.candidateProjection.bundles.find(b => b.id===id).mode,'base-function');
 assert.equal(variableAfter.metadata.candidateProjection.bundles.find(b => b.id==='ATK').mode,'raw');
@@ -147,7 +153,78 @@ assert.equal(optimizer.prepareProblem(variable,{registry,relevantKeys:keys,evalu
 assert.equal(optimizer.prepareProblem(variable,{registry:{entries:()=>registry.entries()},relevantKeys:keys}).metadata.candidateProjection,null);
 assert.equal(optimizer.prepareProblem(variable,{registry,relevantKeys:keys,evaluator:{}}).metadata.candidateProjection,null);
 
+const smallStats={...ctx,agiBase:1,intBase:1,vitBase:1,agiF:15,vitF:5};
+const constant=check(problem(smallStats,[[{AGIP:10,INTP:18,VITP:17},{AGI:1,INT:1}]]));
+assert.deepEqual(plain(constant.metadata.candidateProjection.constantStatReports.map(r=>r.key)),['AGIP','INTP','VITP']);
+for(const key of ['AGIP','INTP','VITP'])assert.ok(!constant.metadata.candidateProjection.keys.includes(key));
+for(const key of ['AGI','INT'])assert.ok(constant.metadata.candidateProjection.keys.includes(key),'Flat bonuses retain their actual effects');
+const neutral=check(problem(smallStats,[[{AGIP:0},{AGIP:10}]]));
+assert.equal(neutral.groups[0].packages.length,1,'Percent-only neutral alternatives collapse');
+const penalized=check(problem(smallStats,[[{AGIP:-1},{AGIP:0}]]));
+assert.ok(!penalized.metadata.candidateProjection.constantStatReports.some(r=>r.key==='AGIP'),'A negative percent can lower base 1 to zero');
+const accumulated=check(problem(smallStats,Array.from({length:4},()=>[{AGIP:0},{AGIP:40}])));
+assert.ok(!accumulated.metadata.candidateProjection.constantStatReports.some(r=>r.key==='AGIP'),'Several small percents can cross 100% together');
+for(const [context,choices] of [
+  [{...smallStats,agiF:0.99},[{AGIP:0},{AGIP:2}]],
+  [smallStats,[{AGIP:2,AGI:0.99},{AGIP:0}]],
+  [{...smallStats,agiBase:-1},[{AGIP:0},{AGIP:2}]]
+]) {
+  const guarded=check(problem(context,[choices]));
+  assert.ok(!guarded.metadata.candidateProjection.constantStatReports.some(r=>r.key==='AGIP'));
+}
+const zeroBase=check(problem({...smallStats,agiBase:0},[[{AGIP:-50},{AGIP:80}]]));
+assert.ok(zeroBase.metadata.candidateProjection.constantStatReports.some(r=>r.key==='AGIP'));
+
+const basicStats=['STR','DEX','AGI','INT','VIT'];
+const allPercent=Object.fromEntries(basicStats.map(key=>[key+'P',3]));
+const allFlat=Object.fromEntries(basicStats.map(key=>[key,1]));
+// Every stat can be the main, secondary or uninvested stat; no fixture names.
+for(const main of basicStats)for(const secondary of basicStats.filter(key=>key!==main)) {
+  const distributed={...ctx,...Object.fromEntries(basicStats.flatMap(key=>[
+    [key.toLowerCase()+'Base',key===main?510:key===secondary?327:1],
+    [key.toLowerCase()+'P',0],[key.toLowerCase()+'F',0]
+  ])),mainType:main==='INT'?'지팡이':main==='AGI'?'권갑':main==='DEX'?'활':'한손검',atkType:main==='INT'?'MAG':'PHYS'};
+  const prepared=check(problem(distributed,Array.from({length:4},()=>[{},allPercent,allFlat])));
+  const removed=prepared.metadata.candidateProjection.constantStatReports.map(report=>report.key);
+  assert.deepEqual(plain(removed),basicStats.filter(key=>key!==main&&key!==secondary).map(key=>key+'P'));
+  for(const invested of [main,secondary])assert.ok(prepared.metadata.candidateProjection.keys.some(key=>key.startsWith('@'+invested+':')));
+}
+for(const key of basicStats) {
+  const prefix=key.toLowerCase();
+  const baseOne={...ctx,[prefix+'Base']:1,[prefix+'P']:0,[prefix+'F']:0};
+  const negativePercent=check(problem(baseOne,[[{[key+'P']:-1},{[key+'P']:0}]]));
+  assert.ok(!negativePercent.metadata.candidateProjection.constantStatReports.some(report=>report.key===key+'P'));
+  const belowBoundary=check(problem({...baseOne,[prefix+'Base']:99},[[{[key+'P']:0},{[key+'P']:1}]]));
+  assert.ok(belowBoundary.metadata.candidateProjection.constantStatReports.some(report=>report.key===key+'P'));
+  const crossingBoundary=check(problem({...baseOne,[prefix+'Base']:100},[[{[key+'P']:0},{[key+'P']:1}]]));
+  assert.ok(!crossingBoundary.metadata.candidateProjection.constantStatReports.some(report=>report.key===key+'P'));
+}
+const allOne=check(problem({...ctx,...Object.fromEntries(basicStats.map(key=>[key.toLowerCase()+'Base',1]))},[[{},allPercent,allFlat]]));
+assert.deepEqual(plain(allOne.metadata.candidateProjection.constantStatReports.map(report=>report.key)),basicStats.map(key=>key+'P'));
+
 let state=18273;
+
+// Relevant-key preparation must preserve the raw exhaustive optimum and tie ID.
+for(const atkType of ['PHYS','MAG'])for(const ignore of [false,true]) {
+  const context={...ctx,atkType,mainType:atkType==='MAG'?'지팡이':'한손검',
+    bossDef:3500,bossMdef:3500,ignoreDefense:atkType==='PHYS'&&ignore,ignoreMdef:atkType==='MAG'&&ignore};
+  const input=problem(context,[[{PHYS_PIERCE:-20,MAG_PIERCE:-20},{PHYS_PIERCE:70,MAG_PIERCE:70}],
+    [{ATKP:5,MATKP:5},{ATK:40,MATK:40}],[{CDMG:10},{SRW:3}]]);
+  const evaluate=stats=>evaluator.evaluateAggregate(context,input.scenarioSnapshot,stats,kernel.evaluateContext);
+  const relevant=optimizer.deriveRelevantKeys(input,registry,evaluate);
+  const activePierce=atkType==='MAG'?'MAG_PIERCE':'PHYS_PIERCE';
+  assert.equal(relevant.includes(activePierce),!ignore,'Only the selected damage type and its defense-ignore flag control pierce relevance');
+  const prepared=optimizer.prepareProblem(input,{registry,relevantKeys:relevant});
+  const raw=exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
+  const reduced=exhaustiveSearch(prepared,{prepared:true,evaluateStats:evaluate});
+  assert.equal(reduced.score,raw.score);assert.equal(reduced.bestBuild.id,raw.bestBuild.id);
+  assert.deepEqual(plain(reduced.bestBuild.packages.map(p=>p.statDelta)),plain(raw.bestBuild.packages.map(p=>p.statDelta)),'Ignored pierce still survives in selected raw options');
+  const reversed={...input,groups:input.groups.map(g=>({...g,packages:g.packages.toReversed()}))};
+  const reverse=exhaustiveSearch(optimizer.prepareProblem(reversed,{registry,relevantKeys:relevant}),{prepared:true,evaluateStats:evaluate});
+  assert.equal(reverse.bestBuild.id,raw.bestBuild.id);
+  cases++;completions+=raw.evaluations;
+}
+
 const random=() => { state=(Math.imul(state,1664525)+1013904223)>>>0;return state; };
 for(let trial=0;trial<30;trial++) {
   const choices=Array.from({length:4},()=>Array.from({length:3},()=>({
@@ -157,4 +234,4 @@ for(let trial=0;trial<30;trial++) {
   })));
   check(problem({...ctx,atkType:trial%2?'MAG':'PHYS',mainType:trial%2?'지팡이':'한손검'},choices));
 }
-console.log(`Crysta candidate projection: PASS (${cases} contexts, ${completions} exhaustive completions, ${removedChecked} replacement checks; raw options, ties, intervals, decimal fallback)`);
+console.log(`Crysta candidate projection: PASS (${cases} contexts, ${completions} exhaustive completions, ${removedChecked} replacement checks; raw options, ties, intervals, constant percent, decimal fallback)`);

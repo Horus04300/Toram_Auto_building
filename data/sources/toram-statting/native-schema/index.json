@@ -1,0 +1,628 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 42
+  },
+  "methods": [
+    {
+      "class": "SmithGrant",
+      "name": "SetEquipEnhance",
+      "method_definition_index": 69894,
+      "token": "0x06011107",
+      "metadata_declaration_range": {
+        "offset": 6261400,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920416,
+      "pointer_slot_va": "0x7fff623d3e20",
+      "runtime_va": "0x7fff5fc73150",
+      "rva": "0xa23150",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30803dbd10970200488bd9755b488d0db7e178",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-SetEquipEnhance-7fff5fc73150.c",
+      "pseudocodeSha256": "16c6df275c4dd55510fe8dc881f041c52bc9ed3091677a5ede137a55ed843a22",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitMaterialTypeSelect",
+      "method_definition_index": 69897,
+      "token": "0x0601110a",
+      "metadata_declaration_range": {
+        "offset": 6261508,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920440,
+      "pointer_slot_va": "0x7fff623d3e38",
+      "runtime_va": "0x7fff5fc70260",
+      "rva": "0xa20260",
+      "status": "mapped",
+      "code_preview_hex": "4055564154488d6c24b94881ecf0000000803da53f970200",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-InitMaterialTypeSelect-7fff5fc70260.c",
+      "pseudocodeSha256": "4f1b6d2f3637ea2e96524508b19605dad0b40a3ee3619bc48eb3e39c678000e2",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "InitDetailSelect",
+      "method_definition_index": 69898,
+      "token": "0x0601110b",
+      "metadata_declaration_range": {
+        "offset": 6261544,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920448,
+      "pointer_slot_va": "0x7fff623d3e40",
+      "runtime_va": "0x7fff5fc6f4c0",
+      "rva": "0xa1f4c0",
+      "status": "mapped",
+      "code_preview_hex": "405541564157488d6c24b94881ecc0000000803d454d9702",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-InitDetailSelect-7fff5fc6f4c0.c",
+      "pseudocodeSha256": "5cad78b0d7c663c58562e54028a17a2eb594f187dd812ccd2d884dc5eb80e287",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrant",
+      "name": "SetSelected",
+      "method_definition_index": 69900,
+      "token": "0x0601110d",
+      "metadata_declaration_range": {
+        "offset": 6261616,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "step",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "index",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920464,
+      "pointer_slot_va": "0x7fff623d3e50",
+      "runtime_va": "0x7fff5fc73f30",
+      "rva": "0xa23f30",
+      "status": "mapped",
+      "code_preview_hex": "405355574881ec80000000803dde02970200418be84863fa",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-SetSelected-7fff5fc73f30.c",
+      "pseudocodeSha256": "fda1175d854b132076915bef76dda4662e57d83844be85752df47d32cc0b2b6e",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrant",
+      "name": ".cctor",
+      "method_definition_index": 69928,
+      "token": "0x06011129",
+      "metadata_declaration_range": {
+        "offset": 6262624,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51920688,
+      "pointer_slot_va": "0x7fff623d3f30",
+      "runtime_va": "0x7fff5fc74fa0",
+      "rva": "0xa24fa0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803d83f29602007513488d0d24f47d02e8978480",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrant-_cctor-7fff5fc74fa0.c",
+      "pseudocodeSha256": "f8ceb9dea05b5e0f0ca8d7d86d479f37b68034f73f7e988d08e287f7644f02a0",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetWeaponData",
+      "method_definition_index": 70050,
+      "token": "0x060111a3",
+      "metadata_declaration_range": {
+        "offset": 6267016,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "itemId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "name",
+          "type_index": 25252,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "potential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "grantnum",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "buttonEnabled",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921664,
+      "pointer_slot_va": "0x7fff623d4300",
+      "runtime_va": "0x7fff5fc86680",
+      "rva": "0xa36680",
+      "status": "mapped",
+      "code_preview_hex": "48895c24185556574883ec20803dc4db950200498bf84963",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetWeaponData-7fff5fc86680.c",
+      "pseudocodeSha256": "195ca3b58f9344a81f03bc34177e527a7aa9583b6327670f889d77c554bf9d85",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetRequire",
+      "method_definition_index": 70054,
+      "token": "0x060111a7",
+      "metadata_declaration_range": {
+        "offset": 6267160,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "requireMaterial",
+          "type_index": 10343
+        },
+        {
+          "name": "requirePotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921696,
+      "pointer_slot_va": "0x7fff623d4320",
+      "runtime_va": "0x7fff5fc85c90",
+      "rva": "0xa35c90",
+      "status": "mapped",
+      "code_preview_hex": "488bc4448940184889501048894808535657415441554156",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetRequire-7fff5fc85c90.c",
+      "pseudocodeSha256": "8b47a8eeed6343945eede78a35d9a039905c196d10d17379c33929d4009335c8",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "SetDetailType",
+      "method_definition_index": 70055,
+      "token": "0x060111a8",
+      "metadata_declaration_range": {
+        "offset": 6267196,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "enhanceType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isElement",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51921704,
+      "pointer_slot_va": "0x7fff623d4328",
+      "runtime_va": "0x7fff5fc85790",
+      "rva": "0xa35790",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803dafea",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-SetDetailType-7fff5fc85790.c",
+      "pseudocodeSha256": "7536d202df2dc43225a33f3fb9732646afa969e5d4bd859fac1387b006e912c6",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "getEnhanceMax",
+      "method_definition_index": 70068,
+      "token": "0x060111b5",
+      "metadata_declaration_range": {
+        "offset": 6267664,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isUpper",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "checkType",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921808,
+      "pointer_slot_va": "0x7fff623d4390",
+      "runtime_va": "0x7fff5fc87510",
+      "rva": "0xa37510",
+      "status": "mapped",
+      "code_preview_hex": "48895c242056415641574881ec90000000803d3acd950200",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-getEnhanceMax-7fff5fc87510.c",
+      "pseudocodeSha256": "e2cb80d08ce847ffd3f2f3a017b508babda4c2fbc1852b960d51df1c1dced404",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "SmithGrantInfoWindow",
+      "name": "CheckOverRateType",
+      "method_definition_index": 70071,
+      "token": "0x060111b8",
+      "metadata_declaration_range": {
+        "offset": 6267772,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51921832,
+      "pointer_slot_va": "0x7fff623d43a8",
+      "runtime_va": "0x7fff5fc84bf0",
+      "rva": "0xa34bf0",
+      "status": "mapped",
+      "code_preview_hex": "8d42ea83f80a7707a8017503b001c383fa0c0f94c0c3cccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SmithGrantInfoWindow-CheckOverRateType-7fff5fc84bf0.c",
+      "pseudocodeSha256": "36b5f82b0e93457811cb106498a0c36c7710411dbac1e27c9e510cba596d136c",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "GrantData",
+      "name": ".cctor",
+      "method_definition_index": 70005,
+      "token": "0x06011176",
+      "metadata_declaration_range": {
+        "offset": 6265396,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51921304,
+      "pointer_slot_va": "0x7fff623d4198",
+      "runtime_va": "0x7fff5fc80d10",
+      "rva": "0xa30d10",
+      "status": "mapped",
+      "code_preview_hex": "488bc4488958084889781055488da898f4ffff4881ec600c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GrantData-_cctor-7fff5fc80d10.c",
+      "pseudocodeSha256": "8cdf553f62c52a2f2368eef37fe2b4562deb7eeceae8c9625572eb7bb0ed2bcb",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "GrantData",
+      "name": "GetUsePotential",
+      "method_definition_index": 70006,
+      "token": "0x06011177",
+      "metadata_declaration_range": {
+        "offset": 6265432,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "key",
+          "type_index": 12857,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "itemUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerData",
+          "type_index": 22742,
+          "exact_byval_name": "PlayerDataManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921312,
+      "pointer_slot_va": "0x7fff623d41a0",
+      "runtime_va": "0x7fff5fc80ba0",
+      "rva": "0xa30ba0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec50803d9436960200498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GrantData-GetUsePotential-7fff5fc80ba0.c",
+      "pseudocodeSha256": "8a428b67222caafaa25a0231da338b33d695cb45104624a2faef1d7e4391b29c",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "GrantData",
+      "name": "GetUsePotential",
+      "method_definition_index": 70007,
+      "token": "0x06011178",
+      "metadata_declaration_range": {
+        "offset": 6265468,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "key",
+          "type_index": 15203,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "itemUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerData",
+          "type_index": 22742,
+          "exact_byval_name": "PlayerDataManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51921320,
+      "pointer_slot_va": "0x7fff623d41a8",
+      "runtime_va": "0x7fff5fc804e0",
+      "rva": "0xa304e0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848897424105741544155415641574881ec9000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GrantData-GetUsePotential-7fff5fc804e0.c",
+      "pseudocodeSha256": "ead19bfa6971b51c0a990876a9bf99b2633cdc64649fb1fcffb590d2062ef2a2",
+      "moduleName": "Assembly-CSharp.dll"
+    },
+    {
+      "class": "Toram.Common.Productions.EnhanceProperties2",
+      "name": ".ctor",
+      "method_definition_index": 91322,
+      "token": "0x06000c44",
+      "metadata_declaration_range": {
+        "offset": 7032808,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "usePotential",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "coefficient",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "materialCategory",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "abilityCategory",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rate",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "baseMax",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "upperMax",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lowerMax",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "overRate",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "doubleUse",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 53740328,
+      "pointer_slot_va": "0x7fff62590328",
+      "runtime_va": "0x7fff617b04a0",
+      "rva": "0x25604a0",
+      "status": "mapped",
+      "code_preview_hex": "8b442428f30f1044243089410c8b4424388941148b442440",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "Toram_Common_Productions_EnhanceProperties2-_ctor-7fff617b04a0.c",
+      "pseudocodeSha256": "cb5423e41c315d08e6ceb8a3a0a7c06c7a675440bcc6699763cd71aff5b51b26",
+      "moduleName": "Toram.Common.dll"
+    }
+  ],
+  "limitations": [
+    "Static saved-module and declaration inspection only; target not executed or attached.",
+    "Direct scoped Ghidra analysis has no REA Evidence ID.",
+    "The preserved module has no managed heap; initialized heap pointers remain unresolved.",
+    "The statting catalog is compiled GrantData static dictionary initialization, not a discovered TextAsset table.",
+    "AbilityCategory has no named enum in the inspected declarations; keep raw category IDs."
+  ],
+  "additionalModules": [
+    {
+      "module_name": "Toram.Common.dll",
+      "module": {
+        "module_offset": 48196352,
+        "module_va": 140734837844736,
+        "name_offset": 48196488,
+        "name_va": 140734837844872,
+        "method_pointer_count": 22830,
+        "method_pointers_va": 140734843363600,
+        "method_pointers_offset": 53715216
+      },
+      "validation": {
+        "metadata_module_method_count": 22830,
+        "maximum_rid": 22830,
+        "count_equals_max_rid": true,
+        "snapshot_digest_matches_capture": true,
+        "selected_methods": 1
+      }
+    }
+  ],
+  "scriptSha256": "d06f34c757fd3d4c7b08b5aa71a34981e7f893c7b45b55275799e5dcd6829ff4",
+  "metadataSha256": "b860252530d4374bdd17c9ff30a8b6fbbeb2aa638c4adfbf74d7d7f76b69c595",
+  "reproduction": {
+    "script": "TraceToramStattingSchema.java",
+    "inputMap": "index.json",
+    "target": "build/tmp/toram-item-extraction/code-trace/runtime/snapshot-1/GameAssembly.snapshot.dll",
+    "parameters": "analyzeHeadless <private directory> <new project> -import <target> -noanalysis -scriptPath <native-schema directory> -postScript TraceToramStattingSchema.java <absolute index.json> <new output directory> -deleteProject",
+    "environment": "Private JVM application.settingsdir/cachedir/tempdir under build/tmp/toram-statting-schema."
+  }
+}

@@ -1,0 +1,8 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidRoomData-ReceiveRaidEnd-7fff5f635870.c
++++ 42445.c
+@@ -1,4 +1,4 @@
+ {
+-  *(int *)(self + 0x8c) = subdueRewardNum;
++  *(int *)(self + 0x8c) = (int)value;
+   return;
+ }

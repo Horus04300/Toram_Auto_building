@@ -1,0 +1,8 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-SetHpGage-7fff5f5974c0.c
++++ 58331.c
+@@ -1,4 +1,4 @@
+ {
+-  *(int *)(self + 0x50) = gage;
++  *(int *)(self + 0x50) = value;
+   return;
+ }

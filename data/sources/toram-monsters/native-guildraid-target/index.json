@@ -1,0 +1,1614 @@
+{
+  "kind": "saved-runtime-scoped-ghidra-guild-raid-target",
+  "sources": {
+    "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+    "mappedSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+    "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+  },
+  "functions": [
+    {
+      "class": "GuildRaidBossMobActionManager",
+      "name": "OnSetStatus",
+      "method_definition_index": 7733,
+      "token": "0x06001e36",
+      "metadata_declaration_range": {
+        "offset": 4023604,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc4",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423128,
+      "pointer_slot_va": "0x7fff6235a798",
+      "runtime_va": "0x7fff5fe25940",
+      "rva": "0xbd5940",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848897424105741544155415641574881ecb000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobActionManager-OnSetStatus-7fff5fe25940.c",
+      "sha256": "ee4c2cd905c1383e0dc7b3e2d853c59d8a2be9279d45036974fd26cf9527d7b9",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidBossMobActionManager",
+      "name": "SetMobLevel",
+      "method_definition_index": 7743,
+      "token": "0x06001e40",
+      "metadata_declaration_range": {
+        "offset": 4023964,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "level",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423208,
+      "pointer_slot_va": "0x7fff6235a7e8",
+      "runtime_va": "0x7fff5fe25eb0",
+      "rva": "0xbd5eb0",
+      "status": "mapped",
+      "code_preview_hex": "899190010000c3ccccccccccccccccccf30f118970010000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobActionManager-SetMobLevel-7fff5fe25eb0.c",
+      "sha256": "9dcab6284ff9df7c8a6a509e75da5cda3173bcf8c4f7ee05426b8cbe4788a575",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobActionManager",
+      "name": "SetPartsMaster",
+      "method_definition_index": 7738,
+      "token": "0x06001e3b",
+      "metadata_declaration_range": {
+        "offset": 4023784,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "master",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "hp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423168,
+      "pointer_slot_va": "0x7fff6235a7c0",
+      "runtime_va": "0x7fff5fe25ed0",
+      "rva": "0xbd5ed0",
+      "status": "mapped",
+      "code_preview_hex": "48896c241857415641574883ec30803d78ed7b0200458bf1",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobActionManager-SetPartsMaster-7fff5fe25ed0.c",
+      "sha256": "90d11591b613010c6526632b11d0cf7590bc7c059cbb3e7415aee8c00909d2f7",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "CalcDef",
+      "method_definition_index": 7774,
+      "token": "0x06001e5f",
+      "metadata_declaration_range": {
+        "offset": 4025080,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423456,
+      "pointer_slot_va": "0x7fff6235a8e0",
+      "runtime_va": "0x7fff5fe273b0",
+      "rva": "0xbd73b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418564883ec20803dadd87b0200488bda488bf175",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-CalcDef-7fff5fe273b0.c",
+      "sha256": "80e2e4818d7d2c3cc5ec2e57aa1e695d78ae1afccb32e50591a4e1df18907836",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "CalcMdef",
+      "method_definition_index": 7775,
+      "token": "0x06001e60",
+      "metadata_declaration_range": {
+        "offset": 4025116,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423464,
+      "pointer_slot_va": "0x7fff6235a8e8",
+      "runtime_va": "0x7fff5fe274f0",
+      "rva": "0xbd74f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2418564883ec20803d6ed77b0200488bda488bf175",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-CalcMdef-7fff5fe274f0.c",
+      "sha256": "1c07370ee0be9a201ba642638482675ccf292169d57682fc0cda7cd6ed4acfdd",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "InitializeMobProperty",
+      "method_definition_index": 7781,
+      "token": "0x06001e66",
+      "metadata_declaration_range": {
+        "offset": 4025332,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423512,
+      "pointer_slot_va": "0x7fff6235a918",
+      "runtime_va": "0x7fff5fe27680",
+      "rva": "0xbd7680",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20488bf148",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-InitializeMobProperty-7fff5fe27680.c",
+      "sha256": "083eb0c337c1615f2a0beaa03dfe776e43ecc3163d54005392134a2fa36de260",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "SetHpGage",
+      "method_definition_index": 7779,
+      "token": "0x06001e64",
+      "metadata_declaration_range": {
+        "offset": 4025260,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "gage",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423496,
+      "pointer_slot_va": "0x7fff6235a908",
+      "runtime_va": "0x7fff5f5974c0",
+      "rva": "0x3474c0",
+      "status": "mapped",
+      "code_preview_hex": "895150c3cccccccccccccccccccccccc88514cc3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-SetHpGage-7fff5f5974c0.c",
+      "sha256": "8525742ed6ac1f9e0261ff0d502dd3720a89f2e7bd8ee7c1a03c2b644d36ce1b",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "SetPartsMaster",
+      "method_definition_index": 7777,
+      "token": "0x06001e62",
+      "metadata_declaration_range": {
+        "offset": 4025188,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "parts",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423480,
+      "pointer_slot_va": "0x7fff6235a8f8",
+      "runtime_va": "0x7fff5fe27770",
+      "rva": "0xbd7770",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803dead47b0200498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-SetPartsMaster-7fff5fe27770.c",
+      "sha256": "1fb624c41f84e091070b9b0fd25d0c0e7890fd31a059d8e41d957c0e71d8f431",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "TryGetCollectionValue",
+      "method_definition_index": 7780,
+      "token": "0x06001e65",
+      "metadata_declaration_range": {
+        "offset": 4025296,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 21218,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyStatusCollectionType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9238
+        },
+        {
+          "name": "rate",
+          "type_index": 9354
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51423504,
+      "pointer_slot_va": "0x7fff6235a910",
+      "runtime_va": "0x7fff5fe27870",
+      "rva": "0xbd7870",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418565741564883ec30803de9d37b02",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-TryGetCollectionValue-7fff5fe27870.c",
+      "sha256": "b3a772b41de21149d5d013a716d2231b0e3096a28320fef0716e1d0eb926f604",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": ".ctor",
+      "method_definition_index": 7773,
+      "token": "0x06001e5e",
+      "metadata_declaration_range": {
+        "offset": 4025044,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "abnormalManager",
+          "type_index": 11498,
+          "exact_byval_name": "AbnormalStateManager"
+        },
+        {
+          "name": "buffManager",
+          "type_index": 20604,
+          "exact_byval_name": "MobBuffManager"
+        },
+        {
+          "name": "level",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "randomProperty",
+          "type_index": 10491
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51423448,
+      "pointer_slot_va": "0x7fff6235a8d8",
+      "runtime_va": "0x7fff5fe27910",
+      "rva": "0xbd7910",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c2410488974241857415641574883ec20",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-_ctor-7fff5fe27910.c",
+      "sha256": "b74689523224a4589837e773b68ba9325120f4e821e128abf45b6a671499f683",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_CutAttack",
+      "method_definition_index": 7756,
+      "token": "0x06001e4d",
+      "metadata_declaration_range": {
+        "offset": 4024432,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423312,
+      "pointer_slot_va": "0x7fff6235a850",
+      "runtime_va": "0x7fff5fe27cf0",
+      "rva": "0xbd7cf0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803d6bcf7b0200488bf97543488d0d37e95d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_CutAttack-7fff5fe27cf0.c",
+      "sha256": "27ee95dab0afb064b2d566858044e13521e1ee3014e59ff0992f9533db0855dd",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 7757,
+      "token": "0x06001e4e",
+      "metadata_declaration_range": {
+        "offset": 4024468,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423320,
+      "pointer_slot_va": "0x7fff6235a858",
+      "runtime_va": "0x7fff5fe27e80",
+      "rva": "0xbd7e80",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803ddccd7b0200488bf97543488d0da7e75d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_CutMagicAttack-7fff5fe27e80.c",
+      "sha256": "c58e6a2179559687f96287435f9ff6e801350b4d64c5b91ef60be0e57b7ca3d3",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_Def",
+      "method_definition_index": 7754,
+      "token": "0x06001e4b",
+      "metadata_declaration_range": {
+        "offset": 4024360,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423296,
+      "pointer_slot_va": "0x7fff6235a840",
+      "runtime_va": "0x7fff5fe280a0",
+      "rva": "0xbd80a0",
+      "status": "mapped",
+      "code_preview_hex": "4053564883ec58803db8cb7b0200488bf17543488d0d86e5",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_Def-7fff5fe280a0.c",
+      "sha256": "c9ac91fc2f4a602f334a72332152b8c911bf89d9caf2d818775e227ad2535c07",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_Level",
+      "method_definition_index": 7751,
+      "token": "0x06001e48",
+      "metadata_declaration_range": {
+        "offset": 4024252,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423272,
+      "pointer_slot_va": "0x7fff6235a828",
+      "runtime_va": "0x7fff5f4d3160",
+      "rva": "0x283160",
+      "status": "mapped",
+      "code_preview_hex": "8b4110c3cccccccccccccccccccccccc4883c118488911e9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_Level-7fff5f4d3160.c",
+      "sha256": "6b5bf6ed20adce23ee9fc7f6aea17097647c22c8ac6f5933a5155b1d7d6f68d4",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 7755,
+      "token": "0x06001e4c",
+      "metadata_declaration_range": {
+        "offset": 4024396,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423304,
+      "pointer_slot_va": "0x7fff6235a848",
+      "runtime_va": "0x7fff5fe285f0",
+      "rva": "0xbd85f0",
+      "status": "mapped",
+      "code_preview_hex": "4053564883ec58803d69c67b0200488bf17543488d0d36e0",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_MagicDef-7fff5fe285f0.c",
+      "sha256": "9db1eedbd2e77ba3e4b77e9bcd4499b887e5ea064a15b86e90621cf9150e031e",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_MaxHp",
+      "method_definition_index": 7750,
+      "token": "0x06001e47",
+      "metadata_declaration_range": {
+        "offset": 4024216,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423264,
+      "pointer_slot_va": "0x7fff6235a820",
+      "runtime_va": "0x7fff5fe288f0",
+      "rva": "0xbd88f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec30803d63c37b0200488bd90f297424",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_MaxHp-7fff5fe288f0.c",
+      "sha256": "50cd1eeda01df60b5e8a73bd0616a0a43afb821bd7d4528808e583f8f972f585",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_NecessaryHit",
+      "method_definition_index": 7753,
+      "token": "0x06001e4a",
+      "metadata_declaration_range": {
+        "offset": 4024324,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51423288,
+      "pointer_slot_va": "0x7fff6235a838",
+      "runtime_va": "0x7fff5fe28bd0",
+      "rva": "0xbd8bd0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec40803d88c07b0200488bd97543488d0d57da5d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_NecessaryHit-7fff5fe28bd0.c",
+      "sha256": "8c88326875497fd77d02b212d435546e3e748518cec447910721b29fb8b5b572",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_Property",
+      "method_definition_index": 7770,
+      "token": "0x06001e5b",
+      "metadata_declaration_range": {
+        "offset": 4024936,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20723,
+        "exact_byval_name": "MobPropertyManager"
+      },
+      "pointer_slot_offset": 51423424,
+      "pointer_slot_va": "0x7fff6235a8c0",
+      "runtime_va": "0x7fff5f4e22d0",
+      "rva": "0x2922d0",
+      "status": "mapped",
+      "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus-get_Property-7fff5f4e22d0.c",
+      "sha256": "56ff5507d4a6361448b3e5d6c53e368d7d1ea9bafc5c13201cb4a61a45d0f942",
+      "generationBatch": "native"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus.__c",
+      "name": "<get_CutAttack>b__13_0",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "token": "0x6001e6c",
+      "method_definition_index": 7787,
+      "pointer_slot_offset": 51423560,
+      "pointer_slot_va": "0x7fff6235a948",
+      "runtime_va": "0x7fff5fe3af50",
+      "rva": "0xbeaf50",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bda4885d2743248837a2000742333d248",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus___c-_get_CutAttack_b__13_0-7fff5fe3af50.c",
+      "sha256": "24757df3b18c9f967600a3d05961fbb5820d9a00e898d36311fdc855b127821b",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus.__c",
+      "name": "<get_CutMagicAttack>b__15_0",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "token": "0x6001e6d",
+      "method_definition_index": 7788,
+      "pointer_slot_offset": 51423568,
+      "pointer_slot_va": "0x7fff6235a950",
+      "runtime_va": "0x7fff5fe3afa0",
+      "rva": "0xbeafa0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bda4885d2743248837a2000742333d248",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus___c-_get_CutMagicAttack_b__15_0-7fff5fe3afa0.c",
+      "sha256": "90ecf33f5579b5056c1b200281bc788843e6be46777e6c691bef0f8b3175c737",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus.__c",
+      "name": "<get_Def>b__9_0",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "token": "0x6001e6a",
+      "method_definition_index": 7785,
+      "pointer_slot_offset": 51423544,
+      "pointer_slot_va": "0x7fff6235a938",
+      "runtime_va": "0x7fff5fe3aff0",
+      "rva": "0xbeaff0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bda4885d2743233d2488bcbe898b60200",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus___c-_get_Def_b__9_0-7fff5fe3aff0.c",
+      "sha256": "a30719e8fe7673081302a7bcceab904821a43543829623e3cda412d63abfda99",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus.__c",
+      "name": "<get_MagicDef>b__11_0",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "token": "0x6001e6b",
+      "method_definition_index": 7786,
+      "pointer_slot_offset": 51423552,
+      "pointer_slot_va": "0x7fff6235a940",
+      "runtime_va": "0x7fff5fe3b080",
+      "rva": "0xbeb080",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bda4885d2743233d2488bcbe808b60200",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus___c-_get_MagicDef_b__11_0-7fff5fe3b080.c",
+      "sha256": "6d84ce91853293758d6ddc7ea0657bd63b5c186644ab871771d5adefe083fe13",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidBossMobBattleStatus.__c",
+      "name": "<get_NecessaryHit>b__7_0",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "token": "0x6001e69",
+      "method_definition_index": 7784,
+      "pointer_slot_offset": 51423536,
+      "pointer_slot_va": "0x7fff6235a930",
+      "runtime_va": "0x7fff5fe3b110",
+      "rva": "0xbeb110",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bda4885d2743233d2488bcbe878b50200",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidBossMobBattleStatus___c-_get_NecessaryHit_b__7_0-7fff5fe3b110.c",
+      "sha256": "1ba78bcaa18eb01e05c653c3fa3680081aca23338b7db38d6a05a7e39afed9eb",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidManager",
+      "name": "UpdateHeldData",
+      "method_definition_index": 17405,
+      "token": "0x060043fe",
+      "metadata_declaration_range": {
+        "offset": 4371796,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 17242,
+          "exact_byval_name": "Toram.Common.Communication.Guilds.Raid.GuildRaidData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51500504,
+      "pointer_slot_va": "0x7fff6236d5d8",
+      "runtime_va": "0x7fff60050f90",
+      "rva": "0xe00f90",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dbf4b590200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidManager-UpdateHeldData-7fff60050f90.c",
+      "sha256": "78638e4960e9611741ed1c9e3096e5fb16b1edda1fddf8ad742ef24eef6c4f40",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidManager",
+      "name": "UpdateHeldData",
+      "method_definition_index": 17414,
+      "token": "0x06004407",
+      "metadata_declaration_range": {
+        "offset": 4372120,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "held",
+          "type_index": 17246,
+          "exact_byval_name": "Toram.Common.Communication.Guilds.Raid.GuildRaidHeldData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51500576,
+      "pointer_slot_va": "0x7fff6236d620",
+      "runtime_va": "0x7fff60051000",
+      "rva": "0xe01000",
+      "status": "mapped",
+      "code_preview_hex": "4053564883ec48803d584b590200488bda488bf1752b488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidManager-UpdateHeldData-7fff60051000.c",
+      "sha256": "5c428d50f4c2a154f84d8b2d49bc6194269d58e3df1f12a7a1f09475397f0dda",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "GetMobGuildRaidBonus",
+      "method_definition_index": 20640,
+      "token": "0x060050a1",
+      "metadata_declaration_range": {
+        "offset": 4488256,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10491
+      },
+      "pointer_slot_offset": 51526384,
+      "pointer_slot_va": "0x7fff62373af0",
+      "runtime_va": "0x7fff600df780",
+      "rva": "0xe8f780",
+      "status": "mapped",
+      "code_preview_hex": "48894c24084155415641574881ec80000000803d44685002",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-GetMobGuildRaidBonus-7fff600df780.c",
+      "sha256": "0eafe52113c63f07df378a7508697b2b3d02e9443bf963be5bf7c841cd49c844",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "ReceiveBossSymbolData",
+      "method_definition_index": 20620,
+      "token": "0x0600508d",
+      "metadata_declaration_range": {
+        "offset": 4487536,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "currentHpGauge",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "maxHpGauge",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "battleHp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "element",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "isPractice",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526224,
+      "pointer_slot_va": "0x7fff62373a50",
+      "runtime_va": "0x7fff600e08b0",
+      "rva": "0xe908b0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec200fb6442458488bf98991a4000000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-ReceiveBossSymbolData-7fff600e08b0.c",
+      "sha256": "61695425469d599233c8009b5bc9ed6e0e95981ebd80827674b7cc20e1895018",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "ReceiveGuildRaidRandomPropertyData",
+      "method_definition_index": 20621,
+      "token": "0x0600508e",
+      "metadata_declaration_range": {
+        "offset": 4487572,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "datas",
+          "type_index": 10255
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526232,
+      "pointer_slot_va": "0x7fff62373a58",
+      "runtime_va": "0x7fff5f597510",
+      "rva": "0x347510",
+      "status": "mapped",
+      "code_preview_hex": "4883c170488911e9a452eeffcccccccc885133c3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-ReceiveGuildRaidRandomPropertyData-7fff5f597510.c",
+      "sha256": "cfcf8e21905dd2840c688d5f6267d7ac864a12910ce814b773bf46f7d88d2421",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "ReceiveRaidEnd",
+      "method_definition_index": 20624,
+      "token": "0x06005091",
+      "metadata_declaration_range": {
+        "offset": 4487680,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "subdueRewardNum",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526256,
+      "pointer_slot_va": "0x7fff62373a70",
+      "runtime_va": "0x7fff5f635870",
+      "rva": "0x3e5870",
+      "status": "mapped",
+      "code_preview_hex": "89918c000000c3cccccccccccccccccc40534883ec2033d2",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-ReceiveRaidEnd-7fff5f635870.c",
+      "sha256": "7faa73054211e3bdfa63b666d6163305560e00305782638c1d8e381ba6a6f004",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "ReceiveRaidEndBattleData",
+      "method_definition_index": 20623,
+      "token": "0x06005090",
+      "metadata_declaration_range": {
+        "offset": 4487644,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "endEvent",
+          "type_index": 17122,
+          "exact_byval_name": "Toram.Common.Events.Communication.Guild.GuildEndGuildRaidBattleEvent"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526248,
+      "pointer_slot_va": "0x7fff62373a68",
+      "runtime_va": "0x7fff600e0a00",
+      "rva": "0xe90a00",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20488bd9488991800000",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-ReceiveRaidEndBattleData-7fff600e0a00.c",
+      "sha256": "b7e247dac15c70e92dbca0d00845ef7c6a8383d5d2189e0e90c4a3115286e7dc",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "RoomSynchronization",
+      "method_definition_index": 20635,
+      "token": "0x0600509c",
+      "metadata_declaration_range": {
+        "offset": 4488076,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "syncEvent",
+          "type_index": 23822,
+          "exact_byval_name": "Toram.Common.Events.Room.RoomSynchronizationEvent"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526344,
+      "pointer_slot_va": "0x7fff62373ac8",
+      "runtime_va": "0x7fff600e0b40",
+      "rva": "0xe90b40",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d8854500200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-RoomSynchronization-7fff600e0b40.c",
+      "sha256": "fd29f69cf01e214e86564497a64eea1f6069f2d30004ca0712fc8e65711b4dbf",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "GuildRaidRoomData",
+      "name": "SetCurrentHpCount",
+      "method_definition_index": 20634,
+      "token": "0x0600509b",
+      "metadata_declaration_range": {
+        "offset": 4488040,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "hpCount",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51526336,
+      "pointer_slot_va": "0x7fff62373ac0",
+      "runtime_va": "0x7fff600e0ca0",
+      "rva": "0xe90ca0",
+      "status": "mapped",
+      "code_preview_hex": "0fb6c28bd0668981b4000000c1e202b8280000003bd00f42",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GuildRaidRoomData-SetCurrentHpCount-7fff600e0ca0.c",
+      "sha256": "1d4abb72082f420e2d3d5342402dbeb37450e8bb4d7b018ea30dacc373c03daf",
+      "generationBatch": "native-progress"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": ".ctor",
+      "method_definition_index": 9039,
+      "token": "0x06002350",
+      "metadata_declaration_range": {
+        "offset": 4070620,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "hp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "difficulty",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51433576,
+      "pointer_slot_va": "0x7fff6235d068",
+      "runtime_va": "0x7fff5fe66560",
+      "rva": "0xc16560",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803da0e8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-_ctor-7fff5fe66560.c",
+      "sha256": "95b300a07f3efc452c2e66d41cc29c4b075bc7469e960b6079d1b969d2e9d654",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_Def",
+      "method_definition_index": 9035,
+      "token": "0x0600234c",
+      "metadata_declaration_range": {
+        "offset": 4070476,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51433544,
+      "pointer_slot_va": "0x7fff6235d048",
+      "runtime_va": "0x7fff5fe66630",
+      "rva": "0xc16630",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803ddce7770200488bd97513488d0d37a85e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_Def-7fff5fe66630.c",
+      "sha256": "8cdff0ef628d9d71dea612feb227d89bea22feb6fa8d36bffcdad87c845decfb",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_IsDead",
+      "method_definition_index": 9033,
+      "token": "0x0600234a",
+      "metadata_declaration_range": {
+        "offset": 4070404,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51433528,
+      "pointer_slot_va": "0x7fff6235d038",
+      "runtime_va": "0x7fff5fe666a0",
+      "rva": "0xc166a0",
+      "status": "mapped",
+      "code_preview_hex": "837930000f94c0c3cccccccccccccccc40534883ec20803d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_IsDead-7fff5fe666a0.c",
+      "sha256": "b234a0946b85d705b97e451b51c13599a506557b59370855c849e90067d132bf",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 9036,
+      "token": "0x0600234d",
+      "metadata_declaration_range": {
+        "offset": 4070512,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51433552,
+      "pointer_slot_va": "0x7fff6235d050",
+      "runtime_va": "0x7fff5fe666b0",
+      "rva": "0xc166b0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d5de7770200488bd97513488d0db7a75e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_MagicDef-7fff5fe666b0.c",
+      "sha256": "8916b8adbfadf91e35b6681805a63e0096993d789d8a826f8768c7012ddb2611",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_NecessaryHit",
+      "method_definition_index": 9034,
+      "token": "0x0600234b",
+      "metadata_declaration_range": {
+        "offset": 4070440,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51433536,
+      "pointer_slot_va": "0x7fff6235d040",
+      "runtime_va": "0x7fff5fe66720",
+      "rva": "0xc16720",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803debe6770200488bd97513488d0d47a75e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_NecessaryHit-7fff5fe66720.c",
+      "sha256": "00cac00d946a5a5538f06ff995743e1b830589946735239942d4629ebe14bf8f",
+      "generationBatch": "native-parts"
+    },
+    {
+      "class": "MobPropertyCriticalResist",
+      "name": "GetCriticalResist",
+      "method_definition_index": 9702,
+      "token": "0x060025e7",
+      "metadata_declaration_range": {
+        "offset": 4094488,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20509,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51438880,
+      "pointer_slot_va": "0x7fff6235e520",
+      "runtime_va": "0x7fff5fe83870",
+      "rva": "0xc33870",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c24184889742420574883ec30803d5816",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCriticalResist-GetCriticalResist-7fff5fe83870.c",
+      "sha256": "29324fb77d50166abc60dd431a70752c81da2b203c07253a9bf8bb9ff4e15206",
+      "generationBatch": "native-critical"
+    },
+    {
+      "class": "MobPropertyCriticalResist",
+      "name": "TryGetValue",
+      "method_definition_index": 9701,
+      "token": "0x060025e6",
+      "metadata_declaration_range": {
+        "offset": 4094452,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20509,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "criticalParcent",
+          "type_index": 9236
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51438872,
+      "pointer_slot_va": "0x7fff6235e518",
+      "runtime_va": "0x7fff5fe83b20",
+      "rva": "0xc33b20",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803daa13760200498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCriticalResist-TryGetValue-7fff5fe83b20.c",
+      "sha256": "fa1b5517705cea5b9879d486bc6745bdb929def0c80726264aca15189438f6ea",
+      "generationBatch": "native-critical"
+    },
+    {
+      "class": "MobPropertyStatusCollection",
+      "name": "TryGetValue",
+      "method_definition_index": 9802,
+      "token": "0x0600264b",
+      "metadata_declaration_range": {
+        "offset": 4098088,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 21218,
+          "exact_byval_name": "Toram.Common.Mob.MonsterPropertyStatusCollectionType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9238
+        },
+        {
+          "name": "rate",
+          "type_index": 9354
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51439680,
+      "pointer_slot_va": "0x7fff6235e840",
+      "runtime_va": "0x7fff5fe86c30",
+      "rva": "0xc36c30",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408488974241048897c24184c8974242041574883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyStatusCollection-TryGetValue-7fff5fe86c30.c",
+      "sha256": "4ddf3fe454ac92e565f7268b530ff291d860562e97ff7e9bd4f1b047d44c7609",
+      "generationBatch": "native-progress"
+    }
+  ],
+  "files": [
+    {
+      "file": "constants.json",
+      "size": 1114,
+      "sha256": "c1fb1d6583c504de2330537f6a8946278c84d00f2275438610035349fe4b9ab8"
+    },
+    {
+      "file": "GuildRaidBossMobActionManager-OnSetStatus-7fff5fe25940.c",
+      "size": 8055,
+      "sha256": "ee4c2cd905c1383e0dc7b3e2d853c59d8a2be9279d45036974fd26cf9527d7b9"
+    },
+    {
+      "file": "GuildRaidBossMobActionManager-SetMobLevel-7fff5fe25eb0.c",
+      "size": 233,
+      "sha256": "9dcab6284ff9df7c8a6a509e75da5cda3173bcf8c4f7ee05426b8cbe4788a575"
+    },
+    {
+      "file": "GuildRaidBossMobActionManager-SetPartsMaster-7fff5fe25ed0.c",
+      "size": 2264,
+      "sha256": "90d11591b613010c6526632b11d0cf7590bc7c059cbb3e7415aee8c00909d2f7"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-_ctor-7fff5fe27910.c",
+      "size": 2941,
+      "sha256": "b74689523224a4589837e773b68ba9325120f4e821e128abf45b6a671499f683"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-CalcDef-7fff5fe273b0.c",
+      "size": 1847,
+      "sha256": "80e2e4818d7d2c3cc5ec2e57aa1e695d78ae1afccb32e50591a4e1df18907836"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-CalcMdef-7fff5fe274f0.c",
+      "size": 1858,
+      "sha256": "1c07370ee0be9a201ba642638482675ccf292169d57682fc0cda7cd6ed4acfdd"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_CutAttack-7fff5fe27cf0.c",
+      "size": 1742,
+      "sha256": "27ee95dab0afb064b2d566858044e13521e1ee3014e59ff0992f9533db0855dd"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_CutMagicAttack-7fff5fe27e80.c",
+      "size": 1747,
+      "sha256": "c58e6a2179559687f96287435f9ff6e801350b4d64c5b91ef60be0e57b7ca3d3"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_Def-7fff5fe280a0.c",
+      "size": 3705,
+      "sha256": "c9ac91fc2f4a602f334a72332152b8c911bf89d9caf2d818775e227ad2535c07"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_Level-7fff5f4d3160.c",
+      "size": 208,
+      "sha256": "6b5bf6ed20adce23ee9fc7f6aea17097647c22c8ac6f5933a5155b1d7d6f68d4"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_MagicDef-7fff5fe285f0.c",
+      "size": 3710,
+      "sha256": "9db1eedbd2e77ba3e4b77e9bcd4499b887e5ea064a15b86e90621cf9150e031e"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_MaxHp-7fff5fe288f0.c",
+      "size": 1182,
+      "sha256": "50cd1eeda01df60b5e8a73bd0616a0a43afb821bd7d4528808e583f8f972f585"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_NecessaryHit-7fff5fe28bd0.c",
+      "size": 2661,
+      "sha256": "8c88326875497fd77d02b212d435546e3e748518cec447910721b29fb8b5b572"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-get_Property-7fff5f4e22d0.c",
+      "size": 226,
+      "sha256": "56ff5507d4a6361448b3e5d6c53e368d7d1ea9bafc5c13201cb4a61a45d0f942"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-InitializeMobProperty-7fff5fe27680.c",
+      "size": 1752,
+      "sha256": "083eb0c337c1615f2a0beaa03dfe776e43ecc3163d54005392134a2fa36de260"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-SetHpGage-7fff5f5974c0.c",
+      "size": 229,
+      "sha256": "8525742ed6ac1f9e0261ff0d502dd3720a89f2e7bd8ee7c1a03c2b644d36ce1b"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-SetPartsMaster-7fff5fe27770.c",
+      "size": 1548,
+      "sha256": "1fb624c41f84e091070b9b0fd25d0c0e7890fd31a059d8e41d957c0e71d8f431"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus-TryGetCollectionValue-7fff5fe27870.c",
+      "size": 1084,
+      "sha256": "b3a772b41de21149d5d013a716d2231b0e3096a28320fef0716e1d0eb926f604"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus___c-_get_CutAttack_b__13_0-7fff5fe3af50.c",
+      "size": 3707,
+      "sha256": "24757df3b18c9f967600a3d05961fbb5820d9a00e898d36311fdc855b127821b"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus___c-_get_CutMagicAttack_b__15_0-7fff5fe3afa0.c",
+      "size": 3718,
+      "sha256": "90ecf33f5579b5056c1b200281bc788843e6be46777e6c691bef0f8b3175c737"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus___c-_get_Def_b__9_0-7fff5fe3aff0.c",
+      "size": 778,
+      "sha256": "a30719e8fe7673081302a7bcceab904821a43543829623e3cda412d63abfda99"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus___c-_get_MagicDef_b__11_0-7fff5fe3b080.c",
+      "size": 786,
+      "sha256": "6d84ce91853293758d6ddc7ea0657bd63b5c186644ab871771d5adefe083fe13"
+    },
+    {
+      "file": "GuildRaidBossMobBattleStatus___c-_get_NecessaryHit_b__7_0-7fff5fe3b110.c",
+      "size": 789,
+      "sha256": "1ba78bcaa18eb01e05c653c3fa3680081aca23338b7db38d6a05a7e39afed9eb"
+    },
+    {
+      "file": "GuildRaidManager-UpdateHeldData-7fff60050f90.c",
+      "size": 821,
+      "sha256": "78638e4960e9611741ed1c9e3096e5fb16b1edda1fddf8ad742ef24eef6c4f40"
+    },
+    {
+      "file": "GuildRaidManager-UpdateHeldData-7fff60051000.c",
+      "size": 2903,
+      "sha256": "5c428d50f4c2a154f84d8b2d49bc6194269d58e3df1f12a7a1f09475397f0dda"
+    },
+    {
+      "file": "GuildRaidRoomData-GetMobGuildRaidBonus-7fff600df780.c",
+      "size": 8529,
+      "sha256": "0eafe52113c63f07df378a7508697b2b3d02e9443bf963be5bf7c841cd49c844"
+    },
+    {
+      "file": "GuildRaidRoomData-ReceiveBossSymbolData-7fff600e08b0.c",
+      "size": 1598,
+      "sha256": "61695425469d599233c8009b5bc9ed6e0e95981ebd80827674b7cc20e1895018"
+    },
+    {
+      "file": "GuildRaidRoomData-ReceiveGuildRaidRandomPropertyData-7fff5f597510.c",
+      "size": 831,
+      "sha256": "cfcf8e21905dd2840c688d5f6267d7ac864a12910ce814b773bf46f7d88d2421"
+    },
+    {
+      "file": "GuildRaidRoomData-ReceiveRaidEnd-7fff5f635870.c",
+      "size": 245,
+      "sha256": "7faa73054211e3bdfa63b666d6163305560e00305782638c1d8e381ba6a6f004"
+    },
+    {
+      "file": "GuildRaidRoomData-ReceiveRaidEndBattleData-7fff600e0a00.c",
+      "size": 844,
+      "sha256": "b7e247dac15c70e92dbca0d00845ef7c6a8383d5d2189e0e90c4a3115286e7dc"
+    },
+    {
+      "file": "GuildRaidRoomData-RoomSynchronization-7fff600e0b40.c",
+      "size": 2309,
+      "sha256": "fd29f69cf01e214e86564497a64eea1f6069f2d30004ca0712fc8e65711b4dbf"
+    },
+    {
+      "file": "GuildRaidRoomData-SetCurrentHpCount-7fff600e0ca0.c",
+      "size": 376,
+      "sha256": "1d4abb72082f420e2d3d5342402dbeb37450e8bb4d7b018ea30dacc373c03daf"
+    },
+    {
+      "file": "metadata-all-guildraid.json",
+      "size": 439304,
+      "sha256": "c6a6223a6c06ee9cfb2725bc5755d2fe3ba2d8ed42f79858bb5fcacdf04d625b"
+    },
+    {
+      "file": "metadata-property.json",
+      "size": 14342,
+      "sha256": "92618a3c7fb307b0acff13ed78b5fe3dda4bdf80e4ef48f08cc6b1a0c1074f20"
+    },
+    {
+      "file": "methods-critical.json",
+      "size": 102560,
+      "sha256": "64116f639df203d0f90e95f0b8cc7c7e111c95e1506b7393bef90c9dce70f85e"
+    },
+    {
+      "file": "methods-parts.json",
+      "size": 259707,
+      "sha256": "e2eb6275d47d9a7de74136db2ef1e34fb71b97829e660acf1bebf05c946865ef"
+    },
+    {
+      "file": "methods-progress.json",
+      "size": 196323,
+      "sha256": "5d55ce3e24eae0ce87a3f97c474b85c387e4a40731e4d9e91713218f5de5c2dc"
+    },
+    {
+      "file": "methods.json",
+      "size": 190479,
+      "sha256": "73fc4ec5cd73755cb9585892b193ba2cd84a69cd0b2b64d5f76bd432cb5c1120"
+    },
+    {
+      "file": "MobPartsStatus-_ctor-7fff5fe66560.c",
+      "size": 1206,
+      "sha256": "95b300a07f3efc452c2e66d41cc29c4b075bc7469e960b6079d1b969d2e9d654"
+    },
+    {
+      "file": "MobPartsStatus-get_Def-7fff5fe66630.c",
+      "size": 1579,
+      "sha256": "8cdff0ef628d9d71dea612feb227d89bea22feb6fa8d36bffcdad87c845decfb"
+    },
+    {
+      "file": "MobPartsStatus-get_IsDead-7fff5fe666a0.c",
+      "size": 201,
+      "sha256": "b234a0946b85d705b97e451b51c13599a506557b59370855c849e90067d132bf"
+    },
+    {
+      "file": "MobPartsStatus-get_MagicDef-7fff5fe666b0.c",
+      "size": 1584,
+      "sha256": "8916b8adbfadf91e35b6681805a63e0096993d789d8a826f8768c7012ddb2611"
+    },
+    {
+      "file": "MobPartsStatus-get_NecessaryHit-7fff5fe66720.c",
+      "size": 1588,
+      "sha256": "00cac00d946a5a5538f06ff995743e1b830589946735239942d4629ebe14bf8f"
+    },
+    {
+      "file": "MobPropertyCriticalResist-GetCriticalResist-7fff5fe83870.c",
+      "size": 3978,
+      "sha256": "29324fb77d50166abc60dd431a70752c81da2b203c07253a9bf8bb9ff4e15206"
+    },
+    {
+      "file": "MobPropertyCriticalResist-TryGetValue-7fff5fe83b20.c",
+      "size": 888,
+      "sha256": "fa1b5517705cea5b9879d486bc6745bdb929def0c80726264aca15189438f6ea"
+    },
+    {
+      "file": "MobPropertyStatusCollection-TryGetValue-7fff5fe86c30.c",
+      "size": 3121,
+      "sha256": "4ddf3fe454ac92e565f7268b530ff291d860562e97ff7e9bd4f1b047d44c7609"
+    },
+    {
+      "file": "README.md",
+      "size": 3910,
+      "sha256": "9941a00f360ca185a2fc1a886b77284bbba35c05ef7654029bf66edc4afe73f5"
+    },
+    {
+      "file": "report.json",
+      "size": 4229,
+      "sha256": "9fdcb591acf7f14441faa4b49780d980777c58608b2ce1ed4ba1e555ab25e363"
+    },
+    {
+      "file": "self-check.py",
+      "size": 1312,
+      "sha256": "ef12d27ca3c653d2bdd310c97715fd529cffcdc579fa7ea57b76e95c22e50fd1"
+    },
+    {
+      "file": "TraceToramGuildRaidCritical.java",
+      "size": 7130,
+      "sha256": "8b44228a631156f52df8c84d306f1f3436874025fc09b1b1189340238c8a6789"
+    },
+    {
+      "file": "TraceToramGuildRaidParts.java",
+      "size": 7279,
+      "sha256": "0e89efa0e4762eaf35aed5349218d1059ac748b675bc897569e319404a0e26a0"
+    },
+    {
+      "file": "TraceToramGuildRaidProgress.java",
+      "size": 7399,
+      "sha256": "0a6f6299dcc3f5ea18254d47877bc9317dc93a1b0af0cd6ca9192e2c8596d61e"
+    },
+    {
+      "file": "TraceToramGuildRaidTarget.java",
+      "size": 7404,
+      "sha256": "be70cb908a7d1d5bac08b4666f2ceb3915efeca4fb07446f2f17e2beccd7a6e7"
+    }
+  ]
+}

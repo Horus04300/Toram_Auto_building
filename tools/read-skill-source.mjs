@@ -7,7 +7,7 @@ const treeId = process.argv[2];
 const maxIndex = process.argv.indexOf('--max');
 const max = maxIndex >= 0 ? Number(process.argv[maxIndex + 1]) : 0;
 if (!treeId) throw new Error('Usage: node tools/read-skill-source.mjs <treeId> [--max <characters>]');
-const links = JSON.parse(await readFile(resolve(root, 'skill_effect_source_links.json'), 'utf8'));
+const links = JSON.parse(await readFile(resolve(root, 'data/sources/skill-effect-source-links.json'), 'utf8'));
 const source = links.sources.find((item) => item.tree_id === treeId);
 if (!source) throw new Error(`Unknown skill tree: ${treeId}`);
 const url = new URL(source.url);

@@ -1,0 +1,350 @@
+{
+  "authority": "static-saved-native-image-and-user-authorized-current-app-budget",
+  "checkedDate": "2026-10-21",
+  "snapshotSha256": "013f5d1668b857820490a9e7f49b716a41eaa2aec1b4c1a449d12ec38a4d7fa0",
+  "metadataSha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f",
+  "mappedImageSha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e",
+  "methods": [
+    {
+      "class": "PlayerDataManager",
+      "name": "UpdateStatusPoint",
+      "method_definition_index": 13413,
+      "token": "0x06003466",
+      "metadata_declaration_range": {
+        "offset": 4228084,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "point",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51468568,
+      "pointer_slot_va": "0x7fff62365918",
+      "runtime_va": "0x7fff5ff89890",
+      "rva": "0xd39890",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec208bda33d2e8911300004885c074124533c08b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerDataManager-UpdateStatusPoint-7fff5ff89890.c",
+      "pseudocodeSha256": "f886f052241c1a36befe5729f3895f1b03884c2bbb41d2ed22d11c51630793fa"
+    },
+    {
+      "class": "PlayerPrimaryStatus",
+      "name": "UpdateStatusPoint",
+      "method_definition_index": 13518,
+      "token": "0x060034cf",
+      "metadata_declaration_range": {
+        "offset": 4231864,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "point",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51469408,
+      "pointer_slot_va": "0x7fff62365c60",
+      "runtime_va": "0x7fff5f597450",
+      "rva": "0x347450",
+      "status": "mapped",
+      "code_preview_hex": "895138c3cccccccccccccccccccccccc88513cc3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-UpdateStatusPoint-7fff5f597450.c",
+      "pseudocodeSha256": "56dbcab5e32d9c575f259e3f23f9d9d65d50cd6da274778c149238b13411bc03"
+    },
+    {
+      "class": "PlayerPrimaryStatus",
+      "name": "GetAllStatusPoint",
+      "method_definition_index": 13522,
+      "token": "0x060034d3",
+      "metadata_declaration_range": {
+        "offset": 4232008,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51469440,
+      "pointer_slot_va": "0x7fff62365c80",
+      "runtime_va": "0x7fff5ff8c5d0",
+      "rva": "0xd3c5d0",
+      "status": "mapped",
+      "code_preview_hex": "8b513803513403513003512c03512803512403512003511c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-GetAllStatusPoint-7fff5ff8c5d0.c",
+      "pseudocodeSha256": "95aa6235da940c4c63f9df6022f68401be4d1034049b5237310b8deedfff583f"
+    },
+    {
+      "class": "UIBuildPanel",
+      "name": "SetBuildStatus",
+      "method_definition_index": 66712,
+      "token": "0x06010499",
+      "metadata_declaration_range": {
+        "offset": 6146848,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "primaryStatus",
+          "type_index": 22763,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51894960,
+      "pointer_slot_va": "0x7fff623cdab0",
+      "runtime_va": "0x7fff5fb80430",
+      "rva": "0x930430",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803ddb37a60200488bfa488bd975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIBuildPanel-SetBuildStatus-7fff5fb80430.c",
+      "pseudocodeSha256": "3bde8a7a33179146893fad61bd3854102528ad85be74d9c4c04e5615782f8ce6"
+    },
+    {
+      "class": "UIBuildPanel",
+      "name": "AddStatusPointCheck",
+      "method_definition_index": 66717,
+      "token": "0x0601049e",
+      "metadata_declaration_range": {
+        "offset": 6147028,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "addPoint",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "selectType",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51895000,
+      "pointer_slot_va": "0x7fff623cdad8",
+      "runtime_va": "0x7fff5fb7d210",
+      "rva": "0x92d210",
+      "status": "mapped",
+      "code_preview_hex": "895424105355565741564883ec70803df969a60200448bf2",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIBuildPanel-AddStatusPointCheck-7fff5fb7d210.c",
+      "pseudocodeSha256": "19c7994e1455de1a32e5f23259d8c8013d9148ff1ed1e36c007172a3ce73c9c1"
+    },
+    {
+      "class": "UIBuildPanel",
+      "name": "GetOverBuildPoint",
+      "method_definition_index": 66721,
+      "token": "0x060104a2",
+      "metadata_declaration_range": {
+        "offset": 6147172,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51895032,
+      "pointer_slot_va": "0x7fff623cdaf8",
+      "runtime_va": "0x7fff5fb7e1c0",
+      "rva": "0x92e1c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d555aa60200488bd97513488d0d9fa88f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIBuildPanel-GetOverBuildPoint-7fff5fb7e1c0.c",
+      "pseudocodeSha256": "a2568003cf67a9c58e8403dc39164ca728c2b62a27845ee56b6416f4842f8a49"
+    },
+    {
+      "class": "UIStatusBar",
+      "name": "SetMaxPoint",
+      "method_definition_index": 66867,
+      "token": "0x06010534",
+      "metadata_declaration_range": {
+        "offset": 6152428,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isLimitBreak",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51896200,
+      "pointer_slot_va": "0x7fff623cdf88",
+      "runtime_va": "0x7fff5fba5010",
+      "rva": "0x955010",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d38eca302000fb6fa488bd975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIStatusBar-SetMaxPoint-7fff5fba5010.c",
+      "pseudocodeSha256": "ba93b8a8d2b110a0e253aba409051492b0f97d4d6d35de4307be4701dc0f5010"
+    },
+    {
+      "class": "UIBuildPanel",
+      "name": ".cctor",
+      "method_definition_index": 66733,
+      "token": "0x060104ae",
+      "metadata_declaration_range": {
+        "offset": 6147604,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51895128,
+      "pointer_slot_va": "0x7fff623cdb58",
+      "runtime_va": "0x7fff5fb80f20",
+      "rva": "0x930f20",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28803dff2ca602007513488d0d447b8f02e817c58f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIBuildPanel-_cctor-7fff5fb80f20.c",
+      "pseudocodeSha256": "e71e113a59a8f8729e2c96187724bc2dc505dfd42b0595f49f819f3045863795"
+    },
+    {
+      "class": "Toram.Common.Parameters.PrimaryStatusData",
+      "name": "IsOverStatus",
+      "method_definition_index": 88953,
+      "token": "0x06000303",
+      "metadata_declaration_range": {
+        "offset": 6947524,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 53721376,
+      "pointer_slot_va": "0x7fff6258b920",
+      "runtime_va": "0x7fff616b4610",
+      "rva": "0x2464610",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048896c2418488974242048894c240857415441",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "Toram_Common_Parameters_PrimaryStatusData-IsOverStatus-7fff616b4610.c",
+      "pseudocodeSha256": "24d6be027d4d2d40abf97b1129215b311eb756f21cba6ad028c50fa08dac3ce8"
+    }
+  ],
+  "shortMinHelper": {
+    "class": "System.Math",
+    "name": "Min",
+    "method_definition_index": 78053,
+    "token": "0x06000857",
+    "metadata_declaration_range": {
+      "offset": 6555124,
+      "size": 36
+    },
+    "generic_container_index": -1,
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "val1",
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      {
+        "name": "val2",
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      }
+    ],
+    "return_type": {
+      "type_index": 18774,
+      "exact_byval_name": "System.Int16"
+    },
+    "pointer_slot_offset": 53397728,
+    "pointer_slot_va": "0x7fff6253c8e0",
+    "runtime_va": "0x7fff61011120",
+    "rva": "0x1dc1120",
+    "status": "mapped",
+    "code_preview_hex": "663bca660f4ed10fb7c2c3cccccccccc3aca0fb6c2440fb6",
+    "rawCodeHex": "663bca660f4ed10fb7c2c3cccccccccc"
+  },
+  "appSource": {
+    "path": "assets/js/ui/status-points.js",
+    "sha256": "6bdc4b4e3107524c3b5aa63d6946ffe0265f6bc1eb9d03ece6a8507983397680",
+    "authority": "User expressly instructed using the existing app value; not independent server emblem verification."
+  },
+  "limitations": [
+    "No current process access or game execution. No REA retained Evidence ID.",
+    "App budget is a user-authorized project assumption. Server/account maximum emblems were not enumerated.",
+    "Allocation is for crafter, separate from statter TEC255."
+  ],
+  "image_base": "0x7fff5f250000",
+  "scriptSha256": "02da9b62a5aa5be3aafee6dca1e9f5a8b0ba85049f627bdbacf40642008038a1",
+  "additionalFiles": [
+    {
+      "file": "metadata.json",
+      "sha256": "310463e9e01d22be508210c1c8c47b33b8ab8b1c32803323e24c03343c4cf2d5"
+    },
+    {
+      "file": "common-metadata.json",
+      "sha256": "13bed88958fc6c10e80e32665d3b4744b0f8b7611845f3a95fe62976587ce5a8"
+    }
+  ],
+  "reproduction": {
+    "script": "TraceToramStatBudget.java",
+    "arguments": "<absolute index.json> <new output directory>",
+    "target": "build/tmp/toram-item-extraction/code-trace/runtime/snapshot-1/GameAssembly.snapshot.dll",
+    "mode": "Direct private AnalyzeHeadless import -noanalysis; no live process. Scoped reproduction can differ in generated labels from original 3 selection passes."
+  }
+}

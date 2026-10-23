@@ -1,0 +1,154 @@
+{
+  "authority": "saved-passive-runtime-image-and-installed-metadata",
+  "moduleCapture": {
+    "authority": "passive-runtime-module-snapshot",
+    "pid": 3108,
+    "executable": "C:\\Asobimo\\AsobimoGames\\Toram\\ToramOnline.exe",
+    "module": "C:\\Asobimo\\AsobimoGames\\Toram\\GameAssembly.dll",
+    "sourceSha256": "c0f666aa071136bfae7ada61135ba01fc2907c3987945a86cce5909c6011fbff",
+    "base": "0x7ffe99740000",
+    "size": 83296256,
+    "startedUtc": "2026-10-22T13:25:03.127079+00:00",
+    "finishedUtc": "2026-10-22T13:25:03.295215+00:00",
+    "processAccess": "PROCESS_QUERY_INFORMATION | PROCESS_VM_READ",
+    "unreadablePages": [],
+    "completeReadableImage": true,
+    "mappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+    "rebuiltSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+    "sections": [
+      {
+        "name": ".text",
+        "rva": 4096,
+        "rawOffset": 4096,
+        "rawSize": 2629632
+      },
+      {
+        "name": "il2cpp",
+        "rva": 2633728,
+        "rawOffset": 2633728,
+        "rawSize": 40394752
+      },
+      {
+        "name": ".rdata",
+        "rva": 43028480,
+        "rawOffset": 43028480,
+        "rawSize": 7999488
+      },
+      {
+        "name": ".data",
+        "rva": 51027968,
+        "rawOffset": 51027968,
+        "rawSize": 7860224
+      },
+      {
+        "name": "_RDATA",
+        "rva": 58888192,
+        "rawOffset": 58888192,
+        "rawSize": 512
+      },
+      {
+        "name": ".text",
+        "rva": 58892288,
+        "rawOffset": 58892288,
+        "rawSize": 22417408
+      },
+      {
+        "name": ".pdata",
+        "rva": 81309696,
+        "rawOffset": 81309696,
+        "rawSize": 32768
+      },
+      {
+        "name": ".idata",
+        "rva": 81342464,
+        "rawOffset": 81342464,
+        "rawSize": 1945600
+      },
+      {
+        "name": ".reloc",
+        "rva": 83288064,
+        "rawOffset": 83288064,
+        "rawSize": 8192
+      }
+    ],
+    "limitations": [
+      "Sequential non-atomic capture of only the selected module; no other modules or heaps read.",
+      "Uncaptured pages are zeros in derived files and remain explicitly unknown.",
+      "Rebuilt PE modifies raw section offsets/sizes, image base, security directory and checksum for offline analysis; it is not an executable replacement."
+    ]
+  },
+  "metadata": {
+    "path": "build\\tmp\\update-pipeline-20261022\\installed-source\\global-metadata.dat",
+    "sha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9"
+  },
+  "limitList": {
+    "initializerFieldName": "EF2BA7DAEFA8D8337BDEE29DF61E5561A05950B2A3D56083A008941EBD1AEBE5",
+    "fieldIndex": 54497,
+    "token": "0x400d4e2",
+    "metadataOffset": 10137576,
+    "rawHex": "60000000670000006c0000006d0000007300000078000000",
+    "values": [
+      96,
+      103,
+      108,
+      109,
+      115,
+      120
+    ]
+  },
+  "floatConstants": [
+    {
+      "purpose": "default multiplier",
+      "address": "0x7ffe9c049b18",
+      "rva": "0x2909b18",
+      "bytes": 4,
+      "hexLE": "0000803f",
+      "float32": 1.0
+    },
+    {
+      "purpose": "override 10",
+      "address": "0x7ffe9c049ce4",
+      "rva": "0x2909ce4",
+      "bytes": 4,
+      "hexLE": "00002041",
+      "float32": 10.0
+    },
+    {
+      "purpose": "override 0.01",
+      "address": "0x7ffe9c049b34",
+      "rva": "0x2909b34",
+      "bytes": 4,
+      "hexLE": "0ad7233c",
+      "float32": 0.009999999776482582
+    },
+    {
+      "purpose": "override 0.1",
+      "address": "0x7ffe9c049b40",
+      "rva": "0x2909b40",
+      "bytes": 4,
+      "hexLE": "cdcccc3d",
+      "float32": 0.10000000149011612
+    },
+    {
+      "purpose": "base percentage100",
+      "address": "0x7ffe9c049cfc",
+      "rva": "0x2909cfc",
+      "bytes": 4,
+      "hexLE": "0000c842",
+      "float32": 100.0
+    },
+    {
+      "purpose": "float sign bit",
+      "address": "0x7ffe9c049c00",
+      "rva": "0x2909c00",
+      "bytes": 4,
+      "hexLE": "00000080",
+      "float32": -0.0
+    }
+  ],
+  "limitations": [
+    "No dynamic game function was executed.",
+    "Metadata compiler payload identity does not alone connect the field to the native cctor; the cctor reference requires separate review.",
+    "Module snapshot excludes managed heap objects."
+  ]
+}

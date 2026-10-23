@@ -16,7 +16,7 @@ context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments:() => investments };
 vm.createContext(context);
 
-for (const path of ['assets/js/data/skill-tree-data.js', 'assets/js/data/skill-combat-catalog.js', 'assets/js/data/skill-effect-registry.js', 'assets/js/data/skill-effect-data.js', 'assets/js/data/skills/battle.js', 'assets/js/data/skills/blade.js', 'assets/js/data/skills/support.js', 'assets/js/data/skills/knight.js']) {
+for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/battle.js', 'web/src/data/skills/blade.js', 'web/src/data/skills/support.js', 'web/src/data/skills/knight.js']) {
   vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 }
 
@@ -26,10 +26,10 @@ context.window.ToramSkillEffectRegistry.register('Test', [{
   attacks:[{ id:'main', damageType:'magic', count:{ op:'value', value:1 }, multiplier:{ op:'value', value:1 }, constant:{ op:'value', value:0 }, flags:{} }]
 }]);
 
-vm.runInContext(await readFile(resolve(root, 'assets/js/skill-effect-engine.js'), 'utf8'), context, { filename:'skill-effect-engine.js' });
-for (const path of ['assets/js/stat-registry.js', 'assets/js/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-effect-engine.js'), 'utf8'), context, { filename:'calculation/skill-effect-engine.js' });
+for (const path of ['web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'assets/js/calculator.js'), 'utf8'), context, { filename:'calculator.js' });
+vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 
 const E = context.window.ToramSkillEffects;
 const physicalBase = { level:300, mainType:'양손검', subType:'없음', armorType:'일반' };

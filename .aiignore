@@ -3,13 +3,16 @@
 # Keep source code, source evidence, tests and fixtures searchable.
 .git/
 node_modules/
-dist/
-src-tauri/target/
-src-tauri/gen/schemas/
+/build/
+desktop/target/
+engine/target/
+desktop/gen/schemas/
 coverage/
 .cache/
 *.log
 *.tsbuildinfo
+/server/.env
+/server/data/
 *.png
 *.jpg
 *.jpeg
@@ -26,11 +29,24 @@ coverage/
 *.7z
 # Read explicitly for dependency work.
 /package-lock.json
-/src-tauri/Cargo.lock
+/desktop/Cargo.lock
 # Bulk icon matching output; read explicitly for icon/source matching work.
-/assets/source-data/game-icon-skill-match-candidates.json
-/assets/source-data/game-icon-skill-duplicates.json
-/assets/source-data/coryn-skill-simulator/skill_icons_manifest.csv
-/assets/source-data/coryn-skill-simulator/title_icons_manifest.csv
-/assets/game-data/ui/manifest.csv
-release-assets/
+/data/sources/game-icon-skill-match-candidates.json
+/data/sources/game-icon-skill-duplicates.json
+/data/sources/coryn-skill-simulator/skill_icons_manifest.csv
+/data/sources/coryn-skill-simulator/title_icons_manifest.csv
+/data/sources/game-ui/manifest.csv
+# Bulk extracted item snapshots; read exact paths when investigating item data.
+__pycache__/
+/data/sources/toram-items/items.*.json
+/data/sources/toram-items/item-options.scaled.*.json
+/data/sources/toram-items/coryn-items.json
+/data/sources/toram-items/existing-crysta-name-candidates.json
+/data/sources/toram-items/item-localization-links.json
+/data/sources/toram-items/item-relations.json
+/data/sources/toram-items/crysta-link-audit.json
+/data/sources/toram-items/pipeline/
+/web/public/game-data/items/
+/data/sources/toram-monsters/pipeline/
+/data/sources/toram-monsters/monster-localization-links.json
+/web/public/game-data/bosses/

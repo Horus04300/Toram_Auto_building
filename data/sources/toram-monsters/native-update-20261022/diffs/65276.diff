@@ -1,0 +1,9 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidRoomData-ReceiveGuildRaidRandomPropertyData-7fff5f597510.c
++++ 65276.c
+@@ -4,5 +4,5 @@
+   ulonglong uVar3;
+   uint uVar4;
+-  *(undefined **)(self + 0x70) = datas;
++  *(undefined **)(self + 0x70) = value;
+   if (GLOBAL0 != 0) {
+     uVar4 = (uint)((ulonglong)(self + 0x70) >> 0xc);

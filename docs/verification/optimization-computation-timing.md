@@ -30,7 +30,7 @@
 
 ```powershell
 npm run bench:optimization:build
-npm run bench:optimization -- --repeats 3 --output src-tauri/target/computation-benchmark/revenir.json
+npm run bench:optimization -- --repeats 3 --output desktop/target/computation-benchmark/revenir.json
 ```
 
 기본 입력은 추적 중인 `tools/fixtures/crysta-native-runtime-26min-revenir.json`의 `resolvedExecutionContext`다. 다른 입력은 `--input path/to/input.json`으로 전달한다. 동일한 raw 필드 또는 `resolvedExecutionContext` 래퍼를 사용한다. 선택적 `crystas`로 가상 후보를 제공할 수 있다. 이미 준비된 `groups` 입력은 거부한다.
@@ -47,7 +47,7 @@ Rust 소스/의존성 및 실행 파일 해시가 빌드 기록과 다르면 재
 
 같은 입력의 250ms slice 연결 검사: 20개 slice(최초 실행 + 19회 resume), 15.608초, exact 점수 1,123,905.36. 기본 측정과 점수·전체 조합이 같으며 재개와 중간 결과 처리 비용이 전체 시간에 포함된다. 이 검사는 기본 성능 평균에서 제외한다.
 
-상세 로컬 산출물: `src-tauri/target/computation-benchmark/revenir-2026-09-28.json` (빌드 산출물과 함께 Git 제외). 측정 구간 회귀: `node tools/tests/optimization/test-crysta-computation-measurement.mjs`는 실제 Native 클라이언트를 가상 transport/clock으로 실행해 비동기 전달·재개·결과 복원·JS 평가·캐시·오류 경계를 검사한다. 실제 Rust 연결 검증과 구분한다.
+상세 로컬 산출물: `desktop/target/computation-benchmark/revenir-2026-09-28.json` (빌드 산출물과 함께 Git 제외). 측정 구간 회귀: `node tools/tests/optimization/test-crysta-computation-measurement.mjs`는 실제 Native 클라이언트를 가상 transport/clock으로 실행해 비동기 전달·재개·결과 복원·JS 평가·캐시·오류 경계를 검사한다. 실제 Rust 연결 검증과 구분한다.
 
 이번 검증:
 
@@ -55,4 +55,4 @@ Rust 소스/의존성 및 실행 파일 해시가 빌드 기록과 다르면 재
 - 위 기본 3회 및 `--repeats 1 --slice-ms 250`: 실제 Rust 서비스 연결, exact·JS 평가·패키지 옵션 합 검증 통과. 두 보고서의 전체 bestBuild도 별도로 비교해 일치 확인.
 - `--repeats 1 --max-ms 1 --slice-ms 1`: `no-incumbent-yet` 기록, 평균 null, 종료 코드 1. 미완료를 성능 성공으로 집계하지 않는 계약 확인.
 - `npm run test:regression`: 72개 프로세스 성공 종료. Native 저장 E2E 1개는 `TORAM_E2E_CDP` 미설정 SKIP이며 실제 화면 검증 통과로 해석하지 않는다.
-- `npm run verify:architecture`, `cargo test --offline --manifest-path src-tauri/Cargo.toml`, `cargo fmt --manifest-path src-tauri/Cargo.toml --check`, `cargo clippy --offline --manifest-path src-tauri/Cargo.toml --bin d4_headless_service -- -D warnings`, `npm run ai:audit`, `git diff --check`: 통과.
+- `npm run verify:architecture`, `cargo test --offline --manifest-path desktop/Cargo.toml`, `cargo fmt --manifest-path desktop/Cargo.toml --check`, `cargo clippy --offline --manifest-path desktop/Cargo.toml --bin d4_headless_service -- -D warnings`, `npm run ai:audit`, `git diff --check`: 통과.

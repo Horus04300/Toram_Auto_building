@@ -20,7 +20,7 @@ const native = { core:{
 } };
 function adapter(tauri) {
   const window = { __TAURI__:tauri };
-  vm.runInNewContext(read('assets/js/tauri-update-adapter.js'), { window });
+  vm.runInNewContext(read('build/generated/desktop/update.js'), { window });
   return window.ToramUpdateService;
 }
 const service = adapter(native);
@@ -51,7 +51,7 @@ assert.equal(adapter(undefined).isAvailable(), false);
 await assert.rejects(adapter(undefined).check(), /데스크톱/);
 
 const root = {};
-vm.runInNewContext(read('assets/js/update-controller.js'), { window:root });
+vm.runInNewContext(read('desktop/adapters/update/update-controller.js'), { window:root });
 let checked = 0, installed = 0, rejectCheck = false, allow = true, flushFail = false;
 let resolveCheck;
 const deps = {
@@ -104,7 +104,7 @@ await controller.install();
 resolveCheck(null);
 await pending;
 assert.equal(installed, 1, 'in-flight checks cannot start installs');
-const elements = new Map([...read('index.html').matchAll(/id="(update[^"]*)"/g)].map(([, id]) => [id, {
+const elements = new Map([...read('web/index.html').matchAll(/id="(update[^"]*)"/g)].map(([, id]) => [id, {
   hidden:false, listeners:{}, textContent:'', value:0,
   addEventListener(name, fn) { this.listeners[name] = fn; },
   removeAttribute(name) { delete this[name]; }
@@ -116,7 +116,7 @@ const uiRoot = {
   ToramApplication:{ Settings:{ getUpdateSettings:() => ({ checkOnStartup:true }), setUpdateSettings:() => {} } },
   setTimeout:fn => timers.push(fn)
 };
-vm.runInNewContext(read('assets/js/update-ui-controller.js'), { window:uiRoot, document:{ readyState:'complete', getElementById:id => elements.get(id) } });
+vm.runInNewContext(read('desktop/adapters/update/ui-controller.js'), { window:uiRoot, document:{ readyState:'complete', getElementById:id => elements.get(id) } });
 assert.equal(elements.get('updatePanel').hidden, true, 'startup must not immediately show a panel');
 timers[0]();
 await new Promise(resolve => setImmediate(resolve));
@@ -134,7 +134,7 @@ const coordination = {
   ToramApp:{ optimizerUi:{ stopForUpdate:async () => { stops++; running = false; paused = false; } } },
   ToramApplication:{ Settings:{ flush:async () => { flushes++; if (refuseFlush) throw new Error('quota'); } } }
 };
-vm.runInNewContext(read('assets/js/update-install-coordinator.js'), { window:coordination });
+vm.runInNewContext(read('desktop/adapters/update/update-install-coordinator.js'), { window:coordination });
 const coordinator = coordination.ToramUpdateInstallCoordinator;
 assert.equal(await coordinator.prepare(async work => { assert.equal(work, true); return false; }), false);
 assert.equal(stops, 0);

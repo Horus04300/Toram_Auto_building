@@ -1,0 +1,11 @@
+--- assets\source-data\toram-monsters\native-schema\MobActionPattern-CreateActionPattern-7fff5fe32440.c
++++ 8264.c
+@@ -21,6 +21,6 @@
+   uVar10 = CALL2(GLOBAL3,0x14);
+   *(undefined8 *)(puVar9 + 0x60) = uVar10;
+-  CALL3();
+-  _loadFieldData_d__125_System_IDisposable_Dispose(puVar9,(undefined *)0x0);
++  il2cpp_write_barrier_0();
++  CALL3(puVar9,0);
+   if (reader != (undefined *)0x0) {
+     lVar1 = *(longlong *)reader;

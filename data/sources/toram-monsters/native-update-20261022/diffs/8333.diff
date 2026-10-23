@@ -1,0 +1,59 @@
+--- assets\source-data\toram-monsters\native-classification\MobFactory-AddComponentMobActionManager-7fff5fe34a30.c
++++ 8333.c
+@@ -44,15 +44,15 @@
+           break;
+         case 1:
+-          lVar5 = lRam00007fff6245b410;
++          lVar5 = lRam00007ffe9c9545f8;
+           break;
+         case 2:
+         case 3:
+-          lVar5 = lRam00007fff6245c7e8;
++          lVar5 = lRam00007ffe9c9559d0;
+           break;
+         case 4:
+-          lVar5 = lRam00007fff6245c320;
++          lVar5 = lRam00007ffe9c955508;
+           break;
+         case 5:
+-          lVar5 = lRam00007fff6245bff0;
++          lVar5 = lRam00007ffe9c9551d8;
+           break;
+         case 6:
+@@ -60,8 +60,8 @@
+           goto LABEL0;
+         case 8:
+-          lVar5 = lRam00007fff62464b58;
++          lVar5 = lRam00007ffe9c95dd48;
+           break;
+         case 9:
+-          lVar5 = lRam00007fff624648f8;
++          lVar5 = lRam00007ffe9c95dae0;
+           break;
+         default:
+@@ -78,9 +78,9 @@
+           case 0x40:
+           case 0x44:
+-            lVar5 = lRam00007fff624607a8;
++            lVar5 = lRam00007ffe9c959990;
+             break;
+           case 0x41:
+           case 0x45:
+-            lVar5 = lRam00007fff624606e0;
++            lVar5 = lRam00007ffe9c9598c8;
+             break;
+           default:
+@@ -109,5 +109,5 @@
+         uVar2 = iVar7 - 0x220;
+         lVar5 = GLOBAL13;
+-        goto joined_r0x7fff5fe34bbc;
++        goto joined_r0x7ffe9a329eec;
+       }
+     }
+@@ -135,5 +135,5 @@
+     uVar2 = iVar7 - 0x8220;
+     lVar5 = GLOBAL15;
+-joined_r0x7fff5fe34bbc:
++joined_r0x7ffe9a329eec:
+     if (1 < uVar2) {
+ LABEL0:

@@ -4,11 +4,15 @@ import { resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '../..');
 const read = path => readFile(resolve(root, path), 'utf8');
-const main = await read('src-tauri/src/main.rs');
-const commands = await read('src-tauri/src/tauri_commands.rs');
-const optimizationService = await read('src-tauri/src/optimization/service.rs');
-const settingsService = await read('src-tauri/src/settings.rs');
-const repository = await read('src-tauri/src/settings.rs');
+const main = await read('desktop/src/main.rs');
+const commands = await read('desktop/src/tauri_commands.rs');
+const optimizationService = await read('desktop/src/optimization/service.rs');
+const settingsService = await read('desktop/src/settings.rs');
+const repository = await read('desktop/src/settings.rs');
+const core = await read('engine/src/lib.rs');
+assert.match(main, /use toram_optimization_core::crysta_native_solver/u, '앱은 공용 Rust crate를 사용해야 합니다.');
+assert.match(core, /path = "solver\.rs"/u, 'WASM과 앱은 같은 solver 원본을 사용해야 합니다.');
+assert.match(core, /path = "evaluator\.rs"/u, 'WASM과 앱은 같은 evaluator 원본을 사용해야 합니다.');
 
 for (const module of ['crysta_service', 'settings', 'tauri_commands']) {
   assert.match(main, new RegExp(`mod ${module};`, 'u'), `${module} 모듈을 main에서 조립해야 합니다.`);

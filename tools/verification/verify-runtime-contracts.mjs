@@ -1,20 +1,20 @@
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { CLASSIC_SCRIPT_PATHS } from '../../assets/js/classic-script-manifest.mjs';
+import { CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs';
 
 const root = resolve(import.meta.dirname, '../..');
 const read = path => readFile(resolve(root, path), 'utf8');
-const calculator = await read('assets/js/calculator.js');
-const policies = await read('assets/js/calculation-policies.js');
-const crystaUi = await read('assets/js/crysta-ui.js');
-const application = await read('assets/js/application-use-cases.js');
-const settings = await read('assets/js/settings-repository.js');
-const storageAdapter = await read('assets/js/tauri-build-storage-adapter.js');
-const executionAdapter = await read('assets/js/optimization/execution-adapter.js');
-const optimizer = await read('assets/js/optimization-results.js');
-const optimizerUi = await read('assets/js/optimizer-ui-controller.js');
-const worker = await read('assets/js/optimization/solver-worker.js');
+const calculator = await read('web/src/calculation/calculator.js');
+const policies = await read('web/src/calculation/calculation-policies.js');
+const crystaUi = await read('web/src/ui/crysta-ui.js');
+const application = await read('web/src/application/application-use-cases.js');
+const settings = await read('web/src/storage/settings-repository.js');
+const storageAdapter = await read('build/generated/desktop/saved-build-storage.js');
+const executionAdapter = await read('web/src/optimization/execution-adapter.js');
+const optimizer = await read('web/src/ui/optimization-results.js');
+const optimizerUi = await read('web/src/ui/optimizer-ui-controller.js');
+const worker = await read('web/src/optimization/wasm-worker.js');
 
 assert.doesNotMatch(calculator, /applyStatLegacy|checkCondition\(/u, '계산기의 구형 stat/조건 fallback을 제거해야 합니다.');
 assert.match(calculator, /ToramCalculationPolicies[\s\S]*applyStat/u, '계산기의 stat 적용은 단일 정책을 사용해야 합니다.');
@@ -27,8 +27,8 @@ assert.doesNotMatch(application, /legacyInput/u, 'Application의 입력 어댑�
 assert.match(application, /kernelInput/u, 'Application은 명시적인 kernel 입력 어댑터를 유지해야 합니다.');
 assert.match(policies, /function applyStat/u, '계산 정책은 stat 적용의 유일한 진입점이어야 합니다.');
 
-assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/calculation-policies.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/calculator.js'), '계산 정책은 계산기보다 먼저 로드해야 합니다.');
-assert.match(worker, /'\.\.\/stat-registry\.js',[\s\S]*'\.\.\/calculation-policies\.js',[\s\S]*'\.\.\/calculator\.js'/u, 'CrystaOptimization Worker도 계산 정책을 같은 순서로 로드해야 합니다.');
+assert.ok(CLASSIC_SCRIPT_PATHS.indexOf('assets/js/calculation/calculation-policies.js') < CLASSIC_SCRIPT_PATHS.indexOf('assets/js/calculation/calculator.js'), '계산 정책은 계산기보다 먼저 로드해야 합니다.');
+assert.match(worker, /'\.\.\/calculation\/stat-registry\.js',[\s\S]*'\.\.\/calculation\/calculation-policies\.js',[\s\S]*'\.\.\/calculation\/calculator\.js'/u, 'CrystaOptimization Worker도 계산 정책을 같은 순서로 로드해야 합니다.');
 
 for (const forbidden of ['toram-auto-build-setting', 'showDirectoryPicker', 'indexedDB']) {
   assert.doesNotMatch(`${settings}\n${storageAdapter}`, new RegExp(forbidden, 'u'), `${forbidden} legacy 저장 경로를 다시 도입하면 안 됩니다.`);
@@ -39,7 +39,7 @@ assert.match(settings, /fileAdapter\(\)/u, 'named build는 파일 Repository 경
 assert.match(storageAdapter, /ToramSettingsFileRepositoryAdapter/u, 'Tauri 저장 Adapter는 Settings Repository의 실제 파일 Port입니다.');
 assert.match(settings, /ToramSettingsFileRepositoryAdapter/u, 'Settings Repository는 현재 Tauri 파일 Adapter를 실제로 사용해야 합니다.');
 assert.match(executionAdapter, /ToramCrystaOptimizationNativeClient/u, 'CrystaOptimization 실행 Adapter는 Native 구현을 실제로 위임해야 합니다.');
-assert.match(executionAdapter, /ToramCrystaOptimizationWorkerClient/u, 'CrystaOptimization 실행 Adapter는 Worker 구현을 실제로 위임해야 합니다.');
+assert.match(executionAdapter, /ToramCrystaOptimizationWasmClient/u, 'CrystaOptimization 실행 Adapter는 Worker 구현을 실제로 위임해야 합니다.');
 assert.match(optimizer, /ToramCrystaOptimizationExecutionAdapter\.execute/u, '최적화 core는 CrystaOptimization 실행 Adapter를 실제로 사용해야 합니다.');
 assert.match(optimizerUi, /ToramCrystaOptimizationExecutionAdapter\.(?:resume|pause|cancel)/u, '최적화 UI는 CrystaOptimization 실행 Adapter를 실제로 사용해야 합니다.');
 

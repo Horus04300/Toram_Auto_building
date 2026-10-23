@@ -1,0 +1,104 @@
+{
+  "schema": "toram.statting-penalty-cap-rules.v1",
+  "authority": "saved-native-static-analysis",
+  "checkedDate": "2026-10-20",
+  "numericModel": "native signed int16/int32 and explicit float32 arithmetic; integer division and casts truncate toward zero",
+  "categoryPenalty": {
+    "source": "SmithGrant.CalcUsePotentialPoint",
+    "input": "newProperties produced by EnhanceGetPropertyPosition (complete resulting options)",
+    "categoryField": "EnhanceProperties2.AbilityCategory",
+    "included": "Type!=0 and Type!=exclusionType; sign/value/delta are not predicates",
+    "countsExistingUnchanged": true,
+    "countsPositive": true,
+    "countsNegative": true,
+    "countsTypedZeroAtDirectFunctionBoundary": true,
+    "elementalType": 65,
+    "elementalCategoryLookup": "EnhanceElementCost[Value].AbilityCategory",
+    "ordinaryCategoryLookup": "EnhanceCost[Type].AbilityCategory",
+    "groupContribution": "count>=2 ? float32(float32(count*count)*float32(0.05)) : 0",
+    "multiplier": "startfloat32(1); add each duplicated group contribution with float32 rounding",
+    "application": "int16(trunc(float32(float32(int16(sumOfRowCosts))*multiplier)))",
+    "roundingBoundary": "After per-row signedshort accumulation, multiply aggregate cost by category factor once; do not round each row penalty separately",
+    "examples": [
+      {
+        "groupCounts": [
+          2
+        ],
+        "extraPercent": 20
+      },
+      {
+        "groupCounts": [
+          3
+        ],
+        "extraPercent": 45
+      },
+      {
+        "groupCounts": [
+          3,
+          2
+        ],
+        "extraPercent": 65
+      }
+    ],
+    "warning": "Do not conflate cost delta list with final option list; no general final-set-only net-cost equivalence was proved."
+  },
+  "maximumMagnitude": {
+    "source": "SmithGrantInfoWindow.getEnhanceMax",
+    "levelSource": "IPlayerStatusCalculator.get_Lv (character level), not global level cap or item level",
+    "skillIds": [
+      365,
+      366,
+      367
+    ],
+    "skillLevels": "eachnegativeclampedtozero",
+    "skillFactor": "float32(float32(float32(float32(3*s365)+10)+float32(3*s366))+float32(3*s367))/float32(100)",
+    "levelBelow210": "max(1,min(trunc(float32(skillFactor*BaseMax)),trunc(level/10),BaseMax))",
+    "levelAtLeast210": [
+      "n=max(0,trunc(level/10)-20)",
+      "increment=trunc(float32(Rate*float32(n)))*OverRate",
+      "selectedMax=isUpper ? UpperMax : LowerMax",
+      "hardMagnitude=(selectedMax-BaseMax)*OverRate+BaseMax",
+      "value=min(trunc(float32(float32(increment+BaseMax)*skillFactor)),hardMagnitude)",
+      "if type in [12,22,24,26,28,30,32] and value>BaseMax: value=BaseMax+trunc((value-BaseMax)/OverRate)",
+      "returnmax(1,value)"
+    ],
+    "upperAndLowerReturn": "positive magnitudes; caller applies intended sign",
+    "displayNormalizationTypes": [
+      12,
+      22,
+      24,
+      26,
+      28,
+      30,
+      32
+    ],
+    "element65": "Not an ordinary numeric EnhanceCost domain; separate element selection."
+  },
+  "usableSlots": {
+    "source": "SmithGrant.getUsableSlotCount",
+    "formula": "3+floor(float32(float32(s366+2)*float32(0.3)))+floor(float32(float32(s367+4)*float32(0.2)))",
+    "skill365IsReadButUnused": true,
+    "maximumForSkillLevels0to10": 8,
+    "nativeSlotArrayCapacity": 10,
+    "warning": "Physical slot array capacity10 and usable skill slots are distinct; product spec8 is not imposed by this extractor."
+  },
+  "successSkillBonus": {
+    "source": "SmithGrant.getSuccessSkillRate",
+    "formula": "max(s365,0)+(s366>0 ? 10+s366 : 0)+(s367>0 ? 20+s367 : 0)",
+    "allSkillsLevel10": 60,
+    "warning": "This is the client skill bonus only. OnGrantCheckButton verifies materials and opens the check window; complete success probability/server rollout is not established here."
+  },
+  "evidence": [
+    "index.json",
+    "metadata.json",
+    "skill-links.json",
+    "../native-schema/Toram_Common_Productions_EnhanceProperties2-_ctor-7fff617b04a0.c",
+    "../native-schema/report.json"
+  ],
+  "limitations": [
+    "No app calculation/storage/optimizer integration.",
+    "No live process access, game mutation, grant execution, or server-success observation.",
+    "User zero-value normalization and all UI paths have not been fully validated; direct CalcUsePotentialPoint counting rule is explicit.",
+    "Signed overflow outside valid game ranges is not supported by reconstruction examples."
+  ]
+}

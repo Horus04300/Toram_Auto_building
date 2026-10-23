@@ -1,0 +1,854 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 25
+  },
+  "limitations": [
+    "Metadata declaration offsets are not code addresses; only pointer-table values establish native locations.",
+    "NULL pointers remain unresolved; generic or shared implementations are not inferred.",
+    "Mapping establishes saved pointer identity, not observed execution or a call edge.",
+    "The source capture was sequential and non-atomic; no process access was performed by this parser."
+  ],
+  "methods": [
+    {
+      "class": "MobFactory",
+      "name": "CreateMobObject",
+      "method_definition_index": 8331,
+      "token": "0x0600208c",
+      "metadata_declaration_range": {
+        "offset": 4045132,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "mobId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "entourage",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51427912,
+      "pointer_slot_va": "0x7fff6235ba48",
+      "runtime_va": "0x7fff5fe35980",
+      "rva": "0xbe5980",
+      "status": "mapped",
+      "code_preview_hex": "44884424185556574883ec50803d61f37a0200488bea8bf1",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobFactory-CreateMobObject-7fff5fe35980.c",
+      "sha256": "e0cea4782ab83dde5189952fb52ff2c3746863093c39c5b8431a40e9fed7e98b"
+    },
+    {
+      "class": "MobFactory",
+      "name": "CreateMmoMobObject",
+      "method_definition_index": 8332,
+      "token": "0x0600208d",
+      "metadata_declaration_range": {
+        "offset": 4045168,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "mobId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 16367,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51427920,
+      "pointer_slot_va": "0x7fff6235ba50",
+      "runtime_va": "0x7fff5fe34fc0",
+      "rva": "0xbe4fc0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d28fd7a02008bd97537488d0d688a6202",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobFactory-CreateMmoMobObject-7fff5fe34fc0.c",
+      "sha256": "8575dd984438b02f36b8c454218536b51e7eca194f729e93600e51ba6db8ccaa"
+    },
+    {
+      "class": "MobFactory",
+      "name": "AddComponentMobActionManager",
+      "method_definition_index": 8333,
+      "token": "0x0600208e",
+      "metadata_declaration_range": {
+        "offset": 4045204,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x91",
+      "parameters": [
+        {
+          "name": "model",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "flag",
+          "type_index": 34392,
+          "exact_byval_name": "MobTypeFlag"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51427928,
+      "pointer_slot_va": "0x7fff6235ba58",
+      "runtime_va": "0x7fff5fe34a30",
+      "rva": "0xbe4a30",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803db5027b0200488bd94863fa0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobFactory-AddComponentMobActionManager-7fff5fe34a30.c",
+      "sha256": "1bd93b905f67fd6f3b3aa896cd82fd2f0de8c156cb71bfdf5af564fc517c40b3"
+    },
+    {
+      "class": "HighRaidBossMasterData",
+      "name": ".ctor",
+      "method_definition_index": 33644,
+      "token": "0x0600836d",
+      "metadata_declaration_range": {
+        "offset": 4956400,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "no",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "fieldId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "raidFlag",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "monsterId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "monsterUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "baseLevel",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "minLevel",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630416,
+      "pointer_slot_va": "0x7fff6238d150",
+      "runtime_va": "0x7fff60362ac0",
+      "rva": "0x1112ac0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec200fb6da41",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidBossMasterData-_ctor-7fff60362ac0.c",
+      "sha256": "710d80172d374cafee03a2c06f16e3f0b9f696a2e1220befe59f38eb27a08b6d"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadInt",
+      "method_definition_index": 40961,
+      "token": "0x0600a002",
+      "metadata_declaration_range": {
+        "offset": 5219812,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51688952,
+      "pointer_slot_va": "0x7fff6239b5f8",
+      "runtime_va": "0x7fff60506890",
+      "rva": "0x12b6890",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b49204885c974158b532c4533c0",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldScriptLoader-ReadInt-7fff60506890.c",
+      "sha256": "7c2ed23ab92333bf2199fb3928510f7d700a137a148dbcf487b9c20081f28d02"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadShort",
+      "method_definition_index": 40962,
+      "token": "0x0600a003",
+      "metadata_declaration_range": {
+        "offset": 5219848,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51688960,
+      "pointer_slot_va": "0x7fff6239b600",
+      "runtime_va": "0x7fff60506a30",
+      "rva": "0x12b6a30",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20488bd9488b49204885c974158b532c4533c0",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldScriptLoader-ReadShort-7fff60506a30.c",
+      "sha256": "3aa3cab9e88aade0c2d7798538f26ada0c09de96c89c5217ac0aa11f11a7965e"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadByte",
+      "method_definition_index": 40963,
+      "token": "0x0600a004",
+      "metadata_declaration_range": {
+        "offset": 5219884,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51688968,
+      "pointer_slot_va": "0x7fff6239b608",
+      "runtime_va": "0x7fff60506580",
+      "rva": "0x12b6580",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488bd1488b49204885c9741c4c63422c443b4118",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldScriptLoader-ReadByte-7fff60506580.c",
+      "sha256": "0df3019617bf92dfdd81a68287bee6fca67dd677d410aa1b68d5a96072d406cf"
+    },
+    {
+      "class": "FieldScriptManager",
+      "name": "OnBossMenuCommand",
+      "method_definition_index": 41176,
+      "token": "0x0600a0d9",
+      "metadata_declaration_range": {
+        "offset": 5227552,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "command",
+          "type_index": 15851,
+          "exact_byval_name": "FieldScriptCommand"
+        }
+      ],
+      "return_type": {
+        "type_index": 18073,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "pointer_slot_offset": 51690672,
+      "pointer_slot_va": "0x7fff6239bcb0",
+      "runtime_va": "0x7fff6051fc10",
+      "rva": "0x12cfc10",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803df2800c02008bf2",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldScriptManager-OnBossMenuCommand-7fff6051fc10.c",
+      "sha256": "2fd68f8b17df222d2e0afec3f675105a6a6668dccdc02bd90a932def2b96f038"
+    },
+    {
+      "class": "HighRaidEventData",
+      "name": "LoadBossMaster",
+      "method_definition_index": 16777,
+      "token": "0x0600418a",
+      "metadata_declaration_range": {
+        "offset": 4349188,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "binary",
+          "type_index": 9987
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51495480,
+      "pointer_slot_va": "0x7fff6236c238",
+      "runtime_va": "0x7fff60034b40",
+      "rva": "0xde4b40",
+      "status": "mapped",
+      "code_preview_hex": "48894c240853565741544155415641574881ecb000000048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidEventData-LoadBossMaster-7fff60034b40.c",
+      "sha256": "092595c86b6140932fb7baaff1feefd7bc00b0f7072c0523c91aa2973945bdfa"
+    },
+    {
+      "class": "FieldManager",
+      "name": "get_IsMmo",
+      "method_definition_index": 34206,
+      "token": "0x0600859f",
+      "metadata_declaration_range": {
+        "offset": 4976632,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51634912,
+      "pointer_slot_va": "0x7fff6238e2e0",
+      "runtime_va": "0x7fff6037c810",
+      "rva": "0x112c810",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41284885c0742083782c00741383782c0674",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldManager-get_IsMmo-7fff6037c810.c",
+      "sha256": "0054fe4158f8809d418bcc6ca26bebe6b28f93216ffe4007b2981d328d28b400"
+    },
+    {
+      "class": "FieldManager",
+      "name": "get_IsMoRoom",
+      "method_definition_index": 34207,
+      "token": "0x060085a0",
+      "metadata_declaration_range": {
+        "offset": 4976668,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51634920,
+      "pointer_slot_va": "0x7fff6238e2e8",
+      "runtime_va": "0x7fff6037c850",
+      "rva": "0x112c850",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41284885c0746e83782c02746183782c0e74",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldManager-get_IsMoRoom-7fff6037c850.c",
+      "sha256": "62a1c35a54a415c70b0bb2d00adcac306f016825dabb89c578a22eb0affba805"
+    },
+    {
+      "class": "FieldScriptLoader",
+      "name": "ReadEventIndex",
+      "method_definition_index": 40982,
+      "token": "0x0600a017",
+      "metadata_declaration_range": {
+        "offset": 5220568,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "eventIndex",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51689120,
+      "pointer_slot_va": "0x7fff6239b6a0",
+      "runtime_va": "0x7fff60506670",
+      "rva": "0x12b6670",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec2033c0488bd989412c8b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "FieldScriptLoader-ReadEventIndex-7fff60506670.c",
+      "sha256": "c27d27fe8b9f6f45a4520f39876240f291819b850e63623c45b6dd0157c4e8d2"
+    },
+    {
+      "class": "<OnBossMenuCommand>d__263",
+      "name": "MoveNext",
+      "method_definition_index": 41420,
+      "token": "0x0600a1cd",
+      "metadata_declaration_range": {
+        "offset": 5236336,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51692624,
+      "pointer_slot_va": "0x7fff6239c450",
+      "runtime_va": "0x7fff60538be0",
+      "rva": "0x12e8be0",
+      "status": "mapped",
+      "code_preview_hex": "40565741564881ecc0000000803dacf10a0200488bf97567",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "_OnBossMenuCommand_d__263-MoveNext-7fff60538be0.c",
+      "sha256": "ed1a4ee04d678196ad488d9d15990db7fb43f484002fd0157846e4567a3a3534"
+    },
+    {
+      "class": "<ScriptThread>d__119",
+      "name": "MoveNext",
+      "method_definition_index": 41822,
+      "token": "0x0600a35f",
+      "metadata_declaration_range": {
+        "offset": 5250808,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51695840,
+      "pointer_slot_va": "0x7fff6239d0e0",
+      "runtime_va": "0x7fff60558cc0",
+      "rva": "0x1308cc0",
+      "status": "mapped",
+      "code_preview_hex": "48896c2418488974242041564883ec30803d09f108020048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "_ScriptThread_d__119-MoveNext-7fff60558cc0.c",
+      "sha256": "7b75391e514376748455222aa5a67dd8368fa1fe32307c264b595a2de134656d"
+    },
+    {
+      "class": "HighRaidRewardData",
+      "name": ".ctor",
+      "method_definition_index": 33675,
+      "token": "0x0600838c",
+      "metadata_declaration_range": {
+        "offset": 4957516,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "no",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "rewardNo",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "cost",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "type",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "value",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "num",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "flag",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51630664,
+      "pointer_slot_va": "0x7fff6238d248",
+      "runtime_va": "0x7fff60362c10",
+      "rva": "0x1112c10",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec200fb6da41",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidRewardData-_ctor-7fff60362c10.c",
+      "sha256": "2627d5b543ed6cbf870e7bc61e635d15b0c9309693492c7a3fc95ac6bb927acf"
+    },
+    {
+      "class": "HighRaidBossActionManager",
+      "name": "SetMobLevel",
+      "method_definition_index": 7900,
+      "token": "0x06001edd",
+      "metadata_declaration_range": {
+        "offset": 4029616,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "level",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51424464,
+      "pointer_slot_va": "0x7fff6235acd0",
+      "runtime_va": "0x7fff5fe2cb40",
+      "rva": "0xbdcb40",
+      "status": "mapped",
+      "code_preview_hex": "899160010000c3cccccccccccccccccc48896c2420415441",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidBossActionManager-SetMobLevel-7fff5fe2cb40.c",
+      "sha256": "f0bd1ab24e73e400533ccae39f72fe4db9e88a8f20e3e760b0e71ed4a6d1ea11"
+    },
+    {
+      "class": "HighRaidBossBattleStatus",
+      "name": "get_Level",
+      "method_definition_index": 7907,
+      "token": "0x06001ee4",
+      "metadata_declaration_range": {
+        "offset": 4029868,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51424520,
+      "pointer_slot_va": "0x7fff6235ad08",
+      "runtime_va": "0x7fff5f50ea40",
+      "rva": "0x2bea40",
+      "status": "mapped",
+      "code_preview_hex": "8b4130c3cccccccccccccccccccccccc8b4134c3cccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidBossBattleStatus-get_Level-7fff5f50ea40.c",
+      "sha256": "300b23f864d56db2a7b1ab6855bb636d99dfc70faff161b13bff60d6c0717af3"
+    },
+    {
+      "class": "HighRaidRoomData",
+      "name": "get_AreaLevel",
+      "method_definition_index": 20734,
+      "token": "0x060050ff",
+      "metadata_declaration_range": {
+        "offset": 4491640,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51527136,
+      "pointer_slot_va": "0x7fff62373de0",
+      "runtime_va": "0x7fff600d4000",
+      "rva": "0xe84000",
+      "status": "mapped",
+      "code_preview_hex": "488b41304885c074050fb74022c3c3cc488b49304885c974",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidRoomData-get_AreaLevel-7fff600d4000.c",
+      "sha256": "e33a1a0ccab781b2897d65b1460454d85345928619df545346ec845d122f973e"
+    },
+    {
+      "class": "HighRaidRoomData",
+      "name": "get_MobDifficultyLevel",
+      "method_definition_index": 20735,
+      "token": "0x06005100",
+      "metadata_declaration_range": {
+        "offset": 4491676,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18774,
+        "exact_byval_name": "System.Int16"
+      },
+      "pointer_slot_offset": 51527144,
+      "pointer_slot_va": "0x7fff62373de8",
+      "runtime_va": "0x7fff5f4e2030",
+      "rva": "0x292030",
+      "status": "mapped",
+      "code_preview_hex": "33c0c3cccccccccccccccccccccccccc4883ec28803df7f0",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidRoomData-get_MobDifficultyLevel-7fff5f4e2030.c",
+      "sha256": "19e2d5cb7a21444a729020b22bc6d31ed8a258cdaebcd11890ac41be7d69ef9a"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultyDown",
+      "method_definition_index": 50307,
+      "token": "0x0600c484",
+      "metadata_declaration_range": {
+        "offset": 5556268,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763720,
+      "pointer_slot_va": "0x7fff623ada08",
+      "runtime_va": "0x7fff5f65fb80",
+      "rva": "0x40fb80",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000fb0fbf81740100003b81900100007d0e0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIHighRaidEnterManager-OnDifficultyDown-7fff5f65fb80.c",
+      "sha256": "dc22827fc6576d48c1ba1b3cdaf3272b363e4bfc118991cf84369ccb27b62b76"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultyUp",
+      "method_definition_index": 50308,
+      "token": "0x0600c485",
+      "metadata_declaration_range": {
+        "offset": 5556304,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763728,
+      "pointer_slot_va": "0x7fff623ada10",
+      "runtime_va": "0x7fff5f65fc10",
+      "rva": "0x40fc10",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000050fbf81740100003b81940100007e0e0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIHighRaidEnterManager-OnDifficultyUp-7fff5f65fc10.c",
+      "sha256": "01b348d99aea1d6c72747b5d6c5202c64f3c0d3c8a2fadb96a82152b3e3a3c31"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultySDown",
+      "method_definition_index": 50309,
+      "token": "0x0600c486",
+      "metadata_declaration_range": {
+        "offset": 5556340,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763736,
+      "pointer_slot_va": "0x7fff623ada18",
+      "runtime_va": "0x7fff5f65fbb0",
+      "rva": "0x40fbb0",
+      "status": "mapped",
+      "code_preview_hex": "66838174010000f60fbf81740100003b81900100007d0e0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIHighRaidEnterManager-OnDifficultySDown-7fff5f65fbb0.c",
+      "sha256": "98dea78b83da4c0176916900213055b40b20041c27eec1ce943ee443198d0114"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnDifficultySUp",
+      "method_definition_index": 50310,
+      "token": "0x0600c487",
+      "metadata_declaration_range": {
+        "offset": 5556376,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763744,
+      "pointer_slot_va": "0x7fff623ada20",
+      "runtime_va": "0x7fff5f65fbe0",
+      "rva": "0x40fbe0",
+      "status": "mapped",
+      "code_preview_hex": "668381740100000a0fbf81740100003b81940100007e0e0f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIHighRaidEnterManager-OnDifficultySUp-7fff5f65fbe0.c",
+      "sha256": "dc486434d53b2152ab9d3f50791eadd0d1d75b65289dc548996a18b4728d6b3a"
+    },
+    {
+      "class": "UIHighRaidEnterManager",
+      "name": "OnBattleReady",
+      "method_definition_index": 50312,
+      "token": "0x0600c489",
+      "metadata_declaration_range": {
+        "offset": 5556448,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51763760,
+      "pointer_slot_va": "0x7fff623ada30",
+      "runtime_va": "0x7fff5f65f8c0",
+      "rva": "0x40f8c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803df522f80200488bd9754f488d0d4f52dd",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "UIHighRaidEnterManager-OnBattleReady-7fff5f65f8c0.c",
+      "sha256": "f53a74051c25553149e9c9ea8261897abddf55f613497d36dd40be450d143616"
+    },
+    {
+      "class": "MapInfo",
+      "name": "GetMobPopPoint",
+      "method_definition_index": 34757,
+      "token": "0x060087c6",
+      "metadata_declaration_range": {
+        "offset": 4996468,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 6997
+      },
+      "pointer_slot_offset": 51639320,
+      "pointer_slot_va": "0x7fff6238f418",
+      "runtime_va": "0x7fff60399400",
+      "rva": "0x1149400",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d56de240200488bd97543488d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MapInfo-GetMobPopPoint-7fff60399400.c",
+      "sha256": "2bae3281c02461417b8fb4b4f8815807e4f2951eb50ea1629394a79f1d09359f"
+    }
+  ]
+}

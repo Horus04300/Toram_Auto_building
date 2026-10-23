@@ -1,0 +1,315 @@
+[
+  {
+    "class": "ItemDBData",
+    "name": "get_TypeId",
+    "oldIndex": 18158,
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18778,
+      "exact_byval_name": "System.Int16"
+    },
+    "pointer_slot_offset": 51539488,
+    "pointer_slot_va": "0x7ffe9c866e20",
+    "runtime_va": "0x7ffe9a1fc390",
+    "rva": "0xabc390",
+    "status": "mapped",
+    "code_preview_hex": "0fb74130c3cccccccccccccccccccccc0fb74168c3cccccc",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "18158.c"
+  },
+  {
+    "class": "ItemDBData",
+    "name": "get_Model",
+    "oldIndex": 18180,
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51539664,
+    "pointer_slot_va": "0x7ffe9c866ed0",
+    "runtime_va": "0x7ffe99a87460",
+    "rva": "0x347460",
+    "status": "mapped",
+    "code_preview_hex": "8b4148c3cccccccccccccccccccccccc0fb6413fc3cccccc",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "18180.c"
+  },
+  {
+    "class": "ItemDBData",
+    "name": "CheckPowerUpCristaItem",
+    "oldIndex": 18216,
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "type",
+        "type_index": 33772,
+        "exact_byval_name": "ItemType"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51539952,
+    "pointer_slot_va": "0x7ffe9c866ff0",
+    "runtime_va": "0x7ffe9a2782b0",
+    "rva": "0xb382b0",
+    "status": "mapped",
+    "code_preview_hex": "83f93d7d0332c0c383f9410f9ec0c3cc83f9320f94c283f9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "18216.c"
+  },
+  {
+    "class": "MasterItemDataManager",
+    "name": "GetMasterItemData",
+    "oldIndex": 18483,
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "id",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 19009,
+      "exact_byval_name": "ItemDBData"
+    },
+    "pointer_slot_offset": 51542088,
+    "pointer_slot_va": "0x7ffe9c867848",
+    "runtime_va": "0x7ffe9a57a320",
+    "rva": "0xe3a320",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d6c425602008bfa488bd9751f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "18483.c"
+  },
+  {
+    "class": "UIEquipCristaPanel",
+    "name": "GetAllPowerUpCristaList",
+    "oldIndex": 58488,
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 6936
+    },
+    "pointer_slot_offset": 51862128,
+    "pointer_slot_va": "0x7ffe9c8b5a70",
+    "runtime_va": "0x7ffe99dd1b60",
+    "rva": "0x691b60",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d0999d00200488bf97537488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58488.c"
+  },
+  {
+    "class": "UIEquipCristaPanel",
+    "name": "GetPowerUpCristaList",
+    "oldIndex": 58490,
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 6936
+    },
+    "pointer_slot_offset": 51862144,
+    "pointer_slot_va": "0x7ffe9c8b5a80",
+    "runtime_va": "0x7ffe99dd2fb0",
+    "rva": "0x692fb0",
+    "status": "mapped",
+    "code_preview_hex": "48894c240853565741544155415641574881ec800000004c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58490.c"
+  },
+  {
+    "class": "UIEquipCristaPanel",
+    "name": "GetPowerUpCristaOrderList",
+    "oldIndex": 58491,
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "startItemData",
+        "type_index": 19011,
+        "exact_byval_name": "ItemData"
+      },
+      {
+        "name": "endItemId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 6936
+    },
+    "pointer_slot_offset": 51862152,
+    "pointer_slot_va": "0x7ffe9c8b5a88",
+    "runtime_va": "0x7ffe99dd36b0",
+    "rva": "0x6936b0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241048896c2418488974242041564883ec20803db1",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58491.c"
+  },
+  {
+    "class": "UIEquipCristaPanel",
+    "name": "GetPowerUpCristaOrderList",
+    "oldIndex": 58492,
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "startItemId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 6936
+    },
+    "pointer_slot_offset": 51862160,
+    "pointer_slot_va": "0x7ffe9c8b5a90",
+    "runtime_va": "0x7ffe99dd38f0",
+    "rva": "0x6938f0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c242041564883ec20803d777bd0020044",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58492.c"
+  },
+  {
+    "class": "\u003c\u003ec",
+    "name": "\u003cGetPowerUpCristaList\u003eb__70_2",
+    "oldIndex": 58528,
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 6456
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51862448,
+    "pointer_slot_va": "0x7ffe9c8b5bb0",
+    "runtime_va": "0x7ffe99dcd180",
+    "rva": "0x68d180",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20803d0ee3d00200488bda751c488d0d9f15ba",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58528.c"
+  },
+  {
+    "class": "\u003c\u003ec",
+    "name": "\u003cGetPowerUpCristaList\u003eb__70_3",
+    "oldIndex": 58529,
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 6456
+      }
+    ],
+    "return_type": {
+      "type_index": 19011,
+      "exact_byval_name": "ItemData"
+    },
+    "pointer_slot_offset": 51862456,
+    "pointer_slot_va": "0x7ffe9c8b5bb8",
+    "runtime_va": "0x7ffe99dcd1c0",
+    "rva": "0x68d1c0",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20803dcfe2d00200488bda751c488d0d8f14ba",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58529.c"
+  },
+  {
+    "class": "\u003c\u003ec__DisplayClass70_0",
+    "name": "\u003cGetPowerUpCristaList\u003eb__0",
+    "oldIndex": 58551,
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 19011,
+        "exact_byval_name": "ItemData"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51862632,
+    "pointer_slot_va": "0x7ffe9c8b5c68",
+    "runtime_va": "0x7ffe99dcd610",
+    "rva": "0x68d610",
+    "status": "mapped",
+    "code_preview_hex": "4883ec284885d2740e8b41103942340f94c04883c428c3e8",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58551.c"
+  },
+  {
+    "class": "\u003c\u003ec__DisplayClass70_1",
+    "name": "\u003cGetPowerUpCristaList\u003eb__1",
+    "oldIndex": 58553,
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 19011,
+        "exact_byval_name": "ItemData"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51862648,
+    "pointer_slot_va": "0x7ffe9c8b5c78",
+    "runtime_va": "0x7ffe99dcd610",
+    "rva": "0x68d610",
+    "status": "mapped",
+    "code_preview_hex": "4883ec284885d2740e8b41103942340f94c04883c428c3e8",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58553.c"
+  },
+  {
+    "class": "\u003c\u003ec__DisplayClass72_0",
+    "name": "\u003cGetPowerUpCristaOrderList\u003eb__0",
+    "oldIndex": 58555,
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 19011,
+        "exact_byval_name": "ItemData"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51862664,
+    "pointer_slot_va": "0x7ffe9c8b5c88",
+    "runtime_va": "0x7ffe99dcd660",
+    "rva": "0x68d660",
+    "status": "mapped",
+    "code_preview_hex": "4883ec284885d27417488b52284885d2740e8b4110394248",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "58555.c"
+  }
+]

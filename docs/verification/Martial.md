@@ -55,9 +55,9 @@
 
 ## 실행 검증
 
-- `node --check assets/js/data/skills/martial.js`: 통과
-- `node --check assets/js/data/skills/crusher.js`: 통과
-- `node --check assets/js/active-buff-ui.js`: 통과
+- `node --check web/src/data/skills/martial.js`: 통과
+- `node --check web/src/data/skills/crusher.js`: 통과
+- `node --check web/src/ui/active-buff-ui.js`: 통과
 - `node tools/verification/audit-stack-source-links.mjs --tree Martial --require-s1`: 22/22 통과
 - `node tools/tests/skills/test-martial-regression.mjs`: 통과
 - `node tools/tests/skills/test-blade-regression.mjs`: 통과

@@ -22,7 +22,7 @@ context.window.ToramSkillEffects = {
   }
 };
 vm.createContext(context);
-for (const path of ['assets/js/data/combo-rule-data.js', 'assets/js/combo-sequence-engine.js']) {
+for (const path of ['web/src/data/combo-rule-data.js', 'web/src/calculation/combo-sequence-engine.js']) {
   vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 }
 

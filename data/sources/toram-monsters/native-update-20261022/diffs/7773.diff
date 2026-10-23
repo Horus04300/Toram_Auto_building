@@ -1,0 +1,108 @@
+--- assets\source-data\toram-monsters\native-guildraid-target\GuildRaidBossMobBattleStatus-_ctor-7fff5fe27910.c
++++ 7773.c
+@@ -1,8 +1,9 @@
+ {
+-  code *pcVar1;
+-  undefined8 uVar2;
+-  longlong lVar3;
+-  uint uVar4;
++  longlong lVar1;
++  code *pcVar2;
++  undefined8 uVar3;
++  undefined *puVar4;
+   uint uVar5;
++  uint uVar6;
+   if (GLOBAL0 == '\0') {
+     CALL0(&GLOBAL1);
+@@ -12,49 +13,49 @@
+   }
+   *(undefined4 *)(self + 0x50) = 1;
+-  GuildRaidRoomData_LoadAsset(self,(undefined *)0x0);
++  CALL1(self,0);
+   *(undefined **)(self + 0x20) = statusMaster;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x28) = abnormalManager;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x30) = buffManager;
+-  CALL1();
++  il2cpp_write_barrier_0();
+   *(undefined **)(self + 0x48) = randomProperty;
+   *(int *)(self + 0x10) = level;
+-  CALL1();
+-  uVar2 = CALL2(GLOBAL2);
+-  CALL3(uVar2,GLOBAL1);
+-  *(undefined8 *)(self + 0x18) = uVar2;
+-  CALL1();
+-  uVar2 = CALL2(GLOBAL3);
+-  CALL4(uVar2,0);
+-  *(undefined8 *)(self + 0x40) = uVar2;
+-  CALL1();
++  il2cpp_write_barrier_0();
++  uVar3 = CALL2(GLOBAL2);
++  CALL3(uVar3,GLOBAL1);
++  *(undefined8 *)(self + 0x18) = uVar3;
++  il2cpp_write_barrier_0();
++  uVar3 = CALL2(GLOBAL3);
++  CALL4(uVar3,0);
++  *(undefined8 *)(self + 0x40) = uVar3;
++  il2cpp_write_barrier_0();
+   if (*(longlong *)(self + 0x40) != 0) {
+-    CALL5(*(longlong *)(self + 0x40),0);
++    CALL5();
+     if ((*(longlong *)(self + 0x20) != 0) &&
+-       (lVar3 = *(longlong *)(*(longlong *)(self + 0x20) + 0xa0), lVar3 != 0)) {
+-      lVar3 = CALL6(lVar3,0);
+-      uVar4 = 0;
+-      if ((lVar3 != 0) && (uVar5 = uVar4, *(longlong *)(lVar3 + 0x18) != 0)) {
+-        for (; (int)uVar5 < (int)*(uint *)(lVar3 + 0x18); uVar5 = uVar5 + 1) {
+-          if (*(uint *)(lVar3 + 0x18) <= uVar5) goto LABEL0;
++       (puVar4 = *(undefined **)(*(longlong *)(self + 0x20) + 0xa0), puVar4 != (undefined *)0x0)) {
++      puVar4 = MobPropertyManager_GetMobPropertyMasters(puVar4,(undefined *)0x0);
++      uVar5 = 0;
++      if ((puVar4 != (undefined *)0x0) && (uVar6 = uVar5, *(longlong *)(puVar4 + 0x18) != 0)) {
++        for (; (int)uVar6 < (int)*(uint *)(puVar4 + 0x18); uVar6 = uVar6 + 1) {
++          if (*(uint *)(puVar4 + 0x18) <= uVar6) goto LABEL0;
+           if (*(longlong *)(self + 0x40) == 0) goto LABEL1;
+-          CALL7(*(longlong *)(self + 0x40),
+-                           *(undefined8 *)(lVar3 + 0x20 + (longlong)(int)uVar5 * 8),0);
++          CALL6(*(longlong *)(self + 0x40),
++                           *(undefined8 *)(puVar4 + (longlong)(int)uVar6 * 8 + 0x20),0);
+         }
+       }
+-      lVar3 = *(longlong *)(self + 0x48);
+-      if ((lVar3 != 0) && (*(longlong *)(lVar3 + 0x18) != 0)) {
+-        for (; (int)uVar4 < *(int *)(lVar3 + 0x18); uVar4 = uVar4 + 1) {
+-          if (*(uint *)(lVar3 + 0x18) <= uVar4) {
++      lVar1 = *(longlong *)(self + 0x48);
++      if ((lVar1 != 0) && (*(longlong *)(lVar1 + 0x18) != 0)) {
++        for (; (int)uVar5 < *(int *)(lVar1 + 0x18); uVar5 = uVar5 + 1) {
++          if (*(uint *)(lVar1 + 0x18) <= uVar5) {
+ LABEL0:
+-            CALL8();
+-            pcVar1 = (code *)swi(3);
+-            (*pcVar1)();
++            CALL7();
++            pcVar2 = (code *)swi(3);
++            (*pcVar2)();
+             return;
+           }
+           if (*(longlong *)(self + 0x40) == 0) goto LABEL1;
+-          CALL7(*(longlong *)(self + 0x40),
+-                           *(undefined8 *)(lVar3 + 0x20 + (longlong)(int)uVar4 * 8),0);
++          CALL6(*(longlong *)(self + 0x40),
++                           *(undefined8 *)(lVar1 + 0x20 + (longlong)(int)uVar5 * 8),0);
+         }
+       }
+@@ -63,7 +64,7 @@
+   }
+ LABEL1:
+-  CALL9();
+-  pcVar1 = (code *)swi(3);
+-  (*pcVar1)();
++  CALL8();
++  pcVar2 = (code *)swi(3);
++  (*pcVar2)();
+   return;
+ }

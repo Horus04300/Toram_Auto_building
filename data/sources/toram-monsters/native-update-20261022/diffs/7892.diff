@@ -1,0 +1,87 @@
+--- assets\source-data\toram-monsters\native-rules\HighRaidBossActionManager-OnSetStatus-7fff5fe2c7b0.c
++++ 7892.c
+@@ -53,23 +53,23 @@
+   CALL2(uVar10,GLOBAL12);
+   *(undefined8 *)(lVar9 + 0x38) = uVar10;
+-  CALL3();
+-  CALL4(lVar9,0);
++  il2cpp_write_barrier_0();
++  CALL3(lVar9,0);
+   *(longlong *)(lVar9 + 0x10) = lVar14;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined8 *)(lVar9 + 0x18) = uVar2;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined8 *)(lVar9 + 0x20) = uVar3;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   *(undefined4 *)(lVar9 + 0x30) = uVar16;
+   plVar1 = (longlong *)(self + 0x158);
+   *plVar1 = lVar9;
+-  CALL3();
++  il2cpp_write_barrier_0();
+   if (*plVar1 != 0) {
+-    CALL5(0x14,GLOBAL8,*plVar1,*(undefined8 *)(self + 0x78));
++    CALL4(0x14,GLOBAL8,*plVar1,*(undefined8 *)(self + 0x78));
+     if (*(longlong *)(self + 0x168) != 0) {
+-      iVar8 = CALL6(*(longlong *)(self + 0x168),GLOBAL2);
++      iVar8 = CALL5(*(longlong *)(self + 0x168),GLOBAL2);
+       if (0 < iVar8) {
+         if (*(longlong *)(self + 0x168) == 0) goto LABEL0;
+-        CALL7(&uStack_48,*(longlong *)(self + 0x168),GLOBAL1);
++        CALL6(&uStack_48,*(longlong *)(self + 0x168),GLOBAL1);
+         uStack_70 = uStack_48;
+         uStack_68 = uStack_40;
+@@ -78,5 +78,5 @@
+         uStack_50 = uStack_28;
+         while( true ) {
+-          cVar6 = CALL8(&uStack_70,GLOBAL4);
++          cVar6 = CALL7(&uStack_70,GLOBAL4);
+           uVar2 = uStack_58;
+           lVar9 = GLOBAL7;
+@@ -85,19 +85,19 @@
+           uVar15 = uStack_60 & 0xff;
+           if (lVar4 == 0) {
+-            CALL9();
++            CALL8();
+ LABEL1:
+-            uVar16 = CALL10(lVar4,lVar14);
++            uVar16 = CALL9(lVar4,lVar14);
+ LABEL2:
+-            CALL10(uVar16,lVar9);
+-            CALL11();
++            CALL9(uVar16,lVar9);
++            CALL10();
+             pcVar5 = (code *)swi(3);
+             (*pcVar5)();
+             return;
+           }
+-          lVar11 = CALL12(lVar4,GLOBAL7);
++          lVar11 = CALL11(lVar4,GLOBAL7);
+           lVar14 = GLOBAL7;
+           uVar16 = extraout_XMM0_Da;
+           if (lVar11 == 0) goto LABEL2;
+-          plVar12 = (longlong *)CALL12(lVar4,GLOBAL7);
++          plVar12 = (longlong *)CALL11(lVar4,GLOBAL7);
+           lVar9 = 0;
+           if (plVar12 == (longlong *)0x0) goto LABEL1;
+@@ -118,9 +118,9 @@
+             } while (uVar7 < *(ushort *)(lVar9 + 0x12e));
+           }
+-          puVar13 = (undefined8 *)CALL13(plVar12,GLOBAL7,1);
++          puVar13 = (undefined8 *)CALL12(plVar12,GLOBAL7,1);
+ LABEL3:
+           (*(code *)*puVar13)(plVar12,uVar15,uVar2,puVar13[1]);
+         }
+-        CALL4(&uStack_70,GLOBAL3);
++        CALL3(&uStack_70,GLOBAL3);
+       }
+       return;
+@@ -128,5 +128,5 @@
+   }
+ LABEL0:
+-  CALL9();
++  CALL8();
+   pcVar5 = (code *)swi(3);
+   (*pcVar5)();

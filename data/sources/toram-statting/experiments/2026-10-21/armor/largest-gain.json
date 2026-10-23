@@ -1,0 +1,5068 @@
+{
+  "case": {
+    "equipmentType": 20,
+    "rounding": "combined-floor",
+    "frame": "armor-atk-crit",
+    "profile": {
+      "equipmentType": 20,
+      "label": "방어구",
+      "basePotential": 63,
+      "startingPotential": 132,
+      "craftStatBonus": 51,
+      "craftingRoundingModel": "combined-floor",
+      "startingPotentialNativeVerified": false,
+      "gameItemIds": [
+        20155
+      ],
+      "statterLevel": 325,
+      "statterTEC": 255,
+      "grantSkills": [
+        10,
+        10,
+        10
+      ],
+      "crafterAppStatBudget": 840,
+      "slotPenalty": "excluded from reference profile"
+    },
+    "positives": {
+      "18": 8,
+      "43": 8,
+      "42": 21,
+      "40": 24
+    },
+    "negatives": {
+      "20": -16,
+      "52": -9,
+      "35": -10
+    },
+    "routes": {
+      "best": {
+        "drain": {
+          "warningPercent": 100,
+          "afterPotential": -82,
+          "steps": [
+            {
+              "18": 1,
+              "42": 1,
+              "40": 1
+            },
+            {
+              "43": 1
+            },
+            {
+              "43": 2
+            },
+            {
+              "43": 3
+            },
+            {
+              "43": 4
+            },
+            {
+              "43": 5
+            },
+            {
+              "43": 6
+            },
+            {
+              "43": 7
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "18": 8,
+              "43": 8,
+              "42": 21,
+              "40": 24
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "drain",
+          "prefixActions": 8,
+          "negativeGroups": 1
+        },
+        "combined": {
+          "warningPercent": 100,
+          "afterPotential": -82,
+          "steps": [
+            {
+              "18": 1,
+              "42": 1,
+              "40": 1
+            },
+            {
+              "43": 1
+            },
+            {
+              "43": 2
+            },
+            {
+              "43": 3
+            },
+            {
+              "43": 4
+            },
+            {
+              "43": 5
+            },
+            {
+              "43": 6
+            },
+            {
+              "43": 7
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "18": 8,
+              "43": 8,
+              "42": 21,
+              "40": 24
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "drain",
+          "prefixActions": 8,
+          "negativeGroups": 1
+        },
+        "drain-split": {
+          "warningPercent": 100,
+          "afterPotential": -64,
+          "steps": [
+            {
+              "18": 1,
+              "42": 1,
+              "40": 1
+            },
+            {
+              "43": 1
+            },
+            {
+              "43": 2
+            },
+            {
+              "43": 3
+            },
+            {
+              "43": 4
+            },
+            {
+              "43": 5
+            },
+            {
+              "43": 6
+            },
+            {
+              "43": 7
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "40": 2
+            },
+            {
+              "40": 3
+            },
+            {
+              "40": 4
+            },
+            {
+              "40": 5
+            },
+            {
+              "40": 6
+            },
+            {
+              "40": 7
+            },
+            {
+              "40": 8
+            },
+            {
+              "40": 9
+            },
+            {
+              "40": 10
+            },
+            {
+              "40": 11
+            },
+            {
+              "40": 12
+            },
+            {
+              "40": 13
+            },
+            {
+              "40": 14
+            },
+            {
+              "40": 15
+            },
+            {
+              "40": 16
+            },
+            {
+              "40": 17
+            },
+            {
+              "40": 18
+            },
+            {
+              "40": 19
+            },
+            {
+              "40": 20
+            },
+            {
+              "18": 8,
+              "43": 8,
+              "42": 21,
+              "40": 24
+            }
+          ],
+          "helperOrder": [
+            40
+          ],
+          "splitThroughCap": false,
+          "family": "drain-split",
+          "prefixActions": 8,
+          "negativeGroups": 1
+        },
+        "mixed": {
+          "warningPercent": 44,
+          "afterPotential": -187,
+          "steps": [
+            {
+              "18": 1
+            },
+            {
+              "18": 2,
+              "35": -1
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "18": 8,
+              "43": 8,
+              "42": 21,
+              "40": 24
+            }
+          ],
+          "helperOrder": [],
+          "splitThroughCap": false,
+          "family": "mixed",
+          "prefixActions": 3,
+          "negativeGroups": "mixed-then-remainder"
+        },
+        "mixed-split": {
+          "warningPercent": 51,
+          "afterPotential": -162,
+          "steps": [
+            {
+              "18": 1
+            },
+            {
+              "18": 2,
+              "35": -1
+            },
+            {
+              "20": -16,
+              "52": -9,
+              "35": -10
+            },
+            {
+              "40": 1
+            },
+            {
+              "40": 2
+            },
+            {
+              "40": 3
+            },
+            {
+              "40": 4
+            },
+            {
+              "40": 5
+            },
+            {
+              "40": 6
+            },
+            {
+              "40": 7
+            },
+            {
+              "40": 8
+            },
+            {
+              "40": 9
+            },
+            {
+              "40": 10
+            },
+            {
+              "40": 11
+            },
+            {
+              "40": 12
+            },
+            {
+              "40": 13
+            },
+            {
+              "40": 14
+            },
+            {
+              "40": 15
+            },
+            {
+              "40": 16
+            },
+            {
+              "40": 17
+            },
+            {
+              "40": 18
+            },
+            {
+              "40": 19
+            },
+            {
+              "40": 20
+            },
+            {
+              "40": 21
+            },
+            {
+              "40": 22
+            },
+            {
+              "40": 23
+            },
+            {
+              "40": 24
+            },
+            {
+              "18": 8,
+              "43": 8,
+              "42": 21
+            }
+          ],
+          "helperOrder": [
+            40
+          ],
+          "splitThroughCap": true,
+          "family": "mixed-split",
+          "prefixActions": 3,
+          "negativeGroups": "mixed-then-remainder"
+        }
+      },
+      "prefixStatesGenerated": 772,
+      "negativeSchedulesAttempted": 500,
+      "completedRoutes": 1122,
+      "uniqueCompletedRoutes": 1122
+    }
+  },
+  "traces": {
+    "drain": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            },
+            {
+              "bonusId": 42,
+              "value": 1
+            },
+            {
+              "bonusId": 40,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 8
+            },
+            {
+              "bonusId": 43,
+              "value": 8
+            },
+            {
+              "bonusId": 42,
+              "value": 21
+            },
+            {
+              "bonusId": 40,
+              "value": 24
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 104,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 42,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 3
+              },
+              {
+                "bonusId": 40,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 24,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 28,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 341,
+            "categoryCounts": {
+              "3": 1,
+              "8": 2
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 104,
+            "afterPotential": 90,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 359,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 90,
+            "afterPotential": 76,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 354,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "beforePotential": 76,
+            "afterPotential": 62,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 347,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "beforePotential": 62,
+            "afterPotential": 48,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 335,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 4
+              }
+            ]
+          },
+          {
+            "beforePotential": 48,
+            "afterPotential": 34,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 284,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 5
+              }
+            ]
+          },
+          {
+            "beforePotential": 34,
+            "afterPotential": 20,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 233,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "beforePotential": 20,
+            "afterPotential": 6,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 181,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "beforePotential": 6,
+            "afterPotential": 374,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -10,
+                "delta": -10,
+                "cost": -30
+              }
+            ],
+            "rowCostSum": -194,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": -368,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1525,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 374,
+            "afterPotential": -82,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 8,
+                "delta": 7,
+                "cost": 140
+              },
+              {
+                "bonusId": 43,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 10
+              },
+              {
+                "bonusId": 42,
+                "old": 1,
+                "new": 21,
+                "delta": 20,
+                "cost": 63
+              },
+              {
+                "bonusId": 40,
+                "old": 1,
+                "new": 24,
+                "delta": 23,
+                "cost": 27
+              }
+            ],
+            "rowCostSum": 240,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 456,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 109,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 8
+              },
+              {
+                "bonusId": 42,
+                "value": 21
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              },
+              {
+                "bonusId": 43,
+                "value": 8
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 100,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "drain-split": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            },
+            {
+              "bonusId": 42,
+              "value": 1
+            },
+            {
+              "bonusId": 40,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 8
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 9
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 10
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 11
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 12
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 13
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 14
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 15
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 16
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 17
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 18
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 19
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 20
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 8
+            },
+            {
+              "bonusId": 43,
+              "value": 8
+            },
+            {
+              "bonusId": 42,
+              "value": 21
+            },
+            {
+              "bonusId": 40,
+              "value": 24
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 104,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 42,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 3
+              },
+              {
+                "bonusId": 40,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 24,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 28,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 341,
+            "categoryCounts": {
+              "3": 1,
+              "8": 2
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 104,
+            "afterPotential": 90,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 359,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 90,
+            "afterPotential": 76,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 354,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "beforePotential": 76,
+            "afterPotential": 62,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 347,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "beforePotential": 62,
+            "afterPotential": 48,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 335,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 4
+              }
+            ]
+          },
+          {
+            "beforePotential": 48,
+            "afterPotential": 34,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 284,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 5
+              }
+            ]
+          },
+          {
+            "beforePotential": 34,
+            "afterPotential": 20,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 233,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "beforePotential": 20,
+            "afterPotential": 6,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 181,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "beforePotential": 6,
+            "afterPotential": 374,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -10,
+                "delta": -10,
+                "cost": -30
+              }
+            ],
+            "rowCostSum": -194,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": -368,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1525,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 374,
+            "afterPotential": 373,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 2
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 373,
+            "afterPotential": 372,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 3
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 372,
+            "afterPotential": 371,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 4
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 371,
+            "afterPotential": 370,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 5
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 370,
+            "afterPotential": 369,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 6
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 369,
+            "afterPotential": 368,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 7
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 368,
+            "afterPotential": 367,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 8
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 367,
+            "afterPotential": 366,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 8,
+                "new": 9,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 9
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 366,
+            "afterPotential": 365,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 9,
+                "new": 10,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 10
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 365,
+            "afterPotential": 364,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 10,
+                "new": 11,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 11
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 364,
+            "afterPotential": 363,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 11,
+                "new": 12,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 12
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 363,
+            "afterPotential": 362,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 12,
+                "new": 13,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 13
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 362,
+            "afterPotential": 361,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 13,
+                "new": 14,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 14
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 361,
+            "afterPotential": 360,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 14,
+                "new": 15,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 15
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 360,
+            "afterPotential": 359,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 15,
+                "new": 16,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 16
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 359,
+            "afterPotential": 358,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 16,
+                "new": 17,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 17
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 358,
+            "afterPotential": 357,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 17,
+                "new": 18,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 18
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 357,
+            "afterPotential": 356,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 18,
+                "new": 19,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 19
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 356,
+            "afterPotential": 355,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 19,
+                "new": 20,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 20
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 355,
+            "afterPotential": -64,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 8,
+                "delta": 7,
+                "cost": 140
+              },
+              {
+                "bonusId": 43,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 10
+              },
+              {
+                "bonusId": 42,
+                "old": 1,
+                "new": 21,
+                "delta": 20,
+                "cost": 63
+              },
+              {
+                "bonusId": 40,
+                "old": 20,
+                "new": 24,
+                "delta": 4,
+                "cost": 8
+              }
+            ],
+            "rowCostSum": 221,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 419,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 118,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 8
+              },
+              {
+                "bonusId": 42,
+                "value": 21
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              },
+              {
+                "bonusId": 43,
+                "value": 8
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 100,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "mixed": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 2
+            },
+            {
+              "bonusId": 35,
+              "value": -1
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 8
+            },
+            {
+              "bonusId": 43,
+              "value": 8
+            },
+            {
+              "bonusId": 42,
+              "value": 21
+            },
+            {
+              "bonusId": 40,
+              "value": 24
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 112,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              }
+            ],
+            "rowCostSum": 20,
+            "multiplierFloat32": 1.0,
+            "totalCost": 20,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 355,
+            "categoryCounts": {
+              "3": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 112,
+            "afterPotential": 95,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -1,
+                "delta": -1,
+                "cost": -3
+              }
+            ],
+            "rowCostSum": 17,
+            "multiplierFloat32": 1.0,
+            "totalCost": 17,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 355,
+            "categoryCounts": {
+              "3": 1,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -1
+              }
+            ]
+          },
+          {
+            "beforePotential": 95,
+            "afterPotential": 371,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": -1,
+                "new": -10,
+                "delta": -9,
+                "cost": -27
+              }
+            ],
+            "rowCostSum": -191,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": -276,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1058,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              }
+            ]
+          },
+          {
+            "beforePotential": 371,
+            "afterPotential": -187,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 2,
+                "new": 8,
+                "delta": 6,
+                "cost": 120
+              },
+              {
+                "bonusId": 43,
+                "old": 0,
+                "new": 8,
+                "delta": 8,
+                "cost": 80
+              },
+              {
+                "bonusId": 42,
+                "old": 0,
+                "new": 21,
+                "delta": 21,
+                "cost": 66
+              },
+              {
+                "bonusId": 40,
+                "old": 0,
+                "new": 24,
+                "delta": 24,
+                "cost": 28
+              }
+            ],
+            "rowCostSum": 294,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 558,
+            "warningPercent": 44,
+            "warningIntegerBeforeUpperBound": 44,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 8
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 43,
+                "value": 8
+              },
+              {
+                "bonusId": 42,
+                "value": 21
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 44,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "mixed-split": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 2
+            },
+            {
+              "bonusId": 35,
+              "value": -1
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 8
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 9
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 10
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 11
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 12
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 13
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 14
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 15
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 16
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 17
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 18
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 19
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 20
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 21
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 22
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 23
+            }
+          ],
+          [
+            {
+              "bonusId": 40,
+              "value": 24
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 8
+            },
+            {
+              "bonusId": 43,
+              "value": 8
+            },
+            {
+              "bonusId": 42,
+              "value": 21
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 112,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              }
+            ],
+            "rowCostSum": 20,
+            "multiplierFloat32": 1.0,
+            "totalCost": 20,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 355,
+            "categoryCounts": {
+              "3": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 112,
+            "afterPotential": 95,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -1,
+                "delta": -1,
+                "cost": -3
+              }
+            ],
+            "rowCostSum": 17,
+            "multiplierFloat32": 1.0,
+            "totalCost": 17,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 355,
+            "categoryCounts": {
+              "3": 1,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -1
+              }
+            ]
+          },
+          {
+            "beforePotential": 95,
+            "afterPotential": 371,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": -1,
+                "new": -10,
+                "delta": -9,
+                "cost": -27
+              }
+            ],
+            "rowCostSum": -191,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": -276,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1058,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              }
+            ]
+          },
+          {
+            "beforePotential": 371,
+            "afterPotential": 370,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 370,
+            "afterPotential": 369,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "beforePotential": 369,
+            "afterPotential": 368,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "beforePotential": 368,
+            "afterPotential": 367,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 4
+              }
+            ]
+          },
+          {
+            "beforePotential": 367,
+            "afterPotential": 366,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 5
+              }
+            ]
+          },
+          {
+            "beforePotential": 366,
+            "afterPotential": 365,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "beforePotential": 365,
+            "afterPotential": 364,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "beforePotential": 364,
+            "afterPotential": 363,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 8
+              }
+            ]
+          },
+          {
+            "beforePotential": 363,
+            "afterPotential": 362,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 8,
+                "new": 9,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 9
+              }
+            ]
+          },
+          {
+            "beforePotential": 362,
+            "afterPotential": 361,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 9,
+                "new": 10,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 10
+              }
+            ]
+          },
+          {
+            "beforePotential": 361,
+            "afterPotential": 360,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 10,
+                "new": 11,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 11
+              }
+            ]
+          },
+          {
+            "beforePotential": 360,
+            "afterPotential": 359,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 11,
+                "new": 12,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 12
+              }
+            ]
+          },
+          {
+            "beforePotential": 359,
+            "afterPotential": 358,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 12,
+                "new": 13,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 13
+              }
+            ]
+          },
+          {
+            "beforePotential": 358,
+            "afterPotential": 357,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 13,
+                "new": 14,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 14
+              }
+            ]
+          },
+          {
+            "beforePotential": 357,
+            "afterPotential": 356,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 14,
+                "new": 15,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 15
+              }
+            ]
+          },
+          {
+            "beforePotential": 356,
+            "afterPotential": 355,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 15,
+                "new": 16,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 16
+              }
+            ]
+          },
+          {
+            "beforePotential": 355,
+            "afterPotential": 354,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 16,
+                "new": 17,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 17
+              }
+            ]
+          },
+          {
+            "beforePotential": 354,
+            "afterPotential": 353,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 17,
+                "new": 18,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 18
+              }
+            ]
+          },
+          {
+            "beforePotential": 353,
+            "afterPotential": 352,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 18,
+                "new": 19,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 19
+              }
+            ]
+          },
+          {
+            "beforePotential": 352,
+            "afterPotential": 351,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 19,
+                "new": 20,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 1,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 1,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 389,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 20
+              }
+            ]
+          },
+          {
+            "beforePotential": 351,
+            "afterPotential": 349,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 20,
+                "new": 21,
+                "delta": 1,
+                "cost": 2
+              }
+            ],
+            "rowCostSum": 2,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 2,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 388,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 21
+              }
+            ]
+          },
+          {
+            "beforePotential": 349,
+            "afterPotential": 347,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 21,
+                "new": 22,
+                "delta": 1,
+                "cost": 2
+              }
+            ],
+            "rowCostSum": 2,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 2,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 388,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 22
+              }
+            ]
+          },
+          {
+            "beforePotential": 347,
+            "afterPotential": 345,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 22,
+                "new": 23,
+                "delta": 1,
+                "cost": 2
+              }
+            ],
+            "rowCostSum": 2,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 2,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 388,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 23
+              }
+            ]
+          },
+          {
+            "beforePotential": 345,
+            "afterPotential": 343,
+            "rowCosts": [
+              {
+                "bonusId": 40,
+                "old": 23,
+                "new": 24,
+                "delta": 1,
+                "cost": 2
+              }
+            ],
+            "rowCostSum": 2,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 2,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 388,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 2
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              }
+            ]
+          },
+          {
+            "beforePotential": 343,
+            "afterPotential": -162,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 2,
+                "new": 8,
+                "delta": 6,
+                "cost": 120
+              },
+              {
+                "bonusId": 43,
+                "old": 0,
+                "new": 8,
+                "delta": 8,
+                "cost": 80
+              },
+              {
+                "bonusId": 42,
+                "old": 0,
+                "new": 21,
+                "delta": 21,
+                "cost": 66
+              }
+            ],
+            "rowCostSum": 266,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 505,
+            "warningPercent": 51,
+            "warningIntegerBeforeUpperBound": 51,
+            "categoryCounts": {
+              "3": 3,
+              "2": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 8
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              },
+              {
+                "bonusId": 43,
+                "value": 8
+              },
+              {
+                "bonusId": 42,
+                "value": 21
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 51,
+        "serverOutcomesSimulated": false
+      }
+    },
+    "combined": {
+      "input": {
+        "schema": "toram.statting-input.v1",
+        "equipmentType": 20,
+        "craftingRoundingModel": "combined-floor",
+        "steps": [
+          [
+            {
+              "bonusId": 18,
+              "value": 1
+            },
+            {
+              "bonusId": 42,
+              "value": 1
+            },
+            {
+              "bonusId": 40,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 1
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 2
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 3
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 4
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 5
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 6
+            }
+          ],
+          [
+            {
+              "bonusId": 43,
+              "value": 7
+            }
+          ],
+          [
+            {
+              "bonusId": 20,
+              "value": -16
+            },
+            {
+              "bonusId": 52,
+              "value": -9
+            },
+            {
+              "bonusId": 35,
+              "value": -10
+            }
+          ],
+          [
+            {
+              "bonusId": 18,
+              "value": 8
+            },
+            {
+              "bonusId": 43,
+              "value": 8
+            },
+            {
+              "bonusId": 42,
+              "value": 21
+            },
+            {
+              "bonusId": 40,
+              "value": 24
+            }
+          ]
+        ]
+      },
+      "trace": {
+        "schema": "toram.statting-trace.v1",
+        "profile": {
+          "equipmentType": 20,
+          "label": "방어구",
+          "basePotential": 63,
+          "startingPotential": 132,
+          "craftStatBonus": 51,
+          "craftingRoundingModel": "combined-floor",
+          "startingPotentialNativeVerified": false,
+          "gameItemIds": [
+            20155
+          ],
+          "statterLevel": 325,
+          "statterTEC": 255,
+          "grantSkills": [
+            10,
+            10,
+            10
+          ],
+          "crafterAppStatBudget": 840,
+          "slotPenalty": "excluded from reference profile"
+        },
+        "steps": [
+          {
+            "beforePotential": 132,
+            "afterPotential": 104,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 20
+              },
+              {
+                "bonusId": 42,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 3
+              },
+              {
+                "bonusId": 40,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 1
+              }
+            ],
+            "rowCostSum": 24,
+            "multiplierFloat32": 1.2000000476837158,
+            "totalCost": 28,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 341,
+            "categoryCounts": {
+              "3": 1,
+              "8": 2
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 104,
+            "afterPotential": 90,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 0,
+                "new": 1,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 359,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 1
+              }
+            ]
+          },
+          {
+            "beforePotential": 90,
+            "afterPotential": 76,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 1,
+                "new": 2,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 354,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 2
+              }
+            ]
+          },
+          {
+            "beforePotential": 76,
+            "afterPotential": 62,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 2,
+                "new": 3,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 347,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 3
+              }
+            ]
+          },
+          {
+            "beforePotential": 62,
+            "afterPotential": 48,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 3,
+                "new": 4,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 335,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 4
+              }
+            ]
+          },
+          {
+            "beforePotential": 48,
+            "afterPotential": 34,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 4,
+                "new": 5,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 284,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 5
+              }
+            ]
+          },
+          {
+            "beforePotential": 34,
+            "afterPotential": 20,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 5,
+                "new": 6,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 233,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 6
+              }
+            ]
+          },
+          {
+            "beforePotential": 20,
+            "afterPotential": 6,
+            "rowCosts": [
+              {
+                "bonusId": 43,
+                "old": 6,
+                "new": 7,
+                "delta": 1,
+                "cost": 10
+              }
+            ],
+            "rowCostSum": 10,
+            "multiplierFloat32": 1.4500000476837158,
+            "totalCost": 14,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 181,
+            "categoryCounts": {
+              "3": 1,
+              "8": 3
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              }
+            ]
+          },
+          {
+            "beforePotential": 6,
+            "afterPotential": 374,
+            "rowCosts": [
+              {
+                "bonusId": 20,
+                "old": 0,
+                "new": -16,
+                "delta": -16,
+                "cost": -79
+              },
+              {
+                "bonusId": 52,
+                "old": 0,
+                "new": -9,
+                "delta": -9,
+                "cost": -85
+              },
+              {
+                "bonusId": 35,
+                "old": 0,
+                "new": -10,
+                "delta": -10,
+                "cost": -30
+              }
+            ],
+            "rowCostSum": -194,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": -368,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 1525,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 1
+              },
+              {
+                "bonusId": 42,
+                "value": 1
+              },
+              {
+                "bonusId": 40,
+                "value": 1
+              },
+              {
+                "bonusId": 43,
+                "value": 7
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          },
+          {
+            "beforePotential": 374,
+            "afterPotential": -82,
+            "rowCosts": [
+              {
+                "bonusId": 18,
+                "old": 1,
+                "new": 8,
+                "delta": 7,
+                "cost": 140
+              },
+              {
+                "bonusId": 43,
+                "old": 7,
+                "new": 8,
+                "delta": 1,
+                "cost": 10
+              },
+              {
+                "bonusId": 42,
+                "old": 1,
+                "new": 21,
+                "delta": 20,
+                "cost": 63
+              },
+              {
+                "bonusId": 40,
+                "old": 1,
+                "new": 24,
+                "delta": 23,
+                "cost": 27
+              }
+            ],
+            "rowCostSum": 240,
+            "multiplierFloat32": 1.9000000953674316,
+            "totalCost": 456,
+            "warningPercent": 100,
+            "warningIntegerBeforeUpperBound": 109,
+            "categoryCounts": {
+              "3": 3,
+              "8": 3,
+              "2": 1
+            },
+            "optionsAfter": [
+              {
+                "bonusId": 18,
+                "value": 8
+              },
+              {
+                "bonusId": 42,
+                "value": 21
+              },
+              {
+                "bonusId": 40,
+                "value": 24
+              },
+              {
+                "bonusId": 43,
+                "value": 8
+              },
+              {
+                "bonusId": 20,
+                "value": -16
+              },
+              {
+                "bonusId": 52,
+                "value": -9
+              },
+              {
+                "bonusId": 35,
+                "value": -10
+              }
+            ]
+          }
+        ],
+        "prefixAll100": true,
+        "finalWarningPercent": 100,
+        "serverOutcomesSimulated": false
+      }
+    }
+  }
+}

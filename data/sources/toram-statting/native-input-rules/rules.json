@@ -1,0 +1,33 @@
+{
+  "safeDomain": {
+    "statterLevel": 325,
+    "tec": 255,
+    "grantSkills": [
+      10,
+      10,
+      10
+    ],
+    "maxOptions": 8,
+    "beforeEveryAction": "currentPotential>=1 and occupiedCount<8",
+    "afterLastAction": "potential may be nonpositive; normal gate prevents another action",
+    "firstSurvey": "nonzero ordinary registered options; monotone edits; no removal/flip; directional cap respected; known unit mapping"
+  },
+  "occupancy": "(IsFixed or FixedBonusValue+BonusValue!=0) and bonusType!=0",
+  "categoryContributionOrder": "dictionary insertion at second occurrence of a category",
+  "specialSelectorTypesNotFullyRoundtripped": [
+    12,
+    22,
+    24,
+    26,
+    28,
+    30,
+    32
+  ],
+  "separateElementType": 65,
+  "warnings": [
+    "IsFixed typed-zero remains occupied; new zero sum does not.",
+    "Array capacity10 is not usable count8.",
+    "getEnhanceMax returns selector bounds for seven special types.",
+    "Client gate evidence does not prove server acceptance or outcome."
+  ]
+}

@@ -1,99 +1,77 @@
-# Toram Auto Building 개발 소스
+# Toram Auto Building
 
-현재 개발 버전은 Tauri v2 데스크톱 앱 `v0.7.3`입니다. 계산기 원본은 루트의 `index.html`과 `assets/`에서 관리하고 빌드할 때 `dist/`로 복사합니다.
-.
-## 구조
+토람 대미지·빌드 계산기. 화면·입력·데이터를 공유하는 웹 페이지와 Tauri Windows 앱입니다. 추천 탐색은 공용 Rust 코어를 Native/WASM으로 컴파일합니다.
 
-- `index.html`: 개발판 진입점과 화면 마크업
-- `assets/css/style.css`: 전체 스타일
-- `assets/fonts/`: Pretendard v1.3.9 가변 WOFF2와 SIL OFL 라이선스
-- `assets/js/data/`: 스킬트리·전투 스킬 카탈로그·크리스타 데이터
-- `assets/js/data/skill-combat-catalog.js`: 전투 대상 427개 스킬과 원문 출처 연결
-- `assets/js/data/combo-rule-data.js`: 사용자 제공 게임 내 콤보 태그 규칙
-- `assets/js/data/skill-effect-data.js`: 스킬 효과·MP·공격·버프·상태 전이 정의
-- `assets/js/skill-effect-engine.js`: 제한된 조건식과 스킬 상태 전이 해석
-- `assets/js/skill-data-validator.js`: 스킬 데이터 커버리지·정합성 검사
-- `assets/js/crysta-ui.js`: 크리스타 입력·자동완성·장비 옵션 UI
-- `assets/js/calculator.js`: 스탯과 전투 수치 계산
-- `assets/js/optimization-results.js`: 크리스타 추천·결과 렌더링
-- `assets/js/status-points.js`: 스테이터스 포인트 제어
-- `assets/js/skill-tree.js`: 스킬트리 시뮬레이터·저장 기능
-- `assets/js/tabs.js`: 상단 탭 구성
-- `assets/js/ui-bootstrap.js`: 화면 이벤트 연결 및 기능별 공개 API 호출
-- `assets/icons/skills/`: Coryn 기반 스킬 트리 아이콘
-- `assets/game-data/ui/`: 이름 미정의 인게임 UI 스프라이트 원본
-- `assets/source-data/coryn-skill-simulator/`: Coryn 아이콘 매니페스트·생성 원본
-- `assets/source-data/game-icon-skill-duplicates.json`: 삭제 확정된 채굴·스킬 아이콘 매칭 기록
-- `assets/source-data/game-icon-skill-match-candidates.json`: 남은 채굴 아이콘의 상위 스킬 후보표
-- `assets/source-data/skill-registration/`: 427개 스킬 등록 메타데이터의 생성 원본
-- `tools/generate-skill-registration.mjs`: 등록 메타데이터 재생성 도구
-- `tools/read-skill-source.mjs`: 트리별 스킬 원문 조회 도구
-- `tools/audit-game-icon-matches.ps1`: 채굴 게임 아이콘과 스킬 아이콘의 후보 매칭 감사 도구
-- `docs/skill-data-schema.md`: 전투 스킬 데이터 계약
-- `docs/skill-tree-verification-standard.md`: S1~S5 검증 기준
-- `docs/handoff/current-development-handoff.md`: 현재 구현·검증·배포 상태의 단일 인계 기준
-- `docs/ai-context-guide.md`: AI 작업별 진입점·검색 제외·토큰 소모 구조 감사 (`npm run ai:audit`로 검증)
+## 시작
 
-## 브라우저 프론트엔드 개발
+Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build Tools와 WebView2도 필요합니다.
 
-`index.html`을 브라우저에서 열어 확인합니다. 기능별 JavaScript는 위 순서대로 로드되므로, 다른 파일의 함수를 사용하려면 해당 파일보다 뒤에 배치해야 합니다.
+    npm ci
+    rustup target add wasm32-unknown-unknown
+    cargo install wasm-bindgen-cli --version 0.2.127 --locked
+    npm run web:dev
 
-## Tauri 데스크톱 개발
-
-Windows에서는 Rust `stable-msvc`, Microsoft C++ Build Tools와 WebView2가 필요합니다.
-
-```powershell
-Set-Location -LiteralPath 'C:\Users\조연우\Documents\GitHub\Toram_Auto_building'
-npm install
-npm run desktop:dev
-```
-
-폴더를 옮기면서 `src-tauri/target/`도 함께 옮겼다면 먼저 `npm run desktop:clean`을 실행합니다. Tauri 권한 파일의 이전 절대 경로가 남아 있는 Tauri·업데이터·앱 패키지의 개발·릴리스·Windows x64 릴리스 캐시만 정리합니다. 나머지 의존성 캐시와 계측 기록, 사용자 세팅은 유지하며, 다음 개발 실행이나 빌드에서 해당 패키지를 다시 컴파일합니다.
-
-모든 npm 명령은 저장소 루트를 기준으로 실행하므로 폴더를 다시 옮겨도 `package.json`의 경로를 수정할 필요가 없습니다. 다른 폴더에서 실행하려면 `npm --prefix "C:\Users\조연우\Documents\GitHub\Toram_Auto_building" run desktop:dev`처럼 현재 저장소 경로를 지정합니다.
+웹은 http://127.0.0.1:5173/ 에서 열립니다. HTML·JS·CSS 변경은 새로고침, Rust 변경은 npm run wasm:build 후 새로고침합니다. 포트는 환경변수 PORT로 바꿉니다.
 
 | 명령 | 용도 |
 | --- | --- |
-| `npm run desktop:clean` | 폴더 이동 후 Tauri·업데이터·앱 빌드 캐시 정리 |
-| `npm run desktop:prepare` | TypeScript 런타임 생성 및 `dist/` 준비 |
-| `npm run desktop:dev` | 개발 앱 실행 |
-| `npm run desktop:build` | NSIS 설치 파일 빌드 |
-| `npm run desktop:build:exe` | 설치 없는 실행 파일 빌드 |
-| `npm run types:check` | TypeScript 타입 검사 |
-| `npm run types:emit` | 저장·업데이트 어댑터 JavaScript 생성 |
-| `npm run verify:architecture` | 구조·계약·어댑터 검사 |
-| `npm run verify:entry` | 소스 로딩 진입점 검사 |
-| `npm run verify:entry:dist` | 준비된 배포본 로딩 검사 (`desktop:prepare` 후) |
-| `npm run test:regression` | 전체 계산 회귀 검사 |
-| `npm run test:regression:normal` | 정상값 회귀 검사 |
-| `npm run test:regression:characterization` | 기존 동작 회귀 검사 |
-| `npm run bench:optimization:build` | Native 계측 실행 파일 빌드 |
-| `npm run bench:optimization` | 최적화 계측 (`bench:optimization:build` 후) |
-| `npm run ai:files` | AI 검색용 파일 목록 |
-| `npm run ai:search -- "패턴" 경로` | AI 검색용 내용 검색 |
-| `npm run ai:audit` | AI 검색 설정·문서 감사 |
+| npm run web:build | 정적 웹 배포본 build/web/ |
+| npm run desktop:dev | Tauri 개발 앱 |
+| npm run desktop:prepare | 앱 프론트엔드 build/desktop/ 생성 |
+| npm run desktop:build | Windows NSIS 설치 파일 |
+| npm run desktop:build:exe | 설치 없는 실행 파일 |
+| npm run desktop:clean | 폴더 이동 후 Tauri 캐시 정리 |
+| npm run verify:architecture | 타입·모듈·저장·실행 경계 |
+| npm run test:regression | 계산·입력·Rust/WASM 회귀 |
+| npm run verify:web:browser | 실제 Edge·하위 경로·세션 복원 검사 |
+| npm run bench:optimization:build | Native 계측 서비스 빌드 |
+| npm run bench:optimization | 새 프로세스 반복 계측 |
+| npm run ai:audit | 문서·검색 경로 점검 |
+| npm run server:start | 홈 서버 계정 API·웹 제공 (server/.env 필요) |
+| npm run test:account | Google 인증 흐름·계정 저장 회귀 (실제 Google 응답은 mock) |
 
-Windows NSIS 설치 파일을 빌드하려면 다음 명령을 사용합니다.
+브라우저 검증은 설치된 Playwright 모듈 경로를 CODEX_PLAYWRIGHT_PATH에 지정하고 web:build 후 실행합니다. Rust 검사는 engine/Cargo.toml과 desktop/Cargo.toml을 각각 대상으로 fmt/test/clippy를 실행합니다.
 
-```powershell
-npm run desktop:build
+## 폴더를 찾는 순서
+
+```text
+root/
+├─ web/              웹·앱 공통 화면 원본
+│  ├─ index.html     화면 뼈대
+│  ├─ src/           JS·타입 계약: 화면·계산·입력 상태·저장·추천 연결
+│  └─ public/        CSS·폰트·아이콘·배포용 게임 데이터
+├─ desktop/          데스크톱 전용 Tauri 코드·설정
+│  ├─ src/           Rust: 앱 실행·파일 저장·업데이트·Native 작업 수명
+│  └─ adapters/      공통 화면과 데스크톱 기능을 연결하는 JS·TS 원본
+├─ engine/           웹 WASM·앱 Native가 공유하는 Rust 추천 엔진
+├─ server/           계정·Google 로그인·서버 저장
+├─ data/             추출 원문·출처·가공 근거
+├─ tools/            빌드·데이터 가공·테스트·검증
+├─ samples/          사용자 제공 빌드 입력
+├─ docs/             개발 상태·계약·검증·출처 문서
+└─ build/            자동 생성물: generated/·web/·desktop/·release/·tmp/
 ```
 
-설치 파일 없이 실행 파일만 빌드하려면 `npm run desktop:build:exe`를 사용합니다.
+화면을 고치면 [web/](web/README.md), 앱 전용 기능을 고치면 [desktop/](desktop/README.md), 추천 알고리즘을 고치면 [engine/](engine/README.md)부터 엽니다. 원본·출처는 [data/](data/README.md), 실행·검사는 [tools/](tools/README.md)에서 찾습니다. 안드로이드 전용 폴더는 실제 구현할 때 추가합니다.
 
-빌드 전 `tools/prepare-tauri-frontend.mjs`가 기존 `index.html`과 `assets/`를 `dist/`에 준비합니다. 계산기 원본은 계속 루트의 웹 소스에서 관리합니다.
+`build/web/`와 `build/desktop/`는 따로 개발하는 소스가 아닙니다. `web/`의 같은 화면을 배포 대상으로 조립한 결과이며, Tauri는 `build/desktop/`를 앱 안에 포함합니다. 앱 전용 어댑터는 데스크톱 배포본에만 들어갑니다.
 
-이름을 붙인 세팅 JSON은 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`에 저장됩니다. 폴더는 앱에서 자동 생성하며, `localStorage`는 직전 작업 상태의 자동 복원에 계속 사용합니다.
+```text
+web/ + engine/ → WASM → build/generated/wasm/ → build/web/
+web/ + desktop/adapters/ + WASM               → build/desktop/
+desktop/src/ + engine/ + build/desktop/        → Windows 앱
+```
 
-- `저장`·`불러오기`·`덮어쓰기`·`삭제`: 앱의 네이티브 세팅 폴더 사용
-- `JSON 내보내기`·`JSON 불러오기`: 다른 PC 이전과 별도 백업용
-- NSIS 설치본: `src-tauri/target/release/bundle/nsis/`
-- 설치 없는 실행 파일: `src-tauri/target/release/toram-online-auto-build-calculator.exe`
+브라우저의 `assets/...` URL은 디스크의 원본 폴더 이름과 구분합니다. 빌드 도구가 `web/src/`를 `assets/js/`, `web/public/`를 `assets/`로 배치합니다. 개발 서버도 같은 URL을 제공합니다. 대응은 `tools/support/frontend-paths.mjs`, 로딩 순서는 `web/src/classic-script-manifest.mjs` 한곳에서 관리합니다.
 
-현재 사용자용 NSIS 설치 폴더와 세팅 폴더는 서로 분리되어 있으며, 앱을 제거해도 세팅 JSON은 보존됩니다.
+빠른 추천은 Rust WASM 초기해, 정밀 추천은 웹에서 같은 WASM 세션, 앱에서 Native를 사용합니다. 후보 준비·입력 조립·최종 결과 재평가에는 JS를 사용합니다. 이전 JS 추천기와 실험 Worker pool은 삭제했습니다.
 
-## 생성 원본과 빌드 산출물
+웹은 build/web/ 전체를 정적 호스팅에 올리며 하위 경로 배포를 지원합니다. 앱과 웹은 빌드 JSON v2를 공유합니다. 자동 복원은 접속 주소별 localStorage이며, 이름 있는 앱 세팅은 %LOCALAPPDATA%\ToramOnlineAutoBuildCalculator 에 저장합니다. JSON 내보내기/불러오기로 다른 주소·기기로 옮깁니다.
 
-- `assets/source-data/`, `assets/game-data/`, `docs/sources/skills/`는 아이콘·게임 자료·검증 원문이므로 정리 대상으로 취급하지 않습니다.
-- `dist/`, `src-tauri/target/`, `src-tauri/gen/`은 재생성 가능한 로컬 산출물이며 Git에서 추적하지 않습니다.
-- `node_modules/`는 `npm install`로 복구할 수 있지만 현재 개발 명령에 사용하므로 일반 정리에서는 유지합니다.
+저장 옆 계정 아이콘에서 Google 로그인과 내 빌드·내 아이템·즐겨찾기를 사용합니다. 계정 저장은 Linux/Docker 홈 서버에서 운영합니다. Google 발급 키·공개 HTTPS 주소 설정과 실제 배포가 필요하며, 설정 전에는 기존 로컬 저장을 사용합니다. [홈 서버 설계·배포 방법](docs/architecture/account-home-server.md)을 참고하세요. 계정 서버는 웹 루트에서 제공하고, Windows 앱에는 빌드 시 서버 주소를 주입합니다.
+
+data/sources/, web/public/game-data/, docs/sources/는 원문·발행 데이터이므로 유지합니다. build/ 전체, 각 Rust 프로젝트의 target/, node_modules/는 Git에서 제외한 생성물입니다. 저장·업데이트 어댑터는 desktop/adapters/의 TypeScript 원본을 수정하고 npm run types:emit으로 build/generated/desktop/에 생성합니다.
+
+배포 준비는 index.html과 실행용 assets만 남깁니다. 선택된 실행 스크립트·CSS·폰트/라이선스·아이콘·WASM을 복사하며 원문·타입 전용 TS·검사 로그는 포함하지 않습니다. 새 classic 스크립트는 classic-script-manifest.mjs에, 새 ES Module은 tools/support/frontend-paths.mjs에 등록합니다. 브라우저 검사 스크린샷은 build/tmp/, Native 계측·검사 로그는 desktop/target/에 보관합니다.
+
+[현재 상태](docs/handoff/current-development-handoff.md) · [작업 진입점](docs/ai-context-guide.md) · [추천 정확성 계약](docs/architecture/crysta-optimization-contract.md)

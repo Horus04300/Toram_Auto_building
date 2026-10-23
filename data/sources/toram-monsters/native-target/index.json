@@ -1,0 +1,2135 @@
+{
+  "evidence_kind": "saved-runtime-image-plus-metadata-token-map",
+  "sources": {
+    "metadata": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\current-source\\global-metadata.dat",
+      "size": 27822060,
+      "sha256": "f0cf212a7c7dca1973a401bda6d208549c13f57f0bbdb8782e5d607ed7e8789f"
+    },
+    "mapped_image": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\GameAssembly.mapped.bin",
+      "size": 83230720,
+      "sha256": "2baf9dd6ad9f2a32f211c1f97a7ad0b94bf778d689afb054047f9ab621fd370e"
+    },
+    "capture_manifest": {
+      "path": "C:\\Users\\조연우\\Documents\\GitHub\\Toram_Auto_building\\build\\tmp\\toram-item-extraction\\code-trace\\runtime\\snapshot-1\\capture.json",
+      "size": 2204,
+      "sha256": "966fc8253bd4f0f42b143b4c1076a9246527c2d126af7d61fe1366e6356ee8ed"
+    }
+  },
+  "layout_source": "https://github.com/Perfare/Il2CppDumper/blob/master/Il2CppDumper/Il2Cpp/Il2CppClass.cs",
+  "image_base": "0x7fff5f250000",
+  "module_name": "Assembly-CSharp.dll",
+  "module": {
+    "module_offset": 44328768,
+    "module_va": 140734833977152,
+    "name_offset": 44328904,
+    "name_va": 140734833977288,
+    "method_pointer_count": 75881,
+    "method_pointers_va": 140734841009648,
+    "method_pointers_offset": 51361264
+  },
+  "validation": {
+    "metadata_module_method_count": 75881,
+    "maximum_rid": 75881,
+    "count_equals_max_rid": true,
+    "snapshot_digest_matches_capture": true,
+    "selected_methods": 259
+  },
+  "methods": [
+    {
+      "class": "BossMobBattleStatus",
+      "name": "SetPartsMaster",
+      "method_definition_index": 7212,
+      "token": "0x06001c2d",
+      "metadata_declaration_range": {
+        "offset": 4004848,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "parts",
+          "type_index": 20683,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51418960,
+      "pointer_slot_va": "0x7fff62359750",
+      "runtime_va": "0x7fff5fdb1070",
+      "rva": "0xb61070",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803da138830200498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-SetPartsMaster-7fff5fdb1070.c",
+      "pseudocodeSha256": "abb38b23cfcf96d9dd5961ab85fb90935f31c6dc9eb3a04e547686aed413e66d"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_Def",
+      "method_definition_index": 7219,
+      "token": "0x06001c34",
+      "metadata_declaration_range": {
+        "offset": 4005100,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419016,
+      "pointer_slot_va": "0x7fff62359788",
+      "runtime_va": "0x7fff5fdb17c0",
+      "rva": "0xb617c0",
+      "status": "mapped",
+      "code_preview_hex": "48894c2408535657415641574883ec700f297424604c8bf1",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_Def-7fff5fdb17c0.c",
+      "pseudocodeSha256": "17d0b561d88949e1625d9772936be2666bc1b78bd78204fef4787ad97cd146fd"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 7220,
+      "token": "0x06001c35",
+      "metadata_declaration_range": {
+        "offset": 4005136,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419024,
+      "pointer_slot_va": "0x7fff62359790",
+      "runtime_va": "0x7fff5fdb1de0",
+      "rva": "0xb61de0",
+      "status": "mapped",
+      "code_preview_hex": "48894c2408535657415641574883ec700f297424604c8bf1",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_MagicDef-7fff5fdb1de0.c",
+      "pseudocodeSha256": "f8cb2b5dd7443733a369dadb3f98789bace5e0d77adc640c69b0ba18fc66ec6e"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_CutAttack",
+      "method_definition_index": 7221,
+      "token": "0x06001c36",
+      "metadata_declaration_range": {
+        "offset": 4005172,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419032,
+      "pointer_slot_va": "0x7fff62359798",
+      "runtime_va": "0x7fff5fdb1450",
+      "rva": "0xb61450",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048894c2408565741564883ec604c8bf1803dc4",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_CutAttack-7fff5fdb1450.c",
+      "pseudocodeSha256": "3cad588c9820eff458d87893fe07d37f9f19358c2952a1c2e0ede42b94d9f6bc"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 7222,
+      "token": "0x06001c37",
+      "metadata_declaration_range": {
+        "offset": 4005208,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419040,
+      "pointer_slot_va": "0x7fff623597a0",
+      "runtime_va": "0x7fff5fdb1600",
+      "rva": "0xb61600",
+      "status": "mapped",
+      "code_preview_hex": "48895c241048894c2408565741564883ec604c8bf1803d15",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_CutMagicAttack-7fff5fdb1600.c",
+      "pseudocodeSha256": "c988ac4f312d65df7cbaf1b143553feb5b7cff46a2df3bb0019108aa68b63813"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_ExpDefNormal",
+      "method_definition_index": 7232,
+      "token": "0x06001c41",
+      "metadata_declaration_range": {
+        "offset": 4005568,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419120,
+      "pointer_slot_va": "0x7fff623597f0",
+      "runtime_va": "0x7fff5fdb1a80",
+      "rva": "0xb61a80",
+      "status": "mapped",
+      "code_preview_hex": "488b41384885c074048b4018c3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_ExpDefNormal-7fff5fdb1a80.c",
+      "pseudocodeSha256": "dac4d613b5420d6642e460de6708734c34036867bb22cca1d19c15adce34849a"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_ExpDefSkill",
+      "method_definition_index": 7233,
+      "token": "0x06001c42",
+      "metadata_declaration_range": {
+        "offset": 4005604,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419128,
+      "pointer_slot_va": "0x7fff623597f8",
+      "runtime_va": "0x7fff5fdb1aa0",
+      "rva": "0xb61aa0",
+      "status": "mapped",
+      "code_preview_hex": "488b41384885c074048b401cc3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_ExpDefSkill-7fff5fdb1aa0.c",
+      "pseudocodeSha256": "19d218f890d548e48465909734622301f130b873c10218236faa36e4231abe87"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_ExpDefMagic",
+      "method_definition_index": 7234,
+      "token": "0x06001c43",
+      "metadata_declaration_range": {
+        "offset": 4005640,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51419136,
+      "pointer_slot_va": "0x7fff62359800",
+      "runtime_va": "0x7fff5fdb1a60",
+      "rva": "0xb61a60",
+      "status": "mapped",
+      "code_preview_hex": "488b41384885c074048b4020c3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_ExpDefMagic-7fff5fdb1a60.c",
+      "pseudocodeSha256": "feeb820ed626da81f031b903afada08f6c4bbc56ae6cba937c82c102901130f5"
+    },
+    {
+      "class": "BossMobBattleStatus",
+      "name": "get_Property",
+      "method_definition_index": 7235,
+      "token": "0x06001c44",
+      "metadata_declaration_range": {
+        "offset": 4005676,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20723,
+        "exact_byval_name": "MobPropertyManager"
+      },
+      "pointer_slot_offset": 51419144,
+      "pointer_slot_va": "0x7fff62359808",
+      "runtime_va": "0x7fff5fdb24c0",
+      "rva": "0xb624c0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41104885c0740c488b80a00000004883c428",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobBattleStatus-get_Property-7fff5fdb24c0.c",
+      "pseudocodeSha256": "244217178fc56026da831ed785a6130e341ef0d9cee403f2d1af0a1402cce67b"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "get_IsDead",
+      "method_definition_index": 7561,
+      "token": "0x06001d8a",
+      "metadata_declaration_range": {
+        "offset": 4017412,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51421752,
+      "pointer_slot_va": "0x7fff6235a238",
+      "runtime_va": "0x7fff5fe22ac0",
+      "rva": "0xbd2ac0",
+      "status": "mapped",
+      "code_preview_hex": "488b41784885c0740e80783d007408837810000f9ec0c332",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EnemyMobActionManagerBase-get_IsDead-7fff5fe22ac0.c",
+      "pseudocodeSha256": "bd1bd8aa495b061032372ae126afe0ace7d0b032ae9a6e4f5218fa24d537b62c"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "UpdateExpDef",
+      "method_definition_index": 7638,
+      "token": "0x06001dd7",
+      "metadata_declaration_range": {
+        "offset": 4020184,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "normal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skill",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "magic",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51422368,
+      "pointer_slot_va": "0x7fff6235a4a0",
+      "runtime_va": "0x7fff5fe21eb0",
+      "rva": "0xbd1eb0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec3080b95101000000418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EnemyMobActionManagerBase-UpdateExpDef-7fff5fe21eb0.c",
+      "pseudocodeSha256": "465d5d48caf7f7abb68e3458456aea48b777bca7abde432d37b3cd11fb1fa988"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_Def",
+      "method_definition_index": 8281,
+      "token": "0x0600205a",
+      "metadata_declaration_range": {
+        "offset": 4043332,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427512,
+      "pointer_slot_va": "0x7fff6235b8b8",
+      "runtime_va": "0x7fff5fe33730",
+      "rva": "0xbe3730",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20488b4110488bf94885c00f84a700",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_Def-7fff5fe33730.c",
+      "pseudocodeSha256": "66f72bd73f97701f0aebd10fb7cf0292dc8e36ec981659cc20017012366c0f70"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 8282,
+      "token": "0x0600205b",
+      "metadata_declaration_range": {
+        "offset": 4043368,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427520,
+      "pointer_slot_va": "0x7fff6235b8c0",
+      "runtime_va": "0x7fff5fe33950",
+      "rva": "0xbe3950",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec40488b4110488bf9440f2944242048",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_MagicDef-7fff5fe33950.c",
+      "pseudocodeSha256": "4948716f116cc16370effcd0893540e24a963aa8cfd651721c098a385912dd12"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_CutAttack",
+      "method_definition_index": 8283,
+      "token": "0x0600205c",
+      "metadata_declaration_range": {
+        "offset": 4043404,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427528,
+      "pointer_slot_va": "0x7fff6235b8c8",
+      "runtime_va": "0x7fff5fe336f0",
+      "rva": "0xbe36f0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41104885c074088b40444883c428c3e8569f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_CutAttack-7fff5fe336f0.c",
+      "pseudocodeSha256": "c721f6d52d23fccb1c8f984e9dff5a270c496c608904b6cf375ff70fb7e31d82"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 8284,
+      "token": "0x0600205d",
+      "metadata_declaration_range": {
+        "offset": 4043440,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427536,
+      "pointer_slot_va": "0x7fff6235b8d0",
+      "runtime_va": "0x7fff5fe33710",
+      "rva": "0xbe3710",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41104885c074088b40484883c428c3e8369f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_CutMagicAttack-7fff5fe33710.c",
+      "pseudocodeSha256": "fd68abb497b5b33e8ac57ea9f521b5e258450787ce67943bd140920139e97afe"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_ExpDefNormal",
+      "method_definition_index": 8294,
+      "token": "0x06002067",
+      "metadata_declaration_range": {
+        "offset": 4043800,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427616,
+      "pointer_slot_va": "0x7fff6235b920",
+      "runtime_va": "0x7fff5fe14fc0",
+      "rva": "0xbc4fc0",
+      "status": "mapped",
+      "code_preview_hex": "488b41284885c074048b4018c3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_ExpDefNormal-7fff5fe14fc0.c",
+      "pseudocodeSha256": "0a81d9b40a94a2c6526cd9f0ff3e7845196a168512f59aec55f8946860c2bbb8"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_ExpDefSkill",
+      "method_definition_index": 8295,
+      "token": "0x06002068",
+      "metadata_declaration_range": {
+        "offset": 4043836,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427624,
+      "pointer_slot_va": "0x7fff6235b928",
+      "runtime_va": "0x7fff5fe14fe0",
+      "rva": "0xbc4fe0",
+      "status": "mapped",
+      "code_preview_hex": "488b41284885c074048b401cc3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_ExpDefSkill-7fff5fe14fe0.c",
+      "pseudocodeSha256": "066a31e6c95a2d677159f43c9028ff82fec67cb84031fe5060bf4df6359efe30"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_ExpDefMagic",
+      "method_definition_index": 8296,
+      "token": "0x06002069",
+      "metadata_declaration_range": {
+        "offset": 4043872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51427632,
+      "pointer_slot_va": "0x7fff6235b930",
+      "runtime_va": "0x7fff5fe14fa0",
+      "rva": "0xbc4fa0",
+      "status": "mapped",
+      "code_preview_hex": "488b41284885c074048b4020c3b864000000c3cccccccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_ExpDefMagic-7fff5fe14fa0.c",
+      "pseudocodeSha256": "a28c427fe2ea3d1c4307b85b23c7bb934547247d27339f4573f8c138f6223286"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": "get_Property",
+      "method_definition_index": 8297,
+      "token": "0x0600206a",
+      "metadata_declaration_range": {
+        "offset": 4043908,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20723,
+        "exact_byval_name": "MobPropertyManager"
+      },
+      "pointer_slot_offset": 51427640,
+      "pointer_slot_va": "0x7fff6235b938",
+      "runtime_va": "0x7fff5fdb24c0",
+      "rva": "0xb624c0",
+      "status": "mapped",
+      "code_preview_hex": "4883ec28488b41104885c0740c488b80a00000004883c428",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-get_Property-7fff5fdb24c0.c",
+      "pseudocodeSha256": "244217178fc56026da831ed785a6130e341ef0d9cee403f2d1af0a1402cce67b"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_IsDead",
+      "method_definition_index": 9033,
+      "token": "0x0600234a",
+      "metadata_declaration_range": {
+        "offset": 4070404,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51433528,
+      "pointer_slot_va": "0x7fff6235d038",
+      "runtime_va": "0x7fff5fe666a0",
+      "rva": "0xc166a0",
+      "status": "mapped",
+      "code_preview_hex": "837930000f94c0c3cccccccccccccccc40534883ec20803d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_IsDead-7fff5fe666a0.c",
+      "pseudocodeSha256": "b234a0946b85d705b97e451b51c13599a506557b59370855c849e90067d132bf"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_Def",
+      "method_definition_index": 9035,
+      "token": "0x0600234c",
+      "metadata_declaration_range": {
+        "offset": 4070476,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51433544,
+      "pointer_slot_va": "0x7fff6235d048",
+      "runtime_va": "0x7fff5fe66630",
+      "rva": "0xc16630",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803ddce7770200488bd97513488d0d37a85e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_Def-7fff5fe66630.c",
+      "pseudocodeSha256": "8cdff0ef628d9d71dea612feb227d89bea22feb6fa8d36bffcdad87c845decfb"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 9036,
+      "token": "0x0600234d",
+      "metadata_declaration_range": {
+        "offset": 4070512,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51433552,
+      "pointer_slot_va": "0x7fff6235d050",
+      "runtime_va": "0x7fff5fe666b0",
+      "rva": "0xc166b0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d5de7770200488bd97513488d0db7a75e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-get_MagicDef-7fff5fe666b0.c",
+      "pseudocodeSha256": "8916b8adbfadf91e35b6681805a63e0096993d789d8a826f8768c7012ddb2611"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefNormal",
+      "method_definition_index": 9172,
+      "token": "0x060023d5",
+      "metadata_declaration_range": {
+        "offset": 4075408,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51434640,
+      "pointer_slot_va": "0x7fff6235d490",
+      "runtime_va": "0x7fff5f5752d0",
+      "rva": "0x3252d0",
+      "status": "mapped",
+      "code_preview_hex": "0fb64134c3cccccccccccccccccccccc48896c2410488974",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_ExpDefNormal-7fff5f5752d0.c",
+      "pseudocodeSha256": "5896b6b94618463ee58c31290015b6f3a703f1505f6cc4a7e7d77e7387529f65"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefSkill",
+      "method_definition_index": 9173,
+      "token": "0x060023d6",
+      "metadata_declaration_range": {
+        "offset": 4075444,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51434648,
+      "pointer_slot_va": "0x7fff6235d498",
+      "runtime_va": "0x7fff5f5971d0",
+      "rva": "0x3471d0",
+      "status": "mapped",
+      "code_preview_hex": "0fb64135c3cccccccccccccccccccccc0fb64132c3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_ExpDefSkill-7fff5f5971d0.c",
+      "pseudocodeSha256": "bc886543dbb9f7167d8b352134bcf21841ad033f9d33233dca4534cc594259cb"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_ExpDefMagic",
+      "method_definition_index": 9174,
+      "token": "0x060023d7",
+      "metadata_declaration_range": {
+        "offset": 4075480,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13013,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51434656,
+      "pointer_slot_va": "0x7fff6235d4a0",
+      "runtime_va": "0x7fff5f5971f0",
+      "rva": "0x3471f0",
+      "status": "mapped",
+      "code_preview_hex": "0fb64136c3cccccccccccccccccccccc0fb64131c3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_ExpDefMagic-7fff5f5971f0.c",
+      "pseudocodeSha256": "eba00de9da83c148279d80f09281979d7ba7208090cc1c00757b39e5c1009970"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_Def",
+      "method_definition_index": 9176,
+      "token": "0x060023d9",
+      "metadata_declaration_range": {
+        "offset": 4075552,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51434672,
+      "pointer_slot_va": "0x7fff6235d4b0",
+      "runtime_va": "0x7fff5f50ea00",
+      "rva": "0x2bea00",
+      "status": "mapped",
+      "code_preview_hex": "8b413cc3cccccccccccccccccccccccc4883ec2883792c00",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_Def-7fff5f50ea00.c",
+      "pseudocodeSha256": "1c1f492a5f267e4c9caf161f4a68a4a33171cc9bd4fe62114007498fd3b20988"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_MagicDef",
+      "method_definition_index": 9177,
+      "token": "0x060023da",
+      "metadata_declaration_range": {
+        "offset": 4075588,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51434680,
+      "pointer_slot_va": "0x7fff6235d4b8",
+      "runtime_va": "0x7fff5f507e40",
+      "rva": "0x2b7e40",
+      "status": "mapped",
+      "code_preview_hex": "8b4140c3cccccccccccccccccccccccc0fb64144c3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_MagicDef-7fff5f507e40.c",
+      "pseudocodeSha256": "76ab3da33ed0e9c501c167b4008c431cbafd514d955dc31491653a9188315f76"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_CutAttack",
+      "method_definition_index": 9178,
+      "token": "0x060023db",
+      "metadata_declaration_range": {
+        "offset": 4075624,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51434688,
+      "pointer_slot_va": "0x7fff6235d4c0",
+      "runtime_va": "0x7fff5f9c8730",
+      "rva": "0x778730",
+      "status": "mapped",
+      "code_preview_hex": "8b4144c3cccccccccccccccccccccccc48895c240848896c",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_CutAttack-7fff5f9c8730.c",
+      "pseudocodeSha256": "d926a7d407a36c5dc13c1f417613f481891264c3e6904e85c6b9091d9f96134e"
+    },
+    {
+      "class": "MobStatusMaster",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 9179,
+      "token": "0x060023dc",
+      "metadata_declaration_range": {
+        "offset": 4075660,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51434696,
+      "pointer_slot_va": "0x7fff6235d4c8",
+      "runtime_va": "0x7fff5f597130",
+      "rva": "0x347130",
+      "status": "mapped",
+      "code_preview_hex": "8b4148c3cccccccccccccccccccccccc0fb6413fc3cccccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatusMaster-get_CutMagicAttack-7fff5f597130.c",
+      "pseudocodeSha256": "6eeb72c6e8041f54c1bc105c3f106be420f96d44ae26e53c86b4eeedfbaf1e3e"
+    },
+    {
+      "class": "MobPropertyManager",
+      "name": "SetMasterData",
+      "method_definition_index": 9657,
+      "token": "0x060025ba",
+      "metadata_declaration_range": {
+        "offset": 4092868,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobUuid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "master",
+          "type_index": 10491
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51438520,
+      "pointer_slot_va": "0x7fff6235e3b8",
+      "runtime_va": "0x7fff5fe85780",
+      "rva": "0xc35780",
+      "status": "mapped",
+      "code_preview_hex": "48895c241848896c242041564883ec20803d40f77502004d",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyManager-SetMasterData-7fff5fe85780.c",
+      "pseudocodeSha256": "4e5d84b66da0616eeaf945286e1e44e314e5516bceb20e3472e7ffbb416bce95"
+    },
+    {
+      "class": "MobPropertyManager",
+      "name": "GetMobPropertyMasters",
+      "method_definition_index": 9659,
+      "token": "0x060025bc",
+      "metadata_declaration_range": {
+        "offset": 4092940,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10491
+      },
+      "pointer_slot_offset": 51438536,
+      "pointer_slot_va": "0x7fff6235e3c8",
+      "runtime_va": "0x7fff5fe85450",
+      "rva": "0xc35450",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742420574883ec70488bd9803d6ffa7502",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyManager-GetMobPropertyMasters-7fff5fe85450.c",
+      "pseudocodeSha256": "69baf7dc7a1d9e79b7e98505f767b655e85da000b68096b7df759bde0a8394f7"
+    },
+    {
+      "class": "MobPropertyBase",
+      "name": "TryAddProperty",
+      "method_definition_index": 9690,
+      "token": "0x060025db",
+      "metadata_declaration_range": {
+        "offset": 4094056,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "master",
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51438784,
+      "pointer_slot_va": "0x7fff6235e4c0",
+      "runtime_va": "0x7fff5fe83710",
+      "rva": "0xc33710",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803dbe17760200488bda488bf975",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyBase-TryAddProperty-7fff5fe83710.c",
+      "pseudocodeSha256": "d2d3acf59af705c660023a011afe1a30a964aaa5fe4f3ee308ae38d8e3b3571e"
+    },
+    {
+      "class": "MobPropertyBase",
+      "name": "GetValue",
+      "method_definition_index": 9692,
+      "token": "0x060025dd",
+      "metadata_declaration_range": {
+        "offset": 4094128,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 20726,
+        "exact_byval_name": "MobPropertyMaster"
+      },
+      "pointer_slot_offset": 51438800,
+      "pointer_slot_va": "0x7fff6235e4d0",
+      "runtime_va": "0x7fff5fe836d0",
+      "rva": "0xc336d0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d0318760200488bd97513488d0ddfa058",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyBase-GetValue-7fff5fe836d0.c",
+      "pseudocodeSha256": "e63a5e2521375be0fd14f0b11b8c099b344024e3572cce358acd22fcd666896f"
+    },
+    {
+      "class": "MobPropertyBase",
+      "name": "GetValue",
+      "method_definition_index": 9693,
+      "token": "0x060025de",
+      "metadata_declaration_range": {
+        "offset": 4094164,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 20726,
+        "exact_byval_name": "MobPropertyMaster"
+      },
+      "pointer_slot_offset": 51438808,
+      "pointer_slot_va": "0x7fff6235e4d8",
+      "runtime_va": "0x7fff5fe83600",
+      "rva": "0xc33600",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803dcb187602008bda",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyBase-GetValue-7fff5fe83600.c",
+      "pseudocodeSha256": "a653fe5b49fea0fbc5aaebb77da1d2a217c0a351d1a05555c564304c5a3ab69d"
+    },
+    {
+      "class": "MobPropertyCriticalResist",
+      "name": "get_PropertyType",
+      "method_definition_index": 9700,
+      "token": "0x060025e5",
+      "metadata_declaration_range": {
+        "offset": 4094416,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21221,
+        "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+      },
+      "pointer_slot_offset": 51438864,
+      "pointer_slot_va": "0x7fff6235e510",
+      "runtime_va": "0x7fff5fdec570",
+      "rva": "0xb9c570",
+      "status": "mapped",
+      "code_preview_hex": "b806000000c3cccccccccccccccccccc40534883ec20f30f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCriticalResist-get_PropertyType-7fff5fdec570.c",
+      "pseudocodeSha256": "a6abdcc0baba2054c8c5e611e254cfb335d45c86642bdd7a40e7c72ffb980d43"
+    },
+    {
+      "class": "MobPropertyCriticalResist",
+      "name": "TryGetValue",
+      "method_definition_index": 9701,
+      "token": "0x060025e6",
+      "metadata_declaration_range": {
+        "offset": 4094452,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20509,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "criticalParcent",
+          "type_index": 9236
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51438872,
+      "pointer_slot_va": "0x7fff6235e518",
+      "runtime_va": "0x7fff5fe83b20",
+      "rva": "0xc33b20",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803daa13760200498b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCriticalResist-TryGetValue-7fff5fe83b20.c",
+      "pseudocodeSha256": "144e12f0e4eb8848e0cc294deeba0d9b6531d501d9f08cbd1f4b500fe8e62ab8"
+    },
+    {
+      "class": "MobPropertyCut",
+      "name": "get_CutAttack",
+      "method_definition_index": 9704,
+      "token": "0x060025e9",
+      "metadata_declaration_range": {
+        "offset": 4094560,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51438896,
+      "pointer_slot_va": "0x7fff6235e530",
+      "runtime_va": "0x7fff5fe83bb0",
+      "rva": "0xc33bb0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d1e13760200488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCut-get_CutAttack-7fff5fe83bb0.c",
+      "pseudocodeSha256": "76297f09a88b2d57b39e8bf74e096ce9830c2d1b20be9ec7ddb44279f06a1915"
+    },
+    {
+      "class": "MobPropertyCut",
+      "name": "get_CutMagicAttack",
+      "method_definition_index": 9705,
+      "token": "0x060025ea",
+      "metadata_declaration_range": {
+        "offset": 4094596,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51438904,
+      "pointer_slot_va": "0x7fff6235e538",
+      "runtime_va": "0x7fff5fe83cd0",
+      "rva": "0xc33cd0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803dff11760200488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyCut-get_CutMagicAttack-7fff5fe83cd0.c",
+      "pseudocodeSha256": "118064c38889e4b5a5e57ff35c632bb3d64e36e0f7e8b6ae36c4d375d2f6bb87"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "CalcPowerResistDamage",
+      "method_definition_index": 14274,
+      "token": "0x060037c3",
+      "metadata_declaration_range": {
+        "offset": 4259080,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetDef",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "addResist",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51475456,
+      "pointer_slot_va": "0x7fff62367400",
+      "runtime_va": "0x7fff5ffb5c70",
+      "rva": "0xd65c70",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec600f29742450488bd90f297c24400f57f6660f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcPowerResistDamage-7fff5ffb5c70.c",
+      "pseudocodeSha256": "09fa266f8037fa3b8c8a182c62c0682a06c6303367d1dee43397eea473cf7be8"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "CalcMagicResistDamage",
+      "method_definition_index": 14275,
+      "token": "0x060037c4",
+      "metadata_declaration_range": {
+        "offset": 4259116,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetMdef",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "addResist",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51475464,
+      "pointer_slot_va": "0x7fff62367408",
+      "runtime_va": "0x7fff5ffb5680",
+      "rva": "0xd65680",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec600f29742450488bd90f297c24400f57f6660f",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcMagicResistDamage-7fff5ffb5680.c",
+      "pseudocodeSha256": "09ccda56815255b89846b7cbb63c9c4511829839abc992c6ec8a48fa1671c03c"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "CalcRegistDamage",
+      "method_definition_index": 14312,
+      "token": "0x060037e9",
+      "metadata_declaration_range": {
+        "offset": 4260448,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 24541,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerStatus",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "mobStatus",
+          "type_index": 18240,
+          "exact_byval_name": "IMobStatusCalculator"
+        },
+        {
+          "name": "addRegistvalue",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51475760,
+      "pointer_slot_va": "0x7fff62367530",
+      "runtime_va": "0x7fff5ffb5d60",
+      "rva": "0xd65d60",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574881ec8000000080",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcRegistDamage-7fff5ffb5d60.c",
+      "pseudocodeSha256": "107570a4fc57769aade55fc27f0f70eaed781e9701c15f68fdfbbb75a4456fff"
+    },
+    {
+      "class": "MobStatus",
+      "name": "SetExpDef",
+      "method_definition_index": 9148,
+      "token": "0x060023bd",
+      "metadata_declaration_range": {
+        "offset": 4074544,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "normal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skill",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "magic",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51434448,
+      "pointer_slot_va": "0x7fff6235d3d0",
+      "runtime_va": "0x7fff5fe6b2f0",
+      "rva": "0xc1b2f0",
+      "status": "mapped",
+      "code_preview_hex": "8951188951244489411c44894128448949204489492cc3cc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatus-SetExpDef-7fff5fe6b2f0.c",
+      "pseudocodeSha256": "83d76eebe81a0ab74e47bb5494db683ea292cca543621fb13b7d903d8904f8ba"
+    },
+    {
+      "class": "MobStatus",
+      "name": "CalcExpDef",
+      "method_definition_index": 9149,
+      "token": "0x060023be",
+      "metadata_declaration_range": {
+        "offset": 4074580,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 34533,
+          "exact_byval_name": "AttackType"
+        },
+        {
+          "name": "normal",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skill",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "magic",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51434456,
+      "pointer_slot_va": "0x7fff6235d3d8",
+      "runtime_va": "0x7fff5fe6b090",
+      "rva": "0xc1b090",
+      "status": "mapped",
+      "code_preview_hex": "4c8bd185d2741583ea01740b83fa01750ef75c2428eb0841",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatus-CalcExpDef-7fff5fe6b090.c",
+      "pseudocodeSha256": "ec23b8e032470c015075997a13684181ea126e11f2df144b4f101598a41b1799"
+    },
+    {
+      "class": "<>c",
+      "name": "<get_CutAttack>b__1_0",
+      "method_definition_index": 9709,
+      "token": "0x060025ee",
+      "metadata_declaration_range": {
+        "offset": 4094740,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51438936,
+      "pointer_slot_va": "0x7fff6235e558",
+      "runtime_va": "0x7fff5fe8d800",
+      "rva": "0xc3d800",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27417488b42184885c0740e83781800760e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "__c-_get_CutAttack_b__1_0-7fff5fe8d800.c",
+      "pseudocodeSha256": "3bce6993bd60479544ddaa2da86da41ee9cef313b61a0c16bea407fb35301082"
+    },
+    {
+      "class": "<>c",
+      "name": "<get_CutMagicAttack>b__3_0",
+      "method_definition_index": 9710,
+      "token": "0x060025ef",
+      "metadata_declaration_range": {
+        "offset": 4094776,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 20726,
+          "exact_byval_name": "MobPropertyMaster"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51438944,
+      "pointer_slot_va": "0x7fff6235e560",
+      "runtime_va": "0x7fff5fe8d830",
+      "rva": "0xc3d830",
+      "status": "mapped",
+      "code_preview_hex": "4883ec284885d27417488b42184885c0740e83781801760e",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "__c-_get_CutMagicAttack_b__3_0-7fff5fe8d830.c",
+      "pseudocodeSha256": "4902b653e3daaec4582732934e9ada7888542e51060e98302ef0a11f9e476a96"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "CalcLastDamageRate",
+      "method_definition_index": 14282,
+      "token": "0x060037cb",
+      "metadata_declaration_range": {
+        "offset": 4259368,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22771,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24541,
+          "exact_byval_name": "SkillAttackType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24497,
+        "exact_byval_name": "System.Single"
+      },
+      "pointer_slot_offset": 51475520,
+      "pointer_slot_va": "0x7fff62367440",
+      "runtime_va": "0x7fff5ffb54a0",
+      "rva": "0xd654a0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec60803d6301630200418b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcLastDamageRate-7fff5ffb54a0.c",
+      "pseudocodeSha256": "b051fe55769a0487776a4e27c5e1225c574dbd8461d896f5caffa761c2b9bc50"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "calcBaseDamage",
+      "method_definition_index": 14296,
+      "token": "0x060037d9",
+      "metadata_declaration_range": {
+        "offset": 4259872,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22715,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20509,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "type",
+          "type_index": 24541,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "eqLimit",
+          "type_index": 24595,
+          "exact_byval_name": "SkillEqLimitFlag"
+        },
+        {
+          "name": "isCritical",
+          "type_index": 12861,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51475632,
+      "pointer_slot_va": "0x7fff623674b0",
+      "runtime_va": "0x7fff5ffbcd60",
+      "rva": "0xd6cd60",
+      "status": "mapped",
+      "code_preview_hex": "4c8944241848894c2408555356574157488d6c24e14881ec",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-calcBaseDamage-7fff5ffbcd60.c",
+      "pseudocodeSha256": "3884297adf0339a24331c5f7cb1f8140c45abe8c1d48a72cb465559a2dcef15b"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "calcBaseDamage",
+      "method_definition_index": 14298,
+      "token": "0x060037db",
+      "metadata_declaration_range": {
+        "offset": 4259944,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "atk",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lv",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "targetLv",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "cut",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobPropCut",
+          "type_index": 24497,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51475648,
+      "pointer_slot_va": "0x7fff623674c0",
+      "runtime_va": "0x7fff5ffbcd20",
+      "rva": "0xd6cd20",
+      "status": "mapped",
+      "code_preview_hex": "b864000000412bc8412bc103ca660f6ec00f5bc0660f6ec9",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-calcBaseDamage-7fff5ffbcd20.c",
+      "pseudocodeSha256": "e3a147e867bbd32c32077606544ee222d8be5d39a6a0dbf622ca844023d0a172"
+    },
+    {
+      "class": "PlayerAttackBase",
+      "name": "checkCriticalPercent",
+      "method_definition_index": 14329,
+      "token": "0x060037fa",
+      "metadata_declaration_range": {
+        "offset": 4261060,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "criticalParcent",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20509,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12861,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51475896,
+      "pointer_slot_va": "0x7fff623675b8",
+      "runtime_va": "0x7fff5ffbdfb0",
+      "rva": "0xd6dfb0",
+      "status": "mapped",
+      "code_preview_hex": "48895c242089542410564883ec20803d7176620200498bd8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-checkCriticalPercent-7fff5ffbdfb0.c",
+      "pseudocodeSha256": "8632e9ef8960a07580c775dabd7b1e83245ed85fe8fa95f6df080b00f0a150c0"
+    },
+    {
+      "class": "BossMobActionManager",
+      "name": "SetPartsMaster",
+      "method_definition_index": 7198,
+      "token": "0x06001c1f",
+      "metadata_declaration_range": {
+        "offset": 4004344,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "master",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "hp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51418848,
+      "pointer_slot_va": "0x7fff623596e0",
+      "runtime_va": "0x7fff5fdb0650",
+      "rva": "0xb60650",
+      "status": "mapped",
+      "code_preview_hex": "488974241857415641574883ec30803dba42830200458bf1",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobActionManager-SetPartsMaster-7fff5fdb0650.c",
+      "pseudocodeSha256": "6a737e343acd22fa4d2f78ef8400a42315f3c842252c2f2d4d5d7d95fa7c3fef"
+    },
+    {
+      "class": "BossMobActionManager",
+      "name": ".ctor",
+      "method_definition_index": 7206,
+      "token": "0x06001c27",
+      "metadata_declaration_range": {
+        "offset": 4004632,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51418912,
+      "pointer_slot_va": "0x7fff62359720",
+      "runtime_va": "0x7fff5f7c70c0",
+      "rva": "0x5770c0",
+      "status": "mapped",
+      "code_preview_hex": "33d2e969712300cccccccccccccccccc48895c2408488974",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BossMobActionManager-_ctor-7fff5f7c70c0.c",
+      "pseudocodeSha256": "ab9be2182e025932a81cf683bc449fa43d60724aa31b3c30b1d0ef953f6c672c"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": "Damaged",
+      "method_definition_index": 7646,
+      "token": "0x06001ddf",
+      "metadata_declaration_range": {
+        "offset": 4020472,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actor",
+          "type_index": 16367,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "action",
+          "type_index": 24530,
+          "exact_byval_name": "SkillActionBase"
+        },
+        {
+          "name": "damageData",
+          "type_index": 24586,
+          "exact_byval_name": "SkillDamageData"
+        },
+        {
+          "name": "id",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51422432,
+      "pointer_slot_va": "0x7fff6235a4e0",
+      "runtime_va": "0x7fff5fe197c0",
+      "rva": "0xbc97c0",
+      "status": "mapped",
+      "code_preview_hex": "488954241055564154415541564157488d6c24e14881ecb8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EnemyMobActionManagerBase-Damaged-7fff5fe197c0.c",
+      "pseudocodeSha256": "07e58ad0a1829bbc4db80794761a3bfe09d7c626aecfb774276cb5acbddba44c"
+    },
+    {
+      "class": "EnemyMobActionManagerBase",
+      "name": ".ctor",
+      "method_definition_index": 7687,
+      "token": "0x06001e08",
+      "metadata_declaration_range": {
+        "offset": 4021948,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1884",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51422760,
+      "pointer_slot_va": "0x7fff6235a628",
+      "runtime_va": "0x7fff5f9fe230",
+      "rva": "0x7ae230",
+      "status": "mapped",
+      "code_preview_hex": "33d2e9f956adffcccccccccccccccccc40534883ec20488b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "EnemyMobActionManagerBase-_ctor-7fff5f9fe230.c",
+      "pseudocodeSha256": "c8b6a8a4ef5fa9a94aedf98294d37a092863c30d9ce5ae015a6c49ea479f3609"
+    },
+    {
+      "class": "HighRaidMobPartsStatus",
+      "name": ".ctor",
+      "method_definition_index": 7967,
+      "token": "0x06001f20",
+      "metadata_declaration_range": {
+        "offset": 4032028,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "hp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "difficulty",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "level",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51425000,
+      "pointer_slot_va": "0x7fff6235aee8",
+      "runtime_va": "0x7fff5fe2fe90",
+      "rva": "0xbdfe90",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec30488bd948c744242000000000e8b96603008b",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidMobPartsStatus-_ctor-7fff5fe2fe90.c",
+      "pseudocodeSha256": "910a81dc88d7aa7d592564e35dcfae37ce72619ad7c9adf1db0a9238cbe6990e"
+    },
+    {
+      "class": "HighRaidMobPartsStatus",
+      "name": "get_Def",
+      "method_definition_index": 7969,
+      "token": "0x06001f22",
+      "metadata_declaration_range": {
+        "offset": 4032100,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51425016,
+      "pointer_slot_va": "0x7fff6235aef8",
+      "runtime_va": "0x7fff5fe2fec0",
+      "rva": "0xbdfec0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803ddc4d7b0200488bd97513488d0de70a60",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidMobPartsStatus-get_Def-7fff5fe2fec0.c",
+      "pseudocodeSha256": "d195ddb2617bfdc7e12e9e8a5e5a61e245c41c3021def6ec40166ac25eb1ba7a"
+    },
+    {
+      "class": "HighRaidMobPartsStatus",
+      "name": "get_MagicDef",
+      "method_definition_index": 7970,
+      "token": "0x06001f23",
+      "metadata_declaration_range": {
+        "offset": 4032136,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18791,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51425024,
+      "pointer_slot_va": "0x7fff6235af00",
+      "runtime_va": "0x7fff5fe2ff80",
+      "rva": "0xbdff80",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d1d4d7b0200488bd97513488d0d270a60",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "HighRaidMobPartsStatus-get_MagicDef-7fff5fe2ff80.c",
+      "pseudocodeSha256": "65307744d155351d9e5eac26cbcc7085328fa52e39e47e4a9a0ab552ba6b9559"
+    },
+    {
+      "class": "MobBattleStatus",
+      "name": ".ctor",
+      "method_definition_index": 8274,
+      "token": "0x06002053",
+      "metadata_declaration_range": {
+        "offset": 4043080,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "abnormalManager",
+          "type_index": 11498,
+          "exact_byval_name": "AbnormalStateManager"
+        },
+        {
+          "name": "buffManager",
+          "type_index": 20604,
+          "exact_byval_name": "MobBuffManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51427456,
+      "pointer_slot_va": "0x7fff6235b880",
+      "runtime_va": "0x7fff5f58c670",
+      "rva": "0x33c670",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20488bda49",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobBattleStatus-_ctor-7fff5f58c670.c",
+      "pseudocodeSha256": "25c9b720ce507c3d9ec1c91f3daa542d1b72b1f6d36576dfdac5a50504ba7f1f"
+    },
+    {
+      "class": "MobPartsStatus",
+      "name": ".ctor",
+      "method_definition_index": 9039,
+      "token": "0x06002350",
+      "metadata_declaration_range": {
+        "offset": 4070620,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "statusMaster",
+          "type_index": 20778,
+          "exact_byval_name": "MobStatusMaster"
+        },
+        {
+          "name": "hp",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "difficulty",
+          "type_index": 18774,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51433576,
+      "pointer_slot_va": "0x7fff6235d068",
+      "runtime_va": "0x7fff5fe66560",
+      "rva": "0xc16560",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803da0e8",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPartsStatus-_ctor-7fff5fe66560.c",
+      "pseudocodeSha256": "14015b06473bf98ba51ccacc3cd7b3e43d533860c9ac953e98b4b0c2c64db9a5"
+    },
+    {
+      "class": "MobStatus",
+      "name": ".ctor",
+      "method_definition_index": 9137,
+      "token": "0x060023b2",
+      "metadata_declaration_range": {
+        "offset": 4074148,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "mobid",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51434360,
+      "pointer_slot_va": "0x7fff6235d378",
+      "runtime_va": "0x7fff5fe6b810",
+      "rva": "0xc1b810",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742410574883ec20803d15967702008bf2",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatus-_ctor-7fff5fe6b810.c",
+      "pseudocodeSha256": "0079e519c79335ecc94d196380f325150c233af2ea148f2bc7abbcced05cbf5d"
+    },
+    {
+      "class": "MobStatus",
+      "name": ".ctor",
+      "method_definition_index": 9138,
+      "token": "0x060023b3",
+      "metadata_declaration_range": {
+        "offset": 4074184,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "mobId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "localId",
+          "type_index": 13013,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "uniqueId",
+          "type_index": 18791,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51434368,
+      "pointer_slot_va": "0x7fff6235d380",
+      "runtime_va": "0x7fff5fe6b730",
+      "rva": "0xc1b730",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c2410488974241848897c242041564883",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobStatus-_ctor-7fff5fe6b730.c",
+      "pseudocodeSha256": "45bbc4d6e09636272ebf6f53881712f2f355496641f0d751a20041dcee64d10f"
+    },
+    {
+      "class": "MobPropertyBodyCutCorrection",
+      "name": "get_PropertyType",
+      "method_definition_index": 9698,
+      "token": "0x060025e3",
+      "metadata_declaration_range": {
+        "offset": 4094344,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21221,
+        "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+      },
+      "pointer_slot_offset": 51438848,
+      "pointer_slot_va": "0x7fff6235e500",
+      "runtime_va": "0x7fff5fdf2a60",
+      "rva": "0xba2a60",
+      "status": "mapped",
+      "code_preview_hex": "b808000000c3cccccccccccccccccccc4883ec28488b4958",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyBodyCutCorrection-get_PropertyType-7fff5fdf2a60.c",
+      "pseudocodeSha256": "521ae3d8737fa100a31695aaf0ec1dc242990d8fb4f54f1b4f41bc143494e32a"
+    },
+    {
+      "class": "MobPropertyBodyCutCorrection",
+      "name": ".ctor",
+      "method_definition_index": 9699,
+      "token": "0x060025e4",
+      "metadata_declaration_range": {
+        "offset": 4094380,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51438856,
+      "pointer_slot_va": "0x7fff6235e508",
+      "runtime_va": "0x7fff5fe832d0",
+      "rva": "0xc332d0",
+      "status": "mapped",
+      "code_preview_hex": "33d2e919050000cccccccccccccccccc48895c2408565741",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyBodyCutCorrection-_ctor-7fff5fe832d0.c",
+      "pseudocodeSha256": "e1549b53dbdbb80517a24cb7df11d049982368050f9da49de70ba55730828d0d"
+    },
+    {
+      "class": "MobPropertyPartCutCorrection",
+      "name": "get_PropertyType",
+      "method_definition_index": 9778,
+      "token": "0x06002633",
+      "metadata_declaration_range": {
+        "offset": 4097224,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x8c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21221,
+        "exact_byval_name": "Toram.Common.Mob.MonsterPropertyType"
+      },
+      "pointer_slot_offset": 51439488,
+      "pointer_slot_va": "0x7fff6235e780",
+      "runtime_va": "0x7fff5fdeeea0",
+      "rva": "0xb9eea0",
+      "status": "mapped",
+      "code_preview_hex": "b807000000c3ccccccccccccccccccccb899010000c3cccc",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyPartCutCorrection-get_PropertyType-7fff5fdeeea0.c",
+      "pseudocodeSha256": "ba01d488e222cb0ae21fba3bd2fa99096735b2a8d49f99354c1cabe0d1ede7e0"
+    },
+    {
+      "class": "MobPropertyPartCutCorrection",
+      "name": ".ctor",
+      "method_definition_index": 9779,
+      "token": "0x06002634",
+      "metadata_declaration_range": {
+        "offset": 4097260,
+        "size": 36
+      },
+      "generic_container_index": -1,
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29187,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51439496,
+      "pointer_slot_va": "0x7fff6235e788",
+      "runtime_va": "0x7fff5fe832d0",
+      "rva": "0xc332d0",
+      "status": "mapped",
+      "code_preview_hex": "33d2e919050000cccccccccccccccccc48895c2408565741",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "MobPropertyPartCutCorrection-_ctor-7fff5fe832d0.c",
+      "pseudocodeSha256": "e1549b53dbdbb80517a24cb7df11d049982368050f9da49de70ba55730828d0d"
+    }
+  ],
+  "limitations": [
+    "Static saved-code inspection; no live target execution or attachment.",
+    "Sequential captured module does not include managed heap.",
+    "Direct scoped Ghidra; no REA Evidence ID.",
+    "Declared part references are preserved; active part registration during every scripted phase is not runtime observed."
+  ],
+  "scriptSha256": "785dffc87d7b259cf237206b410e87aeb9a2b2ad1136e2d86ee8a747d342c857",
+  "metadataSha256": "4a7fa9d77987895eb690d76a8b1d40af756ac75eb326fbd1fbaa54f8a4f8161e",
+  "reproduction": {
+    "script": "TraceToramTarget.java",
+    "inputMap": "index.json",
+    "target": "build/tmp/toram-item-extraction/code-trace/runtime/snapshot-1/GameAssembly.snapshot.dll",
+    "parameters": "analyzeHeadless <private project directory> <new project> -import <target> -noanalysis -scriptPath <native-target directory> -postScript TraceToramTarget.java <index.json absolute path> <new output directory> -deleteProject",
+    "environment": "JVM application.settingsdir/cachedir/tempdir private writable paths. See build/tmp/toram-target-native/console*.log."
+  }
+}
