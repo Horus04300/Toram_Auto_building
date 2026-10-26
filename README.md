@@ -8,6 +8,7 @@ Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build
 
     npm ci
     rustup target add wasm32-unknown-unknown
+    rustup toolchain install nightly-2025-11-15 --profile minimal --component rust-src --target wasm32-unknown-unknown
     cargo install wasm-bindgen-cli --version 0.2.127 --locked
     npm run web:dev
 
@@ -28,6 +29,7 @@ Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build
 | npm run bench:optimization | 새 프로세스 반복 계측 |
 | npm run ai:audit | 문서·검색 경로 점검 |
 | npm run server:start | 홈 서버 계정 API·웹 제공 (server/.env 필요) |
+| npm run web:preview | Google 로그인 없는 로컬 체험 계정·별도 개발 DB |
 | npm run test:account | Google 인증 흐름·계정 저장 회귀 (실제 Google 응답은 mock) |
 
 브라우저 검증은 설치된 Playwright 모듈 경로를 CODEX_PLAYWRIGHT_PATH에 지정하고 web:build 후 실행합니다. Rust 검사는 engine/Cargo.toml과 desktop/Cargo.toml을 각각 대상으로 fmt/test/clippy를 실행합니다.
@@ -68,10 +70,12 @@ desktop/src/ + engine/ + build/desktop/        → Windows 앱
 
 웹은 build/web/ 전체를 정적 호스팅에 올리며 하위 경로 배포를 지원합니다. 앱과 웹은 빌드 JSON v2를 공유합니다. 자동 복원은 접속 주소별 localStorage이며, 이름 있는 앱 세팅은 %LOCALAPPDATA%\ToramOnlineAutoBuildCalculator 에 저장합니다. JSON 내보내기/불러오기로 다른 주소·기기로 옮깁니다.
 
+홈(`/`)은 좌측 대분류 아이콘 메뉴·상단 바와 인기 빌드 영역·계정 카드·최근 메뉴로 구성됩니다. 계산기는 `/calculator`, 내 구성은 `/inventory?type=equipment`에서 열며 화면을 오가도 계산기 입력을 유지합니다. 공개 빌드 게시글의 즐겨찾기로 홈 순위를 표시합니다. 화면 디렉터리는 [웹 안내](web/README.md)를 따릅니다.
+
 저장 옆 계정 아이콘에서 Google 로그인과 내 빌드·내 아이템·즐겨찾기를 사용합니다. 계정 저장은 Linux/Docker 홈 서버에서 운영합니다. Google 발급 키·공개 HTTPS 주소 설정과 실제 배포가 필요하며, 설정 전에는 기존 로컬 저장을 사용합니다. [홈 서버 설계·배포 방법](docs/architecture/account-home-server.md)을 참고하세요. 계정 서버는 웹 루트에서 제공하고, Windows 앱에는 빌드 시 서버 주소를 주입합니다.
 
 data/sources/, web/public/game-data/, docs/sources/는 원문·발행 데이터이므로 유지합니다. build/ 전체, 각 Rust 프로젝트의 target/, node_modules/는 Git에서 제외한 생성물입니다. 저장·업데이트 어댑터는 desktop/adapters/의 TypeScript 원본을 수정하고 npm run types:emit으로 build/generated/desktop/에 생성합니다.
 
 배포 준비는 index.html과 실행용 assets만 남깁니다. 선택된 실행 스크립트·CSS·폰트/라이선스·아이콘·WASM을 복사하며 원문·타입 전용 TS·검사 로그는 포함하지 않습니다. 새 classic 스크립트는 classic-script-manifest.mjs에, 새 ES Module은 tools/support/frontend-paths.mjs에 등록합니다. 브라우저 검사 스크린샷은 build/tmp/, Native 계측·검사 로그는 desktop/target/에 보관합니다.
 
-[현재 상태](docs/handoff/current-development-handoff.md) · [작업 진입점](docs/ai-context-guide.md) · [추천 정확성 계약](docs/architecture/crysta-optimization-contract.md)
+[현재 상태](docs/handoff/current-development-handoff.md) · [작업 진입점](docs/ai-context-guide.md) · [추천 정확성 계약](docs/architecture/crysta-optimization-contract.md) · [종합 플랫폼 설계](docs/architecture/platform-design-contract.md)

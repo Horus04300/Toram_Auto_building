@@ -69,7 +69,7 @@
       diagnostics.push({ code:'UNKNOWN_STAT', key:String(key), owner:owner, message:'등록되지 않은 스탯 키입니다: ' + key });
       return;
     }
-    target[normalized] = (Number(target[normalized]) || 0) + amount;
+    target[normalized] = (Number(target[normalized]) || 0) + (registry && typeof registry.normalizeValue === 'function' ? registry.normalizeValue(normalized, amount) : amount);
   }
 
   function buildLineageIndex(crystas) {
@@ -255,7 +255,9 @@
         if (!crysta || !crysta.name) return false;
         var key = normalizeName(crysta.name);
         var category = categoryGroup(crysta.category);
-        return !banned[key] && !obsolete[key] && (category === '노말' || category === group.category);
+        // User policy: basic flat-stat tutorial series is excluded from automatic picks.
+        var tutorial = crysta.gameItemId >= 9401 && crysta.gameItemId <= 9504;
+        return !tutorial && !banned[key] && !obsolete[key] && (category === '노말' || category === group.category);
       });
       return packageGroup(group, pool, [current[group.slots[0]], current[group.slots[1]]], [locks[group.slots[0]], locks[group.slots[1]]], structure, lineageIndex, registry, diagnostics);
     });

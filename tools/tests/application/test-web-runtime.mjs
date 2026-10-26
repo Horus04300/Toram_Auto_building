@@ -11,6 +11,8 @@ for (const target of ['web', 'desktop']) {
   const html = await renderFrontendHtml(target);
   assert.ok(html.includes(`data-runtime="${target}"`));
   assert.ok(!html.includes('{{APP_VERSION}}'));
+  assert.match(html,/id="homeWorkspace"/u);
+  assert.doesNotMatch(html,/id="charLevel"/u,'The platform entry must not embed calculator inputs');
 }
 await assert.rejects(renderFrontendHtml('../outside'), /target/);
 
@@ -30,7 +32,8 @@ for (const [target, directory, scripts] of [['web','build/web',WEB_CLASSIC_SCRIP
   await prepareFrontend(target);
   assert.deepEqual((await readdir(output)).sort(), ['assets', 'index.html']);
   for (const path of [...scripts, ...icons, 'assets/js/optimization/wasm-worker.js', 'assets/wasm/crysta.js',
-    'assets/wasm/crysta_bg.wasm', 'assets/fonts/OFL.txt', 'assets/icons/skills/icons/skill_on.png', 'assets/icons/skills/icons/skill_off.png']) {
+    'assets/wasm/crysta_bg.wasm', 'assets/wasm/parallel/crysta.js', 'assets/wasm/parallel/crysta_bg.wasm',
+    'assets/fonts/OFL.txt', 'assets/icons/skills/icons/skill_on.png', 'assets/icons/skills/icons/skill_off.png']) {
     await access(resolve(output, path));
   }
   for (const path of ['data/sources', 'assets/game-data/ui', 'assets/js/calculator.js', 'assets/js/application/ports.ts', 'desktop/adapters/saved-build-storage.ts']) {
@@ -61,14 +64,29 @@ function get(path, method = 'GET') {
 }
 try {
   const index = await get('/');
+  const inventory = await get('/inventory?type=equipment&equipmentType=sword');
+  assert.equal((await get('/calculator')).status,200);
+  assert.equal((await get('/board?post=example&release=1')).status,200);
+  assert.equal((await get('/catalog?section=items&selected=22001')).status,200);
+  for (const path of ['/assets/js/application/catalog-browser.mjs','/assets/js/pages/catalog/catalog-page.mjs','/assets/css/catalog.css']) assert.equal((await get(path)).status,200,path);
+  const calculator = await get('/assets/pages/calculator.html');
+  assert.equal(calculator.status,200); assert.match(calculator.headers['content-type'],/text\/html/u);
+  assert.match(calculator.body,/id="charLevel"/u); assert.doesNotMatch(calculator.body,/<script\b/u);
+  for (const path of ['/assets/js/pages/calculator/calculator-page.mjs','/assets/js/application/stat-labels.mjs','/assets/js/calculation/stat-registry.js']) assert.equal((await get(path)).status,200,path);
+  for (const path of ['/assets/js/application/inventory-summary.mjs','/assets/js/pages/board/board-page.mjs','/assets/js/pages/board/publish-dialog.mjs','/assets/css/board.css']) assert.equal((await get(path)).status,200,path);
+  for (const path of ['/assets/js/layout/platform-shell.mjs','/assets/js/pages/home/home-page.mjs','/assets/js/pages/inventory/inventory-page.mjs','/assets/js/pages/inventory/inventory-merge-ui.mjs','/assets/css/home.css','/assets/css/platform.css']) assert.equal((await get(path)).status,200,path);
+  assert.equal(inventory.status, 200);
+  assert.match(inventory.body, /inventory.css/);
   assert.equal(index.status, 200);
   assert.match(index.headers['content-type'], /text\/html/);
   assert.match(index.body, /data-runtime="web"/);
   assert.equal(index.headers['cache-control'], 'no-store');
+  assert.equal(index.headers['cross-origin-opener-policy'], 'same-origin');
+  assert.equal(index.headers['cross-origin-embedder-policy'], 'require-corp');
   const entry = await get('/assets/js/app-entry.mjs?test=1');
   assert.equal(entry.status, 200);
   assert.equal(entry.headers['content-type'], 'text/javascript');
-  assert.match(entry.body, /WEB_CLASSIC_SCRIPT_PATHS/);
+  assert.match(entry.body, /ensureCalculator/);
   const worker = await get('/assets/js/optimization/wasm-worker.js');
   assert.equal(worker.status, 200);
   assert.match(worker.body, /importScripts/);
@@ -78,7 +96,7 @@ try {
   assert.equal((await get('/assets/js/app-entry.mjs', 'HEAD')).body, '');
   for (const path of ['/package.json', '/.git/config', '/web/src/contracts/boundary-dtos.d.ts', '/desktop/tauri.conf.json',
     '/engine/src/solver.rs', '/data/sources/skill-effect-source-links.json', '/assets/js/optimization/native-client.js',
-    '/assets/js/application/ports.ts', '/tools/reference/optimization/exact-solver.js', '/assets/missing.js', '/assets/../package.json',
+    '/assets/js/application/ports.ts', '/tools/reference/optimization/exact-solver.js', '/assets/missing.js', '/api/inventory/missing', '/inventory/unknown', '/assets/../package.json',
     '/assets/%2e%2e%5cpackage.json', '/assets/%2e%2e%2fpackage.json', '/assets/C:%5cWindows%5cwin.ini']) {
     assert.equal((await get(path)).status, 404, `Must not expose ${path}`);
   }

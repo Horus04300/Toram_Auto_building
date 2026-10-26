@@ -1,0 +1,428 @@
+{
+  "schemaVersion": 1,
+  "authority": "retained native duration marker IDs and exact category declarations in localized item descriptions; category labels do not change stacking groups",
+  "source": {
+    "cacheVersion": "e99f6b32",
+    "catalogSha256": "1e360559738f04313b522096107d327c8d8d99bb532ddd7d12ef650b41a19820",
+    "nativeEvidence": "native-item-usage/README.md"
+  },
+  "categories": [
+    {
+      "id": "hp-recovery",
+      "durationCapId": 209,
+      "names": {
+        "kr": "HP 회복",
+        "jp": "HP回復",
+        "us": "HP Healing"
+      },
+      "aliases": {
+        "jp": [
+          "HP回復"
+        ],
+        "kr": [
+          "HP회복"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 1010,
+          "descriptions": {
+            "kr": "5분간, 3초마다 HP 10 회복@「HP 회복 」카테고리와@동시사용 불가",
+            "jp": "5分間、3秒毎にHPを10回復@「HP回復」ｶﾃｺﾞﾘと併用できません",
+            "us": "Restores 10 HP every 3 sec for 5 min.@Unavailable with other HP Healing items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mp-recovery",
+      "durationCapId": 210,
+      "names": {
+        "kr": "MP회복",
+        "jp": "MP回復",
+        "us": "MP Healing"
+      },
+      "aliases": {
+        "jp": [
+          "MP回復"
+        ],
+        "kr": [
+          "MP회복"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2405,
+          "descriptions": {
+            "kr": "10초 동안 2회, MP 50회복@「MP회복」카테고리와 동시 사용 불가",
+            "jp": "10秒間に2回、MP50回復@「ＭＰ回復」カテゴリと併用できません",
+            "us": "Restores 50 MP twice in 10 sec.@Unavailable with other MP Healing items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "hp-boost",
+      "durationCapId": 211,
+      "names": {
+        "kr": "HP 증가",
+        "jp": "HP増加",
+        "us": "HP Boost"
+      },
+      "aliases": {
+        "jp": [
+          "HP増加",
+          "最大HP"
+        ],
+        "kr": [
+          "HP증가",
+          "최대HP"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2000,
+          "descriptions": {
+            "kr": "30분간, 최대 HP 500 증가@「HP 증가」카테고리와@동시사용 불가",
+            "jp": "30分間、最大HPが500増加@「HP増加」ｶﾃｺﾞﾘと併用できません",
+            "us": "MaxHP +500 for 30 min.@Unavailable with other HP Boost items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "mp-boost",
+      "durationCapId": 212,
+      "names": {
+        "kr": "MP 증가",
+        "jp": "MP増加",
+        "us": "MP Boost"
+      },
+      "aliases": {
+        "jp": [
+          "MP増加",
+          "最大MP"
+        ],
+        "kr": [
+          "MP증가",
+          "최대MP"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2010,
+          "descriptions": {
+            "kr": "30분간, 최대 MP 100 증가@「MP 증가」카테고리와@동시사용 불가",
+            "jp": "30分間、最大MPが100増加@「MP増加」ｶﾃｺﾞﾘと併用できません",
+            "us": "MaxMP +100 for 30 min.@Unavailable with other MP Boost items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "attack",
+      "durationCapId": 213,
+      "names": {
+        "kr": "공격력",
+        "jp": "攻撃力",
+        "us": "Attack Boost"
+      },
+      "aliases": {
+        "jp": [
+          "攻撃力"
+        ],
+        "kr": [
+          "공격력"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2919,
+          "descriptions": {
+            "kr": "15분간, 무기ATK가 10% 증가, 공격MP회복이 10 증가@「공격력」카테고리와 병용할 수 없습니다",
+            "jp": "15分間、武器ATKが10%増加、攻撃MP回復が10増加@「攻撃力」カテゴリとは併用できません",
+            "us": "Weapon ATK +10%, Attack MP Recovery +10 for 15 min.@Unavailable with other Attack Boost Items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "magic",
+      "durationCapId": 214,
+      "names": {
+        "kr": "마법력",
+        "jp": "魔法力",
+        "us": "Magic Boost"
+      },
+      "aliases": {
+        "jp": [
+          "魔法力"
+        ],
+        "kr": [
+          "마법력"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 3073,
+          "descriptions": {
+            "kr": "정월에 흔히 보는 국물 요리@30분간 무기 ATK와 마법관통을 5% 증가@[마법력] 카테고리와 동시 사용 불가",
+            "jp": "お正月によく見るスープ料理@30分間、武器ATKと魔法貫通を5%増加@「魔法力」カテゴリとは併用できません",
+            "us": "A soup dish often eaten on New Year's Day.@Adds Weapon ATK and Magic Pierce by 5% for 30 minutes.@Unavailable with other Magic Boost Items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "physical-defense",
+      "durationCapId": 215,
+      "names": {
+        "kr": "물리 방어",
+        "jp": "物理防御",
+        "us": "Melee Defense"
+      },
+      "aliases": {
+        "jp": [
+          "物理防御"
+        ],
+        "kr": [
+          "물리방어"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2974,
+          "descriptions": {
+            "kr": "20분간 Guard 회복과 Guard력이 5% 증가, 물리 내성+10%@「물리 방어」 카테고리와 병용할 수 없습니다",
+            "jp": "20分間、Guard回復とGuard力が5%増加、物理耐性+10%@「物理防御」カテゴリと併用できません",
+            "us": "Guard Recharge and Guard Power +5%, Physical Resistance +10% for 20 min.@Unavailable with other Melee Defense Items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "magic-defense",
+      "durationCapId": 216,
+      "names": {
+        "kr": "마법 방어",
+        "jp": "魔法防御",
+        "us": "Magic Defense"
+      },
+      "aliases": {
+        "jp": [
+          "魔法防御"
+        ],
+        "kr": [
+          "마법방어"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2975,
+          "descriptions": {
+            "kr": "20분간 Guard 회복과 Guard력이 5% 증가, 마법 내성+10%@「마법 방어」 카테고리와 병용할 수 없습니다",
+            "jp": "20分間、Guard回復とGuard力が5%増加、魔法耐性+10%@「魔法防御」カテゴリと併用できません",
+            "us": "Guard Recharge and Guard Power +5%, Magic Resistance +10% for 20 min.@Unavailable with other Magic Defense Items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "accuracy",
+      "durationCapId": 217,
+      "names": {
+        "kr": "명중",
+        "jp": "命中",
+        "us": "Accuracy"
+      },
+      "aliases": {
+        "jp": [
+          "命中"
+        ],
+        "kr": [
+          "명중"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 3001,
+          "descriptions": {
+            "kr": "10분간, 크리티컬률이 10 증가@「명중」카테고리와@동시사용 불가",
+            "jp": "10分間、ｸﾘﾃｨｶﾙ率が10増加@「命中」カテゴリと併用できません",
+            "us": "Critical Rate +10 for 10 min.@Unavailable with other Accuracy items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "evasion",
+      "durationCapId": 218,
+      "names": {
+        "kr": "회피",
+        "jp": "回避",
+        "us": "[Dodge]"
+      },
+      "aliases": {
+        "jp": [
+          "回避"
+        ],
+        "kr": [
+          "회피"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 3040,
+          "descriptions": {
+            "kr": "10분간 회피와 명중이 50 증가한다\\n「회피」 카테고리와 병용할 수 없습니다\\n\\n용사가 여행중에 났던\\n포무찬의 애주\\n마시면 일시적으로 강해진다 한다.\\n자주 마시는 모습이 목격되었으나,\\n강해진 모습은 보지\\n못한 듯하다...",
+            "jp": "10分間、回避と命中が50増加する\\n「回避」カテゴリと併用できません\\n\\n勇者が旅先で出会った\\nポムーチェン愛飲のお酒\\n飲むと一時的に強くなるらしい。\\n飲んでいる姿はよく見るが、\\n強くなった所は見たことが\\n無いようだ・・・",
+            "us": "Dodge&Accuracy +50 for 10 min.\\nUnavailable with other [Dodge] items.\\nPomie Chan, who the hero met during\\nthe travel, loves it. It's supposed\\nto make him stronger but never saw\\nhim being stronger after drinking..."
+          }
+        }
+      ]
+    },
+    {
+      "id": "attack-speed",
+      "durationCapId": 219,
+      "names": {
+        "kr": "공격속도",
+        "jp": "攻撃速度",
+        "us": "Attack Speed"
+      },
+      "aliases": {
+        "jp": [
+          "攻撃速度"
+        ],
+        "kr": [
+          "공격속도"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2948,
+          "descriptions": {
+            "kr": "15분간, ASPD가 500증가, 공격MP 회복이 3증가@  「공격속도」카테고리와 병용할 수 없습니다",
+            "jp": "15分間、ASPDが500増加、攻撃MP回復が3増加@「攻撃速度」カテゴリと併用できません",
+            "us": "ASPD+500, Attack MP Recovery +3 for 15 min.@Unavailable with other Attack Speed items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "cast-speed",
+      "durationCapId": 220,
+      "names": {
+        "kr": "영창속도",
+        "jp": "詠唱速度",
+        "us": "Cast Speed"
+      },
+      "aliases": {
+        "jp": [
+          "詠唱速度"
+        ],
+        "kr": [
+          "영창속도"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2949,
+          "descriptions": {
+            "kr": "15분간, CSPD가 300증가, 최대MP가 300증가@「영창속도」카테고리와 병용할 수 없습니다",
+            "jp": "15分間、CSPDが300増加、最大MPが300増加@「詠唱速度」カテゴリと併用できません",
+            "us": "CSPD+300, MaxMP+300 for 15 min.@ Unavailable with other Cast Speed items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "element-attack",
+      "durationCapId": 221,
+      "names": {
+        "kr": "속성강화",
+        "jp": "属性強化",
+        "us": "Elemental Boost"
+      },
+      "aliases": {
+        "jp": [
+          "属性強化"
+        ],
+        "kr": [
+          "속성강화"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2921,
+          "descriptions": {
+            "kr": "호박 맛의 맛있는 쿠키@10분간, 불속성에 유리+5%, ASPD와 CSPD가 100 증가@「속성강화」카테고리와는 병용할 수 없습니다",
+            "jp": "かぼちゃ味のおいしいクッキー@10分間、火属性に有利+5%、ASPDとCSPDが100増加@「属性強化」カテゴリとは併用できません",
+            "us": "A sweet pumpkin cookie.@ASPD & CSPD +100, Advantage against Fire +5% for 10 min.@Unavailable with other Elemental Boost items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "element-defense",
+      "durationCapId": 222,
+      "names": {
+        "kr": "속성방어",
+        "jp": "属性防御",
+        "us": "Elemental Defense"
+      },
+      "aliases": {
+        "jp": [
+          "属性防御"
+        ],
+        "kr": [
+          "속성방어"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2942,
+          "descriptions": {
+            "kr": "30분간, 불내성+4%　물내성+4%　바람내성+4%　땅내성+4%　빛내성+4%　어둠내성+4%@「속성방어」 카테고리와 병용할 수 없습니다",
+            "jp": "30分間、火耐性+4% 水耐性+4% 風耐性+4% 地耐性+4% 光耐性+4% 闇耐性+4%@「属性防御」カテゴリと併用できません",
+            "us": "Fire, Water, Wind, Earth, Light, Dark Resistance +4% for 30min.@Unavailable with other Elemental Defense items."
+          }
+        }
+      ]
+    },
+    {
+      "id": "prevention",
+      "durationCapId": 223,
+      "names": {
+        "kr": "예방",
+        "jp": "予防",
+        "us": "Preventive"
+      },
+      "aliases": {
+        "jp": [
+          "予防"
+        ],
+        "kr": [
+          "예방"
+        ]
+      },
+      "evidence": [
+        {
+          "gameItemId": 2021,
+          "descriptions": {
+            "kr": "2분간, 상태이상이 돼도 한번만@무효화한다@행동불가는 막을 수 없습니다",
+            "jp": "2分間、状態異常になっても1度だけ@無効化する@行動不能系は防げません@「予防」ｶﾃｺﾞﾘと併用できません",
+            "us": "Nullifies ailment one time for 2 min.@Unavailable with other Preventive items.@Has no effect against immobilization."
+          }
+        },
+        {
+          "gameItemId": 2903,
+          "descriptions": {
+            "kr": "30분간, 상태이상이 돼도 한번만 무효화한다@「예방」카테고리와@동시사용 불가@행동불가는 막을 수 없습니다",
+            "jp": "30分間、状態異常になっても１度だけ無効化する@「予防」カテゴリと併用できません@行動不能系は防げません",
+            "us": "Nullifies ailment one time for 30 min.@Unavailable with other Preventive items.@Has no effect against immobilization."
+          }
+        }
+      ]
+    }
+  ]
+}

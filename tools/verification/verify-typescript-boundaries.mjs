@@ -1,3 +1,4 @@
+import ts from 'typescript';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -19,7 +20,11 @@ const sources = [
 ];
 for (const path of sources) {
   const source = await readFile(resolve(root, path), 'utf8');
-  assert.doesNotMatch(source, /\bany\b/u, `${path}: any를 사용하면 안 됩니다.`);
+  const check = node => {
+    assert.notEqual(node.kind, ts.SyntaxKind.AnyKeyword, `${path}: any를 사용하면 안 됩니다.`);
+    ts.forEachChild(node, check);
+  };
+  check(ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true));
 }
 
 const dtoSource = await readFile(resolve(root, sources[0]), 'utf8');

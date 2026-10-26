@@ -19,7 +19,9 @@ for (let i = 0; i < 40; i++) {
     scenarioSnapshot:env.evaluator.createScenarioSnapshot(baseContext, { requirements }),
     groups:['weapon','armor','additional','special'].map((id, group) => ({ id, packages:[0,1,2].map(j => ({
       id:id + '-' + j, statDelta:{ ATKP:(i + group + j) % 13, MATKP:(i + group * j) % 9,
-        CDMG:j * 2, MAXHP:j % 2 ? -100 : 100, CRIT:5 * j, ASPD:j * 50 }, candidateNames:[], evaluatorCandidates:[]
+        CDMG:j * 2, MAXHP:j % 2 ? -100 : 100, CRIT:5 * j, ASPD:j * 50,
+        ATK_UP_VIT:group === 3 ? j * (i % 2 ? 50 : 25) : 0,
+        MATK_UP_VIT:group === 3 ? j * (i % 2 ? 25 : 50) : 0 }, candidateNames:[], evaluatorCandidates:[]
     })) })) };
   const setup = bridge.prepare(problem, {});
   const session = new wasm.SearchSession(JSON.stringify(bridge.projectProblem(setup.problem)));

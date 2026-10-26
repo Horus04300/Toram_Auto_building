@@ -13,6 +13,8 @@ const { chromium } = require(process.env.CODEX_PLAYWRIGHT_PATH);
 const root = resolve(import.meta.dirname, '../../build/web');
 const mime = { '.html':'text/html', '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.png':'image/png', '.wasm':'application/wasm' };
 const built = createServer(async (req, res) => {
+  res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+  res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
   try {
     const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
     if (!pathname.startsWith('/calculator/')) throw new Error('path');
@@ -30,7 +32,7 @@ const timings = [];
 let browser;
 try {
   for (const server of [dev, built]) await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  browser = await chromium.launch({ channel:'msedge', headless:true });
+  browser = await chromium.launch({ channel:'chrome', headless:true });
   for (const [server, path] of [[dev, '/'], [built, '/calculator/']]) {
     const page = await browser.newPage({ viewport:{ width:1280, height:900 } });
     const errors = [], workers = [], bossRequests = [];
@@ -40,7 +42,7 @@ try {
       if (response.status() >= 400 && new URL(response.url()).pathname.includes('/assets/')) errors.push(`${response.status()} ${response.url()}`);
     });
     page.on('worker', worker => workers.push(worker.url()));
-    await page.goto(`http://127.0.0.1:${server.address().port}${path}`);
+    await page.goto(`http://127.0.0.1:${server.address().port}${path}?view=calculator`);
     await page.waitForFunction(() => window.ToramUiFeatures?.settings);
     assert.equal(bossRequests.length, 0, 'Boss data must remain lazy at startup.');
     const targetBefore = await page.evaluate(() => ['bossLevel','bossDef','bossMdef','bossCritResist','bossPhysResist','bossMagResist'].map(id => document.getElementById(id).value));
@@ -86,7 +88,7 @@ try {
     await chooseBoss('기드론',540,'23000:10');
     assert.equal(await page.locator('#bossDifficultyField').isVisible(),false);
     assert.equal(await page.locator('#bossEntryLevelField').isVisible(),false);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().scenario.target),{bossLevel:195,bossDef:429,bossMdef:390,bossCritResist:0,bossPhysResist:7,bossMagResist:7});
+    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().scenario.target),{bossLevel:195,bossDef:429,bossMdef:390,bossCritResist:0,bossPhysResist:7,bossMagResist:7,targetElement:2});
     assert.match(await page.locator('#bossProration').textContent(),/통상 20%p · 물리 30%p · 마법 30%p/u);
     await chooseBoss('미뮤',888,'32700:1');
     assert.equal(await page.locator('#bossDifficultyField').isVisible(),true);
@@ -302,7 +304,7 @@ try {
     assert.equal(await page.evaluate(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.engine), 'rust-wasm');
     assert.ok(workers.some(url => url.endsWith(path + 'assets/js/optimization/wasm-worker.js')));
     assert.equal(await page.evaluate(() => typeof window.ToramCrystaOptimizationGlobalOptimizer), 'undefined');
-    const previewWorkers = workers.length;
+    const previewWorkers = workers.filter(url => url.endsWith('/optimization/wasm-worker.js')).length;
     const previewScore = await page.evaluate(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.score);
     await page.locator('#optimizationRunPreciseOptimization').click();
     try {
@@ -314,7 +316,7 @@ try {
       });
       throw new Error(`${error.message}; ${path}: ${JSON.stringify({ result, errors })}`);
     }
-    assert.equal(workers.length, previewWorkers, 'UI precision must keep the preview Worker');
+    assert.equal(workers.filter(url => url.endsWith('/optimization/wasm-worker.js')).length, previewWorkers, 'UI precision must keep the preview Worker');
     assert.ok(await page.evaluate(score => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.score >= score, previewScore));
     const result = await page.evaluate(async () => {
       const baseContext = window.ToramApplication.CreateCalculationSnapshot().baseContext;
@@ -380,7 +382,7 @@ try {
   }
   await writeFile(new URL('../../desktop/target/rust-wasm-browser-measurements.json', import.meta.url), JSON.stringify({
     browser:await browser.version(), fixture:'crysta-native-runtime-26min-revenir.json',
-    note:'Three fresh Worker runs in one isolated Edge context; includes WASM loading, preparation and final JS evaluation; excludes UI rendering and initial problem compilation.',
+    note:'Three fresh Worker runs in one isolated Chrome context; includes WASM loading, preparation and final JS evaluation; excludes UI rendering and initial problem compilation.',
     timings
   }, null, 2) + '\n');
   console.log('WASM browser fixture: PASS ' + JSON.stringify(timings));

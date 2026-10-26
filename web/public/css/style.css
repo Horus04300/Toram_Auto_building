@@ -8,9 +8,7 @@
 }
 
 .result-action-bar { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; padding:12px 14px; border:1px solid #dce6ef; border-radius:10px; background:#f8fbfd; }
-.result-action-bar > div:first-child { display:flex; flex-direction:column; gap:3px; }
 .result-action-bar strong { color:#24384a; }
-.result-action-bar span { color:#647789; font-size:12px; }
 .result-action-buttons { display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end; }
 .result-secondary-button { border:1px solid #b9c8d5; border-radius:7px; background:#fff; color:#34495e; padding:8px 12px; font-weight:bold; cursor:pointer; }
 .combo-range-choice { display:flex; align-items:center; flex-wrap:wrap; gap:8px 12px; margin:0 0 12px; padding:7px 10px; border:1px solid #dce6ef; border-radius:8px; background:#f8fbfd; font-size:12px; }
@@ -24,6 +22,8 @@
 .optimization-requirement-value { width:100%; box-sizing:border-box; padding:7px 8px; }
 .optimization-requirement-default { color:#738394; text-align:right; }
 .optimization-requirement-help { margin:8px 0; color:#5d6d7e; font-size:12px; }
+.optimization-requirement-help summary { cursor:pointer; }
+#bossSearchStatus:empty, #buildFileStorageStatus:empty { display:none; }
 .optimization-requirement-actions { display:grid; grid-template-columns:auto 1fr auto auto; align-items:center; gap:8px; margin-top:12px; }
 
 @media (max-width: 620px) {
@@ -35,19 +35,19 @@
 }
 
 :root {
-    --bg: #f6f6f8;
+    --bg: #f3f9ff;
     --surface: #ffffff;
-    --surface-muted: #f7f7f9;
-    --surface-sunken: #f0f0f3;
-    --border: #e6e6ea;
-    --border-strong: #d7d7dd;
-    --text: #1c1c22;
-    --text-secondary: #63636d;
-    --text-tertiary: #a2a2ac;
-    --accent: #4b48e5;
-    --accent-dark: #3c39c4;
-    --accent-soft: #eeeefd;
-    --accent-soft-border: #dcdcfa;
+    --surface-muted: #f5faff;
+    --surface-sunken: #eaf4fb;
+    --border: #d9e8f2;
+    --border-strong: #bed7e8;
+    --text: #173b53;
+    --text-secondary: #4b687c;
+    --text-tertiary: #6e8b9e;
+    --accent: #1976a8;
+    --accent-dark: #155f87;
+    --accent-soft: #e5f4ff;
+    --accent-soft-border: #b8def5;
     --success: #0e9f6e;
     --success-dark: #0b815a;
     --success-soft: #ecfbf5;
@@ -304,7 +304,7 @@ button { font-family: inherit; }
 .optimization-stat-change.is-positive b, .optimization-stat-change.is-positive small { color:var(--success-dark); }
 .optimization-stat-change.is-negative { border-color:#efc3bf; background:#fff7f6; }
 .optimization-stat-change.is-negative b, .optimization-stat-change.is-negative small { color:var(--danger-dark); }
-.optimization-recommendation-note { margin:0; color:var(--text-secondary); font-size:12.5px; line-height:1.65; }
+.optimization-comparison-card:first-child { grid-column:1 / -1; }
 .final-rec { margin-top:14px; }
 .final-rec summary, .result-detail-panel > summary { cursor:pointer; color:var(--text); font-size:14px; font-weight:800; list-style:none; }
 .final-rec summary::-webkit-details-marker, .result-detail-panel > summary::-webkit-details-marker { display:none; }
@@ -407,6 +407,7 @@ button { font-family: inherit; }
 .skill-tree-button { display: flex; align-items: center; gap: 9px; min-height: 48px; padding: 6px 8px; margin-bottom: 6px; text-align: left; font-size: 12px; font-weight: 650; }
 .skill-tree-button img { flex: 0 0 34px; width: 34px; height: 34px; object-fit: contain; }
 .skill-tree-button span { overflow-wrap: anywhere; }
+.skill-tree-button .bookmark-label { word-break:keep-all; overflow-wrap:normal; }
 .skill-bookmark-stage { display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 28px; text-align: center; background: linear-gradient(135deg, #fff 0%, #fbfbff 100%); }
 .skill-bookmark-stage .stage-kicker { margin: 0 0 5px; color: var(--accent); font-size: 12px; font-weight: 700; }
 .skill-bookmark-stage h3 { margin: 0; font-size: 21px; letter-spacing: -0.03em; }
@@ -584,7 +585,6 @@ button { font-family: inherit; }
 .boss-extra dl { display: grid; grid-template-columns: minmax(110px, 1fr) minmax(0, 2fr); gap: 5px 10px; }
 .boss-extra dd { margin: 0; overflow-wrap: anywhere; }
 .boss-manual-inputs { margin-top: auto; border-top: 1px solid var(--warning-border); padding-top: 12px; }
-.boss-manual-note { font-size: 12px; color: var(--text-secondary); margin: 0 0 8px; }
 .boss-manual-inputs .form-group:last-child { margin-bottom: 0; }
 @media (max-width: 760px) { .status-tab-layout { grid-template-columns: 1fr; } }
 /* Compact equipment slot editor */
@@ -660,7 +660,6 @@ button { font-family: inherit; }
 .combo-workspace { display:grid; gap:14px; min-width:0; }
 .combo-heading { display:flex; justify-content:space-between; gap:16px; align-items:flex-start; }
 .combo-heading h3 { margin:0 0 5px; }
-.combo-heading p, .combo-order-note { margin:0; color:#637083; font-size:13px; line-height:1.55; }
 .combo-mp-readout { flex:0 0 auto; padding:8px 12px; border:1px solid #8dc5eb; border-radius:999px; background:#eaf6ff; color:#175d8d; font-size:13px; }
 .combo-chain { display:flex; align-items:flex-start; min-height:132px; padding:18px 14px 12px; overflow-x:auto; border:1px solid #7c6a52; border-radius:12px; background:linear-gradient(180deg,#5b4a3d 0%,#3d332b 100%); box-shadow:inset 0 0 18px rgb(0 0 0 / 28%); scrollbar-width:thin; }
 .combo-chain-node, .combo-chain-add { position:relative; flex:0 0 112px; display:flex; flex-direction:column; align-items:center; gap:4px; min-width:112px; padding:0 7px 7px; border:0; background:transparent; color:#fff; cursor:pointer; font:inherit; }
@@ -744,8 +743,7 @@ button { font-family: inherit; }
 .build-file-dialog-close:hover { color:var(--danger-dark); border-color:var(--danger-border); background:var(--danger-soft); }
 /* 세팅 저장 오버레이와 저장소 어댑터 UI */
 .build-file-storage { display:grid; gap:12px; margin-top:16px; }
-.build-file-storage h3, .build-file-storage-help { margin:0; }
-.build-file-storage-help { color:var(--text-secondary); font-size:13px; line-height:1.5; }
+.build-file-storage h3 { margin:0; }
 .build-file-functions { display:grid; gap:12px; }
 .build-file-functions[hidden] { display:none; }
 .build-file-controls { display:grid; grid-template-columns:minmax(190px, 1fr) repeat(3, max-content); align-items:end; gap:8px; }
@@ -757,7 +755,7 @@ button { font-family: inherit; }
 .build-file-controls #buildSettingDelete:not(:disabled) { border-color:#d8a0a0; color:var(--danger-dark); }
 .build-file-controls button:disabled { opacity:.45; cursor:not-allowed; }
 .build-file-import input { display:none; }
-.build-file-backup { padding-top:12px; border-top:1px solid var(--border); }
+.build-file-functions:not([hidden]) + .build-file-backup { padding-top:12px; border-top:1px solid var(--border); }
 .build-file-storage-status { min-height:18px; margin:0; color:#2471a3; font-size:13px; font-weight:700; }
 .build-file-storage-status.is-error { color:var(--danger-dark); }
 @media (max-width:600px) { .app-titlebar { width:calc(100% - 20px); } .app-build-storage-button { margin-left:6px; } .build-file-overlay { padding:12px; } .build-file-dialog { max-height:calc(100vh - 24px); padding:16px; } .build-file-controls { grid-template-columns:1fr 1fr; } .build-file-controls label { grid-column:1 / -1; } .build-file-controls button, .build-file-controls .build-file-import { width:100%; } }

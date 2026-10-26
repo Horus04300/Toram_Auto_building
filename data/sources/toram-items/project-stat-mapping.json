@@ -317,43 +317,43 @@
       "capId": 53,
       "enumName": "bFireKiller",
       "statId": "FIRE_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 54,
       "enumName": "bAquaKiller",
       "statId": "WATER_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 55,
       "enumName": "bWindKiller",
       "statId": "WIND_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 56,
       "enumName": "bEarthKiller",
       "statId": "EARTH_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 57,
       "enumName": "bLightKiller",
       "statId": "LIGHT_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 58,
       "enumName": "bDarkKiller",
       "statId": "DARK_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 59,
       "enumName": "bNormalKiller",
       "statId": "NEUTRAL_DMG",
-      "registryUnit": "flat"
+      "registryUnit": "percent"
     },
     {
       "capId": 62,
@@ -544,69 +544,142 @@
     {
       "capId": 48,
       "enumName": "bRespawn",
-      "statId": "REVIVE_TIME",
-      "scope": "crystas"
+      "statId": "REVIVE_TIME"
     },
     {
       "capId": 127,
       "enumName": "bTranslationResist",
-      "statId": "TRANSLATION_RES",
-      "scope": "crystas"
+      "statId": "TRANSLATION_RES"
     },
     {
       "capId": 129,
       "enumName": "bWiddResist",
-      "statId": "WIDD_RES",
-      "scope": "crystas"
+      "statId": "WIDD_RES"
     },
     {
       "capId": 130,
       "enumName": "bExplosionResist",
-      "statId": "EXPLOSION_RES",
-      "scope": "crystas"
+      "statId": "EXPLOSION_RES"
     },
     {
       "capId": 137,
       "enumName": "bSelfDmgRate",
-      "statId": "SELF_DMG_RATE",
-      "scope": "crystas"
+      "statId": "SELF_DMG_RATE"
     },
     {
       "capId": 140,
       "enumName": "bItemDelay",
-      "statId": "ITEM_DELAY",
-      "scope": "crystas"
+      "statId": "ITEM_DELAY"
     },
     {
       "capId": 155,
       "enumName": "bDamageReflection",
-      "statId": "REFLECT",
-      "scope": "crystas"
+      "statId": "REFLECT"
     },
     {
       "capId": 164,
       "enumName": "bGrantStopTumble",
-      "statId": "STOP_TUMBLE",
-      "scope": "crystas"
+      "statId": "STOP_TUMBLE"
     },
     {
       "capId": 165,
       "enumName": "bGrantStopStun",
-      "statId": "STOP_STUN",
-      "scope": "crystas"
+      "statId": "STOP_STUN"
     },
     {
       "capId": 168,
       "enumName": "bVitToAtk",
-      "statId": "ATK_UP_VIT",
-      "scope": "crystas"
+      "statId": "ATK_UP_VIT"
     },
     {
       "capId": 174,
       "enumName": "bAgiToMAtk",
-      "statId": "MATK_UP_AGI",
-      "scope": "crystas"
+      "statId": "MATK_UP_AGI"
+    },
+    {
+      "capId": 166,
+      "enumName": "bStrToAtk",
+      "statId": "ATK_UP_STR",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 167,
+      "enumName": "bIntToAtk",
+      "statId": "ATK_UP_INT",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 169,
+      "enumName": "bAgiToAtk",
+      "statId": "ATK_UP_AGI",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 170,
+      "enumName": "bDexToAtk",
+      "statId": "ATK_UP_DEX",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 171,
+      "enumName": "bStrToMAtk",
+      "statId": "MATK_UP_STR",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 172,
+      "enumName": "bIntToMAtk",
+      "statId": "MATK_UP_INT",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 173,
+      "enumName": "bVitToMAtk",
+      "statId": "MATK_UP_VIT",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 175,
+      "enumName": "bDexToMAtk",
+      "statId": "MATK_UP_DEX",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 125,
+      "enumName": "bVerticalResist",
+      "statId": "METEOR_RES",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 131,
+      "enumName": "bBlackholeResist",
+      "statId": "SUCTION_RES",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 143,
+      "enumName": "bHelpMaster",
+      "statId": "HELP_INVINCIBILITY",
+      "registryUnit": "seconds"
+    },
+    {
+      "capId": 163,
+      "enumName": "bGrantStopFlinch",
+      "statId": "STOP_FLINCH",
+      "registryUnit": "boolean"
+    },
+    {
+      "capId": 176,
+      "enumName": "bPetExpRate",
+      "statId": "PET_EXP",
+      "registryUnit": "percent"
+    },
+    {
+      "capId": 177,
+      "enumName": "bGemDustDropRate",
+      "statId": "GEM_DUST_DROP",
+      "registryUnit": "percent"
     }
   ],
-  "additionalMappingEvidence": "native-crysta-lineage/README.md; existing float32 display rules; effects without a kernel model remain notModeled"
+  "additionalMappingEvidence": "native-crysta-lineage/README.md; code-trace.md: signed float32 scaling for cap166~175; same native cap/enum across item kinds; effects without a kernel model remain notModeled; item-connections.md and option-display-rules.json: native enum/text/signed values for caps125/131/143/163/176/177, all multiplier1 and preserved without a combat model"
 }

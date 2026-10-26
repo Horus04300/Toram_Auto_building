@@ -1,4 +1,4 @@
-// Real Edge UI audit. Uses an isolated browser context and never installs updates.
+// Real Chrome UI audit. Uses an isolated browser context and never installs updates.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
@@ -18,7 +18,7 @@ const server = createServer(async (req,res) => {
   } catch { res.writeHead(404); res.end(); }
 });
 await new Promise(r => server.listen(0,'127.0.0.1',r));
-const browser = await chromium.launch({ channel:'msedge',headless:true });
+const browser = await chromium.launch({ channel:'chrome',headless:true });
 const context = await browser.newContext({ viewport:{width:1280,height:900} });
 const page = await context.newPage();
 const report = { checks:[], errors:[], failedRequests:[] };
@@ -26,7 +26,7 @@ report.dialogs=[];
 page.on('dialog',async d=>{report.dialogs.push(d.message());await d.accept();});
 page.on('pageerror',e => report.errors.push(e.message));
 page.on('response',r => { if(r.status() >= 400) report.failedRequests.push({url:r.url(),status:r.status()}); });
-const url = `http://127.0.0.1:${server.address().port}`;
+const url = `http://127.0.0.1:${server.address().port}/?view=calculator`;
 async function check(name, fn) {
   try { const detail = await fn(); report.checks.push({name,status:'PASS',detail}); }
   catch(e) { report.checks.push({name,status:'FAIL',error:e.message}); await page.screenshot({path:resolve(output,`failure-${report.checks.length}.png`)}).catch(()=>{}); }

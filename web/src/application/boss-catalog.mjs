@@ -35,10 +35,11 @@ export function createBossCatalog(manifestUrl, fetchImpl = globalThis.fetch) {
   }
   return Object.freeze({
     manifest,
-    async search(query = '', locale = 'kr') {
+    async search(query = '', locale = 'kr', {classification} = {}) {
       const value = await manifest(), [index, names] = await Promise.all([asset(value.index, value), localized(value, locale)]);
       const text = String(query).toLocaleLowerCase();
-      return Object.keys(index).map(Number).filter(id => !text || String(id).includes(text) || (names.monsters[id] || '').toLocaleLowerCase().includes(text))
+      const ids = classification ? new Set((await Promise.all(Object.values(value.groups).map(path => asset(path,value)))).flat().filter(row => row.classification === classification).map(row => row.gameMonsterId)) : null;
+      return Object.keys(index).map(Number).filter(id => (!ids || ids.has(id)) && (!text || String(id).includes(text) || (names.monsters[id] || '').toLocaleLowerCase().includes(text)))
         .map(gameMonsterId => ({ gameMonsterId, name:names.monsters[gameMonsterId] ?? null }));
     },
     async get(gameMonsterId, locale = 'kr') {

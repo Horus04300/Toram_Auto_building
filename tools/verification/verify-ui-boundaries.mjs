@@ -5,7 +5,7 @@ import { CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs'
 
 const root = resolve(import.meta.dirname, '../..');
 const read = path => readFile(resolve(root, path), 'utf8');
-const html = await read('web/index.html');
+const html = await read('web/src/pages/calculator/calculator.html');
 const tabs = await read('web/src/ui/tabs.js');
 const bindings = await read('web/src/ui/ui-bootstrap.js');
 const buildUi = await read('web/src/ui/build-ui-controller.js');

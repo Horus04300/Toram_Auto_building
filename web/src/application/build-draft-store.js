@@ -61,9 +61,12 @@
   function scenarioFromUi() {
     var preferences = root.ToramOptimizationPreferences && typeof root.ToramOptimizationPreferences.read === 'function' ? root.ToramOptimizationPreferences.read() : { rangeOverride:null, requirements:{}, bannedCrystas:[] };
     var scenario = { target:{ bossLevel:number(value('bossLevel')), bossDef:number(value('bossDef')), bossMdef:number(value('bossMdef')), bossCritResist:number(value('bossCritResist')), bossPhysResist:number(value('bossPhysResist')), bossMagResist:number(value('bossMagResist')) }, conditions:{}, optimizationPreferences:clone(preferences) };
+    scenario.target.targetElement = number(value('bossElement'));
+    scenario.conditions.activeItemEventTypes = [3,9].filter(function (type) { return checked('itemEvent' + type); });
     var bosses = root.ToramApp && root.ToramApp.bossTarget;
     var selection = bosses && bosses.getSelection();
     if (selection) scenario.bossSelection = selection;
+    if (root.ToramOptionCalculationUi) scenario.optionCalculation = root.ToramOptionCalculationUi.read();
     return scenario;
   }
   function setBuild(build) { state.build = freeze(clone(build)); return state.build; }

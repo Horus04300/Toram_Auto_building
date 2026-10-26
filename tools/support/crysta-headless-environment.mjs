@@ -7,7 +7,7 @@ import { frontendSourcePath } from './frontend-paths.mjs';
 
 export const root = resolve(import.meta.dirname, '../..');
 export const jsSources = [
-  'calculation/stat-registry.js', 'calculation/calculation-policies.js', 'calculation/calculator.js', 'calculation/build-evaluator.js',
+  'calculation/supplemental-stats.js', 'calculation/option-event-calculator.js', 'calculation/stat-registry.js', 'calculation/calculation-policies.js', 'calculation/calculator.js', 'calculation/build-evaluator.js',
   'optimization/problem-compiler.js', 'optimization/candidate-preparation.js', 'optimization/rust-bridge.js', 'optimization/native-client.js', 'data/crysta-data.js'
 ];
 

@@ -7,6 +7,7 @@ export function createConsumableBuffUi(documentRef, catalog) {
   const node = id => documentRef.getElementById(id);
   const registry = () => windowRef.ToramStatRegistry;
   function text(tag, value) { const element = documentRef.createElement(tag); element.textContent = value; return element; }
+  const categoryLabel = item => item.consumableCategory ? (item.consumableCategory.names[locale.value] ?? item.consumableCategory.id) : '';
   function changed() {
     documentRef.dispatchEvent(new windowRef.CustomEvent('toram:build-options-changed'));
     documentRef.dispatchEvent(new windowRef.CustomEvent('toram:persistent-state-changed'));
@@ -27,13 +28,14 @@ export function createConsumableBuffUi(documentRef, catalog) {
   }
   function renderList() {
     generation++; apply.disabled = true; results.replaceChildren();
-    const query = search.value.trim().toLocaleLowerCase();
-    for (const item of names.filter(item => `${item.name ?? ''} ${item.id}`.toLocaleLowerCase().includes(query))) {
-      const option = text('option', `${item.name ?? '(이름 없음)'} · #${item.id}`);
+    const query = search.value.toLocaleLowerCase().replace(/\s+/gu,'');
+    for (const item of names.filter(item => `${categoryLabel(item)} ${item.name ?? ''} ${item.id}`.toLocaleLowerCase().replace(/\s+/gu,'').includes(query))) {
+      const category = categoryLabel(item);
+      const option = text('option', `${category ? '[' + category + '] ' : ''}${item.name ?? '(이름 없음)'} · #${item.id}`);
       option.value = String(item.id); results.append(option);
     }
     results.selectedIndex = -1;
-    preview.textContent = `${results.options.length}개. 사용할 버프를 선택해 주세요.`;
+    preview.textContent = `${results.options.length}개`;
   }
   async function loadList() {
     const current = ++generation;
@@ -51,7 +53,8 @@ export function createConsumableBuffUi(documentRef, catalog) {
       const item = await catalog.getItem(Number(results.value), locale.value);
       if (current !== generation) return;
       const selection = createConsumableBuffSelection(item, registry());
-      preview.textContent = `${selection.name ?? '(이름 없음)'} · #${selection.gameItemId} · ${selection.durationSeconds}초\n`
+      const category = categoryLabel(item);
+      preview.textContent = `${category ? '[' + category + '] ' : ''}${selection.name ?? '(이름 없음)'} · #${selection.gameItemId} · ${selection.durationSeconds}초\n`
         + Object.entries(selection.stats).map(([key, value]) => `${key}: ${value}${registry().get(key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ');
       apply.disabled = false;
     } catch (error) { if (current === generation) preview.textContent = error.message; }

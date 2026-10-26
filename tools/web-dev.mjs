@@ -4,11 +4,12 @@ import { extname, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { renderFrontendHtml } from './prepare-frontend.mjs';
 import { WEB_CLASSIC_SCRIPT_PATHS } from '../web/src/classic-script-manifest.mjs';
-import { frontendSourcePath, FRONTEND_MODULE_PATHS } from './support/frontend-paths.mjs';
+import { frontendSourcePath, FRONTEND_MODULE_PATHS, FRONTEND_PAGE_PATHS } from './support/frontend-paths.mjs';
 
 const root = resolve(import.meta.dirname, '..');
-const scripts = new Set([...WEB_CLASSIC_SCRIPT_PATHS, ...FRONTEND_MODULE_PATHS]);
+const scripts = new Set([...WEB_CLASSIC_SCRIPT_PATHS, ...FRONTEND_MODULE_PATHS, ...FRONTEND_PAGE_PATHS]);
 const mime = {
+  '.html':'text/html; charset=utf-8',
   '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css',
   '.json':'application/json', '.svg':'image/svg+xml', '.png':'image/png',
   '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon',
@@ -19,6 +20,8 @@ export function createWebDevServer() {
   return createServer(async (req, res) => {
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.writeHead(405, { Allow:'GET, HEAD' });
       res.end();
@@ -29,7 +32,7 @@ export function createWebDevServer() {
     catch { res.writeHead(400); res.end(); return; }
     try {
       let content;
-      if (pathname === '/' || pathname === '/index.html') {
+      if (['/','/index.html','/inventory','/calculator','/board','/catalog'].includes(pathname)) {
         content = await renderFrontendHtml('web');
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
       } else {

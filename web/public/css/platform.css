@@ -1,0 +1,45 @@
+.platform-loading { padding:24px; color:#123e5b; }
+.platform-loading a { color:#1976a8; }
+body.has-platform-shell { max-width:none; margin:0; padding:0; background:#eef8ff; color:#123e5b; }
+.platform-shell { --rail-width:88px; display:grid; grid-template-columns:var(--rail-width) minmax(0,1fr); min-height:100dvh; }
+.platform-shell [hidden] { display:none !important; }
+.platform-sidebar { position:sticky; top:0; height:100dvh; box-sizing:border-box; display:flex; flex-direction:column; align-items:center; background:#f8fcff; border-right:1px solid #bdd9ed; padding:16px 8px; gap:22px; }
+.platform-brand { width:44px; height:44px; display:grid; place-items:center; color:#1976a8; background:#dff1ff; border-radius:12px; font-size:28px; font-weight:800; text-decoration:none; }
+.platform-sidebar nav { display:flex; flex-direction:column; width:100%; gap:8px; }
+.platform-sidebar .platform-nav-button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; min-height:70px; border:0; border-radius:10px; background:transparent; padding:10px 2px; color:#4a6a80; font:600 11px/1.4 'Pretendard',sans-serif; cursor:pointer; }
+.platform-nav-button svg { width:25px; height:25px; }
+.platform-sidebar .platform-nav-button[aria-current="page"] { background:#dff1ff; color:#155f87; }
+.platform-sidebar .platform-nav-button:enabled:hover { background:#e8f5ff; color:#123e5b; }
+.platform-sidebar .platform-nav-button:disabled { opacity:.55; cursor:not-allowed; }
+.platform-sidebar-caption { margin-top:auto; color:#4a6a80; font-size:10px; letter-spacing:.1em; }
+.platform-workspace { min-width:0; }
+.platform-shell .app-titlebar { position:sticky; top:0; z-index:30; display:flex; flex-wrap:nowrap; justify-content:space-between; align-items:center; gap:16px; width:100%; height:64px; margin:0; padding:0 28px; box-sizing:border-box; background:#fff; border-bottom:1px solid #bdd9ed; }
+.platform-shell .app-titlebar h1 { flex:1; margin:0; display:flex; align-items:center; gap:24px; font-size:24px; color:#1976a8; text-align:left; }
+.platform-shell .app-titlebar h1 strong { white-space:nowrap; }
+.platform-version { font-size:12px; font-weight:500; color:#4a6a80; }
+.platform-breadcrumb { color:#4a6a80; border-left:1px solid #bdd9ed; padding-left:24px; font-size:13px; font-weight:500; }
+.platform-shell .app-titlebar-actions { display:flex; align-items:center; margin:0; }
+.platform-shell .app-build-storage-button { width:38px; height:38px; margin:0; border:1px solid #bdd9ed; background:white; color:#123e5b; border-radius:50%; }
+.platform-shell .app-titlebar-actions { gap:10px; }
+#platformContent { min-width:0; }
+#platformContent:focus { outline:none; }
+#calculatorWorkspace { max-width:1120px; margin:0 auto; padding:24px; box-sizing:border-box; }
+.calculator-file-toolbar { display:flex; justify-content:flex-end; margin-bottom:12px; }
+.has-platform-shell #inventoryWorkspace { max-width:1280px; margin:24px; }
+.platform-skip { position:fixed; z-index:100; left:100px; top:-100px; padding:10px 16px; background:white; color:#123e5b; border:2px solid #1976a8; }
+.platform-skip:focus { top:8px; }
+.platform-shell :is(button,a):focus-visible { outline:3px solid #1976a8; outline-offset:3px; }
+@media (max-width:700px) {
+  .platform-shell { --rail-width:66px; }
+  .platform-sidebar { padding:12px 5px; gap:16px; }
+  .platform-brand { width:38px; height:38px; font-size:24px; }
+  .platform-sidebar nav { gap:5px; }
+  .platform-sidebar .platform-nav-button { font-size:10px; min-height:62px; gap:6px; }
+  .platform-nav-button svg { width:23px; height:23px; }
+  .platform-shell .app-titlebar { height:56px; padding:0 16px; }
+  .platform-shell .app-titlebar h1 { flex-basis:auto; font-size:19px; gap:14px; }
+  .platform-breadcrumb { padding-left:14px; font-size:12px; }
+  #calculatorWorkspace { padding:16px 10px; }
+  .has-platform-shell #inventoryWorkspace { margin:12px; }
+}
+@media (max-height:620px) { .platform-sidebar { gap:8px; padding-top:8px; } .platform-sidebar .platform-nav-button { min-height:48px; padding:5px 0; gap:2px; } .platform-sidebar nav { gap:2px; } .platform-sidebar-caption { display:none; } }

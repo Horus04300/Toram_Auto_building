@@ -36,6 +36,21 @@
   }
   function scenarioShape(value) {
     if (!(value && typeof value === 'object' && value.target && typeof value.target === 'object')) return false;
+    if (value.conditions !== undefined && (!value.conditions || typeof value.conditions !== 'object' || Array.isArray(value.conditions))) return false;
+    var itemEvents = value.conditions && value.conditions.activeItemEventTypes;
+    if (itemEvents !== undefined && (!Array.isArray(itemEvents) || itemEvents.length > 256 || new Set(itemEvents).size !== itemEvents.length || !itemEvents.every(function (type) { return Number.isSafeInteger(type) && type >= 0 && type <= 255; }))) return false;
+    if (value.target.targetElement !== undefined && (!Number.isSafeInteger(value.target.targetElement) || value.target.targetElement < 0 || value.target.targetElement > 7)) return false;
+    if (value.optionCalculation !== undefined) {
+      if (!value.optionCalculation || typeof value.optionCalculation !== 'object' || Array.isArray(value.optionCalculation)) return false;
+      var definitions = Object.assign({}, root.ToramSupplementalStats && root.ToramSupplementalStats.inputDefinitions, root.ToramOptionEvents && root.ToramOptionEvents.inputDefinitions);
+      if (Object.keys(value.optionCalculation).length > 100 || !Object.entries(value.optionCalculation).every(function (pair) {
+        var key=pair[0], entry=pair[1], definition=definitions[key];
+        if (!definition) return false;
+        if (definition.type === 'boolean') return typeof entry === 'boolean';
+        if (definition.type === 'select') return definition.options.some(function (option) { return option.value === entry; });
+        return typeof entry === 'number' && Number.isFinite(entry) && (definition.min === undefined || entry >= definition.min) && (definition.max === undefined || entry <= definition.max);
+      })) return false;
+    }
     if (value.bossSelection !== undefined) {
       try {
         var rules = root.ToramApp && root.ToramApp.bossRules;

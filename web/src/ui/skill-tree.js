@@ -2,14 +2,13 @@
         const data = window.SKILL_TREE_DATA;
         if (!data || !Array.isArray(data.trees)) return;
         const maxLevel = Number(data.skillMaxLevel) || 10;
-        const prerequisiteLevel = Number(data.prerequisiteLevel) || 5;
         const categoryDefinitions = [
             { id: 'weapon', directory: 'Weapon_Skills', display: '무기', icon: 'assets/icons/skills/Weapon_Skills/Blade/00_HammerSlam.png' },
             { id: 'buff', directory: 'Buff_Skills', display: '버프', icon: 'assets/icons/skills/Buff_Skills/Assassin/00_AssassinStab.png' },
             { id: 'assist', directory: 'Assist_Skills', display: '보조', icon: 'assets/icons/skills/Assist_Skills/Battle/00_MagicUP.png' }
         ];
         const treesById = new Map(data.trees.map(function (tree) { return [tree.id, tree]; }));
-        const state = { step: 1, levels: {} };
+        const state = { step: 10, levels: {} };
         data.trees.forEach(function (tree) {
             state.levels[tree.id] = {};
             tree.skills.forEach(function (skill) { state.levels[tree.id][skill.id] = 0; });
@@ -24,6 +23,7 @@
         let activeCombatTree = 'Blade';
         let activeOtherTree = 'Alchemy';
 
+        const simulator = window.ToramApp.createSkillTreeSimulator(document, {data:data, levels:state.levels, step:function () {return state.step;}, onChange:commitSkillChange});
         let storageMessage = '';
         let storageStatus = null;
 
@@ -54,7 +54,7 @@ function createSkillSnapshot() {
                     const value = Number(saved[tree.id] && saved[tree.id][skill.id]);
                     state.levels[tree.id][skill.id] = Number.isFinite(value) ? Math.min(maxLevel, Math.max(0, Math.floor(value))) : 0;
                 });
-                tree.skills.forEach(function (skill) { if (state.levels[tree.id][skill.id] > 0) ensurePrerequisite(tree, skill.prereq); });
+                tree.skills.forEach(function (skill) { if (state.levels[tree.id][skill.id] > 0) simulator.ensurePrerequisite(tree, skill.prereq); });
             });
         }function persistSkillState() {
             setStorageStatus('자동 저장됨');
@@ -97,9 +97,6 @@ function createSkillSnapshot() {
             commitSkillChange(); setStorageStatus('스킬 포인트를 초기화함');
         }
         function treeLabel(tree) { return tree.nameKo || tree.id; }
-        function skillLabel(skill) { return skill.nameKo || skill.name; }
-
-        function iconPath(path) { return encodeURI(path); }
         function treeTotal(treeId) {
             const tree = treesById.get(treeId);
             const spent = tree.skills.reduce(function (sum, skill) { return sum + state.levels[treeId][skill.id]; }, 0);
@@ -120,120 +117,24 @@ function createSkillSnapshot() {
         function totalInvestedSkillPoints() {
             return data.trees.reduce(function (sum, tree) { return sum + treeTotal(tree.id).spent; }, 0);
         }
-        function skillById(tree, id) { return tree.skills.find(function (skill) { return skill.id === id; }); }
-        function ensurePrerequisite(tree, skillId) {
-            if (skillId < 0) return;
-            const prerequisite = skillById(tree, skillId);
-            if (!prerequisite) return;
-            ensurePrerequisite(tree, prerequisite.prereq);
-            state.levels[tree.id][prerequisite.id] = Math.max(state.levels[tree.id][prerequisite.id], prerequisiteLevel);
-        }
-        function addSkillLevel(treeId, skillId) {
-            const tree = treesById.get(treeId);
-            const skill = skillById(tree, skillId);
-            const current = state.levels[treeId][skillId];
-            const next = Math.min(maxLevel, current + state.step);
-            if (next === current) return;
-            ensurePrerequisite(tree, skill.prereq);
-            state.levels[treeId][skillId] = next;
-            commitSkillChange();
-        }
-        function removeDescendants(tree, skillId) {
-            tree.skills.filter(function (candidate) { return candidate.prereq === skillId; }).forEach(function (child) {
-                state.levels[tree.id][child.id] = 0;
-                removeDescendants(tree, child.id);
-            });
-        }
-        function removeSkillLevel(treeId, skillId) {
-            const tree = treesById.get(treeId);
-            const current = state.levels[treeId][skillId];
-            const next = Math.max(0, current - state.step);
-            if (next === current) return;
-            state.levels[treeId][skillId] = next;
-            if (next < prerequisiteLevel) removeDescendants(tree, skillId);
-            commitSkillChange();
-        }
         function createCategoryButton(category) {
-            const total = categoryTotal(category.directory);
-            const maximum = categoryMaximum(category.directory);
-            const button = document.createElement('button');
-            button.type = 'button';
-            button.className = 'skill-bookmark-button skill-category-button' + (category.id === activeCategoryId ? ' active' : '');
-            button.setAttribute('aria-pressed', String(category.id === activeCategoryId));
-            button.title = category.display;
-            const icon = document.createElement('img'); icon.src = iconPath(category.icon); icon.alt = '';
-            const info = document.createElement('span'); info.className = 'bookmark-info';
-            const label = document.createElement('span'); label.className = 'bookmark-label'; label.textContent = category.display;
-            const points = document.createElement('span'); points.className = 'bookmark-points'; points.textContent = '(' + total + '/' + maximum + ')';
-            info.append(label, points); button.append(icon, info);
-            button.addEventListener('click', function () { activeCategoryId = category.id; activeCombatTree = categoryTrees(category.directory)[0].id; renderAll(); });
+            const button = window.ToramApp.createBookmarkButton(document, {
+                label:category.display, icon:category.icon, active:category.id === activeCategoryId,
+                points:'(' + categoryTotal(category.directory) + '/' + categoryMaximum(category.directory) + ')',
+                onClick:function () { activeCategoryId = category.id; activeCombatTree = categoryTrees(category.directory)[0].id; renderAll(); }
+            });
+            button.classList.replace('skill-tree-button','skill-category-button');
             return button;
         }
         function categoryTrees(directory) { return data.trees.filter(function (tree) { return tree.category === directory; }); }
         function createTreeButton(tree, active, onClick) {
             const total = treeTotal(tree.id);
-            const button = document.createElement('button');
-            button.type = 'button'; button.className = 'skill-bookmark-button skill-tree-button' + (active ? ' active' : '');
-            button.setAttribute('aria-pressed', String(active)); button.title = treeLabel(tree);
-            const icon = document.createElement('img'); icon.src = iconPath('assets/icons/skills/' + tree.category + '/' + tree.id + '/title.png'); icon.alt = '';
-            const info = document.createElement('span'); info.className = 'bookmark-info';
-            const label = document.createElement('span'); label.className = 'bookmark-label'; label.textContent = treeLabel(tree);
-            const points = document.createElement('span'); points.className = 'bookmark-points'; points.textContent = '(' + total.spent + '/' + total.maximum + ')';
-            info.append(label, points); button.append(icon, info); button.addEventListener('click', onClick);
-            return button;
-        }
-        function renderStage(stage, treeId) {
-            const tree = treesById.get(treeId);
-
-            stage.classList.add('skill-simulator-stage');
-            stage.innerHTML = '';
-
-            const scroll = document.createElement('div'); scroll.className = 'skill-tree-scroll';
-            const canvas = document.createElement('div'); canvas.className = 'skill-tree-canvas'; canvas.style.setProperty('--tree-columns', String(tree.grid.columns)); canvas.style.setProperty('--tree-rows', String(tree.grid.rows));
-            const compactLayout = window.matchMedia('(max-width: 600px)').matches;
-            const cellWidth = compactLayout ? 70 : 82;
-            const cellHeight = compactLayout ? 62 : 68;
-            const paddingX = compactLayout ? 8 : 12;
-            const paddingY = compactLayout ? 12 : 16;
-            const backgroundSize = compactLayout ? 44 : 50;
-            const svgWidth = paddingX * 2 + tree.grid.columns * cellWidth;
-            const svgHeight = paddingY * 2 + tree.grid.rows * cellHeight;
-            const pointFor = function (x, y) {
-                return [paddingX + x * cellWidth + cellWidth / 2, paddingY + y * cellHeight + 2 + backgroundSize / 2];
-            };
-            const connectorLayer = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-            connectorLayer.setAttribute('class', 'skill-tree-connector-layer');
-            connectorLayer.setAttribute('width', String(svgWidth)); connectorLayer.setAttribute('height', String(svgHeight));
-            connectorLayer.setAttribute('viewBox', '0 0 ' + svgWidth + ' ' + svgHeight);
-            tree.skills.filter(function (skill) { return skill.prereq >= 0; }).forEach(function (skill) {
-                const parent = skillById(tree, skill.prereq);
-                if (!parent) return;
-                const parentPoint = pointFor(parent.x, parent.y);
-                const skillPoint = pointFor(skill.x, skill.y);
-                const points = [parentPoint];
-                if (Array.isArray(skill.via) && skill.via.length === 2) {
-                    points.push(pointFor(skill.via[0], skill.via[1]));
-                } else {
-                    const bendX = (parentPoint[0] + skillPoint[0]) / 2;
-                    points.push([bendX, parentPoint[1]], [bendX, skillPoint[1]]);
-                }
-                points.push(skillPoint);
-                const line = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-                line.setAttribute('class', 'skill-tree-connector' + (state.levels[tree.id][skill.id] > 0 ? ' is-active' : ''));
-                line.setAttribute('points', points.map(function (point) { return point[0] + ',' + point[1]; }).join(' '));
-                connectorLayer.appendChild(line);
+            return window.ToramApp.createBookmarkButton(document, {
+                label:treeLabel(tree), icon:'assets/icons/skills/' + tree.category + '/' + tree.id + '/title.png', active:active,
+                points:'(' + total.spent + '/' + total.maximum + ')', onClick:onClick
             });
-            canvas.appendChild(connectorLayer);
-            tree.skills.forEach(function (skill) {
-                const level = state.levels[tree.id][skill.id];
-                const node = document.createElement('button'); node.type = 'button'; node.className = 'skill-node' + (level > 0 ? ' is-invested' : ''); node.style.gridColumn = String(skill.x + 1); node.style.gridRow = String(skill.y + 1); node.style.backgroundImage = "url('" + iconPath('assets/icons/skills/icons/' + (level > 0 ? 'skill_on.png' : 'skill_off.png')) + "')"; node.title = skillLabel(skill) + ' Lv ' + level + '/' + maxLevel;
-                const image = document.createElement('img'); image.className = 'skill-node-icon' + (skill.iconAvailable ? '' : ' is-missing'); image.src = iconPath(skill.icon); image.alt = skillLabel(skill); image.onerror = function () { this.classList.add('is-missing'); };
-                const name = document.createElement('span'); name.className = 'skill-node-name'; name.textContent = skillLabel(skill);
-                const levelLabel = document.createElement('span'); levelLabel.className = 'skill-node-level'; levelLabel.textContent = 'Lv ' + level + '/' + maxLevel;
-                node.append(image, name, levelLabel); node.addEventListener('click', function () { addSkillLevel(tree.id, skill.id); }); node.addEventListener('contextmenu', function (event) { event.preventDefault(); removeSkillLevel(tree.id, skill.id); }); canvas.appendChild(node);
-            });
-            scroll.appendChild(canvas); stage.appendChild(scroll);
         }
+        function renderStage(stage, treeId) { simulator.render(stage, treeId); }
 const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentElement;
         const skillTotalSummary = document.createElement('span');
         skillTotalSummary.className = 'skill-simulator-total';

@@ -17,7 +17,7 @@
   }
   function kernelInput(build, scenario, request) {
     var equipment = build.equipment || {}, main = equipment.mainWeapon || {}, sub = equipment.subWeapon || {}, armor = equipment.armor || {}, target = scenario && scenario.target || {}, attributes = build.character && build.character.attributes || {};
-    var itemContext = { mainType:main.type || '', subType:sub.type || '', armorType:armor.type || '' };
+    var itemContext = { mainType:main.type || '', subType:sub.type || '', armorType:armor.type || '', activeItemEventTypes:scenario && scenario.conditions && scenario.conditions.activeItemEventTypes || [] };
     var allOptions = Object.keys(equipment).reduce(function (items, slot) {
       var piece = equipment[slot], options = piece.options || [];
       if (piece.catalogItem) {
@@ -35,7 +35,12 @@
     if (root.ToramFoodCatalog) allOptions = allOptions.concat(root.ToramFoodCatalog.options(build.myRoomFood));
     if (build.guildFoodBuff !== false) allOptions = allOptions.concat([{key:'MAXHP',value:1000},{key:'MAXMP',value:100}]);
     var optimizationPreferences = scenario && scenario.optimizationPreferences || {};
-    return { controls:{ charLevel:build.character && build.character.level, strBase:attributes.STR, intBase:attributes.INT, vitBase:attributes.VIT, agiBase:attributes.AGI, dexBase:attributes.DEX, crtBase:attributes.CRT, mainWeaponType:main.type || '', wpnAtk:main.attack, wpnRefine:main.refinement, wpnStab:main.stability, subWeaponType:sub.type || '', subAtk:sub.attack, subRefine:sub.refinement, subStab:sub.stability, armorType:armor.type || '', bossLevel:target.bossLevel, bossDef:target.bossDef, bossMdef:target.bossMdef, bossCritResist:target.bossCritResist, bossPhysResist:target.bossPhysResist, bossMagResist:target.bossMagResist }, options:allOptions, appliedComboHit:request && request.overrides && request.overrides.appliedComboHit || null, rangeOverride:optimizationPreferences.rangeOverride || null };
+    var equipmentRules = root.ToramApp && root.ToramApp.itemRules;
+    var elements = {
+      weaponElement:main.catalogItem ? equipmentRules.resolveEquipmentElement(main.catalogItem,'mainWeapon',itemContext,root.ToramStatRegistry) : 0,
+      subWeaponElement:sub.catalogItem ? equipmentRules.resolveEquipmentElement(sub.catalogItem,'subWeapon',itemContext,root.ToramStatRegistry) : 0
+    };
+    return { ...elements, optionCalculation:clone(scenario && scenario.optionCalculation || {}), controls:{ charLevel:build.character && build.character.level, strBase:attributes.STR, intBase:attributes.INT, vitBase:attributes.VIT, agiBase:attributes.AGI, dexBase:attributes.DEX, crtBase:attributes.CRT, mainWeaponType:main.type || '', wpnAtk:main.attack, wpnRefine:main.refinement, wpnStab:main.stability, subWeaponType:sub.type || '', subAtk:sub.attack, subRefine:sub.refinement, subStab:sub.stability, armorType:armor.type || '', bossLevel:target.bossLevel, bossDef:target.bossDef, bossMdef:target.bossMdef, bossCritResist:target.bossCritResist, bossPhysResist:target.bossPhysResist, bossMagResist:target.bossMagResist, bossElement:target.targetElement || 0 }, options:allOptions, appliedComboHit:request && request.overrides && request.overrides.appliedComboHit || null, rangeOverride:optimizationPreferences.rangeOverride || null };
   }
   function withCalculationScope(build, scenario, request, work) {
     var previous = root.ToramCalculationInputScope;

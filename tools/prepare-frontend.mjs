@@ -2,7 +2,7 @@ import { copyFile, mkdir, readFile, writeFile, readdir, access, unlink, rmdir, r
 import { dirname, resolve, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { CLASSIC_SCRIPT_PATHS, WEB_CLASSIC_SCRIPT_PATHS } from '../web/src/classic-script-manifest.mjs';
-import { frontendSourcePath, FRONTEND_MODULE_PATHS } from './support/frontend-paths.mjs';
+import { frontendSourcePath, FRONTEND_MODULE_PATHS, FRONTEND_PAGE_PATHS } from './support/frontend-paths.mjs';
 import { readProjectManifest } from './extraction/convert-toram-project-items.mjs';
 import { readBossManifest } from './extraction/convert-toram-project-bosses.mjs';
 
@@ -37,7 +37,7 @@ async function pruneDeploymentFiles(directory, outputRoot, files) {
 export async function prepareFrontend(target) {
   const html = await renderFrontendHtml(target);
   const outputRoot = resolve(root, `build/${target}`);
-  const files = new Set(['index.html', ...(target === 'desktop' ? CLASSIC_SCRIPT_PATHS : WEB_CLASSIC_SCRIPT_PATHS), ...FRONTEND_MODULE_PATHS]);
+  const files = new Set(['index.html', ...(target === 'desktop' ? CLASSIC_SCRIPT_PATHS : WEB_CLASSIC_SCRIPT_PATHS), ...FRONTEND_MODULE_PATHS, ...FRONTEND_PAGE_PATHS]);
   for (const directory of ['css', 'fonts', 'icons']) {
     const base = resolve(root, 'web/public', directory);
     for (const entry of await readdir(base, { recursive:true, withFileTypes:true })) {
@@ -54,6 +54,10 @@ export async function prepareFrontend(target) {
   }
   files.add('assets/wasm/crysta.js');
   files.add('assets/wasm/crysta_bg.wasm');
+  const parallelRoot = resolve(root, 'build/generated/wasm/parallel');
+  for (const entry of await readdir(parallelRoot, { recursive:true, withFileTypes:true })) {
+    if (entry.isFile()) files.add('assets/wasm/parallel/' + relative(parallelRoot, resolve(entry.parentPath, entry.name)).split(sep).join('/'));
+  }
   await mkdir(outputRoot, { recursive:true });
   if (await realpath(outputRoot) !== outputRoot) throw new Error('Frontend output must be a real directory.');
   for (const path of files) {

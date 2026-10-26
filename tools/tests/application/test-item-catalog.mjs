@@ -8,7 +8,7 @@ import { EventEmitter } from 'node:events';
 import { syncBuiltinESMExports } from 'node:module';
 import { mock } from 'node:test';
 import { createItemCatalog, resolveItemOptions, matchesItemCondition } from '../../../web/src/application/item-catalog.mjs';
-import { convertCatalog, projectCondition, exportProjectItems, readProjectManifest, publishProjectItems } from '../../extraction/convert-toram-project-items.mjs';
+import { convertCatalog, consumableCategoryFor, projectCondition, exportProjectItems, readProjectManifest, publishProjectItems } from '../../extraction/convert-toram-project-items.mjs';
 import { syncDevelopmentItems } from '../../extraction/sync-toram-dev-items.mjs';
 import { syncDevelopmentBosses } from '../../extraction/sync-toram-dev-bosses.mjs';
 
@@ -28,6 +28,15 @@ function item(id, caps) {
 const catalog = rows => ({ nativeRulesApplied:true, cacheVersion:'77596232', availableItemLocales:['kr','us'], items:rows });
 const first = item(9911, [cap(1,12,100,'bMaxHpTo10',10), cap(2,124,10,'bMoveAttackResist')]);
 const useRules = JSON.parse(await readFile(resolve(root, 'data/sources/toram-items/item-use-rules.json')));
+const categories = JSON.parse(await readFile(resolve(root,'data/sources/toram-items/consumable-categories.json')));
+const categorySource = {...item(2000,[cap(1,211,1800,'runn_maxhp')]),descriptions:{kr:'「HP 증가」카테고리와 동시사용 불가',jp:'「ＨＰ増加」ｶﾃｺﾞﾘと併用できません'}};
+assert.equal(consumableCategoryFor(categorySource,categories).id,'hp-boost');
+assert.equal(consumableCategoryFor({...categorySource,descriptions:{}},categories).basis,'duration-marker');
+assert.equal(consumableCategoryFor({...categorySource,descriptions:{kr:'[새 카테고리] 카테고리'}},categories),null);
+assert.throws(()=>consumableCategoryFor({...categorySource,descriptions:{kr:'「MP 증가」카테고리',jp:categorySource.descriptions.jp}},categories),/Conflicting consumable category/u);
+const unusual = {...categorySource,propertyRecord:{caps:[cap(1,209,1800,'runn_hp_heal')]}};
+assert.equal(consumableCategoryFor(unusual,categories).id,'hp-boost');
+assert.equal(consumableCategoryFor(unusual,categories).durationCapId,209,'A description category never rewrites the native stacking group');
 const buff = item(2000, [cap(1,211,1800,'runn_maxhp'), cap(2,12,50,'bMaxHpTo10',10)]);
 buff.master.type_id = 2;
 buff.references.nativeChecks = {CheckUseItem:true,CheckEquipItem:false,CheckCristaItem:false};
@@ -52,9 +61,52 @@ const converted = convertCatalog(catalog([first]), mappings);
 assert.deepEqual(converted.kinds.crystas[9911].stats, { MAXHP:1000, CHARGE_RED:10 });
 assert.deepEqual(resolveItemOptions(converted.kinds.crystas[9911]), [{ key:'MAXHP', value:1000 }, { key:'CHARGE_RED', value:10 }]);
 
+const reviewedMappings = JSON.parse(await readFile(resolve(root,'data/sources/toram-items/project-stat-mapping.json'))).statMapping;
+for (const id of [48,127,129,130,137,140,155,164,165,168,174]) assert.equal(reviewedMappings.find(row => row.capId === id).scope,undefined,'Native cap mappings apply across item kinds');
+for (const id of [125,131,143,163,176,177]) {
+  const mapping = reviewedMappings.find(row => row.capId === id);
+  for (const raw of id === 163 ? [1] : [-7,7]) {
+    const result = convertCatalog(catalog([item(9990,[cap(1,id,raw,mapping.enumName)])]),reviewedMappings).kinds.crystas[9990];
+    assert.equal(result.stats[mapping.statId],raw,'The six scalar native caps keep their signed multiplier-one values');
+  }
+}
+for (const id of [114,189,190,191,192,193]) assert.equal(reviewedMappings.some(row => row.capId === id),false,'Events, avatar skills and gem commands are not scalar equipment stats');
+for (let id = 166; id <= 175; id++) {
+  const mapping = reviewedMappings.find(row => row.capId === id);
+  for (const raw of [125,-125]) {
+    const source = item(9990,[cap(1,id,raw,mapping.enumName,Math.fround(.1))]);
+    const result = convertCatalog(catalog([source]),reviewedMappings).kinds.crystas[9990];
+    assert.equal(result.stats[mapping.statId],Math.fround(Math.fround(raw) * Math.fround(.1)),'Every proportional cap preserves signed float32 scaling');
+    assert.equal(result.fullyMapped,true);
+  }
+}
+const realSource = JSON.parse(await readFile(resolve(root,'data/sources/toram-items/items.77596232.connected.json')));
+const realRows = realSource.items.filter(row => [10024,108286,13126,16090,21751,12037,11074,14186,20089,21602].includes(row.gameItemId));
+assert.equal(realRows.length,10);
+const realConverted = convertCatalog(catalog(realRows),reviewedMappings,useRules);
+assert.equal(realConverted.kinds.weapons[10024].stats.ATK_UP_INT,150);
+assert.equal(realConverted.kinds.weapons[10024].stats.ATK_UP_STR,-200,'Actual equipment ATK-down must retain its sign');
+assert.ok(realConverted.kinds.weapons[10024].unresolved.every(row => ![166,167].includes(row.capId)));
+assert.ok(Object.hasOwn(realConverted.kinds.weapons[13126].stats,'ITEM_DELAY'),'Existing preserved keys also map on weapons');
+const proportionalBuff = realConverted.kinds.consumables[108286];
+assert.equal(proportionalBuff.fullyMapped,true);
+assert.deepEqual(proportionalBuff.buff,{groupId:211,durationSeconds:1200});
+assert.deepEqual(resolveItemOptions(proportionalBuff),[{key:'MAXHP',value:4000},{key:'ATK_UP_VIT',value:20},{key:'MATK_UP_VIT',value:20}]);
+for (const [id,kind,key,value] of [[16090,'weapons','METEOR_RES',-10],[21751,'additional','SUCTION_RES',30],[12037,'weapons','HELP_INVINCIBILITY',3],
+  [11074,'weapons','STOP_FLINCH',1],[14186,'weapons','PET_EXP',5],[20089,'armor','GEM_DUST_DROP',50]]) {
+  assert.equal(realConverted.kinds[kind][id].stats[key],value);
+}
+const conditionalHelper = realConverted.kinds.additional[21602];
+assert.ok(resolveItemOptions(conditionalHelper,{mainType:'지팡이',subType:'없음'}).some(row => row.key === 'HELP_INVINCIBILITY' && row.value === 2));
+assert.ok(!resolveItemOptions(conditionalHelper,{mainType:'한손검',subType:'없음'}).some(row => row.key === 'HELP_INVINCIBILITY'),'Scalar preservation does not flatten native equipment conditions');
+
 const conditional = item(2, [cap(1,12,100,'bMaxHpTo10',10), { ...cap(2,97,1,'limit'), role:'equipment-condition-marker' }, cap(3,43,5,'bCritical',1,2)]);
 conditional.propertyRecord.conditionGroups = [{ markerSlot:2, capId:97, instructionCount:1, targetSlots:[3], uiScopeMatchesBonusScope:true }];
 const conditionalItem = convertCatalog(catalog([conditional]), mappings).kinds.crystas[2];
+assert.deepEqual(convertCatalog(catalog([conditional]), mappings).details.kr.crystas[2].displayOptions,
+  [{text:'문구',conditional:false},{text:'문구',conditional:true},{text:'문구',conditional:true}]);
+const blankText = structuredClone(first); blankText.propertyRecord.caps[0].display.plainTextCandidates.kr = '  ';
+assert.equal(convertCatalog(catalog([blankText]),mappings).details.kr.crystas[9911].displayOptions.length,1);
 assert.equal(resolveItemOptions(conditionalItem, { mainType:'한손검', subType:'한손검(듀얼소드)' }).find(row => row.key === 'CRIT').value, 5, 'Either slot must apply once.');
 assert.equal(resolveItemOptions(conditionalItem, { mainType:'활', subType:'발도검' }).length, 1);
 assert.equal(matchesItemCondition({ mainType:'한손검', subType:'없음' }, projectCondition(108)), false);
@@ -102,7 +154,7 @@ const manifestBytes = await readFile(resolve(project, 'manifest.json'));
 await writeFile(resolve(project, 'manifest.json'), JSON.stringify({...manifest,source:{...manifest.source,itemUseRulesSha256:'0'.repeat(64)}}));
 await assert.rejects(readProjectManifest(project), /Item use rules changed/u);
 await writeFile(resolve(project, 'manifest.json'), manifestBytes);
-for (const [key,message] of [['mappingSha256','Project stat mapping changed'],['crystaAliasesSha256','Crysta aliases changed']]) {
+for (const [key,message] of [['mappingSha256','Project stat mapping changed'],['crystaAliasesSha256','Crysta aliases changed'],['consumableCategoriesSha256','Consumable categories changed']]) {
   await writeFile(resolve(project,'manifest.json'),JSON.stringify({...manifest,source:{...manifest.source,[key]:'0'.repeat(64)}}));
   await assert.rejects(readProjectManifest(project),new RegExp(message));
 }
@@ -137,6 +189,9 @@ failures.add(nameFile);
 const retry = createItemCatalog(base, fetcher);
 await assert.rejects(retry.listItems('crystas'), /503/u);
 assert.equal((await retry.listItems('crystas')).length, 2);
+assert.ok((await api.listItems('crystas','kr',{typeId:a.typeId,category:a.category})).some(item => item.id === a.id));
+assert.equal((await api.listItems('crystas','kr',{typeId:-1})).length,0);
+assert.equal((await api.listItems('crystas','kr',{category:'missing'})).length,0);
 
 const snapshot = resolve(directory, 'snapshot');
 await mkdir(snapshot);

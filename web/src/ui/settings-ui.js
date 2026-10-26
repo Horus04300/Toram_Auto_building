@@ -95,7 +95,7 @@
     var overlay = document.createElement('div');
     overlay.className = 'build-file-overlay';
     overlay.hidden = true;
-    overlay.innerHTML = '<section class="build-file-dialog" role="dialog" aria-modal="true" aria-labelledby="buildFileDialogTitle"><header class="build-file-dialog-header"><div><h2 id="buildFileDialogTitle">💾 저장</h2><p>현재 세팅을 저장하거나 불러옵니다.</p></div><button type="button" id="buildFileDialogClose" class="build-file-dialog-close" aria-label="세팅 파일 닫기">×</button></header><div class="build-file-storage"><div id="buildNativeFileFunctions" class="build-file-functions" hidden><div class="build-file-controls"><label>세팅 이름<input id="buildSettingName" type="text" value="내 세팅" maxlength="80"></label><button type="button" id="buildSettingSave">저장</button><button type="button" id="buildSettingRefresh">목록 새로고침</button></div><div class="build-file-controls"><label>저장 파일<select id="buildSettingList"></select></label><button type="button" id="buildSettingLoad" disabled>불러오기</button><button type="button" id="buildSettingOverwrite" disabled>덮어쓰기</button><button type="button" id="buildSettingDelete" disabled>삭제</button></div></div><div class="build-file-functions build-file-backup"><p class="build-file-storage-help">현재 세팅을 JSON 파일로 백업하거나 백업 파일을 불러올 수 있습니다.</p><div class="build-file-controls"><label>백업 파일 이름<input id="buildBackupName" type="text" value="내 세팅" maxlength="80"></label><button type="button" id="buildSettingExport">JSON 내보내기</button><label class="build-file-import">JSON 불러오기<input id="buildSettingImport" type="file" accept="application/json,.json"></label></div></div><p id="buildFileStorageStatus" class="build-file-storage-status" role="status"></p></div></section>';
+    overlay.innerHTML = '<section class="build-file-dialog" role="dialog" aria-modal="true" aria-labelledby="buildFileDialogTitle"><header class="build-file-dialog-header"><div><h2 id="buildFileDialogTitle">💾 저장</h2></div><button type="button" id="buildFileDialogClose" class="build-file-dialog-close" aria-label="세팅 파일 닫기">×</button></header><div class="build-file-storage"><div id="buildNativeFileFunctions" class="build-file-functions" hidden><div class="build-file-controls"><label>세팅 이름<input id="buildSettingName" type="text" value="내 세팅" maxlength="80"></label><button type="button" id="buildSettingSave">저장</button><button type="button" id="buildSettingRefresh">목록 새로고침</button></div><div class="build-file-controls"><label>저장 파일<select id="buildSettingList"></select></label><button type="button" id="buildSettingLoad" disabled>불러오기</button><button type="button" id="buildSettingOverwrite" disabled>덮어쓰기</button><button type="button" id="buildSettingDelete" disabled>삭제</button></div></div><div class="build-file-functions build-file-backup"><div class="build-file-controls"><label>백업 파일 이름<input id="buildBackupName" type="text" value="내 세팅" maxlength="80"></label><button type="button" id="buildSettingExport">JSON 내보내기</button><label class="build-file-import">JSON 불러오기<input id="buildSettingImport" type="file" accept="application/json,.json"></label></div></div><p id="buildFileStorageStatus" class="build-file-storage-status" role="status"></p></div></section>';
     document.body.appendChild(overlay);
     elements = {
       overlay:overlay,
@@ -145,7 +145,7 @@
       setStatus(directory ? '저장 위치: ' + directory : '데스크톱 세팅 저장소가 연결되어 있습니다.');
       await refreshFileList(false);
     } else {
-      setStatus('별도 보관과 다른 기기로 옮기기는 JSON 내보내기·불러오기를 이용하세요.');
+      setStatus('');
     }
   }
 

@@ -4,7 +4,7 @@
 
   var EPSILON=1e-9;
 
-  var CANDIDATE_PROJECTION_POLICY='optimization-candidate-projection.v2';
+  var CANDIDATE_PROJECTION_POLICY='optimization-candidate-projection.v3';
 
 
   function clone(value){if(value===null||value===undefined||typeof value!=='object')return value;if(Array.isArray(value))return value.map(clone);var result={};Object.keys(value).forEach(function(key){result[key]=clone(value[key]);});return result;}
@@ -278,6 +278,8 @@
     var objective=entries.filter(function(entry){return entry.status==='calculated'&&entry.target;}).map(function(entry){return entry.id;});
     var context=problem.baseContext||{};var attackType=String(context.atkType||'PHYS').toUpperCase();var powerMode=String(context.attackPowerMode||'default');var usesAtk=powerMode==='sum'||powerMode==='higher'||powerMode==='atk'||powerMode==='wizardBlend'||attackType!=='MAG';var usesMatk=powerMode==='sum'||powerMode==='higher'||powerMode==='wizardBlend'||(attackType==='MAG'&&powerMode!=='atk');
     objective=objective.filter(function(key){
+      var elementIndex=['FIRE_DMG','WATER_DMG','WIND_DMG','EARTH_DMG','LIGHT_DMG','DARK_DMG','NEUTRAL_DMG'].indexOf(key);
+      if(elementIndex>=0&&Number(context.targetElement)!==elementIndex+1)return false;
       if((key==='ATKP'||key==='ATK'||key.indexOf('ATK_UP_')===0)&&!usesAtk)return false;
       if((key==='MATKP'||key==='MATK'||key.indexOf('MATK_UP_')===0)&&!usesMatk)return false;
       if(key==='PHYS_PIERCE'&&(attackType==='MAG'||context.ignoreDefense===true))return false;

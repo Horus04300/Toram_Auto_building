@@ -1,0 +1,96 @@
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+int PlayerSecondaryStatus_get_GuardPower(undefined *self,undefined *methodInfo)
+
+{
+  longlong *plVar1;
+  code *pcVar2;
+  byte bVar3;
+  char cVar4;
+  int iVar5;
+  int iVar6;
+  int iVar7;
+  longlong lVar8;
+  undefined *puVar9;
+  longlong *plStackX_8;
+  
+  if (DAT_7ffe9cadde16 == '\0') {
+    FUN_7ffe9996d590(&DAT_7ffe9c935bd0);
+    FUN_7ffe9996d590(&DAT_7ffe9c968830);
+    DAT_7ffe9cadde16 = '\x01';
+  }
+  iVar6 = 0;
+  plStackX_8 = (longlong *)0x0;
+  iVar5 = PlayerSecondaryStatus_CalcBaseGuardPower(self,(undefined *)0x0);
+  plVar1 = *(longlong **)(self + 0x10);
+  if (plVar1 != (longlong *)0x0) {
+    lVar8 = (**(code **)(*plVar1 + 0x1f8))(plVar1,*(undefined8 *)(*plVar1 + 0x200));
+    if (lVar8 != 0) {
+      puVar9 = (undefined *)FUN_7ffe99c08d90(lVar8,0);
+      bVar3 = ItemDBData_CheckArmorAbility(puVar9,(undefined *)0x2,(undefined *)0x0);
+      if (bVar3 != 0) {
+        plVar1 = *(longlong **)(self + 0x10);
+        if (plVar1 == (longlong *)0x0) goto LAB_7ffe9a488855;
+        lVar8 = (**(code **)(*plVar1 + 0x1b8))(plVar1,*(undefined8 *)(*plVar1 + 0x1c0));
+        if ((lVar8 == 0) || (*(longlong *)(lVar8 + 0x68) == 0)) goto LAB_7ffe9a488855;
+        cVar4 = FUN_7ffe9ad8e670(*(longlong *)(lVar8 + 0x68),0xa3,&plStackX_8,_DAT_7ffe9c935bd0);
+        if (cVar4 != '\0') {
+          if (plStackX_8 == (longlong *)0x0) goto LAB_7ffe9a488855;
+          iVar6 = (**(code **)(*plStackX_8 + 0x178))
+                            (plStackX_8,10,*(undefined8 *)(*plStackX_8 + 0x180));
+        }
+      }
+      plVar1 = *(longlong **)(self + 0x10);
+      if (plVar1 != (longlong *)0x0) {
+        lVar8 = (**(code **)(*plVar1 + 0x1f8))(plVar1,*(undefined8 *)(*plVar1 + 0x200));
+        if (lVar8 != 0) {
+          lVar8 = FUN_7ffe99c090e0(lVar8,0);
+          if (lVar8 == 0) {
+            plVar1 = *(longlong **)(self + 0x10);
+            if (plVar1 == (longlong *)0x0) goto LAB_7ffe9a488855;
+            lVar8 = (**(code **)(*plVar1 + 0x1f8))(plVar1,*(undefined8 *)(*plVar1 + 0x200));
+            if (lVar8 == 0) goto LAB_7ffe9a488855;
+            lVar8 = FUN_7ffe99c08fe0(lVar8,0);
+            if (lVar8 == 0) {
+              plVar1 = *(longlong **)(self + 0x10);
+              if (plVar1 == (longlong *)0x0) goto LAB_7ffe9a488855;
+              lVar8 = (**(code **)(*plVar1 + 0x1b8))(plVar1,*(undefined8 *)(*plVar1 + 0x1c0));
+              if ((lVar8 == 0) || (*(longlong *)(lVar8 + 0x68) == 0)) goto LAB_7ffe9a488855;
+              cVar4 = FUN_7ffe9ad8e670(*(longlong *)(lVar8 + 0x68),0x44c,&plStackX_8,
+                                       _DAT_7ffe9c935bd0);
+              if (cVar4 != '\0') {
+                if (plStackX_8 == (longlong *)0x0) goto LAB_7ffe9a488855;
+                iVar7 = (**(code **)(*plStackX_8 + 0x178))(plStackX_8,10);
+                if (*(int *)(_DAT_7ffe9c968830 + 0xe0) == 0) {
+                  func_0x7ffe9996d830();
+                }
+                iVar5 = func_0x7ffe9b506d80(10000,iVar7 + iVar5);
+              }
+            }
+          }
+          plVar1 = *(longlong **)(self + 0x10);
+          if (plVar1 != (longlong *)0x0) {
+            puVar9 = (undefined *)
+                     (**(code **)(*plVar1 + 0x1d8))(plVar1,*(undefined8 *)(*plVar1 + 0x1e0));
+            if (puVar9 != (undefined *)0x0) {
+              iVar7 = BonusManager_GetBonusValue(puVar9,0x2e,(undefined *)0x0);
+              if (*(int *)(_DAT_7ffe9c968830 + 0xe0) == 0) {
+                func_0x7ffe9996d830();
+              }
+              iVar5 = func_0x7ffe9b506b70(100,((iVar7 + 100 + iVar6) * iVar5) / 100);
+              return iVar5;
+            }
+          }
+        }
+      }
+    }
+  }
+LAB_7ffe9a488855:
+  FUN_7ffe9996d7a0();
+  pcVar2 = (code *)swi(3);
+  iVar5 = (*pcVar2)();
+  return iVar5;
+}
+

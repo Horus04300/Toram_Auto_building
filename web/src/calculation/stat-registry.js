@@ -24,6 +24,7 @@
   calculated('UNSHEATHEP','unsheatheP',{unit:'percent',aliases:['발도위력%','발도공격%']}); calculated('UNSHEATHE','unsheatheF',{aliases:['발도위력','발도공격','발도위력+','발도공격+']});
   calculated('PHYS_PIERCE','physPierce',{unit:'percent',aliases:['물리관통']}); calculated('MAG_PIERCE','magPierce',{unit:'percent',aliases:['마법관통']});
   calculated('ELEM_P','elemP',{unit:'percent',aliases:['속성데미지','속성에유리']});
+  ['FIRE','WATER','WIND','EARTH','LIGHT','DARK','NEUTRAL'].forEach(function (element) { calculated(element + '_DMG',element.toLowerCase() + 'Dmg',{unit:'percent'}); });
   calculated('ELEM_AWAKENING','elementAwakening',{unit:'boolean',aggregation:'or'}); calculated('MAGIC_ELEMENT','magicElement',{unit:'boolean',aggregation:'or'});
   calculated('DAMAGE_P','damageP',{unit:'percent',aliases:['DAMAGE%','스킬데미지']});
   calculated('WATKP','watkP',{unit:'percent',aliases:['무기ATK%']}); calculated('WATK','watkF',{aliases:['무기ATK+']});
@@ -37,22 +38,35 @@
   ['ABS_ACC','ABS_DODGE','ACC','ACCP','AGGRO','AILMENT_RES','ANTICIPATE','AOE_RES','AREA_RES','AROUND_RES','AVOID_RATE','AVOID_RECHARGE','BARR_SPEED','BULLET_RES','CHARGE_RED','LINE_RED','DARK_RES','DEF','DEFP','DROP_RATE','EARTH_RES','EXP','FIRE_DMG','FIRE_RES','FLEE','FLEEP','FLOOR_RES','FRAC_BARR','GUARD_BREAK','GUARD_POWER','GUARD_RECHARGE','HP_REGEN','HP_REGENP','ITEM_CD','LIGHT_RES','MAG_BARR','MAG_PURSUIT','MAG_RES','MDEF','MDEFP','MP_REGEN','MP_REGENP','NEUTRAL_DMG','NEUTRAL_RES','PHYS_BARR','PHYS_PURSUIT','PHYS_RES','REFLECT','REVIVE_TIME','WATER_DMG','WATER_RES','WIND_DMG','WIND_RES','EARTH_DMG','LIGHT_DMG','DARK_DMG'].forEach(function (id) { if (!entries[id]) preserved(id); });
   aliases.DEF_P='DEFP'; aliases.MDEF_P='MDEFP'; aliases.HIT='ACC'; aliases.HIT_P='ACCP'; aliases.AVOID='FLEE'; aliases.AVOID_P='FLEEP';
   ['TRANSLATION_RES','WIDD_RES','EXPLOSION_RES','SELF_DMG_RATE','ITEM_DELAY','STOP_TUMBLE','STOP_STUN'].forEach(function (id) { preserved(id); });
+  ['METEOR_RES','SUCTION_RES','PET_EXP','GEM_DUST_DROP'].forEach(function (id) { preserved(id,{unit:'percent'}); });
+  preserved('HELP_INVINCIBILITY',{unit:'seconds'}); preserved('STOP_FLINCH',{unit:'boolean',aggregation:'or'});
   aliases.GUARD_RECOVERY='GUARD_RECHARGE'; aliases.AVOID_RECOVERY='AVOID_RECHARGE'; aliases.HPR_NONCOMBAT='HP_REGEN'; aliases.HPR_NONCOMBAT_P='HP_REGENP'; aliases.MPR_NONCOMBAT='MP_REGEN'; aliases.MPR_NONCOMBAT_P='MP_REGENP';
   aliases.AGGRO_P='AGGRO'; aliases.EXP_P='EXP'; aliases.HP_REGEN_P='HP_REGENP'; aliases.MP_REGEN_P='MP_REGENP';
   aliases.MAGIC_PIERCE='MAG_PIERCE'; aliases.MOTION_SPEED_P='MOTIONSPEED';
 
   function normalize(key) { return aliases[String(key || '').toUpperCase().replace(/\s+/g,'')] || null; }
   function get(key) { var id=normalize(key); return id ? entries[id] : null; }
+  function normalizeValue(key,value) {
+    var amount=Number(value),id=normalize(key);
+    if(id&&/^(?:ATK|MATK)_UP_(?:STR|INT|VIT|AGI|DEX)$/.test(id)&&Number.isFinite(amount)) {
+      var raw=amount*10,nearest=Math.round(raw);
+      if(Math.abs(raw-nearest)<=Math.max(1,Math.abs(raw))*Math.pow(2,-22))return nearest/10;
+    }
+    return amount;
+  }
   function apply(ctx,key,value) {
-    var amount=Number(value); if(!ctx || !key || !Number.isFinite(amount)) return false;
+    var amount=normalizeValue(key,value); if(!ctx || !key || !Number.isFinite(amount)) return false;
     var definition=get(key);
     if(!definition) { if(!Array.isArray(ctx.statDiagnostics)) ctx.statDiagnostics=[]; if(!ctx.statDiagnostics.some(function(item){return item.code==='UNKNOWN_STAT'&&item.key===String(key);})) ctx.statDiagnostics.push({code:'UNKNOWN_STAT',key:String(key),message:'등록되지 않은 스탯 키입니다: '+key}); return false; }
     if(definition.target) { if(definition.aggregation==='or') ctx[definition.target]=Boolean(ctx[definition.target])||amount>0; else ctx[definition.target]=(Number(ctx[definition.target])||0)+amount; return true; }
-    if(!ctx.preservedStats || typeof ctx.preservedStats!=='object') ctx.preservedStats={}; ctx.preservedStats[definition.id]=(Number(ctx.preservedStats[definition.id])||0)+amount; return true;
+    if(!ctx.preservedStats || typeof ctx.preservedStats!=='object') ctx.preservedStats={};
+    if(!ctx.preservedStatContributions) ctx.preservedStatContributions={};
+    (ctx.preservedStatContributions[definition.id] ||= []).push(amount);
+    ctx.preservedStats[definition.id]=(Number(ctx.preservedStats[definition.id])||0)+amount; return true;
   }
   function collectCrystaKeys(list) { var found={}; (Array.isArray(list)?list:[]).forEach(function(item){Object.keys(item&&item.stats||{}).forEach(function(k){found[k]=true;});(item&&item.condStats||[]).forEach(function(c){Object.keys(c&&c.stats||{}).forEach(function(k){found[k]=true;});});}); return Object.keys(found).sort(); }
   function auditKeys(keys) { var result={total:(keys||[]).length,unknown:[],modeled:[],preserved:[]}; (keys||[]).forEach(function(key){var d=get(key);if(!d)result.unknown.push(key);else if(d.status==='notModeled')result.preserved.push(d.id);else result.modeled.push(d.id);}); Object.keys(result).forEach(function(k){if(Array.isArray(result[k]))result[k]=Array.from(new Set(result[k]));}); return result; }
-  var api=Object.freeze({normalize:normalize,get:get,apply:apply,entries:function(){return Object.keys(entries).sort().map(function(id){return entries[id];});},collectCrystaKeys:collectCrystaKeys,auditKeys:auditKeys});
+  var api=Object.freeze({normalize:normalize,normalizeValue:normalizeValue,get:get,apply:apply,entries:function(){return Object.keys(entries).sort().map(function(id){return entries[id];});},collectCrystaKeys:collectCrystaKeys,auditKeys:auditKeys});
   if(typeof module==='object'&&module.exports) module.exports=api;
   if(root) root.ToramStatRegistry=api;
 }(typeof window!=='undefined'?window:globalThis));

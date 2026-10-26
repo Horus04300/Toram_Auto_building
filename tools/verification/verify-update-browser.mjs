@@ -20,11 +20,11 @@ const server = createServer(async (req, res) => {
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 let browser;
 try {
-  browser = await chromium.launch({ channel:'msedge', headless:true });
+  browser = await chromium.launch({ channel:'chrome', headless:true });
   const page = await browser.newPage({ viewport:{ width:1280, height:900 } });
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  const url = `http://127.0.0.1:${server.address().port}`;
+  const url = `http://127.0.0.1:${server.address().port}/?view=calculator`;
   await page.goto(url);
   await page.waitForFunction(() => window.ToramUiFeatures?.updates);
   assert.equal(await page.locator('#updateCheck').isDisabled(), true);

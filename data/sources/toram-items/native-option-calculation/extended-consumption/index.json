@@ -1,0 +1,5245 @@
+{
+  "schemaVersion": 1,
+  "authority": "offline-ghidra-selected-native-consumption",
+  "date": "2026-10-26",
+  "parentEvidence": "../index.json",
+  "methodMapSha256": "f1073d5514b1771a5e188bd07e80ce94acfd28f8842bc5f211f83a3e2d9cb2c3",
+  "methods": [
+    {
+      "oldIndex": 2384,
+      "newIndex": 2384,
+      "class": "AvoidActionManager",
+      "name": "get_AvoidRate",
+      "token": "0x6000951",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a7d95b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2384-AvoidActionManager-get_AvoidRate.c",
+      "sha256": "b3075c226dc10d8d419501a11d984d4f691b23d90cb9b848983375cb00ff2901"
+    },
+    {
+      "oldIndex": 2385,
+      "newIndex": 2385,
+      "class": "AvoidActionManager",
+      "name": "get_MaxAvoidCount",
+      "token": "0x6000952",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a7d98b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2385-AvoidActionManager-get_MaxAvoidCount.c",
+      "sha256": "033efdc9137f9899938847265b7fbebba5caad80cb38f3a0ac9adeebea5b944a"
+    },
+    {
+      "oldIndex": 2399,
+      "newIndex": 2399,
+      "class": "AvoidActionManager",
+      "name": "CheckAvoid",
+      "token": "0x6000960",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "mobAttack",
+          "type_index": 20543,
+          "exact_byval_name": "MobAttackBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a7d61f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2399-AvoidActionManager-CheckAvoid.c",
+      "sha256": "ad725d5199dfaf57b02dd20c90921554189c42e3e9e7f4d6be55ccf7fa5aa4b9"
+    },
+    {
+      "oldIndex": 2412,
+      "newIndex": 2412,
+      "class": "AvoidActionManager",
+      "name": "UpdateAvoidStack",
+      "token": "0x600096d",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a7d93e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2412-AvoidActionManager-UpdateAvoidStack.c",
+      "sha256": "da91d58e57094906c7b0d79270a5e9d4369bf41eeb47d7f19b3156cb2746e382"
+    },
+    {
+      "oldIndex": 2692,
+      "newIndex": 2692,
+      "class": "GuardActionManager",
+      "name": "get_GuardPowerRate",
+      "token": "0x6000a85",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a8fb6f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2692-GuardActionManager-get_GuardPowerRate.c",
+      "sha256": "9b585ef4bd3ca498a6415bac0b06fc7c61becb3e55b5bffa76187acbd1e97e1b"
+    },
+    {
+      "oldIndex": 2698,
+      "newIndex": 2698,
+      "class": "GuardActionManager",
+      "name": "get_MaxGuardPower",
+      "token": "0x6000a8b",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a8fbab0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2698-GuardActionManager-get_MaxGuardPower.c",
+      "sha256": "ec7c32101e6865d313de855986a1504eecc0319afe08ae0f0dfb66c714d44a3f"
+    },
+    {
+      "oldIndex": 2700,
+      "newIndex": 2700,
+      "class": "GuardActionManager",
+      "name": "get_MaxGuardDelay",
+      "token": "0x6000a8d",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a8fba10",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2700-GuardActionManager-get_MaxGuardDelay.c",
+      "sha256": "e0a35bea134ac053ea16c69b17a342de531ba50e7ccf95dc9312357b89dff740"
+    },
+    {
+      "oldIndex": 2722,
+      "newIndex": 2722,
+      "class": "GuardActionManager",
+      "name": "CalcGuard",
+      "token": "0x6000aa3",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a8f6a80",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2722-GuardActionManager-CalcGuard.c",
+      "sha256": "b0aaeb90a1d33ae2ceee0cf1613339887dec36080c9929667e8c78490bbf9d88"
+    },
+    {
+      "oldIndex": 2726,
+      "newIndex": 2726,
+      "class": "GuardActionManager",
+      "name": "ReceiveDamage",
+      "token": "0x6000aa7",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "otherPlayer",
+          "type_index": 20948,
+          "exact_byval_name": "MobaOtherPlayer"
+        },
+        {
+          "name": "responseData",
+          "type_index": 20945,
+          "exact_byval_name": "Toram.Common.Actions.MobaMobResponseData"
+        },
+        {
+          "name": "reaction",
+          "type_index": 24617,
+          "exact_byval_name": "SkillHitReactionType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8fabb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2726-GuardActionManager-ReceiveDamage.c",
+      "sha256": "9a9a17be56767a82ef8700e137837f4f7df5375db53562c96db40f9f34c631b6"
+    },
+    {
+      "oldIndex": 2729,
+      "newIndex": 2729,
+      "class": "GuardActionManager",
+      "name": "UpdateGuard",
+      "token": "0x6000aaa",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8fb030",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2729-GuardActionManager-UpdateGuard.c",
+      "sha256": "75f61d8ea1074708e2f677e573fe81fcaaf0aeb808dfee4c7b6294ce4dbe8186"
+    },
+    {
+      "oldIndex": 2730,
+      "newIndex": 2730,
+      "class": "GuardActionManager",
+      "name": "UpdateGuarding",
+      "token": "0x6000aab",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8fb0e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2730-GuardActionManager-UpdateGuarding.c",
+      "sha256": "73604da0144239e5fb38e2bef9e8f60b90faea213509937dac500bdf3d1373b5"
+    },
+    {
+      "oldIndex": 2731,
+      "newIndex": 2731,
+      "class": "GuardActionManager",
+      "name": "UpdateGuardWaiting",
+      "token": "0x6000aac",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8fadb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "2731-GuardActionManager-UpdateGuardWaiting.c",
+      "sha256": "8b0e7253b12984972d4e3d097405b7126a98130b15c833613d73a7efca383999"
+    },
+    {
+      "oldIndex": 5048,
+      "newIndex": 5048,
+      "class": "MainPlayer",
+      "name": "CalcItemDelay",
+      "token": "0x60013b9",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "time",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "bonus",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99cfbd70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "5048-MainPlayer-CalcItemDelay.c",
+      "sha256": "5e8346291d1e8f89ec129a204c5836f1079347b6feff0fdc2a2c2a7eef1946db"
+    },
+    {
+      "oldIndex": 5049,
+      "newIndex": 5049,
+      "class": "MainPlayer",
+      "name": "ReduceItemDelay",
+      "token": "0x60013ba",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "time",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99d01080",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "5049-MainPlayer-ReduceItemDelay.c",
+      "sha256": "d9167699786ec247c2f72b74cddffe3ca9f71f008b943b784e68acfa62e33c3b"
+    },
+    {
+      "oldIndex": 9977,
+      "newIndex": 9977,
+      "class": "MobAttackBase",
+      "name": "CalcHit",
+      "token": "0x60026fa",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a36fb90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9977-MobAttackBase-CalcHit.c",
+      "sha256": "c260f2dc663e3219bf06e75fc479ecc9bdce3e0a84a9a3754740aa7b85260e4a"
+    },
+    {
+      "oldIndex": 9984,
+      "newIndex": 9984,
+      "class": "MobAttackBase",
+      "name": "checkHit",
+      "token": "0x6002701",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "mobFlee",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "flee",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "reduce",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a3780a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9984-MobAttackBase-checkHit.c",
+      "sha256": "d8919a99b1a7172b7cd065ebffee7be38eedda4650af3749b546bbf9ee4dd016"
+    },
+    {
+      "oldIndex": 9990,
+      "newIndex": 9990,
+      "class": "MobAttackBase",
+      "name": "calcEquipDefPercent",
+      "token": "0x6002707",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "eqDef",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a3778e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9990-MobAttackBase-calcEquipDefPercent.c",
+      "sha256": "8c0d0c9fa612ad2c92714b60036405cfc711584b85524001526260179cd5f164"
+    },
+    {
+      "oldIndex": 9991,
+      "newIndex": 9991,
+      "class": "MobAttackBase",
+      "name": "calcResistDamage",
+      "token": "0x6002708",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "resistVal",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a377340",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9991-MobAttackBase-calcResistDamage.c",
+      "sha256": "2b3507e61b60a2befa04fb441201308ed0a4982e43b67a0cc82928664083beb9"
+    },
+    {
+      "oldIndex": 9992,
+      "newIndex": 9992,
+      "class": "MobAttackBase",
+      "name": "calcResistDamage",
+      "token": "0x6002709",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "resistVal",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a377900",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9992-MobAttackBase-calcResistDamage.c",
+      "sha256": "4f4c2b4f49153d56520a1511ed7b78b94e4530d244cf893095a4c3a6255650e6"
+    },
+    {
+      "oldIndex": 9993,
+      "newIndex": 9993,
+      "class": "MobAttackBase",
+      "name": "getElementShield",
+      "token": "0x600270a",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "element",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12860,
+        "exact_byval_name": "Toram.Common.Bonus.BonusType"
+      },
+      "runtime_va": "0x7ffe9a3782e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9993-MobAttackBase-getElementShield.c",
+      "sha256": "259700091db91f35a6332f47f1f463f7a1c2f4f97fc813c72094deefa66145aa"
+    },
+    {
+      "oldIndex": 9994,
+      "newIndex": 9994,
+      "class": "MobAttackBase",
+      "name": "calcElementResistDamage",
+      "token": "0x600270b",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "resistVal",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a377340",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9994-MobAttackBase-calcElementResistDamage.c",
+      "sha256": "2b3507e61b60a2befa04fb441201308ed0a4982e43b67a0cc82928664083beb9"
+    },
+    {
+      "oldIndex": 9995,
+      "newIndex": 9995,
+      "class": "MobAttackBase",
+      "name": "CalcSkillComboTough",
+      "token": "0x600270c",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a3736e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9995-MobAttackBase-CalcSkillComboTough.c",
+      "sha256": "41d7f74e93bfabe24a7887934e57221a9b7f72e4719576a15e0bf568e74d5c56"
+    },
+    {
+      "oldIndex": 9996,
+      "newIndex": 9996,
+      "class": "MobAttackBase",
+      "name": "CalcLastDamage",
+      "token": "0x600270d",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "hitReactionType",
+          "type_index": 24617,
+          "exact_byval_name": "SkillHitReactionType"
+        },
+        {
+          "name": "allowBuffChanges",
+          "type_index": 12885
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a370470",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9996-MobAttackBase-CalcLastDamage.c",
+      "sha256": "218763ba71e54d3671f50d3fcfd80427a7ca266674fa8ba3a6cb20631be063af"
+    },
+    {
+      "oldIndex": 9997,
+      "newIndex": 9997,
+      "class": "MobAttackBase",
+      "name": "CheckPercentageDamage",
+      "token": "0x600270e",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374e30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9997-MobAttackBase-CheckPercentageDamage.c",
+      "sha256": "1d55926a4e060fb35f0954d5c9a144995c969ac48152365fdfc2d56de54147f6"
+    },
+    {
+      "oldIndex": 9998,
+      "newIndex": 9998,
+      "class": "MobAttackBase",
+      "name": "CheckActionType",
+      "token": "0x600270f",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "actionTypes",
+          "type_index": 10468
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374440",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9998-MobAttackBase-CheckActionType.c",
+      "sha256": "b88db40bfbfadbe5b83c8e361158f5ea27ad0f51cb15f2b463cc2f5819fd4e9d"
+    },
+    {
+      "oldIndex": 9999,
+      "newIndex": 9999,
+      "class": "MobAttackBase",
+      "name": "CalcBarrier",
+      "token": "0x6002710",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a36e770",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9999-MobAttackBase-CalcBarrier.c",
+      "sha256": "03957863dee4c700df4366a1cee47fed1f77c0a2ae8bd0bb98ed494522111c70"
+    },
+    {
+      "oldIndex": 10001,
+      "newIndex": 10001,
+      "class": "MobAttackBase",
+      "name": "CalcFlee",
+      "token": "0x6002712",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a36f600",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10001-MobAttackBase-CalcFlee.c",
+      "sha256": "bee819260b59f2aa8d8c20bf1375df458ff22f1ff2e58c4c322f2d779574fe4b"
+    },
+    {
+      "oldIndex": 10002,
+      "newIndex": 10002,
+      "class": "MobAttackBase",
+      "name": "CalcFlee",
+      "token": "0x6002713",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "flee",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a36f680",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10002-MobAttackBase-CalcFlee.c",
+      "sha256": "69ff501792aba12094bd740b0c40b6a9612e7570a2e9bf022330383f90353ca0"
+    },
+    {
+      "oldIndex": 10008,
+      "newIndex": 10008,
+      "class": "MobAttackBase",
+      "name": "GetDistDamageRegistRate",
+      "token": "0x6002719",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a375bd0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10008-MobAttackBase-GetDistDamageRegistRate.c",
+      "sha256": "f368ff734b1bb075d634651bdbc1555374df16a0b09bffc9f495918c5b73cf13"
+    },
+    {
+      "oldIndex": 10009,
+      "newIndex": 10009,
+      "class": "MobAttackBase",
+      "name": "AbsoluteFree",
+      "token": "0x600271a",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "type",
+          "type_index": 24621,
+          "exact_byval_name": "SkillHitType"
+        },
+        {
+          "name": "hit",
+          "type_index": 9135
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a36e350",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10009-MobAttackBase-AbsoluteFree.c",
+      "sha256": "b9563af973b75ce8284ac15cc967aff7e25979ae3043f9ae6e7d8ea569185168"
+    },
+    {
+      "oldIndex": 10010,
+      "newIndex": 10010,
+      "class": "MobAttackBase",
+      "name": "CreateFamiliaDamageData",
+      "token": "0x600271b",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "familiaAction",
+          "type_index": 15761,
+          "exact_byval_name": "FamiliaActionManager"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a375080",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10010-MobAttackBase-CreateFamiliaDamageData.c",
+      "sha256": "32d2c07f505ed5ce8ee572a4f62666e7f0deccd12211f80921e63e0d7279a476"
+    },
+    {
+      "oldIndex": 10011,
+      "newIndex": 10011,
+      "class": "MobAttackBase",
+      "name": "CalcUnavoidableAttack",
+      "token": "0x600271c",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 9239
+        },
+        {
+          "name": "justGuard",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a373d10",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10011-MobAttackBase-CalcUnavoidableAttack.c",
+      "sha256": "949b4c06e1b891e9e4aa537d3413d39434d5e76e6e33a4a300f21430150d8418"
+    },
+    {
+      "oldIndex": 10014,
+      "newIndex": 10014,
+      "class": "MobAttackBase",
+      "name": "SetAbnormalEffect",
+      "token": "0x600271f",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "skillDamageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "justGuard",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a3767a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10014-MobAttackBase-SetAbnormalEffect.c",
+      "sha256": "02a48317be80e61d87e29284383f59eb99416b816a2bd478ba36532eff6decd5"
+    },
+    {
+      "oldIndex": 10015,
+      "newIndex": 10015,
+      "class": "MobAttackBase",
+      "name": "SetAbnormalEffect",
+      "token": "0x6002720",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "skillDamageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "justGuard",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "baseAbnormalType",
+          "type_index": 11503,
+          "exact_byval_name": "AbnormalType"
+        },
+        {
+          "name": "baseAbnormalPercent",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "abnormalEffectTime",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a3767f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10015-MobAttackBase-SetAbnormalEffect.c",
+      "sha256": "8bcde216b5135ec04b0b6e2527e55f69a22cbe60d2a42847ee4cab3c4ef39f27"
+    },
+    {
+      "oldIndex": 10016,
+      "newIndex": 10016,
+      "class": "MobAttackBase",
+      "name": "GetMobPatternAbnormalPercent",
+      "token": "0x6002721",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a375e80",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10016-MobAttackBase-GetMobPatternAbnormalPercent.c",
+      "sha256": "b648e40abac784337d41926fe72cab0443d45491a5a7e242068250e2d5b7c717"
+    },
+    {
+      "oldIndex": 10017,
+      "newIndex": 10017,
+      "class": "MobAttackBase",
+      "name": "setAbnormalEffect",
+      "token": "0x6002722",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "skillDamageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a3783c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10017-MobAttackBase-setAbnormalEffect.c",
+      "sha256": "8dcddc3de4143e0cac9dfad7ffdfd8794b5abde25325026e127ce512c52e68f5"
+    },
+    {
+      "oldIndex": 10018,
+      "newIndex": 10018,
+      "class": "MobAttackBase",
+      "name": "GetActionTypeResist",
+      "token": "0x6002723",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a3756d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10018-MobAttackBase-GetActionTypeResist.c",
+      "sha256": "cdc19502cd0a17e61dedb056fa8ef4f57584a31852d8b5b6ad9afc5651926ed9"
+    },
+    {
+      "oldIndex": 10019,
+      "newIndex": 10019,
+      "class": "MobAttackBase",
+      "name": "GetLimitDamage",
+      "token": "0x6002724",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseDamage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "isMinDamage",
+          "type_index": 9136
+        },
+        {
+          "name": "isMaxDamage",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a375df0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10019-MobAttackBase-GetLimitDamage.c",
+      "sha256": "35355b0ddc30a802040a06d15f75c01a758f51d8b88dd4bf8600143df972dc6c"
+    },
+    {
+      "oldIndex": 10020,
+      "newIndex": 10020,
+      "class": "MobAttackBase",
+      "name": "CheckDamageLimit",
+      "token": "0x6002725",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "min",
+          "type_index": 9239
+        },
+        {
+          "name": "max",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374770",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10020-MobAttackBase-CheckDamageLimit.c",
+      "sha256": "9923395c3035a90fb9ef1c26899ff0267d8e3d601d01f6562041bd21e66013fb"
+    },
+    {
+      "oldIndex": 10021,
+      "newIndex": 10021,
+      "class": "MobAttackBase",
+      "name": "CheckAbnormalDamageIncrease",
+      "token": "0x6002726",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "rate",
+          "type_index": 9355
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374300",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10021-MobAttackBase-CheckAbnormalDamageIncrease.c",
+      "sha256": "854469c902a8411d74d5765d9a9bd57a2368576dfa39bba3ef5aa3fc03c72ba1"
+    },
+    {
+      "oldIndex": 10022,
+      "newIndex": 10022,
+      "class": "MobAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x6002727",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 20779,
+          "exact_byval_name": "MobStatus"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a36f570",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10022-MobAttackBase-CalcElementBonus.c",
+      "sha256": "3d6b08dd6dd093702499bbf8ea0707467e788587f1fd70ebb186c19cdfe6a7db"
+    },
+    {
+      "oldIndex": 10023,
+      "newIndex": 10023,
+      "class": "MobAttackBase",
+      "name": "checkMobReaction",
+      "token": "0x6002728",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "guard",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "avoid",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24617,
+        "exact_byval_name": "SkillHitReactionType"
+      },
+      "runtime_va": "0x7ffe9a378100",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10023-MobAttackBase-checkMobReaction.c",
+      "sha256": "4db9e7cc79d54625d526cfcf647ce61cf777ab119e4d4185c18eba81cdd460cb"
+    },
+    {
+      "oldIndex": 10024,
+      "newIndex": 10024,
+      "class": "MobAttackBase",
+      "name": "CheckUnavoidable",
+      "token": "0x6002729",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374ea0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10024-MobAttackBase-CheckUnavoidable.c",
+      "sha256": "d58011f2a156da343ad5a8ba8245e7416881647e475296efc6fad4d8da27bad7"
+    },
+    {
+      "oldIndex": 10025,
+      "newIndex": 10025,
+      "class": "MobAttackBase",
+      "name": "CheckGuard",
+      "token": "0x600272a",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "guardType",
+          "type_index": 9361
+        },
+        {
+          "name": "justGuard",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a374bf0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10025-MobAttackBase-CheckGuard.c",
+      "sha256": "e17bc87cf7ae652588af5786fb6acdddc8ac1acc820944ae343d2ad5acaa7aeb"
+    },
+    {
+      "oldIndex": 10026,
+      "newIndex": 10026,
+      "class": "MobAttackBase",
+      "name": "CalcGuard",
+      "token": "0x600272b",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a36f6e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10026-MobAttackBase-CalcGuard.c",
+      "sha256": "d0403b07ec4ce5b9bd6ac881fc1a8d1ae6b78b7ea2ce86c86e6290b14978c70e"
+    },
+    {
+      "oldIndex": 10027,
+      "newIndex": 10027,
+      "class": "MobAttackBase",
+      "name": "FinawGuard",
+      "token": "0x600272c",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a375650",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10027-MobAttackBase-FinawGuard.c",
+      "sha256": "58b074ef295fe461502d318e7f2a2b1ea9ec8b7fe750efc4b28f4ae73b034940"
+    },
+    {
+      "oldIndex": 10028,
+      "newIndex": 10028,
+      "class": "MobAttackBase",
+      "name": "CheckAvoid",
+      "token": "0x600272d",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a3744b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10028-MobAttackBase-CheckAvoid.c",
+      "sha256": "bb6cd193a23831acaf8efba88389f782c6b21d8380ecad4ddae6ca60c50f89e4"
+    },
+    {
+      "oldIndex": 10029,
+      "newIndex": 10029,
+      "class": "MobAttackBase",
+      "name": "GetBarrierType",
+      "token": "0x600272e",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "mobAttack",
+          "type_index": 20543,
+          "exact_byval_name": "MobAttackBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12860,
+        "exact_byval_name": "Toram.Common.Bonus.BonusType"
+      },
+      "runtime_va": "0x7ffe9a375ab0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10029-MobAttackBase-GetBarrierType.c",
+      "sha256": "016141d880c817dc4badc57a5618d000620e121583da9895b279b676ce3ee00d"
+    },
+    {
+      "oldIndex": 10030,
+      "newIndex": 10030,
+      "class": "MobAttackBase",
+      "name": "GetBarrierBuf",
+      "token": "0x600272f",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "mobAttack",
+          "type_index": 20543,
+          "exact_byval_name": "MobAttackBase"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24555,
+        "exact_byval_name": "SkillBufferDataBase"
+      },
+      "runtime_va": "0x7ffe9a3758f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10030-MobAttackBase-GetBarrierBuf.c",
+      "sha256": "1f6e1d7fdfb446a5e069f514e94864dcc81f733ed82d94bd0c60c65b6cafbe22"
+    },
+    {
+      "oldIndex": 10046,
+      "newIndex": 10046,
+      "class": "MobCurrentHPRateAttack",
+      "name": "calcMobToPlayerDamage",
+      "token": "0x600273f",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a384af0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10046-MobCurrentHPRateAttack-calcMobToPlayerDamage.c",
+      "sha256": "4e1ed8020c8c507347059e603c4cc1e5fa4564cb3c2797ba74a5fca5e1cba484"
+    },
+    {
+      "oldIndex": 10048,
+      "newIndex": 10048,
+      "class": "MobCurrentHPRateAttack",
+      "name": "CalcTemporaryDamage",
+      "token": "0x6002741",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 15303,
+          "exact_byval_name": "EnemyMobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a384160",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10048-MobCurrentHPRateAttack-CalcTemporaryDamage.c",
+      "sha256": "ea3bf354029d7a9c71a53fbdb246cd40ade8fa3ea4ef952a494292c20ac1b941"
+    },
+    {
+      "oldIndex": 10085,
+      "newIndex": 10085,
+      "class": "MobMagicAttack",
+      "name": "calcMobToPlayerDamage",
+      "token": "0x6002766",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a3897d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10085-MobMagicAttack-calcMobToPlayerDamage.c",
+      "sha256": "fcf90d0cc8499ffab1b305a72d8eb3e3156d3f5700b0c79b53e7756cc70306ae"
+    },
+    {
+      "oldIndex": 10087,
+      "newIndex": 10087,
+      "class": "MobMagicAttack",
+      "name": "CalcTemporaryDamage",
+      "token": "0x6002768",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 15303,
+          "exact_byval_name": "EnemyMobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a3888d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10087-MobMagicAttack-CalcTemporaryDamage.c",
+      "sha256": "5b8685e0f800118b0a26d4f6cfd6b5fcb745aa249b4e469584592266878b23d2"
+    },
+    {
+      "oldIndex": 10091,
+      "newIndex": 10091,
+      "class": "MobMaxHPRateAttack",
+      "name": "calcMobToPlayerDamage",
+      "token": "0x600276c",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a38acb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10091-MobMaxHPRateAttack-calcMobToPlayerDamage.c",
+      "sha256": "86b0573e2d6739b70e075a1b46c195af87a459d87b3af498bc9cc56c09a3656e"
+    },
+    {
+      "oldIndex": 10093,
+      "newIndex": 10093,
+      "class": "MobMaxHPRateAttack",
+      "name": "CalcTemporaryDamage",
+      "token": "0x600276e",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 15303,
+          "exact_byval_name": "EnemyMobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a38a410",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10093-MobMaxHPRateAttack-CalcTemporaryDamage.c",
+      "sha256": "e7a4a7909d55bc3d4624a934e9905629c8662241951d099aae9ae5be8b82a14b"
+    },
+    {
+      "oldIndex": 10101,
+      "newIndex": 10101,
+      "class": "MobNormalAttack",
+      "name": "calcMobToPlayerDamage",
+      "token": "0x6002776",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a38c6f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10101-MobNormalAttack-calcMobToPlayerDamage.c",
+      "sha256": "12d908077434941bd329e31eadb7ca05bea6301bf967796f2ab5eb7e070ebc1d"
+    },
+    {
+      "oldIndex": 10103,
+      "newIndex": 10103,
+      "class": "MobNormalAttack",
+      "name": "CalcTemporaryDamage",
+      "token": "0x6002778",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 15303,
+          "exact_byval_name": "EnemyMobActionManagerBase"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a38b7f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "10103-MobNormalAttack-CalcTemporaryDamage.c",
+      "sha256": "ddd5ed49bb57f18f33917720abf62a3a7c85df7549495d22a9fc1c73760a1cd9"
+    },
+    {
+      "oldIndex": 13159,
+      "newIndex": 13159,
+      "class": "PlayerBattleManager",
+      "name": "PursuitAttack",
+      "token": "0x6003368",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "targetActManager",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4695c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13159-PlayerBattleManager-PursuitAttack.c",
+      "sha256": "21d520d7cb0ec4af3aae5baf47262b6e12a33d5747c3f81f52d4854051ee1d07"
+    },
+    {
+      "oldIndex": 13592,
+      "newIndex": 13592,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AntiVirus",
+      "token": "0x6003519",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486880",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13592-PlayerSecondaryStatus-get_AntiVirus.c",
+      "sha256": "5af0f671e3c916b00c2040096cc433f1b541c2408e0ed315b94e5c75824540da"
+    },
+    {
+      "oldIndex": 13593,
+      "newIndex": 13593,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardDelay",
+      "token": "0x600351a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d2030",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13593-PlayerSecondaryStatus-get_GuardDelay.c",
+      "sha256": "0c949ac4b88b276dc8a2a5e78782f6525fe6270af111c6ef6b2c3bfeb96d644f"
+    },
+    {
+      "oldIndex": 13594,
+      "newIndex": 13594,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardPower",
+      "token": "0x600351b",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4885b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13594-PlayerSecondaryStatus-get_GuardPower.c",
+      "sha256": "a3f6cf868a11ec52609d0de72a663d9da7cb45f4ff7614ae98bbe299f3613efa"
+    },
+    {
+      "oldIndex": 13595,
+      "newIndex": 13595,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardSpeed",
+      "token": "0x600351c",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488860",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13595-PlayerSecondaryStatus-get_GuardSpeed.c",
+      "sha256": "e345f72c52cc82bbdb767a9de7fddf1c06f8ada77e4c0d1a17c377a77bd5f1d8"
+    },
+    {
+      "oldIndex": 13596,
+      "newIndex": 13596,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidSpeed",
+      "token": "0x600351d",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486e70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13596-PlayerSecondaryStatus-get_AvoidSpeed.c",
+      "sha256": "864caf5fe90969db4a52c01e40622b0cc35a678448c36546348e58a1f82c6b4d"
+    },
+    {
+      "oldIndex": 13597,
+      "newIndex": 13597,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidStack",
+      "token": "0x600351e",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4873f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13597-PlayerSecondaryStatus-get_AvoidStack.c",
+      "sha256": "df666cb0bfe930ed928c409ed4bbbe841aed1f66c5b827e05bf75362d1d46123"
+    },
+    {
+      "oldIndex": 13598,
+      "newIndex": 13598,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidDelay",
+      "token": "0x600351f",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d2030",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13598-PlayerSecondaryStatus-get_AvoidDelay.c",
+      "sha256": "0c949ac4b88b276dc8a2a5e78782f6525fe6270af111c6ef6b2c3bfeb96d644f"
+    },
+    {
+      "oldIndex": 13616,
+      "newIndex": 13616,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseGuardPower",
+      "token": "0x6003531",
+      "method_flags_raw": "0x1e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482250",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13616-PlayerSecondaryStatus-CalcBaseGuardPower.c",
+      "sha256": "93da09a70662b036f9cdfe325953044bedc1ed5d2799969852afd3607dca1777"
+    },
+    {
+      "oldIndex": 13621,
+      "newIndex": 13621,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbAvoid",
+      "token": "0x6003536",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486060",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13621-PlayerSecondaryStatus-GetbAvoid.c",
+      "sha256": "3cfea3fce04f323568de5e6d43708bfa6bf5e85a7a77913c94ccbe415bbea454"
+    },
+    {
+      "oldIndex": 13622,
+      "newIndex": 13622,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbGuardSpeed",
+      "token": "0x6003537",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486380",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13622-PlayerSecondaryStatus-GetbGuardSpeed.c",
+      "sha256": "a574431ddb64a0675073e19a4df64e289ed9eab95fa39d2406a1f7e86ff85385"
+    },
+    {
+      "oldIndex": 13623,
+      "newIndex": 13623,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbGuardPower",
+      "token": "0x6003538",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486250",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13623-PlayerSecondaryStatus-GetbGuardPower.c",
+      "sha256": "8c32d0c22f4c70bb896b4b2e262e5bf2e1a510e28c25e701317f1afad22f5547"
+    },
+    {
+      "oldIndex": 13625,
+      "newIndex": 13625,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDisplayBonusCalcHate",
+      "token": "0x600353a",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4854f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13625-PlayerSecondaryStatus-GetDisplayBonusCalcHate.c",
+      "sha256": "b8f73c1ddaca3f343afe744a7e4b4af584303ba2797a40be5a64dfdc61026b28"
+    },
+    {
+      "oldIndex": 13630,
+      "newIndex": 13630,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcAntiVirus",
+      "token": "0x600353f",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a481f50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13630-PlayerSecondaryStatus-CalcAntiVirus.c",
+      "sha256": "fd0435ef9036542bfb9a6be371637212cd5dfa2aa0644fb02b14a4d18890d093"
+    },
+    {
+      "oldIndex": 14274,
+      "newIndex": 14274,
+      "class": "PlayerAttackBase",
+      "name": "CheckHit",
+      "token": "0x60037c3",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "needHit",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isFlash",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "correct",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac950",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14274-PlayerAttackBase-CheckHit.c",
+      "sha256": "56691a5461ac049a37fd3f31a47a71b89114323dd4fece3fad4558660cdc06ec"
+    },
+    {
+      "oldIndex": 14275,
+      "newIndex": 14275,
+      "class": "PlayerAttackBase",
+      "name": "ChackCorrectHit",
+      "token": "0x60037c4",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "hit",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isFlash",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "correct",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4abe90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14275-PlayerAttackBase-ChackCorrectHit.c",
+      "sha256": "c93cb4ca910247a36ee38be47bf7cbdb92a42104eea854760c3ae7bbab2a66c8"
+    },
+    {
+      "oldIndex": 14316,
+      "newIndex": 14316,
+      "class": "PlayerAttackBase",
+      "name": "PossibilityAbnormalState",
+      "token": "0x60037ed",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 9909
+      },
+      "runtime_va": "0x7ffe9a4af140",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14316-PlayerAttackBase-PossibilityAbnormalState.c",
+      "sha256": "a2cd6d39d7de1417ebf7da2d2f13285a82ec99e562a98a3294bd779fc009041e"
+    },
+    {
+      "oldIndex": 14317,
+      "newIndex": 14317,
+      "class": "PlayerAttackBase",
+      "name": "CheckAbnormalSubEffect",
+      "token": "0x60037ee",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "abnormalType",
+          "type_index": 11503,
+          "exact_byval_name": "AbnormalType"
+        },
+        {
+          "name": "actor",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ac300",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14317-PlayerAttackBase-CheckAbnormalSubEffect.c",
+      "sha256": "5f6db08dee0396e195ea6522b46188d0755a61fed8796a4f70d09cbf4eae4703"
+    },
+    {
+      "oldIndex": 14318,
+      "newIndex": 14318,
+      "class": "PlayerAttackBase",
+      "name": "CalcHitReaction",
+      "token": "0x60037ef",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "resistReactionType",
+          "type_index": 9361
+        }
+      ],
+      "return_type": {
+        "type_index": 24617,
+        "exact_byval_name": "SkillHitReactionType"
+      },
+      "runtime_va": "0x7ffe9a4a9890",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14318-PlayerAttackBase-CalcHitReaction.c",
+      "sha256": "23c6d7ed3bfc5a7ee37a9943fb231f08823a92ae8768e1dd5af58a0cc16e6ed2"
+    },
+    {
+      "oldIndex": 16220,
+      "newIndex": 16220,
+      "class": "AvoidBreaker",
+      "name": "Reset",
+      "token": "0x6003f5d",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16220-AvoidBreaker-Reset.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16221,
+      "newIndex": 16221,
+      "class": "AvoidBreaker",
+      "name": "Updata",
+      "token": "0x6003f5e",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16221-AvoidBreaker-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16222,
+      "newIndex": 16222,
+      "class": "AvoidBreaker",
+      "name": "Function",
+      "token": "0x6003f5f",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a51a9b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16222-AvoidBreaker-Function.c",
+      "sha256": "8b9aa41380beb1b119d6800f2fcfb3d4e942d52ec520ca925ff158b29fdce52c"
+    },
+    {
+      "oldIndex": 16223,
+      "newIndex": 16223,
+      "class": "AvoidBreaker",
+      "name": "GetParam",
+      "token": "0x6003f60",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999cfbe0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16223-AvoidBreaker-GetParam.c",
+      "sha256": "5711192ef6331077ca57ba2c1d5498c4ee0466b31d81a29537b29e7da67e03a3"
+    },
+    {
+      "oldIndex": 16224,
+      "newIndex": 16224,
+      "class": "AvoidBreaker",
+      "name": "SumValue",
+      "token": "0x6003f61",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51a9f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16224-AvoidBreaker-SumValue.c",
+      "sha256": "2d4f8f8bdf1f25bd53d588fd408154da3d43c3efeed743717372b17ea192194a"
+    },
+    {
+      "oldIndex": 16229,
+      "newIndex": 16229,
+      "class": "BarrierSpeed",
+      "name": "Reset",
+      "token": "0x6003f66",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16229-BarrierSpeed-Reset.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16230,
+      "newIndex": 16230,
+      "class": "BarrierSpeed",
+      "name": "Updata",
+      "token": "0x6003f67",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16230-BarrierSpeed-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16231,
+      "newIndex": 16231,
+      "class": "BarrierSpeed",
+      "name": "Calc",
+      "token": "0x6003f68",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a51ba00",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16231-BarrierSpeed-Calc.c",
+      "sha256": "3b6c532e2dc102a01b3c60cd264491c5a3494ab78ca922ee64a940d7b5ceea84"
+    },
+    {
+      "oldIndex": 16232,
+      "newIndex": 16232,
+      "class": "BarrierSpeed",
+      "name": "SumValue",
+      "token": "0x6003f69",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51ba30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16232-BarrierSpeed-SumValue.c",
+      "sha256": "ac191da0708e5404a1973b9e0876c201ccf05c6e5ebbd11b1ab9bfcb881c0890"
+    },
+    {
+      "oldIndex": 16240,
+      "newIndex": 16240,
+      "class": "DamageReflection",
+      "name": "Reset",
+      "token": "0x6003f71",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16240-DamageReflection-Reset.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16241,
+      "newIndex": 16241,
+      "class": "DamageReflection",
+      "name": "Updata",
+      "token": "0x6003f72",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16241-DamageReflection-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16242,
+      "newIndex": 16242,
+      "class": "DamageReflection",
+      "name": "Calc",
+      "token": "0x6003f73",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a51c7b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16242-DamageReflection-Calc.c",
+      "sha256": "9d0fad1c22a2f61710401d8c9caf480d0d33169d1149edc65df5dd6fc2cf1be5"
+    },
+    {
+      "oldIndex": 16243,
+      "newIndex": 16243,
+      "class": "DamageReflection",
+      "name": "Calc",
+      "token": "0x6003f74",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c9d40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16243-DamageReflection-Calc.c",
+      "sha256": "5518ef378df47f13e3c8331b7eeda4357a984ec92eca14127132d6505ea52e8c"
+    },
+    {
+      "oldIndex": 16274,
+      "newIndex": 16274,
+      "class": "GuardBreaker",
+      "name": "Reset",
+      "token": "0x6003f93",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16274-GuardBreaker-Reset.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16275,
+      "newIndex": 16275,
+      "class": "GuardBreaker",
+      "name": "Updata",
+      "token": "0x6003f94",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16275-GuardBreaker-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16276,
+      "newIndex": 16276,
+      "class": "GuardBreaker",
+      "name": "Function",
+      "token": "0x6003f95",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a51a9b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16276-GuardBreaker-Function.c",
+      "sha256": "8b9aa41380beb1b119d6800f2fcfb3d4e942d52ec520ca925ff158b29fdce52c"
+    },
+    {
+      "oldIndex": 16277,
+      "newIndex": 16277,
+      "class": "GuardBreaker",
+      "name": "GetParam",
+      "token": "0x6003f96",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999cfbe0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16277-GuardBreaker-GetParam.c",
+      "sha256": "5711192ef6331077ca57ba2c1d5498c4ee0466b31d81a29537b29e7da67e03a3"
+    },
+    {
+      "oldIndex": 16278,
+      "newIndex": 16278,
+      "class": "GuardBreaker",
+      "name": "SumValue",
+      "token": "0x6003f97",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a529560",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16278-GuardBreaker-SumValue.c",
+      "sha256": "7b560db84a317c835b23b3db356065ca510bc23c751f7bf7b641904fc8215f22"
+    },
+    {
+      "oldIndex": 16285,
+      "newIndex": 16285,
+      "class": "HelpMaster",
+      "name": "Reset",
+      "token": "0x6003f9e",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16285-HelpMaster-Reset.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16286,
+      "newIndex": 16286,
+      "class": "HelpMaster",
+      "name": "Updata",
+      "token": "0x6003f9f",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16286-HelpMaster-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16287,
+      "newIndex": 16287,
+      "class": "HelpMaster",
+      "name": "GetParam",
+      "token": "0x6003fa0",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a327f50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16287-HelpMaster-GetParam.c",
+      "sha256": "124706355d16879b4089b0447b30f29b705b4768c24cff4509269d63d9ad5b2e"
+    },
+    {
+      "oldIndex": 16288,
+      "newIndex": 16288,
+      "class": "HelpMaster",
+      "name": "SumValue",
+      "token": "0x6003fa1",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a529620",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16288-HelpMaster-SumValue.c",
+      "sha256": "d93b07dd53f7a740deed723b23af3988170e2694cebf56da5f1e75f62aceb499"
+    },
+    {
+      "oldIndex": 16300,
+      "newIndex": 16300,
+      "class": "MagicBarrier",
+      "name": "Updata",
+      "token": "0x6003fad",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52bae0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16300-MagicBarrier-Updata.c",
+      "sha256": "c8f6efa9bd2139b9c52f16b7466a1b2914a09304e5f5778009ee85f75ed7a55b"
+    },
+    {
+      "oldIndex": 16301,
+      "newIndex": 16301,
+      "class": "MagicBarrier",
+      "name": "Reset",
+      "token": "0x6003fae",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99a58810",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16301-MagicBarrier-Reset.c",
+      "sha256": "0781fbd3b7059c8f952527bb936b42972b9ee7fdee15ce34d6759cb4d2869bf8"
+    },
+    {
+      "oldIndex": 16302,
+      "newIndex": 16302,
+      "class": "MagicBarrier",
+      "name": "Calc",
+      "token": "0x6003faf",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a52b8e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16302-MagicBarrier-Calc.c",
+      "sha256": "3930fc21af7dc4a9b4774edda09d275e002206bf48a9c60fb49cdfa6c859afcc"
+    },
+    {
+      "oldIndex": 16303,
+      "newIndex": 16303,
+      "class": "MagicBarrier",
+      "name": "UpdateBufData",
+      "token": "0x6003fb0",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 15393,
+          "exact_byval_name": "EquipBuffDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52bb20",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16303-MagicBarrier-UpdateBufData.c",
+      "sha256": "66eac3d95f6d122395f797503981bcebbbcae03d2eb752f5676838d03f88edb6"
+    },
+    {
+      "oldIndex": 16306,
+      "newIndex": 16306,
+      "class": "MagicPursuit",
+      "name": "Reset",
+      "token": "0x6003fb3",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99a58810",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16306-MagicPursuit-Reset.c",
+      "sha256": "0781fbd3b7059c8f952527bb936b42972b9ee7fdee15ce34d6759cb4d2869bf8"
+    },
+    {
+      "oldIndex": 16307,
+      "newIndex": 16307,
+      "class": "MagicPursuit",
+      "name": "Updata",
+      "token": "0x6003fb4",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16307-MagicPursuit-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16308,
+      "newIndex": 16308,
+      "class": "MagicPursuit",
+      "name": "Calc",
+      "token": "0x6003fb5",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a52bbe0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16308-MagicPursuit-Calc.c",
+      "sha256": "e9f86d664de9c4461ace8a3f45edb7ace87112565218f02fd80949e7904db178"
+    },
+    {
+      "oldIndex": 16309,
+      "newIndex": 16309,
+      "class": "MagicPursuit",
+      "name": "GetParam",
+      "token": "0x6003fb6",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a327f50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16309-MagicPursuit-GetParam.c",
+      "sha256": "124706355d16879b4089b0447b30f29b705b4768c24cff4509269d63d9ad5b2e"
+    },
+    {
+      "oldIndex": 16315,
+      "newIndex": 16315,
+      "class": "PhysicalBarrier",
+      "name": "Updata",
+      "token": "0x6003fbc",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52bae0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16315-PhysicalBarrier-Updata.c",
+      "sha256": "c8f6efa9bd2139b9c52f16b7466a1b2914a09304e5f5778009ee85f75ed7a55b"
+    },
+    {
+      "oldIndex": 16316,
+      "newIndex": 16316,
+      "class": "PhysicalBarrier",
+      "name": "Reset",
+      "token": "0x6003fbd",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99a58810",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16316-PhysicalBarrier-Reset.c",
+      "sha256": "0781fbd3b7059c8f952527bb936b42972b9ee7fdee15ce34d6759cb4d2869bf8"
+    },
+    {
+      "oldIndex": 16317,
+      "newIndex": 16317,
+      "class": "PhysicalBarrier",
+      "name": "Calc",
+      "token": "0x6003fbe",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a52c820",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16317-PhysicalBarrier-Calc.c",
+      "sha256": "dc79bbad022e9092f7e5d1ed16a3eab602ec1513a46f7faee9fc314497d8ac92"
+    },
+    {
+      "oldIndex": 16318,
+      "newIndex": 16318,
+      "class": "PhysicalBarrier",
+      "name": "UpdateBufData",
+      "token": "0x6003fbf",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 15393,
+          "exact_byval_name": "EquipBuffDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52ca20",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16318-PhysicalBarrier-UpdateBufData.c",
+      "sha256": "23963e3af7f5051057cb2233ed423380a49c584084a754561f7869ca9f7e2941"
+    },
+    {
+      "oldIndex": 16321,
+      "newIndex": 16321,
+      "class": "PhysicalPursuit",
+      "name": "Reset",
+      "token": "0x6003fc2",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99a58810",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16321-PhysicalPursuit-Reset.c",
+      "sha256": "0781fbd3b7059c8f952527bb936b42972b9ee7fdee15ce34d6759cb4d2869bf8"
+    },
+    {
+      "oldIndex": 16322,
+      "newIndex": 16322,
+      "class": "PhysicalPursuit",
+      "name": "Updata",
+      "token": "0x6003fc3",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16322-PhysicalPursuit-Updata.c",
+      "sha256": "5b96d1a6134a83a4b67d41307166d0602786595ebde730e3f76e0b0c29e2b64a"
+    },
+    {
+      "oldIndex": 16323,
+      "newIndex": 16323,
+      "class": "PhysicalPursuit",
+      "name": "Calc",
+      "token": "0x6003fc4",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a52caa0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16323-PhysicalPursuit-Calc.c",
+      "sha256": "9d422ace3cc0a15842ab8b1a4146fe056529c5b88fbe63c9fefaf579fb49fc28"
+    },
+    {
+      "oldIndex": 16324,
+      "newIndex": 16324,
+      "class": "PhysicalPursuit",
+      "name": "GetParam",
+      "token": "0x6003fc5",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a327f50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16324-PhysicalPursuit-GetParam.c",
+      "sha256": "124706355d16879b4089b0447b30f29b705b4768c24cff4509269d63d9ad5b2e"
+    },
+    {
+      "oldIndex": 16330,
+      "newIndex": 16330,
+      "class": "RateBarrier",
+      "name": "Updata",
+      "token": "0x6003fcb",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52bae0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16330-RateBarrier-Updata.c",
+      "sha256": "c8f6efa9bd2139b9c52f16b7466a1b2914a09304e5f5778009ee85f75ed7a55b"
+    },
+    {
+      "oldIndex": 16331,
+      "newIndex": 16331,
+      "class": "RateBarrier",
+      "name": "Reset",
+      "token": "0x6003fcc",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99a58810",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16331-RateBarrier-Reset.c",
+      "sha256": "0781fbd3b7059c8f952527bb936b42972b9ee7fdee15ce34d6759cb4d2869bf8"
+    },
+    {
+      "oldIndex": 16332,
+      "newIndex": 16332,
+      "class": "RateBarrier",
+      "name": "Calc",
+      "token": "0x6003fcd",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a52e140",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16332-RateBarrier-Calc.c",
+      "sha256": "c36a6c126249716c06197d3bb8129ec717d6a03bb62a3e8e42d2aca206883070"
+    },
+    {
+      "oldIndex": 16333,
+      "newIndex": 16333,
+      "class": "RateBarrier",
+      "name": "UpdateBufData",
+      "token": "0x6003fce",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 15393,
+          "exact_byval_name": "EquipBuffDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52e360",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16333-RateBarrier-UpdateBufData.c",
+      "sha256": "daabc6843947b74c22ebc1d4752823a1eb8cc2e6fb68612f3e31b0b943af91b6"
+    },
+    {
+      "oldIndex": 28385,
+      "newIndex": 28385,
+      "class": "EquipMagicBarrierBuf",
+      "name": "Updata",
+      "token": "0x6006ee2",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a789060",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28385-EquipMagicBarrierBuf-Updata.c",
+      "sha256": "4c0e7c0cd9af83c9802f33f8bae435a3a05f865089f8bedf6dd03dd16e047b62"
+    },
+    {
+      "oldIndex": 28386,
+      "newIndex": 28386,
+      "class": "EquipMagicBarrierBuf",
+      "name": "GetParam",
+      "token": "0x6006ee3",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a789050",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28386-EquipMagicBarrierBuf-GetParam.c",
+      "sha256": "fdc3687fd60053137e4cb7bbd0b02941abb0aef4f3bec8cc85d682eb7a6d276e"
+    },
+    {
+      "oldIndex": 28387,
+      "newIndex": 28387,
+      "class": "EquipMagicBarrierBuf",
+      "name": "Calc",
+      "token": "0x6006ee4",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a788c40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28387-EquipMagicBarrierBuf-Calc.c",
+      "sha256": "0a1ce0e351ae04551977fded574af5ee03f0f36e34987e83be37c6bde27398cc"
+    },
+    {
+      "oldIndex": 28388,
+      "newIndex": 28388,
+      "class": "EquipMagicBarrierBuf",
+      "name": "UpdateBufData",
+      "token": "0x6006ee5",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 24555,
+          "exact_byval_name": "SkillBufferDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a7890a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28388-EquipMagicBarrierBuf-UpdateBufData.c",
+      "sha256": "ce886798c0c9afd785204d5adcc6fc4add42f3a887fd9682076a608389b11de7"
+    },
+    {
+      "oldIndex": 28389,
+      "newIndex": 28389,
+      "class": "EquipMagicBarrierBuf",
+      "name": "CheckTakeOver",
+      "token": "0x6006ee6",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a788ea0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28389-EquipMagicBarrierBuf-CheckTakeOver.c",
+      "sha256": "03bbb54633b10aa038c2457d6b79662487590b86a898b55ffefe8315171cc8f5"
+    },
+    {
+      "oldIndex": 28390,
+      "newIndex": 28390,
+      "class": "EquipMagicBarrierBuf",
+      "name": "GetBarrierValue",
+      "token": "0x6006ee7",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a788f70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28390-EquipMagicBarrierBuf-GetBarrierValue.c",
+      "sha256": "bb70ca5252bf757c4fc62238a37ec71a22f552e8727bf841178ba65a42a99b84"
+    },
+    {
+      "oldIndex": 28396,
+      "newIndex": 28396,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "Updata",
+      "token": "0x6006eed",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a789060",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28396-EquipPhysicalBarrierBuf-Updata.c",
+      "sha256": "4c0e7c0cd9af83c9802f33f8bae435a3a05f865089f8bedf6dd03dd16e047b62"
+    },
+    {
+      "oldIndex": 28397,
+      "newIndex": 28397,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "GetParam",
+      "token": "0x6006eee",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a789050",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28397-EquipPhysicalBarrierBuf-GetParam.c",
+      "sha256": "fdc3687fd60053137e4cb7bbd0b02941abb0aef4f3bec8cc85d682eb7a6d276e"
+    },
+    {
+      "oldIndex": 28398,
+      "newIndex": 28398,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "Calc",
+      "token": "0x6006eef",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a789150",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28398-EquipPhysicalBarrierBuf-Calc.c",
+      "sha256": "40ff32d0bf62219d46b4a7fe8467c8b06aaa6ddc23c7a73cfccf90c082a2d386"
+    },
+    {
+      "oldIndex": 28399,
+      "newIndex": 28399,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "UpdateBufData",
+      "token": "0x6006ef0",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 24555,
+          "exact_byval_name": "SkillBufferDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a789560",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28399-EquipPhysicalBarrierBuf-UpdateBufData.c",
+      "sha256": "628928f805cf3f32954266fb55fc0321345fee0c36820918b9112e8e8348dfd2"
+    },
+    {
+      "oldIndex": 28400,
+      "newIndex": 28400,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "CheckTakeOver",
+      "token": "0x6006ef1",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a7893b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28400-EquipPhysicalBarrierBuf-CheckTakeOver.c",
+      "sha256": "4ab9f0bbcf01c696f857c9cbe713f8c253e399247ba238bc7095fbe3d27579eb"
+    },
+    {
+      "oldIndex": 28401,
+      "newIndex": 28401,
+      "class": "EquipPhysicalBarrierBuf",
+      "name": "GetBarrierValue",
+      "token": "0x6006ef2",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a789480",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28401-EquipPhysicalBarrierBuf-GetBarrierValue.c",
+      "sha256": "d059e212b6f4f3f4557f502d4b8b879889e3b25df346a63ec404104d26047b21"
+    },
+    {
+      "oldIndex": 28407,
+      "newIndex": 28407,
+      "class": "EquipRateBarrierBuf",
+      "name": "Updata",
+      "token": "0x6006ef8",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a789060",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28407-EquipRateBarrierBuf-Updata.c",
+      "sha256": "4c0e7c0cd9af83c9802f33f8bae435a3a05f865089f8bedf6dd03dd16e047b62"
+    },
+    {
+      "oldIndex": 28408,
+      "newIndex": 28408,
+      "class": "EquipRateBarrierBuf",
+      "name": "GetParam",
+      "token": "0x6006ef9",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a789050",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28408-EquipRateBarrierBuf-GetParam.c",
+      "sha256": "fdc3687fd60053137e4cb7bbd0b02941abb0aef4f3bec8cc85d682eb7a6d276e"
+    },
+    {
+      "oldIndex": 28409,
+      "newIndex": 28409,
+      "class": "EquipRateBarrierBuf",
+      "name": "Calc",
+      "token": "0x6006efa",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a7895d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28409-EquipRateBarrierBuf-Calc.c",
+      "sha256": "8732a6203db151a5f94eb05cb50f000431a9b8f21ce3a275495cddddb7e10027"
+    },
+    {
+      "oldIndex": 28410,
+      "newIndex": 28410,
+      "class": "EquipRateBarrierBuf",
+      "name": "UpdateBufData",
+      "token": "0x6006efb",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "buf",
+          "type_index": 24555,
+          "exact_byval_name": "SkillBufferDataBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a7897f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28410-EquipRateBarrierBuf-UpdateBufData.c",
+      "sha256": "cf8da1f9e5a8db8b9cb1929bf472b4f96601f04f22e46c0bc78d66d880645ea8"
+    },
+    {
+      "oldIndex": 28411,
+      "newIndex": 28411,
+      "class": "EquipRateBarrierBuf",
+      "name": "GetBarrierValue",
+      "token": "0x6006efc",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c3280",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28411-EquipRateBarrierBuf-GetBarrierValue.c",
+      "sha256": "e280dcdcab139bebe747ab8588049b14e89d023eb897fc3a8dd86b3b674d41ba"
+    },
+    {
+      "oldIndex": 28501,
+      "newIndex": 28501,
+      "class": "FirstAidBuf",
+      "name": "GetParam",
+      "token": "0x6006f56",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "id",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a78c1a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28501-FirstAidBuf-GetParam.c",
+      "sha256": "e884ae21ce93cb879240569d8afd954f037d22243b4d057c38c2879e5217bd62"
+    },
+    {
+      "oldIndex": 28503,
+      "newIndex": 28503,
+      "class": "FirstAidBuf",
+      "name": "ValidInvincible",
+      "token": "0x6006f58",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "time",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a78c2c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28503-FirstAidBuf-ValidInvincible.c",
+      "sha256": "4446051bffe66e6ae496d0b5b9a19d76fceb4373f052cfa4ba54af44621f9b47"
+    },
+    {
+      "oldIndex": 28504,
+      "newIndex": 28504,
+      "class": "FirstAidBuf",
+      "name": "InvalidInvincible",
+      "token": "0x6006f59",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a78c1c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28504-FirstAidBuf-InvalidInvincible.c",
+      "sha256": "04e3a875fdb530a7d449e08aec36dcd98b80876878e7c18215503641bb2e63d5"
+    },
+    {
+      "oldIndex": 31374,
+      "newIndex": 31374,
+      "class": "SkillUtil",
+      "name": "CheckPursuitAttack",
+      "token": "0x6007a8f",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "skill",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a8113e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "31374-SkillUtil-CheckPursuitAttack.c",
+      "sha256": "18c94183832d9c2ebbcc23274932141b48ef6b2b2c3d6027abd0c4923d5667d8"
+    },
+    {
+      "oldIndex": 31995,
+      "newIndex": 31995,
+      "class": "FirstAidAction",
+      "name": "ActionStart",
+      "token": "0x6007cfc",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8185d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "31995-FirstAidAction-ActionStart.c",
+      "sha256": "d027b541cda2aaef5d8f48afb78e8ba63a9ae9fc3cfd3c16756f08389c054bad"
+    },
+    {
+      "oldIndex": 66844,
+      "newIndex": 66844,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcSubAtkValue",
+      "token": "0x601051d",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a0913e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66844-UIPlayerStatusDetailPanel-CalcSubAtkValue.c",
+      "sha256": "24a5977a1f334a2dd2764e137e27e991ed169e403d10e942352c910a8e28d274"
+    },
+    {
+      "oldIndex": 66845,
+      "newIndex": 66845,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcPhysicsResistBreakerValue",
+      "token": "0x601051e",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a091190",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66845-UIPlayerStatusDetailPanel-CalcPhysicsResistBreakerValue.c",
+      "sha256": "298bbf5c30f243b0aa925cb0f2b12881cdf2976c983e11eef3b7600640c0a3e3"
+    },
+    {
+      "oldIndex": 66846,
+      "newIndex": 66846,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcMagicResistBreakerValue",
+      "token": "0x601051f",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a090ef0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66846-UIPlayerStatusDetailPanel-CalcMagicResistBreakerValue.c",
+      "sha256": "bbed5bb46f03e6b16eb1833f513d86dc8b1ddbbea4120f6c61c05259bd5bb25e"
+    },
+    {
+      "oldIndex": 66847,
+      "newIndex": 66847,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcPowerDmgCutValue",
+      "token": "0x6010520",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a091250",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66847-UIPlayerStatusDetailPanel-CalcPowerDmgCutValue.c",
+      "sha256": "da40dac6cd0eb042d818da33d3540288173e846be91b2d9ad025c4fba0ce3ead"
+    },
+    {
+      "oldIndex": 66848,
+      "newIndex": 66848,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcMagicDmgCutValue",
+      "token": "0x6010521",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a090c40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66848-UIPlayerStatusDetailPanel-CalcMagicDmgCutValue.c",
+      "sha256": "730c41973207447c588e920fae9c1659668a6dc861e9c56b9e23b4e217f70ff6"
+    },
+    {
+      "oldIndex": 66852,
+      "newIndex": 66852,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcShortRangeValue",
+      "token": "0x6010525",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a091340",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66852-UIPlayerStatusDetailPanel-CalcShortRangeValue.c",
+      "sha256": "083c3facb851439200fa3cc64062dff5edb530fa7af9cde3958ea731fa559194"
+    },
+    {
+      "oldIndex": 66853,
+      "newIndex": 66853,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcLongRangeValue",
+      "token": "0x6010526",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a090ba0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66853-UIPlayerStatusDetailPanel-CalcLongRangeValue.c",
+      "sha256": "465d9e69e78313a023eaaf7813db057f36b9b340b8095b274937733698c21e5a"
+    },
+    {
+      "oldIndex": 66854,
+      "newIndex": 66854,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "AddHateToRespawnStatus",
+      "token": "0x6010527",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a08f720",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66854-UIPlayerStatusDetailPanel-AddHateToRespawnStatus.c",
+      "sha256": "8f42ac1faea8df79efbbf7ca01030e4adbc9d3beebf1f3b7b3825f6f4195f3ed"
+    },
+    {
+      "oldIndex": 66855,
+      "newIndex": 66855,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcExpValue",
+      "token": "0x6010528",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a090850",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66855-UIPlayerStatusDetailPanel-CalcExpValue.c",
+      "sha256": "e6596c7baa32f9eb55b541f2f653d74caf4a5e46dd61e8180365b2fc8fd27cd7"
+    },
+    {
+      "oldIndex": 66856,
+      "newIndex": 66856,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcPetExpValue",
+      "token": "0x6010529",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a090fb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66856-UIPlayerStatusDetailPanel-CalcPetExpValue.c",
+      "sha256": "01ff3b5a226dc55e17b855463bd5237b6e096f70e3dda9bab2a431ef5084190a"
+    },
+    {
+      "oldIndex": 66857,
+      "newIndex": 66857,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcDropValue",
+      "token": "0x601052a",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a0907b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66857-UIPlayerStatusDetailPanel-CalcDropValue.c",
+      "sha256": "63cd5042bee102692633851c48b694c8373c07ef295d2e3b599d0c67e00de2cd"
+    },
+    {
+      "oldIndex": 66860,
+      "newIndex": 66860,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "AddResistStatus",
+      "token": "0x601052d",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a090080",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66860-UIPlayerStatusDetailPanel-AddResistStatus.c",
+      "sha256": "0ac77be96e819628c5e17ff08c34f6a64b51c04d21c32439a59d7ecab03a5dee"
+    },
+    {
+      "oldIndex": 66861,
+      "newIndex": 66861,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "AddBarrierStatus",
+      "token": "0x601052e",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a08da20",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66861-UIPlayerStatusDetailPanel-AddBarrierStatus.c",
+      "sha256": "12b149ab72b7ec63c0e84019235812490ddd422fde2b4958f6dff39caf108a6d"
+    },
+    {
+      "oldIndex": 66862,
+      "newIndex": 66862,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "AddAbsoluteStatus",
+      "token": "0x601052f",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a08d830",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66862-UIPlayerStatusDetailPanel-AddAbsoluteStatus.c",
+      "sha256": "02f0ceba90e7a0cf2116d6b94aaae9d2724020ec21e3d21f28b8c7490330dbcd"
+    },
+    {
+      "oldIndex": 66864,
+      "newIndex": 66864,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcAvoidBreakerValue",
+      "token": "0x6010531",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a0905e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66864-UIPlayerStatusDetailPanel-CalcAvoidBreakerValue.c",
+      "sha256": "36c6de2008c35994a4e2486d1f37393c5182dea13b011117ef9b8133d84447ba"
+    },
+    {
+      "oldIndex": 66865,
+      "newIndex": 66865,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcGuardBreakerValue",
+      "token": "0x6010532",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a0909d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66865-UIPlayerStatusDetailPanel-CalcGuardBreakerValue.c",
+      "sha256": "b0339047943a4fb62ad2a304c1328b6d58a9d44df181f694e8a047798ac851a2"
+    },
+    {
+      "oldIndex": 66867,
+      "newIndex": 66867,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcPhysicalPursuitValue",
+      "token": "0x6010534",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a0910b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66867-UIPlayerStatusDetailPanel-CalcPhysicalPursuitValue.c",
+      "sha256": "ecd99a0d0d7022eca03be5d9a241be6a2316aa02076181ad33828cb341c3d6cf"
+    },
+    {
+      "oldIndex": 66868,
+      "newIndex": 66868,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "CalcMagicPursuitValue",
+      "token": "0x6010535",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a090d30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66868-UIPlayerStatusDetailPanel-CalcMagicPursuitValue.c",
+      "sha256": "3508efc2642a8dd395e2568bd2a8f72ce4e031f1a5ffd7a793da9fdf0ed54588"
+    },
+    {
+      "oldIndex": 66869,
+      "newIndex": 66869,
+      "class": "UIPlayerStatusDetailPanel",
+      "name": "AddGrantStopStatus",
+      "token": "0x6010536",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a08f580",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "66869-UIPlayerStatusDetailPanel-AddGrantStopStatus.c",
+      "sha256": "702718bb043d3bdc80d06c304aebda21da9878ec2c199a29822c243fa5e75fa8"
+    },
+    {
+      "oldIndex": 13160,
+      "newIndex": 13160,
+      "class": "PlayerBattleManager",
+      "name": "EquipBuffAttack",
+      "token": "0x6003369",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a45bf30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13160-PlayerBattleManager-EquipBuffAttack.c",
+      "sha256": "b515bccacd8f8adac7c9f6a28328ae12ea96d03f09d48090234c7ecd3d8ebc40"
+    },
+    {
+      "oldIndex": 14093,
+      "newIndex": 14093,
+      "class": "MagicPursuitAction",
+      "name": "OnInitialize",
+      "token": "0x600370e",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a48f110",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14093-MagicPursuitAction-OnInitialize.c",
+      "sha256": "14c7f03d7c4781a6edf3f7fe585a20a060d3abdc0231b8b4c85fedcc338b701f"
+    },
+    {
+      "oldIndex": 14094,
+      "newIndex": 14094,
+      "class": "MagicPursuitAction",
+      "name": "InitializeOthers",
+      "token": "0x600370f",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 18294,
+          "exact_byval_name": "IOtherPlayerActionManager"
+        },
+        {
+          "name": "targetPos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "motionSpeed",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "castTime",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "loopCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "element",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a48f110",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14094-MagicPursuitAction-InitializeOthers.c",
+      "sha256": "14c7f03d7c4781a6edf3f7fe585a20a060d3abdc0231b8b4c85fedcc338b701f"
+    },
+    {
+      "oldIndex": 14095,
+      "newIndex": 14095,
+      "class": "MagicPursuitAction",
+      "name": "ActionPreparation",
+      "token": "0x6003710",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a492b50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14095-MagicPursuitAction-ActionPreparation.c",
+      "sha256": "9225e9409f11a288032ee66d4ee60cd841f4714ea68b8bf19cb9bac88dc0f99f"
+    },
+    {
+      "oldIndex": 14096,
+      "newIndex": 14096,
+      "class": "MagicPursuitAction",
+      "name": "calcPlayerToMobDamage",
+      "token": "0x6003711",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a492b70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14096-MagicPursuitAction-calcPlayerToMobDamage.c",
+      "sha256": "b2c1644eecda51ca513738f84a83fb9dacefd2dd05f7e8a24627c3ec48f68fae"
+    },
+    {
+      "oldIndex": 14182,
+      "newIndex": 14182,
+      "class": "PhysicalPursuitAction",
+      "name": "OnInitialize",
+      "token": "0x6003767",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a48f110",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14182-PhysicalPursuitAction-OnInitialize.c",
+      "sha256": "14c7f03d7c4781a6edf3f7fe585a20a060d3abdc0231b8b4c85fedcc338b701f"
+    },
+    {
+      "oldIndex": 14183,
+      "newIndex": 14183,
+      "class": "PhysicalPursuitAction",
+      "name": "InitializeOthers",
+      "token": "0x6003768",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 18294,
+          "exact_byval_name": "IOtherPlayerActionManager"
+        },
+        {
+          "name": "targetPos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "motionSpeed",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "castTime",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "loopCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "element",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a48f110",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14183-PhysicalPursuitAction-InitializeOthers.c",
+      "sha256": "14c7f03d7c4781a6edf3f7fe585a20a060d3abdc0231b8b4c85fedcc338b701f"
+    },
+    {
+      "oldIndex": 14184,
+      "newIndex": 14184,
+      "class": "PhysicalPursuitAction",
+      "name": "ActionPreparation",
+      "token": "0x6003769",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a492b50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14184-PhysicalPursuitAction-ActionPreparation.c",
+      "sha256": "9225e9409f11a288032ee66d4ee60cd841f4714ea68b8bf19cb9bac88dc0f99f"
+    },
+    {
+      "oldIndex": 14185,
+      "newIndex": 14185,
+      "class": "PhysicalPursuitAction",
+      "name": "calcPlayerToMobDamage",
+      "token": "0x600376a",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a57e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14185-PhysicalPursuitAction-calcPlayerToMobDamage.c",
+      "sha256": "7599645861c2da1abb85c20376582cf02bac73d5bf2fc28d31921588340ba120"
+    },
+    {
+      "oldIndex": 30995,
+      "newIndex": 30995,
+      "class": "SkillBufferManager",
+      "name": "UpdateFirstAidBuffer",
+      "token": "0x6007914",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a7cd2d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "30995-SkillBufferManager-UpdateFirstAidBuffer.c",
+      "sha256": "6a56b92e9116e47e2e283702ea08ceb90e3eb8818ec0eb1b13f75af663d1aa85"
+    },
+    {
+      "oldIndex": 30996,
+      "newIndex": 30996,
+      "class": "SkillBufferManager",
+      "name": "ClearFirstAidBuffer",
+      "token": "0x6007915",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a7c4f90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "30996-SkillBufferManager-ClearFirstAidBuffer.c",
+      "sha256": "8a78b0d10957b4e0a22f9aaa75a570f7e57a70703219727b9a22c4a754c1f8ce"
+    },
+    {
+      "oldIndex": 28499,
+      "newIndex": 28499,
+      "class": "FirstAidBuf",
+      "name": ".ctor",
+      "token": "0x6006f54",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "lv",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "time",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a78c2e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28499-FirstAidBuf-_ctor.c",
+      "sha256": "18485f53502935a054d6793fe0d000302122890755aa59477a0cd4489152026f"
+    },
+    {
+      "oldIndex": 28500,
+      "newIndex": 28500,
+      "class": "FirstAidBuf",
+      "name": "Updata",
+      "token": "0x6006f55",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a78c200",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "28500-FirstAidBuf-Updata.c",
+      "sha256": "b8779876a308424cdd10a68547d2510300d23b419b51cb3d631b7a543503bf43"
+    },
+    {
+      "oldIndex": 15732,
+      "newIndex": 15732,
+      "class": "BonusManager",
+      "name": "GetCalcBonusValue",
+      "token": "0x6003d75",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseVal",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb460",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "15732-BonusManager-GetCalcBonusValue.c",
+      "sha256": "f19b0efad40421bee456615dd01e946648c3104fc2ed0cb9a6d879d7f3338d8c"
+    },
+    {
+      "oldIndex": 13991,
+      "newIndex": 13991,
+      "class": "DamageReflectionAction",
+      "name": "calcPlayerToMobDamage",
+      "token": "0x60036a8",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a490ff0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13991-DamageReflectionAction-calcPlayerToMobDamage.c",
+      "sha256": "92fbb90d98aa6a7b8e58532c76a5f686268493b3230e9fb44b921c144160eef1"
+    },
+    {
+      "oldIndex": 16208,
+      "newIndex": 16208,
+      "class": "AbsoluteFreeRate",
+      "name": "Calc",
+      "token": "0x6003f51",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a51a750",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16208-AbsoluteFreeRate-Calc.c",
+      "sha256": "e6bc04cebd1a12c2433b7c7d2db746c37c861b65ddf9a9ca2a42bf158744605f"
+    },
+    {
+      "oldIndex": 16209,
+      "newIndex": 16209,
+      "class": "AbsoluteFreeRate",
+      "name": "SumValue",
+      "token": "0x6003f52",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51a780",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16209-AbsoluteFreeRate-SumValue.c",
+      "sha256": "250fd77e528577102f88605d39b80055371dbef44983b4830dc5b06a6792f237"
+    },
+    {
+      "oldIndex": 16216,
+      "newIndex": 16216,
+      "class": "AbsoluteHitRate",
+      "name": "Function",
+      "token": "0x6003f59",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a51a890",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16216-AbsoluteHitRate-Function.c",
+      "sha256": "e305c55224b033f69da43d8b1ed84eeaaf633e8ffbe19a6895b86b1fb5cfd6ac"
+    },
+    {
+      "oldIndex": 16217,
+      "newIndex": 16217,
+      "class": "AbsoluteHitRate",
+      "name": "SumValue",
+      "token": "0x6003f5a",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51a8a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16217-AbsoluteHitRate-SumValue.c",
+      "sha256": "dda2ff4c23eaf50b05b3485e7590e6500a583e3b435669b8c8f2ebbba9878288"
+    },
+    {
+      "oldIndex": 16294,
+      "newIndex": 16294,
+      "class": "ItemDelay",
+      "name": "SumValue",
+      "token": "0x6003fa7",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a52b7f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16294-ItemDelay-SumValue.c",
+      "sha256": "c3496e846aa63a51e93d8b4df91f14e1159b5ad74076b2c8cc4807854af7c7ed"
+    },
+    {
+      "oldIndex": 16364,
+      "newIndex": 16364,
+      "class": "EquipBuffManager",
+      "name": "IsGrantStopAbnormal",
+      "token": "0x6003fed",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 11503,
+          "exact_byval_name": "AbnormalType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a51e2e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16364-EquipBuffManager-IsGrantStopAbnormal.c",
+      "sha256": "e1a3429bd8b02033cb6bbc78d1ed1f28aa10a6abd640c676c2f8b6b346f3a51b"
+    },
+    {
+      "oldIndex": 13140,
+      "newIndex": 13140,
+      "class": "PlayerBattleManager",
+      "name": "OnSkillActionHit",
+      "token": "0x6003355",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "targetActManager",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a463100",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13140-PlayerBattleManager-OnSkillActionHit.c",
+      "sha256": "7d624a5f19947c5b3dbeb97aa370fdf951267883cd5f62210a322512bc67e5c4"
+    },
+    {
+      "oldIndex": 13142,
+      "newIndex": 13142,
+      "class": "PlayerBattleManager",
+      "name": "OnSkillActionDamaged",
+      "token": "0x6003357",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "targetActManager",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        },
+        {
+          "name": "damageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4602c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13142-PlayerBattleManager-OnSkillActionDamaged.c",
+      "sha256": "fcc8be7afe92fcc69849fb6a61a4e5dbfa437ba4422c1621ce32ace6142f1398"
+    },
+    {
+      "oldIndex": 13144,
+      "newIndex": 13144,
+      "class": "PlayerBattleManager",
+      "name": "ConsumeBuffAttack",
+      "token": "0x6003359",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        },
+        {
+          "name": "hitType",
+          "type_index": 24621,
+          "exact_byval_name": "SkillHitType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a45b0d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13144-PlayerBattleManager-ConsumeBuffAttack.c",
+      "sha256": "eee6bd298e9bb50e887e74326c20d2e22bbcc9c50eabafcacdc068f1a45854d1"
+    },
+    {
+      "oldIndex": 13145,
+      "newIndex": 13145,
+      "class": "PlayerBattleManager",
+      "name": "OnSkillActionSupport",
+      "token": "0x600335a",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "targetActManager",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4676c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13145-PlayerBattleManager-OnSkillActionSupport.c",
+      "sha256": "7a54dd5129677cce6149fb784b123b8963ea809e8d282bef97aff5052c3f25d9"
+    },
+    {
+      "oldIndex": 13146,
+      "newIndex": 13146,
+      "class": "PlayerBattleManager",
+      "name": "OnSkillActionEnd",
+      "token": "0x600335b",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "targetActManager",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4616c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13146-PlayerBattleManager-OnSkillActionEnd.c",
+      "sha256": "702a13536b2ed11c68818da93f892b4960b64fe2808e30a15c5cd298c9ab41eb"
+    },
+    {
+      "oldIndex": 13158,
+      "newIndex": 13158,
+      "class": "PlayerBattleManager",
+      "name": "DamagerReflection",
+      "token": "0x6003367",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "actMgr",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a45bdd0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13158-PlayerBattleManager-DamagerReflection.c",
+      "sha256": "17944280476412a3c33235a35bb148fae8e17b742e99288c5a0ea3b32356a5dc"
+    },
+    {
+      "oldIndex": 31993,
+      "newIndex": 31993,
+      "class": "FirstAidAction",
+      "name": "OnInitialize",
+      "token": "0x6007cfa",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8186b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "31993-FirstAidAction-OnInitialize.c",
+      "sha256": "da37737a6f51fbade9d3eae537f4aa6bbe38b7aadf72602a5dca7c508279deaa"
+    },
+    {
+      "oldIndex": 31994,
+      "newIndex": 31994,
+      "class": "FirstAidAction",
+      "name": "InitializeOthers",
+      "token": "0x6007cfb",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 18294,
+          "exact_byval_name": "IOtherPlayerActionManager"
+        },
+        {
+          "name": "targetPos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "motionSpeed",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "castTime",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "loopCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "element",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a8185e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "31994-FirstAidAction-InitializeOthers.c",
+      "sha256": "d1d02ece1be0e90df86204f7b275d6d844a0fcfd150d2ce6df1d798256a20a7a"
+    },
+    {
+      "oldIndex": 16252,
+      "newIndex": 16252,
+      "class": "EquipBuffDataBase",
+      "name": "Calc",
+      "token": "0x6003f7d",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99b9e270",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16252-EquipBuffDataBase-Calc.c",
+      "sha256": "57ad23287a9ad00c0c7c64534d831e978a924346d0f9c97375b300360ea4192b"
+    },
+    {
+      "oldIndex": 16253,
+      "newIndex": 16253,
+      "class": "EquipBuffDataBase",
+      "name": "Calc",
+      "token": "0x6003f7e",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAct",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99b9e270",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16253-EquipBuffDataBase-Calc.c",
+      "sha256": "57ad23287a9ad00c0c7c64534d831e978a924346d0f9c97375b300360ea4192b"
+    },
+    {
+      "oldIndex": 16254,
+      "newIndex": 16254,
+      "class": "EquipBuffDataBase",
+      "name": "Function",
+      "token": "0x6003f7f",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe999d78b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16254-EquipBuffDataBase-Function.c",
+      "sha256": "a2ddf2742ac96ec69dbc62a0845862689387234dd7426070235812e0b2fbd3e3"
+    },
+    {
+      "oldIndex": 16255,
+      "newIndex": 16255,
+      "class": "EquipBuffDataBase",
+      "name": "Function",
+      "token": "0x6003f80",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe999d78b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16255-EquipBuffDataBase-Function.c",
+      "sha256": "a2ddf2742ac96ec69dbc62a0845862689387234dd7426070235812e0b2fbd3e3"
+    },
+    {
+      "oldIndex": 16256,
+      "newIndex": 16256,
+      "class": "EquipBuffDataBase",
+      "name": "GetParam",
+      "token": "0x6003f81",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d2030",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16256-EquipBuffDataBase-GetParam.c",
+      "sha256": "3c21300193f0189f1fd85f9505ddb7a681c428431cd5486491a563458b762745"
+    },
+    {
+      "oldIndex": 16258,
+      "newIndex": 16258,
+      "class": "EquipBuffDataBase",
+      "name": "SumValue",
+      "token": "0x6003f83",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "val",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51ca40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16258-EquipBuffDataBase-SumValue.c",
+      "sha256": "2c41805c4ff733588b0783e4e2317e745b30f21e93c60ad96d09ee772263c27b"
+    },
+    {
+      "oldIndex": 16351,
+      "newIndex": 16351,
+      "class": "EquipBuffManager",
+      "name": "SetBonus",
+      "token": "0x6003fe0",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "bonus",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51e660",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16351-EquipBuffManager-SetBonus.c",
+      "sha256": "bf6fa5193138c6ad98dc78353d40266ad3d0764aafda02712f596888d54bb2de"
+    },
+    {
+      "oldIndex": 16340,
+      "newIndex": 16340,
+      "class": "SelfDmgRate",
+      "name": ".ctor",
+      "token": "0x6003fd5",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a51ca00",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16340-SelfDmgRate-_ctor.c",
+      "sha256": "88bc7b5db25c25d001de078a5614a77e873773b4cb44f20d9254fa290d39d6ed"
+    },
+    {
+      "oldIndex": 16284,
+      "newIndex": 16284,
+      "class": "HelpMaster",
+      "name": ".ctor",
+      "token": "0x6003f9d",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a529690",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "16284-HelpMaster-_ctor.c",
+      "sha256": "491921b6363efa11901efd6eb6d4ddf8d6666300cb22e9701a0d570d61e45644"
+    },
+    {
+      "oldIndex": 12962,
+      "newIndex": 12962,
+      "class": "PlayerActionManager",
+      "name": "Damaged",
+      "token": "0x60032a3",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actor",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        },
+        {
+          "name": "damageData",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        },
+        {
+          "name": "id",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a448540",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "12962-PlayerActionManager-Damaged.c",
+      "sha256": "891f5fb2f37d4f2c464684e8dbf2d87729ccf17041d20ee5de6fd9ff51f0c354"
+    },
+    {
+      "oldIndex": 13132,
+      "newIndex": 13132,
+      "class": "PlayerBattleManager",
+      "name": "SkillPayHp",
+      "token": "0x600334d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "action",
+          "type_index": 24538,
+          "exact_byval_name": "SkillActionBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a43cc80",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13132-PlayerBattleManager-SkillPayHp.c",
+      "sha256": "6389272cee77530a54cf870545fc1add0f217b83735e8038971d9ec4981d09ac"
+    },
+    {
+      "oldIndex": 13115,
+      "newIndex": 13115,
+      "class": "PlayerBattleManager",
+      "name": "CalcGuard",
+      "token": "0x600333c",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "guardPower",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a458ed0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "13115-PlayerBattleManager-CalcGuard.c",
+      "sha256": "ee4ab4dcf4fcebed7f9cb88c0a51558e78b95c213aebdc9018d2db6aef03167e"
+    }
+  ],
+  "limitations": [
+    "Saved snapshot only, no game execution or live combat observation.",
+    "Formula conclusions are recorded separately; successful decompilation alone is not semantic verification."
+  ],
+  "constants": [
+    {
+      "va": "0x7ffe9c04a170",
+      "bytesHex": "0000c8c1",
+      "float32": -25.0
+    },
+    {
+      "va": "0x7ffe9c049b88",
+      "bytesHex": "0000a041",
+      "float32": 20.0
+    },
+    {
+      "va": "0x7ffe9c049ce0",
+      "bytesHex": "0000a040",
+      "float32": 5.0
+    },
+    {
+      "va": "0x7ffe9c049cfc",
+      "bytesHex": "0000c842",
+      "float32": 100.0
+    },
+    {
+      "va": "0x7ffe9c049b4c",
+      "bytesHex": "0000003f",
+      "float32": 0.5
+    },
+    {
+      "va": "0x7ffe9c049cd8",
+      "bytesHex": "0000c03f",
+      "float32": 1.5
+    },
+    {
+      "va": "0x7ffe9c049d94",
+      "bytesHex": "00009642",
+      "float32": 75.0
+    },
+    {
+      "va": "0x7ffe9c049cf4",
+      "bytesHex": "00004842",
+      "float32": 50.0
+    },
+    {
+      "va": "0x7ffe9c049ec0",
+      "bytesHex": "00401c46",
+      "float32": 10000.0
+    },
+    {
+      "va": "0x7ffe9c04a124",
+      "bytesHex": "0000e03f",
+      "float32": 1.75
+    },
+    {
+      "va": "0x7ffe9c049fb8",
+      "bytesHex": "0000a03f",
+      "float32": 1.25
+    },
+    {
+      "va": "0x7ffe9c049e64",
+      "bytesHex": "0000f041",
+      "float32": 30.0
+    },
+    {
+      "va": "0x7ffe9c049cc8",
+      "bytesHex": "0000403f",
+      "float32": 0.75
+    },
+    {
+      "va": "0x7ffe9c049ce8",
+      "bytesHex": "00007041",
+      "float32": 15.0
+    }
+  ]
+}

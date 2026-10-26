@@ -31,7 +31,29 @@ function kindFor(item) {
   return checks.CheckUseItem || type < 6 ? 'consumables' : 'other';
 }
 
-export function convertCatalog(catalog, mappings, useRules = {}, aliases = {}) {
+export function consumableCategoryFor(source, rules) {
+  const normalize = text => text.normalize('NFKC').replace(/\s+/gu, '');
+  const declaredNames = {};
+  const declared = new Set();
+  for (const locale of ['kr','jp']) {
+    const text = (source.descriptions[locale] || '').normalize('NFKC');
+    const labels = [...text.matchAll(/「([^」]+)」[\s@]*(?:카테고리|カテゴリ)|\[([^\]]+)\][\s@]*(?:카테고리|カテゴリ)/gu)].map(match => (match[1] || match[2]).trim());
+    if (labels.length) declaredNames[locale] = labels;
+    for (const label of labels) {
+      const category = rules.categories.find(row => (row.aliases[locale] || []).some(alias => normalize(alias) === normalize(label)));
+      if (category) declared.add(category.id);
+      else return null;
+    }
+  }
+  assert.ok(declared.size <= 1, `Conflicting consumable category descriptions: ${source.gameItemId}.`);
+  const markers = (source.propertyRecord?.caps || []).filter(cap => rules.categories.some(row => row.durationCapId === cap.cap_id));
+  if (markers.length !== 1) return null;
+  const category = rules.categories.find(row => declared.size ? declared.has(row.id) : row.durationCapId === markers[0].cap_id);
+  return { id:category.id, names:category.names, basis:declared.size ? 'item-description' : 'duration-marker',
+    durationCapId:markers[0].cap_id, declaredNames };
+}
+
+export function convertCatalog(catalog, mappings, useRules = {}, aliases = {}, categories) {
   assert.equal(catalog.nativeRulesApplied, true, 'Only native-gated connected data can be converted.');
   const byCap = new Map(mappings.map(row => [row.capId, row]));
   assert.equal(byCap.size, mappings.length);
@@ -47,6 +69,8 @@ export function convertCatalog(catalog, mappings, useRules = {}, aliases = {}) {
       stats:{}, conditionalStats:[], unresolved:[] };
     item.baseRaw = { function:source.master.function, stability:source.master.stability, range:source.master.range_raw,
       slotMax:source.master.slot_max_raw, potential:source.master.potential, flags:source.master.flag_raw, model:source.master.model };
+    if (kind === 'consumables' && categories) item.consumableCategory = source.references.nativeChecks.CheckUseItem
+      ? consumableCategoryFor(source, categories) : null;
     if (kind === 'crystas') {
       item.gameItemId = id;
       item.names = source.names;
@@ -85,14 +109,40 @@ export function convertCatalog(catalog, mappings, useRules = {}, aliases = {}) {
       for (const slot of group.targetSlots) { assert.ok(!assigned.has(slot)); assigned.set(slot, group.markerSlot); }
       counts.conditionGroups++;
     }
+    const eventGates = [], eventTargets = new Map();
     for (const cap of source.propertyRecord?.caps || []) {
       if (cap.cap_id === 0) continue;
       if (cap === buffMarker) continue;
       if (groups.has(cap.slot)) { assert.equal(cap.role, 'equipment-condition-marker'); continue; }
       assert.notEqual(cap.role, 'equipment-condition-marker', 'Condition marker lacks a group.');
       assert.equal(cap.conditionMarkerSlot ?? null, assigned.get(cap.slot) ?? null, 'Conditional scope mismatch.');
-      const target = cap.conditionMarkerSlot == null ? item : groups.get(cap.conditionMarkerSlot);
+      let target = cap.conditionMarkerSlot == null ? item : groups.get(cap.conditionMarkerSlot);
       assert.ok(target, 'Unknown option condition.');
+      if (cap.cap_id === 114 && item.effectScope === 'equipment') {
+        assert.equal(cap.enumName, 'bEventCheck');
+        assert.ok(Number.isSafeInteger(cap.value), 'Invalid item event operand.');
+        // eventCheck reads an unsigned byte. A false check stops the remaining script,
+        // but a marker skipped by an equipment condition never executes.
+        const event = { kind:'item-event', eventType:cap.value & 255 };
+        eventGates.push(target === item ? event : { kind:'any', conditions:[{ kind:'not', condition:target.when }, event] });
+        continue;
+      }
+      if (eventGates.length) {
+        const conditions = [...eventGates, ...(target === item ? [] : [target.when])];
+        const when = conditions.length === 1 ? conditions[0] : { kind:'all', conditions };
+        const key = JSON.stringify(when);
+        if (!eventTargets.has(key)) {
+          const converted = { when, stats:{}, unresolved:[] };
+          eventTargets.set(key, converted); item.conditionalStats.push(converted); counts.conditionGroups++;
+        }
+        target = eventTargets.get(key);
+      }
+      if (kind === 'weapons' && cap.cap_id === 65) {
+        assert.equal(cap.enumName,'bElement');
+        assert.ok(Number.isSafeInteger(cap.value) && cap.value >= 0 && cap.value <= 8 && cap.reference?.kind === 'element','Unreviewed weapon element.');
+        assert.equal(target.element,undefined,'Duplicate weapon element.');
+        target.element = cap.value; continue;
+      }
       const candidateMapping = byCap.get(cap.cap_id);
       const mapping = candidateMapping?.scope && candidateMapping.scope !== kind ? null : candidateMapping;
       if (!mapping || (buffMarker && (cap.value === 0 || !mapping.enumName.startsWith('b')))) {
@@ -122,7 +172,9 @@ export function convertCatalog(catalog, mappings, useRules = {}, aliases = {}) {
         if (cap !== buffMarker && !byCap.has(cap.cap_id) && cap.cap_id > 0 && !groups.has(cap.slot)) texts[cap.slot] = cap.display?.plainTextCandidates?.[locale] ?? null;
       }
       (details[locale][kind] ||= {})[id] = { description:source.descriptions[locale] ?? null,
-        optionTextCandidates:texts };
+        optionTextCandidates:texts,
+        displayOptions:(source.propertyRecord?.caps || []).filter(cap => cap.cap_id > 0 && cap !== buffMarker && cap.display?.plainTextCandidates?.[locale]?.trim())
+          .map(cap => ({text:cap.display.plainTextCandidates[locale],conditional:groups.has(cap.slot) || assigned.has(cap.slot)})) };
     }
     counts.items++;
   }
@@ -156,15 +208,15 @@ async function reviewedInput(name) {
 
 export async function exportProjectItems(input, output) {
   const bytes = await readFile(input), catalog = JSON.parse(bytes);
-  const [mapping, useRules, aliases] = await Promise.all([reviewedInput('projectStatMapping'), reviewedInput('itemUseRules'), reviewedInput('crystaAliases')]);
+  const [mapping, useRules, aliases, categories] = await Promise.all([reviewedInput('projectStatMapping'), reviewedInput('itemUseRules'), reviewedInput('crystaAliases'), reviewedInput('consumableCategories')]);
   const rows = mapping.value.statMapping;
-  const converted = convertCatalog(catalog, rows, useRules.value, aliases.value.aliases);
+  const converted = convertCatalog(catalog, rows, useRules.value, aliases.value.aliases, categories.value);
   for (const item of Object.values(converted.kinds.crystas || {})) {
     assert.ok(item.category || item.typeId === 36, `Unreviewed crysta type: ${item.gameItemId}.`);
     assert.ok(!item.category || item.fullyMapped, `Crysta options need review before publication: ${item.gameItemId}.`);
   }
   const manifest = { schema:ITEM_CATALOG_SCHEMA, cacheVersion:catalog.cacheVersion, kinds:{}, locales:{}, files:{}, counts:converted.counts,
-    source:{ catalogSha256:hash(bytes), mappingSha256:mapping.sha256, itemUseRulesSha256:useRules.sha256, crystaAliasesSha256:aliases.sha256,
+    source:{ catalogSha256:hash(bytes), mappingSha256:mapping.sha256, itemUseRulesSha256:useRules.sha256, crystaAliasesSha256:aliases.sha256, consumableCategoriesSha256:categories.sha256,
       registrySha256:hash(await readFile(resolve(root, 'web/src/calculation/stat-registry.js'))) },
     statDefinitions:Object.fromEntries(rows.map(row => [row.statId, { unit:registry.get(row.statId).unit, status:registry.get(row.statId).status }])),
     calculationContract:'StatOptionDraft {key,value}; resolve conditions before applying; fullyMapped is mapping coverage, not combat/UI verification.',
@@ -194,6 +246,7 @@ export async function readProjectManifest(directory) {
   assert.equal(manifest.source.itemUseRulesSha256, (await reviewedInput('itemUseRules')).sha256, 'Item use rules changed; regenerate the item export.');
   assert.equal(manifest.source.mappingSha256, (await reviewedInput('projectStatMapping')).sha256, 'Project stat mapping changed; regenerate the item export.');
   assert.equal(manifest.source.crystaAliasesSha256, (await reviewedInput('crystaAliases')).sha256, 'Crysta aliases changed; regenerate the item export.');
+  assert.equal(manifest.source.consumableCategoriesSha256, (await reviewedInput('consumableCategories')).sha256, 'Consumable categories changed; regenerate the item export.');
   const referenced = [manifest.index, ...Object.values(manifest.kinds),
     ...Object.values(manifest.locales).flatMap(kinds => Object.values(kinds).flatMap(group => [group.names, group.details]))];
   await validateManifestFiles(directory, manifest, referenced);

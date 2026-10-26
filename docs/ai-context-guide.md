@@ -13,6 +13,12 @@
 | Native 수명 | desktop/src/optimization/ | 서비스·병렬 실행 Rust 테스트 |
 | 저장·업데이트 | web/src/storage/, desktop/adapters/, desktop/src/{settings,update_service}.rs | 저장 계약·세션 복원 브라우저 |
 | 계정·홈 서버 | web/src/application/account-client.mjs, web/src/ui/account-ui.mjs, server/account-server.mjs, desktop/src/account_browser.rs | npm run test:account, docs/architecture/account-home-server.md |
+| 종합 플랫폼 설계 | [제품·객체·병합 기준](architecture/platform-design-contract.md) → [DB/API 계약](architecture/platform-data-api-contract.md) | 사용자 확정 범위·후속 결정·구현 Gate 확인; 설계 확정과 구현 완료 구분 |
+| 홈·공통 탐색 | web/src/layout/platform-shell.mjs, web/src/pages/home/home-page.mjs, web/public/css/{platform,home}.css | verify-inventory-browser.mjs (Chrome): 비로그인·계정·최근 메뉴·PC/모바일·계산기 유지 |
+| 기본 페이지·계산기 분리 | web/index.html(공통 틀·홈), web/src/app-entry.mjs, web/src/pages/calculator/ | verify-platform-startup-browser.mjs: 다른 페이지의 계산기 요청 없음·지연/중복 초기화·메뉴 이동·실패 격리; 저장 복원·계정/인벤토리 왕복 |
+| 도감 조회 | web/src/application/catalog-browser.mjs, web/src/pages/catalog/, web/public/css/catalog.css | test-catalog-browser.mjs, verify-catalog-browser.mjs (Chrome): 검색·번역·원문·계보·보스 선택·읽기 전용 |
+| 공개·릴리스·복사·즐겨찾기 | server/{post-store,request-receipts}.mjs, web/src/pages/board/, application/account-client.mjs | test:account, test-post-store.mjs, verify-posts-browser.mjs (Chrome): 버전/사본 독립·권한·검색·홈 순위·409 초안 |
+| 인벤토리·조립 | web/src/application/{equipment-object,inventory-objects,inventory-merge,account-client}.mjs, web/src/pages/inventory/, server/inventory-{store,rules}.mjs | test:account, verify-inventory-browser.mjs (Chrome), 기존 저장 왕복; DTO는 플랫폼 DB/API 계약 |
 | 빌드 | web/src/classic-script-manifest.mjs, tools/prepare-frontend.mjs, tools/web-dev.mjs | verify:entry / verify:entry:web / verify:entry:dist |
 | 게임 아이템 갱신 | tools/extraction/update-toram-items.py, toram-item-pipeline-contract.json | --self-test, docs/verification/toram-item-pipeline.md |
 | 앱 아이템 가공/적용 | tools/extraction/{convert-toram-project-items,sync-toram-dev-items}.mjs, web/src/application/item-catalog.mjs, web/src/ui/item-{equipment,consumable}-ui.mjs | npm run items:test, docs/architecture/item-data-format.md |

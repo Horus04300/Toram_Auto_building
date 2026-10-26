@@ -1,7 +1,7 @@
 /* Settings 빌드 UI 어댑터. 저장은 ToramSettingsRepository만 담당한다. */
 (function (root) {
   'use strict';
-  var staticIds = ['charLevel','strBase','intBase','vitBase','agiBase','dexBase','crtBase','bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist','mainWeaponType','wpnAtk','wpnRefine','wpnStab','subWeaponType','subAtk','subRefine','subStab','armorType','cr_wpn_1','cr_wpn_2','cr_arm_1','cr_arm_2','cr_add_1','cr_add_2','cr_spc_1','cr_spc_2','lock_wpn_1','lock_wpn_2','lock_arm_1','lock_arm_2','lock_add_1','lock_add_2','lock_spc_1','lock_spc_2'];
+  var staticIds = ['charLevel','strBase','intBase','vitBase','agiBase','dexBase','crtBase','bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist','bossElement','mainWeaponType','wpnAtk','wpnRefine','wpnStab','subWeaponType','subAtk','subRefine','subStab','armorType','cr_wpn_1','cr_wpn_2','cr_arm_1','cr_arm_2','cr_add_1','cr_add_2','cr_spc_1','cr_spc_2','lock_wpn_1','lock_wpn_2','lock_arm_1','lock_arm_2','lock_add_1','lock_add_2','lock_spc_1','lock_spc_2'];
   var slotSpecs = {
     mainWeapon:{ type:'mainWeaponType', attack:'wpnAtk', refinement:'wpnRefine', stability:'wpnStab', options:'wpnOpts', crystas:['cr_wpn_1','cr_wpn_2'], locks:['lock_wpn_1','lock_wpn_2'] },
     subWeapon:{ type:'subWeaponType', attack:'subAtk', refinement:'subRefine', stability:'subStab', options:'subOpts' },
@@ -46,6 +46,10 @@
       write('charLevel', build.character && build.character.level);
       ['STR','INT','VIT','AGI','DEX','CRT'].forEach(function (name) { write(name.toLowerCase() + 'Base', attributes[name]); });
       ['bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist'].forEach(function (id) { write(id, target[id]); });
+      write('bossElement',target.targetElement || 0);
+      if (root.ToramOptionCalculationUi) root.ToramOptionCalculationUi.restore(session.scenario && session.scenario.optionCalculation || {});
+      var activeItemEvents = session.scenario && session.scenario.conditions && session.scenario.conditions.activeItemEventTypes || [];
+      [3,9].forEach(function (type) { write('itemEvent' + type, activeItemEvents.indexOf(type) >= 0); });
       var bosses = root.ToramApp && root.ToramApp.bossTarget;
       if (bosses) bosses.restoreSelection(session.scenario && session.scenario.bossSelection || null);
       else if (session.scenario && session.scenario.bossSelection) throw new Error('보스 대상 복원 기능이 준비되지 않았습니다.');
@@ -65,7 +69,7 @@
       var level = element('charLevel'); if (level) level.dispatchEvent(new Event('input', { bubbles:true }));
     } finally { restoring = false; if (root.ToramBuildDraftStore) root.ToramBuildDraftStore.syncFromUi(); }
   }
-  function isCalculationInput(target) { return Boolean(target && target.nodeType === 1 && (staticIds.indexOf(target.id) >= 0 || target.closest && target.closest('.opt-row'))); }
+  function isCalculationInput(target) { return Boolean(target && target.nodeType === 1 && (staticIds.indexOf(target.id) >= 0 || target.matches && target.matches('[data-option-calculation-input]') || ['itemEvent3','itemEvent9'].indexOf(target.id) >= 0 || target.closest && target.closest('.opt-row'))); }
   function relevant(target) { if (!target || target.nodeType !== 1) return false; if (isCalculationInput(target) || target.closest('.autocomplete-items')) return true; return Boolean(target.closest('[data-add-option], [data-action="add-ban"], .remove-option-row, .remove-ban-tag, .stat-easy-btn, #statusResetBtn')); }
   function notify() { if (restoring || pending !== null) return; pending = root.setTimeout(function () { pending = null; document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }, 0); }
   function initialize() { ['input','change','click'].forEach(function (type) { document.addEventListener(type, function (event) { if (relevant(event.target)) notify(); }); }); }

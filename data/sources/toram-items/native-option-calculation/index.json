@@ -1,0 +1,1411 @@
+{
+  "schemaVersion": 1,
+  "authority": "offline-ghidra-selected-functions-plus-metadata-token-map",
+  "date": "2026-10-26",
+  "source": {
+    "snapshotPath": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.snapshot.dll",
+    "snapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+    "mappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+    "metadataSha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9",
+    "imageBase": "0x7ffe99740000",
+    "ghidraVersion": "12.1.4",
+    "mappedPath": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.mapped.bin",
+    "metadataPath": "build/tmp/update-pipeline-20261022/installed-source/global-metadata.dat"
+  },
+  "scriptSha256": "6ff136371dc402ec83b2a20f3a26e776d78485edff7e98d3c4617cad518d956a",
+  "methodMapSha256": "fd1930ef67bf9708aed7396aa1dfe620c916a990789e953c38bef09b382ef491",
+  "constants": [
+    {
+      "va": "0x7ffe9c049b18",
+      "bytesHex": "0000803f",
+      "float32": 1.0
+    },
+    {
+      "va": "0x7ffe9c049b34",
+      "bytesHex": "0ad7233c",
+      "float32": 0.009999999776482582
+    },
+    {
+      "va": "0x7ffe9c049c90",
+      "bytesHex": "00007a44",
+      "float32": 1000.0
+    },
+    {
+      "va": "0x7ffe9c049cfc",
+      "bytesHex": "0000c842",
+      "float32": 100.0
+    },
+    {
+      "va": "0x7ffe9c049d18",
+      "bytesHex": "00009643",
+      "float32": 300.0
+    },
+    {
+      "va": "0x7ffe9c049ce4",
+      "bytesHex": "00002041",
+      "float32": 10.0
+    },
+    {
+      "va": "0x7ffe9c049c7c",
+      "bytesHex": "0000803e",
+      "float32": 0.25
+    },
+    {
+      "va": "0x7ffe9c049db0",
+      "bytesHex": "cdcc4c3f",
+      "float32": 0.800000011920929
+    },
+    {
+      "va": "0x7ffe9c049db4",
+      "bytesHex": "9a99993f",
+      "float32": 1.2000000476837158
+    },
+    {
+      "va": "0x7ffe9c049cc4",
+      "bytesHex": "cdcccc3e",
+      "float32": 0.4000000059604645
+    },
+    {
+      "va": "0x7ffe9c049cd8",
+      "bytesHex": "0000c03f",
+      "float32": 1.5
+    },
+    {
+      "va": "0x7ffe9c049d94",
+      "bytesHex": "00009642",
+      "float32": 75.0
+    }
+  ],
+  "methods": [
+    {
+      "oldIndex": 14278,
+      "newIndex": 14278,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a9110",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcElementBonus-7ffe9a4a9110.c",
+      "sha256": "7df325fd3c738293ee48a029a0fd53ca9671897ffb4d25bedcf1ef7fd153048e"
+    },
+    {
+      "oldIndex": 14279,
+      "newIndex": 14279,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c8",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a93f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcElementBonus-7ffe9a4a93f0.c",
+      "sha256": "ee549ffee342eef58e30a41954ae21e9c694ec2d0e4b1f1cb7196a9a9c45d19f"
+    },
+    {
+      "oldIndex": 14280,
+      "newIndex": 14280,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementKillerBonus",
+      "token": "0x60037c9",
+      "method_flags_raw": "0x91",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a96d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-CalcElementKillerBonus-7ffe9a4a96d0.c",
+      "sha256": "98a4e7f6ca297d9cbd92f9c94703f582c6cfb562258754d31ed6d7db2f3397bc"
+    },
+    {
+      "oldIndex": 14288,
+      "newIndex": 14288,
+      "class": "PlayerAttackBase",
+      "name": "InitializeElement",
+      "token": "0x60037d1",
+      "method_flags_raw": "0xe4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ae8f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-InitializeElement-7ffe9a4ae8f0.c",
+      "sha256": "f732975d56b316c42cd62f1194a8730363b387f1ee1920f8b0d695c00be3d7b9"
+    },
+    {
+      "oldIndex": 14289,
+      "newIndex": 14289,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponElementType",
+      "token": "0x60037d2",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4adee0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-GetWeaponElementType-7ffe9a4adee0.c",
+      "sha256": "fcbe19f0c1b985883124ed2e412edc53429eabd51f96e239988c09f24fe9f696"
+    },
+    {
+      "oldIndex": 14343,
+      "newIndex": 14343,
+      "class": "PlayerAttackBase",
+      "name": "GetElementKillerBonus",
+      "token": "0x6003808",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ad9b0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerAttackBase-GetElementKillerBonus-7ffe9a4ad9b0.c",
+      "sha256": "1d9b748ca46a83a5f9d5431109fef9db48ca8b22a47678b20fed8f385a3e1787"
+    },
+    {
+      "oldIndex": 15731,
+      "newIndex": 15731,
+      "class": "BonusManager",
+      "name": "GetEquipElement",
+      "token": "0x6003d74",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4eb8d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetEquipElement-7ffe9a4eb8d0.c",
+      "sha256": "92e51c5f0fd56a15de42d02fd36255b3a08b3bae7b5118948adf01f455ef9ec4"
+    },
+    {
+      "oldIndex": 15749,
+      "newIndex": 15749,
+      "class": "BonusManager",
+      "name": "GetElementKiller",
+      "token": "0x6003d86",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12860,
+        "exact_byval_name": "Toram.Common.Bonus.BonusType"
+      },
+      "runtime_va": "0x7ffe9a4eb860",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetElementKiller-7ffe9a4eb860.c",
+      "sha256": "5547d895cab55b81cf4245fbc200d1d866e2f9f36ea7b3cf81d0c84426e9fb52"
+    },
+    {
+      "oldIndex": 13760,
+      "newIndex": 13760,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipElement",
+      "token": "0x60035c1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1cc0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerStatusBase-GetEquipElement-7ffe9a4a1cc0.c",
+      "sha256": "9c47bdf2cbf48715a8198c1b9ef08ac1e3efe2c54a9ee9eceb0f506f3be865ff"
+    },
+    {
+      "oldIndex": 13761,
+      "newIndex": 13761,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSubWeaponElement",
+      "token": "0x60035c2",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1fb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerStatusBase-GetEquipSubWeaponElement-7ffe9a4a1fb0.c",
+      "sha256": "7014299615476d378292ead6d30072d7c89f3bfa95e6b39a5857ac4a1193b6a2"
+    },
+    {
+      "oldIndex": 15744,
+      "newIndex": 15744,
+      "class": "BonusManager",
+      "name": "CulcConvertAtk",
+      "token": "0x6003d81",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4e9e90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-CulcConvertAtk-7ffe9a4e9e90.c",
+      "sha256": "315383a8310913668674b96e1f0d7699f223dbcd769d0c6fd058cbf1fb682eb9"
+    },
+    {
+      "oldIndex": 15745,
+      "newIndex": 15745,
+      "class": "BonusManager",
+      "name": "CulcConvertMAtk",
+      "token": "0x6003d82",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ea180",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-CulcConvertMAtk-7ffe9a4ea180.c",
+      "sha256": "b8d12ca396e49cf3e95961a3052b02ff09167ef120a7c541adf9b18d0c0e6249"
+    },
+    {
+      "oldIndex": 13577,
+      "newIndex": 13577,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Hit",
+      "token": "0x600350a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488f30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_Hit-7ffe9a488f30.c",
+      "sha256": "739fdeca4e9b69063eddd235cd6f0f51ed571e9258750a1deeaef4686b18e8d1"
+    },
+    {
+      "oldIndex": 13579,
+      "newIndex": 13579,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Flee",
+      "token": "0x600350c",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419c00",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_Flee-7ffe9a419c00.c",
+      "sha256": "f97a62f8709bcbde0405d1dc3752d8ddae18e2c8cbdd25f0bf2de781a6515dad"
+    },
+    {
+      "oldIndex": 13580,
+      "newIndex": 13580,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Def",
+      "token": "0x600350d",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419a70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_Def-7ffe9a419a70.c",
+      "sha256": "9a63100551e8d6df9994c78f6bc733ab49150202cd858138b2b16445a6af7421"
+    },
+    {
+      "oldIndex": 13581,
+      "newIndex": 13581,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Mdef",
+      "token": "0x600350e",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41ab30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_Mdef-7ffe9a41ab30.c",
+      "sha256": "b4f42b3f9527c74e3984cb2e1995fcdb5d96db2d8e17e2c9ad3cc2214e446129"
+    },
+    {
+      "oldIndex": 13585,
+      "newIndex": 13585,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_HpRecovery",
+      "token": "0x6003512",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489790",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_HpRecovery-7ffe9a489790.c",
+      "sha256": "8282843b9a70bc2dcf5b1178079382b7de60e4bf14ba98541cb6679a0aaf7b0c"
+    },
+    {
+      "oldIndex": 13586,
+      "newIndex": 13586,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_MpRecovery",
+      "token": "0x6003513",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489950",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_MpRecovery-7ffe9a489950.c",
+      "sha256": "37799c19ccf630ff7471671bc232d7c3cab5824be9acae31b07334274207695a"
+    },
+    {
+      "oldIndex": 13587,
+      "newIndex": 13587,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AtkMpRecovery",
+      "token": "0x6003514",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4868a0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_AtkMpRecovery-7ffe9a4868a0.c",
+      "sha256": "27eee2aabb412f269064cd330a3c3a7eefa7a155a49f5cd69b8a6f26d2846544"
+    },
+    {
+      "oldIndex": 13591,
+      "newIndex": 13591,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_ElementPower",
+      "token": "0x6003518",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4883d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_ElementPower-7ffe9a4883d0.c",
+      "sha256": "0eaa3bdc92696a3710007ffb286e3fb405c7e3199def0a63d767167f96b49f26"
+    },
+    {
+      "oldIndex": 13599,
+      "newIndex": 13599,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Respawn",
+      "token": "0x6003520",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b0e0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-get_Respawn-7ffe9a41b0e0.c",
+      "sha256": "9e5cb6921da49c96b504188be9f4c2b3fb9a9d6dc9e7065abf4d9fe8f0d9b16e"
+    },
+    {
+      "oldIndex": 13603,
+      "newIndex": 13603,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDefFact",
+      "token": "0x6003524",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "def",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-GetDefFact-7ffe99df7d90.c",
+      "sha256": "2eb549bb589d346c44893d64801c453e326a187ed4db789d0566d0de3b649b94"
+    },
+    {
+      "oldIndex": 13604,
+      "newIndex": 13604,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetMdefFact",
+      "token": "0x6003525",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "mdef",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-GetMdefFact-7ffe99df7d90.c",
+      "sha256": "2eb549bb589d346c44893d64801c453e326a187ed4db789d0566d0de3b649b94"
+    },
+    {
+      "oldIndex": 13615,
+      "newIndex": 13615,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseSecondaryStatus",
+      "token": "0x6003530",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "baseStatus",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482ed0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-CalcBaseSecondaryStatus-7ffe9a482ed0.c",
+      "sha256": "9ca8f0af956e19da3e0d4412bae0663e439ef2dc689e81c04f978ae839e5e4a0"
+    },
+    {
+      "oldIndex": 13617,
+      "newIndex": 13617,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxMp",
+      "token": "0x6003532",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482b10",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-CalcBaseMaxMp-7ffe9a482b10.c",
+      "sha256": "e3f9a932b4336f6de423a7de45b12b41cea336d684a8976ededdfbcaa27a07d9"
+    },
+    {
+      "oldIndex": 13618,
+      "newIndex": 13618,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxHp",
+      "token": "0x6003533",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482470",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-CalcBaseMaxHp-7ffe9a482470.c",
+      "sha256": "b772504ba98ce8a092a5b339797547fb0fd859cecb776a15b304d941e0567d45"
+    },
+    {
+      "oldIndex": 13624,
+      "newIndex": 13624,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetRespawnRate",
+      "token": "0x6003539",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485fb0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-GetRespawnRate-7ffe9a485fb0.c",
+      "sha256": "f16702213cc8f88f7fb5a9ca566e901cba16a5f5941c32240f2de8319886b4a6"
+    },
+    {
+      "oldIndex": 13628,
+      "newIndex": 13628,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcHpRecovery",
+      "token": "0x600353d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4834d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-CalcHpRecovery-7ffe9a4834d0.c",
+      "sha256": "1cc119f52a1a6093bc1a79707b72f58fc21e9ef287ac97269cbb0a532f5b6477"
+    },
+    {
+      "oldIndex": 13629,
+      "newIndex": 13629,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcMpRecovery",
+      "token": "0x600353e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4839c0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-CalcMpRecovery-7ffe9a4839c0.c",
+      "sha256": "7c33af3736faf0e5b313bda08cd295a8ad99653997e10b3055d2919df1c976f9"
+    },
+    {
+      "oldIndex": 13506,
+      "newIndex": 13506,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Lv",
+      "token": "0x60034c3",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c3160",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Lv-7ffe999c3160.c",
+      "sha256": "df68372c3f3f0485566d22e9e1fc092f9142cfab16f28dc57ebc63c34ddf7156"
+    },
+    {
+      "oldIndex": 13507,
+      "newIndex": 13507,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Str",
+      "token": "0x60034c4",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d44f0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Str-7ffe999d44f0.c",
+      "sha256": "2e971b7be93f8f6a32527e923c45f6d8ad92c17005b7153083822af854890b65"
+    },
+    {
+      "oldIndex": 13508,
+      "newIndex": 13508,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Int",
+      "token": "0x60034c5",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c9d40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Int-7ffe999c9d40.c",
+      "sha256": "04a49dfa8e446fe744e5eac3fda5272fbaf6248f0dbee3e397d03469325ffcce"
+    },
+    {
+      "oldIndex": 13509,
+      "newIndex": 13509,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Vit",
+      "token": "0x60034c6",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c9d30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Vit-7ffe999c9d30.c",
+      "sha256": "91624aef84137dc81527f823db2af3a48932faf531758f94087aaeceea3d28e5"
+    },
+    {
+      "oldIndex": 13510,
+      "newIndex": 13510,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Agi",
+      "token": "0x60034c7",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c3280",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Agi-7ffe999c3280.c",
+      "sha256": "730244a55f77d4d72b31a89ec29ac09188303d9676a0270c47957efd8558a97c"
+    },
+    {
+      "oldIndex": 13511,
+      "newIndex": 13511,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Dex",
+      "token": "0x60034c8",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99a9a750",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerPrimaryStatus-get_Dex-7ffe99a9a750.c",
+      "sha256": "32d850c51bb7be1e6a332a7301666261a8a08faa1b3133886176c9f9ccf020a3"
+    },
+    {
+      "oldIndex": 31357,
+      "newIndex": 31357,
+      "class": "SkillUtil",
+      "name": "CheckWeakElemet",
+      "token": "0x6007a7e",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "useType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a812710",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillUtil-CheckWeakElemet-7ffe9a812710.c",
+      "sha256": "98a0035ed5acbb47e9b07e911d66d961f6007567a29fc506259ad5de1ecc5ae0"
+    },
+    {
+      "oldIndex": 31359,
+      "newIndex": 31359,
+      "class": "SkillUtil",
+      "name": "GetWeakElement",
+      "token": "0x6007a80",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a8128d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "SkillUtil-GetWeakElement-7ffe9a8128d0.c",
+      "sha256": "22deb87a28cf557d4ce171b826379c52fb2b028745aced6cae82514d59f2eecd"
+    },
+    {
+      "oldIndex": 15733,
+      "newIndex": 15733,
+      "class": "BonusManager",
+      "name": "GetBonusValue",
+      "token": "0x6003d76",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb350",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetBonusValue-7ffe9a4eb350.c",
+      "sha256": "59ddf9b8c8a49f45fe21294bf4bdf0c043ea6e3c1334907422e3d9fa2d9e5fd0"
+    },
+    {
+      "oldIndex": 15734,
+      "newIndex": 15734,
+      "class": "BonusManager",
+      "name": "GetBonusPercentValue",
+      "token": "0x6003d77",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eb220",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetBonusPercentValue-7ffe9a4eb220.c",
+      "sha256": "df095ed2b70372fdfa7229c6b177a785d092142aced84c07573714538f44ce0e"
+    },
+    {
+      "oldIndex": 15736,
+      "newIndex": 15736,
+      "class": "BonusManager",
+      "name": "getDataBonusValue",
+      "token": "0x6003d79",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eeb50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-getDataBonusValue-7ffe9a4eeb50.c",
+      "sha256": "393cd90dab899c97d97988df3e542004c26567a9b9fa21df63dd739f3da4d8ca"
+    },
+    {
+      "oldIndex": 15738,
+      "newIndex": 15738,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_AvatarConstan_Rate",
+      "token": "0x6003d7b",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantToAvatarType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239
+        },
+        {
+          "name": "rate",
+          "type_index": 9355
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239
+        },
+        {
+          "name": "plusRateValue",
+          "type_index": 9355
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239
+        },
+        {
+          "name": "minusRateValue",
+          "type_index": 9355
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ea6d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetBonusConstant_AvatarConstan_Rate-7ffe9a4ea6d0.c",
+      "sha256": "cedf2c4e6b9978153bbf19315ff2dea8fc0295b07815836b7a5a4c2f67f7c6c8"
+    },
+    {
+      "oldIndex": 15739,
+      "newIndex": 15739,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_Rate",
+      "token": "0x6003d7c",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239
+        },
+        {
+          "name": "rate",
+          "type_index": 9355
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4eac40",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetBonusConstant_Rate-7ffe9a4eac40.c",
+      "sha256": "46337a5b21936153769d5a1b6ffd5aba84c6cbc8595daa4a23c73c59755c326c"
+    },
+    {
+      "oldIndex": 15743,
+      "newIndex": 15743,
+      "class": "BonusManager",
+      "name": "GetBonusMultiPercentValue",
+      "token": "0x6003d80",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eade0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusManager-GetBonusMultiPercentValue-7ffe9a4eade0.c",
+      "sha256": "1392d36cb17580614f91b8f926db400aff1d906d6578d227d8b2a5659978f325"
+    },
+    {
+      "oldIndex": 13626,
+      "newIndex": 13626,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetExpBonus",
+      "token": "0x600353b",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485c70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-GetExpBonus-7ffe9a485c70.c",
+      "sha256": "f4c96b4c7d45663cfa1bde5ee48c22cebe32645ee5a26d2adab490b9c7f39ac5"
+    },
+    {
+      "oldIndex": 13627,
+      "newIndex": 13627,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDropBonus",
+      "token": "0x600353c",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485a80",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "PlayerSecondaryStatus-GetDropBonus-7ffe9a485a80.c",
+      "sha256": "d759bbf868610cdacbcb1f22d64a6a8253185164f88a8e2da01c8a93b6e4ad61"
+    },
+    {
+      "oldIndex": 15855,
+      "newIndex": 15855,
+      "class": "BonusScriptManager",
+      "name": ".ctor",
+      "token": "0x6003df0",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4f6d10",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-_ctor-7ffe9a4f6d10.c",
+      "sha256": "9788852aa455c275efe7bc244d3f38c95d8aac4fded3eeb98c21c3063ed1ff32"
+    },
+    {
+      "oldIndex": 15864,
+      "newIndex": 15864,
+      "class": "BonusScriptManager",
+      "name": "funcSetBonus",
+      "token": "0x6003df9",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8a50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-funcSetBonus-7ffe9a4f8a50.c",
+      "sha256": "ca26d1583a2ce48b1a3f47fe00565cbc8a96ab27cda7064f92af3b0100c86a22"
+    },
+    {
+      "oldIndex": 15875,
+      "newIndex": 15875,
+      "class": "BonusScriptManager",
+      "name": "eventCheck",
+      "token": "0x6003e04",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8410",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-eventCheck-7ffe9a4f8410.c",
+      "sha256": "90f69a5046d6f10c5db7799af7c82340d1a0608d0f9d4a64471d0b317ea8d3f5"
+    },
+    {
+      "oldIndex": 15857,
+      "newIndex": 15857,
+      "class": "BonusScriptManager",
+      "name": "Run",
+      "token": "0x6003df2",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusScript",
+          "type_index": 12854,
+          "exact_byval_name": "BonusScriptData"
+        },
+        {
+          "name": "updateTime",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4f6b30",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-Run-7ffe9a4f6b30.c",
+      "sha256": "3dd2ff235d2a1649f8e291485976c851f478d0eec4b60e09285a850a92a64cd9"
+    },
+    {
+      "oldIndex": 16663,
+      "newIndex": 16663,
+      "class": "GameEventManager",
+      "name": "SetOngoingGameEventType",
+      "token": "0x6004118",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ongoingGameEventType",
+          "type_index": 9988
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a528710",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GameEventManager-SetOngoingGameEventType-7ffe9a528710.c",
+      "sha256": "96732254e1abfde8837f52c765322c1cbdb6a9848ac1c07f76b23da59e9bdce1"
+    },
+    {
+      "oldIndex": 16664,
+      "newIndex": 16664,
+      "class": "GameEventManager",
+      "name": "CheckOngoingGameEventType",
+      "token": "0x6004119",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ongoingGameEventType",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a526960",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "GameEventManager-CheckOngoingGameEventType-7ffe9a526960.c",
+      "sha256": "db1e514990ec9c8a0e0c21a840f0137745858aecf72b7f8866464176866b29ec"
+    },
+    {
+      "oldIndex": 15865,
+      "newIndex": 15865,
+      "class": "BonusScriptManager",
+      "name": "funcSetInstantBonus",
+      "token": "0x6003dfa",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8ee0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-funcSetInstantBonus-7ffe9a4f8ee0.c",
+      "sha256": "4c1176b3406c1eee5f735e0956cef8fa6df059fefceb1b1d32c7dc33523aed88"
+    },
+    {
+      "oldIndex": 15866,
+      "newIndex": 15866,
+      "class": "BonusScriptManager",
+      "name": "funcSetAntiVirusBonus",
+      "token": "0x6003dfb",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8a10",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "BonusScriptManager-funcSetAntiVirusBonus-7ffe9a4f8a10.c",
+      "sha256": "6bab81961fe97568965d49938c383d8b15090d3f23b6ae46c8f1006c0a052b7b"
+    }
+  ],
+  "limitations": [
+    "Static saved snapshot only; no game launch, live process access, equipment-instance or combat observation.",
+    "Shared native code can retain a previous metadata alias as the decompiler function name; index token/address/parameters establish the selected method identity.",
+    "Enums are metadata-confirmed; the reused decompiler signature helper renders some enums as pointers, so displayed pointer types are not original C# declarations.",
+    "Selected getter analysis is not complete simulation coverage or proof that all dynamic buffs were reconstructed."
+  ],
+  "metadataBindingsSha256": "581a6c2e549baedede591e3a2b26c383d20a2e2b8affd9ef0e981a77a9eb15fd"
+}

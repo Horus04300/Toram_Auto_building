@@ -8,7 +8,8 @@ export function createEquipmentItemUi(documentRef, catalog) {
   let panel, target, locale, search, results, preview, apply, rows = [], generation = 0, loading = false;
   const node = id => documentRef.getElementById(id);
   const registry = () => windowRef.ToramStatRegistry;
-  const context = () => ({ mainType:node('mainWeaponType').value, subType:node('subWeaponType').value, armorType:node('armorType').value });
+  const context = () => ({ mainType:node('mainWeaponType').value, subType:node('subWeaponType').value, armorType:node('armorType').value,
+    activeItemEventTypes:[3,9].filter(type => node(`itemEvent${type}`)?.checked) });
   function text(tag, value) { const element = documentRef.createElement(tag); element.textContent = value; return element; }
   function freeze(value) {
     if (value && typeof value === 'object') { Object.values(value).forEach(freeze); Object.freeze(value); }
@@ -27,7 +28,7 @@ export function createEquipmentItemUi(documentRef, catalog) {
     box.append(text('p', `${selection.name ?? '(이름 없음)'} · #${selection.gameItemId} · ${selection.cacheVersion}`));
     try {
       const options = resolveEquipmentOptions(selection, slot, context(), registry());
-      if (slot === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) box.append(text('p', '이 보조 무기 종류의 원본 일반 옵션은 합산하지 않습니다. 수동 보정과 ATK·안정률·제련 입력은 유지합니다.'));
+      if (slot === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) box.append(text('p', '보조 무기 일반 옵션 미적용 · 수동 보정 유지'));
       box.append(text('p', options.map(option => `${option.key} ${option.value > 0 ? '+' : ''}${option.value}${registry().get(option.key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ') || '현재 조건에서 추가 옵션 없음'));
     } catch (error) { box.append(text('p', error.message)); }
     const clear = text('button', '원본 장비 해제');
@@ -47,7 +48,7 @@ export function createEquipmentItemUi(documentRef, catalog) {
       option.value = String(row.id); results.append(option);
     }
     results.selectedIndex = -1;
-    preview.textContent = `${filtered.length}개. 목록에서 아이템을 선택해 주세요.`;
+    preview.textContent = `${filtered.length}개`;
   }
   async function loadList() {
     const current = ++generation, kind = kinds[target.value], language = locale.value;
@@ -68,7 +69,7 @@ export function createEquipmentItemUi(documentRef, catalog) {
       preview.textContent = `${item.name ?? '(이름 없음)'} · #${item.id} · ${item.cacheVersion}`;
       const selection = createEquipmentSelection(item, target.value, context(), registry());
       const options = resolveEquipmentOptions(selection, target.value, context(), registry());
-      if (target.value === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) preview.textContent += '\n이 보조 무기 종류의 원본 일반 옵션은 합산하지 않습니다. 수동 보정은 유지합니다.';
+      if (target.value === 'subWeapon' && !subEquipmentUsesOptions(selection.typeId)) preview.textContent += '\n보조 무기 일반 옵션 미적용 · 수동 보정 유지';
       preview.textContent += '\n' + options.map(option => `${option.key}: ${option.value}${registry().get(option.key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ');
       apply.disabled = false;
     } catch (error) { if (current === generation) preview.textContent += '\n' + error.message; }
@@ -82,7 +83,7 @@ export function createEquipmentItemUi(documentRef, catalog) {
       const selection = createEquipmentSelection(item, slot, context(), registry());
       selections[slot] = selection;
       renderSummary(slot); changed();
-      preview.textContent = `${item.name ?? '#' + id} 옵션 적용 완료. ATK·안정률·제련은 실제 장비 값을 입력해 주세요.`;
+      preview.textContent = `${item.name ?? '#' + id} 옵션 적용 완료 · ATK·안정률·제련은 직접 입력`;
       apply.disabled = false;
     } catch (error) { if (current === generation) preview.textContent = error.message; }
   }
@@ -114,7 +115,7 @@ export function createEquipmentItemUi(documentRef, catalog) {
       search.addEventListener('input', () => { if (!loading) renderList(); }); results.addEventListener('change', showItem);
       apply.addEventListener('click', applyItem);
       documentRef.addEventListener('change', event => {
-        if (!['mainWeaponType','subWeaponType','armorType'].includes(event.target.id)) return;
+        if (!['mainWeaponType','subWeaponType','armorType','itemEvent3','itemEvent9'].includes(event.target.id)) return;
         for (const slot of Object.keys(containers)) renderSummary(slot);
         if (results.value) void showItem();
       });

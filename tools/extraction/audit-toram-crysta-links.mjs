@@ -247,7 +247,7 @@ if (process.argv.includes('--self-test')) {
     selfTest();
 } else {
     const files = {
-        existing: 'tools/fixtures/crysta-legacy-data.json', registry: 'web/src/calculation/stat-registry.js', labels: 'web/src/ui/crysta-ui.js',
+        existing: 'tools/fixtures/crysta-legacy-data.json', registry: 'web/src/calculation/stat-registry.js', labels: 'web/src/application/stat-labels.mjs',
         catalog: 'data/sources/toram-items/items.kr.77596232.json', scaled: 'data/sources/toram-items/item-options.scaled.kr.77596232.json',
         bonusEnum: 'data/sources/toram-items/bonus-types.current.json',
         conditionConstants: 'build/tmp/toram-item-extraction/code-trace/runtime/item-connections/formatter-constants.json'

@@ -14,6 +14,8 @@ Native 정밀 계산은 30초 slice를 연결하며 exact·일시정지·취소�
 
 WASM 미리보기는 `NativeSearchSession::new`의 초기해와 후보/트리 준비만 사용하고 탐색 노드를 방문하지 않는다. 결과는 `heuristic`이며 인증 upper/gap을 노출하지 않는다. 같은 입력의 정밀 실행은 해당 세션을 이어받는다. Worker의 짧은 노드 묶음 사이에서 pause/resume을 처리하고, cancel/입력 변경은 Worker와 세션을 폐기한다. JS 탐색 fallback은 두지 않는다.
 
+격리된 웹은 공유 WebAssembly.Memory와 Rayon 풀을 사용한다. coordinator 한 개가 세션·frontier를 소유하며 정밀 실행 때만 논리 코어 수(1~64)의 풀을 초기화한다. 후보·트리를 Worker별로 compile하지 않는다. 공용 노드 확장과 병합을 사용하고, 최대16ms를 요청한 묶음이 join한 뒤에만 snapshot을 발행한다. 중단된 부모는 frontier로 돌려놓는다. cancel은 coordinator와 하위 Worker를 함께 종료한다. COOP same-origin·COEP require-corp/SharedArrayBuffer가 없으면 기존 단일 WASM으로 실행한다.
+
 ## 2. 중단과 결과
 
 | 사건/결과 | 유지할 의미 |

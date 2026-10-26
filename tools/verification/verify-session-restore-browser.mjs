@@ -13,6 +13,8 @@ sample.build.equipment.armor.type = '중량옷';
 sample.build.equipment.mainWeapon.lockedCrystaSlots = [true, false];
 sample.build.equipment.special.lockedCrystaSlots = [false, true];
 sample.build.guildFoodBuff = false;
+sample.scenario.target.targetElement = 4;
+sample.scenario.conditions.activeItemEventTypes = [3,9];
 sample.scenario.optimizationPreferences = {
   rangeOverride:'LONG', requirements:{ maxHp:2345, maxMp:null, amprBeforeDual:21, normalAttackCrit:null, aspd:6789 },
   bannedCrystas:['오로로 콜론', '왕자 메기스톤']
@@ -21,13 +23,13 @@ const server = createWebDevServer();
 let browser;
 try {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  browser = await chromium.launch({ channel:'msedge', headless:true });
+  browser = await chromium.launch({ channel:'chrome', headless:true });
   const context = await browser.newContext();
   const errors = [];
   async function open() {
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
-    await page.goto(`http://127.0.0.1:${server.address().port}/`);
+    await page.goto(`http://127.0.0.1:${server.address().port}/?view=calculator`);
     await page.waitForFunction(() => window.ToramUiFeatures?.settings);
     return page;
   }

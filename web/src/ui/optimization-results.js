@@ -243,6 +243,7 @@ if (document.readyState === 'loading') {
 
             document.getElementById('resultArea').style.display = 'block';
             var tCtx = curRes.ctx;
+            if (window.ToramOptionCalculationUi) window.ToramOptionCalculationUi.render(curRes);
 
             document.getElementById('defWarning').style.display = curRes.isPierced ? 'none' : 'block';
 
@@ -552,7 +553,7 @@ if (document.readyState === 'loading') {
             offenseMetrics.forEach(function(metric) {
                 offenseHtml += optimizationComparisonCard(metric[0], optimizationOutcomeMetric(currentOutcome, metric[1]), optimizationOutcomeMetric(recommendedOutcome, metric[1]), metric[2], metric[3]);
             });
-            summary.innerHTML = '<div class="optimization-damage-summary"><div class="optimization-damage-card"><span>현재 ' + scoreLabel + '</span><b>' + optimizationFormatNumber(currentScore) + '</b></div><div class="optimization-damage-card is-recommended"><span>추천 ' + scoreLabel + '</span><b>' + optimizationFormatNumber(recommendedScore) + '</b></div><div class="optimization-damage-card is-gain"><span>상승량</span><b>' + (absoluteGain >= 0 ? '+' : '') + optimizationFormatNumber(absoluteGain) + ' <small>(' + (relativeGain >= 0 ? '+' : '') + relativeGain.toFixed(2) + '%)</small></b></div></div><div class="optimization-comparison-grid"><section class="optimization-comparison-card"><h3>교체 항목</h3>' + buildRows + '</section><section class="optimization-comparison-card"><h3>주요 공격 스탯</h3><div class="optimization-stat-list">' + offenseHtml + '</div></section><section class="optimization-comparison-card"><h3>실전 유틸리티</h3><div class="optimization-stat-list">' + utilityHtml + '</div></section><section class="optimization-comparison-card"><h3>선택 이유</h3><p class="optimization-recommendation-note">대미지뿐 아니라 최대 HP, 최대 MP, 공격 MP 회복, 속도 요구치를 같은 조건으로 다시 계산해 비교했습니다. 아래 전체 옵션에서 각 수치의 합산 내역을 확인할 수 있습니다.</p></section></div>';
+            summary.innerHTML = '<div class="optimization-damage-summary"><div class="optimization-damage-card"><span>현재 ' + scoreLabel + '</span><b>' + optimizationFormatNumber(currentScore) + '</b></div><div class="optimization-damage-card is-recommended"><span>추천 ' + scoreLabel + '</span><b>' + optimizationFormatNumber(recommendedScore) + '</b></div><div class="optimization-damage-card is-gain"><span>상승량</span><b>' + (absoluteGain >= 0 ? '+' : '') + optimizationFormatNumber(absoluteGain) + ' <small>(' + (relativeGain >= 0 ? '+' : '') + relativeGain.toFixed(2) + '%)</small></b></div></div><div class="optimization-comparison-grid"><section class="optimization-comparison-card"><h3>교체 항목</h3>' + buildRows + '</section><section class="optimization-comparison-card"><h3>주요 공격 스탯</h3><div class="optimization-stat-list">' + offenseHtml + '</div></section><section class="optimization-comparison-card"><h3>실전 유틸리티</h3><div class="optimization-stat-list">' + utilityHtml + '</div></section></div>';
             overview.hidden = false;
         }
 

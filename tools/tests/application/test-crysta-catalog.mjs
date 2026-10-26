@@ -66,18 +66,49 @@ for (const context of contexts) for (const item of crystas) {
 assert.ok(lineage.conflict(env.getCrystaByName('댄드라이언'),env.ToramCrystaCatalog.getById(9900)));
 const fixture = JSON.parse(await readFile(resolve(root,'tools/fixtures/crysta-native-runtime-26min-revenir.json')));
 const search = await loadHeadlessEnvironment(), wasm = await loadWasmModule();
+const tutorials = views.filter(item => item.gameItemId >= 9401 && item.gameItemId <= 9504);
+assert.equal(tutorials.length,99,'Reviewed flat-stat tutorial ID family');
+assert.ok(tutorials.every(item => item.category === '노말' && Object.keys(item.stats).length === 1 && !item.condStats.length));
+const tutorialNames = new Set(tutorials.map(item => item.name));
+for (const keepLowerUpgrades of [false,true]) {
+  const scoped = search.compile({...fixture.resolvedExecutionContext,keepLowerUpgrades});
+  assert.ok(scoped.groups.every(group => group.packages.every(pack => !pack.candidateNames.some(name => tutorialNames.has(name)))),
+    'Tutorial crystals must never enter the automatic candidate combinations');
+}
+for (const current of ['STR+1','9401']) {
+  const locked = search.compile({...fixture.resolvedExecutionContext,crystas:[...tutorials,env.getCrystaByName('블랑')],
+    currentCrystas:[current],locks:[true,false]});
+  assert.deepEqual(plain(locked.diagnostics),[]);
+  assert.ok(locked.groups[0].packages.every(pack => pack.candidateNames.includes('STR+1')),'Explicit tutorial locks must be preserved');
+  assert.ok(locked.groups.flatMap(group => group.packages).every(pack => pack.candidateNames.every(name => name === 'STR+1' || !tutorialNames.has(name))));
+}
+assert.deepEqual(plain(env.getCrystaByName('STR+1').stats),{STR:1},'Manual selection and saved tutorial options remain available');
 const subset = [9776,9900,80453,9911,9804].map(id => env.ToramCrystaCatalog.getById(id));
 for (const armorType of ['일반옷','경량옷','중량옷']) {
   const baseContext = {...fixture.resolvedExecutionContext.baseContext,armorType};
   const input = {baseContext,crystas:subset,keepLowerUpgrades:true,scenarioRequirements:{maxHp:null,maxMp:null,amprBeforeDual:null,normalAttackCrit:null,aspd:null}};
-  const problem = search.compile(input), bridge = search.context.ToramCrystaOptimizationRustBridge;
-  const oracle = exhaustiveSearch(problem,{prepared:true,evaluateStats:bridge.evaluate(problem)});
-  const setup = bridge.prepare(problem,{}), session = new wasm.SearchSession(JSON.stringify(bridge.projectProblem(setup.problem)));
-  try {
-    while (!session.is_complete()) session.step(1000);
-    const result = JSON.parse(session.snapshot());
-    assert.equal(result.status,oracle.status); assert.equal(result.score,oracle.score); assert.equal(result.bestBuild?.id,oracle.bestBuild?.id);
-  } finally {session.free();}
+  for (const seed of [
+    {},
+    {currentCrystas:[null,null,'Dandolion']},
+    {currentCrystas:[null,null,env.ToramCrystaCatalog.getById(9900).name],keepLowerUpgrades:false},
+    {currentCrystas:[null,null,'댄드라이언'],banned:{'댄드라이언':true}}
+  ]) {
+    const problem = search.compile({...input,...seed}), bridge = search.context.ToramCrystaOptimizationRustBridge;
+    const before = JSON.stringify(problem);
+    const oracle = exhaustiveSearch(problem,{prepared:true,evaluateStats:bridge.evaluate(problem)});
+    const setup = bridge.prepare(problem,{}), wire = bridge.projectProblem(setup.problem);
+    if (seed.currentCrystas) {
+      assert.equal(problem.metadata.initialPackageIds[1],null,'Unavailable current packages are optional warm starts');
+      assert.equal(wire.metadata.initialPackageIds,undefined,'Incomplete warm starts must not send null IDs to Rust');
+    } else assert.deepEqual(plain(wire.metadata.initialPackageIds),plain(problem.metadata.initialPackageIds));
+    assert.equal(JSON.stringify(problem),before,'Projection must preserve the input and constraints');
+    const session = new wasm.SearchSession(JSON.stringify(wire));
+    try {
+      while (!session.is_complete()) session.step(1000);
+      const result = JSON.parse(session.snapshot());
+      assert.equal(result.status,oracle.status); assert.equal(result.score,oracle.score); assert.equal(result.bestBuild?.id,oracle.bestBuild?.id);
+    } finally {session.free();}
+  }
   const banned = search.compile({...input,banned:{'9776':true},excluded:['Dandolion']});
   assert.ok(banned.groups.every(group => group.packages.every(pack => !pack.candidateNames.includes('댄드라이언'))));
   const locked = search.compile({...input,currentCrystas:[null,null,'Dandolion'],locks:[false,false,true]});

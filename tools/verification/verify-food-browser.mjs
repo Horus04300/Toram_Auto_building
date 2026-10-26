@@ -1,4 +1,4 @@
-// Source UI integration; requires CODEX_PLAYWRIGHT_PATH, runs headless Edge.
+// Source UI integration; requires CODEX_PLAYWRIGHT_PATH, runs headless Chrome.
 import assert from 'node:assert/strict';
 import { createServer } from 'node:http';
 import { readFile, mkdir } from 'node:fs/promises';
@@ -18,10 +18,10 @@ const server = createServer(async (req,res) => {
 await new Promise(done => server.listen(0,'127.0.0.1',done));
 let browser;
 try {
-  browser = await chromium.launch({channel:'msedge',headless:true});
+  browser = await chromium.launch({channel:'chrome',headless:true});
   const page = await browser.newPage({viewport:{width:1280,height:900}});
   const errors = []; page.on('pageerror',error => errors.push(error.message));
-  await page.goto(`http://127.0.0.1:${server.address().port}`);
+  await page.goto(`http://127.0.0.1:${server.address().port}/?view=calculator`);
   await page.waitForFunction(() => window.ToramSettingsRepository && window.ToramMyRoomFood);
   await page.getByRole('tab',{name:'버프',exact:true}).click();
   const rows = page.locator('#myRoomFoodSlots .food-row');
@@ -94,5 +94,5 @@ try {
   assert.deepEqual(await page.evaluate(() => window.ToramMyRoomFood.getSelections()),[null,null,null,null,null]);
   assert.equal(await guild.isChecked(),true);
   assert.deepEqual(errors,[]);
-  console.log('Food Edge UI: PASS (five slots, shortcuts, duplicates, levels, read-only values, reload, calculation, disconnected effects, old saves, mobile)');
+  console.log('Food Chrome UI: PASS (five slots, shortcuts, duplicates, levels, read-only values, reload, calculation, disconnected effects, old saves, mobile)');
 } finally { await browser?.close(); server.close(); }

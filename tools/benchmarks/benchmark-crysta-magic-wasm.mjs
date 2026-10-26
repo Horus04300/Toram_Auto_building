@@ -14,7 +14,7 @@ const { chromium } = require(process.env.CODEX_PLAYWRIGHT_PATH);
 const root = resolve(import.meta.dirname, '../..');
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const cases = {};
-// Native measurements finish before starting Edge so they do not compete for CPU.
+// Native measurements finish before starting Chrome so they do not compete for CPU.
 for (const id of ['magic-device', 'magic-staff']) {
   const output = `desktop/target/${id}-native-current.json`;
   const { stdout } = await promisify(execFile)(process.execPath, [
@@ -33,11 +33,11 @@ const server = createWebDevServer();
 let browser;
 try {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
-  browser = await chromium.launch({ channel:'msedge', headless:true });
+  browser = await chromium.launch({ channel:'chrome', headless:true });
   const page = await browser.newPage();
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
-  await page.goto(`http://127.0.0.1:${server.address().port}/`);
+  await page.goto(`http://127.0.0.1:${server.address().port}/?view=calculator`);
   await page.waitForFunction(() => window.ToramUiFeatures?.settings);
   assert.equal(await page.evaluate(() => typeof window.ToramCrystaOptimizationNativeClient), 'undefined');
   for (const [id, entry] of Object.entries(cases)) {
@@ -81,7 +81,7 @@ try {
     wasmSha256:hash(await readFile(resolve(root, 'build/generated/wasm/crysta_bg.wasm'))),
     method:{ repeats:3, boundary:'raw problem compilation through final JS reevaluation; UI rendering excluded',
       native:'fresh Node/Rust process, product default threads',
-      wasm:'fresh Worker per run in one isolated Edge context; includes WASM loading and preview, then reuses the session for precise search',
+      wasm:'fresh Worker per run in one isolated Chrome context; includes WASM loading and preview, then reuses the session for precise search',
       scope:'Magic:11 cannon1, charge 200%, smite; original requirements, locks and bans preserved; not full combo damage or P95' }, cases };
   await writeFile(resolve(root, 'desktop/target/rust-wasm-magic-comparison.json'), JSON.stringify(report, null, 2) + '\n');
   console.log('Magic Native/WASM comparison: PASS (2 samples x 3 repeats, exact score/build/raw stats and final JS reevaluation)');

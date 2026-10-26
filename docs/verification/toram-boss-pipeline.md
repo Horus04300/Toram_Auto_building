@@ -48,6 +48,8 @@ npm run bosses:sync -- --offline build/tmp/toram-monster-capture/source
 
 개발판은 `web/public/game-data/bosses/manifest.json`의 `toram.project-bosses.v1`을 읽는다. `ToramApp.bosses.search('기드론', 'kr')`, `ToramApp.bosses.get(540, 'us')`를 제공한다. 검색은 ID index/언어만, 상세는 ID 구간별 변종 파일만 지연 로딩한다. 하위 경로와 웹/앱 준비 도구에 포함되며 원본 자료는 배포하지 않는다.
 
+도감의 `search('', locale, {classification})`는 분류를 선택했을 때만 변종 shard를 읽어 일치 개체가 있는 ID를 반환한다. 기본 검색의 지연 조회는 유지한다. `bossKind` URL은 입장/필드/고난도 선택을 보존하며 상세 개체도 해당 분류로 제한한다. 전체에서는 길드·던전·미분류도 원형대로 보존한다. 이벤트보스는 사용자 요청으로 카테고리 칸만 두고 기간·맵 연결은 보류한다.
+
 앱 파일은 Boss 비트 4 레코드를 보존한다. 여기에는 부위·단계 변종도 있으며 서로 다른 독립 보스의 수가 아니다. `baseStats`는 네이티브 명칭과 원시 단위다. 변종마다 출처 SHA, 방 목록, 직렬화 출현점, 속성·부위·모드를 제공한다. `partStats`는 같은 필드의 부위 마스터를 연결하며 Boss 비트가 없는 부위의 DEF/MDEF와 보정 속성도 포함한다. 누락 참조는 stats:null이다.
 
 분류는 변종별 `classification`·`classificationEvidence`와 `entry`로 전달한다. 필드는 정확한 mmo 출현점(`single`, 난이도 null), 입장은 BossMenu의 명시적 대상 맵/방(`difficulty-select`), 고난도 레이드는 HighRaidBossMaster의 ID 연결(`level-select`, BaseLevel/MinLevel 보존)이다. Dungeon 비트는 별도로 구분한다. 양성 근거가 없는 변종만 unresolved다. 다른 맵의 분류를 UUID만으로 복사하지 않는다. 상세 근거는 `boss-classification.md`에 있다.

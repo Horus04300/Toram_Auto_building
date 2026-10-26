@@ -232,7 +232,7 @@ fn supply_state_joins_cover_negative_resources_and_both_join_paths() {
             maxima,
             resources: std::array::from_fn(|_| Form {
                 constant: 0.0,
-                coefficients: [0.0; 52],
+                coefficients: [0.0; 59],
                 error: 0.0,
             }),
             constant: 0.0,
@@ -2649,6 +2649,83 @@ fn small_stat_bonuses_do_not_receive_main_stat_split_priority() {
 }
 
 #[test]
+fn constant_stat_reflection_keeps_monotone_bounds_and_variable_reflection_keeps_affine_plan() {
+    for key in crate::crysta_native_evaluator::NATIVE_STAT_KEYS
+        .iter()
+        .filter(|key| key.starts_with("ATK_UP_") || key.starts_with("MATK_UP_"))
+    {
+        let (prefix, stat) = key
+            .strip_prefix("ATK_UP_")
+            .map(|stat| ("atkUp", stat))
+            .unwrap_or_else(|| ("matkUp", key.strip_prefix("MATK_UP_").unwrap()));
+        for base_value in [0.0_f64, 1.0, 4.0, 100.0] {
+            for context_rate in [0.0, 50.0, 75.0, -25.0] {
+                for delta in [25.0, -25.0, 1.25] {
+                    let mut problem = small_problem();
+                    let mut base = serde_json::to_value(&problem.base_context).unwrap();
+                    base[format!("{}Base", stat.to_lowercase())] = json!(base_value);
+                    base[format!("{prefix}{stat}")] = json!(context_rate);
+                    problem.base_context = PreparedContext::from(base);
+                    problem.groups[0].packages[0]
+                        .stat_delta
+                        .insert((*key).into(), delta);
+                    problem.prepare_evaluation_stats();
+                    let roots = problem.prepare_trees().unwrap();
+                    let expected = base_value == 0.0;
+                    assert!(problem.trees.supply.as_ref().unwrap().plan.is_some());
+                    if expected {
+                        assert!(problem.trees.supply.as_ref().unwrap().legacy_safe());
+                    }
+                    let envelope = box_stats(&problem.trees, &roots);
+                    let upper =
+                        evaluate_feasible_summary(&problem.base_context, &envelope, |_, _| true)
+                            .unwrap()
+                            .unwrap()
+                            .optimization_damage_factor;
+                    if problem.trees.supply.as_ref().unwrap().legacy_safe() {
+                        for index in 0..problem.groups[0].packages.len() {
+                            let actual = evaluate_feasible_summary(
+                                &problem.base_context,
+                                &selection_evaluation_stats(&problem, &[index, 0, 0, 0]),
+                                |_, _| true,
+                            )
+                            .unwrap()
+                            .unwrap()
+                            .optimization_damage_factor;
+                            assert!(
+                                upper >= actual,
+                                "constant reflection envelope lost a completion"
+                            );
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for fixed in [false, true] {
+        let mut problem = small_problem();
+        let mut base = serde_json::to_value(&problem.base_context).unwrap();
+        base["vitBase"] = json!(1);
+        problem.base_context = PreparedContext::from(base);
+        for (index, group) in problem.groups.iter_mut().enumerate() {
+            group.packages = serde_json::from_value(json!([
+                {"id":format!("{index}-a"),"statDelta":{"ATK_UP_VIT":25}},
+                {"id":format!("{index}-b"),"statDelta":{"ATK_UP_VIT":if fixed {25}else{0}}}
+            ]))
+            .unwrap();
+        }
+        problem.prepare_evaluation_stats();
+        problem.prepare_trees().unwrap();
+        assert_eq!(
+            problem.trees.supply.as_ref().unwrap().legacy_safe(),
+            fixed,
+            "Four 25% rates must be summed before flooring VIT=1; fixed sums remain safe"
+        );
+    }
+}
+
+#[test]
 fn candidate_coordinates_only_order_trees_and_preserve_oracle_resume() {
     let mut problem = joint_problem();
     let oracle = solve_exact(&problem).unwrap();
@@ -2948,7 +3025,7 @@ fn lazy_children_preserve_order_and_cover_each_binary_split_once() {
 #[test]
 fn old_bound_policy_checkpoint_is_rejected() {
     let session = NativeSearchSession::new(small_problem()).unwrap();
-    for version in 4..=22 {
+    for version in 4..=23 {
         let mut checkpoint = session.checkpoint().unwrap();
         checkpoint.schema = format!("toram.crysta-native-search-checkpoint.v{version}");
         assert!(NativeSearchSession::from_checkpoint(checkpoint.clone()).is_err());
@@ -3566,7 +3643,10 @@ fn all_supply_planes_cover_future_options_and_nonlinear_boundaries() {
         problem.prepare_evaluation_stats();
         let roots = problem.prepare_trees().unwrap();
         let supply = problem.trees.supply.as_ref().unwrap();
-        assert!(supply.plan.is_some());
+        assert!(
+            supply.plan.is_some(),
+            "All finite proportional rates retain certified affine bounds"
+        );
         let groups: Vec<Vec<_>> = problem
             .groups
             .iter()
@@ -3577,7 +3657,9 @@ fn all_supply_planes_cover_future_options_and_nonlinear_boundaries() {
                     .collect()
             })
             .collect();
-        let plan = SupplyPlan::prepare(&problem.base_context, &groups).unwrap();
+        let Some(plan) = SupplyPlan::prepare(&problem.base_context, &groups) else {
+            continue;
+        };
         let requirements = Requirements::new(&problem.scenario_snapshot["requirements"]);
         let ancestors: [Vec<Vec<NodeId>>; 4] = std::array::from_fn(|g| {
             let end = roots

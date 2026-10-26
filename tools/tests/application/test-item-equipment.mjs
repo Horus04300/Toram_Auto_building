@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { createRequire } from 'node:module';
-import { createItemCatalog, createEquipmentSelection, resolveEquipmentOptions, validateEquipmentSelection,
+import { createItemCatalog, createEquipmentSelection, resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection,
   createConsumableBuffSelection, resolveConsumableBuffs } from '../../../web/src/application/item-catalog.mjs';
 import { createEquipmentItemUi } from '../../../web/src/ui/item-equipment-ui.mjs';
 import { createConsumableBuffUi } from '../../../web/src/ui/item-consumable-ui.mjs';
@@ -113,8 +113,30 @@ assert.throws(() => resolveConsumableBuffs([{...vita,stats:{BAD:1}}], registry),
 assert.throws(() => resolveConsumableBuffs([{...vita,stats:{MAXHP:0}}], registry), /동적/u);
 const buffNames = await catalog.listBuffItems();
 for (const {id} of buffNames) createConsumableBuffSelection(await catalog.getItem(id), registry);
+const categoryRules = JSON.parse(await readFile(resolve(root,'data/sources/toram-items/consumable-categories.json')));
+assert.equal(categoryRules.categories.length,15);
+for (const category of categoryRules.categories) {
+  for (const anchor of category.evidence) {
+    const source = await catalog.getItem(anchor.gameItemId);
+    assert.equal(source.consumableCategory.id,category.id,`Category anchor ${anchor.gameItemId}`);
+    const details = await catalog.getDetails(anchor.gameItemId);
+    assert.equal(details.description,anchor.descriptions.kr,'Category evidence must match retained Korean prose');
+  }
+}
+assert.ok(buffNames.every(item=>item.consumableCategory),'Every supported ability buff has a reviewed category');
+assert.equal(buffNames.find(item=>item.id===2000).consumableCategory.names.kr,'HP 증가');
+assert.equal(buffNames.find(item=>item.id===2010).consumableCategory.names.kr,'MP 증가');
+assert.equal((await catalog.getItem(2537)).consumableCategory.basis,'duration-marker');
+assert.equal((await catalog.getItem(2020)).consumableCategory.id,'prevention','Catalog-only items still expose categories');
+assert.equal((await catalog.getItem(1000)).consumableCategory,null,'Instant recovery is not a timed buff category');
+const liveVita = await catalog.getItem(2965);
+assert.equal(liveVita.consumableCategory.id,'hp-boost');
+assert.equal(liveVita.consumableCategory.durationCapId,209);
+assert.equal(createConsumableBuffSelection(liveVita,registry).buffGroupId,209);
 assert.ok(buffNames.some(item => item.id === 2000));
-assert.ok(!buffNames.some(item => item.id === 2560), 'Unmapped consumable scripts must stay out of the selectable list.');
+assert.ok(buffNames.some(item => item.id === 2560), 'Reviewed meteor resistance buff is selectable.');
+assert.deepEqual(createConsumableBuffSelection(await catalog.getItem(2560),registry).stats,{MDEFP:10,METEOR_RES:15});
+assert.ok(!buffNames.some(item => item.id === 1000), 'Instant recovery scripts remain outside timed buffs.');
 const ampr = createConsumableBuffSelection(await catalog.getItem(2517), registry);
 assert.deepEqual(ampr.stats, {AMPR:3}); assert.equal(ampr.buffGroupId, 210);
 const tranquilizer = createConsumableBuffSelection(await catalog.getItem(108157), registry);
@@ -140,3 +162,25 @@ buffSave.build.consumableBuffs.push(vitaNext);
 assert.equal(environment.ToramSettingsRepository.validateSavedBuild(buffSave), false);
 consumables.restoreSelections([]); assert.deepEqual(consumables.getSelections(), []);
 console.log('Item equipment/buffs: PASS (native sub types, ordinary-bonus exclusions, base/manual inputs preserved, buff units/groups, kernel parity, pinned v2 saves)');
+
+for (const [id,context,expected] of [[10182,ctx,5],[14140,{...ctx,mainType:'지팡이',armorType:'경량옷'},3],[14140,{...ctx,mainType:'지팡이',armorType:'중량옷'},4],[13145,{...ctx,mainType:'자동활',subType:'마도구'},8]]) {
+  const elementItem=createEquipmentSelection(await catalog.getItem(id),'mainWeapon',context,registry);
+  assert.equal(resolveEquipmentElement(elementItem,'mainWeapon',context,registry),expected,`Element item ${id}`);
+  assert.equal(resolveEquipmentElement(JSON.parse(JSON.stringify(elementItem)),'mainWeapon',context,registry),expected);
+}
+assert.throws(()=>validateEquipmentSelection({...selected,element:9},registry),/속성/u);
+assert.throws(()=>validateEquipmentSelection({...selected,element:'1'},registry),/속성/u);
+
+const elementalBuild=structuredClone(input);
+elementalBuild.build.equipment.mainWeapon.catalogItem=createEquipmentSelection(await catalog.getItem(10182),'mainWeapon',ctx,registry);
+elementalBuild.build.equipment.mainWeapon.type='한손검';
+elementalBuild.scenario.target.targetElement=6;
+const elementalSnapshot=environment.ToramApplication.CreateCalculationSnapshot(elementalBuild);
+assert.equal(elementalSnapshot.baseContext.weaponElement,5,'Pinned light element must reach the kernel');
+assert.equal(elementalSnapshot.baseContext.targetElement,6,'Manual target element must reach the kernel');
+const elementSaved=structuredClone(roundtrip);elementSaved.scenario.target.targetElement=6;
+assert.equal(environment.ToramSettingsRepository.validateSavedBuild(elementSaved),true);
+for(const value of [-1,8,1.5,'6']) {
+  elementSaved.scenario.target.targetElement=value;
+  assert.equal(environment.ToramSettingsRepository.validateSavedBuild(elementSaved),false);
+}

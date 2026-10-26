@@ -1,8 +1,20 @@
 # 홈 서버 계정·Google 로그인
 
+종합 플랫폼으로 확장할 때는 [제품·객체·병합 기준](platform-design-contract.md)과 [DB/API 계약](platform-data-api-contract.md)을 함께 따른다. 아래 기존 개인 저장·인증 계약과 신규 게시글 평가를 혼동하지 않는다.
+
 구현 진입점은 `server/account-server.mjs`, `web/src/application/account-client.mjs`, `web/src/ui/account-ui.mjs`다. Linux/Docker 한 인스턴스와 SQLite로 시작한다. Firebase/Supabase 계정은 필요 없다. 아직 실제 홈 서버에 배포하거나 Google 발급 키로 로그인하지 않았다.
 
+새 인벤토리 저장·화면의 경계는 `server/inventory-store.mjs`, 공용 `web/src/application/{equipment-object,inventory-objects,inventory-merge}.mjs`, `web/src/pages/inventory/`다. 공통 틀·전환은 `web/src/layout/`, 홈은 `web/src/pages/home/`이며 인증 요청은 기존 account-client를 공유한다. DTO·검색·수정 충돌·병합 요청 키는 [플랫폼 데이터·API 계약](platform-data-api-contract.md)의 v1을 따른다. `/` 홈·`/inventory`·`/calculator`를 프론트 진입 문서로 허용하고 없는 API·자산은 HTML로 대체하지 않는다. 구형 records의 이관 여부와 현재 구현 범위는 현재 인계에서 확인한다.
+
+조회 전용 도감의 `/catalog`도 프론트 진입 문서로 허용한다. 도감은 발행된 같은 출처의 아이템·보스 정적 자산을 직접 사용하므로 인증·계정 DB·업로드가 필요하지 않다. 공개 게시판·인벤토리 API의 인증 계약을 바꾸지 않는다.
+
 ## 사용자 흐름과 저장 범위
+
+공개 구성은 `server/post-store.mjs`, 생성 요청 재시도는 `server/request-receipts.mjs`, 게시판·공개 창은 `web/src/pages/board/`가 소유한다. 공개 검색·특정 버전은 비로그인 조회가 가능하며 공개/새 버전/복사/즐겨찾기/작성자 관리는 기존 세션·Origin·JSON 검증을 사용한다. `/board`는 프론트 진입 문서로 허용한다. 기존 records의 favorites와 게시글 즐겨찾기는 다른 테이블이다. 상세 DTO는 [플랫폼 DB/API 계약](platform-data-api-contract.md)을 따른다.
+
+로컬 실제 로그인은 `server/.env`의 `PUBLIC_ORIGIN=http://localhost:8787`, `PORT=8787`과 Google 웹 클라이언트의 `http://localhost:8787/api/auth/google/callback`을 맞춘다. 처음 접속하는 주소도 localhost로 통일한다. 127.0.0.1에서 시작하면 로그인 요청 쿠키가 localhost 콜백으로 넘어가지 않는다. 발급 키·Secret은 이 문서나 브라우저 코드에 넣지 않는다.
+
+인증 설정 전 개발 체험은 `npm run web:preview` → `http://127.0.0.1:5182/__preview`의 명시적 체험 계정 버튼을 사용한다. 이 별도 실행기는 loopback·Host·Origin을 제한하고 `build/tmp/platform-preview/accounts.sqlite`에 테스트 데이터만 저장한다. 여러 체험 브라우저가 같은 로컬 계정을 쓰며 실제 계정 데이터와 합치지 않는다. 운영 서버에 체험 경로·환경 우회 설정을 넣지 않고 Docker에도 실행기를 포함하지 않는다. 로그아웃 뒤에는 체험 진입 페이지에서 다시 들어온다.
 
 - 저장 버튼 바로 옆 계정 아이콘 → 계정 모달. 미로그인은 Google 로그인, 로그인 후에는 닉네임 변경과 내 빌드·내 아이템·즐겨찾기를 제공한다.
 - 내 빌드는 기존 `toram-auto-build-document` schema v2를 이름 있는 새 항목으로 저장/조회/불러오기/삭제한다. 로컬 JSON·앱 파일 저장과 자동 복원은 계속 동작한다.
@@ -38,6 +50,10 @@ Google OAuth 웹 클라이언트의 Authorization Code + PKCE(S256)를 서버에
 | POST /api/{builds,items,favorites} | `{name,data}`를 새 항목으로 저장 (이름 최대 80자) |
 | GET /api/{kind}/:id | 내 항목의 데이터 조회 |
 | DELETE /api/{kind}/:id | `{version}` 확인 후 내 항목 삭제 |
+| GET/POST /api/inventory | 내 구성 목록 종류·검색·분류·페이지 / 새 구성 생성 |
+| GET/PUT/DELETE /api/inventory/:id | 내 구성 상세 / 기대 revision으로 수정·삭제 |
+| POST /api/inventory/merges/preview | 내 두 구성의 조립·충돌 미리보기 |
+| POST /api/inventory/merges | 원본 revision·선택·요청 키 확인 후 새 구성 저장 |
 
 SQLite는 사용자/세션/OAuth 대기/앱 로그인 대기/저장 항목을 분리한다. WAL·foreign key를 활성화하고 데이터 폴더는 컨테이너 밖에 둔다. 공유/공개 빌드·권한 역할·계정 탈퇴·일괄 내보내기 UI는 추가하지 않았다. 현재 항목은 각 기기에 불러와 기존 JSON 내보내기로 백업할 수 있다.
 

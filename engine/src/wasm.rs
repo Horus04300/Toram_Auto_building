@@ -1,6 +1,10 @@
 use crate::crysta_native_solver::{NativeProblem, NativeSearchSession};
 use wasm_bindgen::prelude::*;
 
+#[cfg(feature = "wasm-threads")]
+#[allow(unused_imports)]
+pub use wasm_bindgen_rayon::init_thread_pool;
+
 #[wasm_bindgen]
 pub struct SearchSession {
     session: NativeSearchSession,
@@ -30,5 +34,18 @@ impl SearchSession {
 
     pub fn is_complete(&self) -> bool {
         self.session.is_complete()
+    }
+
+    #[cfg(feature = "wasm-threads")]
+    pub fn step_parallel(&mut self, nodes: u32, threads: u32) -> Result<bool, JsValue> {
+        self.session
+            .advance_parallel_slice_with_control(
+                nodes.clamp(1, 4096) as usize,
+                threads.clamp(1, 64) as usize,
+                None,
+                Some(web_time::Instant::now() + web_time::Duration::from_millis(16)),
+            )
+            .map_err(|e| JsValue::from_str(&e))?;
+        Ok(self.session.is_complete())
     }
 }

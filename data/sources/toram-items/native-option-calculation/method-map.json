@@ -1,0 +1,6941 @@
+{
+  "image_base": "0x7ffe99740000",
+  "snapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+  "metadataSha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9",
+  "methods": [
+    {
+      "oldIndex": 14278,
+      "newIndex": 14278,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a9110",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14279,
+      "newIndex": 14279,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c8",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a93f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14280,
+      "newIndex": 14280,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementKillerBonus",
+      "token": "0x60037c9",
+      "method_flags_raw": "0x91",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a96d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14288,
+      "newIndex": 14288,
+      "class": "PlayerAttackBase",
+      "name": "InitializeElement",
+      "token": "0x60037d1",
+      "method_flags_raw": "0xe4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ae8f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14289,
+      "newIndex": 14289,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponElementType",
+      "token": "0x60037d2",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4adee0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14343,
+      "newIndex": 14343,
+      "class": "PlayerAttackBase",
+      "name": "GetElementKillerBonus",
+      "token": "0x6003808",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ad9b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15731,
+      "newIndex": 15731,
+      "class": "BonusManager",
+      "name": "GetEquipElement",
+      "token": "0x6003d74",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4eb8d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15749,
+      "newIndex": 15749,
+      "class": "BonusManager",
+      "name": "GetElementKiller",
+      "token": "0x6003d86",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12860,
+        "exact_byval_name": "Toram.Common.Bonus.BonusType"
+      },
+      "runtime_va": "0x7ffe9a4eb860",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13760,
+      "newIndex": 13760,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipElement",
+      "token": "0x60035c1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1cc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13761,
+      "newIndex": 13761,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSubWeaponElement",
+      "token": "0x60035c2",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15744,
+      "newIndex": 15744,
+      "class": "BonusManager",
+      "name": "CulcConvertAtk",
+      "token": "0x6003d81",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4e9e90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15745,
+      "newIndex": 15745,
+      "class": "BonusManager",
+      "name": "CulcConvertMAtk",
+      "token": "0x6003d82",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ea180",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13577,
+      "newIndex": 13577,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Hit",
+      "token": "0x600350a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13579,
+      "newIndex": 13579,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Flee",
+      "token": "0x600350c",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419c00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13580,
+      "newIndex": 13580,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Def",
+      "token": "0x600350d",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419a70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13581,
+      "newIndex": 13581,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Mdef",
+      "token": "0x600350e",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41ab30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13585,
+      "newIndex": 13585,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_HpRecovery",
+      "token": "0x6003512",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489790",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13586,
+      "newIndex": 13586,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_MpRecovery",
+      "token": "0x6003513",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489950",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13587,
+      "newIndex": 13587,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AtkMpRecovery",
+      "token": "0x6003514",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4868a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13591,
+      "newIndex": 13591,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_ElementPower",
+      "token": "0x6003518",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4883d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13599,
+      "newIndex": 13599,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Respawn",
+      "token": "0x6003520",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b0e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13603,
+      "newIndex": 13603,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDefFact",
+      "token": "0x6003524",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "def",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13604,
+      "newIndex": 13604,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetMdefFact",
+      "token": "0x6003525",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "mdef",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13615,
+      "newIndex": 13615,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseSecondaryStatus",
+      "token": "0x6003530",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "baseStatus",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482ed0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13617,
+      "newIndex": 13617,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxMp",
+      "token": "0x6003532",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482b10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13618,
+      "newIndex": 13618,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxHp",
+      "token": "0x6003533",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482470",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13624,
+      "newIndex": 13624,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetRespawnRate",
+      "token": "0x6003539",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13628,
+      "newIndex": 13628,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcHpRecovery",
+      "token": "0x600353d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4834d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13629,
+      "newIndex": 13629,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcMpRecovery",
+      "token": "0x600353e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4839c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13506,
+      "newIndex": 13506,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Lv",
+      "token": "0x60034c3",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c3160",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13507,
+      "newIndex": 13507,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Str",
+      "token": "0x60034c4",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d44f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13508,
+      "newIndex": 13508,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Int",
+      "token": "0x60034c5",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c9d40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13509,
+      "newIndex": 13509,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Vit",
+      "token": "0x60034c6",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c9d30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13510,
+      "newIndex": 13510,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Agi",
+      "token": "0x60034c7",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999c3280",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13511,
+      "newIndex": 13511,
+      "class": "PlayerPrimaryStatus",
+      "name": "get_Dex",
+      "token": "0x60034c8",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99a9a750",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 31357,
+      "newIndex": 31357,
+      "class": "SkillUtil",
+      "name": "CheckWeakElemet",
+      "token": "0x6007a7e",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "useType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a812710",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 31359,
+      "newIndex": 31359,
+      "class": "SkillUtil",
+      "name": "GetWeakElement",
+      "token": "0x6007a80",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "target",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a8128d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15733,
+      "newIndex": 15733,
+      "class": "BonusManager",
+      "name": "GetBonusValue",
+      "token": "0x6003d76",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb350",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15734,
+      "newIndex": 15734,
+      "class": "BonusManager",
+      "name": "GetBonusPercentValue",
+      "token": "0x6003d77",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eb220",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15736,
+      "newIndex": 15736,
+      "class": "BonusManager",
+      "name": "getDataBonusValue",
+      "token": "0x6003d79",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eeb50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15738,
+      "newIndex": 15738,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_AvatarConstan_Rate",
+      "token": "0x6003d7b",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantToAvatarType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "plusRateValue",
+          "type_index": 9355,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusRateValue",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ea6d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15739,
+      "newIndex": 15739,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_Rate",
+      "token": "0x6003d7c",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4eac40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15743,
+      "newIndex": 15743,
+      "class": "BonusManager",
+      "name": "GetBonusMultiPercentValue",
+      "token": "0x6003d80",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eade0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13626,
+      "newIndex": 13626,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetExpBonus",
+      "token": "0x600353b",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485c70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13627,
+      "newIndex": 13627,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDropBonus",
+      "token": "0x600353c",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485a80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15855,
+      "newIndex": 15855,
+      "class": "BonusScriptManager",
+      "name": ".ctor",
+      "token": "0x6003df0",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4f6d10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15864,
+      "newIndex": 15864,
+      "class": "BonusScriptManager",
+      "name": "funcSetBonus",
+      "token": "0x6003df9",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8a50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15875,
+      "newIndex": 15875,
+      "class": "BonusScriptManager",
+      "name": "eventCheck",
+      "token": "0x6003e04",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8410",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15857,
+      "newIndex": 15857,
+      "class": "BonusScriptManager",
+      "name": "Run",
+      "token": "0x6003df2",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusScript",
+          "type_index": 12854,
+          "exact_byval_name": "BonusScriptData"
+        },
+        {
+          "name": "updateTime",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4f6b30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 16663,
+      "newIndex": 16663,
+      "class": "GameEventManager",
+      "name": "SetOngoingGameEventType",
+      "token": "0x6004118",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ongoingGameEventType",
+          "type_index": 9988,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a528710",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 16664,
+      "newIndex": 16664,
+      "class": "GameEventManager",
+      "name": "CheckOngoingGameEventType",
+      "token": "0x6004119",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ongoingGameEventType",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a526960",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15865,
+      "newIndex": 15865,
+      "class": "BonusScriptManager",
+      "name": "funcSetInstantBonus",
+      "token": "0x6003dfa",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8ee0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15866,
+      "newIndex": 15866,
+      "class": "BonusScriptManager",
+      "name": "funcSetAntiVirusBonus",
+      "token": "0x6003dfb",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "line",
+          "type_index": 12848,
+          "exact_byval_name": "Toram.Common.Bonus.BonusParameter"
+        }
+      ],
+      "return_type": {
+        "type_index": 31269,
+        "exact_byval_name": "BonusScriptCommand"
+      },
+      "runtime_va": "0x7ffe9a4f8a10",
+      "status": "mapped"
+    }
+  ],
+  "helperAddresses": [
+    "0x7ffe99982110",
+    "0x7ffe998e0270",
+    "0x7ffe9996c900"
+  ],
+  "callees": [
+    {
+      "oldIndex": 13570,
+      "newIndex": 13570,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_MaxHp",
+      "token": "0x6003503",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489900",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13571,
+      "newIndex": 13571,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_MaxMp",
+      "token": "0x6003504",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13572,
+      "newIndex": 13572,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_EqAtk",
+      "token": "0x6003505",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488500",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13573,
+      "newIndex": 13573,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_SubEqAtk",
+      "token": "0x6003506",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b370",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13574,
+      "newIndex": 13574,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Atk",
+      "token": "0x6003507",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a418d40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13575,
+      "newIndex": 13575,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Stable",
+      "token": "0x6003508",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489a70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13576,
+      "newIndex": 13576,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Matk",
+      "token": "0x6003509",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41a600",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13577,
+      "newIndex": 13577,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Hit",
+      "token": "0x600350a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13578,
+      "newIndex": 13578,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_CurrectHit",
+      "token": "0x600350b",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488180",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13579,
+      "newIndex": 13579,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Flee",
+      "token": "0x600350c",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419c00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13580,
+      "newIndex": 13580,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Def",
+      "token": "0x600350d",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419a70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13581,
+      "newIndex": 13581,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Mdef",
+      "token": "0x600350e",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41ab30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13582,
+      "newIndex": 13582,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_EqDef",
+      "token": "0x600350f",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a419bb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13583,
+      "newIndex": 13583,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Aspd",
+      "token": "0x6003510",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a474840",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13584,
+      "newIndex": 13584,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Cspd",
+      "token": "0x6003511",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a487b00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13585,
+      "newIndex": 13585,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_HpRecovery",
+      "token": "0x6003512",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489790",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13586,
+      "newIndex": 13586,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_MpRecovery",
+      "token": "0x6003513",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a489950",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13587,
+      "newIndex": 13587,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AtkMpRecovery",
+      "token": "0x6003514",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4868a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13588,
+      "newIndex": 13588,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Critical",
+      "token": "0x6003515",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a487a70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13589,
+      "newIndex": 13589,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_CriticalDmg",
+      "token": "0x6003516",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4878a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13590,
+      "newIndex": 13590,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_CriticalMagicDmg",
+      "token": "0x6003517",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4878e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13591,
+      "newIndex": 13591,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_ElementPower",
+      "token": "0x6003518",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4883d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13592,
+      "newIndex": 13592,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AntiVirus",
+      "token": "0x6003519",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486880",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13593,
+      "newIndex": 13593,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardDelay",
+      "token": "0x600351a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d2030",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13594,
+      "newIndex": 13594,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardPower",
+      "token": "0x600351b",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4885b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13595,
+      "newIndex": 13595,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_GuardSpeed",
+      "token": "0x600351c",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a488860",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13596,
+      "newIndex": 13596,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidSpeed",
+      "token": "0x600351d",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486e70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13597,
+      "newIndex": 13597,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidStack",
+      "token": "0x600351e",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4873f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13598,
+      "newIndex": 13598,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_AvoidDelay",
+      "token": "0x600351f",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999d2030",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13599,
+      "newIndex": 13599,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_Respawn",
+      "token": "0x6003520",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b0e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13600,
+      "newIndex": 13600,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_SubAtk",
+      "token": "0x6003521",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b310",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13601,
+      "newIndex": 13601,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_SubStable",
+      "token": "0x6003522",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a477f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13602,
+      "newIndex": 13602,
+      "class": "PlayerSecondaryStatus",
+      "name": "get_SubMatk",
+      "token": "0x6003523",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a41b3d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13603,
+      "newIndex": 13603,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDefFact",
+      "token": "0x6003524",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "def",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13604,
+      "newIndex": 13604,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetMdefFact",
+      "token": "0x6003525",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "mdef",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7d90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13605,
+      "newIndex": 13605,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcCritical",
+      "token": "0x6003526",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "rate",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "constant",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a472c30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13606,
+      "newIndex": 13606,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetCrtConstant",
+      "token": "0x6003527",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isNormalAttack",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a484110",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13607,
+      "newIndex": 13607,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetCrtRate",
+      "token": "0x6003528",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a484e10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13608,
+      "newIndex": 13608,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetNextAtkTime",
+      "token": "0x6003529",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "aspd",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe99df7ea0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13609,
+      "newIndex": 13609,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetMotionSpeed",
+      "token": "0x600352a",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "aspd",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13610,
+      "newIndex": 13610,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetCalcMotionSpeed",
+      "token": "0x600352b",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "aspd",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a483d80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13611,
+      "newIndex": 13611,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetSkillDelayRate1",
+      "token": "0x600352c",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "cspd",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe99df7f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13612,
+      "newIndex": 13612,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetSkillDelayRate2",
+      "token": "0x600352d",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "cspd",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a474440",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13613,
+      "newIndex": 13613,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDamageCut",
+      "token": "0x600352e",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485340",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13614,
+      "newIndex": 13614,
+      "class": "PlayerSecondaryStatus",
+      "name": "SetGuildStatusBoost",
+      "token": "0x600352f",
+      "method_flags_raw": "0x1e6",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "rate",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a486700",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13615,
+      "newIndex": 13615,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseSecondaryStatus",
+      "token": "0x6003530",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "baseStatus",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482ed0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13616,
+      "newIndex": 13616,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseGuardPower",
+      "token": "0x6003531",
+      "method_flags_raw": "0x1e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482250",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13617,
+      "newIndex": 13617,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxMp",
+      "token": "0x6003532",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482b10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13618,
+      "newIndex": 13618,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcBaseMaxHp",
+      "token": "0x6003533",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482470",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13619,
+      "newIndex": 13619,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcCriticalDmg",
+      "token": "0x6003534",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a482fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13620,
+      "newIndex": 13620,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcMagicCritical",
+      "token": "0x6003535",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a483870",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13621,
+      "newIndex": 13621,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbAvoid",
+      "token": "0x6003536",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486060",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13622,
+      "newIndex": 13622,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbGuardSpeed",
+      "token": "0x6003537",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486380",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13623,
+      "newIndex": 13623,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetbGuardPower",
+      "token": "0x6003538",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a486250",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13624,
+      "newIndex": 13624,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetRespawnRate",
+      "token": "0x6003539",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13625,
+      "newIndex": 13625,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDisplayBonusCalcHate",
+      "token": "0x600353a",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4854f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13626,
+      "newIndex": 13626,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetExpBonus",
+      "token": "0x600353b",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485c70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13627,
+      "newIndex": 13627,
+      "class": "PlayerSecondaryStatus",
+      "name": "GetDropBonus",
+      "token": "0x600353c",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a485a80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13628,
+      "newIndex": 13628,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcHpRecovery",
+      "token": "0x600353d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4834d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13629,
+      "newIndex": 13629,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcMpRecovery",
+      "token": "0x600353e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "isBattle",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4839c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13630,
+      "newIndex": 13630,
+      "class": "PlayerSecondaryStatus",
+      "name": "CalcAntiVirus",
+      "token": "0x600353f",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a481f50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13631,
+      "newIndex": 13631,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": ".ctor",
+      "token": "0x6003540",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "<>1__state",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99d08760",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13632,
+      "newIndex": 13632,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.IDisposable.Dispose",
+      "token": "0x6003541",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13633,
+      "newIndex": 13633,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "MoveNext",
+      "token": "0x6003542",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe999dbaf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13634,
+      "newIndex": 13634,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.Collections.Generic.IEnumerator<System.String>.get_Current",
+      "token": "0x6003543",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13635,
+      "newIndex": 13635,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.Collections.IEnumerator.Reset",
+      "token": "0x6003544",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a5070",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13636,
+      "newIndex": 13636,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.Collections.IEnumerator.get_Current",
+      "token": "0x6003545",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21695,
+        "exact_byval_name": "System.Object"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13637,
+      "newIndex": 13637,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.Collections.Generic.IEnumerable<System.String>.GetEnumerator",
+      "token": "0x6003546",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 5691,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4a4fe0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13638,
+      "newIndex": 13638,
+      "class": "<GetDurationBonusTime>d__7",
+      "name": "System.Collections.IEnumerable.GetEnumerator",
+      "token": "0x6003547",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18077,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "runtime_va": "0x7ffe9a4a4fe0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13639,
+      "newIndex": 13639,
+      "class": "<GetItemBonusParam>d__6",
+      "name": ".ctor",
+      "token": "0x6003548",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "<>1__state",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99d08760",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13640,
+      "newIndex": 13640,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.IDisposable.Dispose",
+      "token": "0x6003549",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13641,
+      "newIndex": 13641,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "MoveNext",
+      "token": "0x600354a",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe999dbaf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13642,
+      "newIndex": 13642,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.Collections.Generic.IEnumerator<System.String>.get_Current",
+      "token": "0x600354b",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13643,
+      "newIndex": 13643,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.Collections.IEnumerator.Reset",
+      "token": "0x600354c",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a5140",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13644,
+      "newIndex": 13644,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.Collections.IEnumerator.get_Current",
+      "token": "0x600354d",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21695,
+        "exact_byval_name": "System.Object"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13645,
+      "newIndex": 13645,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.Collections.Generic.IEnumerable<System.String>.GetEnumerator",
+      "token": "0x600354e",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 5691,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4a50b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13646,
+      "newIndex": 13646,
+      "class": "<GetItemBonusParam>d__6",
+      "name": "System.Collections.IEnumerable.GetEnumerator",
+      "token": "0x600354f",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18077,
+        "exact_byval_name": "System.Collections.IEnumerator"
+      },
+      "runtime_va": "0x7ffe9a4a50b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13647,
+      "newIndex": 13647,
+      "class": "<GetParam>d__5",
+      "name": ".ctor",
+      "token": "0x6003550",
+      "method_flags_raw": "0x1886",
+      "parameters": [
+        {
+          "name": "<>1__state",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe99d08760",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13648,
+      "newIndex": 13648,
+      "class": "<GetParam>d__5",
+      "name": "System.IDisposable.Dispose",
+      "token": "0x6003551",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13649,
+      "newIndex": 13649,
+      "class": "<GetParam>d__5",
+      "name": "MoveNext",
+      "token": "0x6003552",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe999dbaf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13650,
+      "newIndex": 13650,
+      "class": "<GetParam>d__5",
+      "name": "System.Collections.Generic.IEnumerator<System.String>.get_Current",
+      "token": "0x6003553",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13651,
+      "newIndex": 13651,
+      "class": "<GetParam>d__5",
+      "name": "System.Collections.IEnumerator.Reset",
+      "token": "0x6003554",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a5210",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13652,
+      "newIndex": 13652,
+      "class": "<GetParam>d__5",
+      "name": "System.Collections.IEnumerator.get_Current",
+      "token": "0x6003555",
+      "method_flags_raw": "0x9e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 21695,
+        "exact_byval_name": "System.Object"
+      },
+      "runtime_va": "0x7ffe999c3090",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13653,
+      "newIndex": 13653,
+      "class": "<GetParam>d__5",
+      "name": "System.Collections.Generic.IEnumerable<System.String>.GetEnumerator",
+      "token": "0x6003556",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 5691,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4a5180",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13716,
+      "newIndex": 13716,
+      "class": "PlayerStatusBase",
+      "name": "set_IsInit",
+      "token": "0x6003595",
+      "method_flags_raw": "0x884",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999cfca0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13733,
+      "newIndex": 13733,
+      "class": "PlayerStatusBase",
+      "name": "get_IsEffectiveDeadItemDuration",
+      "token": "0x60035a6",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe99a27590",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13734,
+      "newIndex": 13734,
+      "class": "PlayerStatusBase",
+      "name": "set_IsEffectiveDeadItemDuration",
+      "token": "0x60035a7",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999cfcb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13742,
+      "newIndex": 13742,
+      "class": "PlayerStatusBase",
+      "name": "GetNextExp",
+      "token": "0x60035af",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18827,
+        "exact_byval_name": "System.Int64"
+      },
+      "runtime_va": "0x7ffe9a4a2520",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13743,
+      "newIndex": 13743,
+      "class": "PlayerStatusBase",
+      "name": "GetHpPercent",
+      "token": "0x60035b0",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a22c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13744,
+      "newIndex": 13744,
+      "class": "PlayerStatusBase",
+      "name": "GetMpPercent",
+      "token": "0x60035b1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a2470",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13745,
+      "newIndex": 13745,
+      "class": "PlayerStatusBase",
+      "name": "DamageHp",
+      "token": "0x60035b2",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "actDead",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a1500",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13746,
+      "newIndex": 13746,
+      "class": "PlayerStatusBase",
+      "name": "AddLocalHp",
+      "token": "0x60035b3",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "hp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a1280",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13747,
+      "newIndex": 13747,
+      "class": "PlayerStatusBase",
+      "name": "AddLocalMp",
+      "token": "0x60035b4",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a1370",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13748,
+      "newIndex": 13748,
+      "class": "PlayerStatusBase",
+      "name": "EnoughMp",
+      "token": "0x60035b5",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4a1760",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13749,
+      "newIndex": 13749,
+      "class": "PlayerStatusBase",
+      "name": "PaySkillMp",
+      "token": "0x60035b6",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4a2a80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13750,
+      "newIndex": 13750,
+      "class": "PlayerStatusBase",
+      "name": "SetExp",
+      "token": "0x60035b7",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "level",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "setExp",
+          "type_index": 18827,
+          "exact_byval_name": "System.Int64"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a3b70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13751,
+      "newIndex": 13751,
+      "class": "PlayerStatusBase",
+      "name": "UpdateSkillPoint",
+      "token": "0x60035b8",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "point",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a40e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13752,
+      "newIndex": 13752,
+      "class": "PlayerStatusBase",
+      "name": "UpdateStatusPoint",
+      "token": "0x60035b9",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "point",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a4110",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13753,
+      "newIndex": 13753,
+      "class": "PlayerStatusBase",
+      "name": "UpdateEffectiveDeadItemDuration",
+      "token": "0x60035ba",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "effective",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999cfcb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13754,
+      "newIndex": 13754,
+      "class": "PlayerStatusBase",
+      "name": "SetEquip",
+      "token": "0x60035bb",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        },
+        {
+          "name": "item",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a30b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13755,
+      "newIndex": 13755,
+      "class": "PlayerStatusBase",
+      "name": "SetCooking",
+      "token": "0x60035bc",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusParameterList",
+          "type_index": 6726,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a2cc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13756,
+      "newIndex": 13756,
+      "class": "PlayerStatusBase",
+      "name": "SetGuildRaidBonus",
+      "token": "0x60035bd",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusParameterList",
+          "type_index": 6726,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a3c00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13757,
+      "newIndex": 13757,
+      "class": "PlayerStatusBase",
+      "name": "SetSelfDisclosureBonus",
+      "token": "0x60035be",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusParameterList",
+          "type_index": 6726,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a3d70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13758,
+      "newIndex": 13758,
+      "class": "PlayerStatusBase",
+      "name": "SetCristEquipBuff",
+      "token": "0x60035bf",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "bonus",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        },
+        {
+          "name": "cristBonus",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a2e30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13759,
+      "newIndex": 13759,
+      "class": "PlayerStatusBase",
+      "name": "GetEquip",
+      "token": "0x60035c0",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        }
+      ],
+      "return_type": {
+        "type_index": 19011,
+        "exact_byval_name": "ItemData"
+      },
+      "runtime_va": "0x7ffe9a4a21b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13760,
+      "newIndex": 13760,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipElement",
+      "token": "0x60035c1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1cc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13761,
+      "newIndex": 13761,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSubWeaponElement",
+      "token": "0x60035c2",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4a1fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13762,
+      "newIndex": 13762,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSkill",
+      "token": "0x60035c3",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a1f20",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13763,
+      "newIndex": 13763,
+      "class": "PlayerStatusBase",
+      "name": "GetMainEquipSkill",
+      "token": "0x60035c4",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a2370",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13764,
+      "newIndex": 13764,
+      "class": "PlayerStatusBase",
+      "name": "GetSubEquipSkill",
+      "token": "0x60035c5",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a2870",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13765,
+      "newIndex": 13765,
+      "class": "PlayerStatusBase",
+      "name": "GetWeaponTypeToEquipLimit",
+      "token": "0x60035c6",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a2920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13766,
+      "newIndex": 13766,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSkillFlag",
+      "token": "0x60035c7",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "main",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        },
+        {
+          "name": "sub",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        }
+      ],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a1e10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13767,
+      "newIndex": 13767,
+      "class": "PlayerStatusBase",
+      "name": "GetEquipSkillFlag",
+      "token": "0x60035c8",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24603,
+        "exact_byval_name": "SkillEqLimitFlag"
+      },
+      "runtime_va": "0x7ffe9a4a1dc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13768,
+      "newIndex": 13768,
+      "class": "PlayerStatusBase",
+      "name": "CheckBodyAbility",
+      "token": "0x60035c9",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ability",
+          "type_index": 33765,
+          "exact_byval_name": "ArmorAbility"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4a1460",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13769,
+      "newIndex": 13769,
+      "class": "PlayerStatusBase",
+      "name": "StartRandomProperty",
+      "token": "0x60035ca",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "equipType",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "propertyId",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "stack",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "item",
+          "type_index": 9249,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a3f30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13770,
+      "newIndex": 13770,
+      "class": "PlayerStatusBase",
+      "name": "EndItemRandomProperty",
+      "token": "0x60035cb",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "equipType",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "propertyId",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a1620",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13771,
+      "newIndex": 13771,
+      "class": "PlayerStatusBase",
+      "name": "ResetItemRandomProperty",
+      "token": "0x60035cc",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a2bf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13772,
+      "newIndex": 13772,
+      "class": "PlayerStatusBase",
+      "name": "GetFirstAttack",
+      "token": "0x60035cd",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a2280",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13773,
+      "newIndex": 13773,
+      "class": "PlayerStatusBase",
+      "name": "GetFirstAttackRate",
+      "token": "0x60035ce",
+      "method_flags_raw": "0x1c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a21f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13774,
+      "newIndex": 13774,
+      "class": "PlayerStatusBase",
+      "name": "GetBonusValueWithBuf",
+      "token": "0x60035cf",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a1af0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13775,
+      "newIndex": 13775,
+      "class": "PlayerStatusBase",
+      "name": "GetReceiveElementDmgRateBufType",
+      "token": "0x60035d0",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24562,
+        "exact_byval_name": "SkillBufferId"
+      },
+      "runtime_va": "0x7ffe9a4a2800",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13776,
+      "newIndex": 13776,
+      "class": "PlayerStatusBase",
+      "name": "GetAvatarSkill",
+      "token": "0x60035d1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10734,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4a17d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13777,
+      "newIndex": 13777,
+      "class": "PlayerStatusBase",
+      "name": "GetNinjaSkill",
+      "token": "0x60035d2",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10734,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4a2580",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 13778,
+      "newIndex": 13778,
+      "class": "PlayerStatusBase",
+      "name": ".ctor",
+      "token": "0x60035d3",
+      "method_flags_raw": "0x1884",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c30f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14250,
+      "newIndex": 14250,
+      "class": "PlayerAttackBase",
+      "name": "ActionStart",
+      "token": "0x60037ab",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "target",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a6970",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14251,
+      "newIndex": 14251,
+      "class": "PlayerAttackBase",
+      "name": "SetSendAtkParam",
+      "token": "0x60037ac",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4b03d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14252,
+      "newIndex": 14252,
+      "class": "PlayerAttackBase",
+      "name": "RemoveAfterSkillBuf",
+      "token": "0x60037ad",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAct",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4af4f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14253,
+      "newIndex": 14253,
+      "class": "PlayerAttackBase",
+      "name": "ActionStartMagicSkill",
+      "token": "0x60037ae",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a6580",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14254,
+      "newIndex": 14254,
+      "class": "PlayerAttackBase",
+      "name": "RemoveUnannouncedDestinationBuf",
+      "token": "0x60037af",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4afe50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14255,
+      "newIndex": 14255,
+      "class": "PlayerAttackBase",
+      "name": "RegistChronosShift",
+      "token": "0x60037b0",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4af1f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14256,
+      "newIndex": 14256,
+      "class": "PlayerAttackBase",
+      "name": "AttackStartReceive",
+      "token": "0x60037b1",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "skillParamFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skillIndividualFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4a7630",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14257,
+      "newIndex": 14257,
+      "class": "PlayerAttackBase",
+      "name": "SupportStartReceive",
+      "token": "0x60037b2",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "skillParamFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skillIndividualFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c3920",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14258,
+      "newIndex": 14258,
+      "class": "PlayerAttackBase",
+      "name": "OtherPlayerAttackStartReceive",
+      "token": "0x60037b3",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "skillParamFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "skillIndividualFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4aee30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14259,
+      "newIndex": 14259,
+      "class": "PlayerAttackBase",
+      "name": "OtherPlayerSkillEventReceive",
+      "token": "0x60037b4",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "actorAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        },
+        {
+          "name": "skillEventId",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        {
+          "name": "values",
+          "type_index": 3415,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4aee40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14260,
+      "newIndex": 14260,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponType",
+      "token": "0x60037b5",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 33772,
+        "exact_byval_name": "ItemType"
+      },
+      "runtime_va": "0x7ffe9a4ae0a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14261,
+      "newIndex": 14261,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponType",
+      "token": "0x60037b6",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "item",
+          "type_index": 9248,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 33772,
+        "exact_byval_name": "ItemType"
+      },
+      "runtime_va": "0x7ffe9a4adfc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14262,
+      "newIndex": 14262,
+      "class": "PlayerAttackBase",
+      "name": "GetSubWeaponType",
+      "token": "0x60037b7",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 33772,
+        "exact_byval_name": "ItemType"
+      },
+      "runtime_va": "0x7ffe9a4ade20",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14263,
+      "newIndex": 14263,
+      "class": "PlayerAttackBase",
+      "name": "GetSubWeaponType",
+      "token": "0x60037b8",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "item",
+          "type_index": 9248,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 33772,
+        "exact_byval_name": "ItemType"
+      },
+      "runtime_va": "0x7ffe9a4add40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14264,
+      "newIndex": 14264,
+      "class": "PlayerAttackBase",
+      "name": "ExistWeaponType",
+      "token": "0x60037b9",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad740",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14265,
+      "newIndex": 14265,
+      "class": "PlayerAttackBase",
+      "name": "ExistWeaponType",
+      "token": "0x60037ba",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "type",
+          "type_index": 33772,
+          "exact_byval_name": "ItemType"
+        },
+        {
+          "name": "item",
+          "type_index": 9248,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad860",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14266,
+      "newIndex": 14266,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponRange",
+      "token": "0x60037bb",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "weapon",
+          "type_index": 19011,
+          "exact_byval_name": "ItemData"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4adf80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14267,
+      "newIndex": 14267,
+      "class": "PlayerAttackBase",
+      "name": "CalcCastTime",
+      "token": "0x60037bc",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "baseTime",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a7fe0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14268,
+      "newIndex": 14268,
+      "class": "PlayerAttackBase",
+      "name": "CalcMotionSpeed",
+      "token": "0x60037bd",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4aabb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14269,
+      "newIndex": 14269,
+      "class": "PlayerAttackBase",
+      "name": "CalcMp",
+      "token": "0x60037be",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4aacd0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14270,
+      "newIndex": 14270,
+      "class": "PlayerAttackBase",
+      "name": "CalcCostMp",
+      "token": "0x60037bf",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a81f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14271,
+      "newIndex": 14271,
+      "class": "PlayerAttackBase",
+      "name": "get_CostMpType",
+      "token": "0x60037c0",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 35577,
+        "exact_byval_name": "CalcCostMpType"
+      },
+      "runtime_va": "0x7ffe99afced0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14272,
+      "newIndex": 14272,
+      "class": "PlayerAttackBase",
+      "name": "set_CostMpType",
+      "token": "0x60037c1",
+      "method_flags_raw": "0x881",
+      "parameters": [
+        {
+          "name": "value",
+          "type_index": 35577,
+          "exact_byval_name": "CalcCostMpType"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4b3a30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14273,
+      "newIndex": 14273,
+      "class": "PlayerAttackBase",
+      "name": "RecalcCostMp",
+      "token": "0x60037c2",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4af180",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14274,
+      "newIndex": 14274,
+      "class": "PlayerAttackBase",
+      "name": "CheckHit",
+      "token": "0x60037c3",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "needHit",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isFlash",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "correct",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac950",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14275,
+      "newIndex": 14275,
+      "class": "PlayerAttackBase",
+      "name": "ChackCorrectHit",
+      "token": "0x60037c4",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "hit",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isFlash",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "correct",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4abe90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14276,
+      "newIndex": 14276,
+      "class": "PlayerAttackBase",
+      "name": "CalcPowerResistDamage",
+      "token": "0x60037c5",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetDef",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "addResist",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ab0b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14277,
+      "newIndex": 14277,
+      "class": "PlayerAttackBase",
+      "name": "CalcMagicResistDamage",
+      "token": "0x60037c6",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetMdef",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "addResist",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4aaac0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14278,
+      "newIndex": 14278,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a9110",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14279,
+      "newIndex": 14279,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementBonus",
+      "token": "0x60037c8",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "targetType",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        },
+        {
+          "name": "weak",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a93f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14280,
+      "newIndex": 14280,
+      "class": "PlayerAttackBase",
+      "name": "CalcElementKillerBonus",
+      "token": "0x60037c9",
+      "method_flags_raw": "0x91",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4a96d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14281,
+      "newIndex": 14281,
+      "class": "PlayerAttackBase",
+      "name": "CalcNormalElementWeaponDamageResistRate",
+      "token": "0x60037ca",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4aad20",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14282,
+      "newIndex": 14282,
+      "class": "PlayerAttackBase",
+      "name": "CalcDistanceResistRate",
+      "token": "0x60037cb",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a8c60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14283,
+      "newIndex": 14283,
+      "class": "PlayerAttackBase",
+      "name": "CalcSkillTypeBonusRate",
+      "token": "0x60037cc",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackTypeBonus",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "skillTypeBonus",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4abb40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14284,
+      "newIndex": 14284,
+      "class": "PlayerAttackBase",
+      "name": "CalcLastDamageRate",
+      "token": "0x60037cd",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4aa8e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14285,
+      "newIndex": 14285,
+      "class": "PlayerAttackBase",
+      "name": "CalcBufferLastDamageRate",
+      "token": "0x60037ce",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a7d60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14286,
+      "newIndex": 14286,
+      "class": "PlayerAttackBase",
+      "name": "CalcCobmoRate",
+      "token": "0x60037cf",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a81a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14287,
+      "newIndex": 14287,
+      "class": "PlayerAttackBase",
+      "name": "CalcDoubleThrowLastDamageRate",
+      "token": "0x60037d0",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a8ed0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14288,
+      "newIndex": 14288,
+      "class": "PlayerAttackBase",
+      "name": "InitializeElement",
+      "token": "0x60037d1",
+      "method_flags_raw": "0xe4",
+      "parameters": [
+        {
+          "name": "actarAction",
+          "type_index": 13454,
+          "exact_byval_name": "CharacterActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ae8f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14289,
+      "newIndex": 14289,
+      "class": "PlayerAttackBase",
+      "name": "GetWeaponElementType",
+      "token": "0x60037d2",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4adee0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14290,
+      "newIndex": 14290,
+      "class": "PlayerAttackBase",
+      "name": "CalcSkillMasteryLastDamageRate",
+      "token": "0x60037d3",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4ab4f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14291,
+      "newIndex": 14291,
+      "class": "PlayerAttackBase",
+      "name": "CalcWeaponCharacteristicsLastDamageRate",
+      "token": "0x60037d4",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe99acdf90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14292,
+      "newIndex": 14292,
+      "class": "PlayerAttackBase",
+      "name": "CalcBonusLastDamageRate",
+      "token": "0x60037d5",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a7640",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14293,
+      "newIndex": 14293,
+      "class": "PlayerAttackBase",
+      "name": "CalcGemLastDamageRate",
+      "token": "0x60037d6",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a97e0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14294,
+      "newIndex": 14294,
+      "class": "PlayerAttackBase",
+      "name": "checkRangeHeight",
+      "token": "0x60037d7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "dy",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "_size",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4b3510",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14295,
+      "newIndex": 14295,
+      "class": "PlayerAttackBase",
+      "name": "cheakRangeAngle",
+      "token": "0x60037d8",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "_actor_position",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "_target_position",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4b2e40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14296,
+      "newIndex": 14296,
+      "class": "PlayerAttackBase",
+      "name": "createMultiHitDamage",
+      "token": "0x60037d9",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      },
+      "runtime_va": "0x7ffe9a4b37b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14297,
+      "newIndex": 14297,
+      "class": "PlayerAttackBase",
+      "name": "createExcetraDamage",
+      "token": "0x60037da",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "damage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "hitType",
+          "type_index": 24621,
+          "exact_byval_name": "SkillHitType"
+        },
+        {
+          "name": "reactionType",
+          "type_index": 24617,
+          "exact_byval_name": "SkillHitReactionType"
+        },
+        {
+          "name": "damageCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 7114,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4b3540",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14298,
+      "newIndex": 14298,
+      "class": "PlayerAttackBase",
+      "name": "calcBaseDamage",
+      "token": "0x60037db",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "type",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "eqLimit",
+          "type_index": 24603,
+          "exact_byval_name": "SkillEqLimitFlag"
+        },
+        {
+          "name": "isCritical",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4b21a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14299,
+      "newIndex": 14299,
+      "class": "PlayerAttackBase",
+      "name": "CheckSpecificWeaponBaseDamageRate",
+      "token": "0x60037dc",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad2f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14300,
+      "newIndex": 14300,
+      "class": "PlayerAttackBase",
+      "name": "calcBaseDamage",
+      "token": "0x60037dd",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "atk",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lv",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "targetLv",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "cut",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobPropCut",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4b2160",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14301,
+      "newIndex": 14301,
+      "class": "PlayerAttackBase",
+      "name": "calcDualBaseDamage",
+      "token": "0x60037de",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "mainAtk",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "subAtk",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "subStable",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "lv",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "targetLv",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "cut",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobPropCut",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4b2a10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14302,
+      "newIndex": 14302,
+      "class": "PlayerAttackBase",
+      "name": "calcFastAttackDamage",
+      "token": "0x60037df",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "action",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4b2d40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14303,
+      "newIndex": 14303,
+      "class": "PlayerAttackBase",
+      "name": "calcFastAttackDamageRate",
+      "token": "0x60037e0",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "action",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4b2a70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14304,
+      "newIndex": 14304,
+      "class": "PlayerAttackBase",
+      "name": "GetSpecificWeaponLastDamageRate",
+      "token": "0x60037e1",
+      "method_flags_raw": "0x94",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4adbc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14305,
+      "newIndex": 14305,
+      "class": "PlayerAttackBase",
+      "name": "TemplateAssignment",
+      "token": "0x60037e2",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "SkillType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "TreeType",
+          "type_index": 24669,
+          "exact_byval_name": "SkillTreeType"
+        },
+        {
+          "name": "addRegist",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isCritical",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4b1c10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14306,
+      "newIndex": 14306,
+      "class": "PlayerAttackBase",
+      "name": "TemplateAssignment",
+      "token": "0x60037e3",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "SkillType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "TreeType",
+          "type_index": 24669,
+          "exact_byval_name": "SkillTreeType"
+        },
+        {
+          "name": "addRegist",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isCritical",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "isSecureHit",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4b07c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14307,
+      "newIndex": 14307,
+      "class": "PlayerAttackBase",
+      "name": "TemplateAssignment",
+      "token": "0x60037e4",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "SkillType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "TreeType",
+          "type_index": 24669,
+          "exact_byval_name": "SkillTreeType"
+        },
+        {
+          "name": "addRegist",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "hitState",
+          "type_index": 35580,
+          "exact_byval_name": "HitState"
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4b0940",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14308,
+      "newIndex": 14308,
+      "class": "PlayerAttackBase",
+      "name": "TemplateAssignment",
+      "token": "0x60037e5",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "TreeType",
+          "type_index": 24669,
+          "exact_byval_name": "SkillTreeType"
+        },
+        {
+          "name": "addRegist",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4b0ac0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14309,
+      "newIndex": 14309,
+      "class": "PlayerAttackBase",
+      "name": "templateToDamageData",
+      "token": "0x60037e6",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "damageCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 36382,
+        "exact_byval_name": "DamageData"
+      },
+      "runtime_va": "0x7ffe9a4b4370",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14310,
+      "newIndex": 14310,
+      "class": "PlayerAttackBase",
+      "name": "templateToDamageData",
+      "token": "0x60037e7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "templateList",
+          "type_index": 5546,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 36382,
+        "exact_byval_name": "DamageData"
+      },
+      "runtime_va": "0x7ffe9a4b3a80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14311,
+      "newIndex": 14311,
+      "class": "PlayerAttackBase",
+      "name": "CreateDummyDamageData",
+      "token": "0x60037e8",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 36382,
+        "exact_byval_name": "DamageData"
+      },
+      "runtime_va": "0x7ffe9a4ad620",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14312,
+      "newIndex": 14312,
+      "class": "PlayerAttackBase",
+      "name": "HitReactionAssign",
+      "token": "0x60037e9",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "isCritical",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "igoneAvoid",
+          "type_index": 12885,
+          "exact_byval_name": null
+        },
+        {
+          "name": "igoneGuard",
+          "type_index": 12885,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4ae160",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14313,
+      "newIndex": 14313,
+      "class": "PlayerAttackBase",
+      "name": "SetBufferConstantDamage",
+      "token": "0x60037ea",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "damageCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4b0320",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14314,
+      "newIndex": 14314,
+      "class": "PlayerAttackBase",
+      "name": "CalcRegistDamage",
+      "token": "0x60037eb",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "mobStatus",
+          "type_index": 18244,
+          "exact_byval_name": "IMobStatusCalculator"
+        },
+        {
+          "name": "addRegistvalue",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ab1a0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14315,
+      "newIndex": 14315,
+      "class": "PlayerAttackBase",
+      "name": "CalcStable",
+      "token": "0x60037ec",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "stableSource",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "correctHit",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4abbf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14316,
+      "newIndex": 14316,
+      "class": "PlayerAttackBase",
+      "name": "PossibilityAbnormalState",
+      "token": "0x60037ed",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 9909,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4af140",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14317,
+      "newIndex": 14317,
+      "class": "PlayerAttackBase",
+      "name": "CheckAbnormalSubEffect",
+      "token": "0x60037ee",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "abnormalType",
+          "type_index": 11503,
+          "exact_byval_name": "AbnormalType"
+        },
+        {
+          "name": "actor",
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ac300",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14318,
+      "newIndex": 14318,
+      "class": "PlayerAttackBase",
+      "name": "CalcHitReaction",
+      "token": "0x60037ef",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "attackType",
+          "type_index": 24549,
+          "exact_byval_name": "SkillAttackType"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "resistReactionType",
+          "type_index": 9361,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24617,
+        "exact_byval_name": "SkillHitReactionType"
+      },
+      "runtime_va": "0x7ffe9a4a9890",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14319,
+      "newIndex": 14319,
+      "class": "PlayerAttackBase",
+      "name": "checkMobReaction",
+      "token": "0x60037f0",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "guard",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "avoid",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24617,
+        "exact_byval_name": "SkillHitReactionType"
+      },
+      "runtime_va": "0x7ffe9a378100",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14320,
+      "newIndex": 14320,
+      "class": "PlayerAttackBase",
+      "name": "ViewPreventedHitReactionIcon",
+      "token": "0x60037f1",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "reactionType",
+          "type_index": 24617,
+          "exact_byval_name": "SkillHitReactionType"
+        },
+        {
+          "name": "pos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "equipType",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mainWeaponType",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "subWeaponType",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4b1d90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14321,
+      "newIndex": 14321,
+      "class": "PlayerAttackBase",
+      "name": "ViewPreventedHitReactionIconToGemCart",
+      "token": "0x60037f2",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "reactionType",
+          "type_index": 24617,
+          "exact_byval_name": "SkillHitReactionType"
+        },
+        {
+          "name": "pos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4b1ce0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14322,
+      "newIndex": 14322,
+      "class": "PlayerAttackBase",
+      "name": "CopyHitReaction",
+      "token": "0x60037f3",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "sourceTemplate",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "destTemplate",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        }
+      ],
+      "return_type": {
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      "runtime_va": "0x7ffe9a4ad590",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14323,
+      "newIndex": 14323,
+      "class": "PlayerAttackBase",
+      "name": "ContainsNotApplicableSkill",
+      "token": "0x60037f4",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad460",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14324,
+      "newIndex": 14324,
+      "class": "PlayerAttackBase",
+      "name": "IsBlank",
+      "token": "0x60037f5",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4aea60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14325,
+      "newIndex": 14325,
+      "class": "PlayerAttackBase",
+      "name": "CheckPlayerDamageUpLimit",
+      "token": "0x60037f6",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "limitDamage",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad190",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14326,
+      "newIndex": 14326,
+      "class": "PlayerAttackBase",
+      "name": "CalcPlayerDamageUpLimit",
+      "token": "0x60037f7",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseDamage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4aaf30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14327,
+      "newIndex": 14327,
+      "class": "PlayerAttackBase",
+      "name": "CheckDamageLimit",
+      "token": "0x60037f8",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "min",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "max",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac310",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14328,
+      "newIndex": 14328,
+      "class": "PlayerAttackBase",
+      "name": "GetLimitDamage",
+      "token": "0x60037f9",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseDamage",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "isMinDamage",
+          "type_index": 9136,
+          "exact_byval_name": null
+        },
+        {
+          "name": "isMaxDamage",
+          "type_index": 9136,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ad9c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14329,
+      "newIndex": 14329,
+      "class": "PlayerAttackBase",
+      "name": "CheckAbnormalDamageIncrease",
+      "token": "0x60037fa",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac1c0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14330,
+      "newIndex": 14330,
+      "class": "PlayerAttackBase",
+      "name": "checkAbnormalPercent",
+      "token": "0x60037fb",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "abnormalType",
+          "type_index": 11503,
+          "exact_byval_name": "AbnormalType"
+        },
+        {
+          "name": "per",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        },
+        {
+          "name": "addResistTime",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4b2fb0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14331,
+      "newIndex": 14331,
+      "class": "PlayerAttackBase",
+      "name": "checkCriticalPercent",
+      "token": "0x60037fc",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "criticalParcent",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4b33f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14332,
+      "newIndex": 14332,
+      "class": "PlayerAttackBase",
+      "name": "CheckMagicCritical",
+      "token": "0x60037fd",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4acfc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14333,
+      "newIndex": 14333,
+      "class": "PlayerAttackBase",
+      "name": "CheckMagicCritical",
+      "token": "0x60037fe",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "baseCritical",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4acb20",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14334,
+      "newIndex": 14334,
+      "class": "PlayerAttackBase",
+      "name": "CalcDistanceToTarget",
+      "token": "0x60037ff",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "actorPos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "mobTargetPos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "mobSize",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4a8d80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14335,
+      "newIndex": 14335,
+      "class": "PlayerAttackBase",
+      "name": "CheckGemCartEmergencyMpRecovery",
+      "token": "0x6003800",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac850",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14336,
+      "newIndex": 14336,
+      "class": "PlayerAttackBase",
+      "name": "CheckEnchantedSpellMpLessInvoke",
+      "token": "0x6003801",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac630",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14337,
+      "newIndex": 14337,
+      "class": "PlayerAttackBase",
+      "name": "MagicCannonCharge",
+      "token": "0x6003802",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4aeb20",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14338,
+      "newIndex": 14338,
+      "class": "PlayerAttackBase",
+      "name": "CheckLongRangeAttack",
+      "token": "0x6003803",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4acaa0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14339,
+      "newIndex": 14339,
+      "class": "PlayerAttackBase",
+      "name": "PopSkillNameLabel",
+      "token": "0x6003804",
+      "method_flags_raw": "0xc6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4aefc0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14340,
+      "newIndex": 14340,
+      "class": "PlayerAttackBase",
+      "name": "GetLocalizeKey",
+      "token": "0x6003805",
+      "method_flags_raw": "0xc6",
+      "parameters": [
+        {
+          "name": "element",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "runtime_va": "0x7ffe9a4ada60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14341,
+      "newIndex": 14341,
+      "class": "PlayerAttackBase",
+      "name": "GetLocalizeKey",
+      "token": "0x6003806",
+      "method_flags_raw": "0x1c6",
+      "parameters": [
+        {
+          "name": "element",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        {
+          "name": "skillIndividualFlag",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "runtime_va": "0x7ffe9a4ada80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14342,
+      "newIndex": 14342,
+      "class": "PlayerAttackBase",
+      "name": "CheckMobActionUnobstructable",
+      "token": "0x6003807",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ad060",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14343,
+      "newIndex": 14343,
+      "class": "PlayerAttackBase",
+      "name": "GetElementKillerBonus",
+      "token": "0x6003808",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "targetElement",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ad9b0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14344,
+      "newIndex": 14344,
+      "class": "PlayerAttackBase",
+      "name": "GetNextDamageLocalId",
+      "token": "0x6003809",
+      "method_flags_raw": "0x84",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      "runtime_va": "0x7ffe9a4ada90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14345,
+      "newIndex": 14345,
+      "class": "PlayerAttackBase",
+      "name": "GetNextDamageLocalIds",
+      "token": "0x600380a",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "count",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 10332,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4adac0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14346,
+      "newIndex": 14346,
+      "class": "<>c",
+      "name": ".cctor",
+      "token": "0x600380b",
+      "method_flags_raw": "0x1891",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4bfc70",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14347,
+      "newIndex": 14347,
+      "class": "<>c",
+      "name": ".ctor",
+      "token": "0x600380c",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c30f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14348,
+      "newIndex": 14348,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_0",
+      "token": "0x600380d",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4bea30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14349,
+      "newIndex": 14349,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_3",
+      "token": "0x600380e",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4beac0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14350,
+      "newIndex": 14350,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_5",
+      "token": "0x600380f",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4beaf0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14351,
+      "newIndex": 14351,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_6",
+      "token": "0x6003810",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24594,
+          "exact_byval_name": "SkillDamageData"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4beb10",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14352,
+      "newIndex": 14352,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_1",
+      "token": "0x6003811",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4bea60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14353,
+      "newIndex": 14353,
+      "class": "<>c",
+      "name": "<templateToDamageData>b__176_2",
+      "token": "0x6003812",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "x",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4bea90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14354,
+      "newIndex": 14354,
+      "class": "<>c",
+      "name": "<CalcHitReaction>b__184_0",
+      "token": "0x6003813",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20687,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a330240",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14355,
+      "newIndex": 14355,
+      "class": "<>c",
+      "name": "<CalcHitReaction>b__184_1",
+      "token": "0x6003814",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "p",
+          "type_index": 20687,
+          "exact_byval_name": "MobPartsStatus"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a330370",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14356,
+      "newIndex": 14356,
+      "class": "<>c__DisplayClass111_0",
+      "name": ".ctor",
+      "token": "0x6003815",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c30f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14357,
+      "newIndex": 14357,
+      "class": "<>c__DisplayClass111_0",
+      "name": "<ActionPreparation>b__0",
+      "token": "0x6003816",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "cancel",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4beb30",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14358,
+      "newIndex": 14358,
+      "class": "<>c__DisplayClass113_0",
+      "name": ".ctor",
+      "token": "0x6003817",
+      "method_flags_raw": "0x1886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe999c30f0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14359,
+      "newIndex": 14359,
+      "class": "<>c__DisplayClass113_0",
+      "name": "<ActionStart>b__0",
+      "token": "0x6003818",
+      "method_flags_raw": "0x83",
+      "parameters": [
+        {
+          "name": "cancel",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4bec40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 14360,
+      "newIndex": 14360,
+      "class": "<>c__DisplayClass113_0",
+      "name": "<ActionStart>b__1",
+      "token": "0x6003819",
+      "method_flags_raw": "0x83",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4beca0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15726,
+      "newIndex": 15726,
+      "class": "BonusManager",
+      "name": "CreateBonusParameter",
+      "token": "0x6003d6f",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 10332,
+          "exact_byval_name": null
+        },
+        {
+          "name": "val",
+          "type_index": 10332,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 6726,
+        "exact_byval_name": null
+      },
+      "runtime_va": "0x7ffe9a4e96d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15727,
+      "newIndex": 15727,
+      "class": "BonusManager",
+      "name": "AddGuildFacilityBonus",
+      "token": "0x6003d70",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "types",
+          "type_index": 10332,
+          "exact_byval_name": null
+        },
+        {
+          "name": "values",
+          "type_index": 10332,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4e8770",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15728,
+      "newIndex": 15728,
+      "class": "BonusManager",
+      "name": "GetGuildFacilityElementBonus",
+      "token": "0x6003d71",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eba60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15729,
+      "newIndex": 15729,
+      "class": "BonusManager",
+      "name": "GetGuildFacilityExpBonus",
+      "token": "0x6003d72",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ebb50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15730,
+      "newIndex": 15730,
+      "class": "BonusManager",
+      "name": "Update",
+      "token": "0x6003d73",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "playerStatus",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ed480",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15731,
+      "newIndex": 15731,
+      "class": "BonusManager",
+      "name": "GetEquipElement",
+      "token": "0x6003d74",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        }
+      ],
+      "return_type": {
+        "type_index": 15206,
+        "exact_byval_name": "ElementType"
+      },
+      "runtime_va": "0x7ffe9a4eb8d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15732,
+      "newIndex": 15732,
+      "class": "BonusManager",
+      "name": "GetCalcBonusValue",
+      "token": "0x6003d75",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "baseVal",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb460",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15733,
+      "newIndex": 15733,
+      "class": "BonusManager",
+      "name": "GetBonusValue",
+      "token": "0x6003d76",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb350",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15734,
+      "newIndex": 15734,
+      "class": "BonusManager",
+      "name": "GetBonusPercentValue",
+      "token": "0x6003d77",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eb220",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15735,
+      "newIndex": 15735,
+      "class": "BonusManager",
+      "name": "GetAvatarBonusValue",
+      "token": "0x6003d78",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ea630",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15736,
+      "newIndex": 15736,
+      "class": "BonusManager",
+      "name": "getDataBonusValue",
+      "token": "0x6003d79",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eeb50",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15737,
+      "newIndex": 15737,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_AvatarConstan_Rate",
+      "token": "0x6003d7a",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantToAvatarType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4eaa00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15738,
+      "newIndex": 15738,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_AvatarConstan_Rate",
+      "token": "0x6003d7b",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantToAvatarType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "plusRateValue",
+          "type_index": 9355,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusRateValue",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ea6d0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15739,
+      "newIndex": 15739,
+      "class": "BonusManager",
+      "name": "GetBonusConstant_Rate",
+      "token": "0x6003d7c",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4eac40",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15740,
+      "newIndex": 15740,
+      "class": "BonusManager",
+      "name": "GetMaxHpBonusConstant_Rate",
+      "token": "0x6003d7d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "maxHpConstant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "maxHpRate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ebe60",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15741,
+      "newIndex": 15741,
+      "class": "BonusManager",
+      "name": "GetMaxMpBonusConstant_Rate",
+      "token": "0x6003d7e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "maxMpConstant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "maxMpRate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ebea0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15742,
+      "newIndex": 15742,
+      "class": "BonusManager",
+      "name": "GetMaxBonusConstant_Rate",
+      "token": "0x6003d7f",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "constantType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantTo10Type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constantToAvatarType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "rateType",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        },
+        {
+          "name": "constant",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "rate",
+          "type_index": 9355,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ebc00",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15743,
+      "newIndex": 15743,
+      "class": "BonusManager",
+      "name": "GetBonusMultiPercentValue",
+      "token": "0x6003d80",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4eade0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15744,
+      "newIndex": 15744,
+      "class": "BonusManager",
+      "name": "CulcConvertAtk",
+      "token": "0x6003d81",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4e9e90",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15745,
+      "newIndex": 15745,
+      "class": "BonusManager",
+      "name": "CulcConvertMAtk",
+      "token": "0x6003d82",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22769,
+          "exact_byval_name": "PlayerPrimaryStatus"
+        },
+        {
+          "name": "plusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        },
+        {
+          "name": "minusValue",
+          "type_index": 9239,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4ea180",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15746,
+      "newIndex": 15746,
+      "class": "BonusManager",
+      "name": "GetRestTime",
+      "token": "0x6003d83",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "runtime_va": "0x7ffe9a4ebee0",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15747,
+      "newIndex": 15747,
+      "class": "BonusManager",
+      "name": "TryGetAvatarSkillEquipType",
+      "token": "0x6003d84",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "skillId",
+          "type_index": 24625,
+          "exact_byval_name": "SkillId"
+        },
+        {
+          "name": "equipType",
+          "type_index": 9494,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ece80",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15748,
+      "newIndex": 15748,
+      "class": "BonusManager",
+      "name": "GetBuffValue",
+      "token": "0x6003d85",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 12860,
+          "exact_byval_name": "Toram.Common.Bonus.BonusType"
+        }
+      ],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a4eb360",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15749,
+      "newIndex": 15749,
+      "class": "BonusManager",
+      "name": "GetElementKiller",
+      "token": "0x6003d86",
+      "method_flags_raw": "0x96",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 15206,
+          "exact_byval_name": "ElementType"
+        }
+      ],
+      "return_type": {
+        "type_index": 12860,
+        "exact_byval_name": "Toram.Common.Bonus.BonusType"
+      },
+      "runtime_va": "0x7ffe9a4eb860",
+      "status": "mapped"
+    },
+    {
+      "oldIndex": 15750,
+      "newIndex": 15750,
+      "class": "BonusManager",
+      "name": "StartItemRandomProperty",
+      "token": "0x6003d87",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "equipType",
+          "type_index": 33767,
+          "exact_byval_name": "EquipType"
+        },
+        {
+          "name": "bonusData",
+          "type_index": 12836,
+          "exact_byval_name": "BonusData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a4ecd10",
+      "status": "mapped"
+    }
+  ]
+}

@@ -1,7 +1,7 @@
 //! Dense known coordinates with a sparse fallback and unchanged JSON map contract.
 use serde::{Deserialize, Serialize};
 use std::collections::BTreeMap;
-pub const STAT_COUNT: usize = 52;
+pub const STAT_COUNT: usize = 59;
 // All coordinates read by the native evaluator, including utility goals.
 // Keep this in sync with stat()/stat_total() dependencies in the evaluator.
 macro_rules! stat_keys {
@@ -19,7 +19,7 @@ macro_rules! stat_keys {
         const TYPED_KEYS: [StatKey; STAT_COUNT] = [$(StatKey::$key,)*];
     };
 }
-stat_keys! { AGI, AGIP, AMPR, AMPRP, ASPD, ASPD_P, ATK, ATKP, CDMG, CDMGP, CRIT, CRITP, DAMAGE_P, DEX, DEXP, ELEM_P, INT, INTP, LRW, MAG_PIERCE, MATK, MATKP, MAXHP, MAXHPP, MAXMP, PHYS_PIERCE, SRW, STABILITY, STR, STRP, UNSHEATHE, UNSHEATHEP, VIT, VITP, WATK, WATKP, MOTIONSPEED, CSPD, CSPD_P, CAST_RED, ATK_UP_STR, ATK_UP_DEX, ATK_UP_AGI, ATK_UP_INT, ATK_UP_VIT, MATK_UP_STR, MATK_UP_DEX, MATK_UP_AGI, MATK_UP_INT, MATK_UP_VIT, ELEM_AWAKENING, MAGIC_ELEMENT }
+stat_keys! { AGI, AGIP, AMPR, AMPRP, ASPD, ASPD_P, ATK, ATKP, CDMG, CDMGP, CRIT, CRITP, DAMAGE_P, DEX, DEXP, ELEM_P, INT, INTP, LRW, MAG_PIERCE, MATK, MATKP, MAXHP, MAXHPP, MAXMP, PHYS_PIERCE, SRW, STABILITY, STR, STRP, UNSHEATHE, UNSHEATHEP, VIT, VITP, WATK, WATKP, MOTIONSPEED, CSPD, CSPD_P, CAST_RED, ATK_UP_STR, ATK_UP_DEX, ATK_UP_AGI, ATK_UP_INT, ATK_UP_VIT, MATK_UP_STR, MATK_UP_DEX, MATK_UP_AGI, MATK_UP_INT, MATK_UP_VIT, ELEM_AWAKENING, MAGIC_ELEMENT, FIRE_DMG, WATER_DMG, WIND_DMG, EARTH_DMG, LIGHT_DMG, DARK_DMG, NEUTRAL_DMG }
 #[inline]
 fn index(key: &str) -> Option<usize> {
     match key {
@@ -75,6 +75,13 @@ fn index(key: &str) -> Option<usize> {
         "MATK_UP_VIT" => Some(49),
         "ELEM_AWAKENING" => Some(50),
         "MAGIC_ELEMENT" => Some(51),
+        "FIRE_DMG" => Some(52),
+        "WATER_DMG" => Some(53),
+        "WIND_DMG" => Some(54),
+        "EARTH_DMG" => Some(55),
+        "LIGHT_DMG" => Some(56),
+        "DARK_DMG" => Some(57),
+        "NEUTRAL_DMG" => Some(58),
         _ => None,
     }
 }
@@ -112,6 +119,13 @@ impl NativeStats {
             Some(i) if self.present & (1 << i) != 0 => Some(&self.values[i]),
             Some(_) => None,
             None => self.extra.get(key),
+        }
+    }
+    pub fn get_mut(&mut self, key: &str) -> Option<&mut f64> {
+        match index(key) {
+            Some(i) if self.present & (1 << i) != 0 => Some(&mut self.values[i]),
+            Some(_) => None,
+            None => self.extra.get_mut(key),
         }
     }
     #[inline]

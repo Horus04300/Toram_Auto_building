@@ -8,7 +8,7 @@ import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic
 const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
 const root = resolve(import.meta.dirname, '../../..');
-const html = await readFile(resolve(root, 'web/index.html'), 'utf8');
+const html = await readFile(resolve(root, 'web/src/pages/calculator/calculator.html'), 'utf8');
 const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 let investments = { Battle:{ 12:10 }, MagicBlade:{ 6:10 }, Dagger:{ 5:10 } };
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
@@ -22,7 +22,7 @@ vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'
 
 const calculatorSource = await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8');
 assert.match(calculatorSource, /skillConst:\s*appliedComboHit\s*\?\s*appliedComboHit\.skillConst\s*:\s*0/, '계산 기준 기본 공격 상수는 0이어야 합니다.');
-assert.match(await readFile(resolve(root, 'web/index.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, '계산 기준 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
+assert.match(await readFile(resolve(root, 'web/src/pages/calculator/calculator.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, '계산 기준 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
 assert.match(calculatorSource, /scopedInput\.rangeOverride[\s\S]*ctx\.rangeType\s*=\s*scopedInput\.rangeOverride/, '사용자 거리 선택은 스킬 기본 거리 판정 뒤에 최종 적용돼야 합니다.');
 const comboUiSource = await readFile(resolve(root, 'web/src/ui/combo-ui.js'), 'utf8');
 const applicationUseCasesSource = await readFile(resolve(root, 'web/src/application/application-use-cases.js'), 'utf8');

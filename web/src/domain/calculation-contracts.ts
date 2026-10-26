@@ -18,6 +18,13 @@ export interface StatOptionDraft {
   readonly value: number;
 }
 
+export type ItemOptionCondition = { readonly kind:'either-weapon-slot'; readonly types:readonly string[] }
+  | { readonly kind:'both-weapon-slots'; readonly main:string; readonly sub:string }
+  | { readonly kind:'body-battle-customize'; readonly armor:string }
+  | { readonly kind:'item-event'; readonly eventType:number }
+  | { readonly kind:'all' | 'any'; readonly conditions:readonly ItemOptionCondition[] }
+  | { readonly kind:'not'; readonly condition:ItemOptionCondition };
+
 export interface EquipmentPieceDraft {
   readonly catalogItem?: {
     readonly schema: 'toram.equipment-item.v1';
@@ -26,13 +33,13 @@ export interface EquipmentPieceDraft {
     readonly sourceSha256: string;
     readonly name: string | null;
     readonly typeId: number;
+    readonly element?: number;
     readonly stats: Readonly<Record<string, number>>;
     readonly conditionalStats: readonly {
-      readonly when: { readonly kind:'either-weapon-slot'; readonly types:readonly string[] }
-        | { readonly kind:'both-weapon-slots'; readonly main:string; readonly sub:string }
-        | { readonly kind:'body-battle-customize'; readonly armor:string };
+      readonly when: ItemOptionCondition;
       readonly stats: Readonly<Record<string, number>>;
       readonly unresolved: readonly never[];
+      readonly element?: number;
     }[];
   };
   readonly type: string | null;
@@ -76,6 +83,7 @@ export interface BuildDraft {
 }
 
 export interface ScenarioContext {
+  readonly optionCalculation?: Readonly<Record<string, number | boolean | string>>;
   /** Pinned catalog source; target scalars retain the user's manual overrides. */
   readonly bossSelection?: {
     readonly schema:'toram.boss-selection.v1';

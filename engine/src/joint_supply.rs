@@ -226,6 +226,29 @@ impl Expr {
             -(-self.clone()).floor(),
         )
     }
+    fn float_trunc(self, error: f64) -> Self {
+        let mut lower = self.lower.clone();
+        let mut upper = self.upper.clone();
+        lower.error += error;
+        upper.error += error;
+        let rounded = Self::new(self.domain.clone(), lower, upper);
+        if rounded.low.trunc() == rounded.high.trunc() {
+            return rounded.c(rounded.low.trunc());
+        }
+        if rounded.low >= 0.0 {
+            return rounded.floor();
+        }
+        if rounded.high <= 0.0 {
+            return -(-rounded).floor();
+        }
+        // trunc(x) lies between x-1 and x+1 across zero. Keeping those
+        // affine forms retains package correlation through cancellation.
+        let mut lower = rounded.lower.clone();
+        let mut upper = rounded.upper.clone();
+        lower.constant -= 1.0;
+        upper.constant += 1.0;
+        Self::new(rounded.domain.clone(), lower, upper)
+    }
     fn soften_cdmg(self) -> Self {
         // Dropping the upper branch's floor gives this concave upper graph.
         // One unit below it bounds the original floored branch from below.
@@ -586,25 +609,75 @@ impl SupplyPlan {
         if sub == "화살" && (main == "활" || main == "자동활") {
             weapon = weapon + number(base, "subAtk").floor();
         }
-        let up = |magic: bool| {
-            ["STR", "DEX", "INT", "AGI", "VIT"]
-                .iter()
-                .map(|name| {
-                    let prefix = if magic { "matkUp" } else { "atkUp" };
-                    let key = if magic { "MATK_UP_" } else { "ATK_UP_" };
-                    ((c(&format!("{prefix}{name}")) + stat(&format!("{key}{name}")))
-                        * number(base, &format!("{}Base", name.to_lowercase()))
-                        / 100.0)
-                        .floor()
-                })
-                .reduce(|a, b| a + b)
-                .unwrap()
+        let mut fixed_reflection = NativeStats::new();
+        for group in groups {
+            if let Some(values) = group.first() {
+                for key in KEYS
+                    .iter()
+                    .filter(|key| key.starts_with("ATK_UP_") || key.starts_with("MATK_UP_"))
+                {
+                    let total = fixed_reflection.get(key).copied().unwrap_or(0.0)
+                        + values.get(key).copied().unwrap_or(0.0);
+                    fixed_reflection.insert((*key).into(), total);
+                }
+            }
+        }
+        let up = |magic: bool| -> Option<Expr> {
+            let prefix = if magic { "MATK" } else { "ATK" };
+            let fields = ["STR", "INT", "VIT", "AGI", "DEX"];
+            let fixed = fields.iter().all(|name| {
+                let attribute = number(base, &format!("{}Base", name.to_lowercase()));
+                let index = KEYS
+                    .iter()
+                    .position(|key| *key == format!("{prefix}_UP_{name}"))
+                    .unwrap();
+                attribute == 0.0
+                    || domain
+                        .groups
+                        .iter()
+                        .all(|group| group.iter().all(|point| point[index] == group[0][index]))
+            });
+            if fixed {
+                return Some(zero.c(super::candidate_stat_up(base, &fixed_reflection, magic)));
+            }
+            let mut sum = zero.c(0.0);
+            let mut magnitude = 0.0;
+            let limit = f32::MAX as f64 / 16.0;
+            for name in fields {
+                let attribute = number(base, &format!("{}Base", name.to_lowercase()));
+                let key = format!("{prefix}_UP_{name}");
+                let rate = number(base, &format!("{}Up{name}", prefix.to_lowercase()));
+                let index = KEYS.iter().position(|candidate| *candidate == key).unwrap();
+                let rate_abs = rate.abs() + domain.abs[index];
+                let term_bound = attribute.abs() * (rate_abs + 0.1) / 100.0;
+                if !term_bound.is_finite()
+                    || attribute.abs() > limit
+                    || rate_abs * 10.0 > limit
+                    || term_bound > limit
+                {
+                    return None;
+                }
+                sum = sum + (stat(&key) + rate) * (attribute / 100.0);
+                magnitude += term_bound;
+            }
+            // NormalizeValue snaps raw tenths within 2*EPS32*max(1,|raw|).
+            // Cast/divide/attribute-cast/product each cost at most EPS32/2;
+            // five ordered additions cost at most gamma(5) times the sum of
+            // absolute terms. 128*EPS32 is an outward bound for all these
+            // errors, including cancellation and subnormals. The +.1 above
+            // covers the snapping rule's absolute tolerance near raw zero.
+            // The /16 guards keep all f32 intermediates below overflow.
+            let error = 128.0 * f32::EPSILON as f64 * magnitude + f32::MIN_POSITIVE as f64;
+            Some(sum.float_trunc(error))
         };
+        let atk_up = up(false)?;
+        let matk_up = up(true)?;
+        let constant_reflection = atk_up.low == atk_up.high && matk_up.low == matk_up.high;
         if sub == "마도구" {
             atk_p = atk_p - 15.0;
         }
-        let atk_base = weapon.clone() + stat_atk + level + up(false);
-        let matk_base = (weapon.clone() * matk_ratio).floor() + stat_matk + level + up(true);
+        let atk_base = weapon.clone() + stat_atk + level + atk_up;
+        let matk_base = (weapon.clone() * matk_ratio).floor() + stat_matk + level + matk_up;
         let legacy_power = atk_base.low >= 0.0 && matk_base.low >= 0.0 && atk_p.low >= -100.0;
         let mut atk = (atk_base * (atk_p.clone() + 100.0) / 100.0).floor() + atk_f.clone();
         let mut matk = (matk_base * (c("matkP") + stat("MATKP") + 100.0) / 100.0).floor()
@@ -685,18 +758,91 @@ impl SupplyPlan {
         } else {
             stat("ELEM_AWAKENING").positive_flag()
         };
-        let magic_element = if flag(base, "magicElement") {
+        let mut weapon_element = number(base, "weaponElement") as i32;
+        if ["활", "자동활"].contains(&main)
+            && sub == "화살"
+            && number(base, "subWeaponElement") != 0.0
+        {
+            weapon_element = number(base, "subWeaponElement") as i32;
+        }
+        let attack_element = text(base, "attackElement");
+        let inherits = ["", "none", "weapon"].contains(&attack_element);
+        let effective_element = if inherits {
+            weapon_element
+        } else {
+            match attack_element {
+                "fire" => 1,
+                "water" => 2,
+                "wind" => 3,
+                "earth" => 4,
+                "light" => 5,
+                "dark" => 6,
+                "neutral" | "normal" => 7,
+                "mana" => 8,
+                "targetAdvantage" => match number(base, "targetElement") {
+                    1.0 => 2,
+                    2.0 => 3,
+                    3.0 => 4,
+                    4.0 => 1,
+                    5.0 => 6,
+                    6.0 => 5,
+                    _ => 0,
+                },
+                _ => 0,
+            }
+        };
+        let weapon_weak = match effective_element {
+            1 => number(base, "targetElement") == 4.0,
+            2 => number(base, "targetElement") == 1.0,
+            3 => number(base, "targetElement") == 2.0,
+            4 => number(base, "targetElement") == 3.0,
+            5 => number(base, "targetElement") == 6.0,
+            6 => number(base, "targetElement") == 5.0,
+            _ => false,
+        };
+        let weapon_magic = text(base, "atkType") == "MAG"
+            && ((["지팡이", "마도구"].contains(&main)
+                && effective_element != 0
+                && effective_element != 7)
+                || weapon_weak
+                || attack_element == "weakness");
+        let magic_element = if flag(base, "magicElement") || weapon_magic {
             zero.c(1.0)
         } else {
             stat("MAGIC_ELEMENT").positive_flag()
         };
-        let weak = if text(base, "attackElement") == "weakness" {
+        let weak = if text(base, "attackElement") == "weakness" || weapon_weak {
             zero.c(1.0)
         } else {
             awakening.clone()
         };
+        let element_keys = [
+            "FIRE_DMG",
+            "WATER_DMG",
+            "WIND_DMG",
+            "EARTH_DMG",
+            "LIGHT_DMG",
+            "DARK_DMG",
+            "NEUTRAL_DMG",
+        ];
+        let element_fields = [
+            "fireDmg",
+            "waterDmg",
+            "windDmg",
+            "earthDmg",
+            "lightDmg",
+            "darkDmg",
+            "neutralDmg",
+        ];
+        let target_element = number(base, "targetElement") as usize;
+        let target_bonus = if (1..=7).contains(&target_element) {
+            c(element_fields[target_element - 1]) + stat(element_keys[target_element - 1])
+        } else {
+            zero.c(0.0)
+        };
         let elem = c("elemP")
             + stat("ELEM_P")
+            + target_bonus
             + weak.clone() * 25.0
             + awakening.max(magic_element) * (number(base, "intBase") / 10.0).floor();
         let magic = text(base, "atkType") == "MAG";
@@ -863,7 +1009,7 @@ impl SupplyPlan {
         {
             return None;
         }
-        // Signed percentages, stat-dependent reflection and new boolean options
+        // Signed percentages, variable reflection and new boolean options
         // can break monotonicity of the old coordinate envelope.
         let percentages = [
             ("STRP", "strP"),
@@ -895,7 +1041,7 @@ impl SupplyPlan {
             && !flag(base, "dualBringerActive")
             && domain.abs[50] == 0.0
             && domain.abs[51] == 0.0
-            && (40..50).all(|i| domain.abs[i] == 0.0)
+            && constant_reflection
             && percentages.iter().all(|(key, base_key)| {
                 let i = KEYS.iter().position(|k| k == key).unwrap();
                 let minimum: f64 = domain
@@ -1002,5 +1148,76 @@ impl SupplyPlan {
             && form.error.is_finite()
             && form.coefficients.iter().all(|v| v.is_finite()))
         .then_some(form)
+    }
+}
+
+#[cfg(test)]
+mod float_reflection_tests {
+    use super::*;
+    use serde_json::json;
+
+    #[test]
+    fn signed_float_reflection_planes_cover_native_rounding_and_cancellation() {
+        for attribute in [-16777217.0, -2999.0, -1.0, 0.0, 1.0, 3.0, 999.0, 2999.0, 10000.0, 16777217.0] {
+            for raw in [-32768_i32, -13, -7, -1, 1, 7, 13, 32767] {
+                for magic in [false, true] {
+                    let base = PreparedContext::from(json!({
+                        "mainType":"맨손","atkType":if magic {"MAG"}else{"PHYS"},
+                        "rangeType":"SHORT","strBase":attribute,"intBase":attribute+3.0,
+                        "level":0,"wpnStab":100,"skillMult":1
+                    }));
+                    let prefix = if magic { "MATK" } else { "ATK" };
+                    let groups: Vec<Vec<NativeStats>> = (0..3)
+                        .map(|group| {
+                            (0..2)
+                                .map(|choice| {
+                                    ["STR", "INT", "VIT", "AGI", "DEX"]
+                                        .into_iter()
+                                        .enumerate()
+                                        .map(|(index, name)| {
+                                            let sign = if (group + choice + index) % 2 == 0 {
+                                                1.0
+                                            } else {
+                                                -1.0
+                                            };
+                                            let rate = if group == 0 {
+                                                (raw as f32 * 0.1_f32) as f64 * sign
+                                            } else if group == 1 {
+                                                -(raw as f64 / 10.0) * sign
+                                            } else {
+                                                sign * if choice == 0 {
+                                                    1.23456789
+                                                } else {
+                                                    0.10000000001
+                                                }
+                                            };
+                                            (format!("{prefix}_UP_{name}"), rate)
+                                        })
+                                        .collect()
+                                })
+                                .collect()
+                        })
+                        .collect();
+                    let borrowed: Vec<Vec<_>> =
+                        groups.iter().map(|group| group.iter().collect()).collect();
+                    let plan = SupplyPlan::prepare(&base, &borrowed)
+                        .expect("Finite variable rates retain an affine bound");
+                    for selection in 0..8 {
+                        let mut stats = NativeStats::new();
+                        let mut upper = plan.stages[0].constant + plan.stages[0].error;
+                        for (group, packages) in groups.iter().enumerate() {
+                            let candidate = &packages[(selection >> group) & 1];
+                            stats.add_assign(candidate);
+                            upper += plan.stages[0].package(candidate);
+                        }
+                        let reflection = super::super::candidate_stat_up(&base, &stats, magic);
+                        let raw_power = ((if magic { 3.0 * (attribute+3.0) } else { attribute }) + reflection)
+                            .floor()
+                            .max(1.0);
+                        assert!(upper>=raw_power-1e-6,"attribute={attribute} raw={raw} magic={magic} choice={selection}: {upper} < {raw_power}");
+                    }
+                }
+            }
+        }
     }
 }

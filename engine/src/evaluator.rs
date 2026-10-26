@@ -18,9 +18,11 @@ pub use native_stats::KEYS as NATIVE_STAT_KEYS;
 // in i128; BigInt is an exact overflow fallback, not a floating-point fallback.
 mod decimal_math {
     use num_bigint::{BigInt, Sign};
+    use std::fmt::Write;
     use std::{cell::RefCell, collections::HashMap};
     thread_local! {
         static PARTS: RefCell<HashMap<u64, (i128, i128)>> = RefCell::new(HashMap::new());
+        static TEXT: RefCell<String> = const { RefCell::new(String::new()) };
     }
     fn decimal_text(value: f64) -> (String, i32) {
         let text = value.to_string();
@@ -37,8 +39,20 @@ mod decimal_math {
         if let Some(pair) = PARTS.with(|cache| cache.borrow().get(&value.to_bits()).copied()) {
             return Some(pair);
         }
-        let (digits, scale) = decimal_text(value);
-        let n = digits.parse::<i128>().ok()?;
+        // Reuse decimal text per thread: shared WASM allocation otherwise serializes workers.
+        let (n, scale) = TEXT.with(|text| {
+            let mut text = text.borrow_mut();
+            text.clear();
+            write!(text, "{value}").unwrap();
+            let (mantissa, exponent) = text
+                .split_once('e')
+                .map_or((text.as_str(), 0), |(a, b)| (a, b.parse::<i32>().unwrap()));
+            let length = mantissa.len();
+            let scale = mantissa.split_once('.').map_or(0, |(_, b)| b.len() as i32) - exponent;
+            text.truncate(length);
+            text.retain(|c| c != '.');
+            Some((text.parse::<i128>().ok()?, scale))
+        })?;
         let pair = if scale >= 0 {
             (n, 10_i128.checked_pow(scale as u32)?)
         } else {
@@ -60,6 +74,24 @@ mod decimal_math {
             (n, BigInt::from(10).pow(scale as u32))
         } else {
             (n * BigInt::from(10).pow((-scale) as u32), BigInt::from(1))
+        }
+    }
+    #[test]
+    fn reused_decimal_text_matches_original_conversion_across_cache_evictions() {
+        for exponent in -30..=30 {
+            for numerator in -23..=23 {
+                let value = f64::from(numerator) * 1.37 * 10.0_f64.powi(exponent);
+                let expected = (|| {
+                    let (digits, scale) = decimal_text(value);
+                    let n = digits.parse::<i128>().ok()?;
+                    if scale >= 0 {
+                        Some((n, 10_i128.checked_pow(scale as u32)?))
+                    } else {
+                        Some((n.checked_mul(10_i128.checked_pow((-scale) as u32)?)?, 1))
+                    }
+                })();
+                assert_eq!(small_parts(value), expected, "{value}");
+            }
         }
     }
     fn small_ratio(
@@ -349,65 +381,55 @@ pub enum Invariant {
     MpFlat,
 }
 
+// Native caps 166..175 accumulate f32 terms in cap order and truncate once.
+fn proportional_attack<C: ContextLookup>(base: &C, rates: [f64; 5]) -> f64 {
+    let mut total = 0.0_f32;
+    for (attribute, rate) in [
+        ContextKey::field_str_base,
+        ContextKey::field_int_base,
+        ContextKey::field_vit_base,
+        ContextKey::field_agi_base,
+        ContextKey::field_dex_base,
+    ]
+    .into_iter()
+    .zip(rates)
+    {
+        let mut scaled = rate * 10.0;
+        let nearest = scaled.round();
+        if (scaled - nearest).abs() <= scaled.abs().max(1.0) * 2.0_f64.powi(-22) {
+            scaled = nearest;
+        }
+        let factor = scaled as f32 / 1000.0_f32;
+        let term = factor * number_at(base, attribute) as f32;
+        total += term;
+    }
+    let result = total.trunc();
+    if result == 0.0 {
+        0.0
+    } else {
+        result as f64
+    }
+}
+
 // Only base-context expressions belong here; no candidate stats are cached.
 fn compute_invariant(base: &Value, kind: Invariant) -> f64 {
     match kind {
-        Invariant::AtkUp => {
-            floor_ratio(
-                number_at(base, ContextKey::field_str_base),
-                number_at(base, ContextKey::field_atk_up_s_t_r),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_dex_base),
-                number_at(base, ContextKey::field_atk_up_d_e_x),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_int_base),
-                number_at(base, ContextKey::field_atk_up_i_n_t),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_agi_base),
-                number_at(base, ContextKey::field_atk_up_a_g_i),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_vit_base),
-                number_at(base, ContextKey::field_atk_up_v_i_t),
-                100.0,
-                0.0,
-            )
-        }
-        Invariant::MatkUp => {
-            floor_ratio(
-                number_at(base, ContextKey::field_str_base),
-                number_at(base, ContextKey::field_matk_up_s_t_r),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_dex_base),
-                number_at(base, ContextKey::field_matk_up_d_e_x),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_int_base),
-                number_at(base, ContextKey::field_matk_up_i_n_t),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_agi_base),
-                number_at(base, ContextKey::field_matk_up_a_g_i),
-                100.0,
-                0.0,
-            ) + floor_ratio(
-                number_at(base, ContextKey::field_vit_base),
-                number_at(base, ContextKey::field_matk_up_v_i_t),
-                100.0,
-                0.0,
-            )
-        }
+        Invariant::AtkUp => proportional_attack(
+            base,
+            ["atkUpSTR", "atkUpINT", "atkUpVIT", "atkUpAGI", "atkUpDEX"]
+                .map(|key| number(base, key)),
+        ),
+        Invariant::MatkUp => proportional_attack(
+            base,
+            [
+                "matkUpSTR",
+                "matkUpINT",
+                "matkUpVIT",
+                "matkUpAGI",
+                "matkUpDEX",
+            ]
+            .map(|key| number(base, key)),
+        ),
         Invariant::PhysResistance => resistance_multiplier(base, false),
         Invariant::MagicResistance => resistance_multiplier(base, true),
         Invariant::Proc => expected_proc_multiplier(base),
@@ -565,6 +587,13 @@ prepared_context! {
     field_dual_bringer_active => "dualBringerActive",
     field_dual_bringer_level => "dualBringerLevel",
     field_elem_p => "elemP",
+    field_fire_dmg => "fireDmg",
+    field_water_dmg => "waterDmg",
+    field_wind_dmg => "windDmg",
+    field_earth_dmg => "earthDmg",
+    field_light_dmg => "lightDmg",
+    field_dark_dmg => "darkDmg",
+    field_neutral_dmg => "neutralDmg",
     field_element_awakening => "elementAwakening",
     field_fixed_critical_chance => "fixedCriticalChance",
     field_half_mdef_ignored => "halfMdefIgnored",
@@ -612,6 +641,9 @@ prepared_context! {
     field_sub_refine => "subRefine",
     field_sub_stab => "subStab",
     field_sub_type => "subType",
+    field_weapon_element => "weaponElement",
+    field_sub_weapon_element => "subWeaponElement",
+    field_target_element => "targetElement",
     field_target_weakened => "targetWeakened",
     field_unsheathe_f => "unsheatheF",
     field_unsheathe_p => "unsheatheP",
@@ -1325,18 +1357,18 @@ fn candidate_stat_up<T: StatLookup, C: ContextLookup>(base: &C, stats: &T, magic
     let keys = if magic {
         [
             StatKey::MATK_UP_STR,
-            StatKey::MATK_UP_DEX,
-            StatKey::MATK_UP_AGI,
             StatKey::MATK_UP_INT,
             StatKey::MATK_UP_VIT,
+            StatKey::MATK_UP_AGI,
+            StatKey::MATK_UP_DEX,
         ]
     } else {
         [
             StatKey::ATK_UP_STR,
-            StatKey::ATK_UP_DEX,
-            StatKey::ATK_UP_AGI,
             StatKey::ATK_UP_INT,
             StatKey::ATK_UP_VIT,
+            StatKey::ATK_UP_AGI,
+            StatKey::ATK_UP_DEX,
         ]
     };
     let values = keys.map(|key| stat_at(stats, key));
@@ -1347,19 +1379,25 @@ fn candidate_stat_up<T: StatLookup, C: ContextLookup>(base: &C, stats: &T, magic
             Invariant::AtkUp
         });
     }
-    ["STR", "DEX", "AGI", "INT", "VIT"]
-        .iter()
-        .zip(values)
-        .map(|(name, value)| {
-            let prefix = if magic { "matkUp" } else { "atkUp" };
-            floor_ratio(
-                number(base, &format!("{}Base", name.to_lowercase())),
-                number(base, &format!("{prefix}{name}")) + value,
-                100.0,
-                0.0,
-            )
-        })
-        .sum()
+    let rate_fields = if magic {
+        [
+            ContextKey::field_matk_up_s_t_r,
+            ContextKey::field_matk_up_i_n_t,
+            ContextKey::field_matk_up_v_i_t,
+            ContextKey::field_matk_up_a_g_i,
+            ContextKey::field_matk_up_d_e_x,
+        ]
+    } else {
+        [
+            ContextKey::field_atk_up_s_t_r,
+            ContextKey::field_atk_up_i_n_t,
+            ContextKey::field_atk_up_v_i_t,
+            ContextKey::field_atk_up_a_g_i,
+            ContextKey::field_atk_up_d_e_x,
+        ]
+    };
+    let rates = rate_fields.map(|field| number_at(base, field));
+    proportional_attack(base, std::array::from_fn(|i| rates[i] + values[i]))
 }
 
 /// Display-derived supply coordinates; these are not extra optimization goals.
@@ -1704,13 +1742,74 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         || stat_at(stats, StatKey::ELEM_AWAKENING) > 0.0;
     let magic_element = flag_at(base, ContextKey::field_magic_element)
         || stat_at(stats, StatKey::MAGIC_ELEMENT) > 0.0;
-    let attacks_weakness =
-        awakening || text_at(base, ContextKey::field_attack_element) == "weakness";
+    let mut weapon_element = number_at(base, ContextKey::field_weapon_element);
+    let sub_element = number_at(base, ContextKey::field_sub_weapon_element);
+    if plan.arrow && sub_element != 0.0 {
+        weapon_element = sub_element;
+    }
+    let attack_element = text_at(base, ContextKey::field_attack_element);
+    let inherits_weapon_element =
+        attack_element.is_empty() || attack_element == "none" || attack_element == "weapon";
+    let effective_attack_element = if inherits_weapon_element {
+        weapon_element
+    } else {
+        match attack_element {
+            "fire" => 1.0,
+            "water" => 2.0,
+            "wind" => 3.0,
+            "earth" => 4.0,
+            "light" => 5.0,
+            "dark" => 6.0,
+            "neutral" | "normal" => 7.0,
+            "mana" => 8.0,
+            "targetAdvantage" => match number_at(base, ContextKey::field_target_element) {
+                1.0 => 2.0,
+                2.0 => 3.0,
+                3.0 => 4.0,
+                4.0 => 1.0,
+                5.0 => 6.0,
+                6.0 => 5.0,
+                _ => 0.0,
+            },
+            _ => 0.0,
+        }
+    };
+    let target_element = number_at(base, ContextKey::field_target_element);
+    let weak_target = match effective_attack_element {
+        1.0 => 4.0,
+        2.0 => 1.0,
+        3.0 => 2.0,
+        4.0 => 3.0,
+        5.0 => 6.0,
+        6.0 => 5.0,
+        _ => 0.0,
+    };
+    let attacks_weakness = awakening
+        || attack_element == "weakness"
+        || (weak_target != 0.0 && weak_target == target_element);
+    let weapon_magic_element = is_magic
+        && (attacks_weakness
+            || (matches!(plan.weapon, WeaponKind::Staff | WeaponKind::Device)
+                && effective_attack_element != 0.0
+                && effective_attack_element != 7.0));
     let mut elem = number_at(base, ContextKey::field_elem_p) + stat_at(stats, StatKey::ELEM_P);
+    let target_bonus = match target_element {
+        1.0 => Some((ContextKey::field_fire_dmg, StatKey::FIRE_DMG)),
+        2.0 => Some((ContextKey::field_water_dmg, StatKey::WATER_DMG)),
+        3.0 => Some((ContextKey::field_wind_dmg, StatKey::WIND_DMG)),
+        4.0 => Some((ContextKey::field_earth_dmg, StatKey::EARTH_DMG)),
+        5.0 => Some((ContextKey::field_light_dmg, StatKey::LIGHT_DMG)),
+        6.0 => Some((ContextKey::field_dark_dmg, StatKey::DARK_DMG)),
+        7.0 => Some((ContextKey::field_neutral_dmg, StatKey::NEUTRAL_DMG)),
+        _ => None,
+    };
+    if let Some((field, stat)) = target_bonus {
+        elem += number_at(base, field) + stat_at(stats, stat);
+    }
     if attacks_weakness {
         elem += 25.0;
     }
-    if awakening || magic_element {
+    if awakening || magic_element || weapon_magic_element {
         elem += floor(number_at(base, ContextKey::field_int_base) / 10.0);
     }
     let mut final_cdmg = cdmg;

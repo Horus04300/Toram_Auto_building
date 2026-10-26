@@ -16,7 +16,7 @@ export function createBossTargetUi(documentRef, catalog) {
     const matches = names.filter(item => `${item.name ?? ''} ${item.gameMonsterId}`.toLocaleLowerCase().includes(query));
     results.replaceChildren(...matches.map(item => option(item.gameMonsterId, `${item.name ?? '(이름 없음)'} · #${item.gameMonsterId}`)));
     results.selectedIndex = -1;
-    node('bossSearchStatus').textContent = `${matches.length}개 · 선택하면 아래 계산 값에 반영됩니다.`;
+    node('bossSearchStatus').textContent = `${matches.length}개`;
   }
   async function search() {
     if (names) { list(); return; }
@@ -59,6 +59,8 @@ export function createBossTargetUi(documentRef, catalog) {
   function apply() {
     const resolved = resolveBossTarget(selection);
     for (const [id, value] of Object.entries(resolved.target)) if (value !== null) node(id).value = String(value);
+    const element = selection.variant.baseStats.elementRaw;
+    node('bossElement').value = String(Number.isSafeInteger(element) && element >= 1 && element <= 7 ? element : 0);
     render(); changed();
   }
   async function selectBoss() {
@@ -74,7 +76,7 @@ export function createBossTargetUi(documentRef, catalog) {
       nextBoss.variants.sort((a, b) => Number(a.entry.model === 'unresolved') - Number(b.entry.model === 'unresolved') || a.fieldId - b.fieldId || a.masterId - b.masterId);
       const nextSelection = createBossSelection(nextBoss, nextBoss.variants[0]);
       boss = nextBoss; selection = nextSelection;
-      apply(); node('bossSearchStatus').textContent = '대상 선택 완료 · 지역과 개체·페이즈를 확인해 주세요.';
+      apply(); node('bossSearchStatus').textContent = '대상 적용 완료';
     } catch (error) { if (current === generation) node('bossSearchStatus').textContent = `대상 적용 실패: ${error.message}`; }
   }
   return Object.freeze({
@@ -105,6 +107,7 @@ export function createBossTargetUi(documentRef, catalog) {
       });
       node('bossTargetClear').addEventListener('click', () => { generation++; selection = null; boss = null; render(); changed(); });
       for (const id of ['bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist']) node(id).addEventListener('input', render);
+      node('bossElement').addEventListener('change',render);
     }
   });
 }

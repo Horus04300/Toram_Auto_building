@@ -1,0 +1,66 @@
+#homeWorkspace { padding:28px; height:calc(100dvh - 64px); min-height:560px; box-sizing:border-box; display:flex; flex-direction:column; gap:24px; }
+#homeWorkspace h2, #homeWorkspace h3, #homeWorkspace p { margin:0; padding:0; border:0; color:inherit; }
+#homeWorkspace h2 { font-size:30px; font-weight:750; line-height:1.3; text-align:left; }
+.home-heading p { font-size:14px; color:#4a6a80 !important; margin-top:6px !important; }
+.home-dashboard { flex:1; min-height:0; display:grid; grid-template-columns:minmax(0,1.75fr) minmax(300px,1fr); gap:20px; }
+.home-panel { min-width:0; border:1px solid #bdd9ed; border-radius:12px; background:#fff; }
+.home-panel-heading { padding:20px 22px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+#homeWorkspace h3 { font-size:18px; line-height:1.4; font-weight:700; }
+.home-panel-heading > span { color:#4a6a80; font-size:12px; white-space:nowrap; }
+.home-ranking { display:flex; flex-direction:column; }
+.home-rank-columns { display:grid; grid-template-columns:64px 1fr auto; gap:16px; margin:0 20px; padding:12px 18px; background:#eef8ff; border-radius:5px; color:#4a6a80; font-size:12px; font-weight:600; }
+.home-empty { flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px 20px; gap:12px; text-align:center; }
+.home-empty > svg { width:36px; height:36px; color:#4a6a80; margin-bottom:10px; }
+.home-empty strong { font-size:16px; line-height:1.5; font-weight:650; }
+#homeWorkspace .home-empty p { font-size:13px; line-height:1.65; color:#4a6a80; }
+.home-empty small { color:#4a6a80; font-size:11px; margin-top:4px; }
+.home-side { display:grid; grid-template-rows:auto minmax(0,1fr); gap:20px; min-height:0; }
+.home-account { padding-bottom:20px; }
+.home-account-main { display:flex; align-items:center; gap:14px; padding:0 22px 18px; }
+.home-avatar { width:48px; height:48px; flex-shrink:0; border-radius:50%; background:#eef8ff; color:#1976a8; display:grid; place-items:center; }
+.home-avatar svg { width:27px; height:27px; }
+.home-account-name { display:block; font-size:14px; line-height:1.5; overflow-wrap:anywhere; }
+#homeWorkspace .home-account-description { margin-top:4px; color:#4a6a80; font-size:12px; line-height:1.6; }
+#homeWorkspace button { font-family:inherit; cursor:pointer; }
+.home-primary { display:flex; align-items:center; justify-content:center; gap:12px; width:calc(100% - 44px); margin:0 22px; min-height:42px; padding:10px 12px; border:1px solid #8dbbd8; border-radius:7px; color:#123e5b; background:#b9e4ff; font-size:13px; font-weight:650; }
+.home-primary:hover { background:#a7dcfc; }
+.home-primary:disabled { opacity:.6; cursor:wait !important; }
+.home-primary svg { width:18px; height:18px; }
+.home-account-manage { display:block; margin:10px auto 0; background:transparent; border:0; color:#1976a8; padding:4px 8px; font-size:12px; }
+#homeWorkspace .home-account-status { margin:10px 22px 0; font-size:12px; line-height:1.6; color:#4a6a80; }
+.home-account-status:empty { display:none; }
+.home-recent { display:flex; flex-direction:column; }
+.home-recent-content { display:flex; flex-direction:column; flex:1; min-height:0; }
+.home-recent .home-empty > svg { width:56px; height:56px; background:#eef8ff; border-radius:50%; padding:12px; }
+.home-recent .home-empty strong { font-size:14px; }
+.home-recent-menu { margin:0 20px; padding:16px 4px; display:flex; align-items:center; gap:12px; color:#123e5b; background:white; border:0; border-bottom:1px solid #e4eff7; text-align:left; font-size:14px; }
+.home-recent-menu:hover { background:#f5faff; }
+.home-recent-menu svg { width:22px; height:22px; color:#4a6a80; }
+.home-recent-menu svg:last-child { margin-left:auto; width:17px; }
+@media (max-width:900px) and (min-width:701px) { #homeWorkspace { padding:20px; } .home-dashboard { grid-template-columns:minmax(0,1.25fr) minmax(270px,1fr); gap:14px; } .home-side { gap:14px; } .home-panel-heading { padding:16px; } .home-account-main { padding:0 16px 16px; } }
+@media (max-width:700px) {
+  #homeWorkspace { height:calc(100dvh - 56px); min-height:650px; padding:18px 14px; gap:16px; }
+  #homeWorkspace h2 { font-size:24px; }
+  .home-heading p { font-size:12px; max-width:250px; }
+  .home-dashboard { grid-template-columns:minmax(0,1fr); grid-template-rows:minmax(210px,1fr) auto; gap:12px; }
+  .home-side { grid-template-rows:auto minmax(130px,auto); gap:12px; }
+  .home-panel-heading { padding:12px 14px; }
+  #homeWorkspace h3 { font-size:15px; }
+  .home-panel-heading > span { font-size:10px; }
+  .home-rank-columns { margin:0 12px; padding:8px 10px; grid-template-columns:30px 1fr auto; gap:8px; font-size:10px; }
+  .home-empty { padding:14px 12px; gap:5px; }
+  .home-empty > svg { width:25px; height:25px; margin-bottom:3px; }
+  .home-empty strong { font-size:13px; }
+  #homeWorkspace .home-empty p { font-size:11px; }
+  .home-empty small { font-size:10px; }
+  .home-account-main { padding:0 14px 12px; gap:10px; }
+  .home-avatar { width:36px; height:36px; }
+  .home-avatar svg { width:22px; height:22px; }
+  .home-account-name { font-size:12px; }
+  #homeWorkspace .home-account-description { font-size:11px; }
+  .home-primary { width:calc(100% - 28px); margin:0 14px; min-height:38px; font-size:12px; padding:8px; }
+  .home-account { padding-bottom:14px; }
+  #homeWorkspace .home-account-status { margin:8px 14px 0; font-size:11px; }
+  .home-recent .home-empty > svg { display:none; }
+  .home-recent-menu { margin:0 14px; padding:10px 0; font-size:12px; }
+}

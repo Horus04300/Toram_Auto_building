@@ -104,7 +104,7 @@ await controller.install();
 resolveCheck(null);
 await pending;
 assert.equal(installed, 1, 'in-flight checks cannot start installs');
-const elements = new Map([...read('web/index.html').matchAll(/id="(update[^"]*)"/g)].map(([, id]) => [id, {
+const elements = new Map([...read('web/src/pages/calculator/calculator.html').matchAll(/id="(update[^"]*)"/g)].map(([, id]) => [id, {
   hidden:false, listeners:{}, textContent:'', value:0,
   addEventListener(name, fn) { this.listeners[name] = fn; },
   removeAttribute(name) { delete this[name]; }

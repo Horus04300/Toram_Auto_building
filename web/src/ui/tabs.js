@@ -92,9 +92,9 @@
         if (externalBuffCard) panels.buffs.appendChild(externalBuffCard);
         const comboIntro = document.createElement('section');
         comboIntro.className = 'equip-card';
-        comboIntro.innerHTML = '<h3>🔗 콤보</h3><p>주력기 선택 및 콤보 태그 계산 기능을 여기에 추가합니다.</p>';
+        comboIntro.innerHTML = '<h3>🔗 콤보</h3>';
         panels.combo.appendChild(comboIntro);
-        document.querySelectorAll('body > .skill-bookmark-section').forEach(function (section) { panels.skills.appendChild(section); });
+        container.parentElement.querySelectorAll(':scope > .skill-bookmark-section').forEach(function (section) { panels.skills.appendChild(section); });
         const resultArea = document.getElementById('resultArea');
         if (resultArea) panels.results.appendChild(resultArea);
         const globalActions = document.createElement('section');

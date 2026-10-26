@@ -40,7 +40,21 @@ var ToramExactMath = (function () {
         var n = v[0] * (100n * r[1] + r[0]), d = v[1] * r[1] * 100n;
         return quotient(n * f[1] + f[0] * d, d * f[1]);
     }
-    return Object.freeze({ ratio:ratio, percent:percent });
+    function proportionalAttack(ctx, prefix) {
+        var sum = 0;
+        ['STR','INT','VIT','AGI','DEX'].forEach(function (stat) {
+            var rate = Number(ctx[prefix + 'Up' + stat]) || 0;
+            var scaled = rate * 10, nearest = Math.round(scaled);
+            // Recover native integer tenths from their float32 display values,
+            // including accumulated display roundoff; retain other manual rates.
+            if (Math.abs(scaled - nearest) <= Math.max(1, Math.abs(scaled)) * Math.pow(2, -22)) scaled = nearest;
+            var factor = Math.fround(Math.fround(scaled) / 1000);
+            var term = Math.fround(factor * Math.fround(Number(ctx[stat.toLowerCase() + 'Base']) || 0));
+            sum = Math.fround(sum + term);
+        });
+        return Math.trunc(sum) || 0;
+    }
+    return Object.freeze({ ratio:ratio, percent:percent, proportionalAttack:proportionalAttack });
 }());
 window.ToramExactMath = ToramExactMath;
 
@@ -141,7 +155,7 @@ window.ToramExactMath = ToramExactMath;
             ctx.halfMdefIgnored = Boolean(flags.halfMdefIgnored);
             ctx.useHigherRangeDamage = Boolean(flags.shortOrLongRangeHigher || flags.useHigherRangeDamage);
             ctx.attackPowerMode = flags.usesAtkPlusMatk ? 'sum' : (flags.usesHigherAtkOrMatk ? 'higher' : (flags.usesAtkInsteadOfMatk ? 'atk' : (flags.wizardMatkBlend ? 'wizardBlend' : 'default')));
-            ctx.attackElement = flags.element === undefined ? 'none' : String(flags.element);
+            ctx.attackElement = flags.element === undefined ? 'weapon' : (flags.element === 'none' ? 'neutral' : String(flags.element));
             ctx.attackProfileDiagnostics = Object.keys(flags).filter(function (key) {
                 return /When$/.test(key) && typeof flags[key] === 'string';
             });
@@ -185,6 +199,8 @@ window.ToramExactMath = ToramExactMath;
                 wpnRefine: controlValue('mainWeaponType') === '맨손' ? 0 : (parseFloat(controlValue('wpnRefine')) || 0),
                 wpnStab: controlValue('mainWeaponType') === '맨손' ? 1 : (parseFloat(controlValue('wpnStab')) || 80),
                 subType: controlValue('subWeaponType'),
+                weaponElement: Number(scopedInput && scopedInput.weaponElement) || 0,
+                subWeaponElement: Number(scopedInput && scopedInput.subWeaponElement) || 0,
                 subAtk: parseFloat(controlValue('subAtk')) || 0,
                 subRefine: parseFloat(controlValue('subRefine')) || 0,
                 subStab: parseFloat(controlValue('subStab')) || 0,
@@ -196,6 +212,7 @@ window.ToramExactMath = ToramExactMath;
                 bossCritResist: parseFloat(controlValue('bossCritResist')) || 0,
                 bossPhysResist: parseFloat(controlValue('bossPhysResist')) || 0,
                 bossMagResist: parseFloat(controlValue('bossMagResist')) || 0,
+                targetElement: Number(controlValue('bossElement')) || 0,
                 skillMult: appliedComboHit ? appliedComboHit.skillMult : 1,
                 damageMultiplierLayers: appliedComboHit && appliedComboHit.damageMultiplierLayers ? Object.assign({}, appliedComboHit.damageMultiplierLayers) : null,
                 skillConst: appliedComboHit ? appliedComboHit.skillConst : 0,
@@ -222,13 +239,14 @@ window.ToramExactMath = ToramExactMath;
                 critP: 0, critF: 0, srw: 0, lrw: 0, unsheatheP: 0, unsheatheF: 0, elemP: 0, damageP: 0, watkP: 0, watkF: 0, baseWpnAtkF: 0,
                 physPierce: 0, magPierce: 0, aspdF: 0, aspdP: 0, cspdF: 0, cspdP: 0, stability: 0, motionSpeed: 0, castRed: 0, maxMpF: 0, maxHpF: 0, maxHpP: 0, amprF: 0, amprP: 0,
                 elementAwakening: false, magicElement: false,
+                fireDmg: 0, waterDmg: 0, windDmg: 0, earthDmg: 0, lightDmg: 0, darkDmg: 0, neutralDmg: 0,
                 attackElement: 'none', attackProfileDiagnostics: [], attackPowerMode: 'default', useHigherRangeDamage: false,
                 noCritical: false, criticalChanceBonus: 0, criticalChanceMultiplier: 1, fixedCriticalChance: null, minimumCriticalDamage: 0,
                 stabilityBonus: 0, physicalPierceSkillBonus: 0, magicPierceSkillBonus: 0,
                 ignoreDefense: false, ignoreMdef: false, halfMdefIgnored: false,
                 atkUpSTR: 0, atkUpDEX: 0, atkUpINT: 0, atkUpAGI: 0, atkUpVIT: 0,
                 matkUpSTR: 0, matkUpDEX: 0, matkUpINT: 0, matkUpAGI: 0, matkUpVIT: 0,
-                preservedStats: {}, statDiagnostics: []
+                preservedStats: {}, preservedStatContributions:{}, optionCalculationInputs:scopedInput && scopedInput.optionCalculation || {}, statDiagnostics: []
             };
             var optContainers = ['wpnOpts', 'subOpts', 'armOpts', 'addOpts', 'spcOpts', 'buffOpts'];
             applyAttackProfileToContext(ctx, appliedComboHit);
@@ -351,17 +369,10 @@ window.ToramExactMath = ToramExactMath;
             var normalAttackAmpr = resolveNormalAttackAmpr(equipmentAndBuffAMPR, ctx.normalAttackAmprProfile);
             var amprBeforeDual = normalAttackAmpr.final;
             
-            var statAtkUp = ToramExactMath.ratio(ctx.strBase, ctx.atkUpSTR, 100) +
-                            ToramExactMath.ratio(ctx.dexBase, ctx.atkUpDEX, 100) +
-                            ToramExactMath.ratio(ctx.intBase, ctx.atkUpINT, 100) +
-                            ToramExactMath.ratio(ctx.agiBase, ctx.atkUpAGI, 100) +
-                            ToramExactMath.ratio(ctx.vitBase, ctx.atkUpVIT, 100);
-
-            var statMatkUp = ToramExactMath.ratio(ctx.strBase, ctx.matkUpSTR, 100) +
-                            ToramExactMath.ratio(ctx.dexBase, ctx.matkUpDEX, 100) +
-                            ToramExactMath.ratio(ctx.intBase, ctx.matkUpINT, 100) +
-                            ToramExactMath.ratio(ctx.agiBase, ctx.matkUpAGI, 100) +
-                            ToramExactMath.ratio(ctx.vitBase, ctx.matkUpVIT, 100);
+            // BonusManager.CulcConvertAtk/MAtk sums f32 terms in native cap
+            // order, then truncates the complete sum toward zero once.
+            var statAtkUp = ToramExactMath.proportionalAttack(ctx, 'atk');
+            var statMatkUp = ToramExactMath.proportionalAttack(ctx, 'matk');
 
 
             // 1. 최종 무기 공격력: 기본 무기 공격력 → 무기 ATK%·재련 → 무기 ATK(+)
@@ -550,7 +561,16 @@ window.ToramExactMath = ToramExactMath;
 // --- 1. 약점 속성 및 순수 기본 INT 기준 속성에 유리 보너스 계산 ---
     var hasElementAwakening = Boolean(ctx.elementAwakening);
     var hasMagicElement = Boolean(ctx.magicElement);
-    var attacksWeakness = hasElementAwakening || ctx.attackElement === 'weakness';
+    var weaponElement = Number(ctx.weaponElement) || 0;
+    if ((ctx.mainType === '활' || ctx.mainType === '자동활') && ctx.subType === '화살' && Number(ctx.subWeaponElement)) weaponElement = Number(ctx.subWeaponElement);
+    var inheritsWeaponElement = !ctx.attackElement || ctx.attackElement === 'none' || ctx.attackElement === 'weapon';
+    var namedElement = {fire:1,water:2,wind:3,earth:4,light:5,dark:6,neutral:7,normal:7,mana:8}[ctx.attackElement];
+    if (ctx.attackElement === 'targetAdvantage') namedElement = [0,2,3,4,1,6,5,0][Number(ctx.targetElement)] || 0;
+    var effectiveAttackElement = inheritsWeaponElement ? weaponElement : (namedElement || 0);
+    var attacksWeakness = hasElementAwakening || ctx.attackElement === 'weakness' ||
+        (effectiveAttackElement >= 1 && effectiveAttackElement <= 6 && [0,4,1,2,3,6,5][effectiveAttackElement] === Number(ctx.targetElement));
+    var weaponMagicElement = ctx.atkType === 'MAG' && (attacksWeakness ||
+        ((ctx.mainType === '지팡이' || ctx.mainType === '마도구') && effectiveAttackElement !== 0 && effectiveAttackElement !== 7));
 
     // 내부 엔진/외부 컨텍스트의 속성에 유리 안전 확보
     var baseElemDmg = 0;
@@ -560,14 +580,17 @@ window.ToramExactMath = ToramExactMath;
         baseElemDmg = ctx.elemDmg || ctx.elemDmgP || ctx.elemP || 0;
     }
 
-    var currentElemDmg = baseElemDmg;
+    var targetElementField = [null,'fireDmg','waterDmg','windDmg','earthDmg','lightDmg','darkDmg','neutralDmg'][Number(ctx.targetElement)];
+    var targetElementBonus = targetElementField ? Number(ctx[targetElementField]) || 0 : 0;
+    var currentElemDmg = baseElemDmg + targetElementBonus;
     var elemTipText = `기본 장비 속성에 유리: +${baseElemDmg}%\n`;
+    if (targetElementBonus) elemTipText += `대상 속성 추가 위력: ${targetElementBonus}%\n`;
 
     if (attacksWeakness) {
         currentElemDmg += 25;
         elemTipText += `약점 속성 공격 보너스: +25%\n`;
     }
-    if (hasElementAwakening || hasMagicElement) {
+    if (hasElementAwakening || hasMagicElement || weaponMagicElement) {
         var pureBaseINT = (typeof ctx !== 'undefined' && ctx.intBase) ? ctx.intBase : 0;
         var intElemBonus = Math.floor(pureBaseINT / 10);
         currentElemDmg += intElemBonus;
@@ -722,7 +745,7 @@ window.ToramExactMath = ToramExactMath;
 
             var extraAtkTip = isDualSword ? `\n\n[듀얼소드 합산]\n메인 + (서브ATK * 서브안정률)\n(서브 무기 ATK: ${finalSubAtk} / 서브 안정률: ${finalSubStab}%)` : '';
 
-            return { 
+            var result = {
                 ctx: ctx, isPierced: isPierced, rawAtkBase: rawAtkBase,
                 finalSTR: totalSTR, finalINT: totalINT, finalAGI: totalAGI, finalDEX: totalDEX, finalVIT: totalVIT,
                 finalATK: finalATK, finalMATK: finalMATK, finalCDMG: finalCdmgVal, finalCrit: ctx.chkGuaranteedCrit ? "확정치명타" : finalCritRate,
@@ -757,6 +780,9 @@ window.ToramExactMath = ToramExactMath;
                     elemTip: elemTipText
                 }
             };
+            if (window.ToramSupplementalStats) result.supplementalStats = window.ToramSupplementalStats.evaluate(result, ctx.optionCalculationInputs);
+            if (window.ToramOptionEvents) result.optionEvents = window.ToramOptionEvents.evaluate(result, ctx.optionCalculationInputs);
+            return result;
         }
 
 // 실시간 경고창 제어 및 검사 함수

@@ -8,3 +8,5 @@ src/의 평가·탐색·스탯·공급 제약 구현을 웹 WASM과 데스크톱
 - 웹 연결·후보 준비: ../web/src/optimization/
 
 루트에서 npm run wasm:build로 ../build/generated/wasm/에 출력합니다. Rust 검사는 cargo test --manifest-path engine/Cargo.toml --lib입니다. 변경 Gate는 ../docs/architecture/crysta-optimization-contract.md를 따릅니다.
+
+기본 WASM은 stable/no-modules, parallel/은 nightly-2025-11-15 + rust-src로 표준 라이브러리를 atomics·bulk-memory와 함께 다시 빌드한 ES module입니다. wasm-bindgen-cli 0.2.127을 사용합니다. wasm-threads feature에서 Rayon이 Native와 같은 노드 확장·incumbent·frontier 병합을 실행합니다. nightly와 RUSTFLAGS는 병렬 빌드 자식 프로세스에만 적용합니다.

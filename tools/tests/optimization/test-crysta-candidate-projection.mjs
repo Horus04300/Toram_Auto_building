@@ -154,6 +154,18 @@ assert.equal(optimizer.prepareProblem(variable,{registry:{entries:()=>registry.e
 assert.equal(optimizer.prepareProblem(variable,{registry,relevantKeys:keys,evaluator:{}}).metadata.candidateProjection,null);
 
 const smallStats={...ctx,agiBase:1,intBase:1,vitBase:1,agiF:15,vitF:5};
+const variableReflection=check(problem(ctx,[
+  [{ATK_UP_STR:1,MATK_UP_INT:-2,MAXHPP:10},{ATK_UP_STR:2,MATK_UP_INT:-1,MAXHP:300}],
+  [{ATK_UP_STR:-1,MATK_UP_INT:2,MAXHP:100},{ATK_UP_STR:1,MATK_UP_INT:3,MAXHPP:5}]
+]));
+const reflectionProjection=variableReflection.metadata.candidateProjection;
+assert.ok(reflectionProjection,'Variable proportional attack must retain unrelated safe projections');
+for(const key of ['ATK_UP_STR','MATK_UP_INT'])assert.ok(reflectionProjection.keys.includes(key),'Raw proportional coefficients remain in the equality class');
+for(const id of ['ATK','MATK'])assert.equal(reflectionProjection.bundles.find(bundle=>bundle.id===id).mode,'raw');
+assert.notEqual(reflectionProjection.bundles.find(bundle=>bundle.id==='MAXHP').mode,'raw');
+for(const group of variableReflection.groups) for(const candidate of group.packages) {
+  for(const key of ['ATK_UP_STR','MATK_UP_INT'])assert.equal(candidate.searchProjection[key],candidate.statDelta[key]||0);
+}
 const constant=check(problem(smallStats,[[{AGIP:10,INTP:18,VITP:17},{AGI:1,INT:1}]]));
 assert.deepEqual(plain(constant.metadata.candidateProjection.constantStatReports.map(r=>r.key)),['AGIP','INTP','VITP']);
 for(const key of ['AGIP','INTP','VITP'])assert.ok(!constant.metadata.candidateProjection.keys.includes(key));

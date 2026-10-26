@@ -17,21 +17,19 @@ assert.ok(html.includes(`data-runtime="${verifyDist ? 'desktop' : 'web'}"`));
 if (verifyDist || verifyWeb) assert.ok(!html.includes('{{APP_VERSION}}'));
 
 assert.match(html, /<script type="module" src="assets\/js\/app-entry\.mjs"><\/script>/u, 'HTML은 단일 ES Module 진입점을 로드해야 합니다.');
+assert.match(html,/id="homeWorkspace"/u,'Index owns the home markup');
+assert.doesNotMatch(html,/id="charLevel"|class="container"/u,'Index must not contain calculator markup');
 assert.equal([...html.matchAll(/<script\b[^>]*\bsrc=/gu)].length, 1, 'HTML에는 legacy classic script 태그가 남아 있으면 안 됩니다.');
-for (const path of ['assets/js/app-entry.mjs', 'assets/js/classic-script-manifest.mjs', ...paths]) {
+for (const path of ['assets/js/app-entry.mjs', 'assets/js/classic-script-manifest.mjs', 'assets/js/pages/calculator/calculator-page.mjs', 'assets/pages/calculator.html', ...paths]) {
   await access(file(path));
 }
 
+assert.match(await readFile(file('assets/js/app-entry.mjs'),'utf8'), /import '\.\/calculation\/stat-registry\.js';/u, 'StatRegistry must be initialized before calculator and inventory consumers.');
+
 async function verifySequentialLoading(baseURI, runtime, expectedPaths) {
-  const previousDocument = Object.getOwnPropertyDescriptor(globalThis, 'document');
-  const previousFetch = globalThis.fetch;
-  globalThis.fetch = async url => ({ok:true,json:async () => String(url).endsWith('manifest.json')
-    ? {schema:'toram.project-items.v1',optimizerEligible:true,kinds:{crystas:'crystas.json'}} : {9776:{gameItemId:9776}}});
   const loaded = [];
   const documentRef = {
     baseURI,
-    defaultView:{},
-    getElementById() { return null; },
     documentElement:{ dataset:{ runtime } },
     createElement(tagName) {
       assert.equal(tagName, 'script', 'legacy loader는 script 요소만 만들어야 합니다.');
@@ -44,17 +42,11 @@ async function verifySequentialLoading(baseURI, runtime, expectedPaths) {
       }
     }
   };
-  Object.defineProperty(globalThis, 'document', { configurable:true, value:documentRef });
-  try {
-    const entry = pathToFileURL(file('assets/js/app-entry.mjs')).href + `?runtime=${runtime}&base=${encodeURIComponent(baseURI)}`;
-    await import(entry);
-    assert.equal(typeof documentRef.defaultView.ToramApp.items.getItem, 'function', 'The application exposes the ID-based item catalog without eager data requests.');
-    assert.equal(typeof documentRef.defaultView.ToramApp.bosses.get, 'function', 'The application exposes boss variants without eager data requests.');
-  } finally {
-    globalThis.fetch = previousFetch;
-    if (previousDocument) Object.defineProperty(globalThis, 'document', previousDocument);
-    else delete globalThis.document;
-  }
+
+  const entry = pathToFileURL(file('assets/js/pages/calculator/calculator-page.mjs')).href;
+  const {loadCalculatorScripts} = await import(entry);
+  await loadCalculatorScripts(documentRef);
+
   assert.deepEqual(loaded.map(item => item.src), expectedPaths.map(path => new URL(path, baseURI).href), `${baseURI}: ${runtime} script order`);
   assert.ok(loaded.every(item => item.type === 'text/javascript' && item.async === false), `${baseURI}: classic scripts must stay sequential`);
 }
@@ -74,7 +66,9 @@ const worker = await readFile(file('assets/js/optimization/wasm-worker.js'), 'ut
 assert.ok(workerClient.includes("new root.Worker('assets/js/optimization/wasm-worker.js')"));
 assert.ok(worker.includes("'candidate-preparation.js'"));
 assert.ok(!CLASSIC_SCRIPT_PATHS.some(path => /exact-solver|worker-client|solver-worker|seed-search|marginal-score|pair-partition|source-profile/u.test(path)));
-if (verifyDist || verifyWeb) await access(file('assets/wasm/crysta_bg.wasm'));
+if (verifyDist || verifyWeb) {
+  for (const path of ['assets/wasm/crysta_bg.wasm', 'assets/wasm/parallel/crysta.js', 'assets/wasm/parallel/crysta_bg.wasm']) await access(file(path));
+}
 for (const name of ['exact-solver', 'worker-client', 'solver-worker', 'seed-search', 'marginal-score', 'pair-partition', 'source-profile']) {
   await assert.rejects(access(file(`assets/js/optimization/${name}.js`)), { code:'ENOENT' });
 }

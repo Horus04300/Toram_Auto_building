@@ -155,7 +155,7 @@
     if (!section) { section = document.createElement('section'); section.id = 'activeBuffSkillSection'; section.className = 'equip-card'; panel.insertBefore(section, panel.firstChild); }
     var state = savedState();
     var buffs = displayableBuffSkills().filter(function (skill) { return levelFor(skill) > 0; });
-    section.innerHTML = '<h3>✨ 액티브 버프</h3><p style="margin:0 0 10px;color:#5d6d7e;font-size:13px;">파란색은 적용, 회색은 미적용입니다. 스택형 버프는 카드 하단에서 조절합니다.</p>';
+    section.innerHTML = '<h3>✨ 액티브 버프</h3>';
     var grid = document.createElement('div'); grid.className = 'active-buff-grid';
     buffs.forEach(function (skill) {
       var enabled = enabledFor(state, skill.id);
@@ -164,6 +164,7 @@
       var stacks = config ? stackFor(state, skill, config) : 0;
       var card = document.createElement('div'); card.className = 'active-buff-card' + (config ? ' has-stacks' : '');
       var button = document.createElement('button'); button.type = 'button'; button.className = 'skill-node' + (enabled ? ' is-invested' : '');
+      button.setAttribute('aria-pressed', String(enabled));
       button.style.backgroundImage = 'url("' + encodeURI('assets/icons/skills/icons/' + (enabled ? 'skill_on.png' : 'skill_off.png')) + '")';
       var image = document.createElement('img'); image.className = 'skill-node-icon'; image.src = encodeURI(iconFor(skill)); image.alt = '';
       var name = document.createElement('span'); name.className = 'skill-node-name'; name.textContent = skill.nameKo;

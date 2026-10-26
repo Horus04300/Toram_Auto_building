@@ -5,6 +5,8 @@ import { mkdirSync } from 'node:fs';
 import { readFile, realpath } from 'node:fs/promises';
 import { dirname, extname, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import { createInventoryStore } from './inventory-store.mjs';
+import { createPostStore } from './post-store.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const random = () => randomBytes(32).toString('base64url');
@@ -65,6 +67,8 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
     CREATE TABLE IF NOT EXISTS oauth_states (state_hash TEXT PRIMARY KEY, verifier TEXT NOT NULL, desktop_id TEXT, expires_at INTEGER NOT NULL);
     CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, kind TEXT NOT NULL, name TEXT NOT NULL, data TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1, updated_at TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS records_owner ON records(user_id,kind);`);
+  const inventory = createInventoryStore(db);
+  const posts = createPostStore(db,inventory);
   const configured = Boolean(clientId && clientSecret);
   const cookieName = origin.protocol === 'https:' ? '__Host-toram_session' : 'toram_session';
   const loginCookie = origin.protocol === 'https:' ? '__Host-toram_login' : 'toram_login';
@@ -106,9 +110,10 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
   }
   async function staticFile(req, res, pathname) {
     if (pathname === '/favicon.ico' && req.method === 'GET') { res.writeHead(204); res.end(); return; }
-    if (!['GET','HEAD'].includes(req.method) || (pathname !== '/' && pathname !== '/index.html' && !pathname.startsWith('/assets/'))) throw fail(404, '찾을 수 없습니다.');
+    const entry = ['/', '/index.html', '/inventory', '/calculator', '/board', '/catalog'].includes(pathname);
+    if (!['GET','HEAD'].includes(req.method) || (!entry && !pathname.startsWith('/assets/'))) throw fail(404, '찾을 수 없습니다.');
     const base = await realpath(frontend);
-    const file = await realpath(resolve(base, '.' + (pathname === '/' ? '/index.html' : pathname)));
+    const file = await realpath(resolve(base, '.' + (entry ? '/index.html' : pathname)));
     if (!file.startsWith(base + sep)) throw fail(404, '찾을 수 없습니다.');
     const content = await readFile(file);
     res.writeHead(200, { 'Content-Type':mime[extname(file)] || 'application/octet-stream' });
@@ -117,6 +122,8 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
   const server = createServer({ maxHeaderSize:16384, requestTimeout:20000 }, async (req, res) => {
     res.setHeader('Cache-Control', 'no-store');
     res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
+    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader('Vary', 'Origin');
     const requestOrigin = req.headers.origin;
@@ -127,14 +134,22 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
       if (requestOrigin && requestOrigin !== publicOrigin && !desktopOrigins.has(requestOrigin)) throw fail(403, '허용되지 않은 출처입니다.');
       if (desktopOrigins.has(requestOrigin)) {
         res.setHeader('Access-Control-Allow-Origin', requestOrigin);
-        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
+        res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Idempotency-Key');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS');
       }
       if (req.method === 'OPTIONS') { res.writeHead(204); res.end(); return; }
       if (!['GET','HEAD'].includes(req.method) && !requestOrigin) throw fail(403, '요청 출처가 필요합니다.');
       cleanup(); rate(req, 'api', 1000);
       const user = session(req);
       if (path === '/api/session' && req.method === 'GET') { json(res, 200, { configured, user:user ? { id:user.id, nickname:user.nickname } : null }); return; }
+      const postPath = path.match(/^\/api\/posts\/([a-f0-9-]{36})(?:\/(releases|favorite)(?:\/(\d+))?)?$/u);
+      if (req.method === 'GET') {
+        if (path === '/api/posts') { json(res,200,posts.list(user?.id,url.searchParams)); return; }
+        if (postPath && !postPath[2]) { json(res,200,posts.get(postPath[1],user?.id)); return; }
+        if (postPath?.[2] === 'releases') {
+          json(res,200,postPath[3] ? posts.get(postPath[1],user?.id,Number(postPath[3])) : posts.history(postPath[1],user?.id,url.searchParams)); return;
+        }
+      }
       if (path === '/api/auth/desktop' && req.method === 'POST') {
         if (!configured) throw fail(503, 'Google 로그인 서버 설정이 필요합니다.');
         rate(req, 'login', 30);
@@ -191,6 +206,28 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
         redirect(res, '/?account=connected'); return;
       }
       if (!user) throw fail(401, '로그인이 필요합니다.');
+      if (path === '/api/me/posts' && req.method === 'GET') { json(res,200,posts.list(user.id,url.searchParams,true)); return; }
+      if (path === '/api/posts' && req.method === 'POST') { json(res,201,posts.publish(user.id,await body(req),req.headers['idempotency-key'])); return; }
+      if (path === '/api/inventory/copies' && req.method === 'POST') { json(res,201,posts.copy(user.id,await body(req),req.headers['idempotency-key'])); return; }
+      if (postPath && !postPath[3]) {
+        if (!postPath[2] && req.method === 'PATCH') { json(res,200,posts.manage(user.id,postPath[1],await body(req))); return; }
+        if (postPath[2] === 'releases' && req.method === 'POST') { json(res,201,posts.publish(user.id,await body(req),req.headers['idempotency-key'],postPath[1])); return; }
+        if (postPath[2] === 'favorite' && ['PUT','DELETE'].includes(req.method)) { await body(req); json(res,200,posts.favorite(user.id,postPath[1],req.method === 'PUT')); return; }
+      }
+      if (req.method === 'POST' && path === '/api/inventory/merges/preview') { json(res,200,inventory.preview(user.id,await body(req))); return; }
+      if (req.method === 'POST' && path === '/api/inventory/merges') { json(res,201,inventory.merge(user.id,await body(req),req.headers['idempotency-key'])); return; }
+      if (path === '/api/inventory') {
+        if (req.method === 'GET') { json(res, 200, inventory.list(user.id, url.searchParams)); return; }
+        if (req.method === 'POST') { json(res, 201, inventory.create(user.id, await body(req))); return; }
+        throw fail(405, '지원하지 않는 요청입니다.');
+      }
+      const inventoryId = path.match(/^\/api\/inventory\/([a-f0-9-]{36})$/u)?.[1];
+      if (inventoryId) {
+        if (req.method === 'GET') { json(res, 200, inventory.get(user.id, inventoryId)); return; }
+        if (req.method === 'PUT') { json(res, 200, inventory.update(user.id, inventoryId, await body(req))); return; }
+        if (req.method === 'DELETE') { json(res, 200, inventory.remove(user.id, inventoryId, await body(req))); return; }
+        throw fail(405, '지원하지 않는 요청입니다.');
+      }
       if (path === '/api/logout' && req.method === 'POST') {
         db.prepare('DELETE FROM sessions WHERE token_hash=?').run(user.token_hash);
         if (user.kind === 'web') res.setHeader('Set-Cookie', cookie(cookieName, '', 0));
@@ -227,7 +264,9 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
     } catch (error) {
       if (res.headersSent) { res.end(); return; }
       const missing = ['ENOENT','ENOTDIR','EISDIR','EINVAL'].includes(error.code);
-      json(res, error.status || (missing ? 404 : 500), { error:error.status ? error.message : missing ? '찾을 수 없습니다.' : '서버 처리에 실패했습니다.' });
+      const status = error.status || (missing ? 404 : 500);
+      json(res, status, { error:error.status ? error.message : missing ? '찾을 수 없습니다.' : '서버 처리에 실패했습니다.',
+        ...(req.url.startsWith('/api/inventory') || req.url.startsWith('/api/posts') || req.url.startsWith('/api/me/posts') ? { code:error.apiCode || ({400:'INVALID_INPUT',401:'AUTH_REQUIRED',403:'ORIGIN_REJECTED',404:'OBJECT_UNAVAILABLE',413:'BODY_TOO_LARGE',415:'JSON_REQUIRED',429:'RATE_LIMITED'})[status] || 'REQUEST_FAILED' } : {}) });
     }
   });
   server.on('close', () => db.close());

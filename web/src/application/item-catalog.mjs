@@ -14,6 +14,10 @@ function immutable(value) {
 
 export function matchesItemCondition(context, condition) {
   const ctx = context || {};
+  if (condition.kind === 'item-event') return (ctx.activeItemEventTypes || []).includes(condition.eventType);
+  if (condition.kind === 'all') return condition.conditions.every(when => matchesItemCondition(ctx, when));
+  if (condition.kind === 'any') return condition.conditions.some(when => matchesItemCondition(ctx, when));
+  if (condition.kind === 'not') return !matchesItemCondition(ctx, condition.condition);
   if (condition.kind === 'either-weapon-slot') {
     requireValue(typeof ctx.mainType === 'string' && typeof ctx.subType === 'string', 'Item condition needs mainType and subType.');
     return condition.types.includes(ctx.mainType) || condition.types.includes(ctx.subType);
@@ -49,6 +53,7 @@ export function resolveItemOptions(item, context) {
 export const EQUIPMENT_ITEM_SCHEMA = 'toram.equipment-item.v1';
 const weaponTypes = { 8:'발도검', 9:'선풍창', 10:'한손검', 11:'양손검', 12:'활', 13:'자동활', 14:'지팡이', 15:'마도구', 16:'권갑' };
 const subWeaponTypes = { 8:'발도검', 10:'한손검(듀얼소드)', 15:'마도구', 16:'권갑', 17:'방패', 18:'단검', 19:'화살', 23:'인술 두루마리' };
+export const WEAPON_ITEM_TYPES = Object.freeze({...subWeaponTypes,...weaponTypes});
 const equipmentTypes = { armor:20, additional:21, special:22 };
 
 export function subEquipmentUsesOptions(typeId) { return [17,18,19,23].includes(typeId); }
@@ -68,6 +73,27 @@ function validateStats(value, registry) {
     requireValue(registry.normalize(key) === key, `등록되지 않은 장비 옵션: ${key}`);
   }
 }
+function validateElement(value) {
+  requireValue(value === undefined || Number.isSafeInteger(value) && value >= 0 && value <= 8,'장비 속성이 올바르지 않습니다.');
+}
+
+export function validateItemCondition(when, depth = 0) {
+  requireValue(when && typeof when === 'object' && !Array.isArray(when) && depth <= 32, '장비 조건이 올바르지 않습니다.');
+  const allowed = when.kind === 'item-event' ? ['kind','eventType'] : ['all','any'].includes(when.kind) ? ['kind','conditions']
+    : when.kind === 'not' ? ['kind','condition'] : when.kind === 'either-weapon-slot' ? ['kind','types']
+      : when.kind === 'both-weapon-slots' ? ['kind','main','sub'] : ['kind','armor'];
+  requireValue(Object.keys(when).every(key => allowed.includes(key)), '알 수 없는 장비 조건 정보입니다.');
+  if (when.kind === 'item-event') requireValue(Number.isSafeInteger(when.eventType) && when.eventType >= 0 && when.eventType <= 255, '장비 이벤트 조건이 올바르지 않습니다.');
+  else if (['all','any'].includes(when.kind)) {
+    requireValue(Array.isArray(when.conditions) && when.conditions.length > 0 && when.conditions.length <= 100, '장비 조건 목록이 올바르지 않습니다.');
+    when.conditions.forEach(child => validateItemCondition(child, depth + 1));
+  } else if (when.kind === 'not') validateItemCondition(when.condition, depth + 1);
+  else if (when.kind === 'either-weapon-slot') {
+    const labels = [...Object.values(weaponTypes), '한손검(듀얼소드)', '방패', '단검', '화살', '인술 두루마리'];
+    requireValue(Array.isArray(when.types) && when.types.length > 0 && when.types.every(type => labels.includes(type)), '장비 무기 조건이 올바르지 않습니다.');
+  } else if (when.kind === 'both-weapon-slots') requireValue(when.main === '한손검' && when.sub === '한손검(듀얼소드)', '듀얼 장비 조건이 올바르지 않습니다.');
+  else requireValue(when.kind === 'body-battle-customize' && ['경량옷','중량옷'].includes(when.armor), '장비 개조 조건이 올바르지 않습니다.');
+}
 
 // Saved builds pin the selected definition so a catalog update cannot change their calculation.
 export function validateEquipmentSelection(selection, registry, slot) {
@@ -78,17 +104,12 @@ export function validateEquipmentSelection(selection, registry, slot) {
     : slot === 'subWeapon' ? Object.hasOwn(subWeaponTypes, selection.typeId)
       : equipmentTypes[slot] === selection.typeId, '장비 원본과 적용 칸이 일치하지 않습니다.');
   validateStats(selection.stats, registry);
+  validateElement(selection.element);
   requireValue(Array.isArray(selection.conditionalStats), '장비 조건 목록이 필요합니다.');
   for (const group of selection.conditionalStats) {
-    const when = group.when;
-    requireValue(when && typeof when === 'object', '장비 조건이 필요합니다.');
-    if (when.kind === 'either-weapon-slot') {
-      const labels = [...Object.values(weaponTypes), '한손검(듀얼소드)', '방패', '단검', '화살', '인술 두루마리'];
-      requireValue(Array.isArray(when.types) && when.types.length > 0 && when.types.every(type => labels.includes(type)), '장비 무기 조건이 올바르지 않습니다.');
-    } else if (when.kind === 'both-weapon-slots') {
-      requireValue(when.main === '한손검' && when.sub === '한손검(듀얼소드)', '듀얼 장비 조건이 올바르지 않습니다.');
-    } else requireValue(when.kind === 'body-battle-customize' && ['경량옷','중량옷'].includes(when.armor), '장비 개조 조건이 올바르지 않습니다.');
+    validateItemCondition(group.when);
     validateStats(group.stats, registry);
+    validateElement(group.element);
     requireValue(Array.isArray(group.unresolved) && group.unresolved.length === 0, '미연결 장비 옵션은 적용할 수 없습니다.');
   }
   return selection;
@@ -109,18 +130,26 @@ export function createEquipmentSelection(item, slot, context, registry) {
     '미연결 옵션이 있는 아이템은 적용할 수 없습니다.');
   const selection = JSON.parse(JSON.stringify({ schema:EQUIPMENT_ITEM_SCHEMA, gameItemId:item.id,
     cacheVersion:item.cacheVersion, sourceSha256:item.sourceSha256, name:item.name, typeId:item.typeId,
-    stats:item.stats, conditionalStats:item.conditionalStats }));
+    stats:item.stats, conditionalStats:item.conditionalStats, ...(item.element === undefined ? {} : {element:item.element}) }));
   resolveEquipmentOptions(selection, slot, context, registry);
   return immutable(selection);
 }
 
+export function resolveEquipmentElement(selection, slot, context, registry) {
+  validateEquipmentSelection(selection,registry,slot);
+  let element = selection.element || 0;
+  for (const group of selection.conditionalStats) if (group.element !== undefined && matchesItemCondition(context,group.when)) element = group.element;
+  return element;
+}
+
 export const CONSUMABLE_BUFF_SCHEMA = 'toram.consumable-buff.v1';
+export function isConsumableGroupId(value) { return Number.isSafeInteger(value) && ((value >= 209 && value <= 224) || value === 255); }
 
 export function validateConsumableBuffSelection(selection, registry) {
   requireValue(selection?.schema === CONSUMABLE_BUFF_SCHEMA, '지원하지 않는 소모품 버프 형식입니다.');
   validateSource(selection, registry);
   requireValue([2,50].includes(selection.typeId), '이 소모품 종류는 버프로 적용할 수 없습니다.');
-  requireValue(Number.isSafeInteger(selection.buffGroupId) && ((selection.buffGroupId >= 209 && selection.buffGroupId <= 224) || selection.buffGroupId === 255), '소모품 버프 계열이 올바르지 않습니다.');
+  requireValue(isConsumableGroupId(selection.buffGroupId), '소모품 버프 계열이 올바르지 않습니다.');
   requireValue(Number.isSafeInteger(selection.durationSeconds) && selection.durationSeconds > 0, '소모품 버프 지속시간이 올바르지 않습니다.');
   validateStats(selection.stats, registry);
   requireValue(Object.keys(selection.stats).length > 0, '소모품 버프 효과가 없습니다.');
@@ -198,17 +227,23 @@ export function createItemCatalog(manifestUrl = new URL('../../game-data/items/m
       requireValue(Object.hasOwn(items, String(id)), 'Item index/shard mismatch.');
       return Object.freeze({ id, kind, name:names[id] ?? null, ...items[id], cacheVersion:value.cacheVersion, sourceSha256:value.source.catalogSha256 });
     },
-    async listItems(kind, locale = 'kr') {
+    async listItems(kind, locale = 'kr', {typeId,category} = {}) {
       const value = await manifest();
       const files = localeFiles(value, kind, locale);
-      const names = await get(files.names);
-      return Object.entries(names).map(([id, name]) => ({ id:Number(id), name }));
+      const [names,items] = await Promise.all([get(files.names),typeId !== undefined || category !== undefined ? get(value.kinds[kind]) : null]);
+      return Object.entries(names).filter(([id]) => !items || (typeId === undefined || items[id].typeId === typeId) && (category === undefined || items[id].category === category))
+        .map(([id, name]) => ({ id:Number(id), name }));
     },
     async listBuffItems(locale = 'kr') {
       const value = await manifest(), files = localeFiles(value, 'consumables', locale);
       const [items, names] = await Promise.all([get(value.kinds.consumables), get(files.names)]);
       return Object.entries(items).filter(([, item]) => item.effectScope === 'consumable-buff' && item.fullyMapped)
-        .map(([id]) => ({ id:Number(id), name:names[id] ?? null }));
+        .map(([id,item]) => ({ id:Number(id), name:names[id] ?? null, consumableCategory:item.consumableCategory ?? null }));
+    },
+    async listConsumableCategories() {
+      const value = await manifest(), items = await get(value.kinds.consumables), categories = new Map();
+      for (const item of Object.values(items)) if (item.buff && item.consumableCategory) categories.set(item.buff.groupId,{id:item.buff.groupId,label:item.consumableCategory.names.kr ?? String(item.buff.groupId)});
+      return [...categories.values()].sort((left,right) => left.id - right.id);
     },
     async getDetails(id, locale = 'kr') {
       const value = await manifest();

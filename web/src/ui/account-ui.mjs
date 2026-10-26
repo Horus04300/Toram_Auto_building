@@ -10,17 +10,15 @@ export function createAccountUi(documentRef, account) {
     <header class="account-header"><h2 id="accountTitle">계정</h2><button type="button" class="account-close" aria-label="계정 닫기">×</button></header>
     <div class="account-guest">
       <div class="account-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></svg></div>
-      <h3>내 세팅을 어디서나</h3><p>로그인하고 빌드, 내 아이템과<br>즐겨찾기를 계정에 보관하세요.</p>
+      <h3>내 세팅을 어디서나</h3>
       <button type="button" class="google-login"><svg width="20" height="20" viewBox="0 0 48 48" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5Z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6C44.4 38.03 46.98 31.87 46.98 24.55Z"/><path fill="#FBBC05" d="M10.53 28.59A14.41 14.41 0 0 1 9.75 24c0-1.59.28-3.13.76-4.59l-7.98-6.19A23.87 23.87 0 0 0 0 24c0 3.87.93 7.53 2.56 10.78l7.97-6.19Z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.91-5.8l-7.73-6c-2.15 1.45-4.92 2.3-8.18 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48Z"/></svg><span>구글로 로그인</span></button>
       <div class="account-benefits"><span>내 빌드</span><span>내 아이템</span><span>즐겨찾기</span></div>
-      <small>로그인하지 않아도 기기 안에 저장할 수 있어요.</small>
     </div>
     <div class="account-member" hidden>
       <form class="account-profile"><label>닉네임<input name="nickname" maxlength="40" required autocomplete="nickname"></label><button type="submit">변경</button><button type="button" class="account-logout">로그아웃</button></form>
       <div class="account-tabs" role="tablist" aria-label="계정 보관함">${Object.entries(tabs).map(([id, name]) => `<button type="button" id="accountTab-${id}" role="tab" aria-controls="accountPanel" data-kind="${id}" aria-selected="${id === 'builds'}" tabindex="${id === 'builds' ? '0' : '-1'}">${name}</button>`).join('')}</div>
       <section id="accountPanel" role="tabpanel" aria-labelledby="accountTab-builds">
-        <p class="account-save-help">현재 세팅을 계정에 저장합니다.</p>
-        <form class="account-save-form"><label>저장 이름<input name="name" placeholder="예: 마법사 빌드" maxlength="80" required></label><label class="account-slot" hidden>장비 부위<select name="slot">${Object.entries(account.slots).map(([id, name]) => `<option value="${id}">${name}</option>`).join('')}</select></label><button type="submit" class="account-primary">계정에 저장</button></form>
+        <form class="account-save-form"><label>저장 이름<input name="name" placeholder="예: 마법사 빌드" maxlength="80" required></label><label class="account-slot" hidden>장비 부위<select name="slot">${Object.entries(account.slots).map(([id, name]) => `<option value="${id}">${name}</option>`).join('')}</select></label><button type="submit" class="account-primary">현재 빌드 저장</button></form>
         <ul class="account-records" aria-label="저장 목록"></ul><p class="account-empty" hidden>아직 저장한 빌드가 없어요.</p>
       </section>
     </div>
@@ -88,7 +86,7 @@ export function createAccountUi(documentRef, account) {
     dialog.querySelectorAll('[role="tab"]').forEach(tab => { tab.setAttribute('aria-selected', String(tab === button)); tab.tabIndex = tab === button ? 0 : -1; });
     find('#accountPanel').setAttribute('aria-labelledby', button.id);
     find('.account-slot').hidden = kind === 'builds';
-    find('.account-save-help').textContent = kind === 'builds' ? '현재 세팅을 계정에 저장합니다.' : kind === 'items' ? '현재 선택한 부위의 장비와 수동 옵션을 보관합니다.' : '현재 장비에 선택한 게임 아이템을 즐겨찾기에 추가합니다.';
+    find('.account-primary').textContent = kind === 'builds' ? '현재 빌드 저장' : kind === 'items' ? '선택 부위 저장' : '선택 아이템 즐겨찾기';
     saveForm.elements.name.placeholder = kind === 'builds' ? '예: 마법사 빌드' : '예: 내 지팡이';
     return refresh();
   }

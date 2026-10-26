@@ -63,6 +63,12 @@ assert.deepEqual(linkedParts[0].properties,input.monsters[4].raw.properties,'Par
 assert.equal(linkedParts[1].stats,null,'An unresolved part reference is explicit, not a fabricated zero.');
 assert.deepEqual((await catalog.get(1001)).variants[0].entry,{model:'level-select',levelParameters:{baseLevel:290,minLevel:290}});
 assert.deepEqual((await catalog.get(1195)).variants[0].entry,{model:'level-select',levelParameters:{baseLevel:40,minLevel:40,maxLevel:1020,step:4},actor:'male'});
+for (const [classification,id] of [['entry-boss',888],['field-boss',540],['high-raid-boss',1001],['guild-raid-boss',1195]]) {
+  assert.deepEqual((await catalog.search('','kr',{classification})).map(item => item.gameMonsterId),[id]);
+}
+assert.deepEqual(await catalog.search('same name','kr',{classification:'field-boss'}),[]);
+assert.deepEqual(await catalog.search('','kr',{classification:'event-boss'}),[]);
+assert.equal((await catalog.get(540)).variants.length,3,'Search filters must not mutate the original variants');
 assert.equal(await catalog.get(999),null); await assert.rejects(catalog.get(540,'xx'),/language/);
 const snapshot = resolve(temp,'snapshot'), output = resolve(temp,'published');
 const report = {status:'ready',outputHashes:Object.fromEntries(await Promise.all(['manifest.json',...Object.keys(manifest.files)].map(async path => ['project/'+path,hash(await readFile(resolve(project,path)))])))};

@@ -21,7 +21,9 @@ for (const file of files) {
   if (!/\.(?:mjs|cjs|js|ts)$/.test(file)) continue;
   const source = readFileSync(file, 'utf8');
   for (const match of source.matchAll(/(?:from\s*|import\s*\(|require\s*\()(['"])(\.{1,2}\/[^'"\r\n]+)\1/g)) {
-    const target = resolve(dirname(file), match[2]);
+    const target = file.replaceAll('\\', '/').includes('/web/src/optimization/') && match[2].startsWith('../../wasm/')
+      ? resolve(root, frontendSourcePath(posix.normalize('assets/js/optimization/' + match[2])))
+      : resolve(dirname(file), match[2]);
     const extensions = file.endsWith('.ts') ? ['', '.ts', '.d.ts'] : [''];
     assert(extensions.some(extension => existsSync(target + extension)), `Missing dependency ${match[2]} from ${file}`);
   }

@@ -5,9 +5,9 @@
   // These identifiers are deliberately part of the cache contract.  A formula,
   // tree-splitting, runtime or GPU-policy change must not reuse a result made
   // under a different exact-search contract.
-  var CALCULATION_VERSION = 'optimization-native-evaluator.v4';
-  var ENGINE_VERSION = 'optimization-native-solver.v23';
-  var SPLIT_POLICY = 'candidate-tree-stat-weighted-projected-2axis-gap-work-smallbox64-lookahead-precheck.v8';
+  var CALCULATION_VERSION = 'optimization-native-evaluator.v5';
+  var ENGINE_VERSION = 'optimization-native-solver.v25';
+  var SPLIT_POLICY = 'candidate-tree-stat-weighted-projected-2axis-gap-work-smallbox64-lookahead-precheck.v9';
   var GPU_POLICY = 'cpu-only.v1';
 
   function evaluatorAdapter(problem) {
@@ -52,10 +52,14 @@
   function nativeProblem(prepared) {
     var metadata = prepared.metadata || {};
     var projection = metadata.candidateProjection;
+    var initialPackageIds = metadata.initialPackageIds;
+    // Rust accepts only complete warm starts; unavailable current packages are null.
+    var completeInitialBuild = Array.isArray(initialPackageIds) && initialPackageIds.length === prepared.groups.length &&
+      initialPackageIds.every(function (id) { return typeof id === 'string'; });
     return {
       baseContext:prepared.baseContext,
       scenarioSnapshot:prepared.scenarioSnapshot,
-      metadata:Object.assign({ modeledKeys:metadata.modeledKeys, initialPackageIds:metadata.initialPackageIds }, projection ? {searchKeys:projection.keys} : {}),
+      metadata:Object.assign({ modeledKeys:metadata.modeledKeys, initialPackageIds:completeInitialBuild ? initialPackageIds : undefined }, projection ? {searchKeys:projection.keys} : {}),
       groups:prepared.groups.map(function (group) {
         return {
           id:group.id,

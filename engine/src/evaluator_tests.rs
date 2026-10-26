@@ -638,7 +638,8 @@ fn matches_js_magic_arrow_and_dual_bringer_fixtures() {
         "rangeType":"LONG","damageMultiplierLayers":{"passive":1.03,"active":1.07,"combo":0.9},"skillStats":[{"stat":"totalINT","target":"const","ratio":0.2}]
         }),
     );
-    assert_summary(evaluate_summary(&arrow,&json!({"ATKP":5,"MATKP":30,"MATK":90,"CRIT":25,"CDMG":35,"MAG_PIERCE":18,"LRW":12,"ELEM_P":8,"STABILITY":5})).unwrap(),CrystaOptimizationNativeSummary{optimization_damage_factor:3662.0,final_max_hp:22520,final_max_mp:3467,ampr_before_dual:244,normal_attack_crit:250,final_aspd:4170});
+    // Magic weakness also includes ElementPower (base INT420 /10 =42).
+    assert_summary(evaluate_summary(&arrow,&json!({"ATKP":5,"MATKP":30,"MATK":90,"CRIT":25,"CDMG":35,"MAG_PIERCE":18,"LRW":12,"ELEM_P":8,"STABILITY":5})).unwrap(),CrystaOptimizationNativeSummary{optimization_damage_factor:4820.0,final_max_hp:22520,final_max_mp:3467,ampr_before_dual:244,normal_attack_crit:250,final_aspd:4170});
     let bringer = extend(
         base(),
         json!({
@@ -664,5 +665,179 @@ fn matches_js_magic_arrow_and_dual_bringer_fixtures() {
             normal_attack_crit: 305,
             final_aspd: 4261,
         },
+    );
+}
+#[test]
+fn stat_reflection_uses_base_attributes_independently_of_flat_and_percent_bonuses() {
+    for (attribute, rate, expected) in [(1.0, 25.0, 0.0), (1.0, 200.0, 2.0), (100.0, 25.0, 25.0)] {
+        for (percent, flat) in [(0.0, 0.0), (300.0, 500.0)] {
+            let base = PreparedContext::from(serde_json::json!({
+                "agiBase":attribute,"agiP":percent,"agiF":flat
+            }));
+            let stats: NativeStats = serde_json::from_value(serde_json::json!({
+                "AGI":500.0,"AGIP":300.0,"ATK_UP_AGI":rate,"MATK_UP_AGI":rate
+            }))
+            .unwrap();
+            assert_eq!(candidate_stat_up(&base, &stats, false), expected);
+            assert_eq!(candidate_stat_up(&base, &stats, true), expected);
+        }
+    }
+}
+
+#[test]
+fn stat_reflection_sums_all_attributes_with_distinct_base_and_candidate_rates() {
+    let base = PreparedContext::from(json!({
+        "strBase":111,"dexBase":222,"agiBase":333,"intBase":444,"vitBase":555,
+        "atkUpSTR":1,"atkUpDEX":2,"atkUpAGI":3,"atkUpINT":4,"atkUpVIT":5,
+        "matkUpSTR":5,"matkUpDEX":5,"matkUpAGI":5,"matkUpINT":5,"matkUpVIT":5
+    }));
+    let stats: NativeStats = serde_json::from_value(json!({
+        "ATK_UP_STR":12.5,"ATK_UP_DEX":25,"ATK_UP_AGI":-50,"ATK_UP_INT":200,"ATK_UP_VIT":0.1,
+        "MATK_UP_STR":12.5,"MATK_UP_DEX":25,"MATK_UP_AGI":-50,"MATK_UP_INT":200,"MATK_UP_VIT":0.1
+    }))
+    .unwrap();
+    // Raw-cap oracle: 111*.135+444*2.04+555*.051-333*.47+222*.27
+    // =852.48; MATK uses .175,2.05,.051,-.45,.30 =>874.68.
+    assert_eq!(candidate_stat_up(&base, &stats, false), 852.0);
+    assert_eq!(candidate_stat_up(&base, &stats, true), 874.0);
+}
+
+#[test]
+fn proportional_attack_truncates_the_native_float_sum_once() {
+    let base = PreparedContext::from(json!({"strBase":3,"intBase":3}));
+    assert_eq!(proportional_attack(&base, [25.0, 25.0, 0.0, 0.0, 0.0]), 1.0);
+    assert_eq!(
+        proportional_attack(&base, [-25.0, -25.0, 0.0, 0.0, 0.0]),
+        -1.0
+    );
+    assert_eq!(
+        proportional_attack(&base, [25.0, -25.0, 0.0, 0.0, 0.0]),
+        0.0
+    );
+    let published = (27.0_f32 * 0.1_f32) as f64;
+    let base = PreparedContext::from(json!({"strBase":10000}));
+    assert_eq!(
+        proportional_attack(&base, [published, 0.0, 0.0, 0.0, 0.0]),
+        270.0
+    );
+}
+
+#[test]
+fn json_layer_coefficients_preserve_the_original_binary_float() {
+    let context: Value =
+        serde_json::from_str(r#"{"damageMultiplierLayers":{"active":1.3499999999999999}}"#)
+            .unwrap();
+    assert_eq!(
+        context["damageMultiplierLayers"]["active"]
+            .as_f64()
+            .unwrap()
+            .to_bits(),
+        1.3499999999999999_f64.to_bits()
+    );
+}
+
+#[test]
+fn published_tenths_recover_every_i16_raw_cap_before_native_float_math() {
+    for attribute in [1.0, 3.0, 999.0, 1000.0, 10001.0, 65535.0] {
+        let base = PreparedContext::from(json!({"strBase":attribute}));
+        for raw in i16::MIN..=i16::MAX {
+            let published = (raw as f32 * 0.1_f32) as f64;
+            let expected = ((raw as f32 / 1000.0_f32) * attribute as f32).trunc() as f64;
+            assert_eq!(
+                proportional_attack(&base, [published, 0.0, 0.0, 0.0, 0.0]),
+                expected,
+                "raw={raw} attribute={attribute}"
+            );
+        }
+    }
+    let base = PreparedContext::from(json!({"strBase":12345,"intBase":12345}));
+    for raw in i16::MIN..=i16::MAX {
+        let published = (raw as f32 * 0.1_f32) as f64;
+        let other = ((-i32::from(raw)) as f32 * 0.1_f32) as f64;
+        assert_eq!(
+            proportional_attack(&base, [published, other, 0.0, 0.0, 0.0]),
+            0.0
+        );
+    }
+}
+
+#[test]
+fn elemental_target_options_share_the_element_percent_stage() {
+    for attack_type in ["PHYS", "MAG"] {
+        for (element, key, field) in [
+            (1, "FIRE_DMG", "fireDmg"),
+            (2, "WATER_DMG", "waterDmg"),
+            (3, "WIND_DMG", "windDmg"),
+            (4, "EARTH_DMG", "earthDmg"),
+            (5, "LIGHT_DMG", "lightDmg"),
+            (6, "DARK_DMG", "darkDmg"),
+            (7, "NEUTRAL_DMG", "neutralDmg"),
+        ] {
+            let mut input = extend(
+                base(),
+                json!({"targetElement":element,"atkType":attack_type,"intBase":300}),
+            );
+            input[field] = json!(7);
+            let result = evaluate_summary(&input, &json!({key:-3,"ELEM_P":11})).unwrap();
+            input[field] = json!(0);
+            assert_summary(
+                result,
+                evaluate_summary(&input, &json!({"ELEM_P":15})).unwrap(),
+            );
+            input["targetElement"] = json!(0);
+            assert_summary(
+                evaluate_summary(&input, &json!({key:99})).unwrap(),
+                evaluate_summary(&input, &json!({})).unwrap(),
+            );
+        }
+    }
+}
+
+#[test]
+fn weapon_elements_follow_native_weakness_and_arrow_override() {
+    for (weapon, target) in [(1, 4), (2, 1), (3, 2), (4, 3), (5, 6), (6, 5)] {
+        let input = extend(
+            base(),
+            json!({"weaponElement":weapon,"targetElement":target}),
+        );
+        let weak = extend(
+            input.clone(),
+            json!({"attackElement":"weakness","weaponElement":0}),
+        );
+        assert_summary(
+            evaluate_summary(&input, &json!({})).unwrap(),
+            evaluate_summary(&weak, &json!({})).unwrap(),
+        );
+    }
+    let arrow = extend(
+        base(),
+        json!({"mainType":"활","subType":"화살","weaponElement":1,"subWeaponElement":2,"targetElement":1}),
+    );
+    assert_summary(
+        evaluate_summary(&arrow, &json!({})).unwrap(),
+        evaluate_summary(
+            &extend(
+                arrow.clone(),
+                json!({"attackElement":"weakness","weaponElement":0,"subWeaponElement":0}),
+            ),
+            &json!({}),
+        )
+        .unwrap(),
+    );
+    for element in [0, 7, 8] {
+        let input = extend(base(), json!({"weaponElement":element,"targetElement":4}));
+        assert_summary(
+            evaluate_summary(&input, &json!({})).unwrap(),
+            evaluate_summary(&base(), &json!({})).unwrap(),
+        );
+    }
+    let mana = extend(
+        base(),
+        json!({"mainType":"지팡이","atkType":"MAG","weaponElement":8,"targetElement":4,"intBase":300}),
+    );
+    let explicit = extend(mana.clone(), json!({"weaponElement":0,"magicElement":true}));
+    assert_summary(
+        evaluate_summary(&mana, &json!({})).unwrap(),
+        evaluate_summary(&explicit, &json!({})).unwrap(),
     );
 }

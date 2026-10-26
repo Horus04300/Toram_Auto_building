@@ -466,10 +466,11 @@ fn state_sum_score(a: f64, b: f64) -> f64 {
     a + b + 256.0 * f64::EPSILON * (1.0 + a.abs() + b.abs())
 }
 
+#[allow(clippy::manual_isolate_lowest_one)] // Threaded WASM's pinned nightly predates this API.
 fn state_update(index: &mut [f64], mut position: usize, score: f64) {
     while position < index.len() {
         index[position] = index[position].max(score);
-        position += position.isolate_lowest_one();
+        position += position & position.wrapping_neg();
     }
 }
 
@@ -1364,7 +1365,7 @@ impl JointUtilityBounds {
                 continue;
             }
             // An omitted modeled coordinate must retain its existing semantics.
-            let Some(&original) = stats.get(key) else {
+            let Some(original) = stats.get_mut(key) else {
                 continue;
             };
             let mut encoded_upper = f64::INFINITY;
@@ -1402,8 +1403,8 @@ impl JointUtilityBounds {
             // floors (fraction spacing exceeds the quotient's f64 ULP).
             // The positive power-of-two unit and raw envelope cap stay intact.
             let upper = original.min(encoded_upper.floor() * unit);
-            if upper < original {
-                stats.insert(key.into(), upper);
+            if upper < *original {
+                *original = upper;
             }
         }
     }
@@ -1643,17 +1644,60 @@ struct NodeBatch {
     cancel: Option<Arc<AtomicBool>>,
     deadline: Option<Instant>,
 }
+fn process_node_batch(
+    problem: &NativeProblem,
+    requirements: &Requirements,
+    batch: &NodeBatch,
+    buffer: &mut WorkerOutput,
+) {
+    let mut local_counters = LocalSearchCounters::default();
+    loop {
+        let index = batch.next.fetch_add(1, AtomicOrdering::Relaxed);
+        let Some(node) = batch.nodes.get(index) else {
+            break;
+        };
+        let start = buffer.children.len();
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            expand_parallel_node_into(
+                node,
+                problem,
+                requirements,
+                &batch.incumbent,
+                &mut local_counters,
+                batch.cancel.as_deref(),
+                batch.deadline,
+                &mut buffer.children,
+            )
+        }))
+        .unwrap_or_else(|_| Err("CrystaOptimization search worker panicked".into()));
+        if !matches!(outcome, Ok(true)) {
+            buffer.children.truncate(start);
+        }
+        buffer.outcomes.push((
+            index,
+            outcome.map(|completed| completed.then_some(start..buffer.children.len())),
+        ));
+    }
+    batch.counters.merge_search_counts(local_counters);
+}
+
+#[cfg(not(all(target_arch = "wasm32", feature = "wasm-threads")))]
 struct NodeJob {
     batch: Arc<NodeBatch>,
     buffer: WorkerOutput,
     output: std::sync::mpsc::Sender<WorkerOutput>,
 }
+#[cfg(not(all(target_arch = "wasm32", feature = "wasm-threads")))]
 struct NodePool {
     input: Option<std::sync::mpsc::Sender<NodeJob>>,
     workers: Vec<std::thread::JoinHandle<()>>,
     buffers: Vec<WorkerOutput>,
 }
+#[cfg(not(all(target_arch = "wasm32", feature = "wasm-threads")))]
 impl NodePool {
+    fn worker_count(&self) -> usize {
+        self.workers.len()
+    }
     fn new(
         problem: &NativeProblem,
         requirements: Requirements,
@@ -1680,47 +1724,8 @@ impl NodePool {
                     let Ok(job) = job else {
                         break;
                     };
-                    let batch = &job.batch;
-                    // Progress is published after the batch joins. Keep hot
-                    // counter writes private instead of bouncing shared cache lines.
-                    let mut local_counters = LocalSearchCounters::default();
                     let mut buffer = job.buffer;
-                    loop {
-                        // The message shares a batch, but claims stay node-sized
-                        // so expensive nodes do not strand a fixed-size chunk.
-                        let index = batch.next.fetch_add(1, AtomicOrdering::Relaxed);
-                        let Some(node) = batch.nodes.get(index) else {
-                            break;
-                        };
-                        let start = buffer.children.len();
-                        let outcome =
-                            std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-                                expand_parallel_node_into(
-                                    node,
-                                    &problem,
-                                    &requirements,
-                                    &batch.incumbent,
-                                    &mut local_counters,
-                                    batch.cancel.as_deref(),
-                                    batch.deadline,
-                                    &mut buffer.children,
-                                )
-                            }))
-                            .unwrap_or_else(|_| {
-                                Err("CrystaOptimization search worker panicked".into())
-                            });
-                        // Cancellation, errors and panics must not publish a
-                        // partially expanded node. Keep earlier nodes intact.
-                        if !matches!(outcome, Ok(true)) {
-                            buffer.children.truncate(start);
-                        }
-                        buffer.outcomes.push((
-                            index,
-                            outcome
-                                .map(|completed| completed.then_some(start..buffer.children.len())),
-                        ));
-                    }
-                    batch.counters.merge_search_counts(local_counters);
+                    process_node_batch(&problem, &requirements, &job.batch, &mut buffer);
                     // Release shared input before announcing completion.
                     drop(job.batch);
                     if job.output.send(buffer).is_err() {
@@ -1787,12 +1792,85 @@ impl NodePool {
         Ok(())
     }
 }
+#[cfg(not(all(target_arch = "wasm32", feature = "wasm-threads")))]
 impl Drop for NodePool {
     fn drop(&mut self) {
         self.input.take();
         for worker in self.workers.drain(..) {
             let _ = worker.join();
         }
+    }
+}
+
+#[cfg(all(target_arch = "wasm32", feature = "wasm-threads"))]
+struct NodePool {
+    problem: NativeProblem,
+    requirements: Requirements,
+    workers: usize,
+    buffers: Vec<WorkerOutput>,
+}
+
+#[cfg(all(target_arch = "wasm32", feature = "wasm-threads"))]
+impl NodePool {
+    fn worker_count(&self) -> usize {
+        self.workers
+    }
+    fn new(
+        problem: &NativeProblem,
+        requirements: Requirements,
+        count: usize,
+    ) -> Result<Self, String> {
+        Ok(Self {
+            problem: problem.clone(),
+            requirements,
+            workers: count.max(1),
+            buffers: (0..count.max(1)).map(|_| WorkerOutput::default()).collect(),
+        })
+    }
+    fn run(
+        &mut self,
+        nodes: &Arc<Vec<WorkItem>>,
+        results: &mut Vec<Option<NodeOutcome>>,
+        incumbent: &Arc<SharedIncumbent>,
+        counters: &Arc<ParallelCounters>,
+        cancel: Option<&Arc<AtomicBool>>,
+        deadline: Option<Instant>,
+    ) -> Result<(), String> {
+        use rayon::prelude::*;
+        results.clear();
+        results.resize_with(nodes.len(), || None);
+        let batch = NodeBatch {
+            nodes: Arc::clone(nodes),
+            next: AtomicUsize::new(0),
+            incumbent: Arc::clone(incumbent),
+            counters: Arc::clone(counters),
+            cancel: cancel.cloned(),
+            deadline,
+        };
+        let problem = &self.problem;
+        let requirements = &self.requirements;
+        self.buffers
+            .par_iter_mut()
+            .take(nodes.len())
+            .for_each(|buffer| {
+                buffer.children.clear();
+                buffer.outcomes.clear();
+                process_node_batch(problem, requirements, &batch, buffer);
+            });
+        for (buffer_index, buffer) in self.buffers.iter_mut().enumerate() {
+            for (index, outcome) in buffer.outcomes.drain(..) {
+                results[index] = Some(outcome.map(|range| {
+                    range.map(|range| NodeChildren {
+                        buffer: buffer_index,
+                        range,
+                    })
+                }));
+            }
+        }
+        if results.iter().any(Option::is_none) {
+            return Err("CrystaOptimization worker result missing".into());
+        }
+        Ok(())
     }
 }
 
@@ -3308,7 +3386,7 @@ impl NativeSearchSession {
             .collect::<Vec<_>>();
         Self::audit_frontier(&frontier)?;
         Ok(NativeSearchCheckpoint {
-            schema: "toram.crysta-native-search-checkpoint.v23".to_string(),
+            schema: "toram.crysta-native-search-checkpoint.v25".to_string(),
             problem: self.problem.clone(),
             state: self.state.clone(),
             frontier,
@@ -3323,7 +3401,7 @@ impl NativeSearchSession {
 
     pub fn from_checkpoint(checkpoint: NativeSearchCheckpoint) -> Result<Self, String> {
         // Bound-policy changes invalidate persisted frontiers and cache entries.
-        if checkpoint.schema != "toram.crysta-native-search-checkpoint.v23" {
+        if checkpoint.schema != "toram.crysta-native-search-checkpoint.v25" {
             return Err("CrystaOptimization native checkpoint schema is invalid".to_string());
         }
         Self::audit_frontier(&checkpoint.frontier)?;
@@ -3528,7 +3606,7 @@ impl NativeSearchSession {
         if self
             .pool
             .as_ref()
-            .is_none_or(|pool| pool.workers.len() != workers)
+            .is_none_or(|pool| pool.worker_count() != workers)
         {
             // Construct before dispatch; on any pool failure the parent frontier survives.
             match NodePool::new(&self.problem, self.requirements, workers) {
