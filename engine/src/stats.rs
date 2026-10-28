@@ -15,76 +15,15 @@ macro_rules! stat_keys {
         impl StatKey {
             pub fn name(self) -> &'static str { KEYS[self as usize] }
         }
+        #[inline]
+        fn index(key: &str) -> Option<usize> {
+            match key { $(stringify!($key) => Some(StatKey::$key as usize),)* _ => None }
+        }
         #[cfg(test)]
         const TYPED_KEYS: [StatKey; STAT_COUNT] = [$(StatKey::$key,)*];
     };
 }
 stat_keys! { AGI, AGIP, AMPR, AMPRP, ASPD, ASPD_P, ATK, ATKP, CDMG, CDMGP, CRIT, CRITP, DAMAGE_P, DEX, DEXP, ELEM_P, INT, INTP, LRW, MAG_PIERCE, MATK, MATKP, MAXHP, MAXHPP, MAXMP, PHYS_PIERCE, SRW, STABILITY, STR, STRP, UNSHEATHE, UNSHEATHEP, VIT, VITP, WATK, WATKP, MOTIONSPEED, CSPD, CSPD_P, CAST_RED, ATK_UP_STR, ATK_UP_DEX, ATK_UP_AGI, ATK_UP_INT, ATK_UP_VIT, MATK_UP_STR, MATK_UP_DEX, MATK_UP_AGI, MATK_UP_INT, MATK_UP_VIT, ELEM_AWAKENING, MAGIC_ELEMENT, FIRE_DMG, WATER_DMG, WIND_DMG, EARTH_DMG, LIGHT_DMG, DARK_DMG, NEUTRAL_DMG }
-#[inline]
-fn index(key: &str) -> Option<usize> {
-    match key {
-        "AGI" => Some(0),
-        "AGIP" => Some(1),
-        "AMPR" => Some(2),
-        "AMPRP" => Some(3),
-        "ASPD" => Some(4),
-        "ASPD_P" => Some(5),
-        "ATK" => Some(6),
-        "ATKP" => Some(7),
-        "CDMG" => Some(8),
-        "CDMGP" => Some(9),
-        "CRIT" => Some(10),
-        "CRITP" => Some(11),
-        "DAMAGE_P" => Some(12),
-        "DEX" => Some(13),
-        "DEXP" => Some(14),
-        "ELEM_P" => Some(15),
-        "INT" => Some(16),
-        "INTP" => Some(17),
-        "LRW" => Some(18),
-        "MAG_PIERCE" => Some(19),
-        "MATK" => Some(20),
-        "MATKP" => Some(21),
-        "MAXHP" => Some(22),
-        "MAXHPP" => Some(23),
-        "MAXMP" => Some(24),
-        "PHYS_PIERCE" => Some(25),
-        "SRW" => Some(26),
-        "STABILITY" => Some(27),
-        "STR" => Some(28),
-        "STRP" => Some(29),
-        "UNSHEATHE" => Some(30),
-        "UNSHEATHEP" => Some(31),
-        "VIT" => Some(32),
-        "VITP" => Some(33),
-        "WATK" => Some(34),
-        "WATKP" => Some(35),
-        "MOTIONSPEED" => Some(36),
-        "CSPD" => Some(37),
-        "CSPD_P" => Some(38),
-        "CAST_RED" => Some(39),
-        "ATK_UP_STR" => Some(40),
-        "ATK_UP_DEX" => Some(41),
-        "ATK_UP_AGI" => Some(42),
-        "ATK_UP_INT" => Some(43),
-        "ATK_UP_VIT" => Some(44),
-        "MATK_UP_STR" => Some(45),
-        "MATK_UP_DEX" => Some(46),
-        "MATK_UP_AGI" => Some(47),
-        "MATK_UP_INT" => Some(48),
-        "MATK_UP_VIT" => Some(49),
-        "ELEM_AWAKENING" => Some(50),
-        "MAGIC_ELEMENT" => Some(51),
-        "FIRE_DMG" => Some(52),
-        "WATER_DMG" => Some(53),
-        "WIND_DMG" => Some(54),
-        "EARTH_DMG" => Some(55),
-        "LIGHT_DMG" => Some(56),
-        "DARK_DMG" => Some(57),
-        "NEUTRAL_DMG" => Some(58),
-        _ => None,
-    }
-}
 #[derive(Clone, Debug, PartialEq)]
 pub struct NativeStats {
     values: [f64; STAT_COUNT],

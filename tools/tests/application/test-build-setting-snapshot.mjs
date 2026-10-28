@@ -1,25 +1,31 @@
+import {createSettingsRepository} from '../../../web/src/storage/settings-repository.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+import * as buildValues from '../../../web/src/application/build-values.mjs';
+import {inventoryRules} from '../../../server/inventory-rules.mjs';
 
-const root = resolve(import.meta.dirname, '../../..');
 const local = new Map();
 const files = new Map();
 let restored = null;
-let build = { character:{ level:325, attributes:{ STR:510, INT:1, VIT:1, AGI:1, DEX:1, CRT:0 } }, equipment:{ mainWeapon:{}, subWeapon:{}, armor:{}, additional:{}, special:{} }, skillLevels:{ Blade:{ 0:10 } }, activeBuffs:{}, externalOptions:[], combo:[] };
+let build = JSON.parse(await readFile(new URL('../../../samples/마법) 지팡이 크법 세팅 - pelio s.json',import.meta.url),'utf8')).build;
 const scenario = { target:{ bossLevel:300, bossDef:100, bossMdef:100, bossPhysResist:0, bossMagResist:0, bossCritResist:0 }, conditions:{}, optimizationPreferences:{ rangeOverride:'LONG', requirements:{ maxHp:null, maxMp:2500 }, bannedCrystas:['저장 제외 크리스타'] } };
 const document = { readyState:'loading', addEventListener() {}, createElement() { return { click() {}, remove() {}, href:'', download:'' }; }, body:{ appendChild() {} } };
 const window = {
+  ToramApp:{buildValues}, ToramStatRegistry:inventoryRules.registry, ToramFoodCatalog:inventoryRules.food,
   localStorage:{ getItem:key => local.get(key) ?? null, setItem:(key, value) => local.set(key, String(value)) }, setTimeout:callback => callback(),
-  ToramBuildDraftStore:{ read:() => ({ build, scenario }) }, ToramBuildStateUi:{ restoreSession:value => { restored = value; build = value.build; } },
+  ToramBuildDraftStore:{ read:() => ({ build, scenario }), restoreSession:value => { restored = value; build = value.build; } },
   ToramSettingsFileRepositoryAdapter:{ directory:async () => 'C:\\Settings', list:async () => [...files.keys()].map(name => ({ name, lastModified:1 })), save:async (name, content) => { if (files.has(name + '.json')) throw new Error('duplicate'); files.set(name + '.json', content); }, load:async name => files.get(name), overwrite:async (name, content) => files.set(name, content), delete:async name => files.delete(name) }
 };
 window.window = window;
 const context = { window, document, console, JSON, Date, Blob, URL:{ createObjectURL:() => '', revokeObjectURL() {} } };
-vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'web/src/storage/settings-repository.js'), 'utf8'), context, { filename:'storage/settings-repository.js' });
-const repository = window.ToramSettingsRepository;
+window.document=document;
+const repository=createSettingsRepository(window,window.ToramBuildDraftStore,window.ToramSettingsFileRepositoryAdapter);
+let captureSyncs = 0;
+window.ToramBuildDraftStore.syncFromUi = () => { captureSyncs++; };
+const capturedDocument = repository.snapshot('최신 입력');
+assert.equal(captureSyncs, 1, '계정/인벤토리 스냅샷은 현재 UI 입력을 먼저 동기화해야 합니다.');
+capturedDocument.build.character.level = 1;
+assert.equal(build.character.level, 325, '스냅샷 수정은 현재 빌드를 변경하면 안 됩니다.');
 build.myRoomFood = [{id:'STR',level:10},null,{id:'ELEM_P',level:6},{id:'PHYS_RES',level:10},null];
 const expectedFood = JSON.parse(JSON.stringify(build.myRoomFood));
 build.guildFoodBuff = false;
@@ -75,4 +81,11 @@ const realSet = window.localStorage.setItem;
 window.localStorage.setItem = () => { throw new Error('quota'); };
 assert.throws(() => repository.flushApplicationState(), /quota/);
 window.localStorage.setItem = realSet;
+const values={build:structuredClone(build),scenario:structuredClone(scenario)};
+repository.applySession(values);
+values.build.character.level=1;
+assert.equal(restored.build.character.level,326,'Internal value application owns a detached copy');
+const beforeInvalid=restored;
+assert.throws(()=>repository.applySession({build:{},scenario:{}}));
+assert.equal(restored,beforeInvalid,'Invalid internal values must not partially restore');
 console.log('Settings settings repository contract: PASS (including update preferences and strict pre-install flush)');

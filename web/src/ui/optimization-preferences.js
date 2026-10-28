@@ -1,10 +1,14 @@
-/* 결과 최적화 환경설정: 거리 판정, Utility 요구조건, 추천 제외 목록을 한 계약으로 저장한다. */
-(function (root) {
+import {buildStore} from '../application/build-draft-store.js';
+import {application} from '../application/application-use-cases.js';
+import {buildEvaluator} from '../calculation/build-evaluator.js';
+export function createOptimizationPreferences(document,equipmentUi) {
+  const root=document.defaultView;
+
   'use strict';
 
   var requirementKeys = ['maxHp', 'maxMp', 'amprBeforeDual', 'normalAttackCrit', 'aspd'];
-  var requirementOverrides = {};
-  var savedRangeOverride = null;
+  function preferences() { return buildStore.getScenario().optimizationPreferences || {rangeOverride:null,requirements:{},bannedCrystas:[]}; }
+  function setPreferences(patch) { buildStore.commitScenario({optimizationPreferences:Object.assign({},preferences(),patch)}); }
   var returnFocus = null;
   var resetPending = false;
 
@@ -21,22 +25,22 @@
     });
     return result;
   }
-  function crystaUi() { return root.ToramApp && root.ToramApp.crystaUi || null; }
+  function crystaUi() { return equipmentUi; }
   function bannedCrystas() {
     var ui = crystaUi();
     return ui && typeof ui.getBannedCrystas === 'function' ? ui.getBannedCrystas() : [];
   }
   function read() {
     return Object.freeze({
-      rangeOverride:savedRangeOverride,
-      requirements:Object.freeze(clone(requirementOverrides)),
+      rangeOverride:preferences().rangeOverride,
+      requirements:Object.freeze(clone(preferences().requirements)),
       bannedCrystas:Object.freeze(bannedCrystas().slice())
     });
   }
   function effectiveRequirements(baseContext) {
-    var evaluator = root.ToramBuildEvaluator;
+    var evaluator = buildEvaluator;
     var defaults = evaluator && typeof evaluator.defaultRequirements === 'function' ? evaluator.defaultRequirements(baseContext || {}) : {};
-    return Object.assign({}, defaults, clone(requirementOverrides));
+    return Object.assign({}, defaults, clone(preferences().requirements));
   }
   function notifyChanged() {
     document.dispatchEvent(new CustomEvent('toram:optimization-preferences-changed'));
@@ -47,9 +51,9 @@
   }
   function renderRangeControls() {
     var controls = rangeControls();
-    if (controls.short) controls.short.checked = savedRangeOverride === 'SHORT';
-    if (controls.long) controls.long.checked = savedRangeOverride === 'LONG';
-    if (controls.status) controls.status.textContent = savedRangeOverride === 'SHORT' ? '근거리 강제 적용' : savedRangeOverride === 'LONG' ? '원거리 강제 적용' : '둘 다 해제: 스킬 기본값';
+    if (controls.short) controls.short.checked = preferences().rangeOverride === 'SHORT';
+    if (controls.long) controls.long.checked = preferences().rangeOverride === 'LONG';
+    if (controls.status) controls.status.textContent = preferences().rangeOverride === 'SHORT' ? '근거리 강제 적용' : preferences().rangeOverride === 'LONG' ? '원거리 강제 적용' : '둘 다 해제: 스킬 기본값';
   }
   function bindRangeControls() {
     var controls = rangeControls();
@@ -61,7 +65,7 @@
           if (control === controls.short) controls.long.checked = false;
           else controls.short.checked = false;
         }
-        savedRangeOverride = controls.short.checked ? 'SHORT' : controls.long.checked ? 'LONG' : null;
+        setPreferences({rangeOverride:controls.short.checked ? 'SHORT' : controls.long.checked ? 'LONG' : null});
         renderRangeControls();
         notifyChanged();
       });
@@ -70,22 +74,20 @@
   }
   function restore(value) {
     var source = value && typeof value === 'object' ? value : {};
-    savedRangeOverride = normalizeRange(source.rangeOverride);
-    requirementOverrides = normalizeRequirements(source.requirements);
+    setPreferences({rangeOverride:normalizeRange(source.rangeOverride),requirements:normalizeRequirements(source.requirements)});
     var ui = crystaUi();
     if (ui && typeof ui.restoreBannedCrystas === 'function') ui.restoreBannedCrystas(Array.isArray(source.bannedCrystas) ? source.bannedCrystas : null);
     renderRangeControls();
   }
   function currentBaseContext() {
     try {
-      var application = root.ToramApplication;
       return application && typeof application.CreateCalculationSnapshot === 'function' ? application.CreateCalculationSnapshot().baseContext : {};
     } catch (_) { return {}; }
   }
   function requirementRows() { return Array.prototype.slice.call(document.querySelectorAll('[data-optimization-requirement]')); }
   function renderRequirementEditor(useDefaults) {
-    var defaults = root.ToramBuildEvaluator && root.ToramBuildEvaluator.defaultRequirements(currentBaseContext()) || {};
-    var editorOverrides = useDefaults ? {} : requirementOverrides;
+    var defaults = buildEvaluator && buildEvaluator.defaultRequirements(currentBaseContext()) || {};
+    var editorOverrides = useDefaults ? {} : preferences().requirements;
     var effective = Object.assign({}, defaults, editorOverrides);
     requirementRows().forEach(function (row) {
       var key = row.dataset.optimizationRequirement, enabled = row.querySelector('.optimization-requirement-enabled'), input = row.querySelector('.optimization-requirement-value'), note = row.querySelector('.optimization-requirement-default');
@@ -129,7 +131,7 @@
       invalid.focus();
       return;
     }
-    requirementOverrides = resetPending ? {} : next;
+    setPreferences({requirements:resetPending ? {} : next});
     resetPending = false;
     notifyChanged();
     closeRequirements();
@@ -159,7 +161,8 @@
     }
   }
 
-  root.ToramOptimizationPreferences = Object.freeze({ read:read, restore:restore, effectiveRequirements:effectiveRequirements, bindRangeControls:bindRangeControls });
+  const api = Object.freeze({ read:read, restore:restore, effectiveRequirements:effectiveRequirements, bindRangeControls:bindRangeControls });
   document.dispatchEvent(new CustomEvent('toram:optimization-preferences-changed'));
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
-}(window));
+
+initialize(); return api;
+}

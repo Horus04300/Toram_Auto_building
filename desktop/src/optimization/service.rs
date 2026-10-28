@@ -555,6 +555,39 @@ mod tests {
     }
 
     #[test]
+    fn evicts_only_the_oldest_of_four_continuations() {
+        let service = CrystaOptimizationService::default();
+        for index in 0..5 {
+            let id = format!("d4c-test-{index}");
+            service
+                .store(
+                    id.clone(),
+                    crysta_native_solver::NativeSearchSession::new(small_problem()).unwrap(),
+                )
+                .unwrap();
+            if index == 0 {
+                service
+                    .sessions
+                    .lock()
+                    .unwrap()
+                    .get_mut(&id)
+                    .unwrap()
+                    .last_touched = Instant::now() - Duration::from_secs(60);
+            }
+        }
+        {
+            let sessions = service.sessions.lock().unwrap();
+            assert_eq!(sessions.len(), 4);
+            assert!(!sessions.contains_key("d4c-test-0"));
+            for index in 1..5 {
+                assert!(sessions.contains_key(&format!("d4c-test-{index}")));
+            }
+        }
+        assert!(service.dispose("d4c-test-1".into()).unwrap());
+        assert!(!service.dispose("d4c-test-1".into()).unwrap());
+    }
+
+    #[test]
     fn validates_job_and_continuation_ids() {
         assert!(valid_id("optimization-abc_1"));
         assert!(!valid_id(""));

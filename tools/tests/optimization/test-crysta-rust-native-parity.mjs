@@ -1,14 +1,12 @@
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {statRegistry as registry} from '../../../web/src/calculation/stat-registry.js';
+import {calculationKernel} from '../../fixtures/calculation-oracle.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
+import {matchesItemCondition} from '../../../web/src/application/item-catalog.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
-import { spawn } from 'node:child_process';
-import vm from 'node:vm';
+import {resolve} from 'node:path';
+import {spawn} from 'node:child_process';
 
 const root = resolve(import.meta.dirname, '../../..');
-const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
 
 function base(overrides={}) {
   return Object.assign({
@@ -28,28 +26,20 @@ function base(overrides={}) {
   }, overrides);
 }
 
-function matchesCondition(context, condition) {
-  if (!condition) return true;
-  if (condition.eitherWeapon && !condition.eitherWeapon.includes(context.mainType) && !condition.eitherWeapon.includes(context.subType)) return false;
-  return (!condition.main || condition.main.split('/').includes(context.mainType))
-    && (!condition.sub || condition.sub.split('/').includes(context.subType))
-    && (!condition.armor || condition.armor.split('/').includes(context.armorType));
-}
-
 function effectiveStats(crysta, context) {
   const result = {};
   const add = stats => Object.entries(stats || {}).forEach(([key, value]) => {
     const canonical = registry.normalize(key) || key;
     result[canonical] = (result[canonical] || 0) + Number(value || 0);
   });
-  if (matchesCondition(context, crysta.cond)) add(crysta.stats);
-  for (const item of crysta.condStats || []) if (matchesCondition(context, item.cond)) add(item.stats);
+  add(crysta.stats);
+  for (const item of crysta.conditionalStats || []) if (matchesItemCondition(context, item.when)) add(item.stats);
   return result;
 }
 
 function runNative(cases) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--quiet', '--manifest-path', 'desktop/Cargo.toml', '--bin', 'crysta_native_summary'], { cwd:root, stdio:['pipe','pipe','pipe'] });
+    const child = spawn('cargo', ['run', '--quiet', '--manifest-path', 'engine/Cargo.toml', '--bin', 'crysta_native_summary'], { cwd:root, stdio:['pipe','pipe','pipe'] });
     let stdout = '';
     let stderr = '';
     child.stdout.setEncoding('utf8');
@@ -75,17 +65,12 @@ function isDefaultCrystaOptimizationFeasible(summary, context) {
 
 const calculatorContext = { window:{ ToramStatRegistry:registry }, console };
 calculatorContext.window.window = calculatorContext.window;
-vm.createContext(calculatorContext);
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', calculatorContext);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), calculatorContext, { filename:'calculation/calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), calculatorContext, { filename:'calculation/calculator.js' });
 const dataContext = {};
-vm.createContext(dataContext);
-vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+dataContext.__crystas=(await loadSavedBuildEnvironment()).ToramCrystaCatalog.items;
 
 const allCrystas = dataContext.__crystas;
-const upgradedNames = new Set(allCrystas.map(item => item.prev).filter(Boolean));
-const finalCrystas = allCrystas.filter(item => !upgradedNames.has(item.name));
+const upgradedIds = new Set(allCrystas.map(item => item.previousId).filter(value => value !== null));
+const finalCrystas = allCrystas.filter(item => !upgradedIds.has(item.gameItemId));
 assert.ok(finalCrystas.length > 100 && finalCrystas.length < allCrystas.length, '최종 강화 크리스타 선별이 실제 데이터 계보를 사용해야 합니다.');
 
 const scenarios = [
@@ -96,7 +81,7 @@ const scenarios = [
   { id:'shield-heavy', baseContext:base({mainType:'양손검',subType:'방패',armorType:'중량옷',strBase:400,agiBase:100,dexBase:150}) },
   { id:'scroll', baseContext:base({mainType:'발도검',subType:'인술 두루마리',strBase:350,dexBase:400,chkIsUnsheathe:true}) }
 ];
-const kernel = calculatorContext.window.ToramCalculationKernel.evaluateContext;
+const kernel = calculationKernel.evaluateContext;
 const cases = [];
 const expected = new Map();
 for (const scenario of scenarios) for (const crysta of finalCrystas) {

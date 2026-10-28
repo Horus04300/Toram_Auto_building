@@ -1,22 +1,18 @@
-'use strict';
-self.window = self;
-const BASE_ASPD_MAP = { '한손검':100, '양손검':50, '활':75, '자동활':30, '지팡이':60, '마도구':90, '권갑':120, '선풍창':25, '발도검':200, '맨손':1000 };
-importScripts('../calculation/stat-registry.js', '../calculation/calculation-policies.js', '../calculation/calculator.js', '../calculation/build-evaluator.js',
-  'candidate-preparation.js', 'rust-bridge.js');
-
+let bridge;
 const parallel = self.crossOriginIsolated && typeof SharedArrayBuffer === 'function';
 const ready = (async () => {
+  // Install the message handler before awaiting dependencies so the first job is retained.
+  ({rustBridge:bridge} = await import('./rust-bridge.js'));
   if (parallel) {
     const module = await import('../../wasm/parallel/crysta.js');
     await module.default();
     return module;
   }
-  importScripts('../../wasm/crysta.js');
-  await wasm_bindgen({ module_or_path:new URL('../../wasm/crysta_bg.wasm', self.location.href) });
-  return wasm_bindgen;
+  const module = await import('../../wasm/crysta.js');
+  await module.default();
+  return module;
 })();
 let session, setup, version = 0, paused = false, started = 0, budget = 0, published = 0, threads = 1, pool;
-const bridge = self.ToramCrystaOptimizationRustBridge;
 
 function snapshot(preview) {
   const result = JSON.parse(session.snapshot());

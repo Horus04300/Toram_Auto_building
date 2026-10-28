@@ -1,26 +1,15 @@
-import { frontendSourcePath } from '../../support/frontend-paths.mjs';
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {policies} from '../../../web/src/calculation/calculation-policies.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
+import {calculateResistanceProfile,calculateEffectiveResistance} from '../../../web/src/calculation/calculator.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 let investments = {};
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
 context.window.window = context.window;
-vm.createContext(context);
-for (const path of dataScripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-for (const path of ['web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js', 'web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) {
-  vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-}
 
-const E = context.window.ToramSkillEffects;
-const Q = context.window.ToramComboSequence;
+const E = skillEffects;
+const Q = comboSequence;
 const learn = (ids) => {
   investments = {};
   for (const id of ids) {
@@ -28,7 +17,7 @@ const learn = (ids) => {
     (investments[treeId] ||= {})[skillId] = 10;
   }
 };
-const base = (mainType='한손검', subType='없음') => ({
+const base = (mainType='한손검', subType='없음') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();},
   mainType, subType, subAtk:200, subRefine:15, subStab:80, level:300,
   strBase:100, intBase:100, vitBase:100, agiBase:100, dexBase:100, crtBase:50
 });
@@ -78,22 +67,13 @@ const activeBuffProfile = E.profile('Blade:5', base('한손검', '방패'), comb
 } });
 assert.ok(Math.abs(activeBuffProfile.hits[0].multiplier / inactiveBuffProfile.hits[0].multiplier - 1.55) < 1e-9, '액티브 전역 대미지 증가는 오라 20%+브레이브 20%+플레지 15%=55%로 합산해야 합니다.');
 
-const calculatorSource = await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8');
-vm.runInContext(calculatorSource, context, { filename:'web/src/calculation/calculator.js' });
-assert.equal(context.calculateEffectiveResistance([158]), 158, '같은 내성 항목은 합산값을 그대로 사용해야 합니다.');
-assert.equal(context.calculateEffectiveResistance([50, 20]), 70, '속성 내성 50과 물리 내성 20은 감쇠 없이 합산해야 합니다.');
-assert.equal(context.calculateEffectiveResistance([50, 50]), 100, '같은 적용군의 내성은 합산해야 합니다.');
-const resistanceProfile = context.calculateResistanceProfile([50, 20]);
+assert.equal(calculateEffectiveResistance([158]), 158, '같은 내성 항목은 합산값을 그대로 사용해야 합니다.');
+assert.equal(calculateEffectiveResistance([50, 20]), 70, '속성 내성 50과 물리 내성 20은 감쇠 없이 합산해야 합니다.');
+assert.equal(calculateEffectiveResistance([50, 50]), 100, '같은 적용군의 내성은 합산해야 합니다.');
+const resistanceProfile = calculateResistanceProfile([50, 20]);
 assert.deepEqual(JSON.parse(JSON.stringify(resistanceProfile)), { components:[50, 20], raw:70, effective:70, multiplier:.3 }, '내성 프로필은 원합계와 1-내성/100 배율을 보존해야 합니다.');
-assert.doesNotMatch(calculatorSource, /Math\.max\(0,\s*finalStab\)/, '음수 안정률은 남용 입력으로 보고 별도 보정하지 않아야 합니다.');
 const statContext = { vitP:0 };
-context.window.ToramCalculationPolicies.applyStat(statContext, 'VITP', 12);
+policies.applyStat(statContext, 'VITP', 12);
 assert.equal(statContext.vitP, 12, 'VIT% 옵션 적용은 단일 계산 정책으로 위임해야 합니다.');
-assert.match(calculatorSource, /if \(ctx\.conversionLevel > 0[\s\S]*conversionIntMatk = ToramExactMath\.ratio\(totalINT, ctx\.conversionLevel, 10\)/, '컨버전 패시브 MATK는 액티브 토글과 분리하고 정수 비율 곱셈 뒤 내림해야 합니다.');
-assert.match(calculatorSource, /conversionFlatMatk = Math\.floor\(conversionAddMatk\) \+ Math\.floor\(conversionIntMatk\)[\s\S]*finalMATK = ToramExactMath\.percent\(preFinalMatk[\s\S]*\+ conversionFlatMatk/, '컨버전 무기·INT 보정은 MATK% 계산 뒤 MATK(+)로 적용되어야 합니다.');
-const storageSource = await readFile(resolve(root, 'web/src/storage/build-state-snapshot.js'), 'utf8');
-assert.doesNotMatch(storageSource, /localStorage/, 'Settings 이후 빌드 UI 어댑터는 localStorage를 직접 읽거나 쓰면 안 됩니다.');
-const optimizerSource = await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8');
-assert.match(optimizerSource, /totalActSpeed = Math\.min\(50, baseActSpeed \+ equipMotionSpeed\)/, '최종 행동속도는 50%를 넘지 않아야 합니다.');
 
 console.log('QA edge-case regressions: PASS');

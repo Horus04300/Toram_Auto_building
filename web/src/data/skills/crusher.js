@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 크러셔: 원문 대조가 끝난 파괴자 버프 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('크러셔 스킬 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v = function (n) { return { op:'value', value:n }; };
   var r = function (path) { return { op:'ref', path:path }; };
@@ -12,7 +14,7 @@
   var knuckle = { op:'eq', left:r('equipment.mainWeapon'), right:v('권갑') };
   var skill = catalog.skills.find(function (item) { return item.id === 'Crusher:8'; });
   if (!skill) throw new Error('파괴자를 카탈로그에서 찾지 못했습니다.');
-  registry.register('Crusher-core', [{
+  registry.register([{
     id:skill.id, treeId:'Crusher', skillId:8, nameKo:skill.nameKo, kind:'buff', source:'crusher', dataStatus:'partial',
     sourceRef:{ file:'docs/sources/skills/Crusher.txt', anchor:'파괴자 버프 / 권갑 전용' }, requirements:{ when:knuckle },
     cost:{ mp:{ timing:'cast', value:v(100) } }, combo:{ canStart:false, canReceiveTag:true },
@@ -28,7 +30,7 @@
 /* 크러셔 S1~S5 계산기 범위 정의. 시간·피격 자동 전이는 메타데이터로 보존한다. */
 (function () {
   'use strict';
-  var R = window.ToramSkillEffectRegistry, C = window.TORAM_SKILL_COMBAT_CATALOG;
+  var R = skillRegistry, C = skillCatalog;
   if (!R || !C) throw new Error('Crusher S5 data order');
   var v = function (x) { return { op:'value', value:x }; };
   var r = function (x) { return { op:'ref', path:x }; };
@@ -41,11 +43,8 @@
   var i = function (x) { return r('attack.inputs.' + x); };
   var total = function (x) { return r('combatStats.' + x); };
   var base = function (x) { return r('baseStats.' + x); };
-  var active = function () { return { op:'truthy', value:r('buff.active') }; };
   var truthy = function (x) { return { op:'truthy', value:x }; };
-  var gt = function (x, y) { return { op:'gt', left:x, right:y }; };
   var gte = function (x, y) { return { op:'gte', left:x, right:y }; };
-  var all = function () { return { op:'all', args:[].slice.call(arguments) }; };
   var knuckle = { op:'eq', left:r('equipment.mainWeapon'), right:v('권갑') };
   function definition(id, kind, anchor, requirement) {
     var skill = C.skills.find(function (item) { return item.id === 'Crusher:' + id; });
@@ -83,5 +82,5 @@
   x[6] = Object.assign(x[6], { inputs:[{ id:'distance', label:'시전 거리(m)', type:'number', min:v(0), max:v(30), default:v(0) }], cost:{ mp:{ timing:'cast', value:v(300) } }, attacks:[hit('main',a(v(9),m(v(.1),l()),d(total('AGI'),v(200)),q(gte(i('distance'),v(8)),m(v(.5),l()),v(0))),a(v(200),m(v(10),l())),{ castRange:12, physicalPierceBonus:m(v(2),l()) })], stateTransitions:[{ event:'castWhenRangeAtLeast8', operation:'trigger', stateId:'crusher.breathwork', notes:'습득한 호흡법을 자동 발동; 회복·쿨다운은 시간 상태 엔진 필요.' }] });
   x[7] = Object.assign(x[7], { cost:{ mp:{ timing:'cast', value:v(0) } }, combo:{ canStart:false, canReceiveTag:true }, attacks:[hit('main',a(v(1),m(v(.1),l())),v(0),{ criticalChanceBonus:m(l(),l()), normalProration:true })] });
   x[9] = Object.assign(x[9], { inputs:[{ id:'targetBroken', label:'대상 파괴', type:'boolean', default:false }, { id:'godHandStacks', label:'갓 핸드 스택', type:'number', min:v(0), max:v(3), default:v(0) }], cost:{ mp:{ timing:'cast', value:v(800) } }, attacks:[hit('main',a(v(9),m(v(.6),l()),d({ op:'max', args:[base('STR'),base('AGI')] },v(100))),a(v(700),m(v(10),l())),{ areaRadius:4, guaranteedCriticalWhen:'destroyerActive && targetBroken' })], effects:[{ phase:'afterCast', type:'mpRestore', value:m(i('godHandStacks'),v(100)) }, { phase:'afterCast', type:'barrierFromLostHp', durationSeconds:v(10), absorptionPercent:v(90), refreshable:false }] });
-  R.register('Crusher:calculation-rules', x.filter(Boolean));
+  R.register(x.filter(Boolean));
 }());

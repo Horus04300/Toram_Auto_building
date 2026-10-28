@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
-import fs from 'node:fs';
-import vm from 'node:vm';
+import {createSavedBuildFileAdapter} from '../../../build/generated/desktop/saved-build-storage.js';
 
 const calls = [];
 const context = {
@@ -15,10 +14,8 @@ const context = {
     }
   }
 };
-vm.createContext(context);
-vm.runInContext(fs.readFileSync('build/generated/desktop/saved-build-storage.js', 'utf8'), context);
 
-const adapter = context.window.ToramSettingsFileRepositoryAdapter;
+const adapter = createSavedBuildFileAdapter(context.window.__TAURI__.core);
 assert.ok(adapter, 'Tauri API가 있으면 저장 어댑터를 노출해야 한다.');
 await adapter.directory();
 await adapter.list();
@@ -36,9 +33,6 @@ assert.deepEqual(JSON.parse(JSON.stringify(calls)), [
   { command: 'delete_setting', args: { name:'새 세팅.json' } }
 ]);
 
-const browserContext = { window:{} };
-vm.createContext(browserContext);
-vm.runInContext(fs.readFileSync('build/generated/desktop/saved-build-storage.js', 'utf8'), browserContext);
-assert.equal(browserContext.window.ToramSettingsFileRepositoryAdapter, undefined, '브라우저에서는 네이티브 어댑터를 노출하지 않아야 한다.');
+assert.equal(createSavedBuildFileAdapter(undefined), null, '브라우저에서는 네이티브 어댑터를 노출하지 않아야 한다.');
 
 console.log('Tauri build storage adapter tests passed');

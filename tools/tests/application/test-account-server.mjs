@@ -1,11 +1,13 @@
 import assert from 'node:assert/strict';
-import { createHash } from 'node:crypto';
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { DatabaseSync } from 'node:sqlite';
-import { createAccountServer } from '../../../server/account-server.mjs';
-import { createInventoryStore } from '../../../server/inventory-store.mjs';
+import {createHash,randomUUID} from 'node:crypto';
+import {mkdtemp,rm,readFile} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {DatabaseSync} from 'node:sqlite';
+import {createAccountServer} from '../../../server/account-server.mjs';
+import {createInventoryStore} from '../../../server/inventory-store.mjs';
+import {createEquipmentSelection} from '../../../web/src/application/item-catalog.mjs';
+import {inventoryRules} from '../../../server/inventory-rules.mjs';
 
 const origin = 'https://calculator.example';
 const temporary = await mkdtemp(join(tmpdir(), 'toram-account-'));
@@ -51,7 +53,7 @@ async function signIn() {
   return cookies.find(value => value.startsWith('__Host-toram_session=')).split(';')[0];
 }
 const item = { schema:'toram.account-item.v1', slot:'mainWeapon', equipment:{ type:'지팡이', attack:100, refinement:15, stability:60, options:[{ key:'MATK', value:20 }], crystas:[], lockedCrystaSlots:[] } };
-const build = { format:'toram-auto-build-document', schemaVersion:2, documentType:'saved-build', name:'테스트 빌드', createdAt:new Date().toISOString(), updatedAt:new Date().toISOString(), build:{ character:{}, equipment:{}, skillLevels:{}, activeBuffs:{}, externalOptions:[], combo:[] }, scenario:{ target:{} } };
+const build = JSON.parse(await readFile(new URL('../../../samples/마법) 지팡이 크법 세팅 - pelio s.json',import.meta.url),'utf8'));
 try {
   assert.deepEqual((await call('session')).body, { configured:true, user:null });
   assert.equal((await call('builds')).status, 401);
@@ -75,7 +77,12 @@ try {
   assert.deepEqual((await call('builds/' + id, { cookie:cookieA })).body.data, build);
   assert.equal((await call('items', { method:'POST', cookie:cookieA, data:{ name:'지팡이', data:item } })).status, 201);
   assert.equal((await call('favorites', { method:'POST', cookie:cookieA, data:{ name:'잘못된 즐겨찾기', data:item } })).status, 400);
-  const favorite = structuredClone(item); favorite.equipment.catalogItem = { gameItemId:123 };
+  const invalidFavorite=structuredClone(item);invalidFavorite.equipment.catalogItem={gameItemId:123};
+  assert.equal((await call('favorites',{method:'POST',cookie:cookieA,data:{name:'불완전한 원본',data:invalidFavorite}})).status,400,'A catalog pin requires its actual definition/version/hash');
+  const manifest=JSON.parse(await readFile(new URL('../../../web/public/game-data/items/manifest.json',import.meta.url),'utf8'));
+  const special=JSON.parse(await readFile(new URL('../../../web/public/game-data/items/'+manifest.kinds.special,import.meta.url),'utf8'));
+  const selection=createEquipmentSelection({id:22001,name:'도감 장비',cacheVersion:manifest.cacheVersion,sourceSha256:manifest.source.catalogSha256,...special[22001]},'special',{mainType:'지팡이',subType:'없음',armorType:'일반옷'},inventoryRules.registry);
+  const favorite={schema:'toram.account-item.v1',slot:'special',equipment:{type:null,attack:null,refinement:null,stability:null,options:[],crystas:['',''],lockedCrystaSlots:[false,false],catalogItem:selection}};
   assert.equal((await call('favorites', { method:'POST', cookie:cookieA, data:{ name:'아이템', data:favorite } })).status, 201);
   assert.equal((await call('builds', { method:'POST', cookie:cookieA, data:{ name:'잘못된 빌드', data:{} } })).status, 400);
   assert.equal((await call('builds', { method:'POST', cookie:cookieA, data:{ name:'용량 초과', data:{ junk:'a'.repeat(1024 * 1024) } } })).status, 413);
@@ -92,7 +99,7 @@ try {
   const duplicate = await call('inventory', { method:'POST', cookie:cookieA, data:equipment });
   assert.equal(duplicate.status, 201); assert.notEqual(duplicate.body.id, objectId);
   const listing = await call('inventory?type=equipment&equipmentType=staff&q=지팡이&page=1&pageSize=1', { cookie:cookieA });
-  assert.equal(listing.body.total, 2); assert.equal(listing.body.items.length, 1); assert.equal(listing.body.items[0].data, undefined);
+  assert.equal(listing.body.total, 3,'The legacy saved staff is the same canonical inventory collection'); assert.equal(listing.body.items.length, 1); assert.equal(listing.body.items[0].data, undefined);
   assert.equal((await call('inventory?page=2&pageSize=1', { cookie:cookieA })).body.items.length, 1);
   for (const query of ['page=0', 'pageSize=51', 'equipmentType=unknown', 'type=unknown', 'q=' + 'a'.repeat(81)]) assert.equal((await call('inventory?' + query, { cookie:cookieA })).status, 400);
   for (const bad of [ { ...equipment, schemaVersion:2 }, { ...equipment, owner_id:'forged' },
@@ -160,10 +167,15 @@ try {
   const inventoryOwner = inspect.prepare('SELECT id FROM users WHERE google_sub=?').get('google-user-a').id;
   const reopened = createInventoryStore(inspect);
   assert.equal(reopened.get(inventoryOwner, duplicate.body.id).data.equipment.attack, 100, 'Reopening the schema must preserve saved objects.');
-  assert.equal(inspect.prepare('SELECT count(*) AS total FROM records WHERE user_id=?').get(inventoryOwner).total, 2, 'Legacy item/favorite records must remain untouched.');
+  assert.equal(inspect.prepare('SELECT count(*) AS total FROM records WHERE user_id=?').get(inventoryOwner).total,0,'Current API writes must not create a second copy in records');
+  const archive=inspect.prepare('INSERT INTO records VALUES (?,?,?,?,?,?,?)');
+  archive.run(randomUUID(),inventoryOwner,'items','기존 아이템',JSON.stringify(item),1,new Date().toISOString());
+  archive.run(randomUUID(),inventoryOwner,'favorites','기존 즐겨찾기',JSON.stringify(favorite),1,new Date().toISOString());
+  createInventoryStore(inspect);
+  assert.equal(inspect.prepare('SELECT count(*) AS total FROM records WHERE user_id=?').get(inventoryOwner).total,2,'Opening the canonical store preserves untouched legacy archives');
   const stored = inspect.prepare('SELECT * FROM inventory_objects WHERE id=?').get(duplicate.body.id);
   const fillInventory = inspect.prepare('INSERT INTO inventory_objects VALUES (?,?,?,?,?,?,?,?,?,?,?)');
-  const alreadyStored = inspect.prepare('SELECT count(*) AS total FROM inventory_objects WHERE owner_id=? AND type=?').get(inventoryOwner,'equipment').total;
+  const alreadyStored = inspect.prepare('SELECT count(*) AS total FROM inventory_objects i WHERE owner_id=? AND type=? AND NOT EXISTS (SELECT 1 FROM record_links l WHERE l.inventory_id=i.id)').get(inventoryOwner,'equipment').total;
   for (let i = alreadyStored; i < 200; i++) fillInventory.run('quota-' + i, inventoryOwner, stored.type, stored.name, stored.schema_version, 1, stored.equipment_type, stored.data_json, stored.provenance_json, stored.created_at, stored.updated_at);
   assert.throws(() => reopened.create(inventoryOwner, equipment), error => error.apiCode === 'INVENTORY_LIMIT');
   const session = inspect.prepare('SELECT token_hash FROM sessions LIMIT 1').get();

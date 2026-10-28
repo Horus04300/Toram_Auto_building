@@ -1,6 +1,8 @@
-# 장비 옵션의 명시적 1회 사건 계산
+# 장비 옵션 적용식 검증 원형
 
-2026-10-26. `web/src/calculation/option-event-calculator.js`의 `ToramOptionEvents.evaluate(calculation, inputs)`는 입력된 1회 사건의 수식을 계산한다. 자동 피격·시간 경과·반복 전투 상태를 실행하지 않는다. 선행 장면 조건이 필요한 값은 입력 전 `null`이다. 서로 다른 단계의 결과를 최종 전투 피해로 합쳐 표시하지 않는다.
+이 모듈은 수식 검증용 원형이며 앱에서 로드하지 않는다. 추출 현황은 equipment-option-formulas.md를 따른다.
+
+`web/src/calculation/option-event-calculator.js`의 `ToramOptionEvents.evaluate(calculation, inputs)`는 입력된 1회 사건의 수식을 계산한다. 자동 피격·시간 경과·반복 전투 상태를 실행하지 않는다. 선행 장면 조건이 필요한 값은 입력 전 `null`이다. 서로 다른 단계의 결과를 최종 전투 피해로 합쳐 표시하지 않는다.
 
 ## 입력과 결과 계약
 

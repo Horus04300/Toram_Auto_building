@@ -1,18 +1,14 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window:{}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments:() => ({ Assassin:{} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/assassin.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
-const E = context.window.ToramSkillEffects;
-const Q = context.window.ToramComboSequence;
+const E = skillEffects;
+const Q = comboSequence;
 const ids = Array.from({ length:15 }, (_, index) => `Assassin:${index}`);
-const base = (mainType='한손검', subType='단검') => ({ mainType, subType, subAtk:200, level:300, strBase:100, dexBase:300, intBase:100, vitBase:100, agiBase:250, crtBase:50 });
+const base = (mainType='한손검', subType='단검') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType, subAtk:200, level:300, strBase:100, dexBase:300, intBase:100, vitBase:100, agiBase:250, crtBase:50 });
 const combat = { STR:120, DEX:330, INT:150, VIT:100, AGI:280, ATK:1000, MATK:400, MAXHP:10000 };
 const levels = (value, extra={}) => { context.window.skillSimulatorState.getInvestments = () => ({ Assassin:Object.assign(Object.fromEntries(ids.map(id => [id.slice(9), value])), extra) }); };
 const ok = (value, message) => { if (!value) throw new Error(message); };

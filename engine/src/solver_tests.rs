@@ -2,7 +2,7 @@ use super::*;
 use serde_json::json;
 
 #[test]
-fn local_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
+fn production_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
     let mut patches = vec![
         json!({}),
         json!({"atkType":"MAG","mainType":"지팡이","intBase":327}),
@@ -24,7 +24,6 @@ fn local_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
             patches.push(patch);
         }
     }
-    let mut tightened = 0;
     let mut impossible = 0;
     for patch in patches {
         let mut problem = small_problem();
@@ -59,7 +58,7 @@ fn local_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
                     for d in &nodes[3] {
                         let clusters = [*a, *b, *c, *d];
                         let candidates = box_candidate_indices(&problem.trees, &clusters);
-                        let local = local_box_bound(&problem, &clusters, &requirements).unwrap();
+                        let bound = evaluate_box(&problem, &clusters, Some(&requirements)).unwrap();
                         let mut best = f64::NEG_INFINITY;
                         for a in &candidates[0] {
                             for b in &candidates[1] {
@@ -82,22 +81,15 @@ fn local_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
                         if best.is_finite() {
                             feasible += 1;
                             assert!(
-                                local
+                                bound
                                     .as_ref()
-                                    .expect("local bound lost a feasible subspace")
+                                    .expect("production bound lost a feasible subspace")
                                     .optimization_damage_factor
                                     + 1e-7
                                     >= best
                             );
-                            let old = evaluate_box(&problem, &clusters, Some(&requirements))
-                                .unwrap()
-                                .unwrap();
-                            tightened += usize::from(
-                                local.unwrap().optimization_damage_factor + 1e-7
-                                    < old.optimization_damage_factor,
-                            );
                         } else {
-                            impossible += usize::from(local.is_none());
+                            impossible += usize::from(bound.is_none());
                         }
                     }
                 }
@@ -106,393 +98,7 @@ fn local_bounds_cover_every_subspace_with_variable_bases_and_nonlinear_edges() {
         assert!(feasible > 0);
         assert_eq!(serde_json::to_value(&problem.groups).unwrap(), raw);
     }
-    assert!(tightened > 0);
     assert!(impossible > 0);
-}
-
-#[test]
-fn local_bounds_exact_ties_order_threads_and_checkpoint_control_match_oracle() {
-    let mut problem = joint_problem();
-    problem.scenario_snapshot["requirements"]["maxMp"] = json!(1900);
-    let roots = problem.prepare_trees().unwrap();
-    let requirements = Requirements::new(&problem.scenario_snapshot["requirements"]);
-    let mut oracle = SearchState {
-        best_score: f64::NEG_INFINITY,
-        ..SearchState::default()
-    };
-    enumerate_box_reference(
-        0,
-        &roots,
-        &problem,
-        &requirements,
-        &mut [0; 4],
-        &Stats::new(),
-        &mut oracle,
-        &mut 0,
-    )
-    .unwrap();
-    assert!(oracle.best_selected.is_some());
-    problem.metadata.experimental_local_bounds = true;
-    for reversed in [false, true] {
-        if reversed {
-            for group in &mut problem.groups {
-                group.packages.reverse();
-            }
-        }
-        let result = solve_exact(&problem).unwrap();
-        assert_eq!(result.score, Some(oracle.best_score));
-        assert_eq!(result.best_build.unwrap().id, oracle.best_id);
-        for threads in [1, 2, 8, 16, 64] {
-            let mut session = NativeSearchSession::new(problem.clone()).unwrap();
-            let ready = session.ready_work_count();
-            let cancel = Arc::new(AtomicBool::new(true));
-            session
-                .run_parallel_slice_with_control(8, threads, Some(&cancel), None)
-                .unwrap();
-            assert_eq!(session.ready_work_count(), ready);
-            session
-                .run_parallel_slice_with_control(8, threads, None, Some(Instant::now()))
-                .unwrap();
-            assert_eq!(session.ready_work_count(), ready);
-            session.run_parallel_slice(1, threads).unwrap();
-            let checkpoint = serde_json::from_str(
-                &serde_json::to_string(&session.checkpoint().unwrap()).unwrap(),
-            )
-            .unwrap();
-            let mut restored = NativeSearchSession::from_checkpoint(checkpoint).unwrap();
-            assert!(restored.problem.metadata.experimental_local_bounds);
-            while !restored.is_complete() {
-                let result = restored.run_parallel_slice(8, threads).unwrap();
-                assert!(result.upper_bound.unwrap() >= oracle.best_score);
-            }
-            assert_eq!(restored.snapshot().score, Some(oracle.best_score));
-            assert_eq!(restored.snapshot().best_build.unwrap().id, oracle.best_id);
-        }
-    }
-}
-
-#[test]
-fn local_bounds_restrict_work_and_fall_back_without_claiming_infeasibility() {
-    let mut problem = wide_problem();
-    problem.metadata.experimental_local_bounds = true;
-    let roots = problem.prepare_trees().unwrap();
-    let requirements = Requirements::new(&Value::Null);
-    let ordinary = evaluate_box(&problem, &roots, Some(&requirements))
-        .unwrap()
-        .unwrap()
-        .optimization_damage_factor;
-    for incumbent in [f64::NEG_INFINITY, ordinary * 0.5, ordinary * 2.0] {
-        let actual = evaluate_search_box(&problem, &roots, &requirements, incumbent)
-            .unwrap()
-            .unwrap();
-        assert_eq!(actual.optimization_damage_factor, ordinary);
-    }
-    // Missing/oversized inputs disable the optional certified plan.
-    problem.groups[0].packages[0]
-        .stat_delta
-        .insert("ATK".into(), 1e13);
-    problem.prepare_trees().unwrap();
-    let local = local_box_bound(&problem, &problem.trees.roots, &requirements)
-        .unwrap()
-        .unwrap();
-    assert_eq!(local.optimization_damage_factor, f64::INFINITY);
-}
-
-#[test]
-fn supply_state_joins_cover_negative_resources_and_both_join_paths() {
-    let roots = [NodeId(0), NodeId(1), NodeId(2), NodeId(3)];
-    for count in [3, 12] {
-        let groups: Vec<Vec<_>> = (0..4)
-            .map(|g| {
-                (0..count)
-                    .map(|i| SupplyStatePoint {
-                        mp: i * 3 - 12 + g,
-                        ampr: count - i - g - 3,
-                        score: f64::from((i * 11 + g * 7) % 23 - 10),
-                    })
-                    .collect()
-            })
-            .collect();
-        let profiles: Vec<_> = groups
-            .iter()
-            .map(|points| Some(state_frontier(points.clone())))
-            .collect();
-        let maxima = profiles
-            .iter()
-            .map(|p| {
-                p.as_ref()
-                    .unwrap()
-                    .iter()
-                    .copied()
-                    .max_by(|a, b| a.score.total_cmp(&b.score))
-            })
-            .collect();
-        let states = SupplyStateBounds {
-            profiles,
-            maxima,
-            resources: std::array::from_fn(|_| Form {
-                constant: 0.0,
-                coefficients: [0.0; 59],
-                error: 0.0,
-            }),
-            constant: 0.0,
-            power_stage: false,
-        };
-        for mp in [-40, 0, 20, 100] {
-            for ampr in [-20, 0, 12, 40] {
-                let requirements = Requirements::new(&json!({"maxMp":mp*16,"amprBeforeDual":ampr}));
-                let bound = states.score(&roots, &requirements);
-                let mut best = f64::NEG_INFINITY;
-                for a in &groups[0] {
-                    for b in &groups[1] {
-                        for c in &groups[2] {
-                            for d in &groups[3] {
-                                if a.mp + b.mp + c.mp + d.mp >= mp
-                                    && a.ampr + b.ampr + c.ampr + d.ampr >= ampr
-                                {
-                                    best = best.max(a.score + b.score + c.score + d.score);
-                                }
-                            }
-                        }
-                    }
-                }
-                assert!(
-                    bound.is_none_or(|upper| upper >= best),
-                    "feasible upper lost: {count}/{mp}/{ampr}"
-                );
-                if best == f64::NEG_INFINITY {
-                    assert_eq!(bound, Some(best));
-                }
-            }
-        }
-    }
-    let points = vec![
-        SupplyStatePoint {
-            mp: 0,
-            ampr: 0,
-            score: 0.0
-        };
-        257
-    ];
-    assert!(state_pair(&points, &points).is_none());
-}
-
-#[test]
-fn supply_state_bounds_cover_every_feasible_ancestor_across_contexts() {
-    let mut strengthened = 0;
-    let mut patches = vec![
-        json!({}),
-        json!({"atkType":"MAG","mainType":"지팡이","intBase":327,"strBase":1,"dexBase":1}),
-        json!({"subType":"한손검(듀얼소드)","subAtk":150,"subStab":80}),
-        json!({"mainType":"발도검","chkIsUnsheathe":true,"rangeType":"LONG"}),
-        json!({"intBase":99,"intP":-25.25,"intF":0.75}),
-        json!({"normalAttackAmprProfile":{"passive":[{"percent":13.7,"flat":-2.5,"multiplier":1.2}],"activeCandidates":[{"multiplier":2},{"flat":25}]}}),
-        json!({"normalAttackAmprProfile":{"activeCandidates":[{"multiplier":-1,"flat":200}]}}),
-    ];
-    for main in ["strBase", "dexBase", "agiBase", "intBase", "vitBase"] {
-        for sub in ["strBase", "dexBase", "agiBase", "intBase", "vitBase"] {
-            if main == sub {
-                continue;
-            }
-            let mut patch = json!({"strBase":1,"dexBase":1,"agiBase":1,"intBase":1,"vitBase":1});
-            patch[main] = json!(510);
-            patch[sub] = json!(327);
-            patches.push(patch);
-        }
-    }
-    for patch in patches {
-        let mut problem = joint_problem();
-        problem.metadata.experimental_supply_states = true;
-        let mut base = serde_json::to_value(&problem.base_context).unwrap();
-        for (key, value) in patch.as_object().unwrap() {
-            base[key] = value.clone();
-        }
-        problem.base_context = PreparedContext::from(base);
-        let baseline = utility_values(&problem.base_context, &Stats::new()).unwrap();
-        problem.scenario_snapshot =
-            json!({"requirements":{"maxMp":baseline[1]-150.0,"amprBeforeDual":baseline[2]}});
-        for (g, group) in problem.groups.iter_mut().enumerate() {
-            group.packages = group.packages.iter().skip(1).step_by(2).cloned().collect();
-            for (i, p) in group.packages.iter_mut().enumerate() {
-                for (key, value) in [
-                    ("MAXMP", i as f64 * 100.0 - 125.25),
-                    ("AMPR", i as f64 * 5.0 - 4.25),
-                    ("STRP", i as f64 - 1.5),
-                    ("INT", g as f64 * 0.5),
-                    ("INTP", i as f64 * 2.25),
-                    ("AGIP", i as f64),
-                    ("DEX", i as f64),
-                    ("VIT", g as f64),
-                    ("ASPD_P", i as f64 * 3.0),
-                    ("UNSHEATHE", i as f64 * 5.0),
-                ] {
-                    p.stat_delta.insert(key.into(), value);
-                }
-            }
-        }
-        let raw = serde_json::to_value(&problem.groups).unwrap();
-        let roots = problem.prepare_trees().unwrap();
-        assert!(problem.trees.states.is_some());
-        assert_eq!(serde_json::to_value(&problem.groups).unwrap(), raw);
-        let mut unconditioned = problem.clone();
-        Arc::make_mut(&mut unconditioned.trees).states = None;
-        let requirements = Requirements::new(&problem.scenario_snapshot["requirements"]);
-        let nodes: [Vec<NodeId>; 4] = std::array::from_fn(|g| {
-            let end = roots
-                .get(g + 1)
-                .map_or(problem.trees.nodes.len(), |n| n.0 as usize);
-            (roots[g].0 as usize..end)
-                .map(|i| NodeId(i as u32))
-                .collect()
-        });
-        let mut feasible_count = 0;
-        for a in 0..4 {
-            for b in 0..4 {
-                for c in 0..4 {
-                    for d in 0..4 {
-                        let selected = [a, b, c, d];
-                        let stats = selection_stats(&problem, &selected);
-                        let Some(actual) =
-                            evaluate_feasible_summary(&problem.base_context, &stats, |i, v| {
-                                requirements.accepts_value(i, v)
-                            })
-                            .unwrap()
-                        else {
-                            continue;
-                        };
-                        feasible_count += 1;
-                        let ancestors: [Vec<_>; 4] = std::array::from_fn(|g| {
-                            nodes[g]
-                                .iter()
-                                .copied()
-                                .filter(|n| {
-                                    let mut indices = Vec::new();
-                                    cluster_indices(&problem.trees, *n, &mut indices);
-                                    indices.contains(&selected[g])
-                                })
-                                .collect()
-                        });
-                        for a in &ancestors[0] {
-                            for b in &ancestors[1] {
-                                for c in &ancestors[2] {
-                                    for d in &ancestors[3] {
-                                        let box_ = [*a, *b, *c, *d];
-                                        let bound =
-                                            evaluate_box(&problem, &box_, Some(&requirements))
-                                                .unwrap()
-                                                .expect("lost feasible ancestor");
-                                        assert!(
-                                            bound.optimization_damage_factor + 1e-7
-                                                >= actual.optimization_damage_factor
-                                        );
-                                        let old = evaluate_box(
-                                            &unconditioned,
-                                            &box_,
-                                            Some(&requirements),
-                                        )
-                                        .unwrap()
-                                        .unwrap();
-                                        strengthened += usize::from(
-                                            bound.optimization_damage_factor + 1e-7
-                                                < old.optimization_damage_factor,
-                                        );
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        assert!(feasible_count > 0);
-    }
-    assert!(strengthened > 0, "prototype must tighten a feasible space");
-}
-
-#[test]
-fn supply_state_exact_ties_order_threads_control_and_resume_match_oracle() {
-    let mut problem = joint_problem();
-    problem.scenario_snapshot["requirements"]["maxMp"] = json!(1900);
-    let original = serde_json::to_value(&problem.groups).unwrap();
-    let roots = problem.prepare_trees().unwrap();
-    let requirements = Requirements::new(&problem.scenario_snapshot["requirements"]);
-    let mut reference = SearchState {
-        best_score: f64::NEG_INFINITY,
-        ..SearchState::default()
-    };
-    enumerate_box_reference(
-        0,
-        &roots,
-        &problem,
-        &requirements,
-        &mut [0; 4],
-        &Stats::new(),
-        &mut reference,
-        &mut 0,
-    )
-    .unwrap();
-    let oracle = solve_exact(&problem).unwrap();
-    assert_eq!(oracle.score, Some(reference.best_score));
-    assert_eq!(oracle.best_build.as_ref().unwrap().id, reference.best_id);
-    assert!(oracle.best_build.is_some());
-    problem.metadata.experimental_supply_states = true;
-    for reversed in [false, true] {
-        if reversed {
-            for group in &mut problem.groups {
-                group.packages.reverse();
-            }
-        }
-        let serial = solve_exact(&problem).unwrap();
-        assert_eq!(serial.score, oracle.score);
-        assert_eq!(
-            serial.best_build.unwrap().id,
-            oracle.best_build.as_ref().unwrap().id
-        );
-        for threads in [1, 2, 8, 16, 64] {
-            let mut session = NativeSearchSession::new(problem.clone()).unwrap();
-            assert!(session.problem.trees.states.is_some());
-            let ready = session.ready_work_count();
-            let cancel = Arc::new(AtomicBool::new(true));
-            session
-                .run_parallel_slice_with_control(8, threads, Some(&cancel), None)
-                .unwrap();
-            assert_eq!(session.ready_work_count(), ready);
-            session
-                .run_parallel_slice_with_control(8, threads, None, Some(Instant::now()))
-                .unwrap();
-            assert_eq!(session.ready_work_count(), ready);
-            session.run_parallel_slice(1, threads).unwrap();
-            let checkpoint = serde_json::from_str(
-                &serde_json::to_string(&session.checkpoint().unwrap()).unwrap(),
-            )
-            .unwrap();
-            let mut restored = NativeSearchSession::from_checkpoint(checkpoint).unwrap();
-            assert!(restored.problem.metadata.experimental_supply_states);
-            assert!(restored.problem.trees.states.is_some());
-            while !restored.is_complete() {
-                let result = restored.run_parallel_slice(8, threads).unwrap();
-                assert!(result.upper_bound.unwrap() >= oracle.score.unwrap());
-            }
-            assert_eq!(restored.snapshot().score, oracle.score);
-            assert_eq!(
-                restored.snapshot().best_build.unwrap().id,
-                oracle.best_build.as_ref().unwrap().id
-            );
-        }
-    }
-    for group in &mut problem.groups {
-        group.packages.reverse();
-    }
-    assert_eq!(serde_json::to_value(&problem.groups).unwrap(), original);
-    // Unsupported magnitude/missing requirements disable only the new bound.
-    problem.groups[0].packages[0]
-        .stat_delta
-        .insert("MAXMP".into(), 1e9);
-    problem.prepare_trees().unwrap();
-    assert!(problem.trees.states.is_none());
-    problem.scenario_snapshot["requirements"]["maxMp"] = Value::Null;
-    problem.prepare_trees().unwrap();
-    assert!(problem.trees.states.is_none());
 }
 
 #[test]
@@ -3808,6 +3414,43 @@ fn all_supply_planes_cover_future_options_and_nonlinear_boundaries() {
                 result.best_build.map(|b| b.id),
                 oracle.best_selected.map(|_| oracle.best_id.clone())
             );
+        }
+    }
+}
+
+#[test]
+fn retired_bound_flags_keep_v25_checkpoint_resume_compatible() {
+    let fixtures: Value = serde_json::from_str(include_str!(
+        "../../tools/fixtures/crysta-checkpoint-v25.json"
+    ))
+    .unwrap();
+    for row in fixtures.as_array().unwrap() {
+        let checkpoint: NativeSearchCheckpoint =
+            serde_json::from_value(row["checkpoint"].clone()).unwrap();
+        let metadata = serde_json::to_value(&checkpoint.problem.metadata).unwrap();
+        for threads in [1, 2, 8, 16, 64] {
+            let mut session = NativeSearchSession::from_checkpoint(checkpoint.clone()).unwrap();
+            assert_eq!(
+                serde_json::to_value(&session.checkpoint().unwrap().problem.metadata).unwrap(),
+                metadata
+            );
+            let ready = session.ready_work_count();
+            let cancel = Arc::new(AtomicBool::new(true));
+            session
+                .run_parallel_slice_with_control(8, threads, Some(&cancel), None)
+                .unwrap();
+            assert_eq!(session.ready_work_count(), ready);
+            session
+                .run_parallel_slice_with_control(8, threads, None, Some(Instant::now()))
+                .unwrap();
+            assert_eq!(session.ready_work_count(), ready);
+            while !session.is_complete() {
+                session.run_parallel_slice(8, threads).unwrap();
+            }
+            let result = session.snapshot();
+            assert_eq!(result.status, "exact");
+            assert_eq!(result.score, row["score"].as_f64());
+            assert_eq!(result.best_build.unwrap().id, row["id"].as_str().unwrap());
         }
     }
 }

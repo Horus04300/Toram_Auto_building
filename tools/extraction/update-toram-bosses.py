@@ -12,14 +12,10 @@ import runpy
 import shutil
 import subprocess
 import sys
-import uuid
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-common = runpy.run_path(str(HERE / "update-toram-items.py"))
-module, require, digest, load = (common[name] for name in ("module", "require", "digest", "load"))
-write_json, atomic_json, checked_child, read_snapshot = (common[name] for name in
-    ("write_json", "atomic_json", "checked_child", "read_snapshot"))
+from catalog_pipeline import module, require, digest, load, write_json, atomic_json, checked_child, installation_identity, manifest_source, resource_changes, read_snapshot, SnapshotCapture
 ASSETS = ROOT / "data/sources/toram-monsters"
 
 
@@ -298,39 +294,29 @@ def reviewed_contract():
 
 def run(args):
     contract, contract_hash = reviewed_contract()
-    store = (args.store / args.application).resolve()
-    require(not store.is_relative_to(args.install.resolve()), "Store must not be inside the game installation")
-    store.mkdir(parents=True, exist_ok=True)
-    lock = store / ".pipeline.lock"
-    with lock.open("x", encoding="ascii") as stream:
-        stream.write(uuid.uuid4().hex)
-    stage = temporary = None
-    try:
-        temporary = store / (".manifest-" + uuid.uuid4().hex + ".bytes")
-        data, manifest_record = common["manifest_source"](args.offline, args.application, temporary)
+    with SnapshotCapture(args.store / args.application,args.install) as capture:
+        store=capture.store
+        data, manifest_record=manifest_source(args.offline,args.application,capture.manifest_path)
         assets, selection, locales, coverage = selected_assets(data, contract["requiredLocales"])
-        installation, reasons = common["installation_identity"](args.install, contract)
+        installation, reasons = installation_identity(args.install, contract)
         tool_names = ["update-toram-bosses.py", "extract-toram-monster-data.py", "extract-toram-field-bundle.py",
-                      "extract-toram-item-assets.py", "extract-toram-localizations.py", "update-toram-items.py",
+                      "extract-toram-item-assets.py", "extract-toram-localizations.py", "catalog_pipeline.py",
                       "convert-toram-project-bosses.mjs", "project-catalog-store.mjs"]
         identity = {"selection": selection, "installation": installation, "contract": contract_hash,
                     "tools": {name: digest((HERE / name).read_bytes()) for name in tool_names}}
-        previous = load(store / "latest.json") if (store / "latest.json").is_file() else None
-        observed = load(store / "observed.json") if (store / "observed.json").is_file() else None
-        old_path, old_report = read_snapshot(store, previous) if previous else (None, None)
-        if observed:
-            _, observed_report = read_snapshot(store, observed)
-            if observed_report["identity"] == identity:
-                status = "unchanged" if observed_report["status"] == "ready" else "needs-review"
-                print(json.dumps({"status": status, "counts": observed_report["counts"],
-                                  "reviewReasons": observed_report["reviewReasons"]}))
-                return 0 if status == "unchanged" else 2
+        match=capture.load_state(identity)
+        old_path,old_report=capture.latest_path,capture.latest_report
+        if match:
+            _,observed_report=match
+            status="unchanged" if observed_report["status"]=="ready" else "needs-review"
+            print(json.dumps({"status":status,"counts":observed_report["counts"],"reviewReasons":observed_report["reviewReasons"]}))
+            return 0 if status=="unchanged" else 2
         if args.check:
             print(json.dumps({"status": "needs-review" if reasons else "update-available", "coverage": coverage, "reviewReasons": reasons}))
             return 2 if reasons else 0
-        stage = store / "snapshots" / (selection[:16] + "-" + uuid.uuid4().hex)
+        stage=capture.begin(selection[:16])
         source = stage / "source"
-        source.mkdir(parents=True)
+        source.mkdir()
         (source / "manifest.bytes").write_bytes(data)
         records = retain_bundles(source, store, args.offline, args.application, assets)
         tables, evidence, runtime = parse_bundles(source, records, args.unitypy_path)
@@ -341,7 +327,7 @@ def run(args):
         before = load(old_path / "monsters.raw.json") if old_path else {"monsters": [], "names": {}, "fieldNames": {}}
         delta = compare_records(before["monsters"], catalog["monsters"])
         delta["localizationChanged"] = before["names"] != catalog["names"] or before["fieldNames"] != catalog["fieldNames"]
-        delta["resourceChanges"] = common["resource_changes"](old_report["textAssets"] if old_report else [], evidence)
+        delta["resourceChanges"] = resource_changes(old_report["textAssets"] if old_report else [], evidence)
         write_json(stage / "delta.json", delta)
         for failure in catalog["rejectedFields"]:
             if contract["knownRejectedFields"].get(str(failure["fieldId"])) != failure:
@@ -365,10 +351,10 @@ def run(args):
                                     capture_output=True, text=True, encoding="utf-8", errors="replace")
             if result.returncode:
                 reasons.append("Boss project conversion: " + result.stderr[-1600:])
-        current, _ = common["manifest_source"](args.offline, args.application, source / "manifest-after.bytes")
+        current, _ = manifest_source(args.offline, args.application, source / "manifest-after.bytes")
         require(selected_assets(current, contract["requiredLocales"])[1] == selection,
                 "Boss resource revisions changed during capture; retry")
-        require(common["installation_identity"](args.install, contract)[0] == installation,
+        require(installation_identity(args.install, contract)[0] == installation,
                 "Installation changed during capture; retry")
         counts = {"variants": len(catalog["monsters"]), "monsterIds": len({r["gameMonsterId"] for r in catalog["monsters"]}),
                   "bossVariants": sum(bool(r["raw"]["flagRaw"] & 4) for r in catalog["monsters"]),
@@ -380,23 +366,11 @@ def run(args):
                   "application": args.application, "revision": selection, "coverage": coverage,
                   "activeServerReleaseObserved": False, "manifest": manifest_record, "bundles": records,
                   "textAssets": evidence, "counts": counts,
-                  "outputHashes": {p.relative_to(stage).as_posix(): digest(p.read_bytes()) for p in stage.rglob("*") if p.is_file()}}
-        write_json(stage / "report.json", report)
-        pointer = {"snapshot": stage.relative_to(store).as_posix(), "reportSha256": digest((stage / "report.json").read_bytes())}
-        if not reasons:
-            atomic_json(store / "latest.json", pointer)
-        atomic_json(store / "observed.json", pointer)
-        print(json.dumps({"status": report["status"], "snapshot": str(stage), "counts": counts, "reviewReasons": reasons}))
-        stage = None
+                  }
+        capture.publish(report)
+        print(json.dumps({"status":report["status"],"snapshot":str(stage),"counts":counts,"reviewReasons":reasons}))
         return 2 if reasons else 0
-    except Exception as error:
-        if stage is not None:
-            write_json(stage / "failure.json", {"status": "failed", "error": str(error), "latestUnchanged": True})
-        raise
-    finally:
-        if temporary and temporary.exists():
-            temporary.unlink()
-        lock.unlink()
+
 
 
 def main():

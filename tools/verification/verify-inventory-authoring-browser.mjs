@@ -169,7 +169,7 @@ try {
   assert.equal(await skills.locator('.skill-tree-canvas').count(),1);
   assert.equal(await skills.locator('.skill-category-rail').isVisible(),false);
   assert.equal(await inventory.locator('.inventory-list-panel').isVisible(),true,'Creating must keep the saved list beside the workspace');
-  const blade = await page.evaluate(() => window.SKILL_TREE_DATA.trees.find(tree => tree.id === 'Blade'));
+  const blade = await page.evaluate(() => window.ToramApp.skillTreeData.trees.find(tree => tree.id === 'Blade'));
   const child = blade.skills.findIndex(skill => skill.prereq >= 0), parent = blade.skills.findIndex(skill => skill.id === blade.skills[child].prereq);
   await skills.getByRole('button',{name:'5',exact:true}).click(); await skills.locator('.skill-node').nth(child).click();
   assert.match(await skills.locator('.skill-node').nth(parent).getAttribute('title'),/Lv 5\/10/);
@@ -250,7 +250,7 @@ try {
   assert.equal(await page.locator('#combatTreeRail .skill-tree-button .bookmark-info').count(),9,'The calculator must use the same bookmark builder and keep all weapon trees');
   assert.ok(await page.locator('#combatCategoryRail .bookmark-points').count()); await capture('calculator-reference');
   await page.locator('#combatSkillStage .skill-node').first().click();
-  const calculatorPoints = await page.evaluate(() => window.ToramSkillUi.getInvestments());
+  const calculatorPoints = await page.evaluate(() => window.ToramApp.skillUi.getInvestments());
   await page.locator('.platform-nav-button[data-page="inventory"]').click(); await wait();
   await inventory.locator('[data-inventory-major="skills"]').click(); await wait();
   await inventory.locator('[data-inventory-group="Weapon_Skills"]').click(); await inventory.locator('[data-inventory-leaf="Blade"]').click(); await wait();
@@ -258,7 +258,7 @@ try {
   await skills.locator('.skill-node').nth(parent).click();
   await page.locator('.platform-nav-button[data-page="home"]').click(); await page.locator('#homeWorkspace').waitFor({state:'visible'});
   assert.ok((await api('inventory/' + bladeId)).revision > bladeRecord.revision,'Leaving the inventory page must await automatic saving');
-  assert.deepEqual(await page.evaluate(() => window.ToramSkillUi.getInvestments()),calculatorPoints,'Inventory edits must not alter the calculator investments');
+  assert.deepEqual(await page.evaluate(() => window.ToramApp.skillUi.getInvestments()),calculatorPoints,'Inventory edits must not alter the calculator investments');
   await page.locator('.platform-nav-button[data-page="inventory"]').click(); await wait();
   await skills.locator('.skill-node').nth(parent).click(); const failedUrl = page.url(), editedTitle = await skills.locator('.skill-node').nth(parent).getAttribute('title');
   await page.route('**/api/inventory/' + bladeId,route => route.request().method() === 'PUT' ? route.fulfill({status:409,contentType:'application/json',body:JSON.stringify({error:'다른 곳에서 수정되었습니다.'})}) : route.continue());

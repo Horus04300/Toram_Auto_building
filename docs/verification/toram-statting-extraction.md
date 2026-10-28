@@ -106,4 +106,4 @@ python data/sources/toram-statting/native-penalty/self-check.py
 
 첫 명령은 보존된 초기화 코드에서 JSON/CSV를 재생성하고 나머지는 입력 해시·파싱·경계 사례·산출물 동일성을 검증한다. 새 게임 버전의 코드가 바뀌면 재분석·검토가 필요하며 이 도구가 임의로 새 버전을 허용하지 않는다. 소재 총량, 서버의 최종 성공/실패·슬롯 보존 결과, 모든 UI 입력 허용 조합은 이번 정적 검증의 완료 범위가 아니다.
 
-이번 검증: 추출기 `--check`(73행·6언어·원본/함수 해시·재생성 동일성), potential self-check(3,721 전이 범위와 대표 경계), penalty self-check(12함수 해시·20/45/65%·0/음수/제외·합산 절삭·Lv209/210/300·스킬 슬롯/보너스), `npm run ai:audit`, `git diff --check` 모두 PASS. 앱 실행 코드를 바꾸지 않아 앱 전체 회귀·브라우저 동작 검사는 반복하지 않았다.
+이번 검증: 추출기 `--check`(73행·6언어·원본/함수 해시·재생성 동일성), potential self-check(3,721 전이 범위와 대표 경계), penalty self-check(12함수 해시·20/45/65%·0/음수/제외·합산 절삭·Lv209/210/300·스킬 슬롯/보너스), `node tools/verification/audit-ai-context.mjs`, `git diff --check` 모두 PASS. 앱 실행 코드를 바꾸지 않아 앱 전체 회귀·브라우저 동작 검사는 반복하지 않았다.

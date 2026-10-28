@@ -32,7 +32,7 @@ async function check(name, fn) {
   catch(e) { report.checks.push({name,status:'FAIL',error:e.message}); await page.screenshot({path:resolve(output,`failure-${report.checks.length}.png`)}).catch(()=>{}); }
   console.log(JSON.stringify(report.checks.at(-1)));
 }
-async function ready() { await page.waitForFunction(() => window.ToramSettingsRepository && document.querySelector('#appTabButton-results')); }
+async function ready() { await page.waitForFunction(() => window.ToramApp.settingsRepository && document.querySelector('#appTabButton-results')); }
 const tab = id => page.locator('#appTabButton-' + id).click();
 try {
   await page.goto(url); await ready();
@@ -64,12 +64,12 @@ try {
   });
   await check('requirements cancel leaves saved preferences unchanged',async()=>{
     await tab('results'); await page.locator('#optimizationRequirementsButton').click();
-    const before=await page.evaluate(()=>window.ToramBuildDraftStore.read().scenario.optimizationPreferences);
+    const before=await page.evaluate(()=>window.ToramApp.buildStore.read().scenario.optimizationPreferences);
     const fields=await page.locator('#optimizationRequirementsOverlay input').evaluateAll(es=>es.map(e=>({id:e.id,type:e.type,value:e.value,checked:e.checked})));
     const number=page.locator('#optimizationRequirementsOverlay input[type=number]').first();
     if(await number.isEnabled()) await number.fill('12345');
     await page.locator('#optimizationRequirementsCancel').click();
-    assert.deepEqual(await page.evaluate(()=>window.ToramBuildDraftStore.read().scenario.optimizationPreferences),before);
+    assert.deepEqual(await page.evaluate(()=>window.ToramApp.buildStore.read().scenario.optimizationPreferences),before);
     return fields;
   });
   await check('setting modal controls',async()=>{
@@ -92,14 +92,14 @@ try {
   await check('skill investment and combo survive reload',async()=>{
     await tab('equipment'); await page.locator('#mainWeaponType').selectOption('한손검');
     await tab('skills'); await page.locator('#combatSkillStage .skill-node').first().click();
-    const invested=await page.evaluate(()=>window.ToramBuildDraftStore.read().build.skillLevels);
+    const invested=await page.evaluate(()=>window.ToramApp.buildStore.read().build.skillLevels);
     assert.ok(Object.values(invested).some(tree=>Object.values(tree).some(v=>v>0)));
     await tab('combo'); await page.locator('#comboAddEntry').click();
     assert.equal(await page.locator('.combo-chain-node').count(),2);
     await page.locator('#comboRangeShort').check(); await page.locator('#comboRangeLong').check();
     assert.equal(await page.locator('#comboRangeShort').isChecked(),false);
     await tab('stats-target'); await page.reload(); await ready();
-    assert.deepEqual(await page.evaluate(()=>window.ToramBuildDraftStore.read().build.skillLevels),invested);
+    assert.deepEqual(await page.evaluate(()=>window.ToramApp.buildStore.read().build.skillLevels),invested);
     await tab('combo'); assert.equal(await page.locator('.combo-chain-node').count(),2);
     assert.equal(await page.locator('#comboRangeLong').isChecked(),true);
   });
@@ -118,7 +118,7 @@ try {
   await check('clamped level agrees with store and autosave',async()=>{
     await tab('stats-target'); await page.locator('#charLevel').fill('999');
     await page.waitForFunction(()=>JSON.parse(localStorage.getItem('toram.auto-build.application-state.v2'))?.lastSession.build.character.level !== 222);
-    const values=await page.evaluate(()=>({ui:Number(document.querySelector('#charLevel').value),store:window.ToramBuildDraftStore.read().build.character.level,saved:JSON.parse(localStorage.getItem('toram.auto-build.application-state.v2')).lastSession.build.character.level}));
+    const values=await page.evaluate(()=>({ui:Number(document.querySelector('#charLevel').value),store:window.ToramApp.buildStore.read().build.character.level,saved:JSON.parse(localStorage.getItem('toram.auto-build.application-state.v2')).lastSession.build.character.level}));
     assert.equal(values.store,values.ui,JSON.stringify(values)); assert.equal(values.saved,values.ui,JSON.stringify(values)); return values;
   });
   await check('recommendation apply preserves locked slot',async()=>{
@@ -166,8 +166,8 @@ try {
     await tab('equipment');
     for(const group of ['wpn','arm','add','spc']) for(const slot of [1,2]) await page.locator(`#lock_${group}_${slot}`).check();
     await tab('results'); await page.locator('#optimizationRunPreciseOptimization').click();
-    await page.waitForFunction(()=>window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult?.status==='exact',{},{timeout:60000});
-    const result=await page.evaluate(()=>window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult);
+    await page.waitForFunction(()=>window.ToramApp.optimizer.getState().lastOptimizationResult?.status==='exact',{},{timeout:60000});
+    const result=await page.evaluate(()=>window.ToramApp.optimizer.getState().lastOptimizationResult);
     assert.equal(result.status,'exact'); return {status:result.status,score:result.score};
   });
   await page.screenshot({path:resolve(output,'final.png'),fullPage:true});

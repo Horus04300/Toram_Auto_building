@@ -6,14 +6,14 @@ import { mergeInventoryObjects } from '../../application/inventory-merge.mjs';
 const categories = {Weapon_Skills:'무기',Buff_Skills:'버프',Assist_Skills:'보조',Other_Skills:'생활'};
 const label = tree => (tree.nameKo || tree.id).replace(/ 스킬$/u,'');
 
-export function createInventorySkillEditor(documentRef, panel, api, perform) {
+export function createInventorySkillEditor(documentRef, panel, api, perform, getTreeData) {
   panel.innerHTML = `<nav class="inventory-skill-modes" aria-label="스킬셋 작업"><button type="button" data-skill-mode="edit">전체 편집</button><button type="button" data-skill-mode="assemble">개별 구성 합치기</button></nav>
     <div class="inventory-skill-edit"><header><strong class="inventory-skill-title"></strong><span class="inventory-skill-points"></span><div class="skill-point-step-group"></div></header>
     <div class="inventory-skill-layout"><nav class="skill-category-rail" aria-label="편집할 스킬 분류"></nav><nav class="skill-tree-rail" aria-label="편집할 스킬트리"></nav><div class="inventory-skill-stage"></div></div></div>
     <section class="inventory-skill-assemble" hidden><div class="inventory-skill-sources"></div><div class="inventory-skill-conflicts"></div></section>`;
   const find = selector => panel.querySelector(selector);
   let data, type, record, levels, simulator, activeTree, category, step = 10, dirty = false, mode = 'edit', pendingMerge;
-  const trees = () => documentRef.defaultView.SKILL_TREE_DATA.trees;
+  const trees = () => getTreeData().trees;
   function markDirty() {dirty = true;}
   function treeData(id) {
     const previous = type === 'skill_tree' ? data : data.trees[id]?.data;
@@ -31,7 +31,7 @@ export function createInventorySkillEditor(documentRef, panel, api, perform) {
   }
   function loadLevels() {
     levels = Object.fromEntries(trees().map(tree => [tree.id,Object.fromEntries(tree.skills.map(skill => [skill.id,(type === 'skill_tree' && data.treeId === tree.id ? data.levels : data.trees?.[tree.id]?.data.levels)?.[skill.id] || 0]))]));
-    simulator = createSkillTreeSimulator(documentRef,{data:documentRef.defaultView.SKILL_TREE_DATA,levels,step:() => step,onChange() {markDirty(); render();}});
+    simulator = createSkillTreeSimulator(documentRef,{data:getTreeData(),levels,step:() => step,onChange() {markDirty(); render();}});
   }
   function bookmark(label, active, onClick, icon, points) {return createBookmarkButton(documentRef,{label,active,onClick,icon,points});}
   function render() {

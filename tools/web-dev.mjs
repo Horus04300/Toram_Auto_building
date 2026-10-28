@@ -1,27 +1,17 @@
+import {APP_PATHS,contentType,staticHeaders,containedFile} from '../server/static-assets.mjs';
+import {buildWasm} from './build-wasm.mjs';
 import { createServer } from 'node:http';
 import { readFile, realpath } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { renderFrontendHtml } from './prepare-frontend.mjs';
-import { WEB_CLASSIC_SCRIPT_PATHS } from '../web/src/classic-script-manifest.mjs';
-import { frontendSourcePath, FRONTEND_MODULE_PATHS, FRONTEND_PAGE_PATHS } from './support/frontend-paths.mjs';
+import {frontendSourcePath,renderFrontendModule} from './support/frontend-paths.mjs';
 
 const root = resolve(import.meta.dirname, '..');
-const scripts = new Set([...WEB_CLASSIC_SCRIPT_PATHS, ...FRONTEND_MODULE_PATHS, ...FRONTEND_PAGE_PATHS]);
-const mime = {
-  '.html':'text/html; charset=utf-8',
-  '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css',
-  '.json':'application/json', '.svg':'image/svg+xml', '.png':'image/png',
-  '.jpg':'image/jpeg', '.jpeg':'image/jpeg', '.webp':'image/webp', '.ico':'image/x-icon',
-  '.woff':'font/woff', '.woff2':'font/woff2', '.ttf':'font/ttf', '.wasm':'application/wasm'
-};
 
 export function createWebDevServer() {
   return createServer(async (req, res) => {
-    res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    staticHeaders(res);
     if (req.method !== 'GET' && req.method !== 'HEAD') {
       res.writeHead(405, { Allow:'GET, HEAD' });
       res.end();
@@ -32,22 +22,22 @@ export function createWebDevServer() {
     catch { res.writeHead(400); res.end(); return; }
     try {
       let content;
-      if (['/','/index.html','/inventory','/calculator','/board','/catalog'].includes(pathname)) {
+      if (APP_PATHS.has(pathname)) {
         content = await renderFrontendHtml('web');
         res.setHeader('Content-Type', 'text/html; charset=utf-8');
       } else {
         const asset = pathname.slice(1);
-        if (asset.includes('\\') || asset.split('/').includes('..') || !(scripts.has(asset) || /^assets\/(css|fonts|icons|game-data|wasm)\//u.test(asset))) {
+        if (asset.includes('\\') || asset.split('/').includes('..') || !/^assets\/(js|pages|css|fonts|icons|game-data|wasm)\//u.test(asset) || asset.startsWith('assets/js/') && !/\.(?:m?js)$/u.test(asset)) {
           res.writeHead(404); res.end(); return;
         }
         const source = frontendSourcePath(asset);
         const sourceRoot = resolve(root, source.startsWith('web/src/') ? 'web/src' : source.startsWith('web/public/') ? 'web/public' : 'build/generated/wasm');
-        const path = resolve(root, source);
-        if (!path.startsWith(sourceRoot + sep) || !(await realpath(path)).startsWith(sourceRoot + sep)) {
+        const path = await containedFile(sourceRoot,resolve(root,source));
+        if (!resolve(root,source).startsWith(sourceRoot + sep)) {
           res.writeHead(404); res.end(); return;
         }
-        content = await readFile(path);
-        res.setHeader('Content-Type', mime[extname(path)] || 'application/octet-stream');
+        content = /\.(?:m?js)$/u.test(path) ? (await renderFrontendModule(asset)).source : await readFile(path);
+        res.setHeader('Content-Type', contentType(path));
       }
       res.end(req.method === 'HEAD' ? undefined : content);
     } catch (error) {
@@ -60,6 +50,7 @@ export function createWebDevServer() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  await buildWasm();
   const port = Number(process.env.PORT || 5173);
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be an integer from 1 to 65535.');
   const server = createWebDevServer();

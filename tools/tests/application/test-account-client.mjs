@@ -1,16 +1,16 @@
 import assert from 'node:assert/strict';
-import { createHash, webcrypto } from 'node:crypto';
-import { createRequire } from 'node:module';
-import { readFile } from 'node:fs/promises';
-import { createAccountClient } from '../../../web/src/application/account-client.mjs';
-import { createEquipmentSelection } from '../../../web/src/application/item-catalog.mjs';
-import { validateEquipmentObject } from '../../../web/src/application/equipment-object.mjs';
+import {createHash,webcrypto} from 'node:crypto';
+import {createRequire} from 'node:module';
+import {readFile} from 'node:fs/promises';
+import {createAccountClient} from '../../../web/src/application/account-client.mjs';
+import {createEquipmentSelection} from '../../../web/src/application/item-catalog.mjs';
+import {validateEquipmentObject} from '../../../web/src/application/equipment-object.mjs';
 
 let last, imported, configured = true, inventoryResponse = {};
 const item = { options:[], crystas:[], lockedCrystaSlots:[] };
 const document = { documentElement:{ dataset:{ runtime:'web' } }, defaultView:{
   location:{ origin:'https://calculator.example', assign(url) { last = url; } },
-  ToramApplication:{ Settings:{ flush() {}, snapshot(name) { return { name, build:{ equipment:{ mainWeapon:structuredClone(item) } } }; }, import(value) { imported = JSON.parse(value); } } },
+  ToramSettingsRepository:{ flushApplicationState() {}, snapshot(name) { return { name, build:{ equipment:{ mainWeapon:structuredClone(item) } } }; }, importSavedBuild(value) { imported = JSON.parse(value); }, applySession(value) {imported=structuredClone(value);} },
   async fetch(url, options) {
     last = { url:String(url), options };
     const path = new URL(url).pathname;
@@ -21,6 +21,7 @@ const document = { documentElement:{ dataset:{ runtime:'web' } }, defaultView:{
     return { ok:true, json:async () => ({ data:{ schema:'toram.account-item.v1', slot:'mainWeapon', equipment:{ ...item, attack:400 } } }) };
   }
 } };
+document.defaultView.ToramApp={settingsRepository:document.defaultView.ToramSettingsRepository};
 const account = createAccountClient(document);
 await account.save('builds', '마법사');
 assert.equal(last.url, 'https://calculator.example/api/builds');
@@ -38,11 +39,11 @@ configured = true;
 await account.login();
 assert.equal(last, 'https://calculator.example/api/auth/google');
 const registry = createRequire(import.meta.url)('../../../web/src/calculation/stat-registry.js');
-document.defaultView.ToramStatRegistry = registry;
+document.defaultView.ToramApp.statRegistry = registry.statRegistry;
 document.defaultView.subWeaponRules = { '지팡이':['없음','방패'], '양손검':['없음'] };
 const piece = { type:'지팡이', attack:300, refinement:15, stability:60, options:[{key:'MATKP',value:10}], crystas:['',''], lockedCrystaSlots:[true,false] };
 const current = { name:'다른 빌드', build:{ character:{level:325}, equipment:{ mainWeapon:piece, subWeapon:{type:'방패'}, armor:{options:[{key:'MAXHP',value:100}]} }, skillLevels:{test:10} }, scenario:{target:{bossLevel:330}} };
-document.defaultView.ToramApplication.Settings.snapshot = () => structuredClone(current);
+document.defaultView.ToramSettingsRepository.snapshot = () => structuredClone(current);
 await account.inventory.create('지팡이', 'mainWeapon');
 const payload = JSON.parse(last.options.body);
 assert.equal(last.url, 'https://calculator.example/api/inventory');
@@ -79,7 +80,7 @@ assert.throws(() => validateEquipmentObject({...catalogObject,equipment:{...cata
 const offline = createAccountClient({ documentElement:{ dataset:{ runtime:'desktop' } }, defaultView:{}, querySelector() { return null; } });
 let releaseCalculator, calculatorCalls = 0;
 const calculatorReady = new Promise(done => { releaseCalculator = done; });
-document.defaultView.ToramApp = {ensureCalculator() {calculatorCalls++; return calculatorReady;}};
+document.defaultView.ToramApp.ensureCalculator=() => {calculatorCalls++; return calculatorReady;};
 await account.session(); await account.inventory.list();
 assert.equal(calculatorCalls,0,'Account and inventory reads must not initialize the calculator');
 await account.inventory.register('직접 등록한 장비','equipment',{slot:'mainWeapon',equipment:piece});

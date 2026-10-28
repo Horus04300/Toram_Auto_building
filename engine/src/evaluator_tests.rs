@@ -841,3 +841,52 @@ fn weapon_elements_follow_native_weakness_and_arrow_override() {
         evaluate_summary(&explicit, &json!({})).unwrap(),
     );
 }
+#[test]
+fn full_summary_and_supply_match_independent_js_golden() {
+    fn equivalent(actual: &serde_json::Value, expected: &serde_json::Value) {
+        match (actual, expected) {
+            (serde_json::Value::Number(a), serde_json::Value::Number(b)) => {
+                assert_eq!(a.as_f64(), b.as_f64())
+            }
+            (serde_json::Value::Array(a), serde_json::Value::Array(b)) => {
+                assert_eq!(a.len(), b.len());
+                for (a, b) in a.iter().zip(b) {
+                    equivalent(a, b);
+                }
+            }
+            (serde_json::Value::Object(a), serde_json::Value::Object(b)) => {
+                assert_eq!(a.keys().collect::<Vec<_>>(), b.keys().collect::<Vec<_>>());
+                for (key, a) in a {
+                    equivalent(a, &b[key]);
+                }
+            }
+            _ => assert_eq!(actual, expected),
+        }
+    }
+    let source: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tools/fixtures/crysta-synthetic-utility-conflict.json"
+    ))
+    .unwrap();
+    let cases: serde_json::Value = serde_json::from_str(include_str!(
+        "../../tools/fixtures/calculation-native-full.json"
+    ))
+    .unwrap();
+    for case in cases.as_array().unwrap() {
+        let mut base = source["baseContext"].clone();
+        for (key, value) in case["patch"].as_object().unwrap() {
+            base[key] = value.clone();
+        }
+        let mut full = super::evaluate_context(&base, false).unwrap();
+        full.as_object_mut().unwrap().remove("breakdown");
+        full.as_object_mut().unwrap().remove("ctx");
+        equivalent(&full, &case["full"]);
+        equivalent(
+            &super::evaluate_context(&base, true).unwrap(),
+            &case["summary"],
+        );
+        equivalent(
+            &super::candidate_supply_bases(&base).unwrap(),
+            &case["supply"],
+        );
+    }
+}

@@ -1,16 +1,17 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile, mkdir, mkdtemp, unlink } from 'node:fs/promises';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import { createHash } from 'node:crypto';
+import {readFile,writeFile,mkdir,mkdtemp,unlink} from 'node:fs/promises';
+import {resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {createHash} from 'node:crypto';
 import childProcess from 'node:child_process';
-import { EventEmitter } from 'node:events';
-import { syncBuiltinESMExports } from 'node:module';
-import { mock } from 'node:test';
-import { createItemCatalog, resolveItemOptions, matchesItemCondition } from '../../../web/src/application/item-catalog.mjs';
-import { convertCatalog, consumableCategoryFor, projectCondition, exportProjectItems, readProjectManifest, publishProjectItems } from '../../extraction/convert-toram-project-items.mjs';
-import { syncDevelopmentItems } from '../../extraction/sync-toram-dev-items.mjs';
-import { syncDevelopmentBosses } from '../../extraction/sync-toram-dev-bosses.mjs';
+import {EventEmitter} from 'node:events';
+import {syncBuiltinESMExports} from 'node:module';
+import {mock} from 'node:test';
+import {createItemCatalog,resolveItemOptions,matchesItemCondition} from '../../../web/src/application/item-catalog.mjs';
+import {createCatalogReader} from '../../../web/src/application/catalog-assets.mjs';
+import {convertCatalog,consumableCategoryFor,projectCondition,exportProjectItems,readProjectManifest,publishProjectItems} from '../../extraction/convert-toram-project-items.mjs';
+import {syncDevelopmentItems} from '../../extraction/sync-toram-dev-items.mjs';
+import {syncDevelopmentBosses} from '../../extraction/sync-toram-dev-bosses.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
@@ -245,4 +246,18 @@ for (const sync of [syncDevelopmentItems, syncDevelopmentBosses]) {
   }
 }
 assert.equal(await api.refresh(), '77596232');
+const deliveries=[], urls=[];
+const reader=createCatalogReader(base,url=>{urls.push(url.href);return new Promise((resolve,reject)=>deliveries.push({resolve,reject}));},response=>response.json());
+const oldRead=reader.read('manifest.json');
+assert.equal(reader.read('manifest.json'),oldRead,'Concurrent consumers share one pending request');
+reader.forget('manifest.json');
+const fresh=reader.read('manifest.json');
+await Promise.resolve();
+deliveries[0].reject(new Error('stale request failed'));
+await assert.rejects(oldRead,/stale request/);
+assert.equal(reader.read('manifest.json'),fresh,'A stale rejection must not evict a refreshed request');
+deliveries[1].resolve({json:async()=>({revision:'new'})});
+assert.deepEqual(await fresh,{revision:'new'});
+for(const path of ['../outside.json','https://elsewhere.test/a.json','/other/secret.json']) assert.throws(()=>reader.read(path),/escapes/);
+assert.equal(urls.length,2,'Escaping paths never reach fetch');
 console.log('Item catalog: PASS (numeric units, conditional OR/both/armor, unresolved effects, duplicate IDs/stats, sharded localization, shared/retry requests, hash gates, publication safety and item/boss check/failure propagation)');

@@ -1,3 +1,4 @@
+#![recursion_limit = "256"]
 // Native and WASM compile these same sources; no second solver implementation.
 #[path = "evaluator.rs"]
 pub mod crysta_native_evaluator;

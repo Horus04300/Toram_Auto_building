@@ -1,0 +1,17 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "noEmitOnError": true,
+    "module": "ESNext",
+    "rootDir": "./adapters",
+    "outDir": "../build/generated/desktop"
+  },
+  "files": [
+    "../web/src/contracts/boundary-dtos.d.ts",
+    "../web/src/contracts/update-boundary.d.ts",
+    "./adapters/saved-build-storage.ts",
+    "./adapters/update.ts"
+  ],
+  "include": []
+}

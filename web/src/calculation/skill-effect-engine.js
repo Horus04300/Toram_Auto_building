@@ -1,5 +1,35 @@
+import '../data/skills/assassin.js';
+import '../data/skills/barehand.js';
+import '../data/skills/battle.js';
+import '../data/skills/blade.js';
+import '../data/skills/crusher.js';
+import '../data/skills/dagger.js';
+import '../data/skills/dancer.js';
+import '../data/skills/dark-power.js';
+import '../data/skills/dual-sword.js';
+import '../data/skills/golem.js';
+import '../data/skills/guard.js';
+import '../data/skills/halberd.js';
+import '../data/skills/hunter.js';
+import '../data/skills/knight.js';
+import '../data/skills/magic-blade.js';
+import '../data/skills/magic.js';
+import '../data/skills/martial.js';
+import '../data/skills/minstrel.js';
+import '../data/skills/mononofu.js';
+import '../data/skills/necromancer.js';
+import '../data/skills/ninja.js';
+import '../data/skills/partisan.js';
+import '../data/skills/priest.js';
+import '../data/skills/shield.js';
+import '../data/skills/shot.js';
+import '../data/skills/sprite.js';
+import '../data/skills/support.js';
+import '../data/skills/survival.js';
+import '../data/skills/wizard.js';
+import {skillRegistry} from '../data/skill-effect-registry.js';
 /* 제한된 AST와 전투 상태 전이를 해석하는 스킬 효과 엔진. */
-(function () {
+
   'use strict';
   function read(object, path) { return String(path).split('.').reduce(function (value, key) { return value == null ? undefined : value[key]; }, object); }
   function num(value) { value = Number(value); return Number.isFinite(value) ? value : 0; }
@@ -49,7 +79,6 @@
     throw new Error('지원하지 않는 스킬 조건: ' + node.op);
   }
   function mainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
-  function investments() { var scoped = window.ToramCalculationInputScope && window.ToramCalculationInputScope.skillLevels; if (scoped) return scoped; var simulator = window.skillSimulatorState; return simulator && typeof simulator.getInvestments === 'function' ? simulator.getInvestments() : {}; }
   function investmentSummary(levels, predicate) {
     return Object.keys(levels).reduce(function (totals, treeId) {
       totals[treeId] = Object.keys(levels[treeId] || {}).reduce(function (sum, skillId) {
@@ -59,7 +88,7 @@
       return totals;
     }, {});
   }
-  function skillLevel(skill) { var levels = investments(); return num(levels[skill.treeId] && levels[skill.treeId][skill.skillId]); }
+  function skillLevel(skill, levels) { levels = levels || {}; return num(levels[skill.treeId] && levels[skill.treeId][skill.skillId]); }
   function normalizedActiveBuffs(runtime) {
     var selections = runtime && runtime.activeBuffs || {};
     return Object.keys(selections).reduce(function (result, skillId) {
@@ -68,23 +97,12 @@
       return result;
     }, {});
   }
-  function definitions(options) {
-    var policies = window.ToramCalculationPolicies;
-    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions(options);
-    var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
-    var registry = window.ToramSkillEffectRegistry;
-    var seen = Object.create(null);
-    return root.concat(registry ? registry.all() : []).filter(function (skill) {
-      if (!skill || !skill.id || seen[skill.id]) return false;
-      seen[skill.id] = true;
-      return true;
-    });
-  }
+  var definitions = skillRegistry.definitions;
   function context(base, skill, combat, inputs, runtime) {
     base = base || {}; runtime = runtime || {};
-    var levels = investments();
+    var levels = base.skillLevels || {};
     return {
-      skill: { id: skill.id, level: skillLevel(skill) },
+      skill: { id: skill.id, level: skillLevel(skill, levels) },
       investments: levels,
       investmentTotals: investmentSummary(levels, function () { return true; }),
       learnedSkillCounts: investmentSummary(levels, function (level) { return level > 0; }),
@@ -100,18 +118,18 @@
       attack: { inputs:inputs || {}, inputBounds:{}, flags:{} }
     };
   }
-  function find(id) { return definitions().find(function (skill) { return skill.id === id; }); }
-  function learnedAilmentSources(key) {
+  function find(id) { return skillRegistry.get(id); }
+  function learnedAilmentSources(key, levels) {
     key = String(key || '').toLowerCase();
     var flagKey = key === 'weaken' ? 'weaknessChance' : key + 'Chance';
     return definitions().filter(function (skill) {
-      if (skillLevel(skill) <= 0) return false;
+      if (skillLevel(skill, levels) <= 0) return false;
       if ((skill.effects || []).some(function (effect) {
         return effect && effect.type === 'ailmentChance' && String(effect.key || '').toLowerCase() === key;
       })) return true;
       if (key === 'poison' && (skill.effects || []).some(function (effect) { return effect && effect.type === 'venomInjectChance'; })) return true;
       return (skill.attacks || []).some(function (hit) { return hit && hit.flags && hit.flags[flagKey] !== undefined; });
-    }).map(function (skill) { return { id:skill.id, nameKo:skill.nameKo, level:skillLevel(skill) }; });
+    }).map(function (skill) { return { id:skill.id, nameKo:skill.nameKo, level:skillLevel(skill, levels) }; });
   }
   function resolveEffect(effect, state) {
     var result = { type:effect.type, phase:effect.phase || 'combat', key:effect.key, target:effect.target, scope:effect.scope || 'self' };
@@ -139,7 +157,7 @@
   }
   function triggeredPassiveEffects(sourceSkill, base, combat, inputs, runtime) {
     return definitions().filter(function (candidate) {
-      return candidate.kind === 'passive' && skillLevel(candidate) > 0 && Array.isArray(candidate.castTriggers);
+      return candidate.kind === 'passive' && skillLevel(candidate, base && base.skillLevels) > 0 && Array.isArray(candidate.castTriggers);
     }).reduce(function (result, candidate) {
       var state = context(base, candidate, combat, inputs, runtime);
       if (!test(candidate.requirements && candidate.requirements.when, state)) return result;
@@ -176,7 +194,7 @@
     return matchesDamageTarget(target, skill);
   }
   function passiveDamageModifiers(skill, base, combat, inputs, runtime, flags, damageType) {
-    return definitions().filter(function (candidate) { return candidate.kind === 'passive' && skillLevel(candidate) > 0; }).reduce(function (result, candidate) {
+    return definitions().filter(function (candidate) { return candidate.kind === 'passive' && skillLevel(candidate, base && base.skillLevels) > 0; }).reduce(function (result, candidate) {
       var candidateState = context(base, candidate, combat, inputs, runtime);
       candidateState.attack.flags = flags || {};
       if (!test(candidate.requirements && candidate.requirements.when, candidateState)) return result;
@@ -187,7 +205,7 @@
         } else if (effect.type === 'procDamageMultiplier' && matchesProcDamageTarget(effect.target, damageType, skill)) {
           var chancePercent = Math.min(100, Math.max(0, num(expr(effect.chance, candidateState))));
           var procMultiplier = Math.round((num(expr(effect.value, candidateState)) + Number.EPSILON) * 1e12) / 1e12;
-          result.procs.push({ source:candidate.nameKo, level:skillLevel(candidate), chancePercent:chancePercent, multiplier:procMultiplier, target:effect.target || 'attack' });
+          result.procs.push({ source:candidate.nameKo, level:skillLevel(candidate, base && base.skillLevels), chancePercent:chancePercent, multiplier:procMultiplier, target:effect.target || 'attack' });
         }
       });
       return result;
@@ -258,10 +276,10 @@
 
   function activeStatChanges(base, combat, inputs, runtime) {
     var cappedTotals = {};
-    return definitions({ preferStackControl:true }).filter(function (candidate) { return candidate.kind === 'buff' || candidate.activeBuff === true; }).reduce(function (changes, candidate) {
+    return definitions().filter(function (candidate) { return candidate.kind === 'buff' || candidate.activeBuff === true; }).reduce(function (changes, candidate) {
       var setting = activeBuffSetting(runtime, candidate.id);
       var appliesWhileInactive = Boolean(candidate.stackControl && candidate.stackControl.applyWhenDisabled);
-      if ((!setting.active && !appliesWhileInactive) || skillLevel(candidate) <= 0) return changes;
+      if ((!setting.active && !appliesWhileInactive) || skillLevel(candidate, base && base.skillLevels) <= 0) return changes;
       var candidateRuntime = Object.assign({}, runtime || {}, { buff:{ active:setting.active, stacks:setting.stacks } });
       var candidateState = context(base, candidate, combat, inputs, candidateRuntime);
       if (!test(candidate.requirements && candidate.requirements.when, candidateState)) return changes;
@@ -283,7 +301,7 @@
   function normalAttackAmprModifiers(base, combat, inputs, runtime) {
     var passive = [], activeCandidates = [];
     definitions().forEach(function (candidate) {
-      if (skillLevel(candidate) <= 0) return;
+      if (skillLevel(candidate, base && base.skillLevels) <= 0) return;
       var amprEffects = (candidate.effects || []).filter(function (effect) {
         var key = String(effect && effect.key || '').toUpperCase();
         return effect && effect.type === 'normalAttackModifier' && !effect.excludeFromAmprOutcome && (key === 'AMPR' || key === 'AMPRP' || key === 'AMPR_P' || key === 'AMPR_MULTIPLIER');
@@ -341,7 +359,7 @@
     };
   }
   function passiveStatChanges(base) {
-    return definitions().filter(function (skill) { return skill.kind === 'passive' && skillLevel(skill) > 0; }).reduce(function (changes, skill) {
+    return definitions().filter(function (skill) { return skill.kind === 'passive' && skillLevel(skill, base && base.skillLevels) > 0; }).reduce(function (changes, skill) {
       var state = context(base, skill);
       if (!test(skill.requirements && skill.requirements.when, state)) return changes;
       (skill.effects || []).forEach(function (effect) {
@@ -366,5 +384,4 @@
       }) : []
     };
   }
-  window.ToramSkillEffects = Object.freeze({ expression:expr, condition:test, find:find, learnedAilmentSources:learnedAilmentSources, passiveStatChanges:passiveStatChanges, activeStatChanges:activeStatChanges, activeBuildConversions:activeBuildConversions, normalAttackAmprModifiers:normalAttackAmprModifiers, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });
-}());
+  export const skillEffects = Object.freeze({ expression:expr, condition:test, find:find, learnedAilmentSources:learnedAilmentSources, passiveStatChanges:passiveStatChanges, activeStatChanges:activeStatChanges, activeBuildConversions:activeBuildConversions, normalAttackAmprModifiers:normalAttackAmprModifiers, attackProfile:attackProfile, specialAttackProfile:specialAttackProfile, profile:profile });

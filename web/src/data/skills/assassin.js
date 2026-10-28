@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 어새신 쉐도우 워크의 원문 대조 스택·avoid 공격 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('어새신 스택 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v = function (n) { return { op:'value', value:n }; };
   var r = function (path) { return { op:'ref', path:path }; };
@@ -15,7 +17,7 @@
   var daggerOrNinja = { op:'any', args:[{ op:'eq', left:r('equipment.subWeapon'), right:v('단검') }, { op:'eq', left:r('equipment.subWeapon'), right:v('인술 두루마리') }] };
   var skill = catalog.skills.find(function (item) { return item.id === 'Assassin:8'; });
   if (!skill) throw new Error('쉐도우 워크를 카탈로그에서 찾지 못했습니다.');
-  registry.register('Assassin-stack-buff', [{
+  registry.register([{
     id:skill.id, treeId:'Assassin', skillId:8, nameKo:skill.nameKo, kind:'buff', source:'assassin', dataStatus:'partial',
     sourceRef:{ file:'docs/sources/skills/Assassin.txt', anchor:'쉐도우 워크 버프 / 단검, 인술 두루마리 전용' }, requirements:{ when:daggerOrNinja },
     stackRole:'combat-resource', cost:{ mp:{ timing:'cast', value:v(100) } }, activeBuff:true,
@@ -30,9 +32,9 @@
 }());
 
 /* 어새신 S1~S5 계산기 범위 정의. 위치·피격·독 상태의 자동 전이는 메타데이터로 보존한다. */
-(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Assassin S5 data order');
+(function(){'use strict';var R=skillRegistry,C=skillCatalog;if(!R||!C)throw Error('Assassin S5 data order');
 var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,y,n)=>({op:'if',when:w,then:y,else:n}),I=x=>r('attack.inputs.'+x),T=x=>r('combatStats.'+x),B=x=>r('baseStats.'+x);
-var eq=(x,y)=>({op:'eq',left:x,right:y}),lte=(x,y)=>({op:'lte',left:x,right:y}),truthy=x=>({op:'truthy',value:x}),all=(...x)=>({op:'all',args:x}),any=(...x)=>({op:'any',args:x});var dagger=eq(r('equipment.subWeapon'),v('단검')),ninja=eq(r('equipment.subWeapon'),v('인술 두루마리')),bare=eq(r('equipment.mainWeapon'),v('맨손')),venomWeapon=any(dagger,ninja,bare),daggerNinja=any(dagger,ninja),one=eq(r('equipment.mainWeapon'),v('한손검')),halberd=eq(r('equipment.mainWeapon'),v('선풍창'));
+var eq=(x,y)=>({op:'eq',left:x,right:y}),lte=(x,y)=>({op:'lte',left:x,right:y}),truthy=x=>({op:'truthy',value:x}),any=(...x)=>({op:'any',args:x});var dagger=eq(r('equipment.subWeapon'),v('단검')),ninja=eq(r('equipment.subWeapon'),v('인술 두루마리')),bare=eq(r('equipment.mainWeapon'),v('맨손')),venomWeapon=any(dagger,ninja,bare),daggerNinja=any(dagger,ninja),one=eq(r('equipment.mainWeapon'),v('한손검')),halberd=eq(r('equipment.mainWeapon'),v('선풍창'));
 function D(id,k,anchor,when){var s=C.skills.find(x=>x.id==='Assassin:'+id);if(!s)throw Error('Assassin catalog missing '+id);return{id:s.id,treeId:'Assassin',skillId:id,nameKo:s.nameKo,kind:k,source:'assassin',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Assassin.txt',anchor},requirements:{when},notes:'S1~S5 calculator scope; automatic position, hit, poison, and time events remain metadata.'};}function hit(id,mult,c,flags){return{id:id,damageType:'physical',count:v(1),multiplier:mult,constant:c,flags:Object.assign({longRange:false,unsheathe:false},flags||{})};}
 var x=[D(0,'attack','어쌔신 스탭 물리 액티브',null),D(1,'utility','백스텝 액티브',null),D(2,'attack','퓨네빈테 물리 액티브',daggerNinja),D(3,'passive','시카리우스 패시브',null),D(4,'passive','암살의 극의 패시브',null),D(5,'buff','이베이션 버프',null),D(6,'buff','시에라무 버프',null),D(7,'passive','포기 패시브',null),null,D(9,'buff','어솔트 체이스 버프',null),D(10,'buff','베놈 인젝트 버프',venomWeapon),D(11,'passive','갉아먹는 맹독 패시브',venomWeapon),D(12,'utility','베놈 스내치 액티브',venomWeapon),D(13,'attack','데스 리셉션 물리 액티브',venomWeapon),D(14,'passive','독 조합사 패시브',venomWeapon)];
 var positionMultiplier=q(eq(I('position'),v(0)),a(v(1),m(v(.01),l()),q(daggerNinja,v(.5),v(0))),q(eq(I('position'),v(1)),a(v(1.05),m(v(.03),l()),q(daggerNinja,v(1),v(0))),a(v(1.1),m(v(.09),l()),q(daggerNinja,v(3),v(0)))));
@@ -52,4 +54,4 @@ var deathWeaponBonus=a(q(ninja,d(r('equipment.subWeaponAttack'),v(125)),v(0)),q(
 var deathBase=a(v(2.5),m(v(.25),l()),deathWeaponBonus);
 x[13]=Object.assign(x[13],{inputs:[{id:'venomSnatchStacks',label:'베놈 스내치 스택',type:'number',min:v(0),max:v(2),default:v(0)}],cost:{mp:{timing:'cast',value:v(300)}},attacks:[hit('main',deathBase,m(v(30),l()),{castRange:7,physicalPierceBonus:m(v(25),I('venomSnatchStacks'))}),hit('area',m(deathBase,v(.5)),v(0),{areaRadius:8,nonLethal:true,physicalPierceBonus:m(v(25),I('venomSnatchStacks'))})],effects:[{phase:'hit',type:'ailmentChance',key:'poison',chance:v(100)},{phase:'afterHit',type:'deathReceptionPoison',ticks:v(10),intervalSeconds:v(1),multiplierBySnatchStack:[1,2,3],notes:'사독 도트·퓨네빈테 상호작용은 시간/대상 상태 엔진이 필요하다.'}]});
 x[14]=Object.assign(x[14],{effects:[{phase:'combat',type:'deathReceptionMultiplierBonus',singleTarget:q(any(one,bare),m(v(.75),l()),m(v(.5),l())),areaTarget:q(any(one,bare),m(v(.45),l()),m(v(.3),l()))},{phase:'combat',type:'venomDurationExtension',seconds:l()},{phase:'combat',type:'deathReceptionVenomChanceEstimate',notes:'원문이 추정치로 명시한 확률: 베놈 인젝트 기본 확률 × (10 + 3×Lv)%'}]});
-R.register('Assassin:calculation-rules',x.filter(Boolean));}());
+R.register(x.filter(Boolean));}());

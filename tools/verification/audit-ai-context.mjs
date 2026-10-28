@@ -24,7 +24,7 @@ const required = [
   'web/src/optimization/candidate-preparation.js', 'web/src/optimization/wasm-worker.js',
   'web/src/optimization/rust-bridge.js', 'engine/Cargo.toml',
   'web/src/data/skill-tree-data.js', 'data/sources/coryn-skill-simulator/skill_tree_data.js',
-  'engine/src/solver.rs', 'web/src/domain/calculation-contracts.ts',
+  'engine/src/solver.rs', 'web/src/contracts/boundary-dtos.d.ts',
   'tools/run-regression-suite.mjs', 'tools/fixtures/crysta-native-runtime-26min-revenir.json',
 ];
 for (const path of required) assert(visible.has(path), `Required context hidden: ${path}`);

@@ -126,6 +126,6 @@ node tools/statting/score_probe.mjs data/sources/toram-statting/experiments/2026
 - `tools/statting/review_results.py`: 입력1,753건/원본·실행 코드 해시/통계/저장 추적63개 재생 PASS.
 - 실행 코드 자동 보관 smoke: 소형4입력·저장 코드 해시·0인 통계 키 생략 처리 PASS. 본 조사량에는 합산하지 않았다.
 - 기존 전투 probe144회 PASS. DTE 미연결 Gate를 별도 표시.
-- `npm run verify:architecture`, `npm run ai:audit`, `git -c core.safecrlf=false diff --check`: PASS.
+- `npm test`, `node tools/verification/audit-ai-context.mjs`, `git -c core.safecrlf=false diff --check`: PASS.
 
 제작 초기값 절삭·특수 operand·서버 판정/보호/반전·소재량·수치 추천의 전역 최적은 미검증이다. 앱 제품 코드·저장 계약은 바꾸지 않았다.

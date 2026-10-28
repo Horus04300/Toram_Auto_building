@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 모노노푸: 원문 대조가 끝난 기본 패시브 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('모노노푸 스킬 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v = function (n) { return { op:'value', value:n }; };
   var r = function (path) { return { op:'ref', path:path }; };
@@ -21,7 +23,7 @@
   var bushido = get('Mononofu:11');
   var twoHanded = get('Mononofu:14');
   var atkPercentTier = tier([between(1, 2, 1), between(3, 7, 2), between(8, 10, 3)]);
-  registry.register('Mononofu-passives', [
+  registry.register([
     {
       id:bushido.id, treeId:'Mononofu', skillId:11, nameKo:bushido.nameKo, kind:'passive', source:'mononofu', dataStatus:'partial',
       sourceRef:{ file:'docs/sources/skills/Mononofu.txt', anchor:'무사도 패시브 / 모든 무기 사용 가능' },
@@ -51,11 +53,31 @@
 }());
 
 /* 모노노후: S1~S5 계산기 범위 정의. */
-(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw new Error('모노노후 S5 데이터 로드 순서 오류');
+(function(){'use strict';var R=skillRegistry,C=skillCatalog;if(!R||!C)throw new Error('모노노후 S5 데이터 로드 순서 오류');
 var v=x=>({op:'value',value:x}),r=p=>({op:'ref',path:p}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,y,n)=>({op:'if',when:w,then:y,else:n});
 var kat={op:'eq',left:r('equipment.mainWeapon'),right:v('발도검')},nosub={op:'eq',left:r('equipment.subWeapon'),right:v('없음')},active=()=>({op:'truthy',value:r('buff.active')}),total=k=>r('combatStats.'+k),base=k=>r('baseStats.'+k),inp=k=>r('attack.inputs.'+k);var between=(x,y,z)=>({when:{op:'all',args:[{op:'gte',left:l(),right:v(x)},{op:'lte',left:l(),right:v(y)}]},value:z}),tier=x=>({op:'tier',cases:x});
 function D(id,kind,anchor,when,notes){var s=C.skills.find(x=>x.id==='Mononofu:'+id);if(!s)throw new Error('Mononofu:'+id+' 없음');return{id:s.id,treeId:'Mononofu',skillId:id,nameKo:s.nameKo,kind,source:'mononofu',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Mononofu.txt',anchor},requirements:{when},notes};}
-var x=[D(0,'attack','일섬 물리 액티브',kat,''),D(1,'attack','파동인 물리 액티브',kat,''),D(2,'attack','삼단뚫기 물리 액티브',kat,''),D(3,'attack','팔상발파 물리 액티브',kat,''),D(4,'attack','4차 천류난성 물리 액티브',kat,''),D(5,'attack','5차 하설월화 물리 액티브',kat,''),D(6,'attack','화룡점정 물리 액티브',kat,''),D(7,'attack','무영참 물리 액티브',kat,''),D(8,'attack','칼자루치기 물리 액티브',kat,''),D(9,'attack','재앙베기 물리 액티브',kat,''),D(10,'attack','참정절철 물리 액티브',kat,''),D(11,'passive','무사도 패시브 / 모든 무기 사용 가능',null,''),D(12,'passive','축지법 패시브 / 모든 무기 사용 가능',null,''),D(13,'passive','불시 선의 선 패시브 / 메인 발도검 전용',kat,''),D(14,'passive','양손쥐기 패시브 / 모든 무기 사용 가능',nosub,''),D(15,'buff','명경지수 버프 / 모든 무기 사용 가능',null,''),D(16,'buff','괴력난신 버프 / 모든 무기 사용 가능',null,''),D(17,'passive','불요불굴 패시브 / 메인 발도검 전용',kat,''),D(18,'passive','서풍패시브 / 발도검 전용',kat,''),D(19,'buff','일진강풍물리 액티브',kat,''),D(20,'attack','질풍물리 액티브',kat,''),D(21,'passive','일진강풍 • 개정패시브 / 발도검 전용',kat,''),D(22,'attack','칼 튕기기 물리 액티브 / 메인 발도검 전용',kat,'')];
+var x=[D(0,'attack','일섬 물리 액티브',kat,''),
+D(1,'attack','파동인 물리 액티브',kat,''),
+D(2,'attack','삼단뚫기 물리 액티브',kat,''),
+D(3,'attack','팔상발파 물리 액티브',kat,''),
+D(4,'attack','4차 천류난성 물리 액티브',kat,''),
+D(5,'attack','5차 하설월화 물리 액티브',kat,''),
+D(6,'attack','화룡점정 물리 액티브',kat,''),
+D(7,'attack','무영참 물리 액티브',kat,''),
+D(8,'attack','칼자루치기 물리 액티브',kat,''),
+D(9,'attack','재앙베기 물리 액티브',kat,''),
+D(10,'attack','참정절철 물리 액티브',kat,''),
+D(12,'passive','축지법 패시브 / 모든 무기 사용 가능',null,''),
+D(13,'passive','불시 선의 선 패시브 / 메인 발도검 전용',kat,''),
+D(15,'buff','명경지수 버프 / 모든 무기 사용 가능',null,''),
+D(16,'buff','괴력난신 버프 / 모든 무기 사용 가능',null,''),
+D(17,'passive','불요불굴 패시브 / 메인 발도검 전용',kat,''),
+D(18,'passive','서풍패시브 / 발도검 전용',kat,''),
+D(19,'buff','일진강풍물리 액티브',kat,''),
+D(20,'attack','질풍물리 액티브',kat,''),
+D(21,'passive','일진강풍 • 개정패시브 / 발도검 전용',kat,''),
+D(22,'attack','칼 튕기기 물리 액티브 / 메인 발도검 전용',kat,'')];
 x[0]=Object.assign(x[0],{cost:{mp:{timing:'cast',value:v(100)}},attacks:[{id:'first',damageType:'physical',count:v(1),multiplier:v(.5),constant:v(0),flags:{longRange:true,unsheathe:true}},{id:'second',damageType:'physical',count:v(1),multiplier:a(v(1),m(v(.05),l())),constant:a(v(50),m(v(5),l())),flags:{longRange:true,unsheathe:true,criticalChanceMultiplier:3}}]});
 x[1]=Object.assign(x[1],{inputs:[{id:'distanceOverRange',label:'사거리 초과 거리(m)',type:'number',min:v(0),max:v(30),default:v(0)},{id:'sennosen',label:'불시 선의 선 강화',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:v(100)}},attacks:[{id:'hit1',damageType:'physical',count:v(1),multiplier:q({op:'truthy',value:inp('sennosen')},v(2.5),v(.5)),constant:a(v(30),l()),flags:{longRange:true,unsheathe:true}},{id:'hit2',damageType:'physical',count:v(1),multiplier:q({op:'truthy',value:inp('sennosen')},a(v(2.5),m(v(.25),l())),a(v(.5),m(v(.05),l()))),constant:a(v(30),l()),flags:{longRange:true,unsheathe:true}},{id:'hit3',damageType:'physical',count:v(1),multiplier:q({op:'truthy',value:inp('sennosen')},a(v(2.5),m(v(.5),l())),a(v(.5),m(v(.1),l()))),constant:a(v(30),l()),flags:{longRange:true,unsheathe:true,physicalPiercePenalty:m(inp('distanceOverRange'),a(v(11),m(v(-1),l())))}}]});
 x[2]=Object.assign(x[2],{cost:{mp:{timing:'cast',value:v(300)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1.5),m(v(.2),l()),d(total('AGI'),v(500))),constant:v(0),flags:{longRange:true,unsheathe:true,castRange:12}}],stateTransitions:[{event:'cast',operation:'grant',stateId:'mononofu.tripleThrust.nextConstant',stacks:v(1),maxStacks:v(1),durationSeconds:v(0),effects:[{type:'nextSkillModifier',key:'skillConstant',value:d(r('player.level'),a(v(11),m(v(-1),l())))}]}]});
@@ -67,14 +89,14 @@ x[7]=Object.assign(x[7],{cost:{mp:{timing:'cast',value:v(300)}},attacks:[{id:'ma
 x[8]=Object.assign(x[8],{cost:{mp:{timing:'cast',value:v(200)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1),m(v(.05),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:false}}],effects:[{phase:'hit',type:'ailmentChance',key:'paralyze',chance:a(v(50),m(v(5),l()))}]});
 x[9]=Object.assign(x[9],{inputs:[{id:'wasHit',label:'모션 중 피격',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:v(300)}},attacks:[{id:'main',when:{op:'not',value:{op:'truthy',value:inp('wasHit')}},damageType:'physical',count:v(1),multiplier:a(v(2),m(v(.3),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:false}}],effects:[{phase:'onHit',type:'resourceRefund',key:'MP',when:{op:'truthy',value:inp('wasHit')},value:a(v(100),m(v(10),l()))}]});
 x[10]=Object.assign(x[10],{cost:{mp:{timing:'cast',value:v(400)}},attacks:[{id:'slash',damageType:'physical',count:v(1),multiplier:a(v(1),m(v(.2),l())),constant:m(v(10),l()),flags:{longRange:true,unsheathe:true}},{id:'counter',damageType:'physical',count:v(1),multiplier:a(v(5),l()),constant:m(v(30),l()),flags:{longRange:true,unsheathe:true}}]});
-x[12]=Object.assign(x[12],{effects:[{phase:'combat',type:'normalAttackModifier',key:'multiplier',value:m(v(.05),l())},{phase:'combat',type:'normalAttackModifier',key:'AMPR',activation:'halfActive',trigger:'normalAttackAttemptOutsideWeaponRange',excludeFromAmprOutcome:true,value:tier([between(1,1,v(0)),between(2,2,v(1)),between(3,3,v(2)),between(4,4,v(4)),between(5,5,v(6)),between(6,6,v(9)),between(7,7,v(12)),between(8,8,v(16)),between(9,9,v(20)),between(10,10,v(25))])}]});
-x[13]=Object.assign(x[13],{stackModel:{mode:'idle-trigger',delaySeconds:a(v(12),m(v(-1),l())),notes:'공격 없이 대기·납도 이동은 시간/입력 이벤트 필요. 강화 파동인은 inputs.sennosen으로 선택.'}});
-x[15]=Object.assign(x[15],{cost:{mp:{timing:'cast',value:v(200)}},activeBuff:true,stateTransitions:[{event:'cast',operation:'grant',stateId:'mononofu.meikyo',stacks:v(1),maxStacks:v(1),durationSeconds:a(v(10),m(v(2),l()))}],effects:[{phase:'combat',type:'stat',key:'CRIT',value:a(v(20),m(v(2),l()),q(kat,v(25),v(0)))},{phase:'combat',type:'stat',key:'CDMG',value:q(kat,v(0),a(v(-15),l()))},{phase:'combat',type:'stat',key:'DEF',value:a(v(-1100),m(v(100),l()))},{phase:'combat',type:'stat',key:'MDEF',value:a(v(-1100),m(v(100),l()))}]});
-x[16]=Object.assign(x[16],{cost:{mp:{timing:'cast',value:v(200)}},activeBuff:true,stateTransitions:[{event:'cast',operation:'grant',stateId:'mononofu.kairiki',stacks:v(1),maxStacks:v(1),durationSeconds:m(a(v(5),m(v(.5),l())),q(kat,v(3),v(1)))}],effects:[{phase:'combat',type:'stat',key:'ATK',value:m(v(10),l())},{phase:'combat',type:'normalAttackModifier',key:'AMPR',value:tier([between(1,4,a(v(5),l())),between(5,9,a(v(10),l())),between(10,10,a(v(15),l()))])},{phase:'combat',type:'normalAttackModifier',key:'multiplier',value:a(m(v(.05),l()),q(kat,v(.5),v(0)))}]});
-x[17]=Object.assign(x[17],{activeBuff:true,stackControl:{stateId:'mononofu.dauntless',minStacks:v(0),maxStacks:v(100),initialStacks:v(0),label:'불요불굴 스택'},effects:[{phase:'combat',type:'stat',key:'HIT',value:q({op:'gte',left:r('buff.stacks'),right:v(10)},m(v(10),d(r('buff.stacks'),v(10))),v(0))},{phase:'combat',type:'stat',key:'WATKP',value:q({op:'gte',left:r('buff.stacks'),right:v(20)},m(v(5),d(r('buff.stacks'),v(10))),v(0))},{phase:'combat',type:'stat',key:'MOTION_SPEED_P',value:a(q({op:'gte',left:r('buff.stacks'),right:v(40)},v(12.5),v(0)),q({op:'gte',left:r('buff.stacks'),right:v(80)},v(12.5),v(0)))}]});
-x[18]=Object.assign(x[18],{activeBuff:true,stackControl:{stateId:'mononofu.auspiciousWind',minStacks:v(0),maxStacks:v(5),initialStacks:v(0),label:'서풍 스택'},effects:[{phase:'combat',type:'stat',key:'HIT',value:m(v(10),r('buff.stacks'))},{phase:'combat',type:'stat',key:'CDMG',value:m(l(),r('buff.stacks'))},{phase:'combat',type:'damageMultiplier',target:'attack',value:a(v(1),d(m(l(),r('buff.stacks')),v(100)))}]});
-x[19]=Object.assign(x[19],{cost:{mp:{timing:'cast',value:v(300)}},activeBuff:true,stackControl:{stateId:'mononofu.gust',minStacks:v(1),maxStacks:v(3),initialStacks:v(1),label:'일진 스택'},effects:[{phase:'build',type:'statConversion',conversion:'unsheatheToAtk',when:active(),value:m(v(.1),l()),notes:'활성 시 발도위력%를 ATK%와 기본 무기 공격력으로, 발도위력+를 ATK로 변환한다.'}],attacks:[{id:'mupung',when:active(),damageType:'physical',count:v(1),multiplier:a(v(5),m(v(.5),l())),constant:v(300),flags:{longRange:true,unsheathe:false}}],specialAttacks:[{id:'gustNormal',hits:[{id:'normal',damageType:'physical',count:v(2),multiplier:a(v(1),m(v(.05),l())),constant:v(0),flags:{longRange:false,unsheathe:false,inertia:'normal'}}],notes:'스택 1/2/3 통상 공격 변화는 수동 스택 선택으로 판정한다.'}]});
-x[20]=Object.assign(x[20],{inputs:[{id:'invulnerabilitySeconds',label:'무적 시간(초)',type:'number',min:v(0),max:v(5),default:v(0)}],cost:{mp:{timing:'cast',value:v(400)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(m(v(.6),l()),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(4)},v(9),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(3)},v(6),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(2)},v(3),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(1)},v(3),v(0)))))),constant:v(100),flags:{longRange:true,unsheathe:false}}]});
-x[21]=Object.assign(x[21],{effects:[{phase:'combat',type:'gustSkillModifier',notes:'일진·무풍·사시사철 각 방향 기술의 계수 증가를 원문대로 기록. 방향/연속 순서는 전투 상태 입력 필요.'}]});
-x[22]=Object.assign(x[22],{cost:{mp:{timing:'cast',value:v(100)}},specialAttacks:[{id:'counter',hits:[{id:'counter',damageType:'physical',count:v(1),multiplier:a(v(2),m(v(.2),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:true}}],notes:'피격 성공 시 반격. 다음 MP 반감 및 화룡 스택 증가는 피격 이벤트 필요.'}]});
-R.register('Mononofu:calculation-rules',x);}());
+x[11]=Object.assign(x[11],{effects:[{phase:'combat',type:'normalAttackModifier',key:'multiplier',value:m(v(.05),l())},{phase:'combat',type:'normalAttackModifier',key:'AMPR',activation:'halfActive',trigger:'normalAttackAttemptOutsideWeaponRange',excludeFromAmprOutcome:true,value:tier([between(1,1,v(0)),between(2,2,v(1)),between(3,3,v(2)),between(4,4,v(4)),between(5,5,v(6)),between(6,6,v(9)),between(7,7,v(12)),between(8,8,v(16)),between(9,9,v(20)),between(10,10,v(25))])}]});
+x[12]=Object.assign(x[12],{stackModel:{mode:'idle-trigger',delaySeconds:a(v(12),m(v(-1),l())),notes:'공격 없이 대기·납도 이동은 시간/입력 이벤트 필요. 강화 파동인은 inputs.sennosen으로 선택.'}});
+x[13]=Object.assign(x[13],{cost:{mp:{timing:'cast',value:v(200)}},activeBuff:true,stateTransitions:[{event:'cast',operation:'grant',stateId:'mononofu.meikyo',stacks:v(1),maxStacks:v(1),durationSeconds:a(v(10),m(v(2),l()))}],effects:[{phase:'combat',type:'stat',key:'CRIT',value:a(v(20),m(v(2),l()),q(kat,v(25),v(0)))},{phase:'combat',type:'stat',key:'CDMG',value:q(kat,v(0),a(v(-15),l()))},{phase:'combat',type:'stat',key:'DEF',value:a(v(-1100),m(v(100),l()))},{phase:'combat',type:'stat',key:'MDEF',value:a(v(-1100),m(v(100),l()))}]});
+x[14]=Object.assign(x[14],{cost:{mp:{timing:'cast',value:v(200)}},activeBuff:true,stateTransitions:[{event:'cast',operation:'grant',stateId:'mononofu.kairiki',stacks:v(1),maxStacks:v(1),durationSeconds:m(a(v(5),m(v(.5),l())),q(kat,v(3),v(1)))}],effects:[{phase:'combat',type:'stat',key:'ATK',value:m(v(10),l())},{phase:'combat',type:'normalAttackModifier',key:'AMPR',value:tier([between(1,4,a(v(5),l())),between(5,9,a(v(10),l())),between(10,10,a(v(15),l()))])},{phase:'combat',type:'normalAttackModifier',key:'multiplier',value:a(m(v(.05),l()),q(kat,v(.5),v(0)))}]});
+x[15]=Object.assign(x[15],{activeBuff:true,stackControl:{stateId:'mononofu.dauntless',minStacks:v(0),maxStacks:v(100),initialStacks:v(0),label:'불요불굴 스택'},effects:[{phase:'combat',type:'stat',key:'HIT',value:q({op:'gte',left:r('buff.stacks'),right:v(10)},m(v(10),d(r('buff.stacks'),v(10))),v(0))},{phase:'combat',type:'stat',key:'WATKP',value:q({op:'gte',left:r('buff.stacks'),right:v(20)},m(v(5),d(r('buff.stacks'),v(10))),v(0))},{phase:'combat',type:'stat',key:'MOTION_SPEED_P',value:a(q({op:'gte',left:r('buff.stacks'),right:v(40)},v(12.5),v(0)),q({op:'gte',left:r('buff.stacks'),right:v(80)},v(12.5),v(0)))}]});
+x[16]=Object.assign(x[16],{activeBuff:true,stackControl:{stateId:'mononofu.auspiciousWind',minStacks:v(0),maxStacks:v(5),initialStacks:v(0),label:'서풍 스택'},effects:[{phase:'combat',type:'stat',key:'HIT',value:m(v(10),r('buff.stacks'))},{phase:'combat',type:'stat',key:'CDMG',value:m(l(),r('buff.stacks'))},{phase:'combat',type:'damageMultiplier',target:'attack',value:a(v(1),d(m(l(),r('buff.stacks')),v(100)))}]});
+x[17]=Object.assign(x[17],{cost:{mp:{timing:'cast',value:v(300)}},activeBuff:true,stackControl:{stateId:'mononofu.gust',minStacks:v(1),maxStacks:v(3),initialStacks:v(1),label:'일진 스택'},effects:[{phase:'build',type:'statConversion',conversion:'unsheatheToAtk',when:active(),value:m(v(.1),l()),notes:'활성 시 발도위력%를 ATK%와 기본 무기 공격력으로, 발도위력+를 ATK로 변환한다.'}],attacks:[{id:'mupung',when:active(),damageType:'physical',count:v(1),multiplier:a(v(5),m(v(.5),l())),constant:v(300),flags:{longRange:true,unsheathe:false}}],specialAttacks:[{id:'gustNormal',hits:[{id:'normal',damageType:'physical',count:v(2),multiplier:a(v(1),m(v(.05),l())),constant:v(0),flags:{longRange:false,unsheathe:false,inertia:'normal'}}],notes:'스택 1/2/3 통상 공격 변화는 수동 스택 선택으로 판정한다.'}]});
+x[18]=Object.assign(x[18],{inputs:[{id:'invulnerabilitySeconds',label:'무적 시간(초)',type:'number',min:v(0),max:v(5),default:v(0)}],cost:{mp:{timing:'cast',value:v(400)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(m(v(.6),l()),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(4)},v(9),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(3)},v(6),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(2)},v(3),q({op:'gte',left:inp('invulnerabilitySeconds'),right:v(1)},v(3),v(0)))))),constant:v(100),flags:{longRange:true,unsheathe:false}}]});
+x[19]=Object.assign(x[19],{effects:[{phase:'combat',type:'gustSkillModifier',notes:'일진·무풍·사시사철 각 방향 기술의 계수 증가를 원문대로 기록. 방향/연속 순서는 전투 상태 입력 필요.'}]});
+x[20]=Object.assign(x[20],{cost:{mp:{timing:'cast',value:v(100)}},specialAttacks:[{id:'counter',hits:[{id:'counter',damageType:'physical',count:v(1),multiplier:a(v(2),m(v(.2),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:true}}],notes:'피격 성공 시 반격. 다음 MP 반감 및 화룡 스택 증가는 피격 이벤트 필요.'}]});
+R.register(x);}());

@@ -1,5 +1,6 @@
 // Real installed Tauri upgrade gate. Requires an already installed, isolated old release.
 // No updater IPC, downloaded bytes, signature, install, or restart is mocked.
+// Frozen 0.6.4→0.6.5 fixture: those released binaries expose the historical globals below.
 import assert from 'node:assert/strict';
 import { spawn } from 'node:child_process';
 import { mkdir, readFile, writeFile, open } from 'node:fs/promises';
@@ -77,7 +78,7 @@ try {
       await page.locator('#buildSettingSave').click();
       await page.waitForFunction(() => document.querySelector('#buildFileStorageStatus').textContent.includes('UpgradePreservation.json 저장 완료'));
       await page.locator('#buildFileDialogClose').click();
-      await page.evaluate(() => window.ToramApplication.Settings.flush());
+      await page.evaluate(() => window.ToramSettingsRepository.flushApplicationState());
       const state = await snapshot(), bytes = await readFile(namedFile);
       assert.equal(state.lastSession.build.character.level, 222);
       assert.equal(state.lastSession.scenario.target.bossDef, 123);
@@ -102,7 +103,7 @@ try {
       assert.equal(await version(), '0.6.4');
       report.checks.push({ name: 'declining preserves running 0.6.4' });
       await page.locator('#charLevel').fill('321');
-      await page.evaluate(() => window.ToramApplication.Settings.flush());
+      await page.evaluate(() => window.ToramSettingsRepository.flushApplicationState());
       const expectedState = await snapshot();
       await writeFile(resolve(root, 'expected-after.json'), JSON.stringify(expectedState, null, 2));
       await page.screenshot({ path: resolve(root, '0.6.4-update-available.png') });

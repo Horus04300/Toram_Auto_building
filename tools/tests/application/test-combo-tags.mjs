@@ -1,33 +1,12 @@
+import {skillRegistry} from '../../../web/src/data/skill-effect-registry.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { existsSync, writeFileSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const context = { window:{}, console };
 context.window.window = context.window;
-context.window.ToramSkillEffects = {
-  profile(id) {
-    const cost = Number(id.split(':')[1]);
-    return {
-      skill:{ id, nameKo:id, treeId:'Test', kind:'attack', combo:{ canStart:true, canReceiveTag:true } },
-      available:true,
-      cost:{ mp:cost },
-      hits:[{ id:'hit', multiplier:1, constant:0, flags:{} }],
-      effects:[],
-      stateTransitions:[]
-    };
-  }
-};
-vm.createContext(context);
-for (const path of ['web/src/data/combo-rule-data.js', 'web/src/calculation/combo-sequence-engine.js']) {
-  vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-}
-
-const Q = context.window.ToramComboSequence;
-const base = {};
+skillRegistry.register([100,200,300,500].map(cost=>({id:'Test:'+cost,treeId:'Test',skillId:cost,nameKo:'Test:'+cost,kind:'attack',combo:{canStart:true,canReceiveTag:true},cost:{mp:{timing:'cast',value:cost}},attacks:[{id:'hit',damageType:'physical',count:1,multiplier:1,constant:0,flags:{}}]})));
+const Q = comboSequence;
+const base = {skillLevels:{Test:{100:1,200:1,300:1,500:1}}};
 const combat = { MAXHP:10000 };
 const close = (actual, expected, message) => assert.ok(Math.abs(actual - expected) < 1e-9, message + ': expected ' + expected + ', got ' + actual);
 const entries = (costs, tags) => costs.map((cost, index) => ({ skillId:'Test:' + cost, tag:tags[index] || 'none' }));

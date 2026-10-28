@@ -1,75 +1,52 @@
-import { frontendSourcePath } from '../support/frontend-paths.mjs';
 import assert from 'node:assert/strict';
-import { access, readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { pathToFileURL } from 'node:url';
-import { CLASSIC_SCRIPT_PATHS, WEB_CLASSIC_SCRIPT_PATHS } from '../../web/src/classic-script-manifest.mjs';
-
-const root = resolve(import.meta.dirname, '../..');
-const verifyDist = process.argv.includes('--dist');
-const verifyWeb = process.argv.includes('--web');
-const frontendRoot = verifyWeb ? resolve(root, 'build/web') : verifyDist ? resolve(root, 'build/desktop') : root;
-const paths = verifyDist ? CLASSIC_SCRIPT_PATHS : WEB_CLASSIC_SCRIPT_PATHS;
-const file = path => resolve(frontendRoot, verifyDist || verifyWeb ? path : frontendSourcePath(path));
-const indexPath = resolve(frontendRoot, verifyDist || verifyWeb ? 'index.html' : 'web/index.html');
-const html = await readFile(indexPath, 'utf8');
-assert.ok(html.includes(`data-runtime="${verifyDist ? 'desktop' : 'web'}"`));
-if (verifyDist || verifyWeb) assert.ok(!html.includes('{{APP_VERSION}}'));
-
-assert.match(html, /<script type="module" src="assets\/js\/app-entry\.mjs"><\/script>/u, 'HTML은 단일 ES Module 진입점을 로드해야 합니다.');
-assert.match(html,/id="homeWorkspace"/u,'Index owns the home markup');
-assert.doesNotMatch(html,/id="charLevel"|class="container"/u,'Index must not contain calculator markup');
-assert.equal([...html.matchAll(/<script\b[^>]*\bsrc=/gu)].length, 1, 'HTML에는 legacy classic script 태그가 남아 있으면 안 됩니다.');
-for (const path of ['assets/js/app-entry.mjs', 'assets/js/classic-script-manifest.mjs', 'assets/js/pages/calculator/calculator-page.mjs', 'assets/pages/calculator.html', ...paths]) {
-  await access(file(path));
+import {access,readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {frontendModuleGraph,frontendSourcePath,sourceModuleFiles} from '../support/frontend-paths.mjs';
+import ts from 'typescript';
+const root=resolve(import.meta.dirname,'../..'),dist=process.argv.includes('--dist'),web=process.argv.includes('--web');
+for(const target of dist?['desktop']:web?['web']:['web','desktop']) {
+ const graph=await frontendModuleGraph(target),directory=resolve(root,'build',target);
+ const html=await readFile(dist||web?resolve(directory,'index.html'):resolve(root,'web/index.html'),'utf8');
+ assert.equal((html.match(/<script\b/g)||[]).length,1,'One module entry owns startup');
+ assert.match(html,/<script type="module" src="assets\/js\/app-entry\.mjs"><\/script>/);
+ if(dist||web)assert.ok(!html.includes('{{APP_VERSION}}'));
+ for(const url of graph.files) {
+  await access(dist||web?resolve(directory,url):resolve(root,frontendSourcePath(url)));
+  if((dist||web)&&graph.rendered.has(url))assert.equal(await readFile(resolve(directory,url),'utf8'),graph.rendered.get(url),'Deployment module is stale: '+url);
+ }
+ const native=[...graph.files].filter(url=>/desktop\/|build\/generated\/desktop\//u.test(frontendSourcePath(url)));
+ assert.equal(native.length>0,target==='desktop','Native modules must only be deployed to the desktop target');
+ assert.ok(graph.files.has('assets/js/optimization/wasm-worker.js'),'Worker is reachable from real imports');
+ assert.ok(graph.files.has('assets/pages/calculator.html'),'Lazy calculator HTML is in the graph');
+ console.log(`ES module entry: PASS (${target}, ${graph.files.size} graph assets, ${native.length} Native modules)`);
 }
-
-assert.match(await readFile(file('assets/js/app-entry.mjs'),'utf8'), /import '\.\/calculation\/stat-registry\.js';/u, 'StatRegistry must be initialized before calculator and inventory consumers.');
-
-async function verifySequentialLoading(baseURI, runtime, expectedPaths) {
-  const loaded = [];
-  const documentRef = {
-    baseURI,
-    documentElement:{ dataset:{ runtime } },
-    createElement(tagName) {
-      assert.equal(tagName, 'script', 'legacy loader는 script 요소만 만들어야 합니다.');
-      return {};
-    },
-    head: {
-      appendChild(script) {
-        loaded.push({ src: script.src, type: script.type, async: script.async });
-        script.onload();
-      }
-    }
-  };
-
-  const entry = pathToFileURL(file('assets/js/pages/calculator/calculator-page.mjs')).href;
-  const {loadCalculatorScripts} = await import(entry);
-  await loadCalculatorScripts(documentRef);
-
-  assert.deepEqual(loaded.map(item => item.src), expectedPaths.map(path => new URL(path, baseURI).href), `${baseURI}: ${runtime} script order`);
-  assert.ok(loaded.every(item => item.type === 'text/javascript' && item.async === false), `${baseURI}: classic scripts must stay sequential`);
+const kernel=await sourceModuleFiles(['web/src/calculation/calculator.js']);
+assert.ok(!kernel.some(path=>/\/ui\/|\/data\/skills\//u.test(path)),'Worker evaluation must not load UI or skill authoring data');
+console.log(`Headless kernel: PASS (${kernel.length} modules; no UI/skill-data dependency)`);
+if(!dist&&!web) {
+ const application=await sourceModuleFiles(['web/src/application/application-use-cases.js']);
+ assert.ok(!application.some(path=>path.includes('/ui/')),'Application input cannot depend on UI');
+ const renderer=await sourceModuleFiles(['web/src/ui/optimization-results.js']);
+ assert.ok(!renderer.some(path=>/application-use-cases|build-evaluator|\/calculator\.js|execution-adapter|optimizer-ui-controller|optimization-client|wasm-client|problem-compiler|candidate-preparation/.test(path)),'Result rendering consumes values without calculation/execution owners');
+ const execution=await sourceModuleFiles(['web/src/optimization/execution-adapter.js']);
+ assert.ok(!execution.some(path=>/\/calculation\/|problem-compiler|candidate-preparation|\/ui\//.test(path)),'Runtime selection cannot compile or evaluate a problem');
+ const worker=await sourceModuleFiles(['web/src/optimization/wasm-worker.js']);
+ assert.ok(!worker.some(path=>path.includes('/ui/')),'Worker is headless');
+ const docker=await readFile(resolve(root,'server/Dockerfile'),'utf8');
+ const copied=docker.split(/\r?\n/).filter(line=>line.startsWith('COPY ')).flatMap(line=>line.split(/\s+/).slice(1,-1).filter(part=>!part.startsWith('--')));
+ for(const path of await sourceModuleFiles(['server/account-server.mjs'])) assert.ok(copied.includes(path),'Docker omits runtime dependency: '+path);
+ assert.ok(copied.includes('package.json'),'Docker preserves the ESM boundary');
+ // Public IPC registration is a wire contract, independent of internal Rust module layout.
+ const main=await readFile(resolve(root,'desktop/src/main.rs'),'utf8'),handlers=main.match(/generate_handler!\[([\s\S]*?)\]/)?.[1];
+ assert.ok(handlers,'Tauri command registration is present');
+ const registered=new Set(handlers.split(',').map(name=>name.trim()));
+ for(const path of ['desktop/adapters/optimization-client.js','desktop/adapters/saved-build-storage.ts','desktop/adapters/update.ts','web/src/application/account-client.mjs']) {
+  const source=ts.createSourceFile(path,await readFile(resolve(root,path),'utf8'),ts.ScriptTarget.Latest,true);
+  function visit(node) {
+   if(ts.isCallExpression(node)&&/^(?:invoke|run)$|\.invoke$/.test(node.expression.getText(source))&&node.arguments[0]&&ts.isStringLiteral(node.arguments[0])) assert.ok(registered.has(node.arguments[0].text),'Unregistered frontend IPC: '+node.arguments[0].text);
+   ts.forEachChild(node,visit);
+  }
+  visit(source);
+ }
+ console.log('Module boundaries: PASS (calculation/rendering/execution/Worker direction, Docker closure, public IPC registration)');
 }
-
-await verifySequentialLoading('http://localhost:5173/', 'web', WEB_CLASSIC_SCRIPT_PATHS);
-await verifySequentialLoading('https://example.com/calculator/', 'web', WEB_CLASSIC_SCRIPT_PATHS);
-await verifySequentialLoading('https://tauri.localhost/', 'desktop', CLASSIC_SCRIPT_PATHS);
-assert.equal(new Set(WEB_CLASSIC_SCRIPT_PATHS).size, WEB_CLASSIC_SCRIPT_PATHS.length);
-assert.equal(WEB_CLASSIC_SCRIPT_PATHS.at(-1), 'assets/js/ui/ui-bootstrap.js');
-assert.ok(WEB_CLASSIC_SCRIPT_PATHS.includes('assets/js/optimization/wasm-client.js'));
-for (const path of CLASSIC_SCRIPT_PATHS.filter(path => /native-client|tauri-|\/update-/u.test(path))) {
-  assert.ok(!WEB_CLASSIC_SCRIPT_PATHS.includes(path), `Desktop script loaded on web: ${path}`);
-}
-
-const workerClient = await readFile(file('assets/js/optimization/wasm-client.js'), 'utf8');
-const worker = await readFile(file('assets/js/optimization/wasm-worker.js'), 'utf8');
-assert.ok(workerClient.includes("new root.Worker('assets/js/optimization/wasm-worker.js')"));
-assert.ok(worker.includes("'candidate-preparation.js'"));
-assert.ok(!CLASSIC_SCRIPT_PATHS.some(path => /exact-solver|worker-client|solver-worker|seed-search|marginal-score|pair-partition|source-profile/u.test(path)));
-if (verifyDist || verifyWeb) {
-  for (const path of ['assets/wasm/crysta_bg.wasm', 'assets/wasm/parallel/crysta.js', 'assets/wasm/parallel/crysta_bg.wasm']) await access(file(path));
-}
-for (const name of ['exact-solver', 'worker-client', 'solver-worker', 'seed-search', 'marginal-score', 'pair-partition', 'source-profile']) {
-  await assert.rejects(access(file(`assets/js/optimization/${name}.js`)), { code:'ENOENT' });
-}
-console.log('ES Module entry: PASS (Rust-only runtimes; source/deployment, subpath, Native/WASM loading)');

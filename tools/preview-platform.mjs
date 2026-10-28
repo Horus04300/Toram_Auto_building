@@ -3,6 +3,7 @@ import { DatabaseSync } from 'node:sqlite';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { createAccountServer } from '../server/account-server.mjs';
+import { prepareFrontend } from './prepare-frontend.mjs';
 
 const userId = 'local-preview';
 const landing = `<!doctype html><html lang="ko"><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>토람 로컬 체험</title><link rel="stylesheet" href="/assets/css/style.css"><main><h1>로컬 체험 계정</h1><p>Google 로그인 없이 인벤토리 저장·편집·조립을 테스트합니다.</p><p>이 컴퓨터의 체험 브라우저는 같은 계정을 사용합니다. 저장한 구성은 별도의 개발용 DB에 남으며 실제 계정과 연결되지 않습니다.</p><form method="post" action="/__preview/login"><button type="submit" class="result-secondary-button">체험 계정으로 인벤토리 열기</button></form><p>계산기에서 장비나 빌드를 설정한 뒤, 인벤토리의 ‘계산기 구성 담기’를 사용하세요. 로그아웃했다면 이 페이지에서 다시 들어올 수 있습니다.</p><p><a href="/">홈으로</a></p></main></html>`;
@@ -48,6 +49,7 @@ export async function startPlatformPreview({ port = 5182, directory = resolve(im
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
+  await prepareFrontend('web');
   const {origin,database} = await startPlatformPreview();
   console.log(`Local inventory preview: ${origin}/__preview\nDevelopment DB: ${database}\nGoogle login is not used. Bind: 127.0.0.1 only.`);
 }

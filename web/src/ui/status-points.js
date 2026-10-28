@@ -1,31 +1,18 @@
-(function (root) {
+export function createStatusPoints(document,provider) {
+const root=document && document.defaultView;
+
     var STATUS_MIN = 1;
     var STATUS_CAP = 510;
     var LEVEL_POINT_PER_LEVEL = 2;
     var FIXED_STATUS_BONUS = 25;
-    var OFFICIAL_LEVEL_CAP = Object.freeze({
-        level: 325,
-        sourceUrl: 'https://toram.jp/information/detail/?information_id=11036',
-        verifiedAt: '2026-08-24'
-    });
-
-    // Later official-cap refreshers may replace this provider without changing the
-    // status-point calculation contract.
-    if (!root.ToramOfficialLevelCap) {
-        root.ToramOfficialLevelCap = Object.freeze({
-            getCurrent: function () { return OFFICIAL_LEVEL_CAP; }
-        });
-    }
-
     function integer(val, fallback) {
         var n = parseInt(val, 10);
         return isNaN(n) ? (fallback !== undefined ? fallback : 0) : n;
     }
 
     function officialLevelCap() {
-        var provider = root.ToramOfficialLevelCap;
-        var record = provider && typeof provider.getCurrent === 'function' ? provider.getCurrent() : OFFICIAL_LEVEL_CAP;
-        return Math.max(1, integer(record && record.level, OFFICIAL_LEVEL_CAP.level));
+        var record = provider.getCurrent();
+        return Math.max(1, integer(record && record.level, provider.getCurrent().level));
     }
 
     // Player-level emblems are granted at Lv.5, 15, 25, ... and are shared by
@@ -51,14 +38,14 @@
         return pointBreakdown(characterLevel, officialLevelCap()).total;
     }
 
-    root.ToramStatusPoints = Object.freeze({
+    const api = Object.freeze({
         officialLevelCap: officialLevelCap,
         playerLevelEmblemPoints: playerLevelEmblemPoints,
         pointBreakdown: pointBreakdown,
         pointLimitForLevel: pointLimitForLevel
     });
 
-    if (typeof document === 'undefined') return;
+    if (!document) return api;
 
     function pointLimit() {
         var levelInput = document.getElementById('charLevel');
@@ -152,4 +139,6 @@
     });
     document.getElementById('statusResetBtn').addEventListener('click', resetToMinimum);
     update();
-}(window));
+
+return api;
+}

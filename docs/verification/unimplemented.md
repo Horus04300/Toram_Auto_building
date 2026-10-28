@@ -1,15 +1,11 @@
 # 후속 작업·사용자 보류 범위
 
-- 갱신: 2026-10-25. 이벤트보스 분류 보류 반영. 완료 기능·과거 수치와 후속 범위를 분리한다.
+- 범위: 현재 남은 결정·연결 누락·사용자 보류.
 - 역할: 남은 결정과 전투 이벤트 의존 항목의 탐색 목록. 구현 완료율이나 새 구현 승인 목록이 아니다.
 - 현재 상태는 `docs/handoff/current-development-handoff.md`, 트리별 출처/범위는 `docs/verification/`의 해당 트리 문서와 실제 코드·회귀를 확인한다.
 - S1 출처 연결, S2~S5 계산 검증, 실제 전투 상태 자동 전이는 서로 다른 완료 기준이다. 트리 문서의 과거 partial/단계 수만으로 현재 계산 누락을 단정하지 않는다.
 
-## 1. 이미 연결된 것을 다시 구현하지 않기
-
-충전·집념과 심안의 절대 명중/위치당 명중, Blade의 모델 범위 S4/S5 회귀, Native deadline/progress/pause/resume은 후속 구현 목록에서 제외한다. 2026-09-05 `tools/tests/application/test-combo-tags.mjs`, `tools/tests/skills/test-blade-regression.mjs`, `tools/tests/optimization/test-crysta-native-client.mjs`, `tools/tests/optimization/test-crysta-resume-ui.mjs`가 통과했다. 실제 UI E2E 또는 모든 전투 상태 완료를 뜻하지 않는다.
-
-이 항목에 새 오류가 있으면 아래 보류 목록을 활성화하는 대신 구체 입력으로 회귀를 추가한다.
+## 1. 계산 연결과 보류 구분
 
 현재 계산 전달의 별도 누락 목록은 [스킬 계산 전달 1회 감사](skill-calculation-wiring-audit.md)에 있다. 위자드, 서포터 페널티, 파레스 VIT, 조건부 타격 flag, 콤보 Request·영창·후속 modifier 등의 코드 연결 누락을 확인했다. 원문 전수 재대조/S5 재검증·수정은 하지 않았다. 아래 자동 사건의 보류와 단순 수치/조건 전달 누락을 혼동하지 않는다.
 
@@ -70,7 +66,7 @@ Partisan 화살 갈기의 행동속도 수치는 기존 원문에 불명으로 �
 
 현재 크리스타 compiler·평가기·탐색·Worker/Native·잠금·Utility·결과 UI를 다시 구현 목록에 넣지 않는다. 성능 변경은 `docs/architecture/crysta-optimization-contract.md`, 실행 제어는 `docs/architecture/native-optimization-runtime.md`의 Gate를 따른다.
 
-- 과거 425개 fixture의 단발 시간/gap을 현재 성능으로 보고하지 않는다.
+- 성능 판단은 현재 데이터·동일 입력/경계의 반복 계측으로 한다.
 - 옵션 자동 부여의 로그 한계효용/잠재력 탐색은 현재 수동 완성 옵션과 구분한다.
 - 조건부 main/sub/armor는 구조를 확정한 뒤 사전 물질화한다. 범용 동적 조건 엔진 확장은 먼저 제품 범위를 결정한다.
 - 보류 항목은 사용자 선택 후 원문→코드→관련 회귀 순으로 범위를 확정한다.
@@ -81,10 +77,10 @@ Partisan 화살 갈기의 행동속도 수치는 기존 원문에 불명으로 �
 
 원본 갱신·다국어 카탈로그·대상 검색·정적 스탯 적용을 다시 구현하지 않는다. 아래 분류/전투 상태 후속은 사용자가 보류한 피격 시뮬레이션과 구분한다. `toram-boss-pipeline.md`, `data/sources/toram-monsters/native-target/README.md`, `native-highraid-target/README.md`의 근거를 따른다.
 
-- 이벤트보스는 입장보스 중 특정 이벤트 기간·맵 종속 근거로 분리한다. 사용자가 2026-10-25 분리 작업을 보류하고 도감 카테고리 칸만 요청했다. 미분류 개체나 이름으로 채우지 않는다. 후속 연결 시 `bosses:test`와 도감 소스/웹 생성본 브라우저 검증을 실행한다.
+- 이벤트보스는 입장보스 중 특정 이벤트 기간·맵 종속 근거로 분리한다. 분류는 사용자 보류이며 도감 카테고리 칸만 제공한다. 미분류 개체나 이름으로 채우지 않는다. 후속 연결 시 `npm test`와 도감 소스/웹 생성본 브라우저 검증을 실행한다.
 
 - 양성 근거로 연결한 분류는 유지하고, 미연결 변종의 추가 스크립트 경로와 실제 대상 단계/부위를 확인한다. 명시적 입장 메뉴 첫 명령 밖의 경로를 임의 바이트 검색으로 대체하지 않는다. 단일 필드/일반 난이도/고난도 레벨 선택을 섞지 않는다.
 - 실제 장면의 활성 부위·파괴·동적 버프 상태는 정적 기본값과 구분한다. 일반 BossMobBattleStatus의 난이도 배율을 Dungeon/HighRaid 등에 확장하지 않는다.
 - HighRaid 입장 가능 최대 레벨은 서버 LevelLimit 자료를 확보한 뒤 제한한다. 현재 signed short 표현 범위를 게임 상한으로 설명하지 않는다.
 - 길드 레이드의 실제 클리어→다음 최대 HP 게이지 증가량·랜덤 옵션/type40·서버 입장 한계는 서버 자료 확보 후 연결한다. 현재 레벨별 기본 스탯과 6종/소테리아 개체 선택은 재구현하지 않는다. 미래 부위가 생기면 방 난이도·활성 상태 근거가 필요하다.
-- 검증: npm run bosses:test, verify:architecture, 해당 계산 회귀·실제 브라우저. 피격 시뮬레이션·콤보 보류를 활성화하는 근거로 쓰지 않는다.
+- 검증: npm test, 해당 계산 회귀·실제 브라우저. 피격 시뮬레이션·콤보 보류를 활성화하는 근거로 쓰지 않는다.

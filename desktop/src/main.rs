@@ -4,9 +4,6 @@
 // remain stable in tauri_commands; domain work stays in services/repositories.
 use toram_optimization_core::crysta_native_solver;
 mod account_browser;
-#[allow(dead_code)]
-#[path = "optimization/parallel_runtime.rs"]
-mod crysta_parallel_runtime;
 #[path = "optimization/service.rs"]
 mod crysta_service;
 mod settings;

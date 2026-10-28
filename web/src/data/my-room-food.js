@@ -1,4 +1,5 @@
-(function (root) {
+
+
   'use strict';
   // Source: https://coryn.club/food.php (2026-09-11). Values are totals at each level.
   var basic = [2,4,6,8,10,14,18,22,26,30];
@@ -63,6 +64,8 @@
     }, []);
   }
   var api = Object.freeze({ recipes:Object.freeze(recipes), get:get, normalize:normalize, options:options });
-  root.ToramFoodCatalog = api;
-  if (typeof module === 'object' && module.exports) module.exports = api;
-}(typeof window !== 'undefined' ? window : globalThis));
+  export const foodCatalog = api;
+
+
+
+export {recipes,get,normalize,options};

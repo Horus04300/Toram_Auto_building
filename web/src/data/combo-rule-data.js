@@ -1,7 +1,8 @@
+
 /* 사용자 제공 콤보 원문을 구조화한 공통 콤보 규칙 데이터. */
-(function () {
+
   'use strict';
-  window.TORAM_COMBO_RULE_DATA = Object.freeze({
+  export const comboRules = Object.freeze({
     schemaVersion: 1,
     source: Object.freeze({ type: 'user-provided', description: '게임 내 콤보 도움말 본문 전사' }),
     constants: Object.freeze({
@@ -79,4 +80,3 @@
       '충전의 MP 저장량은 새 충전 태그가 오면 덮어쓴다. 대미지 감소는 누적한다.'
     ])
   });
-}());

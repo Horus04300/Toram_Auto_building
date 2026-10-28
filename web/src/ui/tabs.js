@@ -1,4 +1,5 @@
-    (function () {
+export function createCalculatorTabs(document,app) {
+
         const container = document.querySelector('.container');
         if (!container || document.getElementById('appTabNavigation')) return;
 
@@ -42,14 +43,14 @@
                 buttons[key].classList.toggle('active', isSelected);
                 buttons[key].setAttribute('aria-selected', String(isSelected));
             });
-            if (id === 'combo' && window.ToramComboUi) window.ToramComboUi.refresh();
+            if (id === 'combo' && app.comboUi) app.comboUi.refresh();
         }
         Object.keys(buttons).forEach(function (id) { buttons[id].addEventListener('click', function () {
             selectTab(id);
-            if (id === 'buffs' && window.ToramActiveBuffs) window.ToramActiveBuffs.render();
+            if (id === 'buffs' && app.activeBuffs) app.activeBuffs.render();
         }); });
         buttons.results.addEventListener('click', function () { document.dispatchEvent(new Event('toram:preview')); });
-        window.revealResultTab = function () { selectTab('results'); };
+        const revealResults = function () { selectTab('results'); };
 
         const firstChild = container.firstChild;
         container.insertBefore(navigation, firstChild);
@@ -104,4 +105,6 @@
         const calculationButton = globalActions.querySelector('.btn-calc');
         if (calculationButton) calculationButton.remove();
         panels.equipment.appendChild(globalActions);
-    }());
+
+return Object.freeze({revealResults,select:selectTab});
+}

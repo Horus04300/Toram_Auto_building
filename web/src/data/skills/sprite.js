@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 스프라이트 아스트랄 랜스의 원문 대조 스택·발사 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('스프라이트 스택 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v = function (n) { return { op:'value', value:n }; };
   var r = function (path) { return { op:'ref', path:path }; };
@@ -13,7 +15,7 @@
   var magicDevice = { op:'eq', left:r('equipment.mainWeapon'), right:v('magicDevice') };
   var skill = catalog.skills.find(function (item) { return item.id === 'Sprite:9'; });
   if (!skill) throw new Error('아스트랄 랜스를 카탈로그에서 찾지 못했습니다.');
-  registry.register('Sprite-stack-buff', [{
+  registry.register([{
     id:skill.id, treeId:'Sprite', skillId:9, nameKo:skill.nameKo, kind:'buff', source:'sprite', dataStatus:'partial',
     sourceRef:{ file:'docs/sources/skills/Sprite.txt', anchor:'아스트랄 랜스 버프 / 메인 마도구 전용' }, requirements:{ when:magicDevice },
     stackRole:'combat-resource', cost:{ mp:{ timing:'cast', value:v(500) } }, castTime:{ type:'fixed', seconds:v(2), affectedByCastSpeed:true }, activeBuff:true,
@@ -29,9 +31,9 @@
 }());
 
 /* 스프라이트 S1~S5 계산기 범위 정의. 자동 통상·피격·도트는 상태 메타데이터로 보존한다. */
-(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Sprite S5 data order');
+(function(){'use strict';var R=skillRegistry,C=skillCatalog;if(!R||!C)throw Error('Sprite S5 data order');
 var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,y,n)=>({op:'if',when:w,then:y,else:n}),I=x=>r('attack.inputs.'+x),T=x=>r('combatStats.'+x),B=x=>r('baseStats.'+x);
-var eq=(x,y)=>({op:'eq',left:x,right:y}),lte=(x,y)=>({op:'lte',left:x,right:y}),gte=(x,y)=>({op:'gte',left:x,right:y}),truthy=x=>({op:'truthy',value:x}),magicDevice=eq(r('equipment.mainWeapon'),v('magicDevice')),active=truthy(r('buff.active'));
+var eq=(x,y)=>({op:'eq',left:x,right:y}),gte=(x,y)=>({op:'gte',left:x,right:y}),truthy=x=>({op:'truthy',value:x}),magicDevice=eq(r('equipment.mainWeapon'),v('magicDevice')),active=truthy(r('buff.active'));
 function D(id,k,anchor){var s=C.skills.find(x=>x.id==='Sprite:'+id);if(!s)throw Error('Sprite catalog missing '+id);return{id:s.id,treeId:'Sprite',skillId:id,nameKo:s.nameKo,kind:k,source:'sprite',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Sprite.txt',anchor},requirements:{when:magicDevice},notes:'S1~S5 calculator scope; automatic combat events remain metadata.'};}function hit(id,mult,c,flags){return{id,damageType:'magic',count:v(1),multiplier:mult,constant:c,flags:Object.assign({longRange:true,unsheathe:false},flags||{})};}
 var x=[D(0,'buff','오토 디바이스 버프'),D(1,'passive','러쉬 에이드 패시브'),D(2,'utility','클라인 힐 액티브'),D(3,'utility','리저렉션 액티브'),D(4,'buff','인핸스 버프'),D(5,'buff','스태빌리스 버프'),D(6,'passive','스프라이트 강화패시브'),D(7,'buff','스프라이트 실드 버프'),D(8,'buff','카운터 포스 버프'),null,D(10,'attack','매직 발칸 마법 액티브'),D(11,'attack','카타라보모스마법 액티브'),D(12,'attack','이그니션마법 액티브'),D(13,'attack','알데드락마법 액티브'),D(14,'attack','팍티스알름마법 액티브'),D(15,'attack','슬래시 리퍼마법 액티브'),D(16,'attack','5차레벤그란츠마법 액티브')];
 x[0]=Object.assign(x[0],{cost:{mp:{timing:'cast',value:v(100)}},activeBuff:true,stateTransitions:[{event:'cast',operation:'grant',stateId:'sprite.autoDevice',stacks:v(1),maxStacks:v(1),durationSeconds:v(60)}],specialAttacks:[{id:'autoNormal',hits:[hit('auto',v(1),v(0),{longRange:true,automatic:true,normalProration:true,maximumMotionSpeed:true})],notes:'12m 이내에서 이동 외 행동이 없을 때만 자동 통상 공격. 9m 이상 공격 간격·AMPR 패널티는 시간/통상 이벤트가 필요하다.'}]});
@@ -51,4 +53,4 @@ var pactBaseConstant=m(v(6),l(),l()),pactBaseMultiplier=a(v(7.5),d(T('DEX'),v(10
 x[14]=Object.assign(x[14],{inputs:[{id:'variant',label:'무작위 5차 선택',type:'number',min:v(0),max:v(4),default:v(0)}],cost:{mp:{timing:'cast',value:v(600)}},attacks:[Object.assign(hit('moon1',m(pactBaseMultiplier,v(.75)),m(pactBaseConstant,v(.75)),{guaranteedCritical:true}),{when:eq(I('variant'),v(0))}),Object.assign(hit('moon2',m(pactBaseMultiplier,v(.25)),m(pactBaseConstant,v(.25)),{guaranteedCritical:true}),{when:eq(I('variant'),v(0))}),Object.assign(hit('draconic',m(pactBaseMultiplier,v(.75)),m(pactBaseConstant,v(.75))),{count:v(2),when:eq(I('variant'),v(1))}),Object.assign(hit('hasetsu',m(pactBaseMultiplier,v(.25)),m(pactBaseConstant,v(.25))),{count:v(4),when:eq(I('variant'),v(2))}),Object.assign(hit('reverse',pactBaseMultiplier,pactBaseConstant,{invincibilityDuringMotion:true}),{when:eq(I('variant'),v(3))}),Object.assign(hit('luna',pactBaseMultiplier,pactBaseConstant),{when:eq(I('variant'),v(4))})],notes:'원문상 5차 스킬 무작위 선택; 하설월화 참유 추가타·드라고닉 원거리 명중 분기는 메타데이터로 보존한다.'});
 x[15]=Object.assign(x[15],{inputs:[{id:'swordStacks',label:'마법검 스택',type:'number',min:v(0),max:v(5),default:v(0)},{id:'fireAll',label:'5스택 마법검 발사',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:q(truthy(I('fireAll')),v(100),v(400))}},stackControl:{stateId:'sprite.slashReaper',minStacks:v(0),maxStacks:v(5),initialStacks:v(0),label:'마법검 스택'},stackModel:{mode:'combat-resource',hardCap:v(5),gainFormula:'10 × 공격 스킬 사용 횟수 / 스킬 레벨',lossEvents:['stun:all','tumble:half'],notes:'공격 스킬 사용·상태이상에 따른 자동 증감은 전투 상태 엔진이 필요하다.'},specialAttacks:[{id:'summonedSword',hits:[hit('sword',a(v(.1),d(B('AGI'),m(v(100),a(v(20),m(v(-1),l()))))),d(B('AGI'),a(v(10),m(v(-.5),l()))),{longRange:false})]},{id:'fireSwords',hits:[Object.assign(hit('fire',a(v(2),d(B('INT'),v(500))),v(100),{longRange:false}),{count:v(5)})]}]});
 x[16]=Object.assign(x[16],{inputs:[{id:'accumulatedMp',label:'생명 폭파 축적 MP',type:'number',min:v(0),max:v(10000),default:v(0)}],cost:{mp:{timing:'cast',value:v(400)}},stateTransitions:[{event:'cast',operation:'setStacks',stateId:'sprite.lebengrantz',stacks:v(0),maxStacks:v(0),durationSeconds:v(5)}],effects:[{phase:'cast',type:'lifeExplosionDebuff',durationSeconds:v(5),constant:v(400),multiplier:a(v(10),l()),damageFormula:'mainMagicDeviceWATK × accumulatedMP / 200',ignores:['MATK','defense'],nonCritical:true},{phase:'afterHit',type:'hpRestore',value:d(m(v(1000),l()),I('accumulatedMp'))},{phase:'combat',type:'amprAgainstDebuffedTarget',value:l()}]});
-R.register('Sprite:calculation-rules',x.filter(Boolean));}());
+R.register(x.filter(Boolean));}());

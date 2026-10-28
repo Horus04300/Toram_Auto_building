@@ -1,15 +1,15 @@
 import assert from 'node:assert/strict';
-import { readFile, writeFile, mkdtemp, mkdir } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { spawnSync } from 'node:child_process';
-import { createBossCatalog } from '../../../web/src/application/boss-catalog.mjs';
-import { convertBosses, readBossManifest, publishLatestProjectBosses } from '../../extraction/convert-toram-project-bosses.mjs';
-import { hash, encode } from '../../extraction/project-catalog-store.mjs';
-import { itemPython } from '../../extraction/sync-toram-dev-items.mjs';
+import {readFile,writeFile,mkdtemp,mkdir} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {createBossCatalog} from '../../../web/src/application/boss-catalog.mjs';
+import {convertBosses,readBossManifest,publishLatestProjectBosses} from '../../extraction/convert-toram-project-bosses.mjs';
+import {hash,encode} from '../../extraction/project-catalog-store.mjs';
+import {pipelinePython} from '../../extraction/project-catalog-store.mjs';
 
 const root = resolve(import.meta.dirname, '../../..');
 for (const script of ['extract-toram-monster-data.py','test-toram-field-bundle.py','test-toram-boss-pipeline.py']) {
-  const result = spawnSync(await itemPython(), [resolve(root,'tools/extraction',script), ...(script.startsWith('extract-') ? ['--self-test'] : [])], { cwd:root, encoding:'utf8', windowsHide:true });
+  const result = spawnSync(await pipelinePython(), [resolve(root,'tools/extraction',script), ...(script.startsWith('extract-') ? ['--self-test'] : [])], { cwd:root, encoding:'utf8', windowsHide:true });
   assert.equal(result.status, 0, result.stdout + result.stderr);
 }
 const parent = resolve(root,'build/tmp/boss-catalog-tests'); await mkdir(parent,{ recursive:true });

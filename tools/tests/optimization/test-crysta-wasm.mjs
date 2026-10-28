@@ -1,14 +1,15 @@
-import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
+import {rustBridge} from '../../../web/src/optimization/rust-bridge.js';
+import {exhaustiveSearch} from '../../support/crysta-exhaustive-oracle.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { loadWasmModule } from '../../support/crysta-wasm-module.mjs';
-import { loadHeadlessEnvironment } from '../../support/crysta-headless-environment.mjs';
+import {readFile} from 'node:fs/promises';
+import {loadWasmModule} from '../../support/crysta-wasm-module.mjs';
+import {loadHeadlessEnvironment} from '../../support/crysta-headless-environment.mjs';
 
 const wasm = await loadWasmModule();
 const env = await loadHeadlessEnvironment();
 const fixture = JSON.parse(await readFile(new URL('../../fixtures/crysta-native-runtime-26min-revenir.json', import.meta.url), 'utf8'));
 const base = fixture.resolvedExecutionContext.baseContext;
-const bridge = env.context.ToramCrystaOptimizationRustBridge;
+const bridge = env.rustBridge;
 assert.throws(() => new wasm.SearchSession('invalid'));
 assert.throws(() => new wasm.SearchSession(JSON.stringify({ baseContext:{}, groups:[] })));
 let comparisons = 0;

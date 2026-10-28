@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { createItemCatalog, resolveItemOptions } from '../../../web/src/application/item-catalog.mjs';
-import { loadSavedBuildEnvironment } from '../../support/saved-build-headless-environment.mjs';
-import { loadHeadlessEnvironment, root } from '../../support/crysta-headless-environment.mjs';
-import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
-import { loadWasmModule } from '../../support/crysta-wasm-module.mjs';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createItemCatalog,resolveItemOptions} from '../../../web/src/application/item-catalog.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
+import {loadHeadlessEnvironment,root} from '../../support/crysta-headless-environment.mjs';
+import {exhaustiveSearch} from '../../support/crysta-exhaustive-oracle.mjs';
+import {loadWasmModule} from '../../support/crysta-wasm-module.mjs';
 
 const plain = value => JSON.parse(JSON.stringify(value));
 const catalog = createItemCatalog('https://items.test/manifest.json', async url => ({ok:true,
@@ -21,19 +21,19 @@ assert.equal(crystas.filter(item => item.previousId !== null).length,246);
 const aliases = JSON.parse(await readFile(resolve(root,'data/sources/toram-items/crysta-legacy-aliases.json'))).aliases;
 assert.equal(Object.values(aliases).flat().length,425);
 for (const [id,names] of Object.entries(aliases)) for (const name of names) {
-  assert.equal(env.getCrystaByName(name),env.ToramCrystaCatalog.getById(id),'Legacy names resolve to the same ID object');
+  assert.equal(env.ToramCrystaCatalog.resolve(name),env.ToramCrystaCatalog.getById(id),'Legacy names resolve to the same ID object');
 }
 for (const item of crystas) {
   const view = env.ToramCrystaCatalog.getById(item.gameItemId);
-  assert.equal(env.getCrystaByName(String(item.gameItemId)),view);
+  assert.equal(env.ToramCrystaCatalog.resolve(String(item.gameItemId)),view);
   assert.equal(view.gameItemId,item.gameItemId);
   assert.deepEqual(plain(view.stats),item.stats);
-  assert.equal(view.prev ? env.getCrystaByName(view.prev).gameItemId : null,item.previousId);
+  assert.equal(view.previousId,item.previousId);
   assert.equal(Object.keys(item.names).length,6);
   assert.ok(item.options.every(option => option.texts && Number.isFinite(option.rawValue)));
 }
-assert.equal(env.getCrystaByName('บีมอซ'),null,'An ambiguous translation must never select an arbitrary ID');
-assert.equal(env.getCrystaByName('댄드라이'),null,'No fuzzy identity joins');
+assert.equal(env.ToramCrystaCatalog.resolve('บีมอซ'),null,'An ambiguous translation must never select an arbitrary ID');
+assert.equal(env.ToramCrystaCatalog.resolve('댄드라이'),null,'No fuzzy identity joins');
 const dandelion = records[9776];
 assert.equal(dandelion.names.kr,'댄드라이언');
 assert.deepEqual(dandelion.stats,{MAXMP:500,AMPR:4,CSPD:300});
@@ -54,8 +54,8 @@ for (const context of contexts) for (const item of crystas) {
   const resolved = compiler.resolveCrysta(env.ToramCrystaCatalog.getById(item.gameItemId),context,env.ToramStatRegistry,lineage,diagnostics);
   assert.deepEqual(plain(resolved.statDelta),expected,`Native options/compiler ${item.gameItemId} ${JSON.stringify(context)}`);
   const actual = {...item.stats};
-  for (const group of env.ToramCrystaCatalog.getById(item.gameItemId).condStats) {
-    if (env.ToramCalculationPolicies.matchesCrystaCondition(context,group.cond)) {
+  for (const group of env.ToramCrystaCatalog.getById(item.gameItemId).conditionalStats) {
+    if (env.ToramCalculationPolicies.matchesCrystaCondition(context,group.when)) {
       for (const [key,value] of Object.entries(group.stats)) actual[key]=(actual[key]||0)+value;
     }
   }
@@ -63,12 +63,16 @@ for (const context of contexts) for (const item of crystas) {
   assert.deepEqual(plain(diagnostics),[]);
   comparisons++;
 }
-assert.ok(lineage.conflict(env.getCrystaByName('댄드라이언'),env.ToramCrystaCatalog.getById(9900)));
+assert.ok(lineage.conflict(env.ToramCrystaCatalog.resolve('댄드라이언'),env.ToramCrystaCatalog.getById(9900)));
+const ancestor = env.ToramCrystaCatalog.getById(9631), sibling1 = env.ToramCrystaCatalog.getById(9632), sibling2 = env.ToramCrystaCatalog.getById(9633);
+assert.ok(lineage.conflict(sibling1,sibling2),'Automatic recommendation preserves shared-ancestor exclusion');
+assert.equal(env.ToramCrystaCatalog.conflict(sibling1,sibling2),false,'Manual equipment preserves sibling acceptance');
+assert.ok(env.ToramCrystaCatalog.conflict(ancestor,sibling1),'Manual equipment excludes direct ancestors');
 const fixture = JSON.parse(await readFile(resolve(root,'tools/fixtures/crysta-native-runtime-26min-revenir.json')));
 const search = await loadHeadlessEnvironment(), wasm = await loadWasmModule();
 const tutorials = views.filter(item => item.gameItemId >= 9401 && item.gameItemId <= 9504);
 assert.equal(tutorials.length,99,'Reviewed flat-stat tutorial ID family');
-assert.ok(tutorials.every(item => item.category === '노말' && Object.keys(item.stats).length === 1 && !item.condStats.length));
+assert.ok(tutorials.every(item => item.category === '노말' && Object.keys(item.stats).length === 1 && !item.conditionalStats.length));
 const tutorialNames = new Set(tutorials.map(item => item.name));
 for (const keepLowerUpgrades of [false,true]) {
   const scoped = search.compile({...fixture.resolvedExecutionContext,keepLowerUpgrades});
@@ -76,13 +80,13 @@ for (const keepLowerUpgrades of [false,true]) {
     'Tutorial crystals must never enter the automatic candidate combinations');
 }
 for (const current of ['STR+1','9401']) {
-  const locked = search.compile({...fixture.resolvedExecutionContext,crystas:[...tutorials,env.getCrystaByName('블랑')],
+  const locked = search.compile({...fixture.resolvedExecutionContext,crystas:[...tutorials,env.ToramCrystaCatalog.resolve('블랑')],
     currentCrystas:[current],locks:[true,false]});
   assert.deepEqual(plain(locked.diagnostics),[]);
   assert.ok(locked.groups[0].packages.every(pack => pack.candidateNames.includes('STR+1')),'Explicit tutorial locks must be preserved');
   assert.ok(locked.groups.flatMap(group => group.packages).every(pack => pack.candidateNames.every(name => name === 'STR+1' || !tutorialNames.has(name))));
 }
-assert.deepEqual(plain(env.getCrystaByName('STR+1').stats),{STR:1},'Manual selection and saved tutorial options remain available');
+assert.deepEqual(plain(env.ToramCrystaCatalog.resolve('STR+1').stats),{STR:1},'Manual selection and saved tutorial options remain available');
 const subset = [9776,9900,80453,9911,9804].map(id => env.ToramCrystaCatalog.getById(id));
 for (const armorType of ['일반옷','경량옷','중량옷']) {
   const baseContext = {...fixture.resolvedExecutionContext.baseContext,armorType};

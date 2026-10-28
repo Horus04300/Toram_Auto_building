@@ -1,6 +1,6 @@
 # 크리스타 최적화 Native 실행 계약
 
-- 갱신: 2026-09-05. 과거 N0~N6 단계 계획을 현재 실행 계약으로 정리했다.
+- 범위: Native/WASM 작업 수명과 진행·중단·재개 계약.
 - 역할: 실행 제어 수정 시 유지할 경계. 현재 기능/릴리스 상태는 `docs/handoff/current-development-handoff.md`, 정확성은 `docs/architecture/crysta-optimization-contract.md`가 기준이다.
 - deadline·Channel progress·pause/resume·continuation·잠금 통합 경로는 이미 존재한다. 모든 입력의 30초 exact 또는 모든 CPU의 지속 포화를 보증하지 않는다.
 
@@ -36,25 +36,25 @@ deadline과 cancel을 같은 flag/상한 없는 결과로 처리하지 않는다
 - resume은 같은 prepared problem·frontier·incumbent·누적 counter를 사용한다. 새 compile/seed 시작을 continuation으로 부르지 않는다.
 - exact cache와 resumable session을 분리한다. bounded 결과만 캐시하고 frontier를 버리는 방식은 재개가 아니다.
 - 입력/계산식/후보/실행 정책이 바뀌거나 창이 닫히면 해당 work와 continuation을 무효화한다. session 만료는 명시 오류로 처리하며 자동 Worker 재시작으로 바꾸지 않는다.
-- 메모리 제한을 강화할 때도 work를 버려 인증 upper를 낮추지 않는다. 과거 계획에 적힌 TTL·추가 telemetry 필드를 구현된 기능으로 추정하지 않는다.
+- 메모리 제한을 강화할 때도 work를 버려 인증 upper를 낮추지 않는다. 현재 구현에 없는 TTL·telemetry를 계약으로 가정하지 않는다.
 
 ## 4. 병렬화·잠금 변경 경계
 
 - 실행 중 분할되는 work도 누락·중복 없이 처리하고 모든 스레드 수에서 exact score/build ID를 보존한다.
-- 현재 서비스의 slice 묶음은 `run_shared_tasks`를 호출한다. 별도의 `solve_exact_parallel_with_control` 경로가 존재한다고 서비스가 같은 스케줄러를 쓴다고 가정하지 않는다.
-- 스레드 생성·큐 동기화·tail·평가 비용을 현재 제품 경로에서 계측한다. 과거 5초 CPU 표본/단일 exact 시간을 모든 입력의 처리량으로 일반화하지 않는다.
+- 서비스는 공용 `NativeSearchSession::advance_parallel_slice_with_control`을 호출한다.
+- 스레드 생성·큐 동기화·tail·평가 비용을 현재 제품 경로에서 계측한다. 짧은 CPU 표본/단일 exact 시간을 모든 입력의 처리량으로 일반화하지 않는다.
 - 잠긴 크리스타는 compiler package에 보존되며 효과를 base와 package 양쪽에 중복 합산하지 않는다. 알 수 없는 잠금은 진단으로 차단한다.
-- 잠금 0/1/2/8개, 빈 잠금, 강화 계보 충돌, 최종 package ID 복원과 JS 재평가를 계속 검증한다. 고정 기능을 재설계할 필요성은 실제 실패로 판단한다.
+- 잠금 0/1/2/8개, 빈 잠금, 강화 계보 충돌, 최종 package ID 복원과 제품 최종 재평가를 계속 검증한다. 고정 기능을 재설계할 필요성은 실제 실패로 판단한다.
 
 ## 5. 검증과 남은 개선 후보
 
 - `tools/tests/optimization/test-crysta-native-client.mjs`: 준비·결과 복원·cache·resume·만료.
 - `tools/tests/optimization/test-crysta-resume-ui.mjs`: UI 재개 연결.
 - `tools/tests/optimization/test-crysta-native-runtime-input.mjs`, `tools/tests/optimization/test-crysta-native-locks.mjs`: 사용자 입력/잠금 경계.
-- `tools/tests/optimization/test-crysta-rust-native-parity.mjs`: JS/Rust 평가 동치.
+- `tools/tests/optimization/test-crysta-rust-native-parity.mjs`: 독립 JS oracle/Rust 평가 동치.
 - Rust 단위 테스트: deadline/cancel/pause/checkpoint·직렬/병렬 exact·동점·session eviction.
 - 실제 WebView/설치본 검증은 별도 실행 환경이 필요하다. mock/정적 연결 테스트를 실제 화면 E2E로 보고하지 않는다.
 
-N0~N6 완료 이력은 기존 기능 연결을 뜻하며 추가 성능 개선 완료를 뜻하지 않는다. 현 구조 감사의 후속 후보는 작업 묶음마다 스레드 생성 비용과 결과 오류 표현이다. 입력 무효화는 계산 입력/실제 확정 변경에만 적용하고 화면 편집·중복 알림으로 session을 폐기하지 않는다. 보류된 피격/콤보 엔진을 이 작업에 포함하지 않는다.
+입력 무효화는 계산 입력/실제 확정 변경에만 적용하고 화면 편집·중복 알림으로 session을 폐기하지 않는다. 보류된 피격/콤보 엔진을 이 작업에 포함하지 않는다.
 
-이 문서에는 과거 실행 수치와 단계별 완료 로그를 다시 누적하지 않는다. 8 KiB 이하로 유지한다.
+이 문서는 현재 실행 계약과 검증 진입점만 관리한다. 8 KiB 이하로 유지한다.

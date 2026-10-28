@@ -1,27 +1,28 @@
-import { frontendSourcePath } from './frontend-paths.mjs';
-import { readCrystaDataSource } from './crysta-catalog-source.mjs';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
-import { root } from './crysta-headless-environment.mjs';
-import { resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection, resolveConsumableBuffs } from '../../web/src/application/item-catalog.mjs';
-import { SUB_WEAPON_RULES } from '../../web/src/application/equipment-object.mjs';
-import { STAT_LABELS } from '../../web/src/application/stat-labels.mjs';
+import * as kernel from '../../web/src/calculation/calculator.js';
+import {application,createCalculationContext,applyPassiveSkillStats} from '../../web/src/application/application-use-cases.js';
+import {buildStore} from '../../web/src/application/build-draft-store.js';
+import {skillEffects} from '../../web/src/calculation/skill-effect-engine.js';
+import {skillRegistry} from '../../web/src/data/skill-effect-registry.js';
+import {skillCatalog} from '../../web/src/data/skill-combat-catalog.js';
+import {skillTreeData} from '../../web/src/data/skill-tree-data.js';
+import {foodCatalog} from '../../web/src/data/my-room-food.js';
+import {policies} from '../../web/src/calculation/calculation-policies.js';
+import {statRegistry} from '../../web/src/calculation/stat-registry.js';
+import {buildEvaluator} from '../../web/src/calculation/build-evaluator.js';
+import {comboSequence} from '../../web/src/calculation/combo-sequence-engine.js';
+import {problemCompiler} from '../../web/src/optimization/problem-compiler.js';
+import {initializeCrystaCatalog} from '../../web/src/data/crysta-data.js';
+import {createSettingsRepository} from '../../web/src/storage/settings-repository.js';
+import {readCrystaCatalog} from './crysta-catalog-source.mjs';
 
-// Calculation uses Application's explicit input scope; UI listeners are inactive.
+// These are real module exports. The object is a convenient test/benchmark handle, not a VM or browser global.
 export async function loadSavedBuildEnvironment() {
-  const context = { console, document:{ readyState:'loading', getElementById:() => ({ value:'', addEventListener() {} }), querySelector:() => null, addEventListener() {} } };
-  context.window = context;
-  context.ToramApp = { statLabels:STAT_LABELS, itemRules:{ resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection, resolveConsumableBuffs, subWeaponRules:SUB_WEAPON_RULES } };
-  vm.createContext(context);
-  for (const path of [...CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/')),
-    'web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js', 'web/src/calculation/skill-effect-engine.js',
-    'web/src/calculation/supplemental-stats.js','web/src/calculation/option-event-calculator.js',
-    'web/src/ui/crysta-ui.js', 'web/src/calculation/combo-sequence-engine.js', 'web/src/calculation/calculator.js',
-    'web/src/application/application-use-cases.js', 'web/src/calculation/build-evaluator.js', 'web/src/storage/settings-repository.js']) {
-    vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-  }
+  const catalog=initializeCrystaCatalog(await readCrystaCatalog());
+  const context={...kernel,createCalculationContext,applyPassiveSkillStats,ToramCalculationKernel:kernel.calculationKernel,ToramApplication:application,ToramBuildDraftStore:buildStore,ToramSkillEffects:skillEffects,
+    ToramSkillEffectRegistry:skillRegistry,TORAM_SKILL_COMBAT_CATALOG:skillCatalog,SKILL_TREE_DATA:skillTreeData,
+    ToramFoodCatalog:foodCatalog,ToramCalculationPolicies:policies,ToramStatRegistry:statRegistry,ToramBuildEvaluator:buildEvaluator,
+    ToramComboSequence:comboSequence,ToramCrystaOptimizationProblemCompiler:problemCompiler,ToramCrystaCatalog:catalog};
+  context.window=context;
+  context.ToramSettingsRepository=createSettingsRepository(context,{read:()=>context.ToramBuildDraftStore.read(),syncFromUi:()=>context.ToramBuildDraftStore.syncFromUi(),restoreSession:session=>context.ToramBuildDraftStore.restoreSession(session)});
   return context;
 }

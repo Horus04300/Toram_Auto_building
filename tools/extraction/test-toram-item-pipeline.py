@@ -9,6 +9,7 @@ import tempfile
 from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
+import catalog_pipeline
 
 spec = importlib.util.spec_from_file_location("item_pipeline", Path(__file__).with_name("update-toram-items.py"))
 pipeline = importlib.util.module_from_spec(spec)
@@ -31,6 +32,44 @@ def item(ident, name="item", offset=4, value=100):
 
 
 class PipelineTests(unittest.TestCase):
+    def test_pointer_write_failure_preserves_latest_and_is_not_a_cache_hit(self):
+        with test_directory() as directory:
+            root=Path(directory)
+            store,install=root/'store',root/'install'
+            install.mkdir()
+            def report(version):
+                return {"status":"ready","identity":{"version":version}}
+            with pipeline.SnapshotCapture(store,install) as capture:
+                stage=capture.begin('first')
+                pipeline.write_json(stage/'data.json',{"value":1})
+                capture.publish(report(1))
+            before=(store/'latest.json').read_bytes()
+            real_atomic=catalog_pipeline.atomic_json
+            def fail_latest(path,value):
+                if path.name=='latest.json':
+                    raise OSError('pointer write failed')
+                return real_atomic(path,value)
+            with self.assertRaisesRegex(OSError,'pointer write failed'):
+                with pipeline.SnapshotCapture(store,install) as capture:
+                    capture.begin('second')
+                    with patch.object(catalog_pipeline,'atomic_json',side_effect=fail_latest):
+                        capture.publish(report(2))
+            self.assertEqual((store/'latest.json').read_bytes(),before)
+            self.assertFalse((store/'.pipeline.lock').exists())
+            with pipeline.SnapshotCapture(store,install) as capture:
+                self.assertIsNone(capture.load_state({"version":2}),'An unpublished ready observation must be captured/published again')
+                self.assertEqual(capture.load_state({"version":1})[1]['status'],'ready')
+
+    def test_atomic_pointer_failure_cleans_only_its_temporary_file(self):
+        with test_directory() as directory:
+            path=Path(directory)/'pointer.json'
+            path.write_text('{"old":true}',encoding='utf-8')
+            with patch.object(Path,'replace',side_effect=OSError('replace failed')):
+                with self.assertRaisesRegex(OSError,'replace failed'):
+                    pipeline.atomic_json(path,{"new":True})
+            self.assertEqual(pipeline.load(path),{"old":True})
+            self.assertEqual(list(path.parent.glob('*.tmp')),[])
+
     def test_semantic_diff_ignores_offsets_and_order(self):
         old = {"items": [item(1), item(2), item(3)]}
         new = {"items": [item(4), item(2, name="translated"), item(1, offset=999)]}

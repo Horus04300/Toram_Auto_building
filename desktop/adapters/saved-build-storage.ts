@@ -1,10 +1,8 @@
-/* Tauri 네이티브 파일 명령을 Settings Settings Repository 어댑터로 연결한다. */
-(() => {
+export function createSavedBuildFileAdapter(core: NonNullable<SettingsRepositoryTauriWindow['__TAURI__']>['core']): SettingsFileRepositoryAdapter | null {
   'use strict';
 
-  const root = window as SettingsRepositoryTauriWindow;
-  const invoke = root.__TAURI__?.core?.invoke;
-  if (typeof invoke !== 'function') return;
+  const invoke = core?.invoke;
+  if (typeof invoke !== 'function') return null;
   const adapter: SettingsFileRepositoryAdapter = Object.freeze({
     directory: () => invoke('settings_directory'),
     list: () => invoke('list_settings'),
@@ -14,5 +12,5 @@
     delete: (name: string) => invoke('delete_setting', { name })
   });
 
-  root.ToramSettingsFileRepositoryAdapter = adapter;
-})();
+  return adapter;
+}

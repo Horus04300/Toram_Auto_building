@@ -1,6 +1,39 @@
-/* Update runtime only: no BuildDraft, calculation rules, DOM or native IPC. */
-(function (root) {
+export function createUpdateCoordinator(root,app) {
   'use strict';
+  var locked = false, epoch = 0, previousInert = false;
+  function hasWork() {
+    var execution = app.execution, runtime = app.optimizer && app.optimizer.getState();
+    return Boolean(execution && (execution.isRunning() || execution.hasContinuation()) || runtime && (runtime.calculationQueued || runtime.executionStatus === 'running'));
+  }
+  function lock() {
+    locked = true;
+    epoch++;
+    previousInert = root.document.body.inert;
+    root.document.body.inert = true;
+  }
+  function release() {
+    if (!locked) return;
+    root.document.body.inert = previousInert;
+    locked = false;
+  }
+  async function stopAndFlush() {
+    await app.optimizer.stopForUpdate();
+    // Sync and flush the latest input, including edits made while downloading.
+    await app.settingsRepository.flushApplicationState();
+  }
+  async function prepare(confirm) {
+    if (!await confirm(hasWork())) return false;
+    lock();
+    try { await stopAndFlush(); } finally { release(); }
+    return true;
+  }
+  async function beforeInstall(confirm) {
+    if (hasWork() && !await confirm(true)) throw new Error('새 계산을 유지하기 위해 설치를 취소했습니다. 나중에 다시 시도할 수 있습니다.');
+    lock();
+    try { await stopAndFlush(); } catch (error) { release(); throw error; }
+    // Remain locked only across the final native install request; errors release it.
+  }
+
   function create(deps) {
     var service = deps.service;
     var state = { phase:service && service.isAvailable() ? 'idle' : 'unavailable', update:null, progress:null, error:null, visible:false };
@@ -25,10 +58,10 @@
       if (busy || !state.update) return;
       busy = true;
       try {
-        if (deps.beforeDownload && await deps.beforeDownload() === false) return;
+        if (await prepare(deps.confirm) === false) return;
         change({ phase:'downloading', error:null, progress:null, visible:true });
         await service.install(state.update.version, function (progress) { change({ progress:progress }); }, async function () {
-          if (deps.beforeInstall) await deps.beforeInstall();
+          await beforeInstall(deps.confirm);
           change({ phase:'installing', progress:null });
         });
         change({ phase:'completed' });
@@ -36,7 +69,7 @@
         change({ phase:'failed', error:error.message || '업데이트에 실패했습니다.', visible:true });
       } finally {
         busy = false;
-        if (deps.release) deps.release();
+        release();
       }
     }
     return Object.freeze({
@@ -45,5 +78,6 @@
       subscribe:function (listener) { listeners.push(listener); listener(snapshot()); return function () { listeners = listeners.filter(function (item) { return item !== listener; }); }; }
     });
   }
-  root.ToramUpdateController = Object.freeze({ create:create });
-}(typeof window !== 'undefined' ? window : globalThis));
+  return Object.freeze({ create:create, isLocked:function () { return locked; }, epoch:function () { return epoch; } });
+
+}

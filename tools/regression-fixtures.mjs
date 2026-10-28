@@ -1,22 +1,13 @@
-/**
- * Regression refactoring baseline.
- *
- * `normalValue` fixtures have expectations backed by a source, formula, or
- * explicit algorithmic invariant. `characterization` fixtures intentionally
- * record observable 37dae51 behaviour, including legacy boundaries scheduled
- * for removal only in later refactoring phases.
- */
-export const BASELINE_COMMIT = '37dae51';
-
+// Current requirements, sourced formulas and explicit invariants run as normal tests.
+// Characterization keeps only selected-definition and real saved-input golden values.
 export const NORMAL_VALUE_FIXTURES = Object.freeze([
+  'tests/application/test-evaluator-integration.mjs',
   'tests/application/test-item-catalog.mjs',
   'tests/application/test-crysta-catalog.mjs',
   'tests/application/test-item-equipment.mjs',
   'tests/application/test-item-events.mjs',
-  'tests/application/test-supplemental-stats.mjs',
-  'tests/application/test-option-event-calculator.mjs',
-  'tests/application/test-option-calculation-integration.mjs',
   'tests/application/test-inventory-composition.mjs',
+  'tests/application/test-build-values.mjs',
   'tests/application/test-platform-preview.mjs',
   'tests/application/test-post-store.mjs',
   'tests/application/test-catalog-browser.mjs',
@@ -75,24 +66,28 @@ export const NORMAL_VALUE_FIXTURES = Object.freeze([
   'tests/application/test-skill-data-audit.mjs',
   'tests/skills/test-sprite-regression.mjs',
   'tests/application/test-status-points.mjs',
+  'tests/application/test-supplemental-stats.mjs',
+  'tests/application/test-option-event-calculator.mjs',
   'tests/skills/test-support-regression.mjs',
   'tests/skills/test-survival-regression.mjs',
-  'tests/skills/test-wizard-regression.mjs'
-]);
-
-export const CHARACTERIZATION_FIXTURES = Object.freeze([
+  'tests/skills/test-wizard-regression.mjs',
+  'tests/application/test-calculation-state.mjs',
+  'tests/application/test-record-migration.mjs',
   'tests/application/test-account-server.mjs',
   'tests/application/test-account-client.mjs',
-  'tests/skills/test-definition-precedence.mjs',
   'tests/application/test-active-buff-ui.mjs',
   'tests/application/test-build-setting-snapshot.mjs',
   'tests/application/test-combo-ui-loading.mjs',
   'tests/optimization/test-crysta-execution-adapter.mjs',
   'tests/optimization/test-crysta-native-client.mjs',
   'tests/optimization/test-crysta-resume-ui.mjs',
-  'tests/optimization/test-crysta-native-runtime-input.mjs',
   'tests/application/test-qa-edge-cases.mjs',
   'tests/application/test-skill-icon-assets.mjs',
   'tests/application/test-tauri-build-storage-adapter.mjs',
-  'tests/application/test-tauri-native-storage-e2e.mjs'
+  'tests/application/test-tauri-native-storage-e2e.mjs',
+]);
+
+export const CHARACTERIZATION_FIXTURES = Object.freeze([
+  'tests/skills/test-definition-precedence.mjs',
+  'tests/optimization/test-crysta-native-runtime-input.mjs',
 ]);

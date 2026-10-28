@@ -1,11 +1,18 @@
+import {statRegistry} from '../calculation/stat-registry.js';
+import {policies} from '../calculation/calculation-policies.js';
+import {crystaCatalog} from '../data/crysta-data.js';
+import {buildStore} from '../application/build-draft-store.js';
+import {SUB_WEAPON_RULES} from '../application/equipment-object.mjs';
+import {STAT_LABELS} from '../application/stat-labels.mjs';
+export function createCrystaUi(document) {
+const root=document.defaultView;
         var DEFAULT_BANNED_CRYSTAS = ["오로로 콜론"];
-        var bannedCrystas = {"오로로 콜론": true};
 
-        var subWeaponRules = window.ToramApp.itemRules.subWeaponRules;
+        var subWeaponRules = SUB_WEAPON_RULES;
 
-        const tagMap = window.ToramApp.statLabels;
+        const tagMap = STAT_LABELS;
         function getCrystaStatLabel(key) {
-            var definition = window.ToramStatRegistry && window.ToramStatRegistry.get(key);
+            var definition = statRegistry && statRegistry.get(key);
             return (tagMap[key] || key) + (definition && definition.status === 'notModeled' ? ' (계산 미반영)' : '');
         }
 // 태그명을 분석해 그룹을 반환하는 함수
@@ -32,7 +39,7 @@
                 var dName = getCrystaStatLabel(k);
                 groups[cat].push('<span class="' + cssClass + '">' + dName + ' ' + sign + v + '</span>');
             }
-            
+
             var html = '<div style="display:block; width:100%;">';
             for (var g in groups) {
                 if (groups[g].length > 0) {
@@ -43,10 +50,6 @@
             html += '</div>';
             return html;
         }
-        const BASE_ASPD_MAP = {
-            "한손검": 100, "양손검": 50, "활": 75, "자동활": 30, "지팡이": 60,
-            "마도구": 90, "권갑": 120, "선풍창": 25, "발도검": 200, "맨손": 1000
-        };
 
         function getCategoryGroup(catStr) {
             if(!catStr) return '노말';
@@ -94,7 +97,7 @@
             var mainWpn = document.getElementById('mainWeaponType').value;
             var subSelect = document.getElementById('subWeaponType');
             subSelect.innerHTML = '';
-            
+
             var allowedSubs = subWeaponRules[mainWpn] || ['없음'];
             for(var i=0; i<allowedSubs.length; i++) {
                 var opt = document.createElement('option');
@@ -116,7 +119,6 @@
         }
 
         function matchesCrystaCondition(ctx, cnd) {
-            var policies = window.ToramCalculationPolicies;
             if (!policies || typeof policies.matchesCrystaCondition !== 'function') throw new Error('크리스타 조건 정책이 준비되지 않았습니다.');
             return policies.matchesCrystaCondition(ctx, cnd);
         }
@@ -125,7 +127,7 @@
             var val = inputEl.value.trim();
             var infoDiv = document.getElementById(inputEl.id + "_info");
             if(!infoDiv) return;
-            
+
             if(!val) {
                 inputEl.classList.remove('is-invalid');
                 inputEl.removeAttribute('aria-invalid');
@@ -133,7 +135,7 @@
                 infoDiv.innerHTML = "";
                 return;
             }
-            var c = getCrystaByName(val);
+            var c = crystaCatalog.resolve(val);
             if(!c) {
                 inputEl.classList.add('is-invalid');
                 inputEl.setAttribute('aria-invalid', 'true');
@@ -143,7 +145,7 @@
             }
             inputEl.classList.remove('is-invalid'); inputEl.removeAttribute('aria-invalid');
             infoDiv.classList.remove('is-error');
-            
+
             var ctx = {
                 mainType: document.getElementById('mainWeaponType').value,
                 subType: document.getElementById('subWeaponType').value,
@@ -151,27 +153,21 @@
             };
 
             var html = "";
-            var isRootActive = matchesCrystaCondition(ctx, c.cond);
 
             if(c.stats) {
                 for(var k in c.stats) {
                     var v = c.stats[k];
                     var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";
-                    if (!isRootActive) cssClass += " disabled";
                     var sign = v > 0 ? "+" : "";
                     var displayKey = getCrystaStatLabel(k);
                     html += '<span class="' + cssClass + '">' + displayKey + ' ' + sign + v + '</span>';
                 }
             }
-            
-            if(c.cond && !isRootActive) {
-                html = '<span style="font-size:12px; color:#c0392b; margin-right:5px; align-self:center;">(조건불만족)</span>' + html;
-            }
 
-            if (c.condStats) {
-                for (var i = 0; i < c.condStats.length; i++) {
-                    var cItem = c.condStats[i];
-                    if (matchesCrystaCondition(ctx, cItem.cond)) {
+            if (c.conditionalStats) {
+                for (var i = 0; i < c.conditionalStats.length; i++) {
+                    var cItem = c.conditionalStats[i];
+                    if (matchesCrystaCondition(ctx, cItem.when)) {
                         for(var k in cItem.stats) {
                             var v = cItem.stats[k];
                             var cssClass = v < 0 ? "stat-tag negative" : "stat-tag";
@@ -241,43 +237,38 @@
                 if (isElementAttribute) value.value = '1';
             }
             type.addEventListener('change', syncElementAttribute);
-            row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); });
+            row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); document.dispatchEvent(new CustomEvent('toram:build-options-changed')); });
             container.appendChild(row);
+            document.dispatchEvent(new CustomEvent('toram:build-options-changed'));
         }
 
-        document.getElementById('banInput').addEventListener('keypress', function(e) { 
-            if(e.key === 'Enter') { e.preventDefault(); addBanTag(); } 
+        document.getElementById('banInput').addEventListener('keypress', function(e) {
+            if(e.key === 'Enter') { e.preventDefault(); addBanTag(); }
         });
-        
+
         function addBanTag() {
             var val = document.getElementById('banInput').value.trim();
-            if(val && !bannedCrystas[val]) { 
-                bannedCrystas[val] = true;
-                document.getElementById('banInput').value = ''; 
-                renderBanTags(); 
+            if(val && getBannedCrystas().indexOf(val) < 0) {
+                setBannedCrystas(getBannedCrystas().concat(val));
+                document.getElementById('banInput').value = '';
+                renderBanTags();
                 notifyOptimizationPreferencesChanged();
             }
         }
-        function removeBanTag(val) { delete bannedCrystas[val]; renderBanTags(); notifyOptimizationPreferencesChanged(); }
+        function removeBanTag(val) { setBannedCrystas(getBannedCrystas().filter(function (value) { return value !== val; })); renderBanTags(); notifyOptimizationPreferencesChanged(); }
         function notifyOptimizationPreferencesChanged() {
             document.dispatchEvent(new CustomEvent('toram:optimization-preferences-changed'));
             document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
         }
-        function getBannedCrystas() { return Object.keys(bannedCrystas).sort(); }
-        function restoreBannedCrystas(values) {
-            bannedCrystas = {};
-            (Array.isArray(values) ? values : DEFAULT_BANNED_CRYSTAS).forEach(function (value) {
-                var name = String(value || '').trim();
-                if (name) bannedCrystas[name] = true;
-            });
-            renderBanTags();
-        }
+        function getBannedCrystas() { return (buildStore.getScenario().optimizationPreferences || {bannedCrystas:DEFAULT_BANNED_CRYSTAS}).bannedCrystas || []; }
+        function setBannedCrystas(values) { var store=buildStore; store.commitScenario({optimizationPreferences:Object.assign({},store.getScenario().optimizationPreferences,{bannedCrystas:values.slice().sort()})}); }
+        function restoreBannedCrystas(values) { setBannedCrystas(Array.isArray(values) ? values : DEFAULT_BANNED_CRYSTAS); renderBanTags(); }
         function renderBanTags() {
             var container = document.getElementById('banTagContainer');
             var count = document.getElementById('blacklistCount');
-            if (count) count.textContent = Object.keys(bannedCrystas).length + '개';
+            if (count) count.textContent = getBannedCrystas().length + '개';
             container.innerHTML = '';
-            for (var val in bannedCrystas) {
+            for (var val of getBannedCrystas()) {
                 var tag = document.createElement('span');
                 tag.className = 'ban-tag';
                 tag.appendChild(document.createTextNode(val + ' '));
@@ -293,73 +284,6 @@
         }
 
 
-// 1. 문자열 내 모든 공백 제거 및 소문자화 (매칭 오류 방지)
-function normCrystaName(s) {
-    return s ? String(s).trim().replace(/\s+/g, '').toLowerCase() : '';
-}
-
-// 2. 전체 크리스타 고속 캐시 맵 & 검색 함수
-var crystaMapCache = null;
-function getCrystaByName(name) {
-    if (!name) return null;
-    var targetKey = normCrystaName(name);
-    if (!targetKey) return null;
-
-    // 캐시 맵 생성 (최초 1회)
-    if (!crystaMapCache && typeof crystaDataJson !== 'undefined' && Array.isArray(crystaDataJson)) {
-        crystaMapCache = {};
-        for (var i = 0; i < crystaDataJson.length; i++) {
-            var c = crystaDataJson[i];
-            if (c && c.name) {
-                crystaMapCache[normCrystaName(c.name)] = c;
-                (c.aliases || []).forEach(function (alias) { crystaMapCache[normCrystaName(alias)] = c; });
-                if (c.gameItemId) crystaMapCache[String(c.gameItemId)] = c;
-            }
-        }
-    }
-
-    if (crystaMapCache && crystaMapCache[targetKey]) {
-        return crystaMapCache[targetKey];
-    }
-    return null;
-}
-
-// 3. 동일 및 상/하위(업그레이드) 관계 완벽 검사 함수
-function isCrystaConflict(c1, c2) {
-    if (!c1 || !c2) return false;
-
-    var key1 = normCrystaName(c1.name);
-    var key2 = normCrystaName(c2.name);
-
-    if (!key1 || !key2) return false;
-    if (key1 === key2) return true; // 1. 완전히 동일한 크리스타
-
-    // 2. c1의 하위(prev) 트리를 끝까지 추적하여 c2가 존재하는지 검사
-    var curr = c1;
-    var visited = {};
-    while (curr && curr.prev) {
-        var pKey = normCrystaName(curr.prev);
-        if (!pKey) break;
-        if (pKey === key2) return true; // c2가 c1의 상위/하위 족보에 있음
-        if (visited[pKey]) break; // 무한 루프 방지
-        visited[pKey] = true;
-        curr = getCrystaByName(pKey);
-    }
-
-    // 3. c2의 하위(prev) 트리를 끝까지 추적하여 c1이 존재하는지 검사
-    curr = c2;
-    visited = {};
-    while (curr && curr.prev) {
-        var pKey = normCrystaName(curr.prev);
-        if (!pKey) break;
-        if (pKey === key1) return true; // c1이 c2의 상위/하위 족보에 있음
-        if (visited[pKey]) break;
-        visited[pKey] = true;
-        curr = getCrystaByName(pKey);
-    }
-
-    return false;
-}
 
 // --- 새로 추가할 즉시 검사 로직 ---
 var prevCrystaSelections = {};
@@ -378,11 +302,11 @@ function instantCrystaCheck(inp, newValue) {
     var counterpartId = group + (slotNum === "1" ? "2" : "1");
     var counterpartVal = document.getElementById(counterpartId).value;
 
-    var c1 = getCrystaByName(newValue);
-    var c2 = counterpartVal ? getCrystaByName(counterpartVal) : null;
+    var c1 = crystaCatalog.resolve(newValue);
+    var c2 = counterpartVal ? crystaCatalog.resolve(counterpartVal) : null;
 
     // 중복 체크 및 팝업 (Alert)
-    if (c1 && c2 && isCrystaConflict(c1, c2)) {
+    if (c1 && c2 && crystaCatalog.conflict(c1, c2)) {
         alert("⚠️ 크리스타 장착 오류!\n같은 부위(무기, 방어구, 추가, 특수) 내에서는 상/하위 호환을 포함한 동일 계열의 크리스타를 중복 장착할 수 없습니다.");
         inp.value = prevCrystaSelections[inp.id] || ""; // 이전 값으로 롤백
         return false;
@@ -399,7 +323,7 @@ function validateCrystaInputs() {
     document.querySelectorAll('.cr-select').forEach(function (input) {
         var value = input.value.trim();
         renderCrystaInfo(input);
-        if (value && !getCrystaByName(value)) invalid.push(input);
+        if (value && !crystaCatalog.resolve(value)) invalid.push(input);
     });
     if (invalid.length) {
         var resultArea = document.getElementById('resultArea');
@@ -434,8 +358,9 @@ function validateCrystaInputs() {
                 '<input type="number" step="any" style="flex:1;" class="skill-ratio" placeholder="비율 입력 (예: 0.01)">' +
                 '<button type="button" class="remove-option-row" style="cursor:pointer; color:#e74c3c; border:none; background:none; font-weight:bold;">✕</button>';
 
-            row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); });
+            row.querySelector('.remove-option-row').addEventListener('click', function () { row.remove(); document.dispatchEvent(new CustomEvent('toram:build-options-changed')); });
             container.appendChild(row);
+            document.dispatchEvent(new CustomEvent('toram:build-options-changed'));
         }
 
 
@@ -446,10 +371,10 @@ function wrapInputsForAutocomplete() {
         var inp = inputs[i];
         inp.removeAttribute('list'); // 기존 datalist 연결 해제
         inp.setAttribute('autocomplete', 'off');
-        
+
         var wrapper = document.createElement('div');
         wrapper.className = 'autocomplete-wrapper';
-        
+
         inp.parentNode.insertBefore(wrapper, inp);
         wrapper.appendChild(inp);
     }
@@ -460,12 +385,12 @@ function initAutocomplete() {
     wrapInputsForAutocomplete();
 
     var wpnList = [], armList = [], addList = [], spcList = [], allList = [];
-    
-    for (var i = 0; i < crystaDataJson.length; i++) {
-        var c = crystaDataJson[i];
+
+    for (var i = 0; i < crystaCatalog.items.length; i++) {
+        var c = crystaCatalog.items[i];
         if (!c || !c.name) continue;
         var grp = getCategoryGroup(c.category);
-        
+
         allList.push(c.name);
         if (grp === '노말') {
             wpnList.push(c.name); armList.push(c.name); addList.push(c.name); spcList.push(c.name);
@@ -506,18 +431,18 @@ function setupAutocomplete(inp, arr) {
         var a, b, i;
         closeAllLists(); // 기존에 열려있는 다른 리스트 모두 초기화
         currentFocus = -1;
-        
+
         a = document.createElement("DIV");
         a.setAttribute("id", inp.id + "autocomplete-list");
         a.setAttribute("class", "autocomplete-items");
         inp.parentNode.appendChild(a);
-        
+
         // 검색어에 맞는 항목만 생성 (검색어가 없으면 전체 리스트 생성)
         for (i = 0; i < arr.length; i++) {
             var matchIdx = arr[i].toUpperCase().indexOf(val.toUpperCase());
             if (!val || matchIdx > -1) {
                 b = document.createElement("DIV");
-                
+
                 // 검색어 하이라이트 처리
                 if (val && matchIdx > -1) {
                     b.innerHTML = arr[i].substring(0, matchIdx) + "<strong>" + arr[i].substring(matchIdx, matchIdx + val.length) + "</strong>" + arr[i].substring(matchIdx + val.length);
@@ -525,7 +450,7 @@ function setupAutocomplete(inp, arr) {
                     b.innerHTML = arr[i];
                 }
                 b.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
-                
+
                 b.addEventListener("click", function(e) {
                     var selectedVal = this.getElementsByTagName("input")[0].value;
                     if (inp.classList.contains('cr-select')) {
@@ -555,7 +480,7 @@ function setupAutocomplete(inp, arr) {
             if (currentFocus > -1) {
                 if (x) x[currentFocus].click();
             } else if (inp.id === 'banInput') {
-                addBanTag(); 
+                addBanTag();
                 closeAllLists();
             } else if (inp.classList.contains('cr-select')) {
                 instantCrystaCheck(inp, inp.value); // 직접 타이핑 후 엔터 쳤을 때 검사
@@ -572,7 +497,7 @@ function setupAutocomplete(inp, arr) {
         x[currentFocus].classList.add("autocomplete-active");
         x[currentFocus].scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
-    
+
     function removeActive(x) {
         for (var i = 0; i < x.length; i++) {
             x[i].classList.remove("autocomplete-active");
@@ -599,8 +524,8 @@ document.addEventListener("click", function (e) {
 });
 
 
-window.ToramApp = window.ToramApp || {};
-window.ToramApp.crystaUi = Object.freeze({
+
+const api = Object.freeze({initAutocomplete:initAutocomplete,renderBanTags:renderBanTags,validateCrystaInputs:validateCrystaInputs,buildGroupedTagsHtml:buildGroupedTagsHtml,
     addBanTag: addBanTag,
     addOptionRow: addOptionRow,
     addSkillStatRow: addSkillStatRow,
@@ -613,8 +538,37 @@ window.ToramApp.crystaUi = Object.freeze({
 
 // 저장 복원 전에 선택지를 만들고, 복원 후에는 다시 초기화하지 않는다.
 function initializeEquipmentInputs() {
+    document.querySelectorAll('[data-add-option]').forEach(function (button) {
+      button.addEventListener('click', function () { api.addOptionRow(button.dataset.addOption); });
+    });
+    document.querySelector('[data-action="add-ban"]').addEventListener('click', api.addBanTag);
+    document.querySelector('[data-action="main-weapon-change"]').addEventListener('change', function () {
+      api.updateSubWeaponList();
+      api.refreshAllCrystaInfo();
+    });
+    document.querySelector('[data-action="sub-weapon-change"]').addEventListener('change', api.onSubWeaponChange);
+    document.querySelector('[data-action="armor-change"]').addEventListener('change', api.refreshAllCrystaInfo);
     populateRefineSelects();
     updateSubWeaponList();
 }
-if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeEquipmentInputs, { once:true });
-else initializeEquipmentInputs();
+
+
+function initCrystaEvents() {
+    var ids = ['cr_wpn_1','cr_wpn_2', 'cr_arm_1','cr_arm_2', 'cr_add_1','cr_add_2', 'cr_spc_1','cr_spc_2'];
+
+    ids.forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) {
+            prevCrystaSelections[id] = el.value || ""; // 로드 시 초기값 저장
+
+            // 타이핑 후 다른 곳 클릭 시 검사
+            el.addEventListener('change', function() {
+                instantCrystaCheck(this, this.value);
+            });
+        }
+    });
+}
+
+
+initializeEquipmentInputs(); initCrystaEvents(); return api;
+}

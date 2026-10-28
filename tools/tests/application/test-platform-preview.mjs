@@ -1,10 +1,10 @@
 import assert from 'node:assert/strict';
-import { mkdtemp, rm } from 'node:fs/promises';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { request } from 'node:http';
-import { startPlatformPreview } from '../../preview-platform.mjs';
-import { createAccountServer } from '../../../server/account-server.mjs';
+import {mkdtemp,rm} from 'node:fs/promises';
+import {tmpdir} from 'node:os';
+import {join} from 'node:path';
+import {request} from 'node:http';
+import {startPlatformPreview} from '../../preview-platform.mjs';
+import {createAccountServer} from '../../../server/account-server.mjs';
 
 const directory = await mkdtemp(join(tmpdir(),'toram-preview-'));
 let preview, production;

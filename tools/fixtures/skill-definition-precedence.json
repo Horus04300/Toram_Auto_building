@@ -1,59 +1,6 @@
 {
-  "description": "Definition stream from the pre-refactor working tree (2026-09-30), including duplicate-ID precedence and stack-control selection. Approved calculation correction 2026-10-14: Magic:22 combat motionSpeed is stat/MOTIONSPEED; all other values and ordering verified against previous hashes.",
-  "groups": [
-    "Battle",
-    "Survival",
-    "Guard",
-    "Support",
-    "DarkPower",
-    "Dancer",
-    "Necromancer:calculation-rules",
-    "Golem:calculation-rules",
-    "Minstrel",
-    "Blade",
-    "DualSword-core",
-    "DualSword:calculation-rules",
-    "Halberd-stack-buff",
-    "Halberd-source-coverage",
-    "Crusher-core",
-    "Crusher:calculation-rules",
-    "Mononofu-passives",
-    "Mononofu:calculation-rules",
-    "Knight-stack-buff",
-    "Knight:calculation-rules",
-    "Martial-stack-buff",
-    "Shot-source-coverage",
-    "Shot-stack-buff",
-    "Magic-source-coverage",
-    "Sprite-stack-buff",
-    "Sprite:calculation-rules",
-    "Assassin-stack-buff",
-    "Assassin:calculation-rules",
-    "Dagger:calculation-rules",
-    "Shield:calculation-rules",
-    "Priest:calculation-rules",
-    "Hunter:calculation-rules",
-    "Wizard:calculation-rules",
-    "Guard:calculation-rules",
-    "DarkPower:calculation-rules",
-    "MagicBlade:calculation-rules",
-    "Barehand:calculation-rules",
-    "Ninja:calculation-rules",
-    "Partisan:calculation-rules",
-    "catalog-registration"
-  ],
-  "snapshots": {
-    "all": {
-      "count": 430,
-      "sha256": "a109008dfe6e4f8c9228c062e6c0103c152643c2061b9fd7e8c98bac334edd49"
-    },
-    "normal": {
-      "count": 427,
-      "sha256": "13631ed13c034165afbf6f0a876268b8205688f13e76e6b9843546a230842d82"
-    },
-    "stack": {
-      "count": 427,
-      "sha256": "13631ed13c034165afbf6f0a876268b8205688f13e76e6b9843546a230842d82"
-    }
-  }
+  "description": "Canonical selected skill behavior before ID consolidation. Source references are verified independently by the S1 gate.",
+  "count": 427,
+  "orderedIdsSha256": "408996be4233d6518dacfc105493c776e2515e049cde1a70d61c66145ddf7eb0",
+  "calculationSha256": "1dbdef0e2027cc8acab6c5c7214657e4527d9e2822f0c4183f152cb5cf906093"
 }

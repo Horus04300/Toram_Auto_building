@@ -1,8 +1,10 @@
-import { copyFile, mkdir, readFile, writeFile, readdir, access, unlink, rmdir, realpath, lstat } from 'node:fs/promises';
+import {spawnSync} from 'node:child_process';
+import {buildWasm} from './build-wasm.mjs';
+import {syncArtifacts} from './support/build-artifacts.mjs';
+import { readFile, readdir, access } from 'node:fs/promises';
 import { dirname, resolve, relative, sep } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { CLASSIC_SCRIPT_PATHS, WEB_CLASSIC_SCRIPT_PATHS } from '../web/src/classic-script-manifest.mjs';
-import { frontendSourcePath, FRONTEND_MODULE_PATHS, FRONTEND_PAGE_PATHS } from './support/frontend-paths.mjs';
+import {frontendSourcePath,frontendModuleGraph} from './support/frontend-paths.mjs';
 import { readProjectManifest } from './extraction/convert-toram-project-items.mjs';
 import { readBossManifest } from './extraction/convert-toram-project-bosses.mjs';
 
@@ -23,21 +25,17 @@ export async function renderFrontendHtml(target) {
     .replace('<meta name="account-server" content="">', `<meta name="account-server" content="${accountServer}">`);
 }
 
-async function pruneDeploymentFiles(directory, outputRoot, files) {
-  for (const entry of await readdir(directory, { withFileTypes:true })) {
-    const path = resolve(directory, entry.name);
-    if (entry.isSymbolicLink()) throw new Error(`Deployment must not contain symlinks: ${path}`);
-    if (entry.isDirectory()) {
-      await pruneDeploymentFiles(path, outputRoot, files);
-      if ((await readdir(path)).length === 0) await rmdir(path);
-    } else if (entry.isFile() && !files.has(relative(outputRoot, path).split(sep).join('/'))) await unlink(path);
-  }
-}
-
 export async function prepareFrontend(target) {
-  const html = await renderFrontendHtml(target);
+  const html=await renderFrontendHtml(target);
+  await buildWasm();
+  if(target==='desktop') {
+    const compiler=spawnSync(process.execPath,[resolve(root,'node_modules/typescript/bin/tsc'),'-p','desktop/tsconfig.json'],{cwd:root,windowsHide:true,stdio:'inherit'});
+    if(compiler.error) throw compiler.error;
+    if(compiler.status!==0) throw new Error('Desktop adapter compilation failed');
+  }
   const outputRoot = resolve(root, `build/${target}`);
-  const files = new Set(['index.html', ...(target === 'desktop' ? CLASSIC_SCRIPT_PATHS : WEB_CLASSIC_SCRIPT_PATHS), ...FRONTEND_MODULE_PATHS, ...FRONTEND_PAGE_PATHS]);
+  const graph=await frontendModuleGraph(target);
+  const files=new Set(['index.html',...graph.files]);
   for (const directory of ['css', 'fonts', 'icons']) {
     const base = resolve(root, 'web/public', directory);
     for (const entry of await readdir(base, { recursive:true, withFileTypes:true })) {
@@ -58,20 +56,9 @@ export async function prepareFrontend(target) {
   for (const entry of await readdir(parallelRoot, { recursive:true, withFileTypes:true })) {
     if (entry.isFile()) files.add('assets/wasm/parallel/' + relative(parallelRoot, resolve(entry.parentPath, entry.name)).split(sep).join('/'));
   }
-  await mkdir(outputRoot, { recursive:true });
-  if (await realpath(outputRoot) !== outputRoot) throw new Error('Frontend output must be a real directory.');
-  for (const path of files) {
-    const output = resolve(outputRoot, path);
-    if (!output.startsWith(outputRoot + sep)) throw new Error(`Invalid deployment path: ${path}`);
-    await mkdir(dirname(output), { recursive:true });
-    if (await realpath(dirname(output)) !== dirname(output)) throw new Error(`Deployment directory must be real: ${output}`);
-    try { if (!(await lstat(output)).isFile()) throw new Error(`Deployment target must be a regular file: ${output}`); }
-    catch (error) { if (error.code !== 'ENOENT') throw error; }
-    if (path === 'index.html') await writeFile(output, html, 'utf8');
-    else await copyFile(resolve(root, frontendSourcePath(path)), output);
-  }
-  await pruneDeploymentFiles(outputRoot, outputRoot, files);
-  console.log(`Prepared ${target} frontend in build/${target}/.`);
+  const written=await syncArtifacts(outputRoot,files,path=>path==='index.html' ? html : graph.rendered.has(path) ? graph.rendered.get(path) : readFile(resolve(root,frontendSourcePath(path))));
+  console.log(`Prepared ${target} frontend in build/${target}/ (${written}/${files.size} changed artifacts).`);
+  return {files:files.size,written};
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) await prepareFrontend(process.argv[2]);

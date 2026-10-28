@@ -41,7 +41,7 @@ for (const name of ['마법) 인힘 마도구', '마법) 지팡이 크법 세팅
   const mastery = sample.build.skillLevels.Wizard[10];
   const expectedMasteryPercent = 1.5 * mastery + (wizardCount - 1) * mastery / 2;
   const expectedMasteryFlat = wizardPoints * mastery;
-  const joko = context.getCrystaByName('죠코');
+  const joko = context.ToramCrystaCatalog.resolve('죠코');
   const additiveJoko = context.ToramCalculationKernel.evaluateContext(current.snapshot.baseContext, [...current.snapshot.crystas, joko, joko]);
   assert.equal(additiveJoko.ctx.critF - current.calculation.ctx.critF, -18, '죠코 2개의 고정 CRIT 합');
   let sourceFormulaCspd = null;
@@ -62,15 +62,5 @@ for (const name of ['마법) 인힘 마도구', '마법) 지팡이 크법 세팅
       masteryFlat:expectedMasteryFlat, supportCspdWithMasteryAndOverLimit:sourceFormulaCspd },
     additiveJoko:{ crit: additiveJoko.finalCrit, critFlatDelta:additiveJoko.ctx.critF - current.calculation.ctx.critF } });
 }
-const runtime = { crystaOptimization:{ runVersion:1, lastOptimizationResult:{ status:'exact' } } };
-let cancellations = 0, disposals = 0;
-context.ToramRuntimeState = { get:() => runtime };
-context.ToramCrystaOptimizationExecutionAdapter = { cancel() { cancellations++; }, disposeContinuation() { disposals++; } };
-context.setTimeout = () => {}; // Stop before compiler/search; exercise the actual preview transition.
-vm.runInContext(await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8'), context);
-context.startCrystaOptimizationGreedyPreview({}, {}, [], [], {});
-assert.equal(cancellations, 1);
-assert.equal(disposals, 1);
-assert.equal(runtime.crystaOptimization.lastOptimizationResult, null);
 console.log(JSON.stringify(summaries, null, 2));
-console.log('PASS: saved-build parsing, Perulu deltas, additive Joko -18, input/scope preservation, preview discards exact result (not browser E2E or full feedback verification)');
+console.log('PASS: saved-build parsing, Perulu deltas, additive Joko -18, input/scope preservation (not browser E2E or full feedback verification)');

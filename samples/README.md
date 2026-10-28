@@ -14,14 +14,12 @@
 
 JSON 4개는 `toram-auto-build-document`, schema v2, `saved-build` 형식이다. 두 마법 샘플에는 장비·스킬·활성 버프·콤보와 보스 조건이 포함돼 있다. 실제 앱 가져오기와 계산 결과는 별도 검증이 필요하다.
 
-pelio s 피드백의 현재 코드 확인 결과와 검증 범위는 [피드백 확인 기록](../docs/verification/pelio-feedback.md)에 있다.
+샘플의 계산 기준과 확인 범위는 [샘플 검증 범위](../docs/verification/pelio-feedback.md)를 따른다.
 
-두 마법 샘플의 캐논 입력과 기존 루브닐의 시간·과정 로그 비교는 [실제 입력 계측](../docs/verification/crysta-user-samples.md)에 있다.
-
-다른 입력의 가설 보완과 oo o 샘플의 가능/불가능 경계 진단은 [입력별 가설 확인](../docs/verification/crysta-input-hypothesis-checks.md)에 있다.
+연산 비교는 [계측 계약](../docs/verification/optimization-computation-timing.md)에 따라 같은 입력·실행 경계로 새로 측정한다. 과거 실행 로그를 현재 성능으로 사용하지 않는다.
 
 ## 활용 원칙
 
 - 받은 파일명과 원문을 보존한다. 재현을 위해 입력을 바꾸면 원본과 구분되는 별도 fixture로 만든다.
 - 피드백에 적힌 수치와 현상은 제보 내용이다. 현재 코드에서 재현하고 원문 출처·계산 규칙을 확인하기 전에는 확정 버그나 정답으로 기록하지 않는다.
-- 새 자료도 이 폴더에 보관하고, 계산 검증 결과와 수정 내역은 해당 검증 문서·테스트에 기록한다.
+- 새 자료도 이 폴더에 보관하고, 계산 근거와 검증 범위는 해당 문서·테스트에서 관리한다.

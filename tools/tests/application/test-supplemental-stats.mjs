@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
+import {createRequire} from 'node:module';
 const require=createRequire(import.meta.url);
 const supplemental=require('../../../web/src/calculation/supplemental-stats.js');
 function calculation(overrides={}) {
@@ -69,4 +69,13 @@ assert.equal(rewards.outcomes.gemDustEquivalent,150);
 assert.equal(supplemental.evaluate(calculation()).values.dropWeight,null,'Missing LUK must not become an invented character stat');
 const old=supplemental.evaluate(calculation({ctx:{preservedStats:{ITEM_CD:-1}}}));
 assert.ok(old.diagnostics.some(item=>item.key==='ITEM_CD'));
+for(const [sources,expected] of [[[50,-20],30],[[-90,-30],-100],[[250,100],350]]) {
+  const value=supplemental.evaluate(calculation({ctx:{preservedStats:{AGGRO:sources.reduce((a,b)=>a+b,0)},preservedStatContributions:{AGGRO:sources}}}));
+  assert.equal(value.values.aggroPercent,expected);
+}
+for(const key of ['AGGRO','PHYS_PURSUIT','MAG_PURSUIT'])assert.ok(supplemental.supportedKeys.includes(key));
+const pursuit=supplemental.evaluate(calculation({ctx:{preservedStats:{PHYS_PURSUIT:150,MAG_PURSUIT:75}}}));
+assert.equal(pursuit.values.physicalPursuitMultiplier,1.5);
+assert.equal(pursuit.values.magicalPursuitMultiplier,.75);
+assert.equal(supplemental.evaluate(calculation({ctx:{preservedStats:{ITEM_DELAY:1}}}),{baseItemCooldownSeconds:10}).values.itemCooldownSeconds,9);
 console.log('Supplemental stats: PASS (armor branches, native float stages, signed values, recovery caps, missing inputs)');

@@ -1,22 +1,22 @@
-/* 트리별 스킬 효과 정의를 합치는 등록기. */
-(function () {
+
+/* One definition per skill ID; fixed evaluation order preserves floating-point accumulation. */
+
   'use strict';
-  var trees = Object.create(null);
-  // Definition precedence is independent of physical file layout.
-  var definitionOrder = ["Battle","Survival","Guard","Support","DarkPower","Dancer","Necromancer:calculation-rules","Golem:calculation-rules","Minstrel","Blade","DualSword-core","DualSword:calculation-rules","Halberd-stack-buff","Halberd-source-coverage","Crusher-core","Crusher:calculation-rules","Mononofu-passives","Mononofu:calculation-rules","Knight-stack-buff","Knight:calculation-rules","Martial-stack-buff","Shot-source-coverage","Shot-stack-buff","Magic-source-coverage","Sprite-stack-buff","Sprite:calculation-rules","Assassin-stack-buff","Assassin:calculation-rules","Dagger:calculation-rules","Shield:calculation-rules","Priest:calculation-rules","Hunter:calculation-rules","Wizard:calculation-rules","Guard:calculation-rules","DarkPower:calculation-rules","MagicBlade:calculation-rules","Barehand:calculation-rules","Ninja:calculation-rules","Partisan:calculation-rules","catalog-registration"];
-  function register(treeId, definitions) {
-    if (!treeId || !Array.isArray(definitions)) throw new Error('스킬 효과 등록 형식이 올바르지 않습니다.');
-    if (trees[treeId]) throw new Error('이미 등록된 스킬 효과 트리: ' + treeId);
-    trees[treeId] = Object.freeze(definitions.slice());
+  var order = new Map('Shot:16 Magic:13 Shot:17 Shot:4 Magic:4 Magic:2 Blade:17 Blade:18 Blade:19 Blade:6 Blade:7 Blade:13 Blade:20 Battle:0 Battle:1 Battle:2 Battle:3 Battle:4 Battle:5 Battle:6 Battle:7 Battle:8 Battle:9 Battle:10 Battle:11 Battle:12 Battle:13 Battle:14 Survival:0 Survival:1 Survival:2 Survival:3 Survival:4 Survival:5 Survival:6 Survival:7 Survival:8 Guard:0 Guard:1 Guard:2 Guard:3 Guard:4 Guard:5 Support:0 Support:1 Support:2 Support:3 Support:4 Support:5 Support:6 Support:7 Support:8 Support:9 Support:10 Support:11 Support:12 DarkPower:6 Dancer:0 Dancer:1 Dancer:2 Dancer:3 Dancer:4 Dancer:5 Dancer:6 Necromancer:0 Necromancer:1 Necromancer:2 Necromancer:3 Necromancer:4 Necromancer:5 Necromancer:6 Necromancer:7 Necromancer:8 Necromancer:9 Necromancer:10 Necromancer:11 Golem:0 Golem:1 Golem:2 Golem:3 Golem:4 Golem:5 Golem:6 Golem:7 Golem:8 Golem:9 Golem:10 Golem:11 Minstrel:0 Minstrel:1 Minstrel:2 Minstrel:3 Minstrel:4 Minstrel:5 Minstrel:6 Minstrel:7 Minstrel:8 Minstrel:9 Blade:0 Blade:1 Blade:2 Blade:3 Blade:4 Blade:5 Blade:9 Blade:10 Blade:11 Blade:12 Blade:14 Blade:15 Blade:21 Blade:22 Blade:23 Blade:16 Blade:8 DualSword:0 DualSword:14 DualSword:15 DualSword:16 DualSword:1 DualSword:2 DualSword:3 DualSword:4 DualSword:5 DualSword:6 DualSword:7 DualSword:8 DualSword:9 DualSword:10 DualSword:11 DualSword:12 DualSword:13 DualSword:17 DualSword:18 DualSword:19 DualSword:20 Halberd:19 Halberd:0 Halberd:1 Halberd:2 Halberd:3 Halberd:4 Halberd:5 Halberd:6 Halberd:7 Halberd:8 Halberd:9 Halberd:10 Halberd:11 Halberd:12 Halberd:13 Halberd:14 Halberd:15 Halberd:16 Halberd:17 Halberd:18 Halberd:20 Halberd:21 Crusher:8 Crusher:0 Crusher:1 Crusher:2 Crusher:3 Crusher:4 Crusher:5 Crusher:6 Crusher:7 Crusher:9 Mononofu:11 Mononofu:14 Mononofu:0 Mononofu:1 Mononofu:2 Mononofu:3 Mononofu:4 Mononofu:5 Mononofu:6 Mononofu:7 Mononofu:8 Mononofu:9 Mononofu:10 Mononofu:12 Mononofu:13 Mononofu:15 Mononofu:16 Mononofu:17 Mononofu:18 Mononofu:19 Mononofu:20 Mononofu:21 Mononofu:22 Knight:3 Knight:0 Knight:1 Knight:2 Knight:4 Knight:5 Knight:6 Knight:7 Knight:8 Knight:9 Knight:10 Knight:11 Knight:12 Knight:13 Knight:14 Martial:0 Martial:1 Martial:2 Martial:3 Martial:4 Martial:5 Martial:6 Martial:7 Martial:8 Martial:9 Martial:10 Martial:12 Martial:13 Martial:14 Martial:15 Martial:16 Martial:17 Martial:18 Martial:19 Martial:20 Martial:21 Martial:11 Shot:0 Shot:1 Shot:2 Shot:3 Shot:5 Shot:6 Shot:7 Shot:8 Shot:9 Shot:10 Shot:11 Shot:12 Shot:13 Shot:14 Shot:15 Shot:18 Shot:19 Shot:20 Shot:21 Shot:22 Shot:23 Shot:24 Magic:0 Magic:1 Magic:3 Magic:5 Magic:6 Magic:7 Magic:8 Magic:9 Magic:10 Magic:11 Magic:12 Magic:14 Magic:15 Magic:16 Magic:17 Magic:18 Magic:19 Magic:20 Magic:21 Magic:22 Magic:23 Sprite:9 Sprite:0 Sprite:1 Sprite:2 Sprite:3 Sprite:4 Sprite:5 Sprite:6 Sprite:7 Sprite:8 Sprite:10 Sprite:11 Sprite:12 Sprite:13 Sprite:14 Sprite:15 Sprite:16 Assassin:8 Assassin:0 Assassin:1 Assassin:2 Assassin:3 Assassin:4 Assassin:5 Assassin:6 Assassin:7 Assassin:9 Assassin:10 Assassin:11 Assassin:12 Assassin:13 Assassin:14 Dagger:0 Dagger:1 Dagger:2 Dagger:3 Dagger:4 Dagger:5 Dagger:6 Dagger:7 Dagger:8 Dagger:9 Dagger:10 Dagger:11 Dagger:12 Shield:0 Shield:1 Shield:2 Shield:3 Shield:4 Shield:5 Shield:6 Shield:7 Shield:8 Shield:9 Shield:10 Shield:11 Shield:12 Priest:0 Priest:1 Priest:2 Priest:3 Priest:4 Priest:5 Priest:6 Priest:7 Priest:8 Priest:9 Priest:10 Priest:11 Priest:12 Priest:13 Priest:14 Hunter:0 Hunter:1 Hunter:2 Hunter:3 Hunter:4 Hunter:5 Hunter:6 Hunter:7 Hunter:8 Hunter:9 Hunter:10 Hunter:11 Hunter:12 Hunter:13 Hunter:14 Hunter:15 Hunter:16 Wizard:0 Wizard:1 Wizard:2 Wizard:3 Wizard:4 Wizard:5 Wizard:6 Wizard:7 Wizard:8 Wizard:9 Wizard:10 Wizard:11 Wizard:12 Wizard:13 Wizard:14 DarkPower:0 DarkPower:1 DarkPower:2 DarkPower:3 DarkPower:4 DarkPower:5 DarkPower:7 DarkPower:8 DarkPower:9 DarkPower:10 DarkPower:11 MagicBlade:0 MagicBlade:1 MagicBlade:2 MagicBlade:3 MagicBlade:4 MagicBlade:5 MagicBlade:6 MagicBlade:7 MagicBlade:8 MagicBlade:9 MagicBlade:10 MagicBlade:11 MagicBlade:12 MagicBlade:13 MagicBlade:14 Barehand:0 Barehand:1 Barehand:2 Barehand:3 Barehand:4 Barehand:5 Barehand:6 Barehand:7 Barehand:8 Barehand:9 Barehand:10 Barehand:11 Ninja:0 Ninja:1 Ninja:2 Ninja:3 Partisan:0 Partisan:1 Partisan:2 Partisan:3 Partisan:4 Partisan:5 Partisan:6 Partisan:7 Partisan:8'.split(' ').map(function (id,index) {return [id,index];}));
+  var byId = new Map(), snapshot = null;
+  function freeze(value) { if (value && typeof value === 'object' && !Object.isFrozen(value)) {Object.values(value).forEach(freeze); Object.freeze(value);} return value; }
+  function register(definitions) {
+    if (!Array.isArray(definitions)) throw new Error('스킬 정의 배열이 필요합니다.');
+    var seen = new Set();
+    definitions.forEach(function (skill) {
+      if (!skill || typeof skill.id !== 'string' || !skill.id || byId.has(skill.id) || seen.has(skill.id)) throw new Error('유효하지 않거나 중복된 스킬 ID: ' + (skill && skill.id));
+      seen.add(skill.id);
+    });
+    definitions.forEach(function (skill) {byId.set(skill.id,freeze(skill));});
+    snapshot = null;
   }
-  function all() {
-    return Object.freeze(Object.keys(trees).sort(function (a, b) {
-      var ai = definitionOrder.indexOf(a), bi = definitionOrder.indexOf(b);
-      return (ai < 0 ? definitionOrder.length : ai) - (bi < 0 ? definitionOrder.length : bi);
-    }).reduce(function (items, treeId) {
-      return items.concat(trees[treeId]);
-    }, []));
+  function definitions() {
+    if (!snapshot) snapshot = Object.freeze(Array.from(byId.values()).sort(function (a,b) {return (order.get(a.id) ?? Infinity) - (order.get(b.id) ?? Infinity);}));
+    return snapshot;
   }
-  window.TORAM_SKILL_EFFECT_TREE_DATA = trees;
-  window.ToramSkillEffectRegistry = Object.freeze({ register: register, all: all });
-}());
+  export const skillRegistry = Object.freeze({register:register,get:function (id) {return byId.get(id);},definitions:definitions});

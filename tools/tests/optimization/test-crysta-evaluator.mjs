@@ -1,19 +1,15 @@
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {statRegistry as registry} from '../../../web/src/calculation/stat-registry.js';
+import {buildEvaluator as evaluator} from '../../../web/src/calculation/build-evaluator.js';
+import {calculationKernel} from '../../../web/src/calculation/calculator.js';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
 
 const root = resolve(import.meta.dirname, '../../..');
-const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
-const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
 
-const crystaSource = await readCrystaDataSource(root);
 const dataContext = {};
-vm.createContext(dataContext);
-vm.runInContext(`${crystaSource}\nglobalThis.__crystas = crystaDataJson;`, dataContext);
+dataContext.__crystas=(await loadSavedBuildEnvironment()).ToramCrystaCatalog.items;
 const crystaKeys = registry.collectCrystaKeys(dataContext.__crystas);
 const audit = registry.auditKeys(crystaKeys);
 assert.equal(crystaKeys.length, 94, 'ID 통합 크리스타의 계산/보존 스탯 키를 모두 유지해야 합니다.');
@@ -23,10 +19,6 @@ assert.ok(audit.preserved.includes('DROP_RATE'), '1차 CrystaOptimization 범위
 
 const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 
 function base(overrides={}) {
   return Object.assign({
@@ -52,7 +44,7 @@ const baseInput = base();
 const original = JSON.stringify(baseInput);
 const build = evaluator.createBuildSnapshot(baseInput, [utilityCrysta]);
 const scenario = evaluator.createScenarioSnapshot(baseInput, { requirements:{ maxHp:5000,amprBeforeDual:70 } });
-const outcome = evaluator.evaluate(build, scenario, context.window.ToramCalculationKernel.evaluateContext);
+const outcome = evaluator.evaluate(build, scenario, calculationKernel.evaluateContext);
 
 assert.equal(JSON.stringify(baseInput), original, 'BuildEvaluator는 호출자의 입력 객체를 변경하면 안 됩니다.');
 assert.ok(Object.isFrozen(build) && Object.isFrozen(build.baseContext), 'BuildSnapshot은 평가 중 변경할 수 없게 고정돼야 합니다.');
@@ -64,20 +56,15 @@ assert.equal(outcome.utility.finalAmpr, 200, '듀얼소드는 최종 AMPR만 2�
 assert.equal(outcome.utility.aspd, 1000, 'ASPD% 적용 뒤 고정 ASPD를 더해야 합니다.');
 assert.equal(outcome.offense.normalAttackCrit, 100, '선택 스킬 확정 크리티컬과 별개로 평타 크리티컬률을 반환해야 합니다.');
 assert.equal(outcome.constraints.feasible, true, 'fixture는 모든 CrystaOptimization 기본 Utility 경계를 만족해야 합니다.');
-assert.equal(evaluator.evaluate(build, evaluator.createScenarioSnapshot(baseInput,{requirements:{maxHp:5000,amprBeforeDual:100}}), context.window.ToramCalculationKernel.evaluateContext).constraints.feasible,false,'AMPR%는 CrystaOptimization 유틸리티 목표에 포함하지 않는다.');
+assert.equal(evaluator.evaluate(build, evaluator.createScenarioSnapshot(baseInput,{requirements:{maxHp:5000,amprBeforeDual:100}}), calculationKernel.evaluateContext).constraints.feasible,false,'AMPR%는 CrystaOptimization 유틸리티 목표에 포함하지 않는다.');
 assert.equal(outcome.calculation.ctx.preservedStats.DROP_RATE, 1, '현재 범위 밖 스탯도 계산 컨텍스트에 보존돼야 합니다.');
-const aggregateOutcome = evaluator.evaluateAggregate(baseInput, scenario, utilityCrysta.stats, context.window.ToramCalculationKernel.evaluateContext);
+const aggregateOutcome = evaluator.evaluateAggregate(baseInput, scenario, utilityCrysta.stats, calculationKernel.evaluateContext);
 assert.deepEqual(aggregateOutcome.damage, outcome.damage, '고속 집계 평가의 대미지는 전체 BuildSnapshot 평가와 같아야 합니다.');
 assert.deepEqual(aggregateOutcome.offense, outcome.offense, '고속 집계 평가의 공격 지표는 전체 평가와 같아야 합니다.');
 assert.deepEqual(aggregateOutcome.utility, outcome.utility, '고속 집계 평가의 Utility는 전체 평가와 같아야 합니다.');
 assert.deepEqual(aggregateOutcome.constraints, outcome.constraints, '고속 집계 평가의 hard constraint 판정은 전체 평가와 같아야 합니다.');
 assert.equal(aggregateOutcome.calculation.ctx.preservedStats.DROP_RATE, 1, '고속 집계 평가도 범위 밖 스탯을 보존해야 합니다.');
 assert.equal(JSON.stringify(baseInput), original, '고속 집계 평가도 호출자의 기본 컨텍스트를 변경하면 안 됩니다.');
-const aggregateSummary = evaluator.evaluateAggregateSummary(baseInput, scenario, utilityCrysta.stats, context.window.ToramCalculationKernel.evaluateContext);
-assert.equal(aggregateSummary.damage.expected, outcome.damage.expected, '경량 상한 평가의 점수는 전체 평가와 같아야 합니다.');
-assert.equal(aggregateSummary.constraints.feasible, outcome.constraints.feasible, '경량 상한 평가의 hard constraint 판정은 전체 평가와 같아야 합니다.');
-assert.equal(JSON.stringify(baseInput), original, '경량 상한 평가도 호출자의 기본 컨텍스트를 변경하면 안 됩니다.');
-
 const longRangeDefaults = evaluator.defaultRequirements(base({ rangeType:'LONG', godspeedWieldLevel:10 }));
 assert.equal(longRangeDefaults.maxHp, null, '원거리 기본 빌드는 MAXHP 최소 조건이 없어야 합니다.');
 assert.equal(longRangeDefaults.maxMp, 2300, '신속의 수도 Lv.10은 버프 전 MAXMP 2300을 요구해야 합니다.');
@@ -85,7 +72,7 @@ assert.equal(evaluator.defaultRequirements(base({ maximizerLevel:10 })).amprBefo
 assert.equal(evaluator.defaultRequirements(base({ maximizerLevel:9 })).amprBeforeDual, 100, '맥시마이저 Lv.9 이하는 AMPR 최소 조건 100을 유지해야 합니다.');
 
 const invalidBuild = evaluator.createBuildSnapshot(base(), [{ name:'unknown', stats:{ NOT_A_REAL_STAT:1 } }]);
-const invalid = evaluator.evaluate(invalidBuild, evaluator.createScenarioSnapshot(base(), { requirements:{ maxHp:null, maxMp:null, amprBeforeDual:null, normalAttackCrit:null, aspd:null } }), context.window.ToramCalculationKernel.evaluateContext);
+const invalid = evaluator.evaluate(invalidBuild, evaluator.createScenarioSnapshot(base(), { requirements:{ maxHp:null, maxMp:null, amprBeforeDual:null, normalAttackCrit:null, aspd:null } }), calculationKernel.evaluateContext);
 assert.equal(invalid.constraints.feasible, false, '알 수 없는 스탯 키가 있으면 최적화 입력을 유효하다고 처리하면 안 됩니다.');
 assert.equal(invalid.diagnostics[0].key, 'NOT_A_REAL_STAT', '누락된 스탯 키 이름을 진단에 보존해야 합니다.');
 

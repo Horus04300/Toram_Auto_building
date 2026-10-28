@@ -1,4 +1,5 @@
-(function (root) {
+export function createOfficialLevelCap(root) {
+
     var FALLBACK = Object.freeze({
         level: 325,
         sourceUrl: 'https://toram.jp/information/detail/?information_id=11036',
@@ -122,7 +123,7 @@
         return refreshPromise;
     }
 
-    root.ToramOfficialLevelCap = Object.freeze({
+    const api = Object.freeze({
         getCurrent: function () { return current; },
         refresh: fetchLatest,
         extractConfirmedLevelCap: extractConfirmedLevelCap
@@ -130,4 +131,6 @@
 
     // The known official record is available immediately; the online confirmation is non-blocking.
     fetchLatest();
-}(window));
+
+return api;
+}

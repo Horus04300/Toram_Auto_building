@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import vm from 'node:vm';
-import { convertCatalog } from '../../extraction/convert-toram-project-items.mjs';
-import { createEquipmentSelection, resolveEquipmentOptions, validateEquipmentSelection } from '../../../web/src/application/item-catalog.mjs';
-import { validateEquipmentObject } from '../../../web/src/application/equipment-object.mjs';
-import { loadSavedBuildEnvironment } from '../../support/saved-build-headless-environment.mjs';
+import {readFile} from 'node:fs/promises';
+import {createRequire} from 'node:module';
+import {buildStore,initializeBuildEditor} from '../../../web/src/application/build-draft-store.js';
+import {convertCatalog} from '../../extraction/convert-toram-project-items.mjs';
+import {createEquipmentSelection,resolveEquipmentOptions,validateEquipmentSelection} from '../../../web/src/application/item-catalog.mjs';
+import {validateEquipmentObject} from '../../../web/src/application/equipment-object.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
 
 const read = async path => JSON.parse(await readFile(new URL(`../../../${path}`, import.meta.url), 'utf8'));
 const registry = createRequire(import.meta.url)('../../../web/src/calculation/stat-registry.js');
@@ -56,7 +56,7 @@ assert.equal(when.kind,'any');
 for (const eventType of [-1,256,1.5,'3']) assert.throws(()=>validateEquipmentSelection({...selections.get(21095),conditionalStats:[{when:{kind:'item-event',eventType},stats:{},unresolved:[]}]},registry),/이벤트/u);
 
 const environment=await loadSavedBuildEnvironment();
-const piece=(type=null)=>({type,attack:0,refinement:0,stability:0,options:[],crystas:[],lockedCrystaSlots:[]});
+const piece=(type=null)=>({type,attack:['한손검','방패'].includes(type)?0:null,refinement:['한손검','방패'].includes(type)?0:null,stability:['한손검','방패'].includes(type)?0:null,options:[],crystas:type==='방패'?[]:['',''],lockedCrystaSlots:type==='방패'?[]:[false,false]});
 const input={build:{character:{level:300,attributes:{STR:100,INT:100,VIT:100,AGI:100,DEX:100,CRT:0}},equipment:{mainWeapon:{...piece('한손검'),attack:625,stability:80},subWeapon:{...piece('방패'),catalogItem:selections.get(17035)},armor:piece('일반옷'),additional:piece(),special:piece()},externalOptions:[],skillLevels:{},activeBuffs:{},combo:[],guildFoodBuff:false},scenario:{target:{bossLevel:300,bossDef:1000,bossMdef:500,bossCritResist:0,bossPhysResist:0,bossMagResist:0},conditions:{}},request:{overrides:{}}};
 for(const active of [[],[3]]) {
   input.scenario.conditions.activeItemEventTypes=active;
@@ -65,8 +65,8 @@ for(const active of [[],[3]]) {
   sub.options=resolveEquipmentOptions(sub.catalogItem,'subWeapon',{...ctx,activeItemEventTypes:active},registry); delete sub.catalogItem;
   assert.equal(JSON.stringify(result.calculation),JSON.stringify(environment.ToramApplication.CalculateBuild(manual).calculation));
 }
-environment.ToramBuildDraftStore={read:()=>input};
-const saved=JSON.parse(environment.ToramSettingsRepository.serializeSavedBuild('이벤트 장비'));
+environment.ToramBuildDraftStore={read:()=>input,syncFromUi(){}};
+const saved=environment.ToramSettingsRepository.snapshot('이벤트 장비');
 assert.deepEqual(Array.from(environment.ToramSettingsRepository.parseSavedBuild(JSON.stringify(saved)).scenario.conditions.activeItemEventTypes),[3]);
 for(const bad of [[3,3],[-1],[256],[1.2],['3'],3,null]) {
   const broken=structuredClone(saved); broken.scenario.conditions.activeItemEventTypes=bad;
@@ -76,12 +76,16 @@ delete saved.scenario.conditions.activeItemEventTypes;
 assert.equal(environment.ToramSettingsRepository.validateSavedBuild(saved),true,'Older saves default to no active event');
 
 const nodes=Object.fromEntries(['itemEvent3','itemEvent9'].map(id=>[id,{checked:true,type:'checkbox',nodeType:1,id}]));
-const ui={window:null,document:{readyState:'loading',getElementById:id=>nodes[id],addEventListener(){}},ToramBuildDraftStore:{syncFromUi(){}}}; ui.window=ui;
-vm.createContext(ui);
-vm.runInContext(await readFile(new URL('../../../web/src/storage/build-state-snapshot.js',import.meta.url),'utf8'),ui);
-ui.ToramBuildStateUi.restoreSession({build:{},scenario:{conditions:{activeItemEventTypes:[9]}}});
+const handlers={};
+const ui={CustomEvent:class {constructor(type){this.type=type;}},setTimeout,document:{getElementById:id=>nodes[id],dispatchEvent(){},addEventListener(name,fn){handlers[name]=fn;}}};
+ui.document.defaultView=ui;
+initializeBuildEditor(ui.document,{});
+ui.ToramBuildDraftStore=buildStore;
+ui.ToramBuildDraftStore.restoreSession({build:{},scenario:{conditions:{activeItemEventTypes:[9]}}});
 assert.equal(nodes.itemEvent3.checked,false); assert.equal(nodes.itemEvent9.checked,true);
-ui.ToramBuildStateUi.restoreSession({build:{},scenario:{conditions:{}}});
+ui.ToramBuildDraftStore.restoreSession({build:{},scenario:{conditions:{}}});
 assert.equal(nodes.itemEvent9.checked,false);
-assert.equal(ui.ToramBuildStateUi.isCalculationInput(nodes.itemEvent3),true);
+nodes.itemEvent3.checked=true;
+handlers.change({target:nodes.itemEvent3});
+assert.deepEqual(buildStore.getScenario().conditions.activeItemEventTypes,[3]);
 console.log('Item events: PASS (native ordered gates, byte operands, equipment/kernel/save/restore, default inactive)');

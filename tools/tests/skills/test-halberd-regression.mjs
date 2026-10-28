@@ -1,11 +1,9 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
-const root=resolve(import.meta.dirname, '../../..'), context={window:{},console}; context.window.window=context.window;
-context.window.skillSimulatorState={getInvestments:()=>({Halberd:{}})}; vm.createContext(context);
-for(const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/halberd.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
-const effects=context.window.ToramSkillEffects, combo=context.window.ToramComboSequence, ids=Array.from({length:22},(_,id)=>`Halberd:${id}`);
-const base=(mainType='선풍창')=>({mainType,subType:'없음',level:300,strBase:400,dexBase:100,intBase:200,vitBase:100,agiBase:300,crtBase:50});
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
+const context={window:{},console}; context.window.window=context.window;
+context.window.skillSimulatorState={getInvestments:()=>({Halberd:{}})};
+const effects=skillEffects, combo=comboSequence, ids=Array.from({length:22},(_,id)=>`Halberd:${id}`);
+const base=(mainType='선풍창')=>({get skillLevels(){return context.window.skillSimulatorState.getInvestments();},mainType,subType:'없음',level:300,strBase:400,dexBase:100,intBase:200,vitBase:100,agiBase:300,crtBase:50});
 const combat={STR:450,DEX:110,INT:250,VIT:120,AGI:320,ATK:1000,MATK:600,MAXHP:10000};
 const levels=(value,extra={})=>{context.window.skillSimulatorState.getInvestments=()=>({Halberd:Object.assign(Object.fromEntries(ids.map(id=>[id.slice(8),value])),extra)});};
 const assert=(ok,msg)=>{if(!ok)throw new Error(msg);}; const close=(a,b,msg)=>assert(Math.abs(a-b)<1e-9,`${msg}: expected ${b}, got ${a}`);

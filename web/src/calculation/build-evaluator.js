@@ -1,4 +1,5 @@
-(function (root) {
+import {calculationKernel} from './calculator.js';
+
   'use strict';
   var SCHEMA='toram.crysta-build-evaluator.v1';
   function clone(value){if(value===null||value===undefined||typeof value!=='object')return value;if(Array.isArray(value))return value.map(clone);return Object.keys(value).reduce(function(result,key){result[key]=clone(value[key]);return result;},{});}
@@ -25,25 +26,14 @@
   }
   function evaluate(buildSnapshot,scenarioSnapshot,kernel){
     if(!buildSnapshot||buildSnapshot.schema!==SCHEMA)throw new Error('유효한 CrystaOptimization BuildSnapshot이 필요합니다.');
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
+    var evaluator=kernel||calculationKernel&&calculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
     var scenario=scenarioSnapshot||createScenarioSnapshot(buildSnapshot.baseContext);var raw=evaluator(clone(buildSnapshot.baseContext),clone(buildSnapshot.candidates));
     return outcomeFromRaw(raw,scenario,buildSnapshot.hash,true);
   }
   function evaluateAggregate(baseContext,scenarioSnapshot,stats,kernel){
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
+    var evaluator=kernel||calculationKernel&&calculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
     var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var raw=evaluator(baseContext||{},[{name:'CrystaOptimization aggregate',stats:stats||{}}]);
     return outcomeFromRaw(raw,scenario,null,false);
   }
-  function evaluateAggregateSummary(baseContext,scenarioSnapshot,stats,kernel){
-    var evaluator=kernel||root.ToramCalculationKernel&&root.ToramCalculationKernel.evaluateContext;if(typeof evaluator!=='function')throw new Error('CrystaOptimization 계산 커널이 연결되지 않았습니다.');
-    var scenario=scenarioSnapshot||createScenarioSnapshot(baseContext);var requirements=utilityRequirements(scenario.requirements);var raw=evaluator(baseContext||{},[{name:'CrystaOptimization aggregate',stats:stats||{}}],true);var values=utilityValues(raw);var feasible=!(raw.ctx&&raw.ctx.statDiagnostics&&raw.ctx.statDiagnostics.length);
-    if(requirements.maxHp!==null&&requirements.maxHp!==undefined&&values[0]<requirements.maxHp)feasible=false;
-    if(requirements.maxMp!==null&&requirements.maxMp!==undefined&&values[1]<requirements.maxMp)feasible=false;
-    if(requirements.amprBeforeDual!==null&&requirements.amprBeforeDual!==undefined&&values[2]<requirements.amprBeforeDual)feasible=false;
-    if(requirements.normalAttackCrit!==null&&requirements.normalAttackCrit!==undefined&&values[3]<requirements.normalAttackCrit)feasible=false;
-    if(requirements.aspd!==null&&requirements.aspd!==undefined&&values[4]<requirements.aspd)feasible=false;
-    return{damage:{expected:raw.optimizationDamageFactor},constraints:{feasible:feasible}};
-  }
-  var api=Object.freeze({schema:SCHEMA,createBuildSnapshot:createBuildSnapshot,createScenarioSnapshot:createScenarioSnapshot,defaultRequirements:defaultRequirements,evaluate:evaluate,evaluateAggregate:evaluateAggregate,evaluateAggregateSummary:evaluateAggregateSummary,stableStringify:stableStringify});
-  if(typeof module==='object'&&module.exports)module.exports=api;if(root)root.ToramBuildEvaluator=api;
-}(typeof window!=='undefined'?window:globalThis));
+  var api=Object.freeze({schema:SCHEMA,createBuildSnapshot:createBuildSnapshot,createScenarioSnapshot:createScenarioSnapshot,defaultRequirements:defaultRequirements,evaluate:evaluate,evaluateAggregate:evaluateAggregate,stableStringify:stableStringify});
+  export const buildEvaluator=api;

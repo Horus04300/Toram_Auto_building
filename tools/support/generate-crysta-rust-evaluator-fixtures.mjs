@@ -1,17 +1,4 @@
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
-
-const root = resolve(import.meta.dirname, '../..');
-const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
-const context = { window:{ ToramStatRegistry:registry }, console };
-context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
-
+import {calculationKernel} from '../../web/src/calculation/calculator.js';
 function base(overrides={}) {
   return Object.assign({
     level:325, strBase:255, intBase:0, vitBase:0, agiBase:0, dexBase:500, crtBase:0,
@@ -57,7 +44,7 @@ const cases = [
   }), stats:{ATKP:10,ATK:20,MATKP:12,MATK:50,CRIT:80,CDMG:40,MAG_PIERCE:15} }
 ];
 
-const kernel = context.window.ToramCalculationKernel.evaluateContext;
+const kernel = calculationKernel.evaluateContext;
 const result = {
   schema:'toram.crysta-rust-evaluator-fixtures.v1',
   cases:cases.map(item => {

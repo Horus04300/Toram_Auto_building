@@ -1,3 +1,6 @@
+import {createLegacyRecords} from './legacy-records.mjs';
+import {RECORD_KINDS as kinds} from './account-records.mjs';
+import {APP_PATHS,contentType,staticHeaders,containedFile} from './static-assets.mjs';
 import { createServer } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
@@ -10,34 +13,13 @@ import { createPostStore } from './post-store.mjs';
 
 const hash = value => createHash('sha256').update(value).digest('hex');
 const random = () => randomBytes(32).toString('base64url');
-const kinds = new Set(['builds', 'items', 'favorites']);
-const slots = new Set(['mainWeapon', 'subWeapon', 'armor', 'additional', 'special']);
 const object = value => value && typeof value === 'object' && !Array.isArray(value);
 const fail = (status, message) => Object.assign(new Error(message), { status });
-const mime = { '.html':'text/html; charset=utf-8', '.js':'text/javascript', '.mjs':'text/javascript', '.css':'text/css', '.json':'application/json', '.wasm':'application/wasm', '.png':'image/png', '.svg':'image/svg+xml', '.woff2':'font/woff2', '.ico':'image/x-icon' };
 const maxBody = 1024 * 1024;
 
 function name(value, length = 80) {
   if (typeof value !== 'string' || !value.trim() || value.trim().length > length || /[\x00-\x1f\x7f]/u.test(value)) throw fail(400, '이름을 올바르게 입력하세요.');
   return value.trim();
-}
-
-function validateData(kind, data) {
-  if (!object(data)) throw fail(400, '저장 형식이 올바르지 않습니다.');
-  if (kind === 'builds') {
-    const build = data.build;
-    if (data.format !== 'toram-auto-build-document' || data.schemaVersion !== 2 || data.documentType !== 'saved-build'
-      || typeof data.name !== 'string' || typeof data.createdAt !== 'string' || typeof data.updatedAt !== 'string'
-      || !object(build) || !object(build.character) || !object(build.equipment) || !object(build.skillLevels)
-      || !object(build.activeBuffs) || !Array.isArray(build.externalOptions) || !Array.isArray(build.combo) || !object(data.scenario?.target)) throw fail(400, '빌드 저장 형식이 올바르지 않습니다.');
-  } else {
-    const piece = data.equipment;
-    if (data.schema !== 'toram.account-item.v1' || !slots.has(data.slot) || !object(piece)
-      || !Array.isArray(piece.options) || !Array.isArray(piece.crystas) || !Array.isArray(piece.lockedCrystaSlots)
-      || !piece.options.every(option => object(option) && typeof option.key === 'string' && Number.isFinite(option.value))
-      || !piece.crystas.every(value => typeof value === 'string') || !piece.lockedCrystaSlots.every(value => typeof value === 'boolean')) throw fail(400, '아이템 저장 형식이 올바르지 않습니다.');
-    if (kind === 'favorites' && !object(piece.catalogItem)) throw fail(400, '게임 아이템이 연결된 장비만 즐겨찾기에 저장할 수 있습니다.');
-  }
 }
 
 async function body(req) {
@@ -68,6 +50,7 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
     CREATE TABLE IF NOT EXISTS records (id TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, kind TEXT NOT NULL, name TEXT NOT NULL, data TEXT NOT NULL, version INTEGER NOT NULL DEFAULT 1, updated_at TEXT NOT NULL);
     CREATE INDEX IF NOT EXISTS records_owner ON records(user_id,kind);`);
   const inventory = createInventoryStore(db);
+  const records = createLegacyRecords(db,inventory);
   const posts = createPostStore(db,inventory);
   const configured = Boolean(clientId && clientSecret);
   const cookieName = origin.protocol === 'https:' ? '__Host-toram_session' : 'toram_session';
@@ -110,20 +93,16 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
   }
   async function staticFile(req, res, pathname) {
     if (pathname === '/favicon.ico' && req.method === 'GET') { res.writeHead(204); res.end(); return; }
-    const entry = ['/', '/index.html', '/inventory', '/calculator', '/board', '/catalog'].includes(pathname);
+    const entry = APP_PATHS.has(pathname);
     if (!['GET','HEAD'].includes(req.method) || (!entry && !pathname.startsWith('/assets/'))) throw fail(404, '찾을 수 없습니다.');
     const base = await realpath(frontend);
-    const file = await realpath(resolve(base, '.' + (entry ? '/index.html' : pathname)));
-    if (!file.startsWith(base + sep)) throw fail(404, '찾을 수 없습니다.');
+    const file = await containedFile(base,resolve(base,'.'+(entry ? '/index.html' : pathname)));
     const content = await readFile(file);
-    res.writeHead(200, { 'Content-Type':mime[extname(file)] || 'application/octet-stream' });
+    res.writeHead(200, { 'Content-Type':contentType(file) });
     res.end(req.method === 'HEAD' ? undefined : content);
   }
   const server = createServer({ maxHeaderSize:16384, requestTimeout:20000 }, async (req, res) => {
-    res.setHeader('Cache-Control', 'no-store');
-    res.setHeader('X-Content-Type-Options', 'nosniff');
-    res.setHeader('Cross-Origin-Opener-Policy', 'same-origin');
-    res.setHeader('Cross-Origin-Embedder-Policy', 'require-corp');
+    staticHeaders(res);
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader('Vary', 'Origin');
     const requestOrigin = req.headers.origin;
@@ -240,26 +219,15 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
       }
       const parts = path.split('/'), kind = parts[2], id = parts[3];
       if (!kinds.has(kind) || parts.length > 4 || id === '') throw fail(404, '찾을 수 없습니다.');
-      if (!id && req.method === 'GET') {
-        json(res, 200, db.prepare('SELECT id,name,version,updated_at AS updatedAt FROM records WHERE user_id=? AND kind=? ORDER BY updated_at DESC,id').all(user.id, kind)); return;
+      if (!id && req.method==='GET') {json(res,200,records.list(user.id,kind));return;}
+      if (!id && req.method==='POST') {
+        const input=await body(req);
+        json(res,201,records.create(user.id,kind,name(input.name),input.data));return;
       }
-      if (!id && req.method === 'POST') {
-        const input = await body(req), recordName = name(input.name);
-        validateData(kind, input.data);
-        if (db.prepare('SELECT count(*) AS total FROM records WHERE user_id=? AND kind=?').get(user.id, kind).total >= 200) throw fail(409, '보관함은 각각 200개까지 저장할 수 있습니다.');
-        const recordId = randomUUID(), updatedAt = new Date().toISOString();
-        db.prepare('INSERT INTO records (id,user_id,kind,name,data,updated_at) VALUES (?,?,?,?,?,?)').run(recordId, user.id, kind, recordName, JSON.stringify(input.data), updatedAt);
-        json(res, 201, { id:recordId, name:recordName, version:1, updatedAt }); return;
-      }
-      const record = id && db.prepare('SELECT * FROM records WHERE id=? AND user_id=? AND kind=?').get(id, user.id, kind);
-      if (!record) throw fail(404, '저장 항목을 찾을 수 없습니다.');
-      if (req.method === 'GET') { json(res, 200, { id:record.id, name:record.name, version:record.version, updatedAt:record.updated_at, data:JSON.parse(record.data) }); return; }
-      if (req.method === 'DELETE') {
-        const input = await body(req);
-        if (input.version !== record.version) throw fail(409, '저장 목록이 변경됐습니다. 모달을 다시 열어 주세요.');
-        db.prepare('DELETE FROM records WHERE id=? AND user_id=? AND version=?').run(id, user.id, input.version);
-        json(res, 200, { ok:true }); return;
-      }
+      if(!id) throw fail(404,'저장 항목을 찾을 수 없습니다.');
+      if(req.method==='GET') {json(res,200,records.get(user.id,kind,id));return;}
+      if(req.method==='DELETE') {json(res,200,records.remove(user.id,kind,id,await body(req)));return;}
+      records.get(user.id,kind,id);
       throw fail(405, '지원하지 않는 요청입니다.');
     } catch (error) {
       if (res.headersSent) { res.end(); return; }

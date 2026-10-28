@@ -1,17 +1,12 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Shield: {} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/shield.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
 
-const E = context.window.ToramSkillEffects;
+const E = skillEffects;
 const ids = Array.from({ length: 13 }, (_, index) => `Shield:${index}`);
-const base = (subType = '방패', subRefine = 5) => ({
+const base = (subType = '방패', subRefine = 5) => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();},
   mainType: '한손검', subType, subRefine, level: 300,
   strBase: 100, dexBase: 100, intBase: 100, vitBase: 100, agiBase: 100, crtBase: 50
 });

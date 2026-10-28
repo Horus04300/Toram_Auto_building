@@ -1,5 +1,14 @@
-/* 콤보 탭 UI: 인게임식 아이콘 체인과 선택 순번 편집기를 제공한다. */
-(function () {
+import {skillCatalog} from '../data/skill-combat-catalog.js';
+import {buildStore} from '../application/build-draft-store.js';
+import {skillRegistry} from '../data/skill-effect-registry.js';
+import {skillEffects} from '../calculation/skill-effect-engine.js';
+import {comboSequence} from '../calculation/combo-sequence-engine.js';
+import {application} from '../application/application-use-cases.js';
+import {comboRules} from '../data/combo-rule-data.js';
+import {skillTreeData} from '../data/skill-tree-data.js';
+export function createComboUi(document,preferences) {
+  const root=document.defaultView;
+
   'use strict';
   var maxEntries = 9;
   var calculationInputIds = [
@@ -12,16 +21,9 @@
   var appliedHit = null;
   var dragState = { index:null, target:null, after:false, touch:null };
 
-  function definitions() {
-    var policies = window.ToramCalculationPolicies;
-    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions();
-    var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
-    var registry = window.ToramSkillEffectRegistry;
-    return root.concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
-  }
+  var definitions = skillRegistry.definitions;
   function levelFor(skill) {
-    if (!window.skillSimulatorState) return 0;
-    var levels = window.skillSimulatorState.getInvestments();
+    var levels = (buildStore.getBuild().skillLevels || {});
     return Number(levels[skill.treeId] && levels[skill.treeId][skill.skillId]) || 0;
   }
   function availableSkills() {
@@ -29,17 +31,17 @@
     definitions().forEach(function (skill) {
       if (!byId.has(skill.id) && skill.sourceRef && ['attack','buff','utility'].indexOf(skill.kind) >= 0 && levelFor(skill) > 0) byId.set(skill.id, skill);
     });
-    var catalog = window.TORAM_SKILL_COMBAT_CATALOG && window.TORAM_SKILL_COMBAT_CATALOG.skills || [];
+    var catalog = skillCatalog && skillCatalog.skills || [];
     return catalog.map(function (item) { return byId.get(item.id); }).filter(Boolean);
   }
   function iconFor(skill) {
-    var simulator = window.skillSimulatorState;
-    var tree = simulator && simulator.data.trees.find(function (item) { return item.id === skill.treeId; });
+    var tree = skillTreeData.trees.find(function (item) { return item.id === skill.treeId; });
     var node = tree && tree.skills.find(function (item) { return item.id === skill.skillId; });
     return node ? node.icon : '';
   }
   function load() { return state.entries; }
   function save() {
+    buildStore.commitBuild({combo:state.entries});
     if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') { document.dispatchEvent(new CustomEvent('toram:combo-changed')); document.dispatchEvent(new CustomEvent('toram:persistent-state-changed')); }
   }
   function ensureEntries(skills) {
@@ -54,7 +56,7 @@
   function skillMap(skills) { var map = new Map(); skills.forEach(function (skill) { map.set(skill.id, skill); }); return map; }
   function comboTagIds() { return ['none','consecutive','charge','swift','smite','mindsEye','tenacity']; }
   function tagLabel(tag) {
-    var data = window.TORAM_COMBO_RULE_DATA || {};
+    var data = comboRules || {};
     var fallback = {none:'없음',consecutive:'연속공격',charge:'충전',swift:'신속',smite:'강타',mindsEye:'심안',tenacity:'집념'};
     return data.tags && data.tags[tag] && data.tags[tag].nameKo || fallback[tag] || tag;
   }
@@ -73,8 +75,8 @@
     return parts.join(', ') || '없음';
   }
   function currentContexts() {
-    if (!window.ToramApplication || typeof window.ToramApplication.CalculateBuild !== 'function') throw new Error('기본 계산기가 준비되지 않았습니다.');
-    var result = window.ToramApplication.CalculateBuild();
+    if (!application || typeof application.CalculateBuild !== 'function') throw new Error('기본 계산기가 준비되지 않았습니다.');
+    var result = application.CalculateBuild();
     var base = result.snapshot.baseContext;
     var calculated = result.calculation;
     return {
@@ -82,7 +84,7 @@
       combat:{ STR:calculated.finalSTR, INT:calculated.finalINT, VIT:calculated.finalVIT, AGI:calculated.finalAGI, DEX:calculated.finalDEX, CRT:base.crtBase, ATK:calculated.finalATK, MATK:calculated.finalMATK, ASPD:calculated.finalASPD, CSPD:calculated.finalCSPD, STABILITY:calculated.finalStab, WEAPON_ATK:calculated.finalWeaponAttack },
       maxMp:calculated.finalMaxMP,
       maxHp:calculated.finalMaxHP,
-      activeBuffs:window.ToramActiveBuffs && window.ToramActiveBuffs.getSelections ? window.ToramActiveBuffs.getSelections() : {}
+      activeBuffs:buildStore.getBuild().activeBuffs || {}
     };
   }
   function applyOneShotStats(modifiers) {
@@ -102,8 +104,8 @@
   }
   function applyHit(hit, damageMultiplier, modifiers, skill) {
     applyOneShotStats(modifiers);
-    if (!window.ToramApplication || typeof window.ToramApplication.ApplyComboHit !== 'function') throw new Error('콤보 계산 유스케이스가 준비되지 않았습니다.');
-    appliedHit = window.ToramApplication.ApplyComboHit(hit, damageMultiplier, modifiers, skill);
+    if (!application || typeof application.ApplyComboHit !== 'function') throw new Error('콤보 계산 유스케이스가 준비되지 않았습니다.');
+    appliedHit = application.ApplyComboHit(hit, damageMultiplier, skill);
     if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') document.dispatchEvent(new CustomEvent('toram:combo-hit-selected', { detail:appliedHit }));
     status.textContent = '선택한 타격의 계수·상수·공격 유형·발도/치명타·명중 판정을 결과 계산에 반영했습니다.';
   }
@@ -222,7 +224,7 @@
       var normalizedProfile = null;
       try {
         var contexts = currentContexts();
-        normalizedProfile = window.ToramSkillEffects.profile(entry.skillId, contexts.base, contexts.combat, entry.inputs, { maxMp:contexts.maxMp, activeBuffs:contexts.activeBuffs });
+        normalizedProfile = skillEffects.profile(entry.skillId, contexts.base, contexts.combat, entry.inputs, { maxMp:contexts.maxMp, activeBuffs:contexts.activeBuffs });
       } catch (_) { /* 입력 기본값은 엔진 계산 시 다시 정규화된다. */ }
       definition.inputs.forEach(function (input) {
         var inputField = document.createElement('label'); inputField.className = 'combo-editor-field combo-editor-input';
@@ -314,7 +316,7 @@
     var skills = availableSkills();
     try {
       var contexts = currentContexts();
-      var result = window.ToramComboSequence.evaluate(state.entries, contexts.base, contexts.combat, { maxMp:contexts.maxMp, maxHp:contexts.maxHp, activeBuffs:contexts.activeBuffs });
+      var result = comboSequence.evaluate(state.entries, contexts.base, contexts.combat, { maxMp:contexts.maxMp, maxHp:contexts.maxHp, activeBuffs:contexts.activeBuffs });
       mpReadout.textContent = '현재 빌드 최대 MP ' + contexts.maxMp;
       renderChain(skills, result);
       renderOutput(result, skills);
@@ -331,10 +333,10 @@
   }
   function initialize() {
     panel = document.getElementById('appTabPanel-combo');
-    if (!panel || !window.ToramComboSequence) return;
+    if (!panel || !comboSequence) return;
     panel.innerHTML = '<section class="combo-workspace"><div class="combo-heading"><div><h3>🔗 스킬·콤보 순서 계산</h3></div><strong id="comboMpReadout" class="combo-mp-readout"></strong></div><div class="combo-range-choice" aria-label="대미지 거리 판정"><span>거리 판정</span><label><input type="checkbox" id="comboRangeShort"> 근거리</label><label><input type="checkbox" id="comboRangeLong"> 원거리</label><small id="comboRangeStatus">둘 다 해제: 스킬 기본값</small></div><div id="comboChain" class="combo-chain" aria-label="콤보 스킬 순서"></div><div id="comboEntryEditor" class="combo-entry-editor"></div><div id="comboSequenceStatus" role="status"></div><div id="comboSequenceOutput"></div></section>';
     chain = document.getElementById('comboChain'); editor = document.getElementById('comboEntryEditor'); output = document.getElementById('comboSequenceOutput'); status = document.getElementById('comboSequenceStatus'); mpReadout = document.getElementById('comboMpReadout');
-    if (window.ToramOptimizationPreferences && window.ToramOptimizationPreferences.bindRangeControls) window.ToramOptimizationPreferences.bindRangeControls();
+    if (preferences && preferences.bindRangeControls) preferences.bindRangeControls();
     load(); renderWorkspace();
     document.addEventListener('toram:skill-investments-changed', function () { invalidateAppliedHit(); renderWorkspace(); });
     document.addEventListener('toram:active-buffs-changed', invalidateAppliedHit);
@@ -345,12 +347,13 @@
       });
     });
   }
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, {once:true}); else initialize();
-  window.ToramComboUi = Object.freeze({
-    refresh:function () { if (chain) renderWorkspace(); },
+  const api = Object.freeze({
+    refresh:function () { buildStore.commitBuild({combo:state.entries}); if (chain) renderWorkspace(); },
     getAppliedHit:function () { return appliedHit ? Object.assign({}, appliedHit) : null; },
-    getEntries:function () { return state.entries.map(function (entry) { return { skillId:entry.skillId, tag:entry.tag, includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:Object.assign({}, entry.inputs || {}) }; }); },
-    restore:function (entries) { state.entries = Array.isArray(entries) ? entries.slice(0, maxEntries).map(function (entry) { return { skillId:String(entry.skillId || ''), tag:String(entry.tag || 'none'), includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:entry.inputs && typeof entry.inputs === 'object' ? Object.assign({}, entry.inputs) : {} }; }) : []; if (chain) renderWorkspace(); },
+    getEntries:function () { return (buildStore.getBuild().combo || []).map(function (entry) { return { skillId:entry.skillId, tag:entry.tag, includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:Object.assign({}, entry.inputs || {}) }; }); },
+    restore:function (entries) { state.entries = Array.isArray(entries) ? entries.slice(0, maxEntries).map(function (entry) { return { skillId:String(entry.skillId || ''), tag:String(entry.tag || 'none'), includeSpecialAttack:Boolean(entry.includeSpecialAttack), inputs:entry.inputs && typeof entry.inputs === 'object' ? Object.assign({}, entry.inputs) : {} }; }) : []; buildStore.commitBuild({combo:state.entries}); if (chain) renderWorkspace(); },
     getAvailableSkills:availableSkills
   });
-}());
+
+initialize(); return api;
+}

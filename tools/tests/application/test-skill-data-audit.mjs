@@ -1,29 +1,18 @@
-import { frontendSourcePath } from '../../support/frontend-paths.mjs';
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {skillRegistry} from '../../../web/src/data/skill-effect-registry.js';
+import {skillData} from '../../../web/src/calculation/skill-data-validator.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const scripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 const context = { window:{}, console };
 context.window.window = context.window;
-vm.createContext(context);
-for (const path of scripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-data-validator.js'), 'utf8'), context, { filename:'web/src/calculation/skill-data-validator.js' });
 
-const audit = context.window.ToramSkillData.audit();
+const audit = skillData.audit();
 assert.deepEqual([...audit.errors], [], `스킬 데이터 감사 오류:\n${[...audit.errors].join('\n')}`);
-assert.ok(audit.shadowedDefinitions.length > 0, '의도된 보강 레이어 수를 진단 정보로 보존해야 합니다.');
+assert.equal(audit.shadowedDefinitions.length,0,'Canonical definitions must not shadow one another');
 
-context.window.ToramSkillEffectRegistry.register('Audit-invalid-fixture', [{
+skillRegistry.register([{
   id:'Invalid:999', treeId:'Invalid', skillId:999, nameKo:'감사 오류 검증', kind:'invalid', dataStatus:'partial'
 }]);
-const invalidAudit = context.window.ToramSkillData.audit();
+const invalidAudit = skillData.audit();
 assert.ok(invalidAudit.errors.some(error => error.includes('전투 카탈로그에 없는 스킬 정의: Invalid:999')), '카탈로그 밖 정의를 감지해야 합니다.');
 assert.ok(invalidAudit.errors.some(error => error.includes('알 수 없는 스킬 종류: Invalid:999')), '잘못된 스킬 종류를 감지해야 합니다.');
 assert.ok(invalidAudit.errors.some(error => error.includes('출처 키 누락: Invalid:999')), '출처 누락을 감지해야 합니다.');

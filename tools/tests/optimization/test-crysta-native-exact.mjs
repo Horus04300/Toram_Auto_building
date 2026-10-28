@@ -1,25 +1,22 @@
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
-import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
+import {statRegistry as registry} from '../../../web/src/calculation/stat-registry.js';
+import {buildEvaluator as evaluator} from '../../../web/src/calculation/build-evaluator.js';
+import {problemCompiler as compiler} from '../../../web/src/optimization/problem-compiler.js';
+import {candidatePreparation as candidates} from '../../../web/src/optimization/candidate-preparation.js';
+import {calculationKernel} from '../../../web/src/calculation/calculator.js';
+import {exhaustiveSearch} from '../../support/crysta-exhaustive-oracle.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
-import { spawn } from 'node:child_process';
-import vm from 'node:vm';
-import { projectNativeProblem } from '../../support/crysta-native-payload-helper.mjs';
-import { loadSavedBuildEnvironment } from '../../support/saved-build-headless-environment.mjs';
-import { loadHeadlessEnvironment } from '../../support/crysta-headless-environment.mjs';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {spawn} from 'node:child_process';
+import {projectNativeProblem} from '../../support/crysta-native-payload-helper.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
+import {loadHeadlessEnvironment} from '../../support/crysta-headless-environment.mjs';
 
 const root = resolve(import.meta.dirname, '../../..');
-const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
-const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
-const compiler = require(resolve(root, 'web/src/optimization/problem-compiler.js'));
-const candidates = require(resolve(root, 'web/src/optimization/candidate-preparation.js'));
 
 function runNative(problem, binary='crysta_native_exact', session=false) {
   return new Promise((resolvePromise, reject) => {
-    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'desktop/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'], env:{...process.env, ...(session ? {OPTIMIZATION_SESSION_BENCH_MS:'30000'} : {})} });
+    const child = spawn('cargo', ['run', '--release', '--quiet', '--manifest-path', 'engine/Cargo.toml', '--bin', binary], { cwd:root, stdio:['pipe','pipe','pipe'], env:{...process.env, ...(session ? {OPTIMIZATION_SESSION_BENCH_MS:'30000'} : {})} });
     let stdout = '', stderr = '';
     child.stdout.on('data', chunk => { stdout += chunk; });
     child.stderr.on('data', chunk => { stderr += chunk; });
@@ -34,11 +31,7 @@ function runNative(problem, binary='crysta_native_exact', session=false) {
 
 const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
-const kernel = context.window.ToramCalculationKernel.evaluateContext;
+const kernel = calculationKernel.evaluateContext;
 
 const small = {
   baseContext:{level:100,strBase:0,intBase:0,vitBase:100,agiBase:0,dexBase:0,crtBase:0,mainType:'한손검',subType:'없음',armorType:'일반옷',wpnAtk:100,wpnRefine:0,wpnStab:100,subAtk:0,subRefine:0,subStab:0,critF:100,atkType:'PHYS',rangeType:'SHORT',bossLevel:100,bossDef:0,bossMdef:0,bossCritResist:0,bossPhysResist:0,bossMagResist:0,skillMult:1,skillConst:0,procDamageModifiers:[],chkIsUnsheathe:false,chkGuaranteedCrit:false,conversionLevel:0,dualBringerLevel:0,dualBringerActive:false,spellBurstLevel:0,targetWeakened:false,attackElement:'none',attackPowerMode:'default',useHigherRangeDamage:false,noCritical:false,criticalChanceBonus:0,criticalChanceMultiplier:1,fixedCriticalChance:null,minimumCriticalDamage:0,stabilityBonus:0,physicalPierceSkillBonus:0,magicPierceSkillBonus:0,ignoreDefense:false,ignoreMdef:false,halfMdefIgnored:false,strP:0,strF:0,dexP:0,dexF:0,intP:0,intF:0,agiP:0,agiF:0,vitP:0,vitF:0,atkP:0,atkF:0,matkP:0,matkF:0,cdmgP:0,cdmgF:0,critP:0,srw:0,lrw:0,unsheatheP:0,unsheatheF:0,elemP:0,damageP:0,watkP:0,watkF:0,baseWpnAtkF:0,physPierce:0,magPierce:0,aspdF:1000,aspdP:0,stability:0,maxHpF:10000,maxHpP:0,maxMpF:2000,amprF:100,amprP:0,elementAwakening:false,magicElement:false,atkUpSTR:0,atkUpDEX:0,atkUpINT:0,atkUpAGI:0,atkUpVIT:0,matkUpSTR:0,matkUpDEX:0,matkUpINT:0,matkUpAGI:0,matkUpVIT:0,activeBuildConversions:[]},
@@ -201,8 +194,7 @@ const baseContext = {
   atkUpSTR:0,atkUpDEX:0,atkUpINT:0,atkUpAGI:0,atkUpVIT:0,matkUpSTR:0,matkUpDEX:0,matkUpINT:0,matkUpAGI:0,matkUpVIT:0,preservedStats:{},statDiagnostics:[],activeBuildConversions:[]
 };
 const dataContext = {};
-vm.createContext(dataContext);
-vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+dataContext.__crystas=(await loadSavedBuildEnvironment()).ToramCrystaCatalog.items;
 const scenario = evaluator.createScenarioSnapshot(baseContext);
 const compiled = compiler.compileCrystaProblem({ crystas:dataContext.__crystas, registry, baseContext, scenarioSnapshot:scenario, currentCrystas:[], locks:[], banned:{'오로로 콜론':true} });
 const adapter = stats => evaluator.evaluateAggregate(baseContext, scenario, stats, kernel);

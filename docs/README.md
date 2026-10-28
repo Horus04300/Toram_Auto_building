@@ -1,11 +1,10 @@
 # 개발 문서
 
-현재 기능·릴리스 상태는 handoff/current-development-handoff.md 한곳에서 확인합니다. 코드 변경 전에는 루트 AGENTS.md의 필독 순서를 따릅니다.
+- [현재 상태](handoff/current-development-handoff.md): 기능·제약·릴리스·마지막 통합 검사
+- [작업 진입점](ai-context-guide.md): 책임별 원본과 검증 명령
+- architecture/: 외부/저장/계산 계약과 변경 Gate
+- verification/: 기능별 계산 근거·검사 범위·미결정 사항
+- sources/: 원문·출처·무결성 정보
+- release-notes/: 현재 릴리스 발행에 사용하는 설명
 
-- ai-context-guide.md: 작업별 코드 진입점과 검증 명령
-- architecture/: 설계·불변 계약·Gate
-- verification/: 검증 근거·남은 결정·사용자 보류 범위
-- sources/: 스킬 원문과 출처
-- release-notes/: 버전별 출시 설명
-
-폴더 역할·원본과 생성물의 구분은 루트 README.md, 각 제품 폴더의 README.md에서 먼저 읽습니다. 과거 검증 기록을 현재 기능 판정으로 옮겨 쓰지 않습니다.
+수정 전 AGENTS.md의 필독 순서를 따른다. 문서는 현재 계약과 남은 결정만 유지하며 완료 작업·수정 전후·실행 로그를 누적하지 않는다. 원문·검증 fixture·추출/실험 근거는 재현 자료로 보존한다.

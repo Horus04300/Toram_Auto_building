@@ -1,3 +1,6 @@
+import {createCatalogReader} from './catalog-assets.mjs';
+import {policies} from '../calculation/calculation-policies.js';
+
 export const ITEM_CATALOG_SCHEMA = 'toram.project-items.v1';
 
 function requireValue(condition, message) {
@@ -12,26 +15,7 @@ function immutable(value) {
   return value;
 }
 
-export function matchesItemCondition(context, condition) {
-  const ctx = context || {};
-  if (condition.kind === 'item-event') return (ctx.activeItemEventTypes || []).includes(condition.eventType);
-  if (condition.kind === 'all') return condition.conditions.every(when => matchesItemCondition(ctx, when));
-  if (condition.kind === 'any') return condition.conditions.some(when => matchesItemCondition(ctx, when));
-  if (condition.kind === 'not') return !matchesItemCondition(ctx, condition.condition);
-  if (condition.kind === 'either-weapon-slot') {
-    requireValue(typeof ctx.mainType === 'string' && typeof ctx.subType === 'string', 'Item condition needs mainType and subType.');
-    return condition.types.includes(ctx.mainType) || condition.types.includes(ctx.subType);
-  }
-  if (condition.kind === 'both-weapon-slots') {
-    requireValue(typeof ctx.mainType === 'string' && typeof ctx.subType === 'string', 'Item condition needs mainType and subType.');
-    return ctx.mainType === condition.main && ctx.subType === condition.sub;
-  }
-  if (condition.kind === 'body-battle-customize') {
-    requireValue(typeof ctx.armorType === 'string', 'Item condition needs armorType.');
-    return ctx.armorType === condition.armor;
-  }
-  throw new Error('Unsupported item condition.');
-}
+export const matchesItemCondition = policies.matchesItemCondition;
 
 // Returns the project's StatOptionDraft[]; it never drops an active unmapped effect.
 export function resolveItemOptions(item, context) {
@@ -180,20 +164,10 @@ export function resolveConsumableBuffs(selections = [], registry) {
 }
 
 export function createItemCatalog(manifestUrl = new URL('../../game-data/items/manifest.json', import.meta.url), fetcher = globalThis.fetch) {
-  const base = new URL(manifestUrl);
-  const pending = new Map();
-  function get(path) {
-    if (!pending.has(path)) {
-      const url = new URL(path, base);
-      requireValue(url.origin === base.origin && url.href.startsWith(new URL('.', base).href), 'Item asset escapes its catalog.');
-      const promise = Promise.resolve().then(() => fetcher(url)).then(async response => {
-        requireValue(response.ok, `Item asset request failed: ${response.status}.`);
-        return immutable(await response.json());
-      }).catch(error => { pending.delete(path); throw error; });
-      pending.set(path, promise);
-    }
-    return pending.get(path);
-  }
+  const {read:get,forget}=createCatalogReader(manifestUrl,fetcher,async response=>{
+    requireValue(response.ok,`Item asset request failed: ${response.status}.`);
+    return immutable(await response.json());
+  });
   async function manifest() {
     const value = await get('manifest.json');
     requireValue(value.schema === ITEM_CATALOG_SCHEMA, 'Unsupported item catalog schema.');
@@ -216,7 +190,7 @@ export function createItemCatalog(manifestUrl = new URL('../../game-data/items/m
       return get(value.kinds.crystas);
     },
     async refresh() {
-      pending.delete('manifest.json');
+      forget('manifest.json');
       return (await manifest()).cacheVersion;
     },
     async getItem(id, locale = 'kr') {

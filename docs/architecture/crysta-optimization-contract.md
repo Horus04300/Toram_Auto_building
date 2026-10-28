@@ -1,7 +1,7 @@
 # 크리스타 최적화 정확성·성능 변경 계약
 
 - 갱신: 2026-09-05. 크리스타 최적화 정확성·성능·후보 탐색 변경 시 이 문서를 전체 읽는다.
-- 역할: 불변 계약, 변경 승인 Gate, 재시도 금지 근거. 현재 제품 상태는 `docs/handoff/current-development-handoff.md`에서만 관리한다.
+- 역할: 불변 계약, 변경 Gate와 설계 제약. 현재 제품 상태는 `docs/handoff/current-development-handoff.md`에서만 관리한다.
 - 범위: 고정 Build/Scenario, 네 장비의 크리스타 각 2슬롯. 자동 장비 옵션 부여는 별도 보류 범위다.
 - 10초 exact는 성능 목표이며 모든 입력에서 달성됐다는 보증이 아니다. Native deadline/progress/continuation은 이미 연결된 기능이며 재구현 대상이 아니다.
 
@@ -43,7 +43,7 @@ MAXMP→AMPR, 평타 CRIT와 기대 대미지, ASPD→행동속도, HP/MP 비례
 
 | 변경 | 반드시 확인할 것 |
 | --- | --- |
-| 계산/평가 표현 | 원문 연결, full/summary 동치, JS/Rust parity, 최종 JS 재평가 |
+| 계산/평가 표현 | 원문 연결, full/summary 동치, 독립 JS oracle과 Rust parity, 제품 최종 재평가 |
 | 후보 삭제/포화 | 축소 전후 oracle, 조건/계보/raw Utility/동점 증명 |
 | Pair/분기/상한 | 부분공간 coverage, 상한 property, 입력 순서 결정성 |
 | 병렬화/세션 | 1~64 thread의 exact·동점 동치, cancel/deadline/pause/resume, pending·active work 보존 |
@@ -53,19 +53,16 @@ MAXMP→AMPR, 평타 CRIT와 기대 대미지, ASPD→행동속도, HP/MP 비례
 
 10초 exact 목표 판정은 데이터 버전·PC·Node/WebView 버전을 기록하고 필수 실제 fixture마다 새 프로세스 10회 P95로 측정한다. 컴파일+탐색을 포함하며 외부 wall time도 구분한다. 한 입력의 단발 시간, bounded 품질 개선, 과거 P6 수치를 전체 exact 달성으로 보고하지 않는다. 목표를 통과하기 전 exact 강제 성능 조건을 임의로 활성화하지 않는다.
 
-## 5. 이미 폐기한 가설과 재개 조건
+## 5. 설계 제약
 
-- 큰 Pair 전체 물질화와 불완전 Pareto: 생성/비교 비용과 메모리가 과다했다. 같은 전면 물질화를 재시도하지 않는다.
-- root-only Pair 상관 상한: 자식에서 관계를 잃어 준비 비용을 회수하지 못했다.
-- 기존 개별 CandidateTree에 Pair bucket filter 유지: 자식마다 Pair를 재순회하거나 중복 공간이 생겼다. 관계를 보존하는 새 표현과 oracle이 없으면 재시도하지 않는다.
-- leaf summary, 후보 rank 분할, 분기 차원 증가: 당시 long-exact 또는 품질 Gate에서 개선되지 않았다. 새 병목 근거 없이 기본값을 바꾸지 않는다.
-- JavaScript Worker pool: 후보 복제·초기화 비용 때문에 실제 데이터 Gate에서 기본 경로로 승격하지 못했다. 스레드 수 증가만으로 해소됐다고 가정하지 않는다.
-- Replacement Proof 감사는 증명된 삭제만 허용한다. 실험 옵션이나 보고서 존재를 제품 후보 삭제 연결로 해석하지 않는다.
-- GPU는 독립 대량 batch의 CPU 병목과 전송 포함 이득이 입증된 후 별도 검토한다. f32 값을 그대로 exact pruning에 쓰지 않는다.
+- 큰 Pair 전면 물질화는 생성/비교/메모리 예산과 완전한 Pareto 증명 없이는 사용하지 않는다.
+- Pair 상관 상한은 자식 공간에서도 관계와 coverage를 보존해야 한다. 개별 CandidateTree에 bucket filter를 덧붙여 중복 순회/공간 누락을 만들지 않는다.
+- leaf summary·후보 rank 분할·분기 차원·기본 실행 정책 변경은 새 병목 근거와 실제 입력의 정확성/품질/성능 Gate를 요구한다.
+- 웹 coordinator가 준비 후보/트리를 소유한다. 후보를 복제·재초기화하는 별도 JS 탐색 Worker pool을 추가하지 않는다.
+- 후보 삭제는 2절 증명으로만 허용한다. 실험 옵션이나 보고서의 존재는 삭제 증거가 아니다.
+- GPU는 독립 대량 batch의 CPU 병목과 전송 포함 이득을 확인한 뒤 검토한다. f32 값을 그대로 exact pruning에 쓰지 않는다.
 
-계측에 따라 노드 과다이면 표현/상한, 평가 비용이면 조밀 벡터·증분 평가, 작업 실행 비용이면 지속 스레드 풀을 검토한다. 어느 방향도 새 실측 없이 우선 채택하지 않는다. 중첩 inclusive 시간은 합산하지 않는다.
-
-이전 JS 추천기와 실험 로그는 삭제했다. 현재 변경은 공용 Rust 코어·실제 제품 후보 준비와 실행 회귀로 검증한다.
+노드 수·평가 비용·작업 실행 비용을 구분해 계측한다. 중첩 inclusive 시간은 합산하지 않는다.
 
 ## 6. 검증 진입점과 기록
 
@@ -77,3 +74,5 @@ MAXMP→AMPR, 평타 CRIT와 기대 대미지, ASPD→행동속도, HP/MP 비례
 - 실행 제어: docs/architecture/native-optimization-runtime.md.
 
 영향받는 Gate를 선택해 명령·입력·PASS/SKIP/미실행을 보고한다. 현재 handoff에는 채택 여부·현재 계약·검증 요약만 갱신하고 긴 계측 결과를 누적하지 않는다. 이 문서는 12 KiB 이하로 유지한다.
+
+평가 수식은 공통 Rust evaluator가 소유한다. 독립 비교는 tools/fixtures/calculation-oracle.mjs(제품과 독립된 JS 수식)와 tools/tests/application/test-evaluator-integration.mjs로 유지한다. 이 oracle은 제품 import 그래프에 포함하지 않는다. 전체 호출 성능과 사전 준비된 입력의 수치 평가를 구분하고 입출력·표시 비용을 명시한다.

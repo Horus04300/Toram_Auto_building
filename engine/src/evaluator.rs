@@ -16,7 +16,7 @@ pub use native_stats::KEYS as NATIVE_STAT_KEYS;
 
 // Decimal input coefficients use integer ratios. Common integral operands stay
 // in i128; BigInt is an exact overflow fallback, not a floating-point fallback.
-mod decimal_math {
+pub(crate) mod decimal_math {
     use num_bigint::{BigInt, Sign};
     use std::fmt::Write;
     use std::{cell::RefCell, collections::HashMap};
@@ -382,7 +382,7 @@ pub enum Invariant {
 }
 
 // Native caps 166..175 accumulate f32 terms in cap order and truncate once.
-fn proportional_attack<C: ContextLookup>(base: &C, rates: [f64; 5]) -> f64 {
+pub(crate) fn proportional_attack<C: ContextLookup>(base: &C, rates: [f64; 5]) -> f64 {
     let mut total = 0.0_f32;
     for (attribute, rate) in [
         ContextKey::field_str_base,
@@ -766,7 +766,9 @@ pub struct PreparedEffects {
 }
 impl PreparedEffects {
     fn new(base: &Value) -> Self {
-        let profile = base.get("normalAttackAmprProfile").unwrap_or(&Value::Null);
+        let profile = base
+            .context_get("normalAttackAmprProfile")
+            .unwrap_or(&Value::Null);
         let layers = base.get("damageMultiplierLayers").unwrap_or(&Value::Null);
         let layer_values = [
             finite_number(
@@ -1318,6 +1320,7 @@ fn evaluate_utility_filtered<const RAW_AMPR: bool, T: StatLookup, C: ContextLook
             accepts(index, value)
         },
         caps,
+        EvaluationOutput::None,
     )
 }
 
@@ -1448,14 +1451,21 @@ fn evaluate_filtered_summary<T: StatLookup, C: ContextLookup>(
     stats: &T,
     accepts: impl FnMut(usize, i64) -> bool,
 ) -> Result<Option<CrystaOptimizationNativeSummary>, String> {
-    evaluate_filtered_summary_impl::<true, T, C>(base, stats, accepts, None)
+    evaluate_filtered_summary_impl::<true, T, C>(base, stats, accepts, None, EvaluationOutput::None)
 }
 
+enum EvaluationOutput<'a> {
+    None,
+    Full(&'a mut Value),
+    Summary(&'a mut Value),
+    Supply(&'a mut Value),
+}
 fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: ContextLookup>(
     base: &C,
     stats: &T,
     mut accepts: impl FnMut(usize, i64) -> bool,
     caps: Option<&[f64; 6]>,
+    mut output: EvaluationOutput<'_>,
 ) -> Result<Option<CrystaOptimizationNativeSummary>, String> {
     let plan = base.evaluation_plan().unwrap_or_else(|| {
         let mut plan = EvaluationPlan::new(base);
@@ -1475,12 +1485,16 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
     );
     let level = number_at(base, ContextKey::field_level);
     let base_max_hp = floor_ratio(vit * 100.0 + 2241.0, level, 300.0, 93.0);
-    let max_hp = (floor_percent(
-        base_max_hp,
-        number_at(base, ContextKey::field_max_hp_p) + stat_at(stats, StatKey::MAXHPP),
-        number_at(base, ContextKey::field_max_hp_f) + stat_at(stats, StatKey::MAXHP),
-    ))
-    .clamp(0.0, 99999.0) as i64;
+    let hp_percent = number_at(base, ContextKey::field_max_hp_p) + stat_at(stats, StatKey::MAXHPP);
+    let hp_flat = number_at(base, ContextKey::field_max_hp_f) + stat_at(stats, StatKey::MAXHP);
+    // The Native integer DTO floors flat in-stage; full UI values retain fractional flat.
+    let max_hp_full = if matches!(output, EvaluationOutput::None) {
+        floor_percent(base_max_hp, hp_percent, hp_flat)
+    } else {
+        floor_percent(base_max_hp, hp_percent, 0.0) + hp_flat
+    }
+    .clamp(0.0, 99999.0);
+    let max_hp = max_hp_full as i64;
     if !accepts(0, max_hp) {
         return Ok(None);
     }
@@ -1535,8 +1549,8 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         0.0,
     ) + number_at(base, ContextKey::field_crit_f)
         + stat_at(stats, StatKey::CRIT);
-    let normal_attack_crit =
-        (normal_raw - number_at(base, ContextKey::field_boss_crit_resist)) as i64;
+    let normal_attack_crit_full = normal_raw - number_at(base, ContextKey::field_boss_crit_resist);
+    let normal_attack_crit = normal_attack_crit_full as i64;
     if !accepts(3, normal_attack_crit) {
         return Ok(None);
     }
@@ -1568,7 +1582,7 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         StatKey::AGI,
     );
     let armor_aspd = plan.armor_aspd;
-    let final_aspd = (floor_percent(
+    let final_aspd_full = floor_percent(
         plan.weapon_aspd
             + floor(stat_aspd_prepared(
                 plan.weapon,
@@ -1582,7 +1596,8 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         number_at(base, ContextKey::field_aspd_p) + stat_at(stats, StatKey::ASPD_P) + armor_aspd,
         0.0,
     ) + number_at(base, ContextKey::field_aspd_f)
-        + stat_at(stats, StatKey::ASPD)) as i64;
+        + stat_at(stats, StatKey::ASPD);
+    let final_aspd = final_aspd_full as i64;
     if !accepts(4, final_aspd) {
         return Ok(None);
     }
@@ -1668,6 +1683,9 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         }
         final_matk += floor(conversion_add) + floor(conversion_int);
     }
+    let mut full_sub_pre_atk = 0.0;
+    let mut full_sub_atk = 0.0;
+    let mut full_sub_stab = 0.0;
     if plan.need_atk && plan.dual {
         let sub_weapon = number_at(base, ContextKey::field_sub_atk)
             + floor_ratio(
@@ -1684,15 +1702,29 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
             )
             + number_at(base, ContextKey::field_sub_refine)
             + watk;
-        let sub_atk =
-            floor_percent(sub_weapon + floor(str_ + agi * 3.0) + level, atk_p, 0.0) + atk_f;
+        full_sub_pre_atk = sub_weapon + floor(str_ + agi * 3.0) + level;
+        let sub_atk = floor_percent(full_sub_pre_atk, atk_p, 0.0) + atk_f;
         let sub_stab = (floor(number_at(base, ContextKey::field_sub_stab) * 0.5)
             + floor_ratio(str_, 6.0, 100.0, 0.0)
             + floor_ratio(agi, 4.0, 100.0, 0.0)
             + number_at(base, ContextKey::field_stability)
             + stat_at(stats, StatKey::STABILITY))
         .min(100.0);
+        full_sub_atk = sub_atk;
+        full_sub_stab = sub_stab;
         final_atk += floor_ratio(sub_atk, sub_stab, 100.0, 0.0);
+    }
+    if let EvaluationOutput::Supply(result) = &mut output {
+        **result = serde_json::json!({
+            "STR":number(base,"strBase"),"DEX":number(base,"dexBase"),"AGI":number(base,"agiBase"),"INT":number(base,"intBase"),"VIT":number(base,"vitBase"),
+            "CRIT":base_crit,"CDMG":if str_>=agi {150.0+floor(str_/5.0)} else {150.0+floor((str_+agi)/10.0)},"MAXHP":base_max_hp,
+            "ASPD":plan.weapon_aspd+floor(stat_aspd_prepared(plan.weapon,plan.sub_dual,str_,int_,agi,dex))+level,
+            "CSPD":level+floor_ratio(agi,116.0,100.0,0.0)+floor_ratio(dex,294.0,100.0,0.0),
+            "ATK":if plan.dual {vec![weapon+stat_atk+level+atk_up,full_sub_pre_atk]}else{vec![weapon+stat_atk+level+atk_up]},
+            "MATK":floor_ratio(weapon,matk_ratio,1.0,0.0)+stat_matk+level+matk_up,
+            "WATK":if plan.dual {vec![effective_weapon,number(base,"subAtk")]}else{vec![effective_weapon]}
+        });
+        return Ok(None);
     }
     let mut cdmg = floor_percent(
         if str_ >= agi {
@@ -1792,6 +1824,7 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
             || (matches!(plan.weapon, WeaponKind::Staff | WeaponKind::Device)
                 && effective_attack_element != 0.0
                 && effective_attack_element != 7.0));
+    let phys_stab = stab;
     let mut elem = number_at(base, ContextKey::field_elem_p) + stat_at(stats, StatKey::ELEM_P);
     let target_bonus = match target_element {
         1.0 => Some((ContextKey::field_fire_dmg, StatKey::FIRE_DMG)),
@@ -1944,6 +1977,7 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         raw += unsheathe_f;
     }
     raw += final_skill_const - effective_def;
+    let pierced = raw > 0.0;
     raw = raw.max(1.0);
     let mut range = if flag_at(base, ContextKey::field_use_higher_range_damage) {
         (number_at(base, ContextKey::field_srw) + stat_at(stats, StatKey::SRW))
@@ -1985,6 +2019,101 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
         0.0,
     );
     damage = floor_layer(base, damage, 3, combo_damage_mult);
+    let summary_output = matches!(output, EvaluationOutput::Summary(_));
+    if let EvaluationOutput::Full(result) | EvaluationOutput::Summary(result) = &mut output {
+        let cspd_base =
+            level + floor_ratio(agi, 116.0, 100.0, 0.0) + floor_ratio(dex, 294.0, 100.0, 0.0);
+        let cspd = floor_percent(cspd_base, number(base, "cspdP"), 0.0) + number(base, "cspdF");
+        let motion_bonus = if final_aspd_full >= 1000.0 {
+            (final_aspd_full - 1000.0) / 180.0
+        } else {
+            0.0
+        };
+        let motion = (motion_bonus.floor().min(50.0) + number(base, "motionSpeed")).min(50.0);
+        let cast = (floor(if cspd <= 1000.0 {
+            cspd / 20.0
+        } else {
+            50.0 + (cspd - 1000.0) / 180.0
+        })
+        .min(100.0)
+            + number(base, "castRed"))
+        .min(100.0);
+        let utility = serde_json::json!([
+            max_hp_full,
+            (max_mp as f64).min(if number(base, "godspeedWieldLevel") > 0.0 {
+                2300.0
+            } else {
+                2000.0
+            }),
+            resolve_normal_attack_ampr(
+                floor(10.0 + (max_mp as f64).min(2000.0) / 100.0) + number(base, "amprF"),
+                base.context_get("normalAttackAmprProfile")
+            ),
+            normal_attack_crit_full.clamp(0.0, 100.0),
+            if final_aspd_full < 1000.0 {
+                final_aspd_full
+            } else {
+                1000.0 + 180.0 * motion.max(0.0)
+            }
+        ]);
+        if summary_output {
+            **result = serde_json::json!({"ctx":{"statDiagnostics":base.context_get("statDiagnostics").cloned().unwrap_or(serde_json::json!([]))},"optimizationUtilityValues":utility,"finalMaxHP":max_hp_full,"finalMaxMP":max_mp,"amprBeforeDual":ampr_before_dual,"normalAttackCrit":normal_attack_crit_full,"finalASPD":final_aspd_full,"optimizationDamageFactor":damage*base.invariant(Invariant::Proc)});
+        } else {
+            let ampr_base = floor(10.0 + max_mp as f64 / 100.0);
+            let equipment_ampr =
+                floor_percent(ampr_base, number(base, "amprP"), 0.0) + number(base, "amprF");
+            let ampr = full_ampr(equipment_ampr, base.context_get("normalAttackAmprProfile"));
+            let proc = full_proc(base.context_get("procDamageModifiers"));
+            let defense_average = (number(base, "bossDef") + number(base, "bossMdef")) / 2.0;
+            let defense_ratio = if number(base, "bossLevel") > 0.0 {
+                (defense_average / (number(base, "bossLevel") * 6.0)).min(0.5)
+            } else {
+                0.0
+            };
+            let resistance_average =
+                (number(base, "bossPhysResist") + number(base, "bossMagResist")) / 2.0;
+            let poison_sources = array(base, "poisonSources");
+            let mut resistance_components = vec![number(
+                base,
+                if is_magic {
+                    "bossMagResist"
+                } else {
+                    "bossPhysResist"
+                },
+            )];
+            resistance_components.extend(
+                array(base, "additionalTargetResistances")
+                    .iter()
+                    .map(|v| v.as_f64().unwrap_or(0.0)),
+            );
+            let resistance_raw: f64 = resistance_components.iter().sum();
+            **result = serde_json::json!({
+                "isPierced":pierced,"rawAtkBase":raw,"finalSTR":str_,"finalINT":int_,"finalAGI":agi,"finalDEX":dex,"finalVIT":vit,
+                "finalATK":final_atk,"finalMATK":final_matk,"finalCDMG":final_cdmg,
+                "finalCrit":if base.context_flag("chkGuaranteedCrit") {serde_json::json!("확정치명타")} else {serde_json::json!(final_crit_rate)},
+                "normalAttackCrit":normal_attack_crit_full,"finalASPD":final_aspd_full,"finalCSPD":cspd,"finalStab":stab,
+                "finalMaxHP":max_hp_full,"finalMaxMP":max_mp,"finalMaxMPAfterBuff":max_mp,"baseAMPR":ampr_base,"equipmentAndBuffAMPR":equipment_ampr,
+                "amprBeforeNormalAttackActive":ampr["afterPassive"],"normalAttackAmprActiveCandidates":ampr["activeCandidates"],"selectedNormalAttackAmprActive":ampr["selectedActive"],
+                "amprBeforeDual":ampr["final"],"finalAMPR":ampr["final"].as_f64().unwrap()*if plan.dual {2.0}else{1.0},
+                "finalMotionSpeed":motion,"finalCastReduction":cast,"finalWeaponAttack":weapon,"finalSubAtk":full_sub_atk,"finalSubStab":full_sub_stab,"isDualSword":plan.dual,
+                "damageFactor":damage,"optimizationDamageFactor":damage*proc["expectedMultiplier"].as_f64().unwrap(),
+                "procTriggeredDamageFactor":damage*proc["triggeredMultiplier"].as_f64().unwrap(),"procExpectedDamageFactor":damage*proc["expectedMultiplier"].as_f64().unwrap(),"procDamageProfile":proc,
+                "targetResistance":{"components":resistance_components,"raw":resistance_raw,"effective":resistance_raw,"multiplier":resistance_multiplier(base,is_magic)},
+                "poisonDamageProfile":{"available":!poison_sources.is_empty(),"sources":poison_sources,"defenseAverage":defense_average,"defenseRatio":defense_ratio,"resistanceAverage":resistance_average,"damage":if poison_sources.is_empty(){Value::Null}else{serde_json::json!((dex+(final_atk+final_matk)*defense_ratio)*(1.0-resistance_average/100.0))}},
+                "optimizationUtilityValues":utility,
+                "breakdown":{"weapon":weapon,"statAtk":stat_atk,"statMatk":stat_matk,"atkUp":atk_up,"matkUp":matk_up,
+                    "preAtk":weapon+stat_atk+level+atk_up,"preMatk":floor_ratio(weapon,matk_ratio,1.0,0.0)+stat_matk+level+matk_up,
+                    "wpnMatkContrib":floor_ratio(weapon,matk_ratio,1.0,0.0),"conversionFlatMatk":final_matk-(floor_percent(floor_ratio(weapon,matk_ratio,1.0,0.0)+stat_matk+level+matk_up,number(base,"matkP"),0.0)+number(base,"matkF")),
+                    "baseASPD":plan.weapon_aspd,"preASPD":plan.weapon_aspd+floor(stat_aspd_prepared(plan.weapon,plan.sub_dual,str_,int_,agi,dex))+level,
+                    "preCSPD":cspd_base,"agiCspdTip":floor(1.16*agi),"dexCspdTip":floor(2.94*dex),"armorASPD":armor_aspd,"motionBonus":motion_bonus.min(50.0),"totalAspdP":number(base,"aspdP")+armor_aspd,"statASPD":floor(stat_aspd_prepared(plan.weapon,plan.sub_dual,str_,int_,agi,dex)),
+                    "baseCrit":base_crit,"crtCorrection":floor_ratio(number(base,"crtBase"),10.0,34.0,0.0),"baseCDMG":if str_>=agi {150.0+floor(str_/5.0)} else {150.0+floor((str_+agi)/10.0)},
+                    "physStab":phys_stab,"elem":elem,"baseElem":number(base,"elemP"),"targetBonus":target_bonus.map(|(field,_)|number_at(base,field)).unwrap_or(0.0),"intElemBonus":floor(number(base,"intBase")/10.0),"awakening":awakening,"magicElement":magic_element,"weaponMagicElement":weapon_magic_element,"attacksWeakness":attacks_weakness,
+                    "magicCritReflect":if is_magic {2.5*number(base,"spellBurstLevel")+if base.context_flag("targetWeakened")&&(main=="지팡이"||main=="마도구"||attacks_weakness){50.0}else{0.0}+if base.context_flag("targetWeakened")&&base.context_flag("dualBringerActive")&&sub=="마도구"&&str_>=int_{2.5*number(base,"dualBringerLevel")}else{0.0}}else{0.0},
+                    "magicCdmgReflect":50.0+2.5*number(base,"spellBurstLevel")+if base.context_flag("dualBringerActive")&&int_>str_{2.5*number(base,"dualBringerLevel")}else{0.0},"spellReflect":2.5*number(base,"spellBurstLevel"),"weakenReflect":base.context_flag("targetWeakened")&&(main=="지팡이"||main=="마도구"||attacks_weakness),"effectiveDef":effective_def,"skillMult":final_skill_mult,"skillConst":final_skill_const,
+                    "atkP":atk_p,"atkF":atk_f,"baseWpnAtkF":base_wpn_atk_f,"unsheatheP":unsheathe_p,"unsheatheF":unsheathe_f}
+            });
+        }
+    }
     Ok(Some(CrystaOptimizationNativeSummary {
         optimization_damage_factor: damage * base.invariant(Invariant::Proc),
         final_max_hp: max_hp,
@@ -1998,3 +2127,113 @@ fn evaluate_filtered_summary_impl<const RAW_AMPR: bool, T: StatLookup, C: Contex
 #[cfg(test)]
 #[path = "evaluator_tests.rs"]
 mod tests;
+
+fn full_ampr(value: f64, profile: Option<&Value>) -> Value {
+    let empty = Value::Null;
+    let profile = profile.unwrap_or(&empty);
+    let after = array(profile, "passive")
+        .iter()
+        .fold(floor(value), modifier_ampr);
+    let candidates: Vec<Value> = array(profile, "activeCandidates")
+        .iter()
+        .map(|m| {
+            let mut m = m.clone();
+            m["result"] = serde_json::json!(modifier_ampr(after, &m));
+            m
+        })
+        .collect();
+    let selected = candidates.iter().reduce(|a, b| {
+        let av = number(a, "result");
+        let bv = number(b, "result");
+        let id = |v: &Value| {
+            v.get("id")
+                .and_then(Value::as_str)
+                .unwrap_or("undefined")
+                .to_owned()
+        };
+        if bv > av || (bv == av && id(b) < id(a)) {
+            b
+        } else {
+            a
+        }
+    });
+    serde_json::json!({"beforePassive":floor(value),"afterPassive":after,"activeCandidates":candidates,"selectedActive":selected,"final":selected.map(|m|number(m,"result")).unwrap_or(after)})
+}
+fn full_proc(modifiers: Option<&Value>) -> Value {
+    let mut triggered = 1.0;
+    let mut expected = 1.0;
+    let sources:Vec<Value>=modifiers.and_then(Value::as_array).map(Vec::as_slice).unwrap_or(&[]).iter().map(|m|{
+        let chance=number(m,"chancePercent").clamp(0.0,100.0);let mult=finite_number(m,"multiplier",1.0);
+        triggered*=mult;expected*=1.0+chance/100.0*(mult-1.0);
+        serde_json::json!({"source":m.get("source").filter(|v|!v.is_null()&&v.as_str()!=Some("")).cloned().unwrap_or(serde_json::json!("확률 효과")),"level":number(m,"level").max(0.0),"chancePercent":chance,"multiplier":mult,"target":m.get("target").filter(|v|!v.is_null()).cloned().unwrap_or(serde_json::json!("attack"))})
+    }).collect();
+    serde_json::json!({"sources":sources,"triggeredMultiplier":triggered,"expectedMultiplier":expected})
+}
+
+pub fn evaluate_context(base: &Value, summary_only: bool) -> Result<Value, String> {
+    if !base.is_object() {
+        return Err("object calculation context required".into());
+    }
+    let mut result = Value::Null;
+    let output = if summary_only {
+        EvaluationOutput::Summary(&mut result)
+    } else {
+        EvaluationOutput::Full(&mut result)
+    };
+    evaluate_filtered_summary_impl::<true, _, _>(
+        base,
+        &NativeStats::new(),
+        |_, _| true,
+        None,
+        output,
+    )?;
+    if summary_only {
+        return Ok(result);
+    }
+    let mut ctx = base.clone();
+    let b = &result["breakdown"];
+    let conversion = array(base, "activeBuildConversions")
+        .iter()
+        .any(|v| text(v, "conversion") == "unsheatheToAtk");
+    if conversion {
+        for key in ["atkF", "baseWpnAtkF", "unsheatheP", "unsheatheF"] {
+            ctx[key] = b[key].clone();
+        }
+    }
+    if conversion || text(base, "subType") == "마도구" {
+        ctx["atkP"] = b["atkP"].clone();
+    }
+    for key in ["elemP", "elemDmg", "elemDmgP"] {
+        ctx[key] = b["elem"].clone();
+    }
+    result["ctx"] = ctx;
+    Ok(result)
+}
+pub fn candidate_supply_bases(base: &Value) -> Result<Value, String> {
+    if !base.is_object() {
+        return Err("object calculation context required".into());
+    }
+    let mut result = Value::Null;
+    evaluate_filtered_summary_impl::<true, _, _>(
+        base,
+        &NativeStats::new(),
+        |_, _| true,
+        None,
+        EvaluationOutput::Supply(&mut result),
+    )?;
+    Ok(result)
+}
+pub fn normal_attack_ampr(value: f64, profile: &Value) -> Value {
+    full_ampr(value, Some(profile))
+}
+pub fn resistance_profile(components: &Value) -> Value {
+    let values: Vec<f64> = components
+        .as_array()
+        .map(Vec::as_slice)
+        .unwrap_or(&[])
+        .iter()
+        .map(|v| v.as_f64().unwrap_or(0.0))
+        .collect();
+    let raw: f64 = values.iter().sum();
+    serde_json::json!({"components":values,"raw":raw,"effective":raw,"multiplier":((1.0-raw/100.0)*1e12).round()/1e12})
+}

@@ -1,57 +1,37 @@
-(function () {
+import {buildStore} from '../application/build-draft-store.js';
+import {skillRegistry} from '../data/skill-effect-registry.js';
+import {skillEffects} from '../calculation/skill-effect-engine.js';
+import {skillTreeData} from '../data/skill-tree-data.js';
+export function createActiveBuffUi(document) {
+  const root=document.defaultView;
+
   'use strict';
-  var persistedState = {};
   function clone(value) { return JSON.parse(JSON.stringify(value || {})); }
-  function savedState() { return clone(persistedState); }
+  function savedState() { return Object.fromEntries(Object.entries(buildStore.getBuild().activeBuffs || {}).map(function (entry) { var value=entry[1]; return [entry[0],{enabled:value === true || Boolean(value && value.active),stacks:Number(value && value.stacks)||0}]; })); }
   function saveState(state) {
-    persistedState = clone(state);
+    buildStore.commitBuild({activeBuffs:Object.fromEntries(Object.entries(state).map(function (entry) {return [entry[0],{active:enabledFor(state,entry[0]),stacks:Number(entry[1] && entry[1].stacks)||0}]; }))});
     if (typeof document.dispatchEvent === 'function' && typeof CustomEvent === 'function') {
       document.dispatchEvent(new CustomEvent('toram:active-buffs-changed'));
       document.dispatchEvent(new CustomEvent('toram:persistent-state-changed'));
     }
   }
-  function displayNumber(value) {
-    var numeric = Number(value);
-    return Number.isFinite(numeric) ? Number(numeric.toFixed(6)) : 0;
-  }
   function iconFor(skill) {
-    var simulator = window.skillSimulatorState;
-    var tree = simulator && simulator.data.trees.find(function (item) { return item.id === skill.treeId; });
+    var tree = skillTreeData.trees.find(function (item) { return item.id === skill.treeId; });
     var node = tree && tree.skills.find(function (item) { return item.id === skill.skillId; });
     return node ? node.icon : '';
   }
   function levelFor(skill) {
-    var levels = window.skillSimulatorState.getInvestments();
+    var levels = (buildStore.getBuild().skillLevels || {});
     return Number(levels[skill.treeId] && levels[skill.treeId][skill.skillId]) || 0;
   }
-  function effectSkills() {
-    var policies = window.ToramCalculationPolicies;
-    if (policies && typeof policies.resolveSkillDefinitions === 'function') return policies.resolveSkillDefinitions({ preferStackControl:true });
-    var root = window.TORAM_SKILL_EFFECT_DATA && window.TORAM_SKILL_EFFECT_DATA.skills || [];
-    var registry = window.ToramSkillEffectRegistry;
-    var byId = Object.create(null);
-    var orderedIds = [];
-    root.concat(registry ? registry.all() : []).forEach(function (skill) {
-      if (!skill || !skill.id) return;
-      var existing = byId[skill.id];
-      if (!existing) {
-        byId[skill.id] = skill;
-        orderedIds.push(skill.id);
-        return;
-      }
-      // 기본 정의와 스택 보강 정의가 같은 스킬 ID를 공유할 수 있다.
-      // 버프 카드는 하나만 표시하고, 스택 조절 정보가 있는 보강 정의를 우선한다.
-      if (skill.stackControl && !existing.stackControl) byId[skill.id] = skill;
-    });
-    return orderedIds.map(function (id) { return byId[id]; });
-  }
+  function effectSkills() { return skillRegistry.definitions(); }
   function isActiveBuff(skill) { return skill.kind === 'buff' || skill.activeBuff === true; }
   function isDisplayableActiveBuff(skill) {
-    if (!isActiveBuff(skill) || !window.ToramSkillEffects) return false;
+    if (!isActiveBuff(skill) || !skillEffects) return false;
     var context = contextFor(skill, false, 0, {});
-    if (!window.ToramSkillEffects.condition(skill.requirements && skill.requirements.when, context)) return false;
+    if (!skillEffects.condition(skill.requirements && skill.requirements.when, context)) return false;
     if (!skill.activeBuffWhen) return true;
-    return Boolean(window.ToramSkillEffects.condition(skill.activeBuffWhen, context));
+    return Boolean(skillEffects.condition(skill.activeBuffWhen, context));
   }
   function displayableBuffSkills() {
     return effectSkills().filter(isDisplayableActiveBuff);
@@ -66,7 +46,7 @@
     if (!config) return null;
     var evaluate = function (value, fallback) {
       if (value === undefined) return fallback;
-      return Math.floor(Number(window.ToramSkillEffects.expression(value, context)) || 0);
+      return Math.floor(Number(skillEffects.expression(value, context)) || 0);
     };
     var min = evaluate(config.minStacks, 0);
     var max = Math.max(min, evaluate(config.maxStacks, min));
@@ -81,30 +61,16 @@
     return { stateId:config.stateId, min:min, max:max, initial:initial, label:config.label || '스택', persistWhenDisabled:Boolean(config.persistWhenDisabled), showWhenDisabled:Boolean(config.showWhenDisabled), applyWhenDisabled:Boolean(config.applyWhenDisabled), resetStacksOnEnable:Boolean(config.resetStacksOnEnable) };
   }
   function engineMainWeapon(value) { return ({ '활':'bow', '자동활':'bowgun', '지팡이':'staff', '마도구':'magicDevice' })[value] || value; }
-  function currentCalculationContext() {
-    if (!window.ToramApplication || typeof window.ToramApplication.CalculateBuild !== 'function') return null;
-    try {
-      var result = window.ToramApplication.CalculateBuild();
-      var base = result.snapshot.baseContext;
-      var calculated = result.calculation;
-      var combat = { STR:calculated.finalSTR, INT:calculated.finalINT, VIT:calculated.finalVIT, AGI:calculated.finalAGI, DEX:calculated.finalDEX, CRT:base.crtBase, ATK:calculated.finalATK, MATK:calculated.finalMATK, ASPD:calculated.finalASPD, CSPD:calculated.finalCSPD, STABILITY:calculated.finalStab, WEAPON_ATK:calculated.finalWeaponAttack, MAXMP:calculated.finalMaxMP };
-      return {
-        baseStats:{ STR:base.strBase, INT:base.intBase, VIT:base.vitBase, AGI:base.agiBase, DEX:base.dexBase, CRT:base.crtBase },
-        combatStats:combat,
-        buildStats:combat
-      };
-    } catch (_) { return null; }
-  }
-  function contextFor(skill, active, stacks, states, calculated) {
+  function contextFor(skill, active, stacks, states) {
     var mainWeapon = document.getElementById('mainWeaponType');
     var subWeapon = document.getElementById('subWeaponType');
     var charLevel = document.getElementById('charLevel');
     var numberValue = function (id) { var node = document.getElementById(id); return Number(node && node.value) || 0; };
-    var baseStats = calculated && calculated.baseStats || { STR:numberValue('strBase'), INT:numberValue('intBase'), VIT:numberValue('vitBase'), AGI:numberValue('agiBase'), DEX:numberValue('dexBase'), CRT:numberValue('crtBase') };
-    var combatStats = calculated && calculated.combatStats || {};
+    var baseStats = { STR:numberValue('strBase'), INT:numberValue('intBase'), VIT:numberValue('vitBase'), AGI:numberValue('agiBase'), DEX:numberValue('dexBase'), CRT:numberValue('crtBase') };
+    var combatStats = {};
     return {
       skill:{ level:levelFor(skill) }, player:{ level:Number(charLevel && charLevel.value) || 0 }, buff:{ active:active, stacks:stacks }, states:states || {},
-      baseStats:baseStats, combatStats:combatStats, buildStats:calculated && calculated.buildStats || combatStats,
+      baseStats:baseStats, combatStats:combatStats, buildStats:combatStats,
       equipment:{ mainWeapon:engineMainWeapon(mainWeapon ? mainWeapon.value : null), subWeapon:subWeapon ? subWeapon.value : null, subWeaponRefinement:numberValue('subRefine'), subWeaponAttack:numberValue('subAtk'), subWeaponStability:numberValue('subStab') }
     };
   }
@@ -142,7 +108,7 @@
     var value = Math.min(config.max, Math.max(config.min, stackFor(state, skill, config) + delta));
     state[skill.id] = { enabled:enabledFor(state, skill.id), stacks:value };
   }
-  function syncOptions(active) {
+  function syncOptions() {
     var container = document.getElementById('buffOpts');
     if (!container) return;
     var proxy = container.querySelector('#activeSkillBuffOptions');
@@ -150,7 +116,7 @@
   }
   function render() {
     var panel = document.getElementById('appTabPanel-buffs');
-    if (!panel || !window.skillSimulatorState || !window.TORAM_SKILL_EFFECT_DATA) return;
+    if (!panel) return;
     var section = document.getElementById('activeBuffSkillSection');
     if (!section) { section = document.createElement('section'); section.id = 'activeBuffSkillSection'; section.className = 'equip-card'; panel.insertBefore(section, panel.firstChild); }
     var state = savedState();
@@ -186,10 +152,10 @@
     if (!buffs.length) {
       var empty = document.createElement('p'); empty.className = 'active-buff-empty'; empty.textContent = '습득한 액티브 버프 스킬이 없습니다.'; grid.appendChild(empty);
     }
-    section.appendChild(grid); syncOptions(state);
+    section.appendChild(grid); syncOptions();
   }
-  document.addEventListener('toram:calculate', function () { syncOptions(savedState()); });
-  document.addEventListener('toram:preview', function () { syncOptions(savedState()); });
+  document.addEventListener('toram:calculate', syncOptions);
+  document.addEventListener('toram:preview', syncOptions);
   document.addEventListener('change', function (event) { if (event.target && (event.target.id === 'mainWeaponType' || event.target.id === 'subWeaponType')) render(); });
   function activeSelections() {
     var state = savedState(), states = runtimeStates(state), result = {};
@@ -202,13 +168,10 @@
     return result;
   }
   function restore(selections) {
-    persistedState = Object.keys(selections || {}).reduce(function (result, id) {
-      var value = selections[id];
-      result[id] = { enabled:Boolean(value === true || value && (value.active === true || value.enabled === true)), stacks:Number(value && value.stacks) || 0 };
-      return result;
-    }, {});
+    buildStore.commitBuild({activeBuffs:clone(selections || {})});
     render();
   }
-  window.ToramActiveBuffs = Object.freeze({ render:render, restore:restore, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections, getDisplaySkills:displayableBuffSkills });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render, { once:true }); else render();
-}());
+  const api = Object.freeze({ render:render, restore:restore, getRuntimeStates:function () { return runtimeStates(savedState()); }, getSelections:activeSelections, getDisplaySkills:displayableBuffSkills });
+
+render(); return api;
+}

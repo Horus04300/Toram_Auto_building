@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { DatabaseSync } from 'node:sqlite';
-import { randomUUID } from 'node:crypto';
-import { createInventoryStore } from '../../../server/inventory-store.mjs';
-import { createPostStore } from '../../../server/post-store.mjs';
+import {DatabaseSync} from 'node:sqlite';
+import {randomUUID} from 'node:crypto';
+import {createInventoryStore} from '../../../server/inventory-store.mjs';
+import {createPostStore} from '../../../server/post-store.mjs';
 
 const db = new DatabaseSync(':memory:');
 db.exec('PRAGMA foreign_keys=ON; CREATE TABLE users(id TEXT PRIMARY KEY,nickname TEXT NOT NULL); INSERT INTO users VALUES (\'author\',\'작성자\'),(\'reader\',\'독자\');');

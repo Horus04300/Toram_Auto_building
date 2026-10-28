@@ -1,18 +1,14 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Martial: {} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/martial.js', 'web/src/data/skill-registration-metadata.js', 'web/src/data/skill-catalog-registration.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
 
-const effects = context.window.ToramSkillEffects;
+const effects = skillEffects;
 const ids = Array.from({ length: 22 }, (_, index) => `Martial:${index}`);
 const restricted = new Set([5, 6, 11, 12, 13, 14, 15, 16, 18, 19, 20, 21]);
-const base = (mainType = '권갑') => ({ mainType, subType: '없음', level: 300, strBase: 400, dexBase: 300, intBase: 100, vitBase: 200, agiBase: 500, crtBase: 50 });
+const base = (mainType = '권갑') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType: '없음', level: 300, strBase: 400, dexBase: 300, intBase: 100, vitBase: 200, agiBase: 500, crtBase: 50 });
 const combat = { STR: 400, DEX: 300, INT: 100, VIT: 200, AGI: 500, AMPR: 30, ATK: 1000, ASPD: 1000 };
 const setLevels = (value, extra = {}) => { context.window.skillSimulatorState.getInvestments = () => ({ Martial: Object.assign(Object.fromEntries(ids.map((id) => [id.split(':')[1], value])), extra) }); };
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
@@ -54,7 +50,7 @@ close(profile.hits[0].multiplier, 1.95, '아수라 ON 마셜 피해 배율');
 assert(profile.hits[0].constant === 325, '아수라 ON 전역 상수');
 assert(profile.cost.mp === 100, '아수라는 마셜 MP 비용을 늘리지 않음');
 setLevels(0, { 0: 10, 14: 10, 21: 10 });
-const sequence = context.window.ToramComboSequence;
+const sequence = comboSequence;
 let combo = sequence.evaluate([{ skillId:'Martial:14', tag:'none' }, { skillId:'Martial:0', tag:'none' }, { skillId:'Martial:0', tag:'none' }], base(), combat, { maxMp:1000 });
 assert(combo.entries[1].appliedNextSkillModifiers.shortRangeDamagePercent === 10, '플래시 아트 다음 스킬 근거리 위력');
 assert(combo.entries[2].appliedNextSkillModifiers.shortRangeDamagePercent === 0, '플래시 아트 효과는 1회 후 소멸');

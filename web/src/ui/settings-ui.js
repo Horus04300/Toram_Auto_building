@@ -1,13 +1,10 @@
-/* 세팅 저장 오버레이. 저장 계약과 위치는 Settings Repository가 담당한다. */
-(function () {
+
+export function createSettingsUi(document,repository) {
+  const root=document.defaultView;
+
   'use strict';
 
   var elements = {};
-  function settingsApi() {
-    var application = window.ToramApplication;
-    if (!application || !application.Settings) throw new Error('세팅 Application API가 준비되지 않았습니다.');
-    return application.Settings;
-  }
 
   function errorMessage(error) {
     return error && error.message ? error.message : String(error || '알 수 없는 오류');
@@ -28,8 +25,8 @@
   }
 
   async function refreshFileList(showStatus) {
-    var api = settingsApi();
-    if (!api.isAvailable()) return;
+    var api = repository;
+    if (!api.isNativeAvailable()) return;
     var files = await api.list();
     elements.fileList.innerHTML = '';
     files.forEach(function (item) {
@@ -46,7 +43,7 @@
 
   async function saveSetting() {
     var name = settingName();
-    await settingsApi().save(name);
+    await repository.save(name);
     setStatus(name + '.json 저장 완료');
     await refreshFileList(false);
   }
@@ -54,8 +51,8 @@
   async function overwriteSelectedSetting() {
     var selected = elements.fileList.value;
     if (!selected) { setStatus('덮어쓸 세팅 파일을 선택하세요.', true); return; }
-    if (!window.confirm('“' + selected + '” 파일을 현재 세팅으로 덮어쓸까요?')) return;
-    await settingsApi().overwrite(selected);
+    if (!root.confirm('“' + selected + '” 파일을 현재 세팅으로 덮어쓸까요?')) return;
+    await repository.overwrite(selected);
     setStatus(selected + ' 덮어쓰기 완료');
     await refreshFileList(false);
   }
@@ -63,27 +60,27 @@
   async function loadSelectedSetting() {
     var selected = elements.fileList.value;
     if (!selected) { setStatus('불러올 세팅 파일을 선택하세요.', true); return; }
-    await settingsApi().load(selected);
+    await repository.load(selected);
   }
 
   async function deleteSelectedSetting() {
     var selected = elements.fileList.value;
     if (!selected) { setStatus('삭제할 세팅 파일을 선택하세요.', true); return; }
-    if (!window.confirm('“' + selected + '” 파일을 삭제할까요? 이 작업은 되돌릴 수 없습니다.')) return;
-    await settingsApi().remove(selected);
+    if (!root.confirm('“' + selected + '” 파일을 삭제할까요? 이 작업은 되돌릴 수 없습니다.')) return;
+    await repository.remove(selected);
     setStatus(selected + ' 삭제 완료');
     await refreshFileList(false);
   }
 
   function exportJson() {
-    var name = settingsApi().export(elements.backupName && elements.backupName.value);
+    var name = repository.exportCurrent(elements.backupName && elements.backupName.value);
     setStatus(name + ' 내보내기 완료');
   }
 
   function importJson(file) {
     if (!file) return;
     file.text().then(function (text) {
-      settingsApi().import(text);
+      repository.importSavedBuild(text);
     }).catch(function (error) {
       setStatus('불러오기 실패: ' + errorMessage(error), true);
     });
@@ -91,7 +88,7 @@
 
   function createUi() {
     var launcher = document.getElementById('appBuildStorageButton');
-    if (!launcher || !window.ToramApplication || !window.ToramApplication.Settings) return;
+    if (!launcher || !repository) return;
     var overlay = document.createElement('div');
     overlay.className = 'build-file-overlay';
     overlay.hidden = true;
@@ -137,8 +134,8 @@
   async function initialize() {
     createUi();
     if (!elements.status) return;
-    var api = settingsApi();
-    var hasAdapter = api.isAvailable();
+    var api = repository;
+    var hasAdapter = api.isNativeAvailable();
     setNativeVisible(hasAdapter);
     if (hasAdapter) {
       var directory = await api.directory();
@@ -149,9 +146,7 @@
     }
   }
 
-  window.ToramBuildFileUi = Object.freeze({ initialize:initialize });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () {
-    initialize().catch(function (error) { setStatus('저장 UI 초기화 실패: ' + errorMessage(error), true); });
-  }, { once:true });
-  else initialize().catch(function (error) { setStatus('저장 UI 초기화 실패: ' + errorMessage(error), true); });
-}());
+  const api = Object.freeze({ initialize:initialize });
+
+initialize().catch(error=>setStatus('저장 UI 초기화 실패: ' + errorMessage(error),true)); return api;
+}

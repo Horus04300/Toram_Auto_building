@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import vm from 'node:vm';
-import { measureComputation } from '../../support/crysta-computation-measurement.mjs';
+import {readFile} from 'node:fs/promises';
+import {importWithMocks} from '../../support/import-with-mocks.mjs';
+import {measureComputation} from '../../support/crysta-computation-measurement.mjs';
 
 // Drive the actual product Native client with a deterministic monotonic clock.
 // Setup, transfer, restoration, evaluation, cache bookkeeping and resume must all precede stop.
@@ -29,9 +29,13 @@ const context = { console, window:null,
   } } }
 };
 context.window = context;
-vm.createContext(context);
-vm.runInContext(await readFile(new URL('../../../web/src/optimization/rust-bridge.js', import.meta.url), 'utf8'), context);
-const loadClient = () => { vm.runInContext(source, context); return context.ToramCrystaOptimizationNativeClient; };
+const {createNativeClient}=await importWithMocks(new URL('../../../desktop/adapters/optimization-client.js',import.meta.url),{
+ 'stat-registry.js':{statRegistry:context.ToramStatRegistry},
+ 'calculator.js':{calculationKernel:context.ToramCalculationKernel},
+ 'build-evaluator.js':{buildEvaluator:context.ToramBuildEvaluator},
+ 'candidate-preparation.js':{candidatePreparation:context.ToramCrystaOptimizationCandidates}
+});
+const loadClient=()=>context.ToramCrystaOptimizationNativeClient=createNativeClient(context.__TAURI__.core);
 const compile = () => {
   tick(13);
   return { baseContext:{}, scenarioSnapshot:{}, metadata:{},

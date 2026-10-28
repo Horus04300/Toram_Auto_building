@@ -1,5 +1,8 @@
-/* Settings 단일 저장 경계: named build, app settings, last session. */
-(function (root) {
+import * as buildValues from '../application/build-values.mjs';
+import {statRegistry} from '../calculation/stat-registry.js';
+import {foodCatalog} from '../data/my-room-food.js';
+export function createSettingsRepository(root,store,files=null) {
+  const document=root.document;
   'use strict';
   var FORMAT = 'toram-auto-build-document';
   var SCHEMA_VERSION = 2;
@@ -8,57 +11,21 @@
   var LEGACY_SESSION_STORAGE_KEY = 'toram.auto-build.application-state.v1';
   var restoring = false, pendingSave = null;
 
-  function clone(value) { return value === undefined ? undefined : JSON.parse(JSON.stringify(value)); }
+  function clone(value) { return structuredClone(value); }
   function now() { return new Date().toISOString(); }
   function safeName(value) {
     var name = String(value || '').trim().replace(/[\/:*?"<>|]/g, '-').replace(/\s+/g, ' ').replace(/[. ]+$/g, '');
     return name || ('세팅-' + new Date().toISOString().slice(0, 19).replace(/[:T]/g, '-'));
   }
-  function fileAdapter() { return root.ToramSettingsFileRepositoryAdapter || null; }
+  function fileAdapter() { return files; }
   function storage() { try { return root.localStorage || null; } catch (_) { return null; } }
   function buildShape(value) {
-    if (!(value && typeof value === 'object' && value.character && value.equipment && value.skillLevels && value.activeBuffs && Array.isArray(value.externalOptions) && Array.isArray(value.combo))) return false;
-    try {
-      Object.keys(value.equipment).forEach(function (slot) {
-        var selection = value.equipment[slot] && value.equipment[slot].catalogItem;
-        if (!selection) return;
-        var rules = root.ToramApp && root.ToramApp.itemRules;
-        if (!rules) throw new Error('게임 장비 검증 기능이 준비되지 않았습니다.');
-        rules.validateEquipmentSelection(selection, root.ToramStatRegistry, slot);
-      });
-      if (value.consumableBuffs !== undefined) {
-        var rules = root.ToramApp && root.ToramApp.itemRules;
-        if (!rules) throw new Error('소모품 버프 검증 기능이 준비되지 않았습니다.');
-        rules.resolveConsumableBuffs(value.consumableBuffs, root.ToramStatRegistry);
-      }
-      return true;
-    } catch (_) { return false; }
+    try { buildValues.validateBuild(value, { registry:statRegistry, food:foodCatalog }); return true; }
+    catch (_) { return false; }
   }
   function scenarioShape(value) {
-    if (!(value && typeof value === 'object' && value.target && typeof value.target === 'object')) return false;
-    if (value.conditions !== undefined && (!value.conditions || typeof value.conditions !== 'object' || Array.isArray(value.conditions))) return false;
-    var itemEvents = value.conditions && value.conditions.activeItemEventTypes;
-    if (itemEvents !== undefined && (!Array.isArray(itemEvents) || itemEvents.length > 256 || new Set(itemEvents).size !== itemEvents.length || !itemEvents.every(function (type) { return Number.isSafeInteger(type) && type >= 0 && type <= 255; }))) return false;
-    if (value.target.targetElement !== undefined && (!Number.isSafeInteger(value.target.targetElement) || value.target.targetElement < 0 || value.target.targetElement > 7)) return false;
-    if (value.optionCalculation !== undefined) {
-      if (!value.optionCalculation || typeof value.optionCalculation !== 'object' || Array.isArray(value.optionCalculation)) return false;
-      var definitions = Object.assign({}, root.ToramSupplementalStats && root.ToramSupplementalStats.inputDefinitions, root.ToramOptionEvents && root.ToramOptionEvents.inputDefinitions);
-      if (Object.keys(value.optionCalculation).length > 100 || !Object.entries(value.optionCalculation).every(function (pair) {
-        var key=pair[0], entry=pair[1], definition=definitions[key];
-        if (!definition) return false;
-        if (definition.type === 'boolean') return typeof entry === 'boolean';
-        if (definition.type === 'select') return definition.options.some(function (option) { return option.value === entry; });
-        return typeof entry === 'number' && Number.isFinite(entry) && (definition.min === undefined || entry >= definition.min) && (definition.max === undefined || entry <= definition.max);
-      })) return false;
-    }
-    if (value.bossSelection !== undefined) {
-      try {
-        var rules = root.ToramApp && root.ToramApp.bossRules;
-        if (!rules) return false;
-        rules.validateBossSelection(value.bossSelection);
-      } catch (_) { return false; }
-    }
-    return true;
+    try { buildValues.validateScenario(value); return true; }
+    catch (_) { return false; }
   }
   function documentShape(document, documentType, schemaVersion) { return Boolean(document && document.format === FORMAT && document.schemaVersion === schemaVersion && document.documentType === documentType); }
   function validateSavedBuild(document) {
@@ -75,7 +42,7 @@
     return { build:discardLegacyBuffOptionProxy(session.build), scenario:clone(session.scenario), savedAt:session.savedAt || now() };
   }
   function currentSession() {
-    var store = root.ToramBuildDraftStore;
+
     if (!store || typeof store.read !== 'function') throw new Error('BuildDraft 저장소가 준비되지 않았습니다.');
     var source = store.read();
     return { build:clone(source.build), scenario:clone(source.scenario), savedAt:now() };
@@ -117,7 +84,7 @@
   function flushApplicationState() {
     if (restoring || !storage()) throw new Error('현재 세팅을 저장할 수 없어 업데이트를 중단했습니다.');
     if (pendingSave !== null) { root.clearTimeout(pendingSave); pendingSave = null; }
-    root.ToramBuildDraftStore.syncFromUi();
+    store.syncFromUi();
     saveLastSession();
   }
   function setUpdateSettings(settings) {
@@ -129,7 +96,7 @@
   }
   function restoreSession(session) {
     if (!session || !buildShape(session.build) || !scenarioShape(session.scenario)) return;
-    var ui = root.ToramBuildStateUi;
+    var ui = store;
     if (!ui || typeof ui.restoreSession !== 'function') throw new Error('Build 상태 UI 어댑터가 준비되지 않았습니다.');
     restoring = true;
     try { ui.restoreSession(session); } finally { restoring = false; }
@@ -139,7 +106,7 @@
     var session = currentSession(), timestamp = now();
     return { format:FORMAT, schemaVersion:SCHEMA_VERSION, documentType:'saved-build', name:safeName(name), createdAt:existing && existing.createdAt || timestamp, updatedAt:timestamp, build:session.build, scenario:session.scenario };
   }
-  function serializeSavedBuild(name) { return JSON.stringify(savedBuild(name), null, 2); }
+  function snapshot(name) { store.syncFromUi(); return savedBuild(name); }
   function parseSavedBuild(text) {
     var parsed = JSON.parse(text);
     if (validateSavedBuild(parsed)) return parsed;
@@ -157,11 +124,16 @@
     link.href = url; link.download = document.name + '.json'; documentRef().body.appendChild(link); link.click(); link.remove(); root.setTimeout(function () { URL.revokeObjectURL(url); }, 0); return link.download;
   }
   function documentRef() { return root.document || document; }
-  function importSavedBuild(text) { var document = parseSavedBuild(text); restoreSession({ build:document.build, scenario:document.scenario }); writeApplicationState(applicationState(currentSession(), readApplicationState())); return document; }
+  function applySession(session) {
+    buildValues.validateBuild(session.build,{registry:statRegistry,food:foodCatalog});
+    buildValues.validateScenario(session.scenario);
+    restoreSession(clone({build:session.build,scenario:session.scenario}));
+    writeApplicationState(applicationState(currentSession(),readApplicationState()));
+  }
+  function importSavedBuild(text) { var document = parseSavedBuild(text); applySession(document); return document; }
   function initialize() {
     restoreLastSession();
     ['toram:persistent-state-changed','toram:skill-investments-changed','toram:active-buffs-changed','toram:combo-changed','toram:build-options-changed'].forEach(function (eventName) { document.addEventListener(eventName, scheduleLastSessionSave); });
   }
-  root.ToramSettingsRepository = Object.freeze({ flushApplicationState:flushApplicationState, getUpdateSettings:getUpdateSettings, setUpdateSettings:setUpdateSettings, format:FORMAT, schemaVersion:SCHEMA_VERSION, sessionStorageKey:SESSION_STORAGE_KEY, safeName:safeName, validateSavedBuild:validateSavedBuild, validateApplicationState:validateApplicationState, serializeSavedBuild:serializeSavedBuild, parseSavedBuild:parseSavedBuild, list:list, directory:directory, save:save, overwrite:overwrite, load:load, remove:remove, exportCurrent:exportCurrent, importSavedBuild:importSavedBuild, restoreLastSession:restoreLastSession, saveLastSession:saveLastSession, isNativeAvailable:function () { return Boolean(fileAdapter()); } });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
-}(window));
+  return Object.freeze({initialize:initialize, flushApplicationState:flushApplicationState, getUpdateSettings:getUpdateSettings, setUpdateSettings:setUpdateSettings, format:FORMAT, schemaVersion:SCHEMA_VERSION, sessionStorageKey:SESSION_STORAGE_KEY, safeName:safeName, validateSavedBuild:validateSavedBuild, validateApplicationState:validateApplicationState, snapshot:snapshot, parseSavedBuild:parseSavedBuild, list:list, directory:directory, save:save, overwrite:overwrite, load:load, remove:remove, exportCurrent:exportCurrent, importSavedBuild:importSavedBuild, applySession:applySession, restoreLastSession:restoreLastSession, saveLastSession:saveLastSession, isNativeAvailable:function () { return Boolean(fileAdapter()); } });
+}

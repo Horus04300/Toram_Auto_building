@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 블레이드: 원문 대조가 끝난 오라 블레이드·램페이지 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('블레이드 효과 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v=function(n){return {op:'value',value:n};}, r=function(path){return {op:'ref',path:path};};
   var l=function(){return r('skill.level');}, a=function(){return {op:'add',args:[].slice.call(arguments)};};
@@ -29,7 +31,7 @@
   var aura = catalog.skills.find(function (item) { return item.id === 'Blade:16'; });
   var rampage = catalog.skills.find(function (item) { return item.id === 'Blade:8'; });
   if (!aura || !rampage) throw new Error('블레이드 스킬을 카탈로그에서 찾지 못했습니다.');
-  registry.register('Blade', [
+  registry.register([
     Object.assign(identity(0,'attack','해머 다운 물리 액티브 / 양손검 전용'),{
       requirements:{when:twoHand},inputs:[{id:'consecutive',label:'연속 사용',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:i(truthy(input('consecutive')),v(0),v(100))}},
       attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1),m(v(.5),l()),d(total('VIT'),v(100))),constant:v(100),flags:{longRange:false,unsheathe:false,areaRadius:3,guaranteedCriticalWhen:'target.incapacitated',normalProrationWhenConsecutive:true,comboDisabledWhenConsecutive:true}}]
@@ -136,5 +138,52 @@
         {multiplier:a(v(2.5),m(v(.05),l()),{op:'if',when:weapon('양손검'),then:v(3),else:v(0)}),constant:a(v(300),m(v(20),l()))}
       ],flags:{guaranteedHit:true,damageReductionDuringMotion:90,longRange:false,unsheathe:false},notes:'피니시 어택은 콤보 피해 변화·행동 속도·장인의 검술 영향을 받지 않음'}]
     }
+  ]);
+}());
+(function () {
+  'use strict';
+  var v = function(n){return {op:'value',value:n};};
+  var r = function(p){return {op:'ref',path:p};};
+  var l = function(){return r('skill.level');};
+  var a = function(){return {op:'add',args:[].slice.call(arguments)};};
+  var m = function(){return {op:'multiply',args:[].slice.call(arguments)};};
+  var d = function(x,y){return {op:'divide',left:x,right:y};};
+  var q = function(c,y,n){return {op:'if',when:c,then:y,else:n||v(0)};};
+  var e = function(x,y){return {op:'eq',left:x,right:y};};
+  var between = function(min,max,result){return {when:{op:'all',args:[{op:'gte',left:l(),right:v(min)},{op:'lte',left:l(),right:v(max)}]},value:v(result)};};
+  var tier = function(cases){return {op:'tier',cases:cases};};
+  var mainIs = function(){return {op:'in',value:r('equipment.mainWeapon'),values:[].slice.call(arguments)};};
+  skillRegistry.register([
+{id:'Blade:17',treeId:'Blade',skillId:17,nameKo:'블레이드 마스터리',kind:'passive',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'블레이드 마스터리 패시브'},requirements:{when:mainIs('한손검','양손검')},effects:[
+        {phase:'build',type:'stat',key:'WATKP',when:mainIs('한손검','양손검'),value:m(v(3),l())},
+        {phase:'build',type:'stat',key:'ATKP',when:mainIs('한손검','양손검'),value:tier([between(1,2,1),between(3,7,2),between(8,10,3)])}
+      ]},
+{id:'Blade:18',treeId:'Blade',skillId:18,nameKo:'재빠른 참격',kind:'passive',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'재빠른 참격 패시브'},requirements:{when:mainIs('한손검','양손검')},effects:[
+        {phase:'build',type:'stat',key:'ASPD_P',when:mainIs('한손검','양손검'),value:l()},
+        {phase:'build',type:'stat',key:'ASPD',when:mainIs('한손검','양손검'),value:m(v(10),l())}
+      ]},
+{id:'Blade:19',treeId:'Blade',skillId:19,nameKo:'장인의 검술',kind:'passive',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'장인의 검술 패시브'},requirements:{when:mainIs('한손검','양손검')},effects:[
+        {phase:'hit',type:'damageMultiplier',target:'skillCategory:Blade',when:mainIs('한손검','양손검'),value:a(v(1),d(m(v(2),l()),v(100)))}
+      ]},
+{id:'Blade:6',treeId:'Blade',skillId:6,nameKo:'아스튜트',kind:'attack',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'아스튜트 물리 액티브'},
+       requirements:{when:mainIs('한손검','양손검')},cost:{mp:{timing:'cast',value:q(e(r('equipment.mainWeapon'),v('한손검')),v(100),v(200))}},
+       attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1.5),m(v(.1),l()),q(e(r('equipment.mainWeapon'),v('양손검')),v(.5),v(0))),constant:a(v(150),m(v(5),l())),flags:{longRange:false,unsheathe:false}}],
+       effects:[{phase:'cast',type:'skillModifier',key:'motionSpeed',value:m(v(5),l())}],
+       stateTransitions:[{event:'cast',operation:'grant',stateId:'blade.astute.critical',stacks:v(1),maxStacks:v(1),durationSeconds:tier([between(1,5,5),between(6,10,10)]),effects:[{phase:'combat',type:'stat',key:'CRIT',value:a(v(25),q(e(r('equipment.mainWeapon'),v('양손검')),v(25),v(0)))}]}]
+      },
+{id:'Blade:7',treeId:'Blade',skillId:7,nameKo:'트리거 슬래시',kind:'attack',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'트리거 슬래시 물리 액티브'},
+       requirements:{when:mainIs('한손검','양손검')},cost:{mp:{timing:'cast',value:q({op:'gte',left:l(),right:v(6)},v(200),v(300))}},
+       attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1.5),m(v(.05),l()),q(e(r('equipment.mainWeapon'),v('양손검')),v(1),v(0))),constant:a(v(200),m(v(10),l())),flags:{longRange:false,unsheathe:false,guaranteedHitWhen:{op:'eq',left:r('equipment.mainWeapon'),right:v('한손검')}}}],
+       stateTransitions:[{event:'cast',operation:'grant',stateId:'blade.triggerSlash',stacks:v(1),maxStacks:v(1),durationSeconds:v(0),effects:[{phase:'combat',type:'stat',key:'AMPR',value:m(v(2),l())},{phase:'cast',type:'nextSkillModifier',key:'motionSpeed',value:v(50)}]}]
+      },
+{id:'Blade:13',treeId:'Blade',skillId:13,nameKo:'스파이럴 에어',kind:'attack',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'스파이럴 에어 물리 액티브'},
+       requirements:{when:mainIs('한손검','양손검')},cost:{mp:{timing:'cast',value:v(300)}},
+       attacks:[{id:'main',damageType:'physical',count:v(10),multiplier:a(v(.1),m(v(.03),l()),q(e(r('equipment.mainWeapon'),v('양손검')),v(.5),v(0))),constant:v(30),flags:{longRange:false,unsheathe:false,perHitModifiers:{physicalPierceFromHit:2,perHitPercent:5.556}},stateTransitions:[{event:'hit',operation:'grant',stateId:'blade.spiralAir.criticalDamage',stacks:v(1),maxStacks:v(1),durationSeconds:l(),effects:[{phase:'combat',type:'stat',key:'CDMG',value:q(e(r('equipment.mainWeapon'),v('양손검')),d(a(v(.5),m(v(.5),l()),d(r('combatStats.DEX'),v(50))),v(2)),a(v(.5),m(v(.5),l()),d(r('combatStats.DEX'),v(50))))}]}]}]
+      },
+{id:'Blade:20',treeId:'Blade',skillId:20,nameKo:'워 크라이',kind:'buff',source:'blade',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Blade.txt',anchor:'워 크라이 버프'},
+       inputs:[{id:'active',label:'활성',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:v(300)}},
+       stateTransitions:[{event:'cast',operation:'grant',stateId:'blade.warCry',stacks:v(1),maxStacks:v(1),durationSeconds:a(v(15),l(),q(e(r('equipment.mainWeapon'),v('한손검')),v(50),v(0))),effects:[{phase:'combat',type:'stat',key:'ATKP',scope:'party',value:q(e(r('equipment.mainWeapon'),v('양손검')),a(l(),v(5)),l())}]}],
+       effects:[{phase:'cast',type:'ailmentRemove',key:'fear',value:v(1)},{phase:'combat',type:'stat',key:'ATKP',scope:'party',when:{op:'truthy',value:r('buff.active')},value:q(e(r('equipment.mainWeapon'),v('양손검')),a(l(),v(5)),l())}]
+      }
   ]);
 }());

@@ -1,17 +1,17 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { DatabaseSync } from 'node:sqlite';
-import { randomUUID } from 'node:crypto';
-import { inventoryRules as rules } from '../../../server/inventory-rules.mjs';
-import { createInventoryStore } from '../../../server/inventory-store.mjs';
-import { createPostStore } from '../../../server/post-store.mjs';
-import { captureObject, applyObject, validateInventoryObject, snapshot, INVENTORY_TYPES } from '../../../web/src/application/inventory-objects.mjs';
-import { mergeInventoryObjects } from '../../../web/src/application/inventory-merge.mjs';
-import { createItemCatalog, createConsumableBuffSelection } from '../../../web/src/application/item-catalog.mjs';
-import { createEquipmentDraft } from '../../../web/src/application/inventory-equipment-draft.mjs';
-import { inventoryMajor, inventoryGroups, inventoryLeaves } from '../../../web/src/pages/inventory/inventory-navigation.mjs';
-import { createSkillTreeSimulator } from '../../../web/src/ui/skill-tree-simulator.mjs';
-import { nextInventoryName } from '../../../web/src/application/inventory-summary.mjs';
+import {readFile} from 'node:fs/promises';
+import {DatabaseSync} from 'node:sqlite';
+import {randomUUID} from 'node:crypto';
+import {inventoryRules as rules} from '../../../server/inventory-rules.mjs';
+import {createInventoryStore} from '../../../server/inventory-store.mjs';
+import {createPostStore} from '../../../server/post-store.mjs';
+import {captureObject,applyObject,validateInventoryObject,INVENTORY_TYPES,sections,encodeSections} from '../../../web/src/application/inventory-objects.mjs';
+import {mergeInventoryObjects} from '../../../web/src/application/inventory-merge.mjs';
+import {createItemCatalog,createConsumableBuffSelection} from '../../../web/src/application/item-catalog.mjs';
+import {createEquipmentDraft} from '../../../web/src/application/inventory-equipment-draft.mjs';
+import {inventoryMajor,inventoryGroups,inventoryLeaves} from '../../../web/src/pages/inventory/inventory-navigation.mjs';
+import {createSkillTreeSimulator} from '../../../web/src/ui/skill-tree-simulator.mjs';
+import {nextInventoryName} from '../../../web/src/application/inventory-summary.mjs';
 
 const clone = structuredClone;
 assert.equal(nextInventoryName([],'스킬트리'),'새 스킬트리');
@@ -56,7 +56,13 @@ const session = {build:{character:{level:325,attributes:{STR:1,INT:1,VIT:1,AGI:1
   skillLevels:{Blade:{0:5,1:1},Magic:{0:1}},activeBuffs:{'Blade:0':{active:false,stacks:0}},externalOptions:[],myRoomFood:[null,null,null,null,null],guildFoodBuff:true,consumableBuffs:[buffs[0]],combo:[{skillId:'Blade:0',tag:'none',includeSpecialAttack:false,inputs:{}}]},
   scenario:{target:{bossLevel:330,bossDef:0,bossMdef:0,bossPhysResist:0,bossMagResist:0,bossCritResist:0},conditions:{},optimizationPreferences:{rangeOverride:null,requirements:{maxHp:null},bannedCrystas:[]}}};
 const record = (type, source = session, parameters = {}) => ({id:randomUUID(),type,name:INVENTORY_TYPES[type],schemaVersion:1,revision:1,provenance:[],data:captureObject(type,source,{slot:'mainWeapon',treeId:'Blade',consumableId:2000,...parameters})});
-for (const type of Object.keys(INVENTORY_TYPES)) validateInventoryObject(type,record(type).data,rules);
+for (const type of Object.keys(INVENTORY_TYPES)) {
+  const item=record(type), normalized=sections(item);
+  validateInventoryObject(type,item.data,rules);
+  assert.doesNotMatch(JSON.stringify(normalized.values),/"(?:schemaVersion|provenance)":/,'Composition values do not contain inventory envelopes or provenance');
+  assert.deepEqual(sections({type:'build',data:encodeSections(normalized)}).values,normalized.values,'All ten v1 types roundtrip through the common values');
+}
+assert.equal(captureObject('equipment',{build:{equipment:{mainWeapon:piece}}}).equipment.attack,piece.attack,'A partial capture reads only the requested section');
 const main = record('equipment'), armor = record('equipment',session,{slot:'armor'}), second = clone(main); second.id = randomUUID(); second.data.equipment.attack = 400;
 let merged = mergeInventoryObjects(main,armor);
 assert.equal(merged.type,'equipment_set'); assert.equal(merged.complete,true);

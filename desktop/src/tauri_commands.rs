@@ -4,8 +4,7 @@ use crate::crysta_service::{
     CrystaOptimizationNativeProgress, CrystaOptimizationNativeRuntimeResult,
     CrystaOptimizationService,
 };
-use crate::settings::SettingFile;
-use crate::settings::SettingsService;
+use crate::settings::{SettingFile, SettingsRepository};
 use crate::update_service::{UpdateFailure, UpdateInfo, UpdateProgress, UpdateService};
 
 #[tauri::command]
@@ -38,7 +37,7 @@ pub async fn install_update(
 
 #[tauri::command]
 pub fn settings_directory() -> Result<String, String> {
-    SettingsService::directory()
+    SettingsRepository::directory()
 }
 #[tauri::command]
 pub fn crysta_hardware_profile() -> CrystaOptimizationHardwareProfile {
@@ -89,21 +88,21 @@ pub fn pause_crysta_optimization(
 }
 #[tauri::command]
 pub fn list_settings() -> Result<Vec<SettingFile>, String> {
-    SettingsService::list()
+    SettingsRepository::list()
 }
 #[tauri::command]
 pub fn save_setting(name: String, content: String) -> Result<(), String> {
-    SettingsService::save(name, content)
+    SettingsRepository::save(name, content)
 }
 #[tauri::command]
 pub fn load_setting(name: String) -> Result<String, String> {
-    SettingsService::load(name)
+    SettingsRepository::load(name)
 }
 #[tauri::command]
 pub fn overwrite_setting(name: String, content: String) -> Result<(), String> {
-    SettingsService::overwrite(name, content)
+    SettingsRepository::overwrite(name, content)
 }
 #[tauri::command]
 pub fn delete_setting(name: String) -> Result<(), String> {
-    SettingsService::delete(name)
+    SettingsRepository::delete(name)
 }

@@ -6,10 +6,9 @@ export function createAccountClient(documentRef) {
   const desktop = documentRef.documentElement.dataset.runtime === 'desktop';
   const server = desktop ? documentRef.querySelector('meta[name="account-server"]')?.content : root.location.origin;
   let token = null, loginController = null;
-  const settings = () => root.ToramApplication.Settings;
   const ensureCalculator = () => root.ToramApp?.ensureCalculator?.();
-  const rules = () => ({registry:root.ToramStatRegistry,trees:root.SKILL_TREE_DATA,food:root.ToramFoodCatalog,subWeaponRules:SUB_WEAPON_RULES,
-    comboSkillIds:root.ToramCalculationPolicies ? new Set(root.ToramCalculationPolicies.resolveSkillDefinitions().filter(skill => skill.sourceRef && ['attack','buff','utility'].includes(skill.kind) && root.TORAM_SKILL_COMBAT_CATALOG.skills.some(item => item.id === skill.id)).map(skill => skill.id)) : null});
+  const rules = () => ({registry:root.ToramApp.statRegistry,trees:root.ToramApp.skillTreeData,food:root.ToramApp.foodCatalog,subWeaponRules:SUB_WEAPON_RULES,
+    comboSkillIds:root.ToramApp.skillRegistry ? new Set(root.ToramApp.skillRegistry.definitions().filter(skill => skill.sourceRef && ['attack','buff','utility'].includes(skill.kind) && root.ToramApp.skillCatalog.skills.some(item => item.id === skill.id)).map(skill => skill.id)) : null});
   const accountChanged = () => documentRef.dispatchEvent?.(new root.Event('toram:account-changed'));
 
   async function request(path, options = {}) {
@@ -39,7 +38,7 @@ export function createAccountClient(documentRef) {
       const state = await request('session', { signal:controller.signal });
       if (!state.configured) throw new Error('Google 로그인 서버 설정이 필요합니다. 로컬 저장은 계속 사용할 수 있습니다.');
       if (!desktop) {
-        if (!root.ToramApp?.ensureCalculator || root.ToramApp.calculatorReady) root.ToramApplication?.Settings?.flush();
+        if (!root.ToramApp?.ensureCalculator || root.ToramApp.calculatorReady) root.ToramApp.settingsRepository?.flushApplicationState();
         if (root.location.pathname === '/inventory') root.sessionStorage.setItem('toram.inventory.return', root.location.pathname + root.location.search);
         root.location.assign(new URL('/api/auth/google', server).href);
         return;
@@ -66,38 +65,37 @@ export function createAccountClient(documentRef) {
     } finally { if (loginController === controller) loginController = null; }
   }
 
-  function snapshot(name) { return settings().snapshot(name); }
   function itemData(name, slot) {
     if (!slots[slot]) throw new Error('장비 부위를 선택하세요.');
-    return { schema:'toram.account-item.v1', slot, equipment:snapshot(name).build.equipment[slot] };
+    return { schema:'toram.account-item.v1', slot, equipment:root.ToramApp.settingsRepository.snapshot(name).build.equipment[slot] };
   }
   async function save(kind, name, slot) {
     await ensureCalculator();
-    const data = kind === 'builds' ? snapshot(name) : itemData(name, slot);
+    const data = kind === 'builds' ? root.ToramApp.settingsRepository.snapshot(name) : itemData(name, slot);
     if (kind === 'favorites' && !data.equipment.catalogItem) throw new Error('게임 아이템을 선택한 장비만 즐겨찾기에 추가할 수 있습니다.');
     return request(kind, { method:'POST', body:JSON.stringify({ name, data }) });
   }
   async function load(kind, id) {
     const record = await request(kind + '/' + encodeURIComponent(id));
     await ensureCalculator();
-    if (kind === 'builds') settings().import(JSON.stringify(record.data));
+    if (kind === 'builds') root.ToramApp.settingsRepository.importSavedBuild(JSON.stringify(record.data));
     else {
       const data = record.data;
       if (data?.schema !== 'toram.account-item.v1' || !slots[data.slot] || !data.equipment || typeof data.equipment !== 'object') throw new Error('저장된 장비 형식이 올바르지 않습니다.');
-      const current = snapshot('내 세팅');
+      const current = root.ToramApp.settingsRepository.snapshot('내 세팅');
       current.build.equipment[data.slot] = data.equipment;
-      settings().import(JSON.stringify(current));
+      root.ToramApp.settingsRepository.importSavedBuild(JSON.stringify(current));
     }
     return record;
   }
   function equipmentData(slot) {
     const data = itemData('내 장비', slot);
     const value = { slot:data.slot, equipment:data.equipment };
-    validateEquipmentObject(value, root.ToramStatRegistry);
+    validateEquipmentObject(value, root.ToramApp.statRegistry);
     return value;
   }
   function captured(type, name, parameters) {
-    const data = captureObject(type,snapshot(name),parameters); validateInventoryObject(type,data,rules()); return data;
+    const data = captureObject(type,root.ToramApp.settingsRepository.snapshot(name),parameters); validateInventoryObject(type,data,rules()); return data;
   }
   const inventory = Object.freeze({
     register(name, type, data) { return request('inventory',{method:'POST',body:JSON.stringify({name,type,schemaVersion:1,data})}); },
@@ -117,7 +115,7 @@ export function createAccountClient(documentRef) {
     async apply(record, comboId) {
       if (record.schemaVersion !== 1) throw new Error('지원하지 않는 구성 형식입니다.');
       await ensureCalculator();
-      settings().import(JSON.stringify(applyObject(record,snapshot('내 세팅'),rules(),comboId)));
+      root.ToramApp.settingsRepository.applySession(applyObject(record,root.ToramApp.settingsRepository.snapshot('내 세팅'),rules(),comboId));
     }
   });
   const posts = Object.freeze({

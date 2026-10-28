@@ -6,61 +6,18 @@ import argparse
 import collections
 import copy
 import datetime
-import hashlib
 import json
 from pathlib import Path
 import re
 import runpy
 import subprocess
 import sys
-import uuid
 
 ROOT = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
 ASSETS = ROOT / "data/sources/toram-items"
 CONTRACT = HERE / "toram-item-pipeline-contract.json"
-MODULES = {}
-
-
-def module(name):
-    if name not in MODULES:
-        MODULES[name] = runpy.run_path(str(HERE / name))
-    return MODULES[name]
-
-
-def require(value, message):
-    if not value:
-        raise ValueError(message)
-
-
-def digest(data):
-    return hashlib.sha256(data).hexdigest()
-
-
-def load(path):
-    return json.loads(path.read_text(encoding="utf-8"))
-
-
-def write_json(path, value):
-    path.parent.mkdir(parents=True, exist_ok=True)
-    with path.open("x", encoding="utf-8", newline="\n") as stream:
-        json.dump(value, stream, ensure_ascii=False, indent=2, allow_nan=False)
-        stream.write("\n")
-
-
-def atomic_json(path, value):
-    temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
-    write_json(temporary, value)
-    temporary.replace(path)
-
-
-def checked_child(root, relative):
-    if root == ROOT and relative.startswith("assets/source-data/"):
-        relative = "data/sources/" + relative[len("assets/source-data/"):]
-    require(not Path(relative).is_absolute(), "Absolute artifact path")
-    target = (root / relative).resolve()
-    require(target.is_relative_to(root.resolve()) and target != root.resolve(), "Artifact escapes its store")
-    return target
+from catalog_pipeline import module, require, digest, load, write_json, atomic_json, checked_child, installation_identity, manifest_source, resource_changes, read_snapshot, SnapshotCapture
 
 
 def reviewed_inputs():
@@ -75,31 +32,6 @@ def reviewed_inputs():
         require(digest(data) == record["sha256"], f"Reviewed input changed: {name}; review and update the contract")
         values[name] = json.loads(data)
     return contract, values
-
-
-def installation_identity(install, contract):
-    observed, reasons = {}, []
-    for relative, expected in contract["installation"].items():
-        path = install / relative
-        observed[relative] = digest(path.read_bytes()) if path.is_file() else None
-        if observed[relative] != expected:
-            reasons.append(f"Installation requires code review: {relative}")
-    return observed, reasons
-
-
-def manifest_source(offline, application, destination):
-    localization = module("extract-toram-localizations.py")
-    url = f"{localization['PUBLIC_BASE']}{application}/{localization['MANIFEST_NAME']}"
-    if offline:
-        filename = (localization["MANIFEST_NAME"] if application == "releaseA"
-                    else f"RevisionInfoBinary.{application}.bytes")
-        path = offline / "manifest.bytes" if (offline / "manifest.bytes").is_file() else offline / filename
-        data = path.read_bytes()
-        if destination:
-            destination.write_bytes(data)
-        return data, {"url": url, "sha256": digest(data), "input": str(path.resolve()), "mode": "offline"}
-    record = localization["get_public"](url, destination)
-    return destination.read_bytes(), record
 
 
 def selected_assets(data, required_locales):
@@ -340,27 +272,11 @@ def connect_auxiliary(catalog, auxiliary, tables, reviewed):
                 item["references"]["modelPropertyCandidates"].append({"groupKeyRaw": group["groupKeyRaw"], "modelId": row["modelId"]})
 
 
-def resource_changes(before, after):
-    old = {r["name"]: r["decodedSha256"] for r in before}
-    new = {r["name"]: r["decodedSha256"] for r in after}
-    return [{"name": name, "beforeSha256": old.get(name), "afterSha256": new.get(name)}
-            for name in sorted(old.keys() | new.keys()) if old.get(name) != new.get(name)]
-
-
 def template_changes(before, after):
     old = {(locale, row["propertyId"]): row["text"] for locale, rows in before.items() for row in rows}
     new = {(locale, row["propertyId"]): row["text"] for locale, rows in after.items() for row in rows}
     return [{"locale": key[0], "propertyId": key[1], "before": old.get(key), "after": new.get(key)}
             for key in sorted(old.keys() | new.keys()) if old.get(key) != new.get(key)]
-
-
-def read_snapshot(store, pointer):
-    path = checked_child(store, pointer["snapshot"])
-    require(digest((path / "report.json").read_bytes()) == pointer["reportSha256"], "Stored report changed")
-    report = load(path / "report.json")
-    for name, expected in report["outputHashes"].items():
-        require(digest(checked_child(path, name).read_bytes()) == expected, f"Stored snapshot changed: {name}")
-    return path, report
 
 
 def export_project_items(stage):
@@ -372,19 +288,9 @@ def export_project_items(stage):
 
 def run(args):
     contract, reviewed = reviewed_inputs()
-    store = (args.store / args.application).resolve()
-    require(not store.is_relative_to(args.install.resolve()), "Store must not be inside the game installation")
-    store.mkdir(parents=True, exist_ok=True)
-    lock = store / ".pipeline.lock"
-    with lock.open("x", encoding="ascii") as stream:
-        stream.write(str(uuid.uuid4()))
-    stage = None
-    try:
-        temporary = checked_child(store, ".manifest-" + uuid.uuid4().hex + ".bytes")
-        try:
-            data, manifest_record = manifest_source(args.offline, args.application, temporary)
-        finally:
-            temporary.unlink(missing_ok=True)
+    with SnapshotCapture(args.store / args.application,args.install) as capture:
+        store=capture.store
+        data, manifest_record=manifest_source(args.offline,args.application,capture.manifest_path)
         assets, selection, locales = selected_assets(data, contract["requiredLocales"])
         observed, reasons = installation_identity(args.install, contract)
         identity = {"selection": selection, "installation": observed, "contractSha256": digest(CONTRACT.read_bytes()),
@@ -392,22 +298,18 @@ def run(args):
                     "projectConversion": {str(p.relative_to(ROOT)): digest(p.read_bytes()) for p in [
                         HERE / "convert-toram-project-items.mjs", HERE / "project-catalog-store.mjs", ROOT / "web/src/application/item-catalog.mjs",
                         ROOT / "web/src/calculation/stat-registry.js"]}}
-        previous = load(store / "latest.json") if (store / "latest.json").is_file() else None
-        observation = load(store / "observed.json") if (store / "observed.json").is_file() else previous
-        for pointer in [previous, observation]:
-            if not pointer:
-                continue
-            _, observed_report = read_snapshot(store, pointer)
-            if observed_report["identity"] == identity:
-                status = "unchanged" if observed_report["status"] == "ready" else "needs-review"
-                print(json.dumps({"status": status, "snapshot": pointer["snapshot"], "reviewReasons": observed_report["reviewReasons"]}))
-                return 2 if status == "needs-review" else 0
+        match=capture.load_state(identity)
+        previous=capture.latest_pointer
+        if match:
+            pointer,observed_report=match
+            status="unchanged" if observed_report["status"]=="ready" else "needs-review"
+            print(json.dumps({"status":status,"snapshot":pointer["snapshot"],"reviewReasons":observed_report["reviewReasons"]}))
+            return 2 if status=="needs-review" else 0
         if args.check:
             print(json.dumps({"status": "update-available" if not reasons else "needs-review", "identity": identity,
                               "reviewReasons": reasons, "cacheVersion": assets[0]["cacheKey"], "locales": locales}))
             return 2 if reasons else 0
-        stage = checked_child(store, "snapshots/" + assets[0]["cacheKey"] + "-" + uuid.uuid4().hex)
-        stage.mkdir(parents=True)
+        stage=capture.begin(assets[0]["cacheKey"])
         sources = stage / "source"
         sources.mkdir()
         (sources / "manifest.bytes").write_bytes(data)
@@ -416,7 +318,7 @@ def run(args):
         require(unity_version == contract["unityPyVersion"], "UnityPy version changed; review the extraction runtime")
         catalog = raw_catalog(tables, locales, assets[0]["cacheKey"])
         write_json(stage / "items.raw.json", catalog)
-        before = load(read_snapshot(store, previous)[0] / "items.raw.json") if previous else reviewed["baseline"]
+        before = load(capture.latest_path / "items.raw.json") if previous else reviewed["baseline"]
         delta = compare_items(before, catalog)
         old_templates = before.get("optionTextRows")
         if old_templates is None:
@@ -427,7 +329,7 @@ def run(args):
         delta["optionTemplateChanges"] = template_changes(old_templates, catalog["optionTextRows"])
         delta["baseline"] = previous["snapshot"] if previous else contract["inputs"]["baseline"]
         if previous:
-            old_evidence = read_snapshot(store, previous)[1]["textAssets"]
+            old_evidence = capture.latest_report["textAssets"]
         else:
             old_evidence = [r for bundle in reviewed["localizations"]["sources"] for r in bundle["textAssets"]]
             old_evidence += [{"name": name, "decodedSha256": table["source"]["sha256"]}
@@ -466,22 +368,10 @@ def run(args):
                   "limitations": ["Connected fields use the reviewed native contract only when local binary and metadata hashes match.",
                                   "Auxiliary tables are fresh raw records, not stale item relationships from the baseline.",
                                   "Final UI and app/combat calculations are unverified. Baseline Coryn IDs are never treated as game IDs."],
-                  "outputHashes": {p.relative_to(stage).as_posix(): digest(p.read_bytes()) for p in stage.rglob("*") if p.is_file()}}
-        write_json(stage / "report.json", report)
-        destination = stage
-        stage = None
-        pointer = {"snapshot": destination.relative_to(store).as_posix(), "reportSha256": digest((destination / "report.json").read_bytes())}
-        if not reasons:
-            atomic_json(store / "latest.json", pointer)
-        atomic_json(store / "observed.json", pointer)
-        print(json.dumps({"status": report["status"], "snapshot": str(destination), "counts": report["counts"], "reviewReasons": reasons}))
+                  }
+        capture.publish(report)
+        print(json.dumps({"status":report["status"],"snapshot":str(stage),"counts":report["counts"],"reviewReasons":reasons}))
         return 2 if reasons else 0
-    except Exception as error:
-        if stage is not None:
-            write_json(stage / "failure.json", {"status": "failed", "error": str(error), "latestUnchanged": True})
-        raise
-    finally:
-        lock.unlink()
 
 
 def main():

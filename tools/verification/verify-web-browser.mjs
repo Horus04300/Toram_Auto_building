@@ -43,8 +43,17 @@ try {
     });
     page.on('worker', worker => workers.push(worker.url()));
     await page.goto(`http://127.0.0.1:${server.address().port}${path}?view=calculator`);
-    await page.waitForFunction(() => window.ToramUiFeatures?.settings);
+    await page.waitForFunction(() => window.ToramApp.features?.settings);
     assert.equal(bossRequests.length, 0, 'Boss data must remain lazy at startup.');
+    const invalid=await page.evaluate(()=>{
+      const app=window.ToramApp,input=document.getElementById('cr_wpn_1'),before=input.value,version=app.optimizer.getState().runVersion;
+      input.value='__not_a_catalog_crysta__';
+      const valid=app.crystaUi.validateCrystaInputs();app.optimizer.runPreviewSafe();
+      const unchanged=app.optimizer.getState().runVersion===version;
+      input.value=before;app.crystaUi.validateCrystaInputs();return {valid,unchanged};
+    });
+    assert.deepEqual(invalid,{valid:false,unchanged:true},'Unknown crystas must block actual UI calculation');
+
     const targetBefore = await page.evaluate(() => ['bossLevel','bossDef','bossMdef','bossCritResist','bossPhysResist','bossMagResist'].map(id => document.getElementById(id).value));
     const bossSearch = await page.evaluate(() => window.ToramApp.bosses.search('기드론','kr'));
     assert.equal(bossSearch.at(0).gameMonsterId, 540);
@@ -88,7 +97,7 @@ try {
     await chooseBoss('기드론',540,'23000:10');
     assert.equal(await page.locator('#bossDifficultyField').isVisible(),false);
     assert.equal(await page.locator('#bossEntryLevelField').isVisible(),false);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().scenario.target),{bossLevel:195,bossDef:429,bossMdef:390,bossCritResist:0,bossPhysResist:7,bossMagResist:7,targetElement:2});
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().scenario.target),{bossLevel:195,bossDef:429,bossMdef:390,bossCritResist:0,bossPhysResist:7,bossMagResist:7,targetElement:2});
     assert.match(await page.locator('#bossProration').textContent(),/통상 20%p · 물리 30%p · 마법 30%p/u);
     await chooseBoss('미뮤',888,'32700:1');
     assert.equal(await page.locator('#bossDifficultyField').isVisible(),true);
@@ -134,7 +143,7 @@ try {
     assert.equal(await page.locator('#bossDef').inputValue(),'600');
     await page.locator('#bossDef').fill('777');
     const guildRequests = bossRequests.length;
-    await page.evaluate(() => window.ToramSettingsRepository.importSavedBuild(window.ToramSettingsRepository.serializeSavedBuild('guild-test')));
+    await page.evaluate(() => window.ToramApp.settingsRepository.importSavedBuild(JSON.stringify(window.ToramApp.settingsRepository.snapshot('guild-test'))));
     assert.equal(bossRequests.length,guildRequests,'A pinned guild selection must restore without fresh catalog requests.');
     assert.equal(await page.locator('#bossDef').inputValue(),'777');
     assert.equal(await page.locator('#bossEntryLevel').inputValue(),'200');
@@ -144,7 +153,7 @@ try {
     assert.equal(await page.locator('#bossDef').inputValue(),'1950');
     assert.equal(await page.locator('#bossMagResist').inputValue(),'27');
     assert.equal(await page.locator('#bossCritResist').inputValue(),'70');
-    const bossContext = await page.evaluate(() => { const context = window.ToramApplication.CreateCalculationSnapshot().baseContext; return ['bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist'].map(key => context[key]); });
+    const bossContext = await page.evaluate(() => { const context = window.ToramApp.calculation.CreateCalculationSnapshot().baseContext; return ['bossLevel','bossDef','bossMdef','bossPhysResist','bossMagResist','bossCritResist'].map(key => context[key]); });
     assert.deepEqual(bossContext,[325,1950,1950,27,27,70],'Selected target scalars must reach the existing calculation kernel.');
     await page.locator('#bossDef').fill('2222');
     assert.match(await page.locator('#bossTargetStatus').textContent(),/수동 수정/u);
@@ -171,7 +180,7 @@ try {
     await page.locator('#armorType').selectOption('일반옷');
     await page.locator('#cr_arm_1').fill('댄드라이언');
     await page.locator('#cr_arm_1').dispatchEvent('change');
-    assert.equal(await page.evaluate(() => window.ToramApp.crystas.getById(9776) === getCrystaByName('Dandolion')),true);
+    assert.equal(await page.evaluate(() => window.ToramApp.crystas.getById(9776) === window.ToramApp.crystas.resolve('Dandolion')),true);
     assert.match(await page.locator('#cr_arm_1_info').textContent(),/최대MP \+500/u);
     assert.doesNotMatch(await page.locator('#cr_arm_1_info').textContent(),/안정률/u);
     await page.locator('#armorType').selectOption('경량옷');
@@ -185,11 +194,11 @@ try {
     await page.locator('#gameItemSearch').fill('22001');
     await page.locator('#gameItemResults').selectOption('22001');
     await page.waitForFunction(() => !document.querySelector('#gameItemApply').disabled);
-    const beforeGameMp = await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxMpF);
+    const beforeGameMp = await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxMpF);
     await page.locator('#gameItemApply').click();
-    await page.waitForFunction(() => window.ToramBuildDraftStore.read().build.equipment.special.catalogItem?.gameItemId === 22001);
-    assert.equal(await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxMpF), beforeGameMp + 200);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
+    await page.waitForFunction(() => window.ToramApp.buildStore.read().build.equipment.special.catalogItem?.gameItemId === 22001);
+    assert.equal(await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxMpF), beforeGameMp + 200);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
     assert.match(await page.locator('[data-game-equipment="special"]').textContent(), /MAXMP \+200/u);
     // Applying another locale keeps the game ID; no name-based legacy crysta migration occurs.
     await page.locator('#gameItemLocale').selectOption('us');
@@ -197,7 +206,7 @@ try {
     await page.locator('#gameItemResults').selectOption('22001');
     await page.waitForFunction(() => !document.querySelector('#gameItemApply').disabled);
     await page.locator('#gameItemApply').click();
-    await page.waitForFunction(() => window.ToramBuildDraftStore.read().build.equipment.special.catalogItem?.name === 'Talisman');
+    await page.waitForFunction(() => window.ToramApp.buildStore.read().build.equipment.special.catalogItem?.name === 'Talisman');
     await page.locator('#subWeaponType').selectOption('방패');
     await page.locator('#subAtk').fill('37'); await page.locator('#subStab').fill('11');
     await page.locator('#subRefine').selectOption('11');
@@ -209,13 +218,13 @@ try {
     await page.waitForFunction(() => document.querySelector('#gameItemResults').options.length > 0);
     await page.locator('#gameItemResults').selectOption('17002');
     await page.waitForFunction(() => !document.querySelector('#gameItemApply').disabled);
-    const beforeShieldHp = await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxHpF);
+    const beforeShieldHp = await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxHpF);
     await page.locator('#gameItemApply').click();
-    await page.waitForFunction(() => window.ToramBuildDraftStore.read().build.equipment.subWeapon.catalogItem?.gameItemId === 17002);
-    assert.equal(await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxHpF), beforeShieldHp + 30);
+    await page.waitForFunction(() => window.ToramApp.buildStore.read().build.equipment.subWeapon.catalogItem?.gameItemId === 17002);
+    assert.equal(await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxHpF), beforeShieldHp + 30);
     assert.equal(await page.locator('#subAtk').inputValue(), '37'); assert.equal(await page.locator('#subStab').inputValue(), '11');
     assert.equal(await page.locator('#subRefine').inputValue(), '11');
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.subWeapon.options), [{key:'ATK',value:3}]);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.subWeapon.options), [{key:'ATK',value:3}]);
 
     await page.locator('#appTabButton-buffs').click();
     await page.locator('#gameConsumableBuffs summary').click();
@@ -223,23 +232,23 @@ try {
     await page.locator('#buffOpts .opt-type').selectOption('ATK'); await page.locator('#buffOpts .opt-val').fill('7');
     await page.locator('#gameConsumableLoad').click();
     await page.waitForFunction(() => document.querySelector('#gameConsumableResults').options.length > 0);
-    const beforeVitaHp = await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxHpF);
+    const beforeVitaHp = await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxHpF);
     for (const id of ['2000','2001','2537']) {
       await page.locator('#gameConsumableSearch').fill(id);
       await page.locator('#gameConsumableResults').selectOption(id);
       await page.waitForFunction(() => !document.querySelector('#gameConsumableApply').disabled);
       await page.locator('#gameConsumableApply').click();
-      await page.waitForFunction(id => window.ToramBuildDraftStore.read().build.consumableBuffs.some(item => item.gameItemId === id), Number(id));
-      if (id === '2000') assert.equal(await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxHpF), beforeVitaHp + 500);
-      if (id === '2001') assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().build.consumableBuffs.length), 1, 'Same-group buff replaces its predecessor.');
+      await page.waitForFunction(id => window.ToramApp.buildStore.read().build.consumableBuffs.some(item => item.gameItemId === id), Number(id));
+      if (id === '2000') assert.equal(await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxHpF), beforeVitaHp + 500);
+      if (id === '2001') assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().build.consumableBuffs.length), 1, 'Same-group buff replaces its predecessor.');
     }
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.externalOptions), [{key:'ATK',value:7}]);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.externalOptions), [{key:'ATK',value:7}]);
     await page.locator('#appTabButton-stats-target').click();
     assert.equal(await page.locator('html').getAttribute('data-runtime'), 'web');
     assert.equal(await page.locator('.update-toolbar').isVisible(), false);
     assert.equal(await page.evaluate(() => typeof window.ToramCrystaOptimizationNativeClient), 'undefined');
     assert.equal(await page.evaluate(() => typeof window.ToramUpdateService), 'undefined');
-    assert.equal(await page.evaluate(() => window.ToramCrystaOptimizationExecutionAdapter.isAvailable()), true);
+    assert.equal(await page.evaluate(() => window.ToramApp.execution.isAvailable()), true);
 
     await page.locator('#charLevel').fill('321');
     await page.locator('#appBuildStorageButton').click();
@@ -269,7 +278,7 @@ try {
     });
     await page.waitForFunction(() => document.querySelector('#charLevel').value === '222');
     await page.reload();
-    await page.waitForFunction(() => window.ToramUiFeatures?.settings);
+    await page.waitForFunction(() => window.ToramApp.features?.settings);
     assert.equal(await page.locator('#charLevel').inputValue(), '222');
     assert.equal(await page.locator('#cr_arm_1').inputValue(),'댄드라이언');
     console.log(`Joined data browser: PASS (${path}, Dandelion ID/options/light-armor/JSON/reload, Colon Boss entry/difficulty)`);
@@ -278,49 +287,50 @@ try {
     assert.match(await page.locator('#bossTargetStatus').textContent(),/메르제하르/u);
     await page.locator('#bossTargetClear').click();
     assert.equal(await page.locator('#bossDef').inputValue(),'2222');
-    assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().scenario.bossSelection),undefined,'Clearing the catalog link preserves manual numbers.');
-    assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.special.catalogItem.gameItemId), 22001);
+    assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().scenario.bossSelection),undefined,'Clearing the catalog link preserves manual numbers.');
+    assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.special.catalogItem.gameItemId), 22001);
     assert.match(await page.locator('[data-game-equipment="special"]').textContent(), /Talisman/u);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
-    assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.subWeapon.catalogItem.gameItemId), 17002);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.consumableBuffs.map(item => item.gameItemId)), [2001,2537]);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
+    assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.subWeapon.catalogItem.gameItemId), 17002);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.consumableBuffs.map(item => item.gameItemId)), [2001,2537]);
     await page.locator('#appTabButton-buffs').click();
-    const speedBefore = await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.aspdF);
+    const speedBefore = await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.aspdF);
     if (await page.locator('#gameConsumableBuffs').getAttribute('open') === null) await page.locator('#gameConsumableBuffs summary').click();
     await page.locator('[data-consumable-id="2537"] button').click();
-    assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().build.consumableBuffs.length), 1);
-    assert.equal(await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.aspdF), speedBefore - 1000);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.externalOptions), [{key:'ATK',value:7}]);
+    assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().build.consumableBuffs.length), 1);
+    assert.equal(await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.aspdF), speedBefore - 1000);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.externalOptions), [{key:'ATK',value:7}]);
     await page.locator('#appTabButton-equipment').click();
     await page.locator('[data-game-equipment="special"] button').click();
-    assert.equal(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.special.catalogItem), undefined);
-    assert.deepEqual(await page.evaluate(() => window.ToramBuildDraftStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
-    assert.equal(await page.evaluate(() => window.ToramApplication.CreateCalculationSnapshot().baseContext.maxMpF), beforeGameMp);
+    assert.equal(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.special.catalogItem), undefined);
+    assert.deepEqual(await page.evaluate(() => window.ToramApp.buildStore.read().build.equipment.special.options), [{key:'ATK',value:7}]);
+    assert.equal(await page.evaluate(() => window.ToramApp.calculation.CreateCalculationSnapshot().baseContext.maxMpF), beforeGameMp);
 
     // Keep one real catalog slot open so this UI/Worker lifecycle gate has a bounded input size.
     for (const id of ['lock_wpn_1','lock_wpn_2','lock_arm_1','lock_arm_2','lock_add_1','lock_add_2','lock_spc_1']) await page.locator('#'+id).check();
     await page.locator('#appTabButton-results').click();
-    await page.waitForFunction(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult);
-    assert.equal(await page.evaluate(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.engine), 'rust-wasm');
+    await page.waitForFunction(() => window.ToramApp.optimizer.getState().lastOptimizationResult);
+    assert.equal(await page.evaluate(() => window.ToramApp.optimizer.getState().lastOptimizationResult.engine), 'rust-wasm');
     assert.ok(workers.some(url => url.endsWith(path + 'assets/js/optimization/wasm-worker.js')));
     assert.equal(await page.evaluate(() => typeof window.ToramCrystaOptimizationGlobalOptimizer), 'undefined');
     const previewWorkers = workers.filter(url => url.endsWith('/optimization/wasm-worker.js')).length;
-    const previewScore = await page.evaluate(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.score);
+    const previewScore = await page.evaluate(() => window.ToramApp.optimizer.getState().lastOptimizationResult.score);
     await page.locator('#optimizationRunPreciseOptimization').click();
     try {
-      await page.waitForFunction(() => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult?.status === 'exact');
+      await page.waitForFunction(() => window.ToramApp.optimizer.getState().lastOptimizationResult?.status === 'exact');
     } catch (error) {
       const result = await page.evaluate(() => {
-        const value = window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult;
+        const value = window.ToramApp.optimizer.getState().lastOptimizationResult;
         return value && { status:value.status, score:value.score, elapsedMs:value.elapsedMs, visitedNodes:value.visitedNodes, diagnostics:value.diagnostics };
       });
       throw new Error(`${error.message}; ${path}: ${JSON.stringify({ result, errors })}`);
     }
     assert.equal(workers.filter(url => url.endsWith('/optimization/wasm-worker.js')).length, previewWorkers, 'UI precision must keep the preview Worker');
-    assert.ok(await page.evaluate(score => window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult.score >= score, previewScore));
+    assert.ok(await page.evaluate(score => window.ToramApp.optimizer.getState().lastOptimizationResult.score >= score, previewScore));
     const result = await page.evaluate(async () => {
-      const baseContext = window.ToramApplication.CreateCalculationSnapshot().baseContext;
-      const scenarioSnapshot = window.ToramBuildEvaluator.createScenarioSnapshot(baseContext, {
+      const baseContext = window.ToramApp.calculation.CreateCalculationSnapshot().baseContext;
+      const {buildEvaluator}=await import(new URL('assets/js/calculation/build-evaluator.js',document.baseURI));
+      const scenarioSnapshot = buildEvaluator.createScenarioSnapshot(baseContext, {
         requirements:{ maxHp:null, maxMp:null, amprBeforeDual:null, normalAttackCrit:null, aspd:null }
       });
       const problem = {
@@ -331,7 +341,7 @@ try {
           { id:id + '-2', slot:id, statDelta:{ ATKP:2 }, candidateNames:[], evaluatorCandidates:[] }
         ] }))
       };
-      const adapter = window.ToramCrystaOptimizationExecutionAdapter;
+      const adapter = window.ToramApp.execution;
       const pending = adapter.execute(problem, {}, { timeLimitMs:1000 });
       if (!adapter.cancel('browser test')) throw new Error('WASM cancel unavailable');
       if ((await pending).status !== 'cancelled') throw new Error('WASM cancel did not settle');
@@ -345,7 +355,7 @@ try {
     console.log(`Web browser: PASS (${path}, loading, calculation, JSON export/import, reload, real Worker exact/cancel, desktop controls excluded)`);
     if (server === built) {
       const resumed = await page.evaluate(async problem => {
-        const adapter = window.ToramCrystaOptimizationExecutionAdapter;
+        const adapter = window.ToramApp.execution;
         await adapter.disposeContinuation();
         const pending = adapter.execute(problem, {}, { timeLimitMs:10000 });
         if (!adapter.pause()) throw new Error('WASM pause unavailable');
@@ -356,7 +366,7 @@ try {
       assert.equal(resumed.status, 'exact');
       for (let repeat = 0; repeat < 3; repeat++) {
         const measurement = await page.evaluate(async problem => {
-          const adapter = window.ToramCrystaOptimizationExecutionAdapter;
+          const adapter = window.ToramApp.execution;
           await adapter.disposeContinuation();
           const started = performance.now();
           const preview = await adapter.preview(problem);

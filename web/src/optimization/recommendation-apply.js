@@ -1,5 +1,4 @@
-/* CrystaOptimization 결과를 장비 입력에 반영하는 UI 경계. 탐색 결과·잠금 자체는 변경하지 않는다. */
-(function (root) {
+export function createRecommendationApply(document,crystaUi) {
   'use strict';
 
   var GROUPS = Object.freeze([
@@ -52,12 +51,12 @@
 
   function notifyChanged(documentRef, valueInput) {
     if (typeof valueInput.dispatchEvent !== 'function') return;
-    var EventConstructor = documentRef.defaultView && documentRef.defaultView.Event || root.Event;
+    var EventConstructor = documentRef.defaultView && documentRef.defaultView.Event || document.defaultView.Event;
     if (typeof EventConstructor === 'function') valueInput.dispatchEvent(new EventConstructor('change', { bubbles:true }));
   }
 
   function apply(result, documentRef) {
-    var targetDocument = documentRef || root.document;
+    var targetDocument = documentRef || document;
     if (!targetDocument) throw new Error('장비 입력 화면을 찾지 못했습니다.');
     var assignments = buildAssignments(result, targetDocument);
     var changed = 0;
@@ -67,10 +66,10 @@
       changed++;
     });
     assignments.forEach(function (assignment) { notifyChanged(targetDocument, assignment.input); });
-    var crystaUi = root.ToramApp && root.ToramApp.crystaUi;
-    if (crystaUi && typeof crystaUi.refreshAllCrystaInfo === 'function') crystaUi.refreshAllCrystaInfo();
+        if (crystaUi && typeof crystaUi.refreshAllCrystaInfo === 'function') crystaUi.refreshAllCrystaInfo();
     return { changed:changed, writableSlots:assignments.length };
   }
 
-  root.ToramCrystaOptimizationRecommendationApply = Object.freeze({ apply:apply, buildAssignments:buildAssignments });
-}(typeof window !== 'undefined' ? window : globalThis));
+  return Object.freeze({ apply:apply, buildAssignments:buildAssignments });
+
+}

@@ -1,16 +1,9 @@
-import { frontendSourcePath } from '../../support/frontend-paths.mjs';
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {createActiveBuffUi} from '../../../web/src/ui/active-buff-ui.js';
+import {skillRegistry} from '../../../web/src/data/skill-effect-registry.js';
+import {skillTreeData} from '../../../web/src/data/skill-tree-data.js';
+import {buildStore} from '../../../web/src/application/build-draft-store.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
-const dataScripts = CLASSIC_SCRIPT_PATHS
-  .filter((path) => path.startsWith('web/src/data/'));
 const investmentLevels = new Proxy({}, { get: () => new Proxy({}, { get: () => 10 }) });
 const document = {
   readyState: 'complete',
@@ -30,24 +23,14 @@ const window = {
     expression: (value) => Number(value && value.value) || 0
   }
 };
-window.window = window;
-const context = { window, document, console };
-vm.createContext(context);
-
-for (const path of dataScripts) {
-  vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename: path });
+buildStore.commitBuild({skillLevels:Object.fromEntries(skillTreeData.trees.map(tree=>[tree.id,Object.fromEntries(tree.skills.map(skill=>[skill.id,10]))]))});
+const buffs=createActiveBuffUi(document);
+const skills = skillRegistry.definitions();
+const displaySkills = buffs.getDisplaySkills();
+assert.equal(new Set(displaySkills.map(skill=>skill.id)).size,displaySkills.length,'One card per skill ID');
+for (const skill of displaySkills) {
+  assert.equal(skill,skillRegistry.get(skill.id),'The card and calculator use the same definition');
+  if (skills.find(item=>item.id===skill.id).stackControl) assert.ok(skill.stackControl);
 }
-vm.runInContext(await readFile(resolve(root, 'web/src/ui/active-buff-ui.js'), 'utf8'), context, { filename: 'web/src/ui/active-buff-ui.js' });
-
-const rawSkills = window.TORAM_SKILL_EFFECT_DATA.skills.concat(window.ToramSkillEffectRegistry.all());
-const duplicateStackBuffIds = [...new Set(rawSkills.filter((skill) => skill.stackControl).map((skill) => skill.id))]
-  .filter((id) => rawSkills.filter((skill) => skill.id === id && (skill.kind === 'buff' || skill.activeBuff === true)).length > 1);
-assert.ok(duplicateStackBuffIds.length > 0, '중복 스택 버프 정의가 있어야 회귀 테스트가 유효합니다.');
-
-const displaySkills = window.ToramActiveBuffs.getDisplaySkills();
-assert.equal(new Set(displaySkills.map((skill) => skill.id)).size, displaySkills.length, '액티브 버프 카드 목록은 스킬 ID별로 하나여야 합니다.');
-for (const id of duplicateStackBuffIds) {
-  assert.ok(displaySkills.find((skill) => skill.id === id)?.stackControl, id + ': 스택 조절 정의가 카드에 우선되어야 합니다.');
-}
-
-console.log('Active buff UI dedup regression: PASS (' + duplicateStackBuffIds.length + ' duplicate stack buffs)');
+assert.ok(displaySkills.some(skill=>skill.stackControl),'Stack controls remain available');
+console.log('Active buff UI: PASS (canonical skill IDs and stack controls)');

@@ -14,7 +14,7 @@
 
 로컬 실제 로그인은 `server/.env`의 `PUBLIC_ORIGIN=http://localhost:8787`, `PORT=8787`과 Google 웹 클라이언트의 `http://localhost:8787/api/auth/google/callback`을 맞춘다. 처음 접속하는 주소도 localhost로 통일한다. 127.0.0.1에서 시작하면 로그인 요청 쿠키가 localhost 콜백으로 넘어가지 않는다. 발급 키·Secret은 이 문서나 브라우저 코드에 넣지 않는다.
 
-인증 설정 전 개발 체험은 `npm run web:preview` → `http://127.0.0.1:5182/__preview`의 명시적 체험 계정 버튼을 사용한다. 이 별도 실행기는 loopback·Host·Origin을 제한하고 `build/tmp/platform-preview/accounts.sqlite`에 테스트 데이터만 저장한다. 여러 체험 브라우저가 같은 로컬 계정을 쓰며 실제 계정 데이터와 합치지 않는다. 운영 서버에 체험 경로·환경 우회 설정을 넣지 않고 Docker에도 실행기를 포함하지 않는다. 로그아웃 뒤에는 체험 진입 페이지에서 다시 들어온다.
+인증 설정 전 개발 체험은 `node tools/preview-platform.mjs` → `http://127.0.0.1:5182/__preview`의 명시적 체험 계정 버튼을 사용한다. 이 별도 실행기는 loopback·Host·Origin을 제한하고 `build/tmp/platform-preview/accounts.sqlite`에 테스트 데이터만 저장한다. 여러 체험 브라우저가 같은 로컬 계정을 쓰며 실제 계정 데이터와 합치지 않는다. 운영 서버에 체험 경로·환경 우회 설정을 넣지 않고 Docker에도 실행기를 포함하지 않는다. 로그아웃 뒤에는 체험 진입 페이지에서 다시 들어온다.
 
 - 저장 버튼 바로 옆 계정 아이콘 → 계정 모달. 미로그인은 Google 로그인, 로그인 후에는 닉네임 변경과 내 빌드·내 아이템·즐겨찾기를 제공한다.
 - 내 빌드는 기존 `toram-auto-build-document` schema v2를 이름 있는 새 항목으로 저장/조회/불러오기/삭제한다. 로컬 JSON·앱 파일 저장과 자동 복원은 계속 동작한다.
@@ -89,7 +89,7 @@ calculator.example.com {
 
 ```powershell
 $env:TORAM_ACCOUNT_SERVER_URL = 'https://calculator.example.com'
-npm run desktop:prepare
+npm run desktop:build -- --no-bundle
 ```
 
 설정 없는 앱도 계정 모달과 로컬 저장은 작동하며, 로그인 시 서버 설정 안내를 표시한다. Google secret은 이 변수나 앱 코드에 넣지 않는다.
@@ -98,10 +98,9 @@ npm run desktop:prepare
 
 ## 검증
 
-- `npm run test:account`: 실제 임시 HTTP 서버와 SQLite로 OAuth state·브라우저 바인딩·PKCE·재사용/실패, 계정 격리, 저장 형식/용량, CSRF/CORS, 앱 일회성 전달, 로그아웃/만료, 토큰 해시, 비공개 파일 차단을 검사한다. Google 응답은 mock이며 실제 Google 로그인 성공을 증명하지 않는다. 클라이언트는 Settings 스냅샷/복원·미설정/401·쿠키/리디렉션을 검사한다.
-- UI 변경은 실제 브라우저에서 계정 모달·로그인 전후·보관함·작은 화면·키보드 닫기/포커스를 검사한다. 기존 저장 계약·구조는 `npm run verify:architecture`, 배포 포함은 `npm run verify:entry:web`/`verify:entry:dist`로 확인한다.
+- `npm test`: 실제 임시 HTTP 서버와 SQLite로 OAuth state·브라우저 바인딩·PKCE·재사용/실패, 계정 격리, 저장 형식/용량, CSRF/CORS, 앱 일회성 전달, 로그아웃/만료, 토큰 해시, 비공개 파일 차단을 검사한다. Google 응답은 mock이며 실제 Google 로그인 성공을 증명하지 않는다. 클라이언트는 Settings 스냅샷/복원·미설정/401·쿠키/리디렉션을 검사한다.
+- UI 변경은 실제 브라우저에서 계정 모달·로그인 전후·보관함·작은 화면·키보드 닫기/포커스를 검사한다. 기존 저장 계약·구조는 `npm test`, 배포 포함은 verify-es-module-entry.mjs의 --web/--dist로 확인한다.
 - Docker 이미지 빌드/실제 Google 키·도메인·TLS·홈 서버 배포는 별도 실환경 확인 사항이다.
 
-2026-10-23 로컬 확인: `npm run test:account`, `npm run verify:architecture`, `npm run verify:entry`/`verify:entry:web`/`verify:entry:dist`, `cargo test --manifest-path desktop/Cargo.toml --bin toram-online-auto-build-calculator account_browser::tests`(1/1), 같은 bin의 `cargo clippy -- -D warnings` 통과. Edge 1280×900·375×812에서 미로그인/미설정 안내·닉네임·빌드 저장/복원·아이템 저장·즐겨찾기 조건·로그아웃 후 목록 제거·Escape/포커스 복귀·기존 저장 모달을 확인했고 콘솔/페이지 오류가 없었다. 로그인 후 UI의 API 응답은 mock이다. Browser 플러그인 스킬이 없어 설치된 Playwright/Edge를 사용했다. Docker 실행 파일이 없어 이미지 빌드는 실행하지 않았다.
 
 공식 근거: [Google 서버 OAuth](https://developers.google.com/identity/protocols/oauth2/web-server), [Google OAuth 정책](https://developers.google.com/identity/protocols/oauth2/policies), [Node SQLite](https://nodejs.org/api/sqlite.html).

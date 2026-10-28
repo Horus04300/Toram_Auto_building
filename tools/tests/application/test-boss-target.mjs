@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createBossSelection, resolveBossTarget, validateBossSelection } from '../../../web/src/application/boss-target.mjs';
+import {createBossSelection,resolveBossTarget,validateBossSelection} from '../../../web/src/application/boss-target.mjs';
 
 const sha = 'a'.repeat(64);
 function boss(kind = 'field-boss') {

@@ -1,20 +1,19 @@
-(function (root) {
+import {rustBridge} from '../../web/src/optimization/rust-bridge.js';
+export function createNativeClient(core) {
   'use strict';
 
   var SCHEMA = 'toram.crysta-native-parallel-client.v1';
-  var bridge = root.ToramCrystaOptimizationRustBridge;
+  var bridge = rustBridge;
   var CALCULATION_VERSION = bridge.policy.calculationVersion;
   var ENGINE_VERSION = bridge.policy.engineVersion;
   var SPLIT_POLICY = bridge.policy.splitPolicy;
   var GPU_POLICY = bridge.policy.gpuPolicy;
 
   function invoke() {
-    var tauri = root && root.__TAURI__;
-    return tauri && tauri.core && typeof tauri.core.invoke === 'function' ? tauri.core.invoke : null;
+    return core && typeof core.invoke === 'function' ? core.invoke : null;
   }
 
   function progressChannel(onmessage) {
-    var core = root && root.__TAURI__ && root.__TAURI__.core;
     if (!core || typeof core.Channel !== 'function') return null;
     var channel = new core.Channel();
     channel.onmessage = onmessage;
@@ -34,16 +33,11 @@
     return '{' + keys.sort().map(function (key) { return JSON.stringify(key) + ':' + stableStringify(value[key]); }).join(',') + '}';
   }
 
-  function hashString(text) {
-    var hash = 2166136261, multiply = Math.imul;
-    for (var index = 0; index < text.length; index++) { hash ^= text.charCodeAt(index); hash = multiply(hash, 16777619); }
-    return ('00000000' + (hash >>> 0).toString(16)).slice(-8);
-  }
-
   function cacheKey(problem, options, profile) {
     if (!profile || !Number.isFinite(Number(profile.logicalThreads))) return null;
     var budget = Math.max(1, Math.floor(Number(options && options.timeLimitMs) || 30000));
-    return [SCHEMA, CALCULATION_VERSION, ENGINE_VERSION, SPLIT_POLICY, 'threads=' + Math.max(1, Math.floor(Number(profile.logicalThreads))), 'gpu=' + GPU_POLICY, 'budget=' + budget, hashString(stableStringify(problem))].join(':');
+    var key = [SCHEMA, CALCULATION_VERSION, ENGINE_VERSION, SPLIT_POLICY, 'threads=' + Math.max(1, Math.floor(Number(profile.logicalThreads))), 'gpu=' + GPU_POLICY, 'budget=' + budget, stableStringify(problem)].join(':');
+    return key.length <= 4 * 1024 * 1024 ? key : null;
   }
 
   function loadHardwareProfile(run) {
@@ -77,7 +71,7 @@
   function NativeParallelClient() {
     this.active = null;
     this.continuation = null;
-    this.cache = new Map();
+    this.cache = null;
   }
 
   NativeParallelClient.prototype.isAvailable = function () { return typeof invoke() === 'function'; };
@@ -105,7 +99,8 @@
         if (typeof handlers.onComplete === 'function') handlers.onComplete(cancelled, { native:true, cancelled:true, cached:false });
         return cancelled;
       }
-      var key = cacheKey(setup.problem, options || {}, profile), cached = key && self.cache.get(key);
+      var key = cacheKey(setup.problem, options || {}, profile), cached = self.cache && self.cache.key === key && Date.now() - self.cache.savedAt < 300000 ? self.cache.result : null;
+      if (!cached) self.cache = null;
       if (cached) {
         if (self.active === active) self.active = null;
         if (typeof handlers.onProgress === 'function') handlers.onProgress(Object.assign({}, cached, { stage:'native-cache', elapsedMs:0, cached:true }));
@@ -137,7 +132,7 @@
         // A bounded result is only useful while its native frontier remains in
         // the session registry.  Caching it would later make a stale button
         // look resumable, so cache only terminal exact results.
-        if (key && result.status === 'exact') self.cache.set(key, result);
+        if (key && result.status === 'exact') self.cache = { key:key, result:result, savedAt:Date.now() };
         if (self.active === active) self.active = null;
         if (typeof handlers.onComplete === 'function') handlers.onComplete(result, { native:true, cancelled:result.status === 'cancelled', cached:false });
         return result;
@@ -183,7 +178,7 @@
         self.continuation = continuationState(result.continuationId, continuation.prepared, continuation.evaluate, continuation.profile, result);
       }
       var key = cacheKey(continuation.prepared, options || {}, continuation.profile);
-      if (key && result.status === 'exact') self.cache.set(key, result);
+      if (key && result.status === 'exact') self.cache = { key:key, result:result, savedAt:Date.now() };
       if (self.active === active) self.active = null;
       if (typeof handlers.onComplete === 'function') handlers.onComplete(result, { native:true, resumed:true, cancelled:result.status === 'cancelled', cached:false });
       return result;
@@ -227,10 +222,8 @@
 
   NativeParallelClient.prototype.hasContinuation = function () { return Boolean(this.continuation && this.continuation.id); };
 
-  NativeParallelClient.prototype.clearCache = function () { this.cache.clear(); };
-
   var client = new NativeParallelClient();
-  root.ToramCrystaOptimizationNativeClient = Object.freeze({
+  return Object.freeze({
     schema:SCHEMA,
     optimize:client.optimize.bind(client),
     resume:client.resume.bind(client),
@@ -238,9 +231,8 @@
     pause:client.pause.bind(client),
     disposeContinuation:client.disposeContinuation.bind(client),
     hasContinuation:client.hasContinuation.bind(client),
-    clearCache:client.clearCache.bind(client),
     isAvailable:client.isAvailable.bind(client),
     isRunning:client.isRunning.bind(client),
     cachePolicy:Object.freeze({ calculationVersion:CALCULATION_VERSION, engineVersion:ENGINE_VERSION, splitPolicy:SPLIT_POLICY, gpuPolicy:GPU_POLICY })
   });
-})(typeof window !== 'undefined' ? window : globalThis);
+}

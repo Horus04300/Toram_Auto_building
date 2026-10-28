@@ -1,4 +1,4 @@
-(function (root) {
+export function createWasmClient(root) {
   'use strict';
   var worker = null, key = null, continuation = false, active = null, version = 0, lastResult = null;
 
@@ -35,7 +35,7 @@
     if (!resume && !problem) return Promise.reject(new Error('WASM 추천 세션이 만료되었습니다.'));
     if (!resume) {
       dispose(); key = nextKey;
-      try { worker = new root.Worker('assets/js/optimization/wasm-worker.js'); }
+      try { worker = new root.Worker(new URL('./wasm-worker.js',import.meta.url),{type:'module'}); }
       catch (error) { return Promise.reject(error); }
     }
     return new Promise(function (resolve, reject) {
@@ -64,7 +64,7 @@
     });
   }
 
-  root.ToramCrystaOptimizationWasmClient = Object.freeze({
+  return Object.freeze({
     preview:function (problem, callbacks, options) { return run(problem, 'preview', callbacks, options); },
     optimize:function (problem, callbacks, options) { return run(problem, 'precise', callbacks, options); },
     resume:function (callbacks, options) { return run(null, 'precise', callbacks, options); },
@@ -75,4 +75,4 @@
     isRunning:function () { return Boolean(active); },
     isAvailable:function () { return typeof root.Worker === 'function' && typeof root.WebAssembly === 'object'; }
   });
-})(typeof window !== 'undefined' ? window : globalThis);
+}

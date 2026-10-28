@@ -1,9 +1,6 @@
 use toram_optimization_core::crysta_native_solver;
 // Shared Rust core test/measurement bridge.
 #[allow(dead_code)]
-#[path = "../optimization/parallel_runtime.rs"]
-mod crysta_parallel_runtime;
-#[allow(dead_code)]
 #[path = "../optimization/service.rs"]
 mod crysta_service;
 

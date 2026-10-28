@@ -1,9 +1,17 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
-const root=resolve(import.meta.dirname, '../../..'),context={window:{},console};context.window.window=context.window;context.window.skillSimulatorState={getInvestments:()=>({Guard:{}})};vm.createContext(context);
-for(const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/guard.js', 'web/src/calculation/skill-effect-engine.js'])vm.runInContext(await readFile(resolve(root,path),'utf8'),context,{filename:path});
-// This fixture isolates the calculation-rule variant, as before consolidation.
-delete context.window.TORAM_SKILL_EFFECT_TREE_DATA.Guard;
-const E=context.window.ToramSkillEffects,ids=Array.from({length:6},(_,i)=>`Guard:${i}`),base=armorType=>({mainType:'한손검',subType:'방패',armorType,level:300}),levels=(value)=>context.window.skillSimulatorState.getInvestments=()=>({Guard:Object.fromEntries(ids.map(id=>[id.slice(6),value]))}),ok=(x,m)=>{if(!x)throw Error(m)},find=(effects,key)=>effects.find(effect=>effect.key===key).value;
-levels(10);for(const id of ['Guard:0','Guard:1'])ok(E.profile(id,base('중량옷'),{},{}).available,`${id} 중량옷`);for(const id of ['Guard:3','Guard:4'])ok(E.profile(id,base('경량옷'),{},{}).available,`${id} 경량옷`);for(const id of ['Guard:2','Guard:5'])ok(E.profile(id,base('일반옷'),{},{}).available,`${id} 전체 장비`);levels(0);for(const id of ids)ok(!E.profile(id,base('중량옷'),{},{}).available,`${id} Lv0`);levels(10);let p=E.profile('Guard:1',base('중량옷'),{},{});ok(find(p.effects,'GUARD_RECOVERY')===10,'어드밴스 가드 회복');ok(find(p.effects,'GUARD_POWER')===5.5,'어드밴스 가드 가드력');p=E.profile('Guard:3',base('경량옷'),{},{});ok(find(p.effects,'AVOID_RECOVERY')===10,'경갑옷 마스터리 회복');ok(!E.profile('Guard:0',base('경량옷'),{},{}).available,'중갑옷 조건 차단');ok(!E.profile('Guard:3',base('중량옷'),{},{}).available,'경갑옷 조건 차단');console.log('Guard S1-S5 calculator-scope regressions: PASS');
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+const context={window:{},console};context.window.window=context.window;context.window.skillSimulatorState={getInvestments:()=>({Guard:{}})};
+const E=skillEffects;
+const base=(level,armorType)=>({mainType:'한손검',subType:'방패',armorType,level:300,skillLevels:{Guard:Object.fromEntries(Array.from({length:6},(_,id)=>[id,level]))}});
+const assert=(ok,message)=>{if(!ok)throw Error(message);};
+for(let level=0;level<=10;level++) {
+  for(let id=0;id<6;id++) assert(E.profile(`Guard:${id}`,base(level,'중량옷'),{},{}).available===(level>0),`Guard:${id} Lv${level}`);
+  if(!level)continue;
+  const heavy=E.profile('Guard:1',base(level,'중량옷'),{},{}).effects;
+  assert(heavy.find(effect=>effect.type==='guardRecoveryRate').value===level,'Heavy guard recovery');
+  assert(heavy.find(effect=>effect.type==='guardPower').value===(level+1)/2,'Heavy guard power');
+  assert(E.profile('Guard:1',base(level,'경량옷'),{},{}).effects.length===0,'Heavy effects require heavy armor');
+  assert(E.profile('Guard:3',base(level,'경량옷'),{},{}).effects[0].value===level,'Light evasion recovery');
+  assert(E.profile('Guard:3',base(level,'중량옷'),{},{}).effects.length===0,'Light effects require light armor');
+  assert(E.profile('Guard:5',base(level,'일반옷'),{},{}).effects[0].value===20-level,'Mirage cooldown metadata');
+}
+console.log('Guard active-definition regression: PASS (Lv0~10, armor conditions, preserved combat metadata; actual hit simulation remains deferred)');

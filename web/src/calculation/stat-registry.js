@@ -1,4 +1,5 @@
-(function (root) {
+
+
   'use strict';
   var entries = Object.create(null);
   var aliases = Object.create(null);
@@ -59,14 +60,14 @@
     var definition=get(key);
     if(!definition) { if(!Array.isArray(ctx.statDiagnostics)) ctx.statDiagnostics=[]; if(!ctx.statDiagnostics.some(function(item){return item.code==='UNKNOWN_STAT'&&item.key===String(key);})) ctx.statDiagnostics.push({code:'UNKNOWN_STAT',key:String(key),message:'등록되지 않은 스탯 키입니다: '+key}); return false; }
     if(definition.target) { if(definition.aggregation==='or') ctx[definition.target]=Boolean(ctx[definition.target])||amount>0; else ctx[definition.target]=(Number(ctx[definition.target])||0)+amount; return true; }
-    if(!ctx.preservedStats || typeof ctx.preservedStats!=='object') ctx.preservedStats={};
-    if(!ctx.preservedStatContributions) ctx.preservedStatContributions={};
-    (ctx.preservedStatContributions[definition.id] ||= []).push(amount);
-    ctx.preservedStats[definition.id]=(Number(ctx.preservedStats[definition.id])||0)+amount; return true;
+    if(!ctx.preservedStats || typeof ctx.preservedStats!=='object') ctx.preservedStats={}; ctx.preservedStats[definition.id]=(Number(ctx.preservedStats[definition.id])||0)+amount; return true;
   }
-  function collectCrystaKeys(list) { var found={}; (Array.isArray(list)?list:[]).forEach(function(item){Object.keys(item&&item.stats||{}).forEach(function(k){found[k]=true;});(item&&item.condStats||[]).forEach(function(c){Object.keys(c&&c.stats||{}).forEach(function(k){found[k]=true;});});}); return Object.keys(found).sort(); }
+  function collectCrystaKeys(list) { var found={}; (Array.isArray(list)?list:[]).forEach(function(item){Object.keys(item&&item.stats||{}).forEach(function(k){found[k]=true;});(item&&item.conditionalStats||[]).forEach(function(c){Object.keys(c&&c.stats||{}).forEach(function(k){found[k]=true;});});}); return Object.keys(found).sort(); }
   function auditKeys(keys) { var result={total:(keys||[]).length,unknown:[],modeled:[],preserved:[]}; (keys||[]).forEach(function(key){var d=get(key);if(!d)result.unknown.push(key);else if(d.status==='notModeled')result.preserved.push(d.id);else result.modeled.push(d.id);}); Object.keys(result).forEach(function(k){if(Array.isArray(result[k]))result[k]=Array.from(new Set(result[k]));}); return result; }
   var api=Object.freeze({normalize:normalize,normalizeValue:normalizeValue,get:get,apply:apply,entries:function(){return Object.keys(entries).sort().map(function(id){return entries[id];});},collectCrystaKeys:collectCrystaKeys,auditKeys:auditKeys});
-  if(typeof module==='object'&&module.exports) module.exports=api;
-  if(root) root.ToramStatRegistry=api;
-}(typeof window!=='undefined'?window:globalThis));
+
+  export const statRegistry=api;
+
+
+const listEntries = api.entries;
+export {normalize,normalizeValue,get,apply,collectCrystaKeys,auditKeys,listEntries as entries};

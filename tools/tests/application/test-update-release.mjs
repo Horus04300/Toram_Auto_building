@@ -1,8 +1,8 @@
 import assert from 'node:assert/strict';
-import { mkdtempSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { resolve } from 'node:path';
-import { verifyVersion } from '../../release-version.mjs';
+import {mkdtempSync,mkdirSync,readFileSync,writeFileSync,rmSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {resolve} from 'node:path';
+import {verifyVersion} from '../../release-version.mjs';
 const root = resolve(import.meta.dirname, '../../..');
 const version = verifyVersion(root);
 assert.throws(() => verifyVersion(root, 'v0.0.1'), /tag/);

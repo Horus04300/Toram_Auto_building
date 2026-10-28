@@ -1,3 +1,6 @@
+import '../../web/src/calculation/skill-effect-engine.js';
+import {skillRegistry} from '../../web/src/data/skill-effect-registry.js';
+import {skillCatalog} from '../../web/src/data/skill-combat-catalog.js';
 import { createHash } from 'node:crypto';
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
@@ -8,17 +11,6 @@ import vm from 'node:vm';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const fail = [];
 const assert = (condition, message) => { if (!condition) fail.push(message); };
-const context = { window: {}, console };
-context.window.window = context.window;
-vm.createContext(context);
-async function load(relativePath) {
-  const path = resolve(root, relativePath);
-  assert(existsSync(path), `로드 파일 누락: ${relativePath}`);
-  if (existsSync(path)) vm.runInContext(await readFile(path, 'utf8'), context, { filename: relativePath });
-}
-
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/battle.js', 'web/src/data/skills/survival.js', 'web/src/data/skills/guard.js', 'web/src/data/skills/support.js', 'web/src/data/skills/dark-power.js', 'web/src/data/skills/dancer.js', 'web/src/data/skills/necromancer.js', 'web/src/data/skills/golem.js', 'web/src/data/skills/minstrel.js', 'web/src/data/skills/blade.js', 'web/src/data/skills/dual-sword.js', 'web/src/data/skills/halberd.js', 'web/src/data/skills/crusher.js', 'web/src/data/skills/mononofu.js', 'web/src/data/skills/knight.js', 'web/src/data/skills/martial.js', 'web/src/data/skills/shot.js', 'web/src/data/skills/magic.js', 'web/src/data/skills/sprite.js', 'web/src/data/skills/assassin.js', 'web/src/data/skills/dagger.js', 'web/src/data/skills/shield.js', 'web/src/data/skills/priest.js', 'web/src/data/skills/hunter.js', 'web/src/data/skills/wizard.js', 'web/src/data/skills/magic-blade.js', 'web/src/data/skills/barehand.js', 'web/src/data/skills/ninja.js', 'web/src/data/skills/partisan.js', 'web/src/data/skill-registration-metadata.js', 'web/src/data/skill-catalog-registration.js']) await load(path);
-
 const manifest = JSON.parse(await readFile(resolve(root, 'docs/sources/skills/manifest.json'), 'utf8'));
 for (const entry of manifest) {
   const path = resolve(root, entry.file);
@@ -30,9 +22,8 @@ for (const entry of manifest) {
   }
 }
 
-const rootSkills = context.window.TORAM_SKILL_EFFECT_DATA && context.window.TORAM_SKILL_EFFECT_DATA.skills || [];
-const skills = rootSkills.concat(context.window.ToramSkillEffectRegistry.all());
-const catalogSkills = context.window.TORAM_SKILL_COMBAT_CATALOG && context.window.TORAM_SKILL_COMBAT_CATALOG.skills || [];
+const skills = skillRegistry.definitions();
+const catalogSkills = skillCatalog && skillCatalog.skills || [];
 const args = process.argv.slice(2);
 const treeIndex = args.indexOf('--tree');
 const selectedTreeId = treeIndex >= 0 ? args[treeIndex + 1] : null;

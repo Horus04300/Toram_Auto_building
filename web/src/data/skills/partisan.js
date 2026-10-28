@@ -1,5 +1,7 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 파르티잔 S1~S5 계산기 범위 정의. 파티/통상/피격 사건은 메타데이터로 보존한다. */
-(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Partisan S5 data order');
+(function(){'use strict';var R=skillRegistry,C=skillCatalog;if(!R||!C)throw Error('Partisan S5 data order');
 var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,t,f)=>({op:'if',when:w,then:t,else:f}),eq=(x,y)=>({op:'eq',left:x,right:y}),I=x=>r('attack.inputs.'+x),B=x=>r('baseStats.'+x),P=x=>r('player.'+x),S=x=>r('investments.Partisan.'+x),H=x=>r('investments.Halberd.'+x);
 var twoHanded=eq(r('equipment.mainWeapon'),v('양손검')),bow=({op:'in',value:r('equipment.mainWeapon'),values:['bow','bowgun']}),halberd=eq(r('equipment.mainWeapon'),v('선풍창'));
 function D(id,kind,anchor,when){var s=C.skills.find(x=>x.id==='Partisan:'+id);if(!s)throw Error('Partisan catalog missing '+id);return{id:s.id,treeId:'Partisan',skillId:id,nameKo:s.nameKo,kind:kind,source:'partisan',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Partisan.txt',anchor:anchor},requirements:{when:when},notes:'S1~S5 calculator scope; normal attack, party state, successful return and no-damage events remain metadata.'};}
@@ -16,4 +18,4 @@ x[5]=Object.assign(x[5],{activeBuff:true,cost:{mp:{timing:'cast',value:v(100)}},
 x[6].effects=[{phase:'partyMemberDown',type:'survivalInstinct',durationSeconds:v(20),maxHpFlat:m(v(500),l()),maxHpPercent:l(),percentageDamageReductionPercent:m(v(2.5),l()),notes:'파티원 전투불능 발동, 현재 HP 회복과 지속시간 종료는 파티/시간 상태 엔진 필요.'}];
 x[7]=Object.assign(x[7],{activeBuff:true,cost:{mp:{timing:'cast',value:v(100)}},effects:[{phase:'cast',type:'fixedAggro',value:a(v(1000),m(v(150),l()))},{phase:'combat',type:'stat',key:'AGGRO',value:m(v(2),l())},{phase:'combat',type:'physicalBarrierByEligibleParty',value:m(v(100),l(),I('eligiblePartyMemberCount')),notes:'생존 중이면서 어그로 대상이 아닌 실제 파티원만 세며 자신·용병·펫은 제외한다.'}],inputs:[{id:'eligiblePartyMemberCount',label:'조건 충족 파티원 수',type:'number',min:v(0),max:v(3),default:v(0)}]});
 x[8].effects=[{phase:'build',type:'stat',key:'MAXHP',value:a(m(v(100),l()),m(v(10),P('level')))},{phase:'combat',type:'magicBarrierByEligibleParty',value:m(v(100),l(),I('eligiblePartyMemberCount')),notes:'전선 유지 중 조건 충족 파티원 수에 따른 마법 배리어. 파티 상태 엔진 필요.'}];x[8].inputs=[{id:'eligiblePartyMemberCount',label:'조건 충족 파티원 수',type:'number',min:v(0),max:v(3),default:v(0)}];
-R.register('Partisan:calculation-rules',x);}());
+R.register(x);}());

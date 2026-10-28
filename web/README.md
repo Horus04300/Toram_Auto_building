@@ -9,7 +9,7 @@
 | index.html | 화면 구조·입력 요소 |
 | src/layout/ | 공통 사이드바·탑바·페이지 전환 |
 | src/pages/home/ | 홈 순위 영역·계정 카드·최근 메뉴 |
-| src/pages/calculator/ | 계산기 HTML·최초 사용 시 classic 초기화 |
+| src/pages/calculator/ | 계산기 HTML·최초 사용 시 ESM 초기화 |
 | src/pages/inventory/ | 내 구성 목록·상세·조립 UI |
 | src/pages/inventory/inventory-navigation.mjs | 고정 두 열·3열 위치의 세로 선택 팝업·제목 옆 경로; 전체는 하위 없음 |
 | src/pages/inventory/inventory-equipment-editor.mjs | 계산기와 독립된 새 장비 직접 등록 |
@@ -19,14 +19,14 @@
 | src/ui/skill-tree-simulator.mjs | 계산기·인벤토리 공통 스킬 트리 렌더링/선행 투자/회수, 호출자별 상태 |
 | src/ui/ | 화면 표시·이벤트; bookmark-button.mjs는 계산기·인벤토리·도감 공통 책갈피 |
 | src/application/ | 입력 상태·사용자 동작·계산 조립 |
-| src/calculation/ | JS 계산식·효과 적용·최종 결과 평가 |
+| src/calculation/ | 효과 적용·Rust/WASM 호출·표시 문자열 |
 | src/optimization/ | 추천 입력 준비·Rust/WASM 연결·실행 선택 |
 | src/storage/ | 공통 저장 형식·자동 복원·JSON 가져오기/내보내기 |
 | src/data/ | 스킬·게임 규칙 정의 |
-| src/domain/, src/contracts/ | TypeScript 타입·경계 계약 |
+| src/contracts/ | 실제 저장·업데이트 어댑터의 TypeScript 계약 |
 | public/ | CSS·폰트·아이콘·발행된 아이템/보스 데이터 |
 
-실행은 저장소 루트에서 npm run web:dev, 배포본 생성은 npm run web:build입니다. index.html의 assets/... URL은 개발 서버와 배포 도구가 원본 위치에 연결합니다. src/app-entry.mjs가 진입점, src/classic-script-manifest.mjs가 classic 스크립트 로딩 순서입니다.
+실행은 저장소 루트에서 npm run web:dev, 배포본 생성은 npm run web:build입니다. index.html의 assets/... URL은 개발 서버와 배포 도구가 원본 위치에 연결합니다. src/app-entry.mjs가 진입점, 실제 ESM import 그래프가 배포 파일과 Worker 의존성을 결정합니다.
 
 계산기·인벤토리의 스킬 노드는 Shift+클릭하면 선택 스킬과 필요한 모든 선행 스킬을 Lv.10으로 투자합니다. 1/5/10 포인트 설정과 무관하며 다른 분기는 유지합니다. 선택 스킬이 이미 Lv.10이어도 선행 경로는 올리고, 전체 경로가 최대면 변경·저장을 발생시키지 않습니다. 일반 클릭·우클릭의 투자/회수는 기존 규칙을 유지합니다. `node tools/verification/verify-skill-shift-browser.mjs`로 웹 생성본의 두 화면·저장/복원을 검증합니다.
 
@@ -48,3 +48,5 @@ index.html은 공통 틀과 홈 HTML을 소유합니다. app-entry.mjs는 기본
     Cross-Origin-Embedder-Policy: require-corp
 
 crossOriginIsolated 또는 SharedArrayBuffer를 사용할 수 없으면 단일 WASM으로 실행합니다. 외부 리소스는 CORS/CORP 허용이 필요합니다. 현재 폰트·게임 데이터·스크립트는 같은 출처에서 제공합니다. 서버 설정을 바꾼 뒤에는 페이지를 새로고침합니다.
+
+일반 계산도 공통 Rust evaluator의 WASM을 사용합니다. 입력·옵션 조립과 툴팁 문자열은 JS에 남기고, 전체/요약/후보 공급값·정수 비율 산술을 Rust가 소유합니다. 계산기 진입 때 모듈 초기화를 기다리며 홈·도감·계정은 독립적입니다. WASM을 차단하거나 자산을 읽지 못하면 계산기 오류를 표시하며 홈·계정은 유지됩니다.

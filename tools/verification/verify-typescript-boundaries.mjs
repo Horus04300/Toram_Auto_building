@@ -14,9 +14,8 @@ const sources = [
   'web/src/contracts/boundary-dtos.d.ts',
   'web/src/contracts/boundary-dto-fixtures.ts',
   'desktop/adapters/saved-build-storage.ts',
-  'web/src/domain/calculation-contracts.ts',
-  'web/src/application/ports.ts',
-  'web/src/contracts/calculation-contract-fixtures.ts'
+  'web/src/contracts/update-boundary.d.ts',
+  'desktop/adapters/update.ts'
 ];
 for (const path of sources) {
   const source = await readFile(resolve(root, path), 'utf8');
@@ -27,9 +26,4 @@ for (const path of sources) {
   check(ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true));
 }
 
-const dtoSource = await readFile(resolve(root, sources[0]), 'utf8');
-for (const name of ['SavedBuildDocumentDto', 'CalculationRequestDto', 'CalculationResultDto', 'CrystaOptimizationRequestDto', 'CrystaOptimizationResultDto', 'SettingsFileRepositoryAdapter']) {
-  assert.match(dtoSource, new RegExp(`interface ${name}\\b`, 'u'), `${name} DTO가 필요합니다.`);
-}
-
-console.log('Type boundary TypeScript boundary definitions: PASS (strict, no explicit any, build/calculation/storage/CrystaOptimization DTOs)');
+console.log('Type boundary: PASS (strict storage/update adapters, no explicit any)');

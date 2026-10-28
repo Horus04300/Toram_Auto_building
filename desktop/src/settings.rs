@@ -3,12 +3,86 @@ use serde_json::Value;
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::path::{Path, PathBuf};
+use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::UNIX_EPOCH;
 
 pub const SETTING_FORMAT: &str = "toram-auto-build-document";
 pub const SETTING_SCHEMA_VERSION: u64 = 2;
 const LEGACY_SETTING_SCHEMA_VERSION: u64 = 1;
 const APP_STORAGE_DIRECTORY: &str = "ToramOnlineAutoBuildCalculator";
+static NEXT_TEMP: AtomicU64 = AtomicU64::new(1);
+
+#[cfg(test)]
+thread_local! { static WRITE_FAILURE: std::cell::Cell<u8> = const { std::cell::Cell::new(0) }; }
+
+fn publish_file(temporary: &Path, target: &Path, overwrite: bool) -> std::io::Result<()> {
+    #[cfg(windows)]
+    {
+        use std::os::windows::ffi::OsStrExt;
+        #[link(name = "kernel32")]
+        extern "system" {
+            fn MoveFileExW(from: *const u16, to: *const u16, flags: u32) -> i32;
+        }
+        let from: Vec<u16> = temporary.as_os_str().encode_wide().chain(Some(0)).collect();
+        let to: Vec<u16> = target.as_os_str().encode_wide().chain(Some(0)).collect();
+        // Same-directory move: publish complete bytes, never truncate the old file.
+        if unsafe { MoveFileExW(from.as_ptr(), to.as_ptr(), 8 | u32::from(overwrite)) } == 0 {
+            return Err(std::io::Error::last_os_error());
+        }
+        Ok(())
+    }
+    #[cfg(not(windows))]
+    {
+        if overwrite {
+            fs::rename(temporary, target)
+        } else {
+            fs::hard_link(temporary, target)?;
+            fs::remove_file(temporary)
+        }
+    }
+}
+
+fn write_document(path: &Path, content: &str, overwrite: bool) -> Result<(), String> {
+    if overwrite {
+        SettingsRepository::reject_link(path)?;
+    }
+    let temporary = path.with_extension(format!(
+        "{}-{}.tmp",
+        std::process::id(),
+        NEXT_TEMP.fetch_add(1, Ordering::Relaxed)
+    ));
+    let mut created = false;
+    let result = (|| -> std::io::Result<()> {
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create_new(true)
+            .open(&temporary)?;
+        created = true;
+        #[cfg(test)]
+        if WRITE_FAILURE.get() == 1 {
+            file.write_all(&content.as_bytes()[..content.len() / 2])?;
+            return Err(std::io::Error::other("injected partial write"));
+        }
+        file.write_all(content.as_bytes())?;
+        file.sync_all()?;
+        drop(file);
+        #[cfg(test)]
+        if WRITE_FAILURE.get() == 2 {
+            return Err(std::io::Error::other("injected publish failure"));
+        }
+        publish_file(&temporary, path, overwrite)
+    })();
+    if result.is_err() && created {
+        let _ = fs::remove_file(&temporary);
+    }
+    result.map_err(|error| {
+        if error.kind() == std::io::ErrorKind::AlreadyExists {
+            "같은 이름의 세팅이 이미 있습니다. 덮어쓰기를 사용하세요.".to_string()
+        } else {
+            format!("세팅 파일을 저장할 수 없습니다: {error}")
+        }
+    })
+}
 
 #[derive(Serialize)]
 #[serde(rename_all = "camelCase")]
@@ -181,19 +255,7 @@ impl SettingsRepository {
     pub fn save(name: String, content: String) -> Result<(), String> {
         Self::validate(&content)?;
         let path = Self::new_path(&Self::ensure_directory()?, &name)?;
-        let mut file = OpenOptions::new()
-            .write(true)
-            .create_new(true)
-            .open(&path)
-            .map_err(|error| {
-                if error.kind() == std::io::ErrorKind::AlreadyExists {
-                    "같은 이름의 세팅이 이미 있습니다. 덮어쓰기를 사용하세요.".to_string()
-                } else {
-                    format!("세팅 파일을 만들 수 없습니다: {error}")
-                }
-            })?;
-        file.write_all(content.as_bytes())
-            .map_err(|error| format!("세팅 파일을 저장할 수 없습니다: {error}"))
+        write_document(&path, &content, false)
     }
     pub fn load(name: String) -> Result<String, String> {
         let path = Self::existing_path(&Self::ensure_directory()?, &name)?;
@@ -206,42 +268,12 @@ impl SettingsRepository {
     pub fn overwrite(name: String, content: String) -> Result<(), String> {
         Self::validate(&content)?;
         let path = Self::existing_path(&Self::ensure_directory()?, &name)?;
-        Self::reject_link(&path)?;
-        let mut file = OpenOptions::new()
-            .write(true)
-            .truncate(true)
-            .open(&path)
-            .map_err(|error| format!("덮어쓸 세팅 파일을 열 수 없습니다: {error}"))?;
-        file.write_all(content.as_bytes())
-            .map_err(|error| format!("세팅 파일을 덮어쓸 수 없습니다: {error}"))
+        write_document(&path, &content, true)
     }
     pub fn delete(name: String) -> Result<(), String> {
         let path = Self::existing_path(&Self::ensure_directory()?, &name)?;
         Self::reject_link(&path)?;
         fs::remove_file(&path).map_err(|error| format!("세팅 파일을 삭제할 수 없습니다: {error}"))
-    }
-}
-
-/// Application service: commands use this API instead of filesystem details.
-pub struct SettingsService;
-impl SettingsService {
-    pub fn directory() -> Result<String, String> {
-        SettingsRepository::directory()
-    }
-    pub fn list() -> Result<Vec<SettingFile>, String> {
-        SettingsRepository::list()
-    }
-    pub fn save(name: String, content: String) -> Result<(), String> {
-        SettingsRepository::save(name, content)
-    }
-    pub fn load(name: String) -> Result<String, String> {
-        SettingsRepository::load(name)
-    }
-    pub fn overwrite(name: String, content: String) -> Result<(), String> {
-        SettingsRepository::overwrite(name, content)
-    }
-    pub fn delete(name: String) -> Result<(), String> {
-        SettingsRepository::delete(name)
     }
 }
 
@@ -292,5 +324,50 @@ mod tests {
         assert!(SettingsRepository::validate(&valid_document()).is_ok());
         assert!(SettingsRepository::validate("{}").is_err());
         assert!(SettingsRepository::validate("not json").is_err());
+    }
+
+    #[test]
+    fn publishes_complete_documents_and_preserves_original_on_failure() {
+        let directory = std::env::temp_dir().join(format!(
+            "toram-atomic-settings-{}-{}",
+            std::process::id(),
+            NEXT_TEMP.fetch_add(1, Ordering::Relaxed)
+        ));
+        fs::create_dir(&directory).unwrap();
+        let path = directory.join("빌드.json");
+        let original = valid_document();
+        write_document(&path, &original, false).unwrap();
+        assert!(write_document(&path, "duplicate", false).is_err());
+        assert_eq!(fs::read(&path).unwrap(), original.as_bytes());
+        for failure in [1, 2] {
+            WRITE_FAILURE.set(failure);
+            assert!(write_document(&path, "replacement", true).is_err());
+            assert!(write_document(&directory.join("new.json"), "new", false).is_err());
+            WRITE_FAILURE.set(0);
+            assert_eq!(fs::read(&path).unwrap(), original.as_bytes());
+            assert_eq!(
+                fs::read_dir(&directory).unwrap().count(),
+                1,
+                "failed writes clean only their own temporary file"
+            );
+        }
+        #[cfg(windows)]
+        {
+            use std::os::windows::fs::OpenOptionsExt;
+            let locked = OpenOptions::new()
+                .read(true)
+                .share_mode(0)
+                .open(&path)
+                .unwrap();
+            assert!(write_document(&path, "locked replacement", true).is_err());
+            drop(locked);
+            assert_eq!(fs::read(&path).unwrap(), original.as_bytes());
+        }
+        assert!(write_document(&directory, "not a regular file", true).is_err());
+        write_document(&path, "complete replacement", true).unwrap();
+        assert_eq!(fs::read_to_string(&path).unwrap(), "complete replacement");
+        assert_eq!(fs::read_dir(&directory).unwrap().count(), 1);
+        fs::remove_file(path).unwrap();
+        fs::remove_dir(directory).unwrap();
     }
 }

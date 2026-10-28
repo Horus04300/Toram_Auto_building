@@ -25,6 +25,14 @@ function row(value) {
     ...(value.data_json ? { data:JSON.parse(value.data_json), provenance:JSON.parse(value.provenance_json) } : {}) };
 }
 
+export function validateInventoryInput(input) {
+  if (!Object.hasOwn(INVENTORY_TYPES,input.type) || input.schemaVersion !== 1) throw fail(400, 'UNSUPPORTED_SCHEMA', '지원하지 않는 인벤토리 형식입니다.');
+  if (typeof input.name !== 'string' || !input.name.trim() || input.name.trim().length > 80 || /[\x00-\x1f\x7f]/u.test(input.name)) throw fail(400, 'INVALID_INPUT', '이름은 1~80자로 입력하세요.');
+  if (Object.keys(input).some(key => !['name','type','schemaVersion','data','revision'].includes(key))) throw fail(400, 'INVALID_INPUT', '지원하지 않는 요청 필드입니다.');
+  try { validateInventoryObject(input.type,input.data,rules); }
+  catch (error) { throw fail(400, input.type === 'equipment' ? 'INVALID_EQUIPMENT' : 'INVALID_OBJECT', error.message); }
+}
+
 export function createInventoryStore(db) {
   db.exec(`CREATE TABLE IF NOT EXISTS inventory_objects (
     id TEXT PRIMARY KEY, owner_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -35,14 +43,12 @@ export function createInventoryStore(db) {
     CREATE INDEX IF NOT EXISTS inventory_equipment ON inventory_objects(owner_id,type,equipment_type,updated_at DESC,id);
     CREATE TABLE IF NOT EXISTS request_receipts (owner_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
       request_key TEXT NOT NULL, fingerprint TEXT NOT NULL, result_json TEXT NOT NULL, created_at TEXT NOT NULL,
-      PRIMARY KEY(owner_id,request_key));`);
-  function validate(input) {
-    if (!Object.hasOwn(INVENTORY_TYPES,input.type) || input.schemaVersion !== 1) throw fail(400, 'UNSUPPORTED_SCHEMA', '지원하지 않는 인벤토리 형식입니다.');
-    if (typeof input.name !== 'string' || !input.name.trim() || input.name.trim().length > 80 || /[\x00-\x1f\x7f]/u.test(input.name)) throw fail(400, 'INVALID_INPUT', '이름은 1~80자로 입력하세요.');
-    if (Object.keys(input).some(key => !['name','type','schemaVersion','data','revision'].includes(key))) throw fail(400, 'INVALID_INPUT', '지원하지 않는 요청 필드입니다.');
-    try { validateInventoryObject(input.type,input.data,rules); }
-    catch (error) { throw fail(400, input.type === 'equipment' ? 'INVALID_EQUIPMENT' : 'INVALID_OBJECT', error.message); }
-  }
+      PRIMARY KEY(owner_id,request_key));
+    CREATE TABLE IF NOT EXISTS record_links (legacy_id TEXT PRIMARY KEY,
+      owner_id TEXT NOT NULL REFERENCES users(id) ON DELETE CASCADE, kind TEXT NOT NULL,
+      inventory_id TEXT UNIQUE REFERENCES inventory_objects(id) ON DELETE SET NULL,
+      source_sha256 TEXT NOT NULL, metadata_json TEXT NOT NULL);
+    CREATE INDEX IF NOT EXISTS record_links_owner ON record_links(owner_id,kind);`);
   function get(owner, id) {
     const value = db.prepare('SELECT * FROM inventory_objects WHERE id=? AND owner_id=?').get(id, owner);
     if (!value) throw fail(404, 'OBJECT_UNAVAILABLE', '구성을 찾을 수 없거나 접근할 수 없습니다.');
@@ -63,13 +69,15 @@ export function createInventoryStore(db) {
       }
     } catch (error) { throw fail(400,'INVALID_MERGE',error.message); }
   }
-  function create(owner, input, provenance) {
-    validate(input); provenance ||= catalogSources(input.data); validateProvenance(provenance);
+  function create(owner, input, provenance, imported) {
+    validateInventoryInput(input); provenance ||= catalogSources(input.data); validateProvenance(provenance);
     if (Buffer.byteLength(JSON.stringify(input)) > 1024 * 1024) throw fail(413,'BODY_TOO_LARGE','구성은 1 MiB 이하여야 합니다.');
-    if (db.prepare('SELECT count(*) AS total FROM inventory_objects WHERE owner_id=? AND type=?').get(owner, input.type).total >= 200) throw fail(409, 'INVENTORY_LIMIT', '종류별로 200개까지 보관할 수 있습니다.');
-    const id = randomUUID(), now = new Date().toISOString();
-    db.prepare('INSERT INTO inventory_objects VALUES (?,?,?,?,?,?,?,?,?,?,?)').run(id, owner, input.type, input.name.trim(), 1, 1,
-      input.type === 'equipment' ? equipmentType(input.data) : '', JSON.stringify(input.data), JSON.stringify(provenance), now, now);
+    // Legacy scopes retain their existing quotas; backfilled objects do not consume the independent inventory quota.
+    if (!imported && db.prepare('SELECT count(*) AS total FROM inventory_objects i WHERE owner_id=? AND type=? AND NOT EXISTS (SELECT 1 FROM record_links l WHERE l.inventory_id=i.id)').get(owner, input.type).total >= 200) throw fail(409, 'INVENTORY_LIMIT', '종류별로 200개까지 보관할 수 있습니다.');
+    const id = imported?.id || randomUUID(), now = new Date().toISOString();
+    if(imported && (!/^[a-f0-9-]{36}$/u.test(id)||!Number.isSafeInteger(imported.revision)||imported.revision<1||typeof imported.createdAt!=='string'||typeof imported.updatedAt!=='string')) throw fail(400,'INVALID_IMPORT','이관 식별자·수정 번호·시각을 확인하세요.');
+    db.prepare('INSERT INTO inventory_objects VALUES (?,?,?,?,?,?,?,?,?,?,?)').run(id, owner, input.type, input.name.trim(), 1, imported?.revision || 1,
+      input.type === 'equipment' ? equipmentType(input.data) : '', JSON.stringify(input.data), JSON.stringify(provenance), imported?.createdAt || now, imported?.updatedAt || now);
     return get(owner,id);
   }
   function preview(owner, input) {
@@ -91,6 +99,7 @@ export function createInventoryStore(db) {
     });
   }
   return Object.freeze({ get, create, preview, merge,
+    importRecord:(owner,input,identity)=>create(owner,input,undefined,identity),
     list(owner, params) {
       const type = params.get('type') || 'equipment';
       if ([...params.keys()].some(key => !['type','equipmentType','slot','treeId','skillCategory','buffGroupId','q','page','pageSize'].includes(key)) || !Object.hasOwn(INVENTORY_TYPES,type)) throw fail(400, 'INVALID_QUERY', '지원하지 않는 목록 조건입니다.');
@@ -115,7 +124,7 @@ export function createInventoryStore(db) {
       return { items, page, pageSize, total };
     },
     update(owner, id, input) {
-      const current = get(owner, id); checkRevision(input, current); validate(input);
+      const current = get(owner, id); checkRevision(input, current); validateInventoryInput(input);
       if (input.type !== current.type) throw fail(400,'TYPE_MISMATCH','저장된 구성의 종류를 바꿀 수 없습니다. 새 구성으로 저장하세요.');
       const result = db.prepare('UPDATE inventory_objects SET name=?,equipment_type=?,data_json=?,revision=revision+1,updated_at=? WHERE id=? AND owner_id=? AND revision=?').run(
         input.name.trim(), input.type === 'equipment' ? equipmentType(input.data) : '', JSON.stringify(input.data), new Date().toISOString(), id, owner, input.revision);

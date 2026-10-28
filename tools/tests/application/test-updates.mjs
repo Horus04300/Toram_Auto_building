@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
-import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+import {createUpdateService} from '../../../build/generated/desktop/update.js';
+import {createUpdateCoordinator} from '../../../desktop/adapters/update/update-controller.js';
+import {createUpdateUi} from '../../../desktop/adapters/update/ui-controller.js';
 
 const read = path => readFileSync(new URL('../../../' + path, import.meta.url), 'utf8');
 const info = { currentVersion:'0.6.3', version:'0.6.4', notes:'<script>bad()</script>', publishedAt:null };
@@ -18,11 +20,7 @@ const native = { core:{
     }
   }
 } };
-function adapter(tauri) {
-  const window = { __TAURI__:tauri };
-  vm.runInNewContext(read('build/generated/desktop/update.js'), { window });
-  return window.ToramUpdateService;
-}
+const adapter=tauri=>createUpdateService(tauri?.core);
 const service = adapter(native);
 assert.deepEqual(JSON.parse(JSON.stringify(await service.check())), info);
 response = null;
@@ -50,8 +48,8 @@ fail = null;
 assert.equal(adapter(undefined).isAvailable(), false);
 await assert.rejects(adapter(undefined).check(), /데스크톱/);
 
-const root = {};
-vm.runInNewContext(read('desktop/adapters/update/update-controller.js'), { window:root });
+const root = { document:{ body:{ inert:false } }, ToramApp:{ optimizerUi:{ getState:()=>({}), stopForUpdate:async () => {} } }, ToramSettingsRepository:{ flushApplicationState:async () => { if (flushFail) throw new Error('저장 실패'); } } };
+root.ToramUpdateController=createUpdateCoordinator(root,{optimizer:root.ToramApp.optimizerUi,settingsRepository:root.ToramSettingsRepository});
 let checked = 0, installed = 0, rejectCheck = false, allow = true, flushFail = false;
 let resolveCheck;
 const deps = {
@@ -62,8 +60,7 @@ const deps = {
   }, install:async (_version, notify, before) => {
     notify({ downloaded:3, total:5 }); await before(); installed++;
   } },
-  beforeDownload:async () => allow,
-  beforeInstall:async () => { if (flushFail) throw new Error('저장 실패'); }
+  confirm:async () => allow
 };
 const controller = root.ToramUpdateController.create(deps);
 response = null;
@@ -113,10 +110,11 @@ const timers = [];
 const uiRoot = {
   ToramUpdateController:root.ToramUpdateController,
   ToramUpdateService:{ isAvailable:() => true, check:async () => info },
-  ToramApplication:{ Settings:{ getUpdateSettings:() => ({ checkOnStartup:true }), setUpdateSettings:() => {} } },
+  ToramSettingsRepository:{ getUpdateSettings:() => ({ checkOnStartup:true }), setUpdateSettings:() => {} },
   setTimeout:fn => timers.push(fn)
 };
-vm.runInNewContext(read('desktop/adapters/update/ui-controller.js'), { window:uiRoot, document:{ readyState:'complete', getElementById:id => elements.get(id) } });
+createUpdateUi({getElementById:id=>elements.get(id),defaultView:uiRoot},{updateController:uiRoot.ToramUpdateController,settingsRepository:uiRoot.ToramSettingsRepository},uiRoot.ToramUpdateService);
+
 assert.equal(elements.get('updatePanel').hidden, true, 'startup must not immediately show a panel');
 timers[0]();
 await new Promise(resolve => setImmediate(resolve));
@@ -127,30 +125,44 @@ elements.get('updateLater').listeners.click();
 assert.equal(elements.get('updatePanel').hidden, true);
 console.log('Updater: PASS (metadata, unavailable, silent startup, notes UI, consent, progress, save/signature failure, retry, concurrency)');
 
-let running = true, paused = false, stops = 0, flushes = 0, refuseFlush = false;
+let running = true, paused = false, stops = 0, flushes = 0, installs = 0, allowFirst = false, allowFinal = false, failFinal = false, finalStage = false;
 const coordination = {
   document:{ body:{ inert:false } },
   ToramCrystaOptimizationExecutionAdapter:{ isRunning:() => running, hasContinuation:() => paused },
-  ToramApp:{ optimizerUi:{ stopForUpdate:async () => { stops++; running = false; paused = false; } } },
-  ToramApplication:{ Settings:{ flush:async () => { flushes++; if (refuseFlush) throw new Error('quota'); } } }
+  ToramApp:{ optimizerUi:{ getState:()=>({}), stopForUpdate:async () => { stops++; running = false; paused = false; } } },
+  ToramSettingsRepository:{ flushApplicationState:async () => { flushes++; if (failFinal && finalStage) throw new Error('quota'); } }
 };
-vm.runInNewContext(read('desktop/adapters/update/update-install-coordinator.js'), { window:coordination });
-const coordinator = coordination.ToramUpdateInstallCoordinator;
-assert.equal(await coordinator.prepare(async work => { assert.equal(work, true); return false; }), false);
-assert.equal(stops, 0);
-await coordinator.prepare(async () => true);
-assert.equal(stops, 1);
-assert.equal(flushes, 1);
-assert.equal(coordination.document.body.inert, false, 'calculator remains usable during download');
-paused = true;
-await assert.rejects(coordinator.beforeInstall(async work => { assert.equal(work, true); return false; }), /취소/);
-assert.equal(paused, true, 'new paused work survives declining final consent');
-await coordinator.beforeInstall(async () => true);
-assert.equal(coordination.document.body.inert, true);
-assert.equal(flushes, 2, 'flush again after download');
-coordinator.release();
-assert.equal(coordination.document.body.inert, false);
-refuseFlush = true;
-await assert.rejects(coordinator.beforeInstall(async () => true), /quota/);
-assert.equal(coordinator.isLocked(), false);
-console.log('Update coordination: PASS (running/paused consent, second flush, final UI lock, failure release)');
+coordination.ToramUpdateController=createUpdateCoordinator(coordination,{execution:coordination.ToramCrystaOptimizationExecutionAdapter,optimizer:coordination.ToramApp.optimizerUi,settingsRepository:coordination.ToramSettingsRepository});
+let confirmations = 0;
+const coordinated = coordination.ToramUpdateController.create({
+  service:{ isAvailable:() => true, check:async () => info, install:async (_version,_notify,before) => {
+    assert.equal(coordination.document.body.inert,false,'Download must permit edits');
+    paused = true; finalStage = true; await before();
+    assert.equal(coordination.document.body.inert,true,'Only final installation stays locked');
+    installs++;
+  } },
+  confirm:async work => { assert.equal(work,true); return ++confirmations % 2 ? allowFirst : allowFinal; }
+});
+await coordinated.check();
+await coordinated.install();
+assert.equal(stops,0,'Declined consent must preserve running work');
+assert.equal(running,true);
+allowFirst = true; confirmations = 0;
+await coordinated.install();
+assert.equal(coordinated.read().phase,'failed');
+assert.equal(installs,0);
+assert.equal(paused,true,'New paused work survives declining final consent');
+assert.equal(coordination.document.body.inert,false);
+allowFinal = true; confirmations = 0; finalStage = false;
+await coordinated.install();
+assert.equal(coordinated.read().phase,'completed');
+assert.equal(installs,1);
+assert.equal(flushes,3,'Preflight and final installation each flush current input');
+assert.equal(coordination.document.body.inert,false);
+failFinal = true; confirmations = 0; finalStage = false;
+await coordinated.install();
+assert.equal(coordinated.read().phase,'failed');
+assert.equal(installs,1,'Failed final save must block installation');
+assert.equal(coordination.ToramUpdateController.isLocked(),false);
+assert.ok(coordination.ToramUpdateController.epoch() > 0);
+console.log('Update workflow: PASS (consent, current/paused work, fresh pre/final saves, download editing, final lock, failure release)');

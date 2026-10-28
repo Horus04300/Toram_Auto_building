@@ -1158,7 +1158,18 @@ mod float_reflection_tests {
 
     #[test]
     fn signed_float_reflection_planes_cover_native_rounding_and_cancellation() {
-        for attribute in [-16777217.0, -2999.0, -1.0, 0.0, 1.0, 3.0, 999.0, 2999.0, 10000.0, 16777217.0] {
+        for attribute in [
+            -16777217.0,
+            -2999.0,
+            -1.0,
+            0.0,
+            1.0,
+            3.0,
+            999.0,
+            2999.0,
+            10000.0,
+            16777217.0,
+        ] {
             for raw in [-32768_i32, -13, -7, -1, 1, 7, 13, 32767] {
                 for magic in [false, true] {
                     let base = PreparedContext::from(json!({
@@ -1211,7 +1222,11 @@ mod float_reflection_tests {
                             upper += plan.stages[0].package(candidate);
                         }
                         let reflection = super::super::candidate_stat_up(&base, &stats, magic);
-                        let raw_power = ((if magic { 3.0 * (attribute+3.0) } else { attribute }) + reflection)
+                        let raw_power = ((if magic {
+                            3.0 * (attribute + 3.0)
+                        } else {
+                            attribute
+                        }) + reflection)
                             .floor()
                             .max(1.0);
                         assert!(upper>=raw_power-1e-6,"attribute={attribute} raw={raw} magic={magic} choice={selection}: {upper} < {raw_power}");

@@ -1,8 +1,7 @@
-/* Select the Rust runtime; search and candidate preparation belong to the engine. */
-(function (root) {
+export function createExecutionAdapter(nativeRuntime,wasmRuntime) {
   'use strict';
-  function nativeClient() { return root.ToramCrystaOptimizationNativeClient; }
-  function wasmClient() { return root.ToramCrystaOptimizationWasmClient; }
+  function nativeClient() { return nativeRuntime; }
+  function wasmClient() { return wasmRuntime; }
   function unavailable() { return new Error('Rust 추천기를 사용할 수 없습니다. 페이지를 새로고침하거나 앱을 다시 실행해 주세요.'); }
   function runtime() {
     var native = nativeClient();
@@ -45,7 +44,7 @@
   }
   function isAvailable() { var client = runtime(); return Boolean(client && client.isAvailable()); }
   function isRunning() { return [nativeClient(), wasmClient()].some(function (client) { return client && client.isRunning(); }); }
-  root.ToramCrystaOptimizationExecutionAdapter = Object.freeze({ schema:'toram.crysta-execution-adapter.v2',
+  return Object.freeze({ schema:'toram.crysta-execution-adapter.v2',
     execute:execute, preview:preview, resume:resume, cancel:cancel, pause:pause,
     disposeContinuation:disposeContinuation, hasContinuation:hasContinuation, isAvailable:isAvailable, isRunning:isRunning });
-})(typeof window !== 'undefined' ? window : globalThis);
+}

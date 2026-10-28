@@ -1,58 +1,4 @@
-/**
- * Type boundary legacy boundary DTOs.
- *
- * These describe only the data that currently crosses build, calculation,
- * storage, and CrystaOptimization boundaries. Calculation contract owns the future application/domain contracts.
- */
-interface SavedBuildDocumentDto {
-  readonly format: 'toram-auto-build-document';
-  readonly schemaVersion: 1;
-  readonly documentType: 'saved-build';
-  readonly name: string;
-  readonly createdAt: string;
-  readonly updatedAt: string;
-  readonly build: Readonly<Record<string, unknown>>;
-  readonly scenario: Readonly<Record<string, unknown>>;
-}
-
-interface CalculationRequestDto {
-  readonly baseContext: Readonly<Record<string, unknown>>;
-  readonly scenario: Readonly<Record<string, unknown>>;
-  readonly statDelta: Readonly<Record<string, number>>;
-}
-
-interface CalculationResultDto {
-  readonly score: number | null;
-  readonly diagnostics: readonly { readonly code: string; readonly message: string }[];
-  readonly aggregate: Readonly<Record<string, unknown>>;
-}
-
-type CrystaOptimizationStatus = 'exact' | 'bounded' | 'heuristic' | 'no-incumbent-yet' | 'paused' | 'cancelled' | 'invalid';
-
-interface CrystaOptimizationCandidatePackageDto {
-  readonly id: string;
-  readonly statDelta: Readonly<Record<string, number>>;
-}
-
-interface CrystaOptimizationRequestDto {
-  readonly schema: string;
-  readonly baseContext: Readonly<Record<string, unknown>>;
-  readonly scenarioSnapshot: Readonly<Record<string, unknown>>;
-  readonly groups: readonly {
-    readonly id: string;
-    readonly packages: readonly CrystaOptimizationCandidatePackageDto[];
-  }[];
-}
-
-interface CrystaOptimizationResultDto {
-  readonly status: CrystaOptimizationStatus;
-  readonly score: number | null;
-  readonly lowerBound: number | null;
-  readonly upperBound: number | null;
-  readonly continuationId: string | null;
-  readonly diagnostics: readonly { readonly code: string; readonly message: string }[];
-}
-
+/** Native settings IPC used by saved-build-storage.ts. */
 interface TauriSettingFileDto {
   readonly name: string;
   readonly lastModified: number;
@@ -67,7 +13,7 @@ interface SettingsFileRepositoryAdapter {
   delete(name: string): Promise<void>;
 }
 
-interface LegacyTauriCore {
+interface SettingsTauriCore {
   invoke(command: 'settings_directory'): Promise<string>;
   invoke(command: 'list_settings'): Promise<readonly TauriSettingFileDto[]>;
   invoke(command: 'save_setting', args: { readonly name: string; readonly content: string }): Promise<void>;
@@ -77,6 +23,6 @@ interface LegacyTauriCore {
 }
 
 interface SettingsRepositoryTauriWindow extends Window {
-  __TAURI__?: { readonly core?: LegacyTauriCore };
+  __TAURI__?: { readonly core?: SettingsTauriCore };
   ToramSettingsFileRepositoryAdapter?: SettingsFileRepositoryAdapter;
 }

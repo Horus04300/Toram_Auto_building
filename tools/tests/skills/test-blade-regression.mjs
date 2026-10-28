@@ -1,20 +1,15 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Blade: {} }) };
-vm.createContext(context);
 
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/blade.js', 'web/src/data/skill-registration-metadata.js', 'web/src/data/skill-catalog-registration.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
-
-const effects = context.window.ToramSkillEffects;
-const sequence = context.window.ToramComboSequence;
+const effects = skillEffects;
+const sequence = comboSequence;
 const ids = Array.from({ length: 24 }, (_, id) => `Blade:${id}`);
 const restricted = new Set([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 22, 23]);
-const base = (mainType = '양손검', level = 300) => ({ mainType, subType: '없음', level, strBase: 400, dexBase: 400, intBase: 100, vitBase: 300, agiBase: 300, crtBase: 50 });
+const base = (mainType = '양손검', level = 300) => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType: '없음', level, strBase: 400, dexBase: 400, intBase: 100, vitBase: 300, agiBase: 300, crtBase: 50 });
 const combat = { STR: 400, DEX: 400, INT: 100, VIT: 300, AGI: 300, ATK: 1000, MATK: 500, ASPD: 1000, CSPD: 1000 };
 const setLevels = (value, extra = {}) => { context.window.skillSimulatorState.getInvestments = () => ({ Blade: Object.assign(Object.fromEntries(ids.map((id) => [id.split(':')[1], value])), extra) }); };
 const assert = (condition, message) => { if (!condition) throw new Error(message); };

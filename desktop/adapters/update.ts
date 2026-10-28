@@ -1,13 +1,10 @@
-/* Emitted as a classic script; Tauri objects never cross the Application Port. */
-(() => {
+export function createUpdateService(core: NonNullable<UpdateTauriWindow['__TAURI__']>['core']): UpdateService {
   'use strict';
-  const root = window as UpdateTauriWindow;
-  const core = root.__TAURI__?.core;
   const available = typeof core?.invoke === 'function' && typeof core.Channel === 'function';
   function record(value: unknown): value is Record<string, unknown> {
     return typeof value === 'object' && value !== null && !Array.isArray(value);
   }
-  function metadata(value: unknown): ApplicationUpdateInfo | null {
+  function metadata(value: unknown): UpdateInfo | null {
     if (value === null) return null;
     const version = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)$/;
     if (!record(value) || typeof value['currentVersion'] !== 'string' || !version.test(value['currentVersion']) ||
@@ -25,10 +22,10 @@
       throw new Error(record(error) && typeof error['message'] === 'string' ? error['message'] : '업데이트 요청에 실패했습니다. 다시 시도해 주세요.');
     }
   }
-  const service: ApplicationUpdateService = Object.freeze({
+  const service: UpdateService = Object.freeze({
     isAvailable: () => available,
     check: async () => metadata(await invoke('check_for_update')),
-    install: async (version: string, onProgress: (progress: ApplicationUpdateProgress) => void, beforeInstall: () => Promise<void>) => {
+    install: async (version: string, onProgress: (progress: UpdateProgress) => void, beforeInstall: () => Promise<void>) => {
       if (!available || !core) throw new Error('업데이트는 Windows 데스크톱 앱에서 사용할 수 있습니다.');
       const progress = new core.Channel();
       progress.onmessage = (value: unknown) => {
@@ -42,5 +39,5 @@
       await invoke('install_update', { version });
     }
   });
-  root.ToramUpdateService = service;
-})();
+  return service;
+}

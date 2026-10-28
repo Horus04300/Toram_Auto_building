@@ -1,17 +1,12 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window:{}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Magic:{} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/magic.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
-const effects = context.window.ToramSkillEffects;
+const effects = skillEffects;
 const ids = Array.from({ length:24 }, (_, id) => `Magic:${id}`);
-const base = (mainType='지팡이') => ({ mainType, subType:'없음', level:300, strBase:100, dexBase:100, intBase:500, vitBase:100, agiBase:100, crtBase:0 });
+const base = (mainType='지팡이') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType:'없음', level:300, strBase:100, dexBase:100, intBase:500, vitBase:100, agiBase:100, crtBase:0 });
 const combat = { STR:100, DEX:100, INT:600, VIT:100, AGI:100, MAXHP:10000, CSPD:1000, ATK:500, MATK:1200 };
 const levels = (value, extra={}) => { context.window.skillSimulatorState.getInvestments = () => ({ Magic:Object.assign(Object.fromEntries(ids.map((id) => [id.slice(6), value])), extra) }); };
 const assert = (condition, message) => { if (!condition) throw new Error(message); };

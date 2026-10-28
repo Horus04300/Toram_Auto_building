@@ -1,28 +1,19 @@
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {calculationKernel} from '../../../web/src/calculation/calculator.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window:{}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments:() => ({}) };
-vm.createContext(context);
 
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/blade.js', 'web/src/data/skills/mononofu.js', 'web/src/data/skills/shot.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-
-// Keep this fixture's original calculation-rule-only Mononofu scope.
-delete context.window.TORAM_SKILL_EFFECT_TREE_DATA.Mononofu;
 context.BASE_ASPD_MAP = { '한손검':100, '자동활':30 };
-for (const path of ['web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'web/src/calculation/calculator.js' });
 
-const effects = context.window.ToramSkillEffects;
-const kernel = context.window.ToramCalculationKernel;
+const effects = skillEffects;
+const kernel = calculationKernel;
 const levels = value => {
   context.window.skillSimulatorState.getInvestments = () => value;
 };
-const base = overrides => Object.assign({
+const base = overrides => Object.assign({skillLevels:context.window.skillSimulatorState.getInvestments(),
   level:300, strBase:0, intBase:0, vitBase:100, agiBase:0, dexBase:0, crtBase:0,
   mainType:'자동활', wpnAtk:100, wpnRefine:0, wpnStab:100, subType:'없음', subAtk:0, subRefine:0, subStab:0, armorType:'일반옷',
   bossLevel:300, bossDef:0, bossMdef:0, bossCritResist:0, bossPhysResist:0, bossMagResist:0,
@@ -61,8 +52,8 @@ assert.equal(lowBase.amprBeforeDual, 39, '선택하지 않은 트윈 스톰과 �
 
 levels({ Blade:{ 8:10 }, Mononofu:{ 16:10 } });
 const swordBuffs = { 'Blade:8':{ active:true, stacks:11 }, 'Mononofu:16':{ active:true, stacks:0 } };
-const swordProfile = effects.normalAttackAmprModifiers(base({ mainType:'한손검' }), {}, {}, { activeBuffs:swordBuffs });
-const tied = kernel.evaluateContext(base({ mainType:'한손검', subType:'한손검(듀얼소드)', normalAttackAmprProfile:swordProfile }), []);
+const swordProfile = effects.normalAttackAmprModifiers(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType:'한손검' }), {}, {}, { activeBuffs:swordBuffs });
+const tied = kernel.evaluateContext(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType:'한손검', subType:'한손검(듀얼소드)', normalAttackAmprProfile:swordProfile }), []);
 assert.equal(tied.selectedNormalAttackAmprActive.id, 'Blade:8', '동률은 안정적인 스킬 ID 순으로 선택해야 합니다.');
 assert.equal(tied.amprBeforeDual, 39, '램페이지와 괴력난신 AMPR을 합산하면 안 됩니다.');
 assert.equal(tied.finalAMPR, 78, '듀얼소드 2배는 활성 후보 선택 이후 한 번만 적용해야 합니다.');

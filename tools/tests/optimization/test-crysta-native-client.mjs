@@ -1,9 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {resolve} from 'node:path';
+import {importWithMocks} from '../../support/import-with-mocks.mjs';
 
-const root = resolve(import.meta.dirname, '../../..');
 const calls = [];
 let boundedMode = false;
 let expiredResume = false;
@@ -41,9 +39,13 @@ const context = {
   }
 };
 context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'web/src/optimization/rust-bridge.js'), 'utf8'), context, { filename:'optimization/rust-bridge.js' });
-vm.runInContext(await readFile(resolve(root, 'desktop/adapters/optimization-client.js'), 'utf8'), context, { filename:'optimization/native-client.js' });
+const {createNativeClient}=await importWithMocks(new URL('../../../desktop/adapters/optimization-client.js',import.meta.url),{
+  'stat-registry.js':{statRegistry:context.window.ToramStatRegistry},
+  'calculator.js':{calculationKernel:context.window.ToramCalculationKernel},
+  'build-evaluator.js':{buildEvaluator:context.window.ToramBuildEvaluator},
+  'candidate-preparation.js':{candidatePreparation:context.window.ToramCrystaOptimizationCandidates}
+});
+context.window.ToramCrystaOptimizationNativeClient=createNativeClient(context.window.__TAURI__.core);
 
 const problem = {
   baseContext:{ activeBuildConversions:[{ source:'STR', target:'ATK', rate:1 }] },
@@ -161,4 +163,32 @@ await assert.rejects(() => context.window.ToramCrystaOptimizationNativeClient.op
 assert.equal(calls.filter(call => call.command === 'crysta_optimize_parallel').length, callsBeforeInvalid);
 context.window.ToramCrystaOptimizationCandidates.prepareProblem = originalPrepare;
 
+// Use the real client with a minimal bridge so the recorded FNV collision reaches its cache unchanged.
+let cacheCalls = 0, clock = 1000000;
+const cacheContext = { console, Date:{now:() => clock}, window:{
+  ToramCrystaOptimizationRustBridge:{policy:{},prepare:problem => ({problem,evaluate:null}),projectProblem:problem => problem,normalize:(_problem,_evaluate,result) => result,gap:() => null},
+  __TAURI__:{core:{Channel:class {},invoke(command,input) {
+    if (command === 'crysta_hardware_profile') return Promise.resolve({logicalThreads:1});
+    if (command === 'crysta_optimize_parallel') {cacheCalls++; return Promise.resolve({status:'exact',score:input.problem.baseContext.strBase});}
+    return Promise.resolve(false);
+  }}}
+}};
+const realNow=Date.now; Date.now=()=>clock;
+const {createNativeClient:createCacheClient}=await importWithMocks(new URL('../../../desktop/adapters/optimization-client.js',import.meta.url),{
+ 'rust-bridge.js':{rustBridge:cacheContext.window.ToramCrystaOptimizationRustBridge}
+});
+const cacheClient=createCacheClient(cacheContext.window.__TAURI__.core);
+const collisionGroups = Array.from({length:4},(_,i) => ({id:'g'+i,packages:[{id:'p'+i,statDelta:{}}]}));
+const left = {baseContext:{strBase:87,dexBase:18,intBase:310},groups:collisionGroups};
+const right = {baseContext:{strBase:232,dexBase:509,intBase:443},groups:collisionGroups};
+assert.equal((await cacheClient.optimize(left)).score,87);
+assert.equal((await cacheClient.optimize(right)).score,232);
+assert.equal(cacheCalls,2,'Different canonical payloads must not reuse the recorded 32-bit collision');
+await cacheClient.optimize(right); assert.equal(cacheCalls,2);
+await cacheClient.optimize(left); assert.equal(cacheCalls,3,'Only the latest exact result remains cached');
+clock += 300001; await cacheClient.optimize(left); assert.equal(cacheCalls,4,'Exact cache expires after five minutes');
+const large = {...left,uncached:'x'.repeat(4 * 1024 * 1024)};
+await cacheClient.optimize(large); await cacheClient.optimize(large); assert.equal(cacheCalls,6,'Oversized keys are not retained');
+
+Date.now=realNow;
 console.log('CrystaOptimization native client: PASS (compact payload, raw options, original restoration, cache metadata isolation, continuation resume, expiry handling)');

@@ -1,5 +1,7 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 민스트럴 S1~S5 계산기 범위 정의. 노래 연주·파티·시간·통상 사건은 메타데이터로 보존한다. */
-(function(){'use strict';var R=window.ToramSkillEffectRegistry,C=window.TORAM_SKILL_COMBAT_CATALOG;if(!R||!C)throw Error('Minstrel S5 data order');
+(function(){'use strict';var R=skillRegistry,C=skillCatalog;if(!R||!C)throw Error('Minstrel S5 data order');
 var v=x=>({op:'value',value:x}),r=x=>({op:'ref',path:x}),l=()=>r('skill.level'),a=(...x)=>({op:'add',args:x}),m=(...x)=>({op:'multiply',args:x}),d=(x,y)=>({op:'divide',left:x,right:y}),q=(w,t,f)=>({op:'if',when:w,then:t,else:f}),I=x=>r('attack.inputs.'+x),P=x=>r('player.'+x),T=x=>r('combatStats.'+x),floor=x=>({op:'floor',value:x}),truthy=x=>({op:'truthy',value:x}),eq=(x,y)=>({op:'eq',left:x,right:y});
 var songWeapon={op:'in',value:r('equipment.mainWeapon'),values:['양손검','bow','bowgun','staff','magicDevice','발도검']};
 function D(id,kind,anchor,when){var s=C.skills.find(x=>x.id==='Minstrel:'+id);if(!s)throw Error('Minstrel catalog missing '+id);return{id:s.id,treeId:'Minstrel',skillId:id,nameKo:s.nameKo,kind:kind,source:'minstrel',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Minstrel.txt',anchor:anchor},requirements:{when:when},notes:'S1~S5 calculator scope; performance, party target selection, normal attack and time events remain metadata.'};}
@@ -17,4 +19,4 @@ x[6]=Object.assign(x[6],{cost:{mp:{timing:'cast',value:v(0)}},inputs:[{id:'beatS
 x[7].effects=[{phase:'whilePerforming',type:'fixedAggro',value:v(1)},{phase:'whilePerforming',type:'damageReductionPercent',value:m(I('mutedSongCount'),l()),notes:'애드립과는 더 높은 피해 감소율만 적용. 실제 연주/감음 개수 상태가 필요하다.'}];x[7].inputs=[{id:'mutedSongCount',label:'감음한 노래 수',type:'number',min:v(0),max:v(10),default:v(0)}];
 x[8].effects=[{phase:'whilePerforming',type:'battleNoteNormalAttackIntervalSeconds',value:{op:'max',args:[v(0),d(a(v(1100),m(v(-1),floor(m(T('ASPD'),d(l(),v(10)))))),v(1000))]},notes:'연주 중 사거리 내 대상에 자동 통상 공격하는 사건은 통상공격/대상 상태 엔진 필요.'}];
 x[9]=Object.assign(x[9],{cost:{mp:{timing:'cast',value:v(100)}},inputs:[{id:'performing',label:'연주 중',type:'boolean',default:false}],effects:[{phase:'whilePerforming',type:'damageReductionPercent',when:truthy(I('performing')),value:m(v(10),l())},{phase:'whilePerforming',type:'missInvulnerability',when:{op:'all',args:[truthy(I('performing')),eq(l(),v(10))]},durationSeconds:v(1)},{phase:'performanceGrace',type:'resumePerformanceWindowSeconds',when:truthy(I('performing')),value:v(10),notes:'피격/공격으로 연주가 멈춘 뒤 재개하는 유예는 전투 상태 엔진 필요.'}]});
-R.register('Minstrel',x);}());
+R.register(x);}());

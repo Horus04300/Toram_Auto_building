@@ -1,7 +1,8 @@
-/* 콤보 순서 계산: 피격·시간 경과 없이 다음 스킬 1회 효과, 콤보 태그, MP 소모를 평가한다. */
-(function () {
+import {skillEffects} from './skill-effect-engine.js';
+import {comboRules} from '../data/combo-rule-data.js';
+
   'use strict';
-  var effects = window.ToramSkillEffects;
+  var effects = skillEffects;
   if (!effects) throw new Error('콤보 순서 엔진은 스킬 효과 엔진 뒤에 로드되어야 합니다.');
 
   function number(value, fallback) { value = Number(value); return Number.isFinite(value) ? value : (fallback || 0); }
@@ -40,11 +41,11 @@
     }, 0);
   }
   function comboRule(tag) {
-    var data = window.TORAM_COMBO_RULE_DATA || {};
+    var data = comboRules || {};
     return data.tags && data.tags[tag] || null;
   }
   function clampComboDamageMultiplier(value) {
-    var bounds = ((window.TORAM_COMBO_RULE_DATA || {}).constants || {}).damageMultiplier || {};
+    var bounds = ((comboRules || {}).constants || {}).damageMultiplier || {};
     return Math.min(Number(bounds.max) || 1.5, Math.max(Number(bounds.min) || .1, value));
   }
   function chargeDamageMultiplier(position, effects) {
@@ -240,5 +241,4 @@
     return { entries:results, maxMp:maxMp, remainingMp:currentMp, canceledAt:canceledAt, blockedAt:blockedAt, blockReason:blockReason, chargeSettlementMp:chargeSettlementMp, chargeSettlementShortfall:chargeSettlementShortfall, unconsumedNextSkillModifiers:copyModifiers(pending) };
   }
 
-  window.ToramComboSequence = Object.freeze({ evaluate:evaluate });
-}());
+  export const comboSequence = Object.freeze({ evaluate:evaluate });

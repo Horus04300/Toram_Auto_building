@@ -1,4 +1,5 @@
-import './calculation/stat-registry.js';
+import {statRegistry} from './calculation/stat-registry.js';
+import * as buildValues from './application/build-values.mjs';
 import { createItemCatalog, resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection, resolveConsumableBuffs } from './application/item-catalog.mjs';
 import { createBossCatalog } from './application/boss-catalog.mjs';
 import { validateBossSelection } from './application/boss-target.mjs';
@@ -21,6 +22,8 @@ export async function startApplication(documentRef = document) {
   app.bossRules = Object.freeze({validateBossSelection});
   app.itemRules = Object.freeze({resolveEquipmentOptions,resolveEquipmentElement,validateEquipmentSelection,resolveConsumableBuffs,subWeaponRules:SUB_WEAPON_RULES});
   app.statLabels = STAT_LABELS;
+  app.statRegistry=statRegistry;
+  app.buildValues = buildValues;
   app.createBookmarkButton = createBookmarkButton;
   app.createSkillTreeSimulator = createSkillTreeSimulator;
   const shell = createPlatformShell(documentRef);

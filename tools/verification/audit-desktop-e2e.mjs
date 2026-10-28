@@ -23,15 +23,19 @@ async function launch(){
   child.stdout.on('data',b=>console.log('APP '+b));child.stderr.on('data',b=>console.log('APP '+b));
   child.on('exit',(code,signal)=>console.log('APP EXIT '+JSON.stringify({code,signal})));
   child.on('error',e=>report.errors.push(e.message));
+  // One real CPU keeps the pause target alive long enough for a real UI click.
+  const affinity=spawn('powershell.exe',['-NoProfile','-Command',`(Get-Process -Id ${child.pid}).ProcessorAffinity = 1`],{windowsHide:true,stdio:'ignore'});
+  assert.equal(await new Promise(resolve=>affinity.once('exit',resolve)),0);
   for(let i=0;i<80;i++){try{const targets=await(await fetch(endpoint+'/json/list')).json();if(targets.some(t=>t.type==='page'))break;await delay(250);}catch{await delay(250);}}
   browser=await chromium.connectOverCDP(endpoint);
   page=browser.contexts()[0].pages()[0]; page.setDefaultTimeout(20000);
   page.on('pageerror',e=>report.errors.push(e.message));
   page.on('dialog',async d=>{report.dialogs.push(d.message());await d.accept();});
-  await page.waitForFunction(()=>window.ToramSettingsRepository && window.ToramCrystaOptimizationNativeClient);
+  await page.locator('.platform-nav-button[data-page="calculator"]').click();
+  await page.waitForFunction(()=>window.ToramApp?.features?.settings && window.ToramApp.execution);
 }
 async function stop(){
-  if(page) await page.evaluate(()=>window.ToramCrystaOptimizationExecutionAdapter?.cancel('E2E cleanup')).catch(()=>{});
+  if(page) await page.evaluate(()=>window.ToramApp.execution?.cancel('E2E cleanup')).catch(()=>{});
   // Closing the owned main window allows normal Tauri shutdown.
   if(child && child.exitCode===null){
     const closer=spawn('powershell.exe',['-NoProfile','-Command',`(Get-Process -Id ${child.pid}).CloseMainWindow()`],{windowsHide:true,stdio:'ignore'});
@@ -42,13 +46,13 @@ async function stop(){
 }
 async function check(name,fn){try{report.checks.push({name,status:'PASS',detail:await fn()});}catch(e){report.checks.push({name,status:'FAIL',error:e.message});await page?.screenshot({path:resolve(output,`failure-${report.checks.length}.png`)}).catch(()=>{});}console.log(JSON.stringify(report.checks.at(-1)));}
 const tab=id=>page.locator('#appTabButton-'+id).click();
-const state=()=>page.evaluate(()=>window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult);
+const state=()=>page.evaluate(()=>window.ToramApp.optimizer.getState().lastOptimizationResult);
 try{
   await launch();
   await check('real native bridge and isolated settings directory',async()=>{
-    const directory=await page.evaluate(()=>window.ToramSettingsRepository.directory());
+    const directory=await page.evaluate(()=>window.ToramApp.settingsRepository.directory());
     assert.equal(directory,resolve(local,'ToramOnlineAutoBuildCalculator'));
-    assert.equal(await page.evaluate(()=>window.ToramCrystaOptimizationNativeClient.isAvailable()),true);
+    assert.equal(await page.evaluate(()=>window.ToramApp.execution.isAvailable()),true);
     return {directory,version:await page.evaluate(()=>window.__TAURI__.app.getVersion()),hardware:await page.evaluate(()=>window.__TAURI__.core.invoke('crysta_hardware_profile'))};
   });
   await check('native save duplicate overwrite load delete and disk contract',async()=>{
@@ -82,35 +86,37 @@ try{
     assert.equal(await readFile(file,'utf8'),before);
   });
   await check('native pause resume unrelated edit and input invalidation',async()=>{
+    const sample=JSON.parse(await readFile(resolve('samples/마법) 지팡이 크법 세팅 - pelio s.json'),'utf8'));
+    await page.evaluate(sample=>window.ToramApp.settingsRepository.importSavedBuild(JSON.stringify(sample)),sample);
     await tab('results');await page.locator('#optimizationRunPreciseOptimization').click();
-    await page.waitForFunction(()=>window.ToramCrystaOptimizationNativeClient.isRunning());
+    await page.waitForFunction(()=>window.ToramApp.execution.isRunning());
     await page.locator('#crystaOptimizationPause').click();
-    await page.waitForFunction(()=>window.ToramCrystaOptimizationNativeClient.hasContinuation()&&!window.ToramCrystaOptimizationNativeClient.isRunning());
+    await page.waitForFunction(()=>window.ToramApp.execution.hasContinuation()&&!window.ToramApp.execution.isRunning());
     const paused=await page.locator('#crystaOptimizationMeta').innerText();
-    assert.equal(await page.evaluate(()=>window.ToramRuntimeState.get().crystaOptimization.executionStatus),'paused');
+    assert.equal(await page.evaluate(()=>window.ToramApp.optimizer.getState().executionStatus),'paused');
     await delay(2000);assert.equal(await page.locator('#crystaOptimizationMeta').innerText(),paused);
     await page.locator('#appBuildStorageButton').click();await page.locator('#buildSettingName').fill('unrelated-name');await page.locator('#buildFileDialogClose').click();
-    assert.equal(await page.evaluate(()=>window.ToramCrystaOptimizationNativeClient.hasContinuation()),true);
-    await page.locator('#crystaOptimizationContinue').click();await page.waitForFunction(()=>window.ToramCrystaOptimizationNativeClient.isRunning());
-    await page.locator('#crystaOptimizationPause').click();await page.waitForFunction(()=>window.ToramCrystaOptimizationNativeClient.hasContinuation()&&!window.ToramCrystaOptimizationNativeClient.isRunning());
+    assert.equal(await page.evaluate(()=>window.ToramApp.execution.hasContinuation()),true);
+    await page.locator('#crystaOptimizationContinue').click();await page.waitForFunction(()=>window.ToramApp.execution.isRunning());
+    await page.locator('#crystaOptimizationPause').click();await page.waitForFunction(()=>window.ToramApp.execution.hasContinuation()&&!window.ToramApp.execution.isRunning());
     const resumed=await page.locator('#crystaOptimizationMeta').innerText();
-    assert.equal(await page.evaluate(()=>window.ToramRuntimeState.get().crystaOptimization.executionStatus),'paused');
+    assert.equal(await page.evaluate(()=>window.ToramApp.optimizer.getState().executionStatus),'paused');
     const elapsed=text=>Number(text.match(/경과 ([\d.]+)초/)[1]);
     assert.ok(elapsed(resumed)>=elapsed(paused));assert.ok(elapsed(resumed)-elapsed(paused)<2,'paused wall time must not count as execution');
-    await tab('stats-target');await page.locator('#bossDef').fill('124');await page.waitForFunction(()=>!window.ToramCrystaOptimizationNativeClient.hasContinuation());
+    await tab('stats-target');await page.locator('#bossDef').fill('124');await page.waitForFunction(()=>!window.ToramApp.execution.hasContinuation());
     return {paused,resumed};
   });
   await check('native cancellation',async()=>{
-    await tab('results');await page.locator('#optimizationRunPreciseOptimization').click();await page.waitForFunction(()=>window.ToramCrystaOptimizationNativeClient.isRunning());
-    await page.locator('#crystaOptimizationCancel').click();await page.waitForFunction(()=>!window.ToramCrystaOptimizationNativeClient.isRunning());
-    assert.equal(await page.evaluate(()=>window.ToramCrystaOptimizationNativeClient.hasContinuation()),false);
+    await tab('results');await page.locator('#optimizationRunPreciseOptimization').click();await page.waitForFunction(()=>window.ToramApp.execution.isRunning());
+    await page.locator('#crystaOptimizationCancel').click();await page.waitForFunction(()=>!window.ToramApp.execution.isRunning());
+    assert.equal(await page.evaluate(()=>window.ToramApp.execution.hasContinuation()),false);
   });
   await check('native exact with eight empty locked slots',async()=>{
     await tab('equipment');for(const g of ['wpn','arm','add','spc'])for(const n of [1,2])await page.locator(`#lock_${g}_${n}`).check();
     await tab('results');await page.locator('#optimizationRequirementsButton').click();
     const boxes=page.locator('#optimizationRequirementsOverlay input[type=checkbox]');for(let i=0;i<await boxes.count();i++)await boxes.nth(i).uncheck();
     await page.locator('#optimizationRequirementsApply').click();await page.locator('#optimizationRunPreciseOptimization').click();
-    await page.waitForFunction(()=>window.ToramRuntimeState.get().crystaOptimization.lastOptimizationResult?.status==='exact');
+    await page.waitForFunction(()=>window.ToramApp.optimizer.getState().lastOptimizationResult?.status==='exact');
     const result=await state();assert.equal(result.engine,'rust-native');return {status:result.status,engine:result.engine,threadsUsed:result.threadsUsed,score:result.score};
   });
   await check('manual native update check reports outcome',async()=>{

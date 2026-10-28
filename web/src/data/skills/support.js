@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 서포터 스킬: 원문 https://gall.dcinside.com/mgallery/board/view/?id=toramonline&no=40366 기준. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('서포터 효과 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v=function(n){return {op:'value',value:n};}, r=function(path){return {op:'ref',path:path};};
   var l=function(){return r('skill.level');}, a=function(){return {op:'add',args:[].slice.call(arguments)};};
@@ -20,7 +22,7 @@
   function aura(skillId, mp, effects) {
     return skill(skillId, 'buff', 'partial', { cost:{mp:{timing:'cast',value:v(mp)}}, combo:{canStart:true,canReceiveTag:false}, stateTransitions:[{event:'cast',operation:'grant',stateId:'support.' + skillId,stacks:v(1),maxStacks:v(1),durationSeconds:v(900)}], effects:effects });
   }
-  registry.register('Support', [
+  registry.register([
     skill(0, 'passive', 'partial', {effects:[{phase:'combat',type:'reviveTimeReductionRate',value:m(v(2),l()),notes:'기본 부활 시간 감소율 30%에 곱연산'}]}),
     skill(1, 'utility', 'partial', {cost:{mp:{timing:'cast',value:v(100)}},combo:{canStart:true,canReceiveTag:false},effects:[{phase:'cast',type:'heal',value:a(m(v(30),l()),m(r('target.maxHp'),d(l(),v(100))))},{phase:'cast',type:'reviveWaitReductionSeconds',value:l()}]}),
     skill(2, 'utility', 'partial', {cost:{mp:{timing:'cast',value:v(100)}},combo:{canStart:true,canReceiveTag:false},effects:[{phase:'cast',type:'removeAilment',count:v(1)},{phase:'cast',type:'resourceRestore',key:'MP',value:m(l(),l()),when:{op:'truthy',value:r('combat.ailmentRemoved')}}]}),

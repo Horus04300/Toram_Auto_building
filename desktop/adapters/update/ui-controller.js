@@ -1,4 +1,5 @@
-(function (root) {
+export function createUpdateUi(document,app,service) {
+const root=document.defaultView;
   'use strict';
   var initialized = false, controller;
   function element(id) { return document.getElementById(id); }
@@ -39,17 +40,15 @@
   function initialize() {
     if (initialized) return;
     initialized = true;
-    var settings = root.ToramApplication.Settings;
-    controller = root.ToramUpdateController.create({
-      service:root.ToramUpdateService,
-      beforeDownload:function () { return root.ToramUpdateInstallCoordinator.prepare(confirmInstall); },
-      beforeInstall:function () { return root.ToramUpdateInstallCoordinator.beforeInstall(confirmInstall); },
-      release:function () { if (root.ToramUpdateInstallCoordinator) root.ToramUpdateInstallCoordinator.release(); }
+    var settings = app.settingsRepository;
+    controller = app.updateController.create({
+      service:service,
+      confirm:confirmInstall
     });
     controller.subscribe(render);
     var startup = element('updateCheckOnStartup');
     startup.checked = settings.getUpdateSettings().checkOnStartup;
-    startup.disabled = !root.ToramUpdateService.isAvailable();
+    startup.disabled = !service.isAvailable();
     startup.addEventListener('change', function () {
       try { settings.setUpdateSettings({ checkOnStartup:startup.checked }); }
       catch (error) { startup.checked = settings.getUpdateSettings().checkOnStartup; element('updateAvailability').textContent = error.message; }
@@ -60,6 +59,7 @@
     element('updateLater').addEventListener('click', controller.later);
     root.setTimeout(function () { if (startup.checked) controller.check(true); }, 0);
   }
-  root.ToramUpdateUi = Object.freeze({ initialize:initialize });
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initialize, { once:true }); else initialize();
-}(window));
+  const api = Object.freeze({ initialize:initialize });
+
+initialize(); return api;
+}

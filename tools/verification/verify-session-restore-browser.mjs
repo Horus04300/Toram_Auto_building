@@ -30,25 +30,25 @@ try {
     const page = await context.newPage();
     page.on('pageerror', error => errors.push(error.message));
     await page.goto(`http://127.0.0.1:${server.address().port}/?view=calculator`);
-    await page.waitForFunction(() => window.ToramUiFeatures?.settings);
+    await page.waitForFunction(() => window.ToramApp.features?.settings);
     return page;
   }
   async function capture(page) {
     return page.evaluate(() => {
-      const { build, scenario } = window.ToramBuildDraftStore.syncFromUi();
+      const { build, scenario } = window.ToramApp.buildStore.syncFromUi();
       return { build, scenario };
     });
   }
   async function saved(page, expected) {
     await page.waitForFunction(expected => {
-      const session = JSON.parse(localStorage.getItem(window.ToramSettingsRepository.sessionStorageKey) || 'null')?.lastSession;
+      const session = JSON.parse(localStorage.getItem(window.ToramApp.settingsRepository.sessionStorageKey) || 'null')?.lastSession;
       return session && JSON.stringify({ build:session.build, scenario:session.scenario }) === JSON.stringify(expected);
     }, expected);
   }
   let page = await open();
   assert.equal(await page.locator('#wpnOpts .opt-row').count(), 0, 'A fresh build must start without default weapon options');
   assert.equal(await page.locator('#armOpts .opt-row').count(), 0, 'A fresh build must start without default armor options');
-  await page.evaluate(sample => window.ToramApplication.Settings.import(JSON.stringify(sample)), sample);
+  await page.evaluate(sample => window.ToramApp.settingsRepository.importSavedBuild(JSON.stringify(sample)), sample);
   // Real input events must save without an explicit flush or a reload helper.
   await page.locator('#bossDef').fill('789');
   const expected = await capture(page);
@@ -77,7 +77,7 @@ try {
     console.log(`Session restore: PASS (${main}/${sub})`);
   }
   await page.reload();
-  await page.waitForFunction(() => window.ToramUiFeatures?.settings);
+  await page.waitForFunction(() => window.ToramApp.features?.settings);
   assert.equal(await page.locator('#wpnAtk').isDisabled(), true);
   await page.locator('#appTabButton-equipment').click();
   await page.locator('#mainWeaponType').selectOption('한손검');

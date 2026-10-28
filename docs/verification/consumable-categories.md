@@ -1,6 +1,6 @@
-# 소모품 카테고리 연결 검증 (2026-10-25)
+# 소모품 카테고리 계약
 
-보존된 releaseC/e99f6b32 원본의 카테고리 선언과 native 지속 계열을 연결했다. 게임 실행·소모품 사용·프로세스 추가 접근 없이 저장 자료만 읽었다. 공개 배포는 하지 않았다.
+카테고리는 원문의 선언과 native 지속 계열을 사용한다. 현재 발행 건수/지원 범위는 handoff와 manifest를 따른다.
 
 ## 출처와 계약
 
@@ -37,9 +37,7 @@
 ## 앱 연결과 검증
 
 - `getItem(id)`와 `listBuffItems(locale)`에서 `consumableCategory`를 제공한다. 계산기 목록/미리보기는 `[HP 증가]`와 같이 표시하고 카테고리·이름·ID로 검색한다. 도감 정보 탭에도 카테고리를 표시한다. 저장 문서/계산 스냅샷에 표시용 메타데이터를 복제하지 않는다.
-- `npm run items:test`:15개 카테고리의 모든 원문 앵커·209개 선택 가능한 버프 커버리지·플러스바이타/애드매지클·설명 없는 스피드 팟·미지원 예방·즉시 회복 제외·라이브 바이타 예외·언어 충돌/미검토 이름·category hash 거부·기존 계산/저장 동치 PASS.
-- `node tools/tests/application/test-catalog-browser.mjs`:11,749개 상세·카테고리 표시 PASS. `npm run verify:architecture` PASS. `npm run test:regression`:78항목(77 PASS, 실제 앱 저장 E2E1 SKIP).
-- Chrome1280×900 소스 및 배포 하위 경로: 카테고리 검색→HP/MP/마법력 목록·미리보기→적용→JSON 왕복 유지 PASS.390×844 폭 넘침 없음·카테고리 목록 표시 PASS. 도감 정보의 HP 증가 표시 PASS. pageerror/실행 assets 오류 없음. Browser plugin 부재로 설치된 Playwright를 사용했다.
-- 개발/배포 가공본은 오프라인 sync 후 재실행 unchanged. 로그 `build/tmp/consumable-categories/`, 화면/검증 스크립트는 이 채팅의 `.codex/visualizations/2026/10/22/01a163bd-aabc-7c01-aa53-5a74fe86b873/`에 있다.
+- npm test: 카테고리 앵커·선택 버프·동적/미지원/즉시 회복 제외·언어/분류 충돌·hash 거부·기존 계산/저장 동치.
+- test-catalog-browser.mjs: 상세 카테고리 표시. 실제 브라우저는 카테고리 검색·미리보기·적용·JSON/재열기·모바일·읽기 전용 도감을 검사한다.
 
-전체 소모품의 카테고리가 확보된 것은 아니다. 확인할 원문 선언/지속 계열이 없는 항목은 미분류로 남긴다. 실제 게임 소비·자동 만료·상태이상 사건은 이번 검증 범위가 아니다.
+원문 선언/지속 계열이 없는 항목은 미분류다. 게임 소비·자동 만료·상태이상 사건은 지원 범위 밖이다. 마지막 통합 검사는 ../handoff/current-development-handoff.md를 따른다.

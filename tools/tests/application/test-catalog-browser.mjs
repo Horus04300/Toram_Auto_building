@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { CATALOG_KINDS,CATALOG_SUBCATEGORIES,catalogState,catalogPage,itemCatalogContent } from '../../../web/src/application/catalog-browser.mjs';
-import { createItemCatalog } from '../../../web/src/application/item-catalog.mjs';
+import {readFile} from 'node:fs/promises';
+import {CATALOG_KINDS,CATALOG_SUBCATEGORIES,catalogState,catalogPage,itemCatalogContent} from '../../../web/src/application/catalog-browser.mjs';
+import {createItemCatalog} from '../../../web/src/application/item-catalog.mjs';
 
 const defaults = catalogState(new URLSearchParams()); assert.equal(defaults.section,'items'); assert.equal(defaults.kind,'all'); assert.equal(defaults.selected,null);
 for (const query of ['section=quests','kind=invalid','locale=invalid','page=-1','selected=NaN','selected=-1','difficulty=9','variant=../x','level=99999','kind=weapons&subcategory=999','kind=crystas&subcategory=강화','kind=armor&subcategory=17','section=bosses&kind=weapons&subcategory=17','section=bosses&bossKind=wrong','bossKind=entry-boss']) assert.throws(() => catalogState(new URLSearchParams(query)),/확인/);

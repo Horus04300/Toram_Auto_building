@@ -1,4 +1,7 @@
-(function (root) {
+import {crystaIdentity} from '../application/crysta-identity.js';
+import {statRegistry} from '../calculation/stat-registry.js';
+import {policies} from '../calculation/calculation-policies.js';
+
   'use strict';
 
   var SCHEMA = 'toram.crysta-problem.v1';
@@ -37,17 +40,8 @@
     return '노말';
   }
 
-  function splitCondition(value) {
-    return String(value || '').split('/').map(function (item) { return item.trim(); }).filter(Boolean);
-  }
-
   function conditionMatches(structure, condition) {
-    if (!condition) return true;
-    if (condition.eitherWeapon && condition.eitherWeapon.indexOf(structure.mainType) === -1 && condition.eitherWeapon.indexOf(structure.subType) === -1) return false;
-    if (condition.main && splitCondition(condition.main).indexOf(structure.mainType) === -1) return false;
-    if (condition.sub && splitCondition(condition.sub).indexOf(structure.subType) === -1) return false;
-    if (condition.armor && splitCondition(condition.armor).indexOf(structure.armorType) === -1) return false;
-    return true;
+    return policies.matchesCrystaCondition(structure,condition);
   }
 
   function createStructure(baseContext) {
@@ -73,49 +67,8 @@
   }
 
   function buildLineageIndex(crystas) {
-    var byName = Object.create(null);
-    (Array.isArray(crystas) ? crystas : []).forEach(function (crysta) {
-      if (crysta && crysta.name) {
-        byName[normalizeName(crysta.name)] = crysta;
-        (crysta.aliases || []).forEach(function (alias) { byName[normalizeName(alias)] = crysta; });
-        if (crysta.gameItemId) byName[String(crysta.gameItemId)] = crysta;
-      }
-    });
-    var cache = Object.create(null);
-    function lineage(crysta) {
-      if (!crysta || !crysta.name) return [];
-      var ownKey = normalizeName(crysta.name);
-      if (cache[ownKey]) return cache[ownKey].slice();
-      var result = [ownKey];
-      var current = crysta;
-      var visited = Object.create(null);
-      visited[ownKey] = true;
-      while (current && current.prev) {
-        var previousKey = normalizeName(current.prev);
-        if (!previousKey || visited[previousKey]) break;
-        visited[previousKey] = true;
-        result.push(previousKey);
-        current = byName[previousKey] || null;
-      }
-      cache[ownKey] = result.slice();
-      return result;
-    }
-    function conflict(left, right) {
-      if (!left || !right) return false;
-      var leftLine = lineage(left);
-      var rightSet = Object.create(null);
-      lineage(right).forEach(function (key) { rightSet[key] = true; });
-      return leftLine.some(function (key) { return Boolean(rightSet[key]); });
-    }
-    function obsoleteNames() {
-      var obsolete = Object.create(null);
-      Object.keys(byName).forEach(function (key) {
-        var line = lineage(byName[key]);
-        for (var i=1; i<line.length; i++) if (byName[line[i]]) obsolete[line[i]] = true;
-      });
-      return obsolete;
-    }
-    return { byName:byName, lineage:lineage, conflict:conflict, obsoleteNames:obsoleteNames };
+    var identity = crystaIdentity;
+    return identity.createIndex(crystas);
   }
 
   function resolveCrysta(crysta, structure, registry, lineageIndex, diagnostics) {
@@ -123,21 +76,17 @@
     var statDelta = {};
     var activeConditions = [];
     var inactiveConditions = [];
-    var rootActive = conditionMatches(structure, crysta.cond);
-    if (crysta.cond) (rootActive ? activeConditions : inactiveConditions).push(clone(crysta.cond));
-    if (rootActive) Object.keys(crysta.stats || {}).forEach(function (key) {
-      addStat(statDelta, key, crysta.stats[key], registry, diagnostics, crysta.name);
-    });
-    (crysta.condStats || []).forEach(function (entry) {
-      var active = conditionMatches(structure, entry && entry.cond);
-      (active ? activeConditions : inactiveConditions).push(clone(entry && entry.cond || {}));
+    Object.keys(crysta.stats || {}).forEach(function (key) { addStat(statDelta,key,crysta.stats[key],registry,diagnostics,crysta.name); });
+    (crysta.conditionalStats || []).forEach(function (entry) {
+      var active = conditionMatches(structure, entry && entry.when);
+      (active ? activeConditions : inactiveConditions).push(clone(entry && entry.when || {}));
       if (active) Object.keys(entry && entry.stats || {}).forEach(function (key) {
         addStat(statDelta, key, entry.stats[key], registry, diagnostics, crysta.name);
       });
     });
     var line = lineageIndex.lineage(crysta);
     return freeze({
-      id:'crysta:' + normalizeName(crysta.name),
+      id:'crysta:' + crysta.gameItemId,
       name:String(crysta.name),
       category:categoryGroup(crysta.category),
       statDelta:statDelta,
@@ -145,7 +94,7 @@
       lineage:line,
       lineageRoot:line.length ? line[line.length - 1] : normalizeName(crysta.name),
       resolvedConditionMetadata:{ active:activeConditions, inactive:inactiveConditions },
-      original:clone(crysta)
+      gameItemId:crysta.gameItemId
     });
   }
 
@@ -187,11 +136,10 @@
 
   function packageGroup(group, pool, lockedValues, lockFlags, structure, lineageIndex, registry, diagnostics) {
     var resolvedPool = pool.map(function (item) { return resolveCrysta(item, structure, registry, lineageIndex, diagnostics); });
-    var byName = lineageIndex.byName;
     function lockedAt(index) {
       var value = lockedValues[index];
       if (!value) return null;
-      var raw = typeof value === 'string' ? byName[normalizeName(value)] : value;
+      var raw = typeof value === 'string' ? lineageIndex.resolve(value) : value;
       if (!raw) {
         diagnostics.push({ code:'UNKNOWN_LOCKED_CRYSTA', slot:group.slots[index], name:String(value && value.name || value), message:'잠긴 크리스타를 데이터에서 찾을 수 없습니다.' });
         return null;
@@ -208,7 +156,7 @@
     var packages = [];
     function validPair(left, right) {
       if (!left || !right) return true;
-      return !lineageIndex.conflict(left.original, right.original);
+      return !lineageIndex.conflict(left, right);
     }
     if (leftLocked && rightLocked) {
       if (!validPair(lockedLeft, lockedRight)) diagnostics.push({ code:'LOCKED_CRYSTA_CONFLICT', slot:group.id, message:'같은 장비에 잠긴 크리스타 계보가 충돌합니다.' });
@@ -234,17 +182,17 @@
   function compileCrystaProblem(input) {
     var options = input || {};
     var crystas = Array.isArray(options.crystas) ? options.crystas : [];
-    var registry = options.registry || root.ToramStatRegistry;
+    var registry = options.registry || statRegistry;
     if (!registry || typeof registry.normalize !== 'function') throw new Error('CrystaOptimization StatRegistry가 필요합니다.');
     var baseContext = clone(options.baseContext || {});
     var structure = createStructure(baseContext);
     var diagnostics = [];
     var lineageIndex = buildLineageIndex(crystas);
-    var obsolete = options.keepLowerUpgrades ? Object.create(null) : lineageIndex.obsoleteNames();
+    var obsolete = options.keepLowerUpgrades ? Object.create(null) : lineageIndex.obsoleteIds();
     var banned = Object.create(null);
     function ban(name) {
-      var key = normalizeName(name), item = lineageIndex.byName[key];
-      banned[item ? normalizeName(item.name) : key] = true;
+      var item = lineageIndex.resolve(name);
+      if (item) banned[String(item.gameItemId)] = true;
     }
     Object.keys(options.banned || {}).forEach(function (name) { if (options.banned[name]) ban(name); });
     (options.excluded || []).forEach(ban);
@@ -253,7 +201,7 @@
     var groups = GROUPS.map(function (group) {
       var pool = crystas.filter(function (crysta) {
         if (!crysta || !crysta.name) return false;
-        var key = normalizeName(crysta.name);
+        var key = String(crysta.gameItemId);
         var category = categoryGroup(crysta.category);
         // User policy: basic flat-stat tutorial series is excluded from automatic picks.
         var tutorial = crysta.gameItemId >= 9401 && crysta.gameItemId <= 9504;
@@ -298,6 +246,5 @@
     resolveCrysta:resolveCrysta,
     compileCrystaProblem:compileCrystaProblem
   });
-  if (typeof module === 'object' && module.exports) module.exports = api;
-  if (root) root.ToramCrystaOptimizationProblemCompiler = api;
-}(typeof window !== 'undefined' ? window : globalThis));
+
+  export const problemCompiler = api;

@@ -47,7 +47,7 @@ try {
       await page.waitForLoadState('networkidle');
       assert.equal(requests.some(path => path.endsWith('/calculator-page.mjs') || path === '/assets/pages/calculator.html' || path.endsWith('/ui-bootstrap.js')),false,'Other pages must not load the calculator');
       assert.equal(await page.locator('#charLevel').count(),0);
-      assert.equal(await page.evaluate(() => Boolean(window.ToramUiFeatures)),false);
+      assert.equal(await page.evaluate(() => Boolean(window.ToramApp.features)),false);
       if (view === 'home') {
         assert.equal(await page.locator('.home-login').isEnabled(),true);
         await page.screenshot({path:join(directory,'home-without-calculator.png')});
@@ -94,8 +94,9 @@ try {
     await page.close();
   }
   assert.deepEqual(errors,[]);
+  for (const asset of ['assets/pages/calculator.html','assets/wasm/crysta_bg.wasm']) {
   const failed = await browser.newPage();
-  await failed.route('**/assets/pages/calculator.html',route => route.fulfill({status:503,body:'Unavailable'}));
+  await failed.route('**/'+asset,route => route.fulfill({status:503,body:'Unavailable'}));
   await failed.route('**/api/**',route => route.fulfill({json:{items:[],total:0,page:1,pageSize:3,configured:false,user:null}}));
   await failed.goto(origin + '/calculator');
   const alert = failed.locator('#platformContent > .platform-loading[role="alert"]');
@@ -107,6 +108,7 @@ try {
   await failed.locator('#homeWorkspace').waitFor({state:'visible'});
   assert.equal(await failed.locator('.home-login').isEnabled(),true,'Calculator failure must not disable home/account');
   await failed.close();
+  }
   console.log('Platform startup: PASS (Chrome, home HTML, no calculator requests on other pages, lazy/direct entry, shared initialization, navigation race, mobile, tabs/state, isolated failure)');
   console.log('Screenshots: ' + directory);
 } finally {await browser?.close(); await new Promise(done => server.close(done));}

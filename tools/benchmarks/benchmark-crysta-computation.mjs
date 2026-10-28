@@ -6,7 +6,7 @@ import { createHash } from 'node:crypto';
 import { cpus } from 'node:os';
 import { resolve, dirname } from 'node:path';
 import { parseArgs } from 'node:util';
-import { root, jsSources, loadHeadlessEnvironment } from '../support/crysta-headless-environment.mjs';
+import { buildWasm } from '../build-wasm.mjs';
 import { createHeadlessTransport } from '../support/crysta-headless-transport.mjs';
 import { measureComputation } from '../support/crysta-computation-measurement.mjs';
 
@@ -17,6 +17,8 @@ const { values, positionals } = parseArgs({ allowPositionals:true, options:{
 } });
 const mode = positionals[0] || 'run';
 assert.ok(['build','run','child'].includes(mode), 'Use build or run');
+if (mode !== 'child') await buildWasm();
+const {root, jsSources, loadHeadlessEnvironment} = await import('../support/crysta-headless-environment.mjs');
 const repeats = Number(values.repeats), maxDurationMs = Number(values['max-ms']), sliceMs = Number(values['slice-ms']);
 assert.ok(Number.isInteger(repeats) && repeats > 0 && repeats <= 100);
 assert.ok(Number.isFinite(maxDurationMs) && maxDurationMs > 0 && maxDurationMs <= 3600000);
@@ -26,7 +28,7 @@ const buildStamp = binary + '.measurement.json';
 const rustSources = ['desktop/Cargo.toml','desktop/Cargo.lock','desktop/build.rs',
   'engine/Cargo.toml','engine/Cargo.lock','engine/src/lib.rs',
   ...['evaluator.rs','solver.rs','stats.rs','joint_supply.rs'].map(f => 'engine/src/' + f),
-  ...['optimization/parallel_runtime.rs','optimization/service.rs','bin/crysta_headless_service.rs'].map(f => 'desktop/src/' + f)];
+  ...['optimization/service.rs','bin/crysta_headless_service.rs'].map(f => 'desktop/src/' + f)];
 const hash = text => createHash('sha256').update(text).digest('hex');
 async function sourceHashes(paths) {
   return Object.fromEntries(await Promise.all(paths.map(async file => [file, hash((await readFile(resolve(root, file), 'utf8')).replaceAll('\r\n','\n'))])));
@@ -83,13 +85,13 @@ if (mode === 'build') {
     console.log(JSON.stringify({ status:'error', validForComparison:false, error:error.message, timing:error.measurement || null }));
   } finally { await transport.close(); }
 } else {
-  const stamp = JSON.parse(await readFile(buildStamp, 'utf8').catch(() => { throw new Error('Run npm run bench:optimization:build first'); }));
+  const stamp = JSON.parse(await readFile(buildStamp, 'utf8').catch(() => { throw new Error('Run node tools/benchmarks/benchmark-crysta-computation.mjs build first'); }));
   const currentSources = await sourceHashes(rustSources);
   assert.deepEqual(currentSources, stamp.sources, 'Rust changed: rebuild the measurement service');
   assert.equal(hash(await readFile(binary)), stamp.binaryHash, 'Binary changed: rebuild the measurement stamp');
   const inputPath = resolve(root, values.input), outputPath = resolve(root, values.output);
   assert.notEqual(inputPath, outputPath, 'Do not overwrite the input fixture');
-  const measuredJsPaths = [...jsSources.map(f => 'web/src/' + f),
+  const measuredJsPaths = [...jsSources,
     'tools/support/crysta-catalog-source.mjs','web/public/game-data/items/manifest.json',
     'tools/support/crysta-headless-environment.mjs','tools/support/crysta-headless-transport.mjs','tools/support/crysta-computation-measurement.mjs','tools/benchmarks/benchmark-crysta-computation.mjs'];
   const jsHashes = await sourceHashes(measuredJsPaths), inputHash = hash(await readFile(inputPath));

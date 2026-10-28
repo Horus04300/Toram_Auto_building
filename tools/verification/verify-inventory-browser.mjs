@@ -72,7 +72,7 @@ try {
   await page.reload(); await home.waitFor({state:'visible'});
   assert.ok(await home.getByText('아직 사용한 메뉴가 없습니다',{exact:true}).isVisible());
   await nav('계산기').click(); await page.locator('#charLevel').fill('325');
-  await page.evaluate(() => window.ToramApplication.Settings.flush());
+  await page.evaluate(() => window.ToramApp.settingsRepository.flushApplicationState());
   await page.goto(origin + '/inventory?type=equipment'); await wait();
   assert.match(await page.title(), /인벤토리/); assert.ok(await inventory.locator('.inventory-guest').isVisible());
   assert.equal(await page.locator('#calculatorWorkspace').isVisible(), false);

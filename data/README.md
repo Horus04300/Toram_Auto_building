@@ -4,7 +4,7 @@ sources/에는 게임에서 추출한 원문·네이티브 근거·등록 자료
 
 sources/game-ui/는 비교·추출용 원본 이미지와 목록이며 배포 리소스가 아닙니다. 실제 화면에서 쓰는 아이콘은 ../web/public/icons/입니다.
 
-가공 도구는 ../tools/extraction/, 수동 갱신 명령은 루트의 npm run items:sync / bosses:sync입니다. 이 폴더 자체를 웹에 배포하지 않습니다.
+가공 도구는 ../tools/extraction/, 수동 갱신은 루트에서 tools/extraction/sync-toram-dev-items.mjs 또는 sync-toram-dev-bosses.mjs를 node로 실행합니다. 이 폴더 자체를 웹에 배포하지 않습니다.
 
 고정된 pipeline 계약·과거 근거 JSON·발행 snapshot의 경로 문자열과 해시는 보존합니다. 그 안의 assets/source-data/ 경로는 검사 도구가 현재 data/sources/로 연결한 뒤 원본 해시를 검증합니다. 폴더 이동을 이유로 게임 수치나 발행 이력을 다시 만들지 않습니다.
 

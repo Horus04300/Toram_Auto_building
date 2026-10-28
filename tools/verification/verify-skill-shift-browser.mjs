@@ -25,7 +25,7 @@ try {
   const inventory = page.locator('#inventoryWorkspace'), panel = inventory.locator('.inventory-skill-editor');
   const wait = async () => {await panel.waitFor({state:'visible'}); await page.waitForFunction(() => !document.querySelector('#inventoryWorkspace').hasAttribute('aria-busy'));};
   await wait(); assert.match(await page.title(),/인벤토리/);
-  const tree = await page.evaluate(() => window.SKILL_TREE_DATA.trees.find(tree => tree.id === 'Blade'));
+  const tree = await page.evaluate(() => window.ToramApp.skillTreeData.trees.find(tree => tree.id === 'Blade'));
   const paths = tree.skills.map(skill => {const path = []; for (let current = skill; current; current = tree.skills.find(candidate => candidate.id === current.prereq)) path.push(current.id); return path;});
   const path = paths.reduce((best,current) => current.length > best.length ? current : best), targetIndex = tree.skills.findIndex(skill => skill.id === path[0]);
   const nodes = panel.locator('.skill-node');
@@ -44,12 +44,12 @@ try {
   for (const id of path) assert.match(await nodes.nth(tree.skills.findIndex(skill => skill.id === id)).getAttribute('title'),/Lv 10\/10/);
   const screenshot = join(directory,'shift-path.png'); await page.screenshot({path:screenshot});
   await nodes.nth(targetIndex).click({button:'right'}); assert.match(await nodes.nth(targetIndex).getAttribute('title'),/Lv 0\/10/);
-  await page.goto(origin + '/calculator'); await page.waitForFunction(() => Boolean(window.ToramSkillUi));
+  await page.goto(origin + '/calculator'); await page.waitForFunction(() => Boolean(window.ToramApp.skillUi));
   await page.locator('#appTabButton-skills').click();
   assert.equal(await page.locator('#calculatorWorkspace .skill-point-step.active').innerText(),'10','Calculator defaults to 10 points');
-  const before = await page.evaluate(() => window.ToramSkillUi.getInvestments());
+  const before = await page.evaluate(() => window.ToramApp.skillUi.getInvestments());
   await page.locator('#combatSkillStage .skill-node').nth(targetIndex).click({modifiers:['Shift']});
-  const after = await page.evaluate(() => window.ToramSkillUi.getInvestments());
+  const after = await page.evaluate(() => window.ToramApp.skillUi.getInvestments());
   for (const skill of tree.skills) assert.equal(after.Blade[skill.id],path.includes(skill.id) ? 10 : before.Blade[skill.id]);
   for (const treeId of Object.keys(before).filter(id => id !== 'Blade')) assert.deepEqual(after[treeId],before[treeId]);
   assert.deepEqual(errors,[]);

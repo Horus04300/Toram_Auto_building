@@ -1,17 +1,12 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Wizard: {} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skills/wizard.js', 'web/src/calculation/skill-effect-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename: path });
 
-const E = context.window.ToramSkillEffects;
+const E = skillEffects;
 const ids = Array.from({ length: 15 }, (_, index) => `Wizard:${index}`);
-const base = (mainType = '지팡이') => ({ mainType, subType: '없음', level: 300, strBase: 100, dexBase: 100, intBase: 100, vitBase: 100, agiBase: 100, crtBase: 50 });
+const base = (mainType = '지팡이') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType: '없음', level: 300, strBase: 100, dexBase: 100, intBase: 100, vitBase: 100, agiBase: 100, crtBase: 50 });
 const combat = { STR: 120, DEX: 130, INT: 120, VIT: 100, AGI: 110, ATK: 1000, MATK: 400, MAXHP: 10000 };
 const levels = (value, extra = {}) => { context.window.skillSimulatorState.getInvestments = () => ({ Wizard: { ...Object.fromEntries(ids.map(id => [id.slice(7), value])), ...extra } }); };
 const ok = (condition, message) => { if (!condition) throw new Error(message); };

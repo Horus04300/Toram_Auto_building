@@ -1,9 +1,10 @@
-import { exhaustiveSearch } from '../../support/crysta-exhaustive-oracle.mjs';
-import { loadWasmModule } from '../../support/crysta-wasm-module.mjs';
+import {rustBridge} from '../../../web/src/optimization/rust-bridge.js';
+import {exhaustiveSearch} from '../../support/crysta-exhaustive-oracle.mjs';
+import {loadWasmModule} from '../../support/crysta-wasm-module.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { loadHeadlessEnvironment, root } from '../../support/crysta-headless-environment.mjs';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {loadHeadlessEnvironment,root} from '../../support/crysta-headless-environment.mjs';
 
 const env = await loadHeadlessEnvironment({ invoke() { throw new Error('No native calls in projection oracle'); } });
 const { candidates:optimizer, registry, evaluator, kernel } = env;
@@ -101,7 +102,7 @@ for(const input of [variable,problem(ctx,[[{STRP:2},{STR:10}],[{CRITP:20},{CRIT:
   const prepared=optimizer.prepareProblem(input,{registry,relevantKeys:keys});
   const evaluate=stats=>evaluator.evaluateAggregate(input.baseContext,input.scenarioSnapshot,stats,kernel.evaluateContext);
   const oracle=exhaustiveSearch(input,{prepared:true,evaluateStats:evaluate});
-  const bridge=env.context.ToramCrystaOptimizationRustBridge;
+  const bridge=env.rustBridge;
   const session=new wasm.SearchSession(JSON.stringify(bridge.projectProblem(prepared)));
   try {
     while(!session.is_complete())session.step(256);

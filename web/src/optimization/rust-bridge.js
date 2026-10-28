@@ -1,5 +1,8 @@
-(function (root) {
-  'use strict';
+import {statRegistry} from '../calculation/stat-registry.js';
+import {buildEvaluator} from '../calculation/build-evaluator.js';
+import {candidatePreparation} from './candidate-preparation.js';
+import {calculationKernel} from '../calculation/calculator.js';
+'use strict';
 
   var SCHEMA = 'toram.crysta-native-parallel-client.v1';
   // These identifiers are deliberately part of the cache contract.  A formula,
@@ -11,8 +14,8 @@
   var GPU_POLICY = 'cpu-only.v1';
 
   function evaluatorAdapter(problem) {
-    var evaluator = root.ToramBuildEvaluator;
-    var kernel = root.ToramCalculationKernel && root.ToramCalculationKernel.evaluateContext;
+    var evaluator = buildEvaluator;
+    var kernel = calculationKernel && calculationKernel.evaluateContext;
     if (!evaluator || typeof evaluator.evaluateAggregate !== 'function') throw new Error('CrystaOptimization BuildEvaluator가 필요합니다.');
     var scenario = problem.scenarioSnapshot || evaluator.createScenarioSnapshot(problem.baseContext);
     return function (stats) {
@@ -21,13 +24,13 @@
   }
 
   function prepare(problem, options) {
-    var optimizer = root.ToramCrystaOptimizationCandidates;
+    var optimizer = candidatePreparation;
     if (!optimizer || typeof optimizer.prepareProblem !== 'function' || typeof optimizer.deriveRelevantKeys !== 'function') throw new Error('CrystaOptimization 전역 탐색기가 연결되지 않았습니다.');
     var adapter = evaluatorAdapter(problem);
-    var keys = optimizer.deriveRelevantKeys(problem, root.ToramStatRegistry, adapter);
+    var keys = optimizer.deriveRelevantKeys(problem, statRegistry, adapter);
     return {
       problem:optimizer.prepareProblem(problem, {
-        registry:root.ToramStatRegistry,
+        registry:statRegistry,
         relevantKeys:keys,
         disableCandidateProjection:Boolean(options && options.disableCandidateProjection),
         pareto:{ maxComparisons:Number(options && options.maxParetoComparisons) || 1000000 }
@@ -106,8 +109,7 @@
     });
   }
 
-  root.ToramCrystaOptimizationRustBridge = Object.freeze({
+  export const rustBridge = Object.freeze({
     prepare:prepare, projectProblem:nativeProblem, normalize:normalize, evaluate:evaluatorAdapter, gap:optimalityGap,
     policy:Object.freeze({ calculationVersion:CALCULATION_VERSION, engineVersion:ENGINE_VERSION, splitPolicy:SPLIT_POLICY, gpuPolicy:GPU_POLICY })
   });
-})(typeof window !== 'undefined' ? window : globalThis);

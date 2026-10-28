@@ -1,8 +1,9 @@
+import {skillRegistry} from '../../../web/src/data/skill-effect-registry.js';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
-import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+import {dirname,resolve} from 'node:path';
+import {fileURLToPath} from 'node:url';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../../..');
 const skill = {
@@ -14,20 +15,18 @@ const skill = {
   ]
 };
 const window = {
-  TORAM_SKILL_EFFECT_DATA:{ skills:[skill] },
   skillSimulatorState:{ getInvestments:() => ({ Demo:{ 0:10 } }) }
 };
 window.window = window;
 const context = { window, console };
-vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-effect-engine.js'), 'utf8'), context, { filename:'web/src/calculation/skill-effect-engine.js' });
+skillRegistry.register([skill]);
 
-const changes = window.ToramSkillEffects.activeStatChanges(
-  { level:300, mainType:'한손검', subType:'방패', subRefine:15, strBase:100, intBase:100, vitBase:100, agiBase:100, dexBase:100, crtBase:50 },
+const changes = skillEffects.activeStatChanges(
+  {get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, level:300, mainType:'한손검', subType:'방패', subRefine:15, strBase:100, intBase:100, vitBase:100, agiBase:100, dexBase:100, crtBase:50 },
   { VIT:450 }, {}, { activeBuffs:{ 'Demo:0':{ active:true, stacks:0 } } }
 );
 assert.equal(JSON.stringify(changes.map(change => [change.key, change.value])), JSON.stringify([['REFINE_TEST', 15], ['BASE_CRT_TEST', 50], ['TOTAL_VIT_TEST', 450]]), '활성 버프는 계산 엔진이 현재 입력 컨텍스트에서 직접 해석해야 합니다.');
-assert.equal(JSON.stringify(window.ToramSkillEffects.activeStatChanges({}, {}, {}, { activeBuffs:{ 'Demo:0':{ active:false, stacks:0 } } })), '[]', '비활성 버프는 외부 옵션으로 남거나 계산에 적용되면 안 됩니다.');
+assert.equal(JSON.stringify(skillEffects.activeStatChanges({}, {}, {}, { activeBuffs:{ 'Demo:0':{ active:false, stacks:0 } } })), '[]', '비활성 버프는 외부 옵션으로 남거나 계산에 적용되면 안 됩니다.');
 
 const activeBuffUi = await readFile(resolve(root, 'web/src/ui/active-buff-ui.js'), 'utf8');
 assert.doesNotMatch(activeBuffUi, /container\.appendChild\(proxy\)|proxy\.appendChild\(/u, '활성 버프 효과를 외부 옵션 행으로 복제하면 안 됩니다.');

@@ -1,24 +1,23 @@
+import {createCatalogReader} from './catalog-assets.mjs';
 export const BOSS_CATALOG_SCHEMA = 'toram.project-bosses.v1';
 
 function requireValue(value, message) { if (!value) throw new Error(message); }
 
 // The catalog exposes original variants; choosing a combat phase/difficulty is a separate operation.
 export function createBossCatalog(manifestUrl, fetchImpl = globalThis.fetch) {
-  const pending = new Map(), base = new URL('.', manifestUrl);
-  function request(path, expected) {
-    requireValue(/^[a-z0-9][a-z0-9/.-]*$/u.test(path) && !path.includes('..'), 'Invalid boss asset path.');
-    if (!pending.has(path)) pending.set(path, (async () => {
-      const response = await fetchImpl(new URL(path, base));
-      requireValue(response.ok, 'Boss catalog request failed: ' + path);
-      const bytes = await response.arrayBuffer();
-      if (expected) {
-        requireValue(bytes.byteLength === expected.bytes, 'Boss asset size differs.');
-        const digest = [...new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256', bytes))].map(v => v.toString(16).padStart(2,'0')).join('');
-        requireValue(digest === expected.sha256, 'Boss asset hash differs.');
-      }
-      return JSON.parse(new TextDecoder().decode(bytes));
-    })().catch(error => { pending.delete(path); throw error; }));
-    return pending.get(path);
+  const {read}=createCatalogReader(manifestUrl,fetchImpl,async (response,path,expected)=>{
+    requireValue(response.ok,'Boss catalog request failed: '+path);
+    const bytes=await response.arrayBuffer();
+    if(expected) {
+      requireValue(bytes.byteLength===expected.bytes,'Boss asset size differs.');
+      const digest=[...new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256',bytes))].map(v=>v.toString(16).padStart(2,'0')).join('');
+      requireValue(digest===expected.sha256,'Boss asset hash differs.');
+    }
+    return JSON.parse(new TextDecoder().decode(bytes));
+  });
+  function request(path,expected) {
+    requireValue(/^[a-z0-9][a-z0-9/.-]*$/u.test(path)&&!path.includes('..'),'Invalid boss asset path.');
+    return read(path,expected);
   }
   async function manifest() {
     const value = await request('manifest.json');

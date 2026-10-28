@@ -1,6 +1,8 @@
-/* Shared candidate preparation for Rust Native and WASM; no search implementation. */
-(function (root) {
-  'use strict';
+import {ToramExactMath} from '../calculation/calculator.js';
+import {statRegistry} from '../calculation/stat-registry.js';
+import {buildEvaluator} from '../calculation/build-evaluator.js';
+import {calculationKernel} from '../calculation/calculator.js';
+'use strict';
 
   var EPSILON=1e-9;
 
@@ -88,11 +90,11 @@
 
 
   function candidateProjection(problem,keys){
-    var kernel=root.ToramCalculationKernel,context=problem.baseContext||{};
+    var kernel=calculationKernel,context=problem.baseContext||{};
     if(!kernel||typeof kernel.candidateSupplyBases!=='function')return null;
     if(problem.groups.some(function(group){return !group.packages.length;}))return null;
     if((context.activeBuildConversions||[]).some(function(effect){return !effect||effect.conversion!=='unsheatheToAtk';}))return null;
-    var minimum={},maximum={},invalid=new Set(),modeled=new Set(modeledKeys(root.ToramStatRegistry));
+    var minimum={},maximum={},invalid=new Set(),modeled=new Set(modeledKeys(statRegistry));
     problem.groups.forEach(function(group){
       var ranges=new Map();
       group.packages.forEach(function(item){Object.keys(item.statDelta||{}).forEach(function(key){
@@ -115,7 +117,7 @@
     });
     var low=kernel.candidateSupplyBases(context,lowStats),high=kernel.candidateSupplyBases(context,highStats);
     var stats=['STR','DEX','AGI','INT','VIT'],statKeys=stats.flatMap(function(key){return [key,key+'P'];});
-    var ignoredPercents=new Set(),constantStatReports=[],math=root.ToramExactMath;
+    var ignoredPercents=new Set(),constantStatReports=[],math=ToramExactMath;
     stats.forEach(function(key){
       var percent=key+'P',prefix=key.toLowerCase(),base=low[key];
       var contextPercent=Number(context[prefix+'P'])||0,contextFlat=Number(context[prefix+'F'])||0;
@@ -235,8 +237,8 @@
 
   function prepareProblem(problem,options){
     if(!problem||!Array.isArray(problem.groups))throw new Error('CrystaOptimization 후보 문제가 필요합니다.');
-    var registry=options&&options.registry||root.ToramStatRegistry;var keys=options&&options.relevantKeys||modeledKeys(registry);var reports=[];
-    var projectionDisabled=!root.ToramCalculationKernel||typeof root.ToramCalculationKernel.candidateSupplyBases!=='function'||options&&(options.disableCandidateProjection||options.disablePareto||options.evaluateStats||options.kernel&&options.kernel!==root.ToramCalculationKernel.evaluateContext||options.registry&&options.registry!==root.ToramStatRegistry||options.evaluator&&options.evaluator!==root.ToramBuildEvaluator);
+    var registry=options&&options.registry||statRegistry;var keys=options&&options.relevantKeys||modeledKeys(registry);var reports=[];
+    var projectionDisabled=!calculationKernel||typeof calculationKernel.candidateSupplyBases!=='function'||options&&(options.disableCandidateProjection||options.disablePareto||options.evaluateStats||options.kernel&&options.kernel!==calculationKernel.evaluateContext||options.registry&&options.registry!==statRegistry||options.evaluator&&options.evaluator!==buildEvaluator);
     var uniqueGroups=projectionDisabled?problem.groups:problem.groups.map(function(group){return {id:group.id,packages:uniqueRawPackages(group.packages,keys)};});
     var projection=projectionDisabled?null:candidateProjection(Object.assign({},problem,{groups:uniqueGroups}),keys);
     var groups=problem.groups.map(function(group,index){
@@ -306,6 +308,5 @@
     return Array.from(new Set(objective)).filter(function(key){return present[key];}).sort();
   }
   var api=Object.freeze({prepareProblem:prepareProblem,deriveRelevantKeys:deriveRelevantKeys,modeledKeys:modeledKeys,strictParetoFrontier:strictParetoFrontier,dominates:dominates,addStats:addStats});
-  if(typeof module==='object'&&module.exports)module.exports=api;
-  if(root)root.ToramCrystaOptimizationCandidates=api;
-})(typeof window!=='undefined'?window:globalThis);
+
+  export const candidatePreparation=api;

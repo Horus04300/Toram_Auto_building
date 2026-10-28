@@ -34,7 +34,7 @@ class BossPipelineTests(unittest.TestCase):
     @contextlib.contextmanager
     def mocked_run(self, source=None, reasons=None):
         namespace = p["run"].__globals__
-        common = namespace["common"]
+        common = namespace
         def manifest(offline, application, destination):
             destination.write_bytes(b"manifest")
             return b"manifest", {"sha256": p["digest"](b"manifest")}
@@ -75,7 +75,7 @@ class BossPipelineTests(unittest.TestCase):
             self.assertEqual(self.pointer().read_bytes(), before)
         # Change the reviewed identity as a new extraction would observe.
         with self.mocked_run(reasons=["Native code changed"]) as namespace:
-            namespace["common"]["installation_identity"] = lambda *args: ({"GameAssembly.dll": "new"}, ["Native code changed"])
+            namespace["installation_identity"] = lambda *args: ({"GameAssembly.dll": "new"}, ["Native code changed"])
             self.assertEqual(p["run"](self.args), 2)
             self.assertEqual(self.pointer().read_bytes(), before)
 
@@ -86,7 +86,7 @@ class BossPipelineTests(unittest.TestCase):
         bad = tables()
         bad["fields"].append({"fieldId": 9, "master": {"parseError": "new format", "sha256": "b" * 64, "bytes": 3}})
         with self.mocked_run(bad) as namespace:
-            namespace["common"]["installation_identity"] = lambda *args: ({"revision": "changed"}, [])
+            namespace["installation_identity"] = lambda *args: ({"revision": "changed"}, [])
             self.assertEqual(p["run"](self.args), 2)
         self.assertEqual(self.pointer().read_bytes(), before)
         observed = p["load"](self.args.store / "releaseB/observed.json")
@@ -183,7 +183,7 @@ class BossPipelineTests(unittest.TestCase):
         raid = {"no": 9, "fieldId": 999, "roomId": 0, "monsterId": 1, "monsterUuid": 99}
         changed["highRaid"] = {"sha256": "r", "records": [raid]}
         with self.mocked_run(changed) as namespace:
-            namespace["common"]["installation_identity"] = lambda *args: ({"revision": "new"}, [])
+            namespace["installation_identity"] = lambda *args: ({"revision": "new"}, [])
             self.assertEqual(p["run"](self.args), 2)
         self.assertEqual(self.pointer().read_bytes(), before)
         self.contract["knownScriptIssues"] = {"23000": issue}
@@ -219,7 +219,7 @@ class BossPipelineTests(unittest.TestCase):
         bad = tables()
         bad["guildRaid"] = registry
         with self.mocked_run(bad) as namespace:
-            namespace["common"]["installation_identity"] = lambda *args: ({"revision": "new"}, [])
+            namespace["installation_identity"] = lambda *args: ({"revision": "new"}, [])
             self.assertEqual(p["run"](self.args), 2)
         self.assertEqual(self.pointer().read_bytes(), before, "A stale reviewed guild identity must not advance latest.")
 

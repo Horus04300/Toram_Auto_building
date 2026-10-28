@@ -1,11 +1,15 @@
+import {statRegistry} from '../calculation/stat-registry.js';
+import {buildStore} from '../application/build-draft-store.js';
 import { createConsumableBuffSelection, resolveConsumableBuffs } from '../application/item-catalog.mjs';
 
 export function createConsumableBuffUi(documentRef, catalog) {
   const windowRef = documentRef.defaultView;
-  let selections = [], names = [], generation = 0, loading = false;
+  const selections = () => buildStore.getBuild().consumableBuffs || [];
+  const setSelections = value => buildStore.commitBuild({consumableBuffs:value});
+  let names = [], generation = 0, loading = false;
   let results, search, locale, preview, apply, selected;
   const node = id => documentRef.getElementById(id);
-  const registry = () => windowRef.ToramStatRegistry;
+  const registry = () => statRegistry;
   function text(tag, value) { const element = documentRef.createElement(tag); element.textContent = value; return element; }
   const categoryLabel = item => item.consumableCategory ? (item.consumableCategory.names[locale.value] ?? item.consumableCategory.id) : '';
   function changed() {
@@ -14,15 +18,15 @@ export function createConsumableBuffUi(documentRef, catalog) {
   }
   function renderSelected() {
     if (!selected) return;
-    node('gameConsumableCount').textContent = selections.length ? `(${selections.length}개 적용 중)` : '';
+    node('gameConsumableCount').textContent = selections().length ? `(${selections().length}개 적용 중)` : '';
     selected.replaceChildren();
-    for (const selection of selections) {
+    for (const selection of selections()) {
       const row = documentRef.createElement('div');
       row.dataset.consumableId = String(selection.gameItemId);
       row.append(text('p', `${selection.name ?? '(이름 없음)'} · #${selection.gameItemId} · ${selection.durationSeconds}초`));
       row.append(text('p', Object.entries(selection.stats).map(([key, value]) => `${key} ${value > 0 ? '+' : ''}${value}${registry().get(key).status === 'notModeled' ? ' (계산 미지원·보존)' : ''}`).join(', ')));
       const remove = text('button', '버프 해제'); remove.type = 'button';
-      remove.addEventListener('click', () => { selections = selections.filter(item => item !== selection); renderSelected(); changed(); });
+      remove.addEventListener('click', () => { setSelections(selections().filter(item => item.gameItemId !== selection.gameItemId)); renderSelected(); changed(); });
       row.append(remove); selected.append(row);
     }
   }
@@ -65,17 +69,17 @@ export function createConsumableBuffUi(documentRef, catalog) {
       const item = await catalog.getItem(Number(results.value), locale.value);
       if (current !== generation) return;
       const selection = createConsumableBuffSelection(item, registry());
-      const next = selections.filter(other => other.buffGroupId !== selection.buffGroupId).concat(selection);
+      const next = selections().filter(other => other.buffGroupId !== selection.buffGroupId).concat(selection);
       resolveConsumableBuffs(next, registry());
-      selections = next; renderSelected(); changed();
+      setSelections(next); renderSelected(); changed();
       preview.textContent = `${selection.name ?? '#' + selection.gameItemId} 사용 중으로 적용했습니다.`; apply.disabled = false;
     } catch (error) { if (current === generation) preview.textContent = error.message; }
   }
   return Object.freeze({
-    getSelections() { return JSON.parse(JSON.stringify(selections)); },
+    getSelections() { return JSON.parse(JSON.stringify(selections())); },
     restoreSelections(value) {
       resolveConsumableBuffs(value, registry());
-      selections = JSON.parse(JSON.stringify(value)); renderSelected();
+      setSelections(value); renderSelected();
     },
     bind() {
       if (!node('gameConsumableBuffs')) return;

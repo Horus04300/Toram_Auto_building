@@ -1,12 +1,12 @@
+import {buildStore} from '../../../web/src/application/build-draft-store.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import { createRequire } from 'node:module';
-import { createItemCatalog, createEquipmentSelection, resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection,
-  createConsumableBuffSelection, resolveConsumableBuffs } from '../../../web/src/application/item-catalog.mjs';
-import { createEquipmentItemUi } from '../../../web/src/ui/item-equipment-ui.mjs';
-import { createConsumableBuffUi } from '../../../web/src/ui/item-consumable-ui.mjs';
-import { loadSavedBuildEnvironment } from '../../support/saved-build-headless-environment.mjs';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
+import {createRequire} from 'node:module';
+import {createItemCatalog,createEquipmentSelection,resolveEquipmentOptions,resolveEquipmentElement,validateEquipmentSelection,createConsumableBuffSelection,resolveConsumableBuffs} from '../../../web/src/application/item-catalog.mjs';
+import {createEquipmentItemUi} from '../../../web/src/ui/item-equipment-ui.mjs';
+import {createConsumableBuffUi} from '../../../web/src/ui/item-consumable-ui.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
 
 const root = resolve(import.meta.dirname, '../../..');
 const registry = createRequire(import.meta.url)(resolve(root, 'web/src/calculation/stat-registry.js'));
@@ -45,7 +45,7 @@ assert.throws(() => validateEquipmentSelection({...synthetic,conditionalStats:[{
 assert.throws(() => validateEquipmentSelection({...synthetic,conditionalStats:[{...synthetic.conditionalStats[0],when:{kind:'unknown'}}]}, registry), /조건/u);
 
 const environment = await loadSavedBuildEnvironment();
-const piece = (type = null) => ({type,attack:null,refinement:null,stability:null,options:[],crystas:[],lockedCrystaSlots:[]});
+const piece = (type = null) => ({type,attack:null,refinement:null,stability:null,options:[],crystas:type === '없음' ? [] : ['',''],lockedCrystaSlots:type === '없음' ? [] : [false,false]});
 const input = {build:{character:{level:300,attributes:{STR:100,INT:100,VIT:100,AGI:100,DEX:100,CRT:0}},
   equipment:{mainWeapon:{...piece('한손검'),attack:625,refinement:15,stability:80},subWeapon:{...piece('없음'),attack:0,refinement:0,stability:0},armor:piece('일반옷'),additional:piece(),special:piece()},
   externalOptions:[],skillLevels:{},activeBuffs:{},combo:[],guildFoodBuff:false}, scenario:{target:{bossLevel:300,bossDef:1000,bossMdef:500,bossCritResist:0,bossPhysResist:0,bossMagResist:0},conditions:{}},request:{selectedSkillId:null,selectedHitId:null,overrides:{}}};
@@ -62,8 +62,8 @@ for (const armorType of ['일반옷','경량옷','중량옷']) {
   assert.equal(JSON.stringify(gameResult.calculation), JSON.stringify(environment.ToramApplication.CalculateBuild(manual).calculation), 'Game selections must use the existing calculation kernel exactly once.');
   assert.equal(gameResult.snapshot.build.equipment.special.catalogItem.gameItemId, 22001);
 }
-environment.ToramBuildDraftStore = {read:()=>input};
-const saved = JSON.parse(environment.ToramSettingsRepository.serializeSavedBuild('아이템 회귀'));
+environment.ToramBuildDraftStore = {read:()=>input,syncFromUi(){}};
+const saved = environment.ToramSettingsRepository.snapshot('아이템 회귀');
 assert.equal(environment.ToramSettingsRepository.validateSavedBuild(saved), true);
 const roundtrip = environment.ToramSettingsRepository.parseSavedBuild(JSON.stringify(saved));
 assert.equal(roundtrip.build.equipment.special.catalogItem.stats.MAXMP, 200);
@@ -74,7 +74,9 @@ const legacy = structuredClone(roundtrip);
 for (const piece of Object.values(legacy.build.equipment)) delete piece.catalogItem;
 assert.equal(environment.ToramSettingsRepository.validateSavedBuild(legacy), true, 'Old v2 builds still load.');
 
-const ui = createEquipmentItemUi({defaultView:{ToramStatRegistry:registry}}, catalog);
+const uiRoot={ToramStatRegistry:registry}, uiDocument={readyState:'loading',addEventListener(){}};
+buildStore.commitBuild(input.build); buildStore.commitScenario(input.scenario);
+const ui = createEquipmentItemUi({defaultView:uiRoot}, catalog);
 ui.restoreSelection('special', selected);
 assert.ok(Object.isFrozen(ui.getSelection('special').stats));
 ui.restoreSelection('special', null);
@@ -88,7 +90,7 @@ for (const [id, subType, applies] of [[17002,'방패',true],[18001,'단검',true
   ui.restoreSelection('subWeapon', selection);
   assert.equal(ui.getSelection('subWeapon').gameItemId, id);
   const build = structuredClone(input);
-  build.build.equipment.subWeapon = {...piece(subType),attack:100,stability:20,refinement:11,options:[{key:'ATK',value:7}],catalogItem:selection};
+  build.build.equipment.subWeapon = {...piece(subType),crystas:[],lockedCrystaSlots:[],attack:100,stability:20,refinement:11,options:[{key:'ATK',value:7}],catalogItem:selection};
   const result = environment.ToramApplication.CalculateBuild(build);
   const manual = structuredClone(build);
   manual.build.equipment.subWeapon.options.push(...resolveEquipmentOptions(selection, 'subWeapon', context, registry));
@@ -142,7 +144,7 @@ assert.deepEqual(ampr.stats, {AMPR:3}); assert.equal(ampr.buffGroupId, 210);
 const tranquilizer = createConsumableBuffSelection(await catalog.getItem(108157), registry);
 assert.equal(resolveConsumableBuffs([vita,tranquilizer], registry).filter(option => option.key === 'MAXHP').reduce((total, option) => total + option.value, 0), 1500, 'Different native groups may contribute the same stat.');
 assert.equal(createConsumableBuffSelection(await catalog.getItem(2945), registry).typeId, 50);
-const consumables = createConsumableBuffUi({defaultView:{ToramStatRegistry:registry}}, catalog);
+const consumables = createConsumableBuffUi({defaultView:uiRoot}, catalog);
 consumables.restoreSelections([vita,speed]);
 const copy = consumables.getSelections(); copy[0].stats.MAXHP = 99999;
 assert.equal(consumables.getSelections()[0].stats.MAXHP, 500);
@@ -155,7 +157,7 @@ const manualBuffs = structuredClone(input);
 manualBuffs.build.externalOptions.push(...resolveConsumableBuffs(input.build.consumableBuffs, registry));
 delete manualBuffs.build.consumableBuffs;
 assert.equal(JSON.stringify(withBuffs.calculation), JSON.stringify(environment.ToramApplication.CalculateBuild(manualBuffs).calculation));
-const buffSave = environment.ToramSettingsRepository.parseSavedBuild(environment.ToramSettingsRepository.serializeSavedBuild('버프 소모품'));
+const buffSave = environment.ToramSettingsRepository.parseSavedBuild(JSON.stringify(environment.ToramSettingsRepository.snapshot('버프 소모품')));
 assert.equal(buffSave.build.consumableBuffs[0].stats.MAXHP, 500);
 assert.equal(buffSave.build.externalOptions[0].value, 7);
 buffSave.build.consumableBuffs.push(vitaNext);

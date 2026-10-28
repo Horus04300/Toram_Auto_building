@@ -1,4 +1,3 @@
-(function (root) {
   'use strict';
   var f = Math.fround;
   function add(a,b) { return f(f(a)+f(b)); }
@@ -8,7 +7,7 @@
   function finite(value) { return typeof value==='number'&&Number.isFinite(value); }
   function optional(inputs,key) { var rule=inputDefinitions[key]||{},value=inputs[key];return finite(value)&&(rule.min===undefined||value>=rule.min)&&(rule.max===undefined||value<=rule.max)?value:null; }
   function sum(values) { return values.reduce(function(total,value){return total+value;},0); }
-  var supportedKeys=['DEF','DEFP','MDEF','MDEFP','ACC','ACCP','FLEE','FLEEP','HP_REGEN','HP_REGENP','MP_REGEN','MP_REGENP','REVIVE_TIME','ABS_ACC','ANTICIPATE','GUARD_BREAK','ITEM_DELAY','EXP','DROP_RATE','PET_EXP','GEM_DUST_DROP'];
+  var supportedKeys=['DEF','DEFP','MDEF','MDEFP','ACC','ACCP','FLEE','FLEEP','HP_REGEN','HP_REGENP','MP_REGEN','MP_REGENP','REVIVE_TIME','ABS_ACC','ANTICIPATE','GUARD_BREAK','ITEM_DELAY','EXP','DROP_RATE','PET_EXP','GEM_DUST_DROP','AGGRO','PHYS_PURSUIT','MAG_PURSUIT'];
   var legacyKeys=['ITEM_CD'];
   var inputDefinitions={
     equipmentDefense:{key:'equipmentDefense',label:'장비 DEF 합계',unit:'DEF'},
@@ -69,6 +68,9 @@
     row('mpRecovery','비전투 MP 자연회복',maxMp===null?null:recovery(integer(maxMp/100)+1,'MP_REGENP','MP_REGEN'),'MP/회');
     row('reviveSeconds','부활 대기시간',integer(add(multiply(add(1,-divide(Number(inputs.avatarRevivePercent)||0,100)),300),-stat('REVIVE_TIME'))),'초');
     function chance(value) { return Math.min(100,Math.max(0,integer(value))); }
+    row('aggroPercent','어그로 증감',Math.max(-100,sum(sources('AGGRO'))),'%');
+    row('physicalPursuitMultiplier','장비 물리추격 계수',divide(stat('PHYS_PURSUIT'),100),'배');
+    row('magicalPursuitMultiplier','장비 마법추격 계수',divide(stat('MAG_PURSUIT'),100),'배');
     var hit=optional(inputs,'baseHitChance'),avoid=optional(inputs,'targetAvoidChance'),guard=optional(inputs,'targetGuardChance');
     row('hitChance','절대명중 포함 일반 적중 확률',hit===null?null:chance(hit)+(100-chance(hit))*chance(cappedInstant('ABS_ACC',30))/100,'%',['baseHitChance']);
     row('targetAvoidChance','선행 판정 후 대상 Avoid 확률',avoid===null?null:chance(avoid)*(100-chance(cappedInstant('ANTICIPATE',100)))/100,'%',['targetAvoidChance']);
@@ -99,6 +101,6 @@
     return {values:values,outcomes:outcomes,rows:rows,requirements:Object.keys(requirements).map(function(key){return requirements[key];}),diagnostics:diagnostics,notes:['보상 환산값은 입력한 기초값에 클라이언트 비율을 적용한 값입니다. 서버의 실제 지급·드롭 판정이나 정수 반올림을 예측하지 않습니다.']};
   }
   var api=Object.freeze({evaluate:evaluate,supportedKeys:Object.freeze(supportedKeys),legacyKeys:Object.freeze(legacyKeys),inputDefinitions:Object.freeze(inputDefinitions)});
-  if(typeof module==='object'&&module.exports)module.exports=api;
-  if(root)root.ToramSupplementalStats=api;
-}(typeof window!=='undefined'?window:globalThis));
+
+export const supplementalStats=api;
+export {evaluate,supportedKeys,legacyKeys,inputDefinitions};

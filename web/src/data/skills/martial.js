@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 마셜: 22개 원문 출처·종류·무기 조건과 아수라 오라의 양방향 상태·스택 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('마셜 스킬 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v=function(n){return {op:'value',value:n};}, r=function(path){return {op:'ref',path:path};};
   var l=function(){return r('skill.level');}, m=function(){return {op:'multiply',args:[].slice.call(arguments)};};
@@ -73,7 +75,7 @@
   Object.assign(def(21),{cost:{mp:{timing:'cast',value:v(100)}},stateTransitions:[{event:'cast',operation:'grant',stateId:'martial.sliding.nextSkillHit',stacks:v(1),maxStacks:v(1),durationSeconds:v(0),effects:[{type:'nextSkillModifier',key:'hit',value:m(l(),l())}]}],effects:[{phase:'combat',type:'positionMove',value:v(1),notes:'8m 사거리에서 대상 1m 앞까지 이동'}]});
   var skill=catalog.skills.find(function(item){return item.id==='Martial:11';});
   if(!skill) throw new Error('아수라 오라를 카탈로그에서 찾지 못했습니다.');
-  registry.register('Martial-stack-buff', definitions.concat([{
+  registry.register(definitions.concat([{
     id:skill.id, treeId:'Martial', skillId:11, nameKo:skill.nameKo, kind:'buff', source:'martial', dataStatus:'partial',
     sourceRef:{file:'docs/sources/skills/Martial.txt',anchor:'아수라 오라 버프 / 권갑 전용'}, requirements:{when:mainKnuckle}, cost:{mp:{timing:'cast',value:v(0)}}, combo:{canStart:false,canReceiveTag:true},
     stackRole:'combat-resource',

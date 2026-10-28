@@ -1,3 +1,4 @@
+import {buildStore} from '../application/build-draft-store.js';
 import { createBossSelection, validateBossSelection, resolveBossTarget, bossKindLabel, bossActorLabel } from '../application/boss-target.mjs';
 
 export function createBossTargetUi(documentRef, catalog) {
@@ -6,6 +7,7 @@ export function createBossTargetUi(documentRef, catalog) {
   const clone = value => JSON.parse(JSON.stringify(value));
   function option(value, label) { const item = documentRef.createElement('option'); item.value = String(value); item.textContent = label; return item; }
   function changed() {
+    buildStore.commitScenario({bossSelection:selection || undefined});
     documentRef.dispatchEvent(new windowRef.CustomEvent('toram:build-options-changed'));
     documentRef.dispatchEvent(new windowRef.CustomEvent('toram:persistent-state-changed'));
   }
@@ -80,10 +82,10 @@ export function createBossTargetUi(documentRef, catalog) {
     } catch (error) { if (current === generation) node('bossSearchStatus').textContent = `대상 적용 실패: ${error.message}`; }
   }
   return Object.freeze({
-    getSelection() { return selection && clone(selection); },
+    getSelection() { return buildStore.getScenario().bossSelection || null; },
     restoreSelection(value) {
       if (value) validateBossSelection(value);
-      generation++; selection = value ? clone(value) : null; boss = null; render();
+      generation++; selection = value ? clone(value) : null; boss = null; buildStore.commitScenario({bossSelection:selection || undefined}); render();
     },
     bind() {
       if (!node('bossTargetSearch')) return;

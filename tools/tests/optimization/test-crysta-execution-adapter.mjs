@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import vm from 'node:vm';
+import {createWasmClient} from '../../../web/src/optimization/wasm-client.js';
+import {createExecutionAdapter} from '../../../web/src/optimization/execution-adapter.js';
 
 const calls = [], workers = [];
 let nativeAvailable = true, nativeFails = false;
@@ -20,11 +20,7 @@ const root = { console, Worker:FakeWorker, WebAssembly:{},
   }
 };
 root.window = root;
-const context = vm.createContext(root);
-for (const file of ['wasm-client.js','execution-adapter.js']) {
-  vm.runInContext(await readFile(new URL('../../../web/src/optimization/' + file, import.meta.url), 'utf8'), context);
-}
-const adapter = root.ToramCrystaOptimizationExecutionAdapter;
+const adapter = createExecutionAdapter(root.ToramCrystaOptimizationNativeClient,createWasmClient(root));
 assert.equal(adapter.schema, 'toram.crysta-execution-adapter.v2');
 assert.equal((await adapter.execute({})).engine, 'rust-native');
 nativeFails = true;
@@ -35,7 +31,7 @@ const problem = { id:'fixture' };
 const preview = adapter.preview(problem);
 assert.equal(workers.length, 1);
 const worker = workers[0];
-assert.equal(worker.url, 'assets/js/optimization/wasm-worker.js');
+assert.ok(worker.url.href.endsWith('/web/src/optimization/wasm-worker.js'));
 assert.equal(worker.messages[0].mode, 'preview');
 worker.result({ status:'heuristic', engine:'rust-wasm', continuationId:'wasm-session' });
 assert.equal((await preview).status, 'heuristic');

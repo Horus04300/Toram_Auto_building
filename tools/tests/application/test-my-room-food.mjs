@@ -1,7 +1,7 @@
+import {application} from '../../../web/src/application/application-use-cases.js';
 import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
-import { readFile } from 'node:fs/promises';
-import vm from 'node:vm';
+import {createRequire} from 'node:module';
+import {readFile} from 'node:fs/promises';
 const require = createRequire(import.meta.url);
 const food = require('../../../web/src/data/my-room-food.js');
 assert.equal(food.recipes.length, 33);
@@ -19,11 +19,20 @@ for (const recipe of food.recipes) {
     assert.deepEqual(food.options([{id:recipe.id,level}]), recipe.connected ? [{key:recipe.key,value:recipe.values[level-1]}] : []);
   }
 }
-const window = { ToramFoodCatalog:food, getBaseContext() { return { options:this.ToramCalculationInputScope.kernelInput.options }; } };
-vm.runInNewContext(await readFile(new URL('../../../web/src/application/application-use-cases.js', import.meta.url),'utf8'), {window});
-const input = {build:{equipment:{},externalOptions:[{key:'STR',value:5}],myRoomFood:[{id:'STR',level:10},{id:'ELEM_P',level:10},{id:'MAXHP',level:6},{id:'AGGRO_MINUS',level:10},{id:'PHYS_RES',level:10}]}};
-const snapshot = window.ToramApplication.CreateCalculationSnapshot(input);
-assert.deepEqual(JSON.parse(JSON.stringify(snapshot.baseContext.options)), [{key:'STR',value:5},{key:'STR',value:30},{key:'ELEM_P',value:15},{key:'MAXHP',value:2600},{key:'MAXHP',value:1000},{key:'MAXMP',value:100}]);
-assert.deepEqual(JSON.parse(JSON.stringify(window.ToramApplication.CreateCalculationSnapshot({build:{equipment:{},externalOptions:[]}}).baseContext.options)), [{key:'MAXHP',value:1000},{key:'MAXMP',value:100}]);
-assert.deepEqual(JSON.parse(JSON.stringify(window.ToramApplication.CreateCalculationSnapshot({build:{equipment:{},externalOptions:[],guildFoodBuff:false}}).baseContext.options)), []);
-console.log('My room food: PASS (33 effects, 39 names, 330 level cases, deduplication, bounds, explicit snapshot and disconnected effects)');
+const saved=JSON.parse(await readFile(new URL('../../../samples/마법) 지팡이 크법 세팅 - pelio s.json',import.meta.url),'utf8'));
+const input=structuredClone(saved);
+Object.assign(input.build,{externalOptions:[{key:'STR',value:5}],skillLevels:{},activeBuffs:{},combo:[],myRoomFood:[{id:'STR',level:10},{id:'ELEM_P',level:10},{id:'MAXHP',level:6},{id:'AGGRO_MINUS',level:10},{id:'PHYS_RES',level:10}]});
+delete input.build.consumableBuffs;
+for(const [slot,piece] of Object.entries(input.build.equipment)){piece.options=[];piece.crystas=slot==='subWeapon'?[]:['',''];delete piece.catalogItem;}
+const snapshot=application.CreateCalculationSnapshot(input);
+assert.equal(snapshot.baseContext.strF,35);
+assert.equal(snapshot.baseContext.elemP,15);
+assert.equal(snapshot.baseContext.maxHpF,3600);
+assert.equal(snapshot.baseContext.maxMpF,100);
+assert.equal(snapshot.baseContext.preservedStats.PHYS_RES,undefined,'Disconnected recipes remain display-only');
+const empty=structuredClone(input);empty.build.myRoomFood=[null,null,null,null,null];empty.build.externalOptions=[];
+assert.equal(application.CreateCalculationSnapshot(empty).baseContext.maxHpF,1000);
+empty.build.guildFoodBuff=false;
+assert.equal(application.CreateCalculationSnapshot(empty).baseContext.maxHpF,0);
+assert.equal(application.CreateCalculationSnapshot(empty).baseContext.maxMpF,0);
+console.log('My room food: PASS (33 effects, 39 names, 330 levels, deduplication/bounds, real Application options, guild defaults and disconnected effects)');

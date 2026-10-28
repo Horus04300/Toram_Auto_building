@@ -1,5 +1,11 @@
-    (function () {
-        const data = window.SKILL_TREE_DATA;
+import {skillTreeData} from '../data/skill-tree-data.js';
+import {buildStore} from '../application/build-draft-store.js';
+import {createSkillTreeSimulator} from './skill-tree-simulator.mjs';
+import {createBookmarkButton} from './bookmark-button.mjs';
+export function createSkillUi(document) {
+  const root=document.defaultView;
+
+        const data = skillTreeData;
         if (!data || !Array.isArray(data.trees)) return;
         const maxLevel = Number(data.skillMaxLevel) || 10;
         const categoryDefinitions = [
@@ -23,7 +29,7 @@
         let activeCombatTree = 'Blade';
         let activeOtherTree = 'Alchemy';
 
-        const simulator = window.ToramApp.createSkillTreeSimulator(document, {data:data, levels:state.levels, step:function () {return state.step;}, onChange:commitSkillChange});
+        const simulator = createSkillTreeSimulator(document, {data:data, levels:state.levels, step:function () {return state.step;}, onChange:commitSkillChange});
         let storageMessage = '';
         let storageStatus = null;
 
@@ -62,6 +68,7 @@ function createSkillSnapshot() {
             return true;
         }
         function commitSkillChange() {
+            buildStore.commitBuild({skillLevels:state.levels});
             persistSkillState();
             document.dispatchEvent(new CustomEvent('toram:skill-investments-changed'));
             renderAll();
@@ -73,7 +80,7 @@ function createSkillSnapshot() {
             const date = new Date().toISOString().slice(0, 10);
             link.href = URL.createObjectURL(blob); link.download = 'toram-coryn-skill-save-' + date + '.json';
             document.body.appendChild(link); link.click(); link.remove();
-            window.setTimeout(function () { URL.revokeObjectURL(link.href); }, 0);
+            root.setTimeout(function () { URL.revokeObjectURL(link.href); }, 0);
             setStorageStatus('저장 파일을 내려받음');
         }
         function importSkillState(file) {
@@ -92,7 +99,7 @@ function createSkillSnapshot() {
             reader.readAsText(file, 'utf-8');
         }
         function resetSkillState() {
-            if (!window.confirm('모든 스킬 투자 포인트를 초기화할까요?')) return;
+            if (!root.confirm('모든 스킬 투자 포인트를 초기화할까요?')) return;
             data.trees.forEach(function (tree) { tree.skills.forEach(function (skill) { state.levels[tree.id][skill.id] = 0; }); });
             commitSkillChange(); setStorageStatus('스킬 포인트를 초기화함');
         }
@@ -118,7 +125,7 @@ function createSkillSnapshot() {
             return data.trees.reduce(function (sum, tree) { return sum + treeTotal(tree.id).spent; }, 0);
         }
         function createCategoryButton(category) {
-            const button = window.ToramApp.createBookmarkButton(document, {
+            const button = createBookmarkButton(document, {
                 label:category.display, icon:category.icon, active:category.id === activeCategoryId,
                 points:'(' + categoryTotal(category.directory) + '/' + categoryMaximum(category.directory) + ')',
                 onClick:function () { activeCategoryId = category.id; activeCombatTree = categoryTrees(category.directory)[0].id; renderAll(); }
@@ -129,7 +136,7 @@ function createSkillSnapshot() {
         function categoryTrees(directory) { return data.trees.filter(function (tree) { return tree.category === directory; }); }
         function createTreeButton(tree, active, onClick) {
             const total = treeTotal(tree.id);
-            return window.ToramApp.createBookmarkButton(document, {
+            return createBookmarkButton(document, {
                 label:treeLabel(tree), icon:'assets/icons/skills/' + tree.category + '/' + tree.id + '/title.png', active:active,
                 points:'(' + total.spent + '/' + total.maximum + ')', onClick:onClick
             });
@@ -179,15 +186,17 @@ const skillHeading = document.getElementById('combatSkillBookmarkTitle').parentE
             otherTreeRail.innerHTML = ''; categoryTrees('Other_Skills').forEach(function (tree) { otherTreeRail.appendChild(createTreeButton(tree, tree.id === activeOtherTree, function () { activeOtherTree = tree.id; renderAll(); })); });
             renderStage(combatStage, activeCombatTree); renderStage(otherStage, activeOtherTree);
         }
-        window.skillSimulatorState = { data: data, levels: state.levels, getInvestments: function () { return JSON.parse(JSON.stringify(state.levels)); } };
-        window.ToramSkillUi = Object.freeze({ refresh:renderAll, restore:function (snapshot) { applySkillSnapshot(snapshot); renderAll(); }, getInvestments:window.skillSimulatorState.getInvestments });
+        buildStore.commitBuild({skillLevels:state.levels});
+        const getInvestments=function () {return buildStore.getBuild().skillLevels;};
+        const api = Object.freeze({data:data, refresh:renderAll, restore:function (snapshot) { applySkillSnapshot(snapshot); buildStore.commitBuild({skillLevels:state.levels}); renderAll(); }, getInvestments:getInvestments });
         const charLevelInput = document.getElementById('charLevel');
         if (charLevelInput) charLevelInput.addEventListener('input', renderAll);
         renderAll();
         let resizeTimer;
-        window.addEventListener('resize', function () {
-            window.clearTimeout(resizeTimer);
-            resizeTimer = window.setTimeout(renderAll, 120);
+        root.addEventListener('resize', function () {
+            root.clearTimeout(resizeTimer);
+            resizeTimer = root.setTimeout(renderAll, 120);
         });
-    }());
-    // Top-level workspace tabs: existing controls are moved without changing their logic.
+
+return api;
+}

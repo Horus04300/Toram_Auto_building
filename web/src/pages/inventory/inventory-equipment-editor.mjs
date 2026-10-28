@@ -1,3 +1,4 @@
+import {statRegistry} from '../../calculation/stat-registry.js';
 import { EQUIPMENT_SLOTS, EQUIPMENT_TYPES, EQUIPMENT_SLOT_TYPES } from '../../application/equipment-object.mjs';
 import { createEquipmentDraft } from '../../application/inventory-equipment-draft.mjs';
 import { STAT_LABELS } from '../../application/stat-labels.mjs';
@@ -26,7 +27,7 @@ export function createInventoryEquipmentEditor(documentRef,page,app) {
   }
   function renderOptions() {
     const target = find('.inventory-create-options'); target.replaceChildren();
-    const keys = root.ToramStatRegistry.entries().filter(definition => !['CAST_RED','DAMAGE_P'].includes(definition.id));
+    const keys = statRegistry.entries().filter(definition => !['CAST_RED','DAMAGE_P'].includes(definition.id));
     for (const option of options) {
       const row = documentRef.createElement('div'); row.className = 'inventory-create-option';
       const keyLabel = documentRef.createElement('label'); keyLabel.textContent = '옵션';
@@ -67,7 +68,7 @@ export function createInventoryEquipmentEditor(documentRef,page,app) {
     async read() {
       const crystalValues = [form.elements.crysta0.value,form.elements.crysta1.value];
       if (slot !== 'subWeapon' && crystalValues.some(value => value.trim())) crystas = await app.items.getCrystaCatalog();
-      const data = createEquipmentDraft({slot,type,attack:form.elements.attack.value,refinement:form.elements.refinement.value,stability:form.elements.stability.value,options,crystas:crystalValues,lockedCrystaSlots:[form.elements.lock0.checked,form.elements.lock1.checked]},root.ToramStatRegistry,crystas);
+      const data = createEquipmentDraft({slot,type,attack:form.elements.attack.value,refinement:form.elements.refinement.value,stability:form.elements.stability.value,options,crystas:crystalValues,lockedCrystaSlots:[form.elements.lock0.checked,form.elements.lock1.checked]},statRegistry,crystas);
       if (record?.data.slot === slot && record.data.equipment.type === type && record.data.equipment.catalogItem) data.equipment.catalogItem = structuredClone(record.data.equipment.catalogItem);
       return {name:record?.name || '새 무기',type:'equipment',data};
     }

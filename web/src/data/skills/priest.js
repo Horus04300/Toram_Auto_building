@@ -1,7 +1,9 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 (function () {
   'use strict';
-  const R = window.ToramSkillEffectRegistry;
-  const C = window.TORAM_SKILL_COMBAT_CATALOG;
+  const R = skillRegistry;
+  const C = skillCatalog;
   if (!R || !C) throw new Error('Priest order');
   const v = value => ({ op: 'value', value });
   const r = path => ({ op: 'ref', path });
@@ -85,5 +87,5 @@
     { ...hit('magicCircle', 'magic', a(v(5), d(T('INT'), v(200))), m(v(30), l()), { areaRadius: q(magicDevice, v(4.5), v(2)), element: 'light', tickSeconds: 0.5, guaranteedCriticalAfterCritical: true }), count: I('nemesisStacks'), when: truthy(I('nemesisActive')) }
   ], stackControl: { stateId: 'priest.nemesis', minStacks: v(0), maxStacks: v(20), label: '신벌 스택' }, stateTransitions: [{ event: 'hit', operation: 'grant', stateId: 'priest.nemesis', stacks: v(1), maxStacks: v(20), durationSeconds: m(v(10), l()) }, { event: 'castWhenActive', when: truthy(I('nemesisActive')), operation: 'consumeStacks', stateId: 'priest.nemesis', stacks: I('nemesisStacks'), maxStacks: v(20) }], effects: [{ phase: 'combat', type: 'nemesisLink', notes: '대상 명중/16m 이탈/각 스킬별 스택 획득은 전투 대상 상태 엔진 필요.' }] };
   skills[14] = { ...skills[14], activeBuff: true, cost: { mp: { timing: 'cast', value: v(500) } }, effects: [{ phase: 'combat', type: 'holyGraceItemBuffPersistence', durationSeconds: m(v(10), l()) }], stateTransitions: [{ event: 'cast', operation: 'grant', stateId: 'priest.holyGrace.nextMpHalf', stacks: v(1), maxStacks: v(1), durationSeconds: v(0), effects: [{ type: 'nextSkillModifier', key: 'mpCostMultiplier', value: v(0.5) }] }] };
-  R.register('Priest:calculation-rules', skills);
+  R.register(skills);
 }());

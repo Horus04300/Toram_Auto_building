@@ -36,7 +36,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     page.classList.remove('inventory-show-list'); setUrl(changes); await refresh();
   }));
   const equipmentEditor = createInventoryEquipmentEditor(documentRef,page,root.ToramApp);
-  const skillEditor = createInventorySkillEditor(documentRef,find('.inventory-skill-editor'),api,run);
+  const skillEditor = createInventorySkillEditor(documentRef,find('.inventory-skill-editor'),api,run,()=>root.ToramApp.skillTreeData);
   const drafts = new Map();
   let draftContext = '', navigationData, shownUrl = root.location.href;
   function active() { return shell.active('inventory'); }
@@ -90,10 +90,10 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     navigation.render(state());
     if (!root.ToramApp.calculatorReady) return;
     const trees = capture.elements.treeId, previousTree = trees.value; trees.replaceChildren();
-    for (const tree of root.SKILL_TREE_DATA.trees) { const option = text('option',tree.nameKo || tree.id); option.value = tree.id; trees.append(option); }
+    for (const tree of root.ToramApp.skillTreeData.trees) { const option = text('option',tree.nameKo || tree.id); option.value = tree.id; trees.append(option); }
     if (previousTree) trees.value = previousTree;
     const consumables = capture.elements.consumableId, previousItem = consumables.value; consumables.replaceChildren();
-    for (const item of root.ToramApplication.Settings.snapshot('인벤토리').build.consumableBuffs || []) { const option = text('option',item.name || '#' + item.gameItemId); option.value = String(item.gameItemId); consumables.append(option); }
+    for (const item of root.ToramApp.settingsRepository.snapshot('인벤토리').build.consumableBuffs || []) { const option = text('option',item.name || '#' + item.gameItemId); option.value = String(item.gameItemId); consumables.append(option); }
     if (previousItem) consumables.value = previousItem;
   }
   function detailTab() {
@@ -210,8 +210,8 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     button('create').hidden = !session.user;
     if (session.user) {
       navigationData ||= (async () => {
-        if (!root.SKILL_TREE_DATA) await import('../../data/skill-tree-data.js');
-        navigation.setMetadata({trees:root.SKILL_TREE_DATA.trees,buffs:await root.ToramApp.items.listConsumableCategories()});
+        root.ToramApp.skillTreeData ||= (await import('../../data/skill-tree-data.js')).skillTreeData;
+        navigation.setMetadata({trees:root.ToramApp.skillTreeData.trees,buffs:await root.ToramApp.items.listConsumableCategories()});
       })().catch(error => {navigationData = null; throw error;});
       await navigationData; await refresh();
     }

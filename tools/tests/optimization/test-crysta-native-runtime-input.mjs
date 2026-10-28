@@ -1,9 +1,12 @@
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {statRegistry as registry} from '../../../web/src/calculation/stat-registry.js';
+import {buildEvaluator as evaluator} from '../../../web/src/calculation/build-evaluator.js';
+import {problemCompiler as compiler} from '../../../web/src/optimization/problem-compiler.js';
+import {candidatePreparation as optimizer} from '../../../web/src/optimization/candidate-preparation.js';
+import {calculationKernel} from '../../../web/src/calculation/calculator.js';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { createRequire } from 'node:module';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {readFile} from 'node:fs/promises';
+import {resolve} from 'node:path';
 
 const root = resolve(import.meta.dirname, '../../..');
 const fixture = JSON.parse(await readFile(resolve(root, 'tools/fixtures/crysta-native-runtime-26min-revenir.json'), 'utf8'));
@@ -12,23 +15,13 @@ const nativeCommandSource = (await Promise.all([
   readFile(resolve(root, 'desktop/src/tauri_commands.rs'), 'utf8'),
   readFile(resolve(root, 'desktop/src/optimization/service.rs'), 'utf8')
 ])).join('\n');
-const require = createRequire(import.meta.url);
-const registry = require(resolve(root, 'web/src/calculation/stat-registry.js'));
-const evaluator = require(resolve(root, 'web/src/calculation/build-evaluator.js'));
-const compiler = require(resolve(root, 'web/src/optimization/problem-compiler.js'));
-const optimizer = require(resolve(root, 'web/src/optimization/candidate-preparation.js'));
 
 const context = { window:{ ToramStatRegistry:registry }, console };
 context.window.window = context.window;
-vm.createContext(context);
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculation-policies.js'), 'utf8'), context, { filename:'calculation/calculation-policies.js' });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
-const kernel = context.window.ToramCalculationKernel.evaluateContext;
+const kernel = calculationKernel.evaluateContext;
 
 const dataContext = {};
-vm.createContext(dataContext);
-vm.runInContext(`${await readCrystaDataSource(root)}\nglobalThis.__crystas=crystaDataJson;`, dataContext);
+dataContext.__crystas=(await loadSavedBuildEnvironment()).ToramCrystaCatalog.items;
 
 assert.equal(fixture.schema, 'toram.d4-native-runtime-fixture.v1');
 assert.equal(fixture.evidence.reportedWallTimeMinutes, 26);
@@ -84,7 +77,7 @@ function resolvePolveros(mainType) {
 const oneHandPolveros = resolvePolveros('한손검');
 assert.equal(oneHandPolveros.statDelta.LRW, 9, 'Polveros long-range damage is unconditional');
 assert.equal(oneHandPolveros.statDelta.SRW, undefined, 'Polveros short-range damage must not apply to a one-hand sword');
-assert.ok(oneHandPolveros.resolvedConditionMetadata.inactive.some(condition => condition.eitherWeapon?.includes('자동활')), 'the inactive native weapon condition must be retained for audit');
+assert.ok(oneHandPolveros.resolvedConditionMetadata.inactive.some(condition => condition.kind === 'either-weapon-slot' && condition.types.includes('자동활')), 'the inactive native weapon condition must be retained for audit');
 const bowPolveros = resolvePolveros('자동활');
 assert.equal(bowPolveros.statDelta.LRW, 9, 'Polveros long-range damage remains active with a bow');
 assert.equal(bowPolveros.statDelta.SRW, 9, 'Polveros short-range damage applies only with a bow');

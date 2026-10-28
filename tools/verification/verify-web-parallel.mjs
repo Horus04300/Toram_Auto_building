@@ -50,6 +50,13 @@ const cases = Array.from({ length:12 }, (_, i) => {
     expected:{ status:oracle.status, score:oracle.score, id:oracle.bestBuild?.id ?? null } };
 });
 let browser;
+async function clientFor(page) {
+  await page.waitForFunction(() => window.ToramApp?.optimizer);
+  return page.evaluateHandle(async () => {
+    const {createWasmClient} = await import(new URL('assets/js/optimization/wasm-client.js', document.baseURI));
+    return createWasmClient(window);
+  });
+}
 try {
   await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
   browser = await chromium.launch({ channel:'chrome', headless:true });
@@ -57,10 +64,9 @@ try {
     hardware = count;
     const page = await browser.newPage();
     await page.goto(`http://127.0.0.1:${server.address().port}/parallel/?view=calculator`);
-    await page.waitForFunction(() => window.ToramCrystaOptimizationWasmClient);
+    const client = await clientFor(page);
     for (let repeat = 0; repeat < 3; repeat++) {
-      const measured = await page.evaluate(async problem => {
-        const client = window.ToramCrystaOptimizationWasmClient;
+      const measured = await page.evaluate(async ({problem, client}) => {
         await client.disposeContinuation();
         const started = performance.now();
         const preview = await client.preview(problem);
@@ -70,7 +76,7 @@ try {
         return { threads:result.threadsUsed, previewMs:preciseStarted - started, preciseMs:performance.now() - preciseStarted,
           elapsedMs:result.elapsedMs, score:result.score, id:result.bestBuild?.id, status:result.status,
           upper:result.upperBound, gap:result.optimalityGap, visited:result.visitedNodes };
-      }, problem);
+      }, {problem, client});
       assert.equal(measured.status, 'exact');
       assert.equal(measured.threads, count);
       assert.equal(measured.upper, measured.score);
@@ -83,7 +89,7 @@ try {
       console.log('WASM threads: ' + JSON.stringify(measured));
     }
     const closed = Promise.all(page.workers().map(worker => new Promise(resolve => worker.once('close', resolve))));
-    await page.evaluate(() => window.ToramCrystaOptimizationWasmClient.disposeContinuation());
+    await page.evaluate(client => client.disposeContinuation(), client);
     await Promise.race([closed, new Promise((_, reject) => setTimeout(() => reject(new Error('Orphaned WASM pool after dispose')), 3000))]);
     assert.equal(page.workers().length, 0);
     await page.close();
@@ -91,9 +97,8 @@ try {
   hardware = 4;
   const page = await browser.newPage();
   await page.goto(`http://127.0.0.1:${server.address().port}/parallel/?view=calculator`);
-  await page.waitForFunction(() => window.ToramCrystaOptimizationWasmClient);
-  const controls = await page.evaluate(async problem => {
-    const client = window.ToramCrystaOptimizationWasmClient;
+  const client = await clientFor(page);
+  const controls = await page.evaluate(async ({problem, client}) => {
     await client.preview(problem);
     const bounded = await client.optimize(problem, {}, { timeLimitMs:1 });
     await new Promise(resolve => setTimeout(resolve, 200));
@@ -108,7 +113,7 @@ try {
     } }, { timeLimitMs:10000 });
     const cancelledResult = await cancelled;
     return { bounded, paused, exact, cancelledResult };
-  }, problem);
+  }, {problem, client});
   assert.equal(controls.bounded.status, 'bounded');
   assert.ok(controls.bounded.upperBound >= controls.exact.score);
   assert.equal(controls.paused.status, 'paused');
@@ -160,9 +165,9 @@ try {
   await page.close();
   const fallback = await browser.newPage();
   await fallback.goto(`http://127.0.0.1:${server.address().port}/single/?view=calculator`);
-  await fallback.waitForFunction(() => window.ToramCrystaOptimizationWasmClient);
+  const fallbackClient = await clientFor(fallback);
   assert.equal(await fallback.evaluate(() => crossOriginIsolated), false);
-  const single = await fallback.evaluate(problem => window.ToramCrystaOptimizationWasmClient.optimize(problem, {}, { timeLimitMs:10000 }), problem);
+  const single = await fallback.evaluate(({problem, client}) => client.optimize(problem, {}, { timeLimitMs:10000 }), {problem, client:fallbackClient});
   assert.equal(single.threadsUsed, 1);
   assert.equal(single.status, 'exact');
   assert.equal(single.bestBuild.id, measurements[0].id);

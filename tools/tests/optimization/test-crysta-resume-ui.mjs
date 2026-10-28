@@ -1,107 +1,158 @@
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {resolve} from 'node:path';
 
-const root = resolve(import.meta.dirname, '../../..');
-const client = await readFile(resolve(root, 'desktop/adapters/optimization-client.js'), 'utf8');
-const optimizerCore = await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8');
-const optimizerUi = await readFile(resolve(root, 'web/src/ui/optimizer-ui-controller.js'), 'utf8');
-const optimizer = optimizerCore + '\n' + optimizerUi;
-
-assert.match(client, /run\('resume_crysta_optimization'/, 'native client must invoke the Rust continuation command');
-assert.match(client, /pause_crysta_optimization/, 'native client must expose a distinct pause command that keeps the frontier');
-assert.match(client, /dispose_crysta_optimization/, 'native client must release stale continuation sessions');
-assert.match(client, /OPTIMIZATION_CONTINUATION_UNAVAILABLE/, 'expired native sessions must surface an explicit error');
-assert.match(optimizer, /status === 'bounded' \|\| status === 'no-incumbent-yet' \|\| status === 'paused'/, 'all resumable terminal states must expose a continuation control');
-assert.match(optimizer, /crystaOptimizationPause/, 'native execution must expose an explicit pause button');
-const continueStart = optimizer.indexOf("continueButton.addEventListener('click'");
-const continueEnd = optimizer.indexOf('function discardCrystaOptimizationContinuationForInputChange', continueStart);
-assert.ok(continueStart >= 0 && continueEnd > continueStart, 'continue button handler must remain present');
-const continueHandler = optimizer.slice(continueStart, continueEnd);
-assert.match(continueHandler, /ToramCrystaOptimizationExecutionAdapter\.resume/, 'continue button must resume rather than launch a new search');
-assert.doesNotMatch(continueHandler, /launchCrystaOptimizationWorker\(/, 'continue button must not restart crysta_optimize_parallel');
-assert.match(continueHandler, /resumeUntilExact/, 'one precision action must automatically chain bounded 30-second slices until terminal or paused');
-assert.match(optimizer, /discardCrystaOptimizationContinuationForInputChange/, 'input changes must discard stale continuations');
-assert.match(optimizer, /pagehide/, 'closing the window must release a stored continuation');
-
+import {buildStore,initializeBuildEditor} from '../../../web/src/application/build-draft-store.js';
+import {importWithMocks} from '../../support/import-with-mocks.mjs';
 // Execute the actual UI handlers: presentation-only input must keep costly work.
 const listeners = new Map(), windowListeners = new Map();
-const runtime = { runVersion:0 };
-const calculationInput = { build:{ revision:0 }, scenario:{}, request:{} };
+const snapshot = () => context.ToramApp.optimizer.getState();
+let reads = 0, optionAmount = 0;
+const nodes = new Map(), pending = [], clicks = new Map();
+function node(id) {
+  if (!nodes.has(id)) nodes.set(id,{id,nodeType:1,value:'0',checked:false,closest:() => null,addEventListener(type,handler) {if(type === 'click') clicks.set(id,handler);},querySelectorAll:() => []});
+  return nodes.get(id);
+}
+const optionRow = {parentElement:{id:'buffOpts'},classList:{contains:() => false},closest:() => null,
+  querySelector:selector => ({value:selector === '.opt-type' ? 'ATK' : String(optionAmount)})};
+node('buffOpts').querySelectorAll = () => [optionRow];
 let cancellations = 0, disposals = 0;
 const badge = {}, applyButton = { addEventListener() {} };
 const documentRef = {
   readyState:'loading',
-  getElementById(id) { return id === 'globalEffTextBadge' ? badge : id === 'optimizationApplyRecommendedCrystas' ? applyButton : null; },
+  querySelector:() => null,
+  getElementById(id) { reads++; return id === 'globalEffTextBadge' ? badge : id === 'optimizationApplyRecommendedCrystas' ? applyButton : node(id); },
+  dispatchEvent(event) { emit(event.type); return true; },
   addEventListener(type, handler) { if (!listeners.has(type)) listeners.set(type, []); listeners.get(type).push(handler); }
 };
 const context = {
   document:documentRef, window:null,
   addEventListener(type, handler) { windowListeners.set(type, handler); },
   initAutocomplete() {}, renderBanTags() {},
-  ToramApp:{ optimizer:{ uiSupport:{ runtime:() => runtime, updateProgress() {} } } },
-  ToramBuildDraftStore:{ syncFromUi:() => calculationInput },
-  ToramCrystaOptimizationExecutionAdapter:{ hasContinuation:() => true, cancel() { cancellations++; }, disposeContinuation() { disposals++; } }
+  ToramApp:{ optimizationResults:{current() {},preparing() {},progress() {},result() {},marginal() {}} },
+  structuredClone,
+  cloneCtx:structuredClone,
+  ToramApplication:{ CreateCalculationSnapshot:() => ({...context.ToramBuildDraftStore.read(),baseContext:{},crystas:[]}) },
+  ToramBuildEvaluator:{createScenarioSnapshot:() => ({}),createBuildSnapshot:() => ({}),evaluate:() => ({calculation:{damageFactor:1}})},
+  ToramCrystaOptimizationProblemCompiler:{compileCrystaProblem:() => ({schema:'fixture'})},
+  requestAnimationFrame:callback => callback(),
+  CustomEvent:class { constructor(type,options) { this.type=type; this.detail=options?.detail; } },
+  setTimeout(callback) { pending.push(callback); return pending.length; },
+  ToramCrystaOptimizationExecutionAdapter:{ isAvailable:() => true, preview:async () => ({status:'bounded',bestBuild:{packages:[]},outcomes:{}}), hasContinuation:() => true, cancel() { cancellations++; }, disposeContinuation() { disposals++; } }
 };
 context.window = context;
-vm.createContext(context);
-vm.runInContext(await readFile(resolve(root, 'web/src/storage/build-state-snapshot.js'), 'utf8'), context);
-vm.runInContext(optimizerUi, context);
-context.ToramApp.optimizerUi.initialize();
-function arm() {
-  runtime.lastOptimizationRequest = { problem:{} };
-  runtime.lastOptimizationResult = { status:'bounded' };
+documentRef.defaultView=context;
+context.ToramBuildDraftStore=buildStore;
+initializeBuildEditor(documentRef,context.ToramApp);
+const {createOptimizerUi}=await importWithMocks(new URL('../../../web/src/ui/optimizer-ui-controller.js',import.meta.url),{
+ 'crysta-data.js':{crystaCatalog:{items:[]}},
+ 'application-use-cases.js':{application:context.ToramApplication},
+ 'build-evaluator.js':{buildEvaluator:context.ToramBuildEvaluator},
+ 'problem-compiler.js':{problemCompiler:context.ToramCrystaOptimizationProblemCompiler}
+});
+let validInputs=true,reveals=0;
+Object.assign(context.ToramApp,{
+ execution:context.ToramCrystaOptimizationExecutionAdapter,
+ crystaUi:{initAutocomplete(){},renderBanTags(){},validateCrystaInputs:()=>validInputs},
+ tabs:{revealResults() {reveals++;}}
+});
+context.ToramApp.optimizerUi=context.ToramApp.optimizer=createOptimizerUi(documentRef,context.ToramApp);
+context.ToramApp.optimizer.initialize();
+validInputs=false;
+const beforeInvalid=snapshot().runVersion;
+context.ToramApp.optimizer.runPreviewSafe();
+assert.equal(reveals,0,'Invalid inputs do not switch to the result tab');
+assert.equal(snapshot().runVersion,beforeInvalid,'Invalid inputs do not start work');
+validInputs=true;
+async function arm() {
+  context.ToramApp.optimizer.runPreviewSafe();
+  while (pending.length) pending.shift()();
+  await Promise.resolve(); await Promise.resolve();
   applyButton.hidden = false; applyButton.disabled = false;
   cancellations = 0; disposals = 0;
 }
-function emit(type, id = '', optionRow = false) {
-  const target = { id, nodeType:1, closest:selector => optionRow && selector === '.opt-row' ? {} : null };
+function emit(type, id = '', isOption = false) {
+  const target = id ? node(id) : {id:'',nodeType:1,closest:selector => isOption && selector === '.opt-row' ? optionRow : null};
   for (const handler of listeners.get(type) || []) handler({ target });
 }
 for (const type of ['input', 'change']) {
   for (const id of ['buildSettingName', 'buildBackupName', 'buildSettingList', 'buildSettingImport', 'banInput', 'skillSearch', 'optimizationRequirementsDraft', 'unrelatedFutureInput']) {
-    arm(); const request = runtime.lastOptimizationRequest, result = runtime.lastOptimizationResult, version = runtime.runVersion;
+    await arm(); const request = snapshot().lastOptimizationRequest, result = snapshot().lastOptimizationResult, version = snapshot().runVersion;
+    const beforeReads = reads, beforeRevision = context.ToramBuildDraftStore.revision();
     emit(type, id);
+    assert.equal(reads,beforeReads,'Presentation input must not collect the Build from the DOM');
+    assert.equal(context.ToramBuildDraftStore.revision(),beforeRevision);
     assert.equal(cancellations, 0, `${type} on ${id} must preserve running work`);
     assert.equal(disposals, 0, `${id} must preserve continuation`);
-    assert.equal(runtime.lastOptimizationRequest, request);
-    assert.equal(runtime.lastOptimizationResult, result);
-    assert.equal(runtime.runVersion, version);
+    assert.equal(snapshot().lastOptimizationRequest, request);
+    assert.deepEqual(snapshot().lastOptimizationResult, result);
+    assert.equal(snapshot().runVersion, version);
     assert.equal(applyButton.hidden, false);
   }
   for (const id of ['charLevel', 'strBase', 'bossDef', 'mainWeaponType', 'wpnAtk', 'subStab', 'armorType', 'cr_wpn_1', 'lock_spc_2']) {
-    arm(); emit(type, id);
+    await arm(); node(id).value = String(Number(node(id).value)+1); node(id).checked = !node(id).checked; emit(type, id);
     assert.equal(cancellations, 1, `${type} on ${id} must cancel stale work`);
     assert.equal(disposals, 1);
-    assert.equal(runtime.lastOptimizationRequest, null);
-    assert.equal(runtime.lastOptimizationResult, null);
+        assert.equal(snapshot().lastOptimizationResult, null);
     assert.equal(applyButton.disabled, true);
     emit(type, id); assert.equal(cancellations, 1, 'duplicate events must not cancel twice');
   }
-  arm(); emit(type, '', true); assert.equal(cancellations, 1, 'dynamic option rows affect calculations');
+  await arm(); optionAmount++; emit(type, '', true); assert.equal(cancellations, 1, 'dynamic option rows affect calculations');
 }
-for (const type of ['toram:persistent-state-changed', 'toram:skill-investments-changed', 'toram:active-buffs-changed', 'toram:combo-changed', 'toram:combo-hit-selected', 'toram:build-options-changed', 'toram:optimization-preferences-changed']) {
-  arm(); emit(type); assert.equal(disposals, 0, `${type} without an input change must preserve work`);
-  calculationInput.build.revision++;
-  emit(type); assert.equal(disposals, 1, `${type} must invalidate committed input`);
+for (const type of ['toram:persistent-state-changed', 'toram:skill-investments-changed', 'toram:active-buffs-changed', 'toram:combo-changed', 'toram:build-options-changed', 'toram:optimization-preferences-changed']) {
+  await arm(); emit(type); assert.equal(disposals, 0, `${type} without an input change must preserve work`);
 }
-for (const part of ['scenario', 'request']) {
-  arm(); calculationInput[part].revision = 1;
-  emit('toram:optimization-preferences-changed');
-  assert.equal(disposals, 1, `${part} changes must invalidate continuation`);
+for (const [type,field,api] of [
+  ['toram:skill-investments-changed','skillLevels','commitBuild'],
+  ['toram:active-buffs-changed','activeBuffs','commitBuild'],
+  ['toram:combo-changed','combo','commitBuild'],
+  ['toram:optimization-preferences-changed','optimizationPreferences','commitScenario']
+]) {
+  await arm(); const value = field === 'combo' ? [{skillId:'fixture'}] : {fixture:1};
+  context.ToramBuildDraftStore[api]({[field]:value});
+  assert.equal(disposals,1,`${field} commit must invalidate continuation once`);
+  context.ToramBuildDraftStore[api]({[field]:value});
+  assert.equal(disposals,1,'Repeated same commit must preserve revision');
 }
-arm(); runtime.lastOptimizationResult = null;
+await arm();
 emit('input', 'buildSettingName'); assert.equal(cancellations, 0, 'running work without a result must survive file name edits');
-emit('input', 'wpnAtk'); assert.equal(cancellations, 1, 'running work must stop for weapon edits');
-arm(); windowListeners.get('pagehide')(); assert.equal(disposals, 1, 'page exit must still release work');
-arm();
+node('wpnAtk').value = '100'; emit('input', 'wpnAtk'); assert.equal(cancellations, 1, 'running work must stop for weapon edits');
+await arm(); windowListeners.get('pagehide')(); assert.equal(disposals, 1, 'page exit must still release work');
+await arm();
 context.ToramCrystaOptimizationExecutionAdapter.isRunning = () => false;
-const beforeUpdateVersion = runtime.runVersion;
+const beforeUpdateVersion = snapshot().runVersion;
 await context.ToramApp.optimizerUi.stopForUpdate();
 assert.equal(cancellations, 1);
 assert.equal(disposals, 1);
-assert.equal(runtime.runVersion, beforeUpdateVersion + 1);
-assert.equal(runtime.lastOptimizationRequest, null);
+assert.equal(snapshot().runVersion, beforeUpdateVersion + 1);
 assert.equal(applyButton.disabled, true);
-console.log('CrystaOptimization native continuation UI UI continuation: PASS (resume, unrelated input preservation, calculation invalidation, page exit, approved update stop)');
+// Real continuation callbacks keep one frontier, and stale callbacks never overwrite a newer run.
+let resumes = 0;
+context.ToramCrystaOptimizationExecutionAdapter.resume = async callbacks => {
+  resumes++;
+  const result = {status:resumes === 1 ? 'bounded' : 'exact',continuationId:resumes === 1 ? 'same-frontier' : null,bestBuild:{packages:[]},outcomes:{}};
+  callbacks.onProgress({status:'running'}); callbacks.onComplete(result,{}); return result;
+};
+context.setTimeout = callback => {callback(); return 0;};
+await arm();
+clicks.get('crystaOptimizationContinue')();
+for (let i=0;i<12;i++) await Promise.resolve();
+assert.equal(resumes,2,'Bounded resume must automatically continue the same frontier');
+assert.equal(snapshot().lastOptimizationResult.status,'exact');
+const detached = snapshot(); detached.lastOptimizationResult.outcomes.changed = true;
+assert.equal(snapshot().lastOptimizationResult.outcomes.changed,undefined,'Diagnostic state cannot mutate the owner');
+const completions = [];
+context.ToramCrystaOptimizationExecutionAdapter.preview = () => new Promise(resolve => completions.push(resolve));
+await arm(); await arm();
+completions[1]({status:'heuristic',score:2,bestBuild:{},outcomes:{}});
+await Promise.resolve(); await Promise.resolve();
+completions[0]({status:'heuristic',score:1,bestBuild:{},outcomes:{}});
+await Promise.resolve(); await Promise.resolve();
+assert.equal(snapshot().lastOptimizationResult.score,2,'An old response must never replace a newer result');
+context.setTimeout = callback => {pending.push(callback);return pending.length;};
+const beforePreparation = completions.length;
+context.ToramApp.optimizer.runPreviewSafe();
+context.ToramBuildDraftStore.commitBuild({character:{level:999,attributes:{}}});
+while (pending.length) pending.shift()();
+assert.equal(completions.length,beforePreparation,'An input edit must also discard work before asynchronous preparation starts');
+assert.equal(snapshot().lastOptimizationResult,null);
+console.log('Recommendation lifecycle: PASS (Store revision, unrelated edits, duplicate commits, automatic resume, stale response, preparation cancellation, detached diagnostics, page exit, update stop)');

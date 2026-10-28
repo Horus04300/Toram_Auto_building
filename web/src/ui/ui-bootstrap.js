@@ -1,30 +1,51 @@
-/* 기능 단위 UI의 공개 진입점. 기능 간 직접 DOM 호출을 이 경계 밖으로 제한한다. */
-(function (root) {
-  'use strict';
-  var app = root.ToramApp || {};
-  root.ToramUiFeatures = Object.freeze({
-    build:app.buildUi,
-    skills:root.ToramSkillUi,
-    buffs:root.ToramActiveBuffs,
-    combo:root.ToramComboUi,
-    optimizer:app.optimizerUi,
-    settings:root.ToramBuildFileUi,
-    updates:root.ToramUpdateUi
-  });
-    var initialized = false;
-    function bindUiEvents() {
-        if (initialized) return;
-        if (!app.buildUi || !app.optimizerUi || !app.optimizer) throw new Error('UI 기능 컨트롤러가 준비되지 않았습니다.');
-        initialized = true;
-        app.buildUi.bind();
-        document.addEventListener('toram:preview', app.optimizer.runPreviewSafe);
-        document.addEventListener('toram:calculate', app.optimizer.runCalculationSafe);
-        app.optimizerUi.initialize();
-    }
+import {createCrystaUi} from './crysta-ui.js';
+import {buildStore,initializeBuildEditor} from '../application/build-draft-store.js';
+import {createCalculatorTabs} from './tabs.js';
+import {createSkillUi} from './skill-tree.js';
+import {createActiveBuffUi} from './active-buff-ui.js';
+import {createFoodUi} from './my-room-food-ui.js';
+import {createComboUi} from './combo-ui.js';
+import {createOptimizationPreferences} from './optimization-preferences.js';
+import {createOptimizationResults} from './optimization-results.js';
+import {createOptimizerUi} from './optimizer-ui-controller.js';
+import {createStatusPoints} from './status-points.js';
+import {createOfficialLevelCap} from '../calculation/official-level-cap.js';
+import {createSettingsRepository} from '../storage/settings-repository.js';
+import {createSettingsUi} from './settings-ui.js';
+import {createWasmClient} from '../optimization/wasm-client.js';
+import {createExecutionAdapter} from '../optimization/execution-adapter.js';
+import {createRecommendationApply} from '../optimization/recommendation-apply.js';
+import {application} from '../application/application-use-cases.js';
+import {skillRegistry} from '../data/skill-effect-registry.js';
+import {skillTreeData} from '../data/skill-tree-data.js';
+import {foodCatalog} from '../data/my-room-food.js';
+import {skillCatalog} from '../data/skill-combat-catalog.js';
 
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', bindUiEvents, { once: true });
-    } else {
-        bindUiEvents();
-    }
-}(window));
+export function initializeCalculatorUi(document,app,desktop) {
+  const root=document.defaultView;
+  app.buildStore=buildStore; app.calculation=application;
+  app.skillRegistry=skillRegistry; app.skillTreeData=skillTreeData; app.foodCatalog=foodCatalog; app.skillCatalog=skillCatalog;
+  app.crystaUi=createCrystaUi(document);
+  initializeBuildEditor(document,app);
+  app.tabs=createCalculatorTabs(document,app);
+  app.statusPoints=createStatusPoints(document,createOfficialLevelCap(root));
+  app.skillUi=createSkillUi(document);
+  app.activeBuffs=createActiveBuffUi(document);
+  app.myRoomFood=createFoodUi(document);
+  app.optimizationPreferences=createOptimizationPreferences(document,app.crystaUi);
+  app.comboUi=createComboUi(document,app.optimizationPreferences);
+  app.settingsRepository=createSettingsRepository(root,buildStore,desktop?.files);
+  app.optimizationResults=createOptimizationResults(document,app.crystaUi);
+  app.execution=createExecutionAdapter(desktop?.nativeClient,createWasmClient(root));
+  app.recommendationApply=createRecommendationApply(document,app.crystaUi);
+  app.updateController=desktop?.coordinator;
+  app.optimizer=createOptimizerUi(document,app);
+  app.optimizer.initialize();
+  app.settingsRepository.initialize();
+  app.settingsUi=createSettingsUi(document,app.settingsRepository);
+  app.updateUi=desktop?.initializeUpdates();
+  document.addEventListener('toram:preview',app.optimizer.runPreviewSafe);
+  document.addEventListener('toram:calculate',app.optimizer.runCalculationSafe);
+  app.features=Object.freeze({skills:app.skillUi,buffs:app.activeBuffs,combo:app.comboUi,optimizer:app.optimizer,settings:app.settingsUi,updates:app.updateUi});
+  return app.features;
+}

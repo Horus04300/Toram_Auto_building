@@ -26,7 +26,7 @@ try {
   page.on('pageerror', error => errors.push(error.message));
   const url = `http://127.0.0.1:${server.address().port}/?view=calculator`;
   await page.goto(url);
-  await page.waitForFunction(() => window.ToramUiFeatures?.updates);
+  await page.waitForFunction(() => window.ToramApp.features?.updates);
   assert.equal(await page.locator('#updateCheck').isDisabled(), true);
   await page.close();
   const native = await browser.newPage({ viewport:{ width:1280, height:900 } });
@@ -51,7 +51,7 @@ try {
   assert.equal(await native.evaluate(() => window.bad), undefined);
   await native.evaluate(() => {
     window.pausedTestWork = true;
-    window.ToramCrystaOptimizationExecutionAdapter = {
+    window.ToramApp.execution = {
       isAvailable:() => true, isRunning:() => false, hasContinuation:() => window.pausedTestWork,
       cancel:() => {}, disposeContinuation:async () => { window.pausedTestWork = false; }
     };

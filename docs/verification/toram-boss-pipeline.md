@@ -5,9 +5,9 @@
 ## 실행
 
 ```powershell
-npm run bosses:sync
-npm run bosses:sync -- --check
-npm run bosses:test
+node tools/extraction/sync-toram-dev-bosses.mjs
+node tools/extraction/sync-toram-dev-bosses.mjs --check
+npm test
 ```
 
 기본 공개 리소스 브랜치는 2026-10-22 블랑 신규 원본을 확인한 `releaseC`다. 이전 분기는 `--application releaseB`로 재현한다. 실제 로그인 서버의 활성 브랜치를 관찰했다는 의미는 아니다. `--application releaseA` 등은 명시적으로 선택하며 브랜드별 캐시를 섞지 않는다. `--check`는 manifest/설치/도구 식별자만 확인하고 개발판을 교체하지 않는다. Python은 기존 아이템 명령과 같은 `TORAM_ITEM_PYTHON` 또는 번들 런타임을 사용한다. UnityPy 1.25.4 경로는 `--unitypy-path`로 지정할 수 있다. 새 설치에서는 이 의존성을 먼저 준비한다.
@@ -15,7 +15,7 @@ npm run bosses:test
 재현·오프라인 입력은 `manifest.bytes`와 해당 manifest의 모든 FieldScript/GameScene 번들이 있는 source 디렉터리다.
 
 ```powershell
-npm run bosses:sync -- --offline build/tmp/toram-monster-capture/source
+node tools/extraction/sync-toram-dev-bosses.mjs --offline build/tmp/toram-monster-capture/source
 ```
 
 실행은 수동이다. 게임 실행/메모리 접근/계정 API/예약 실행/사용자 세팅 변경은 없다. 공개 배포·앱 설치도 하지 않는다.
@@ -64,7 +64,7 @@ npm run bosses:sync -- --offline build/tmp/toram-monster-capture/source
 
 선택은 `scenario.bossSelection?`의 `toram.boss-selection.v1`로 ID·revision·변종 원본·난이도·레벨을 고정한다. 실제 계산에는 기존 `scenario.target` 여섯 숫자만 전달한다. JSON/세션 복원은 최신 카탈로그를 다시 읽거나 원본으로 덮어쓰지 않으므로 수동 수정도 보존한다. 원본을 갱신하려면 검색에서 다시 선택한다. 연결 해제도 현재 숫자를 유지한다. 기존 선택 필드 없는 v2 문서는 그대로 읽는다.
 
-검증은 `npm run bosses:test`의 파서/변환/부위/반올림/레벨/예외 플래그와 `npm run verify:web:browser`의 필드·입장·고난도 선택, 수동 수정, JSON/재열기, 모바일 폭으로 나뉜다. 보존된 함수는 게임 실행 관측이 아닌 정적 근거다.
+검증은 `npm test`의 파서/변환/부위/반올림/레벨/예외 플래그와 `npm test -- browser`의 필드·입장·고난도 선택, 수동 수정, JSON/재열기, 모바일 폭으로 나뉜다. 보존된 함수는 게임 실행 관측이 아닌 정적 근거다.
 
 ## 길드 레이드
 
@@ -83,22 +83,8 @@ npm run bosses:sync -- --offline build/tmp/toram-monster-capture/source
 
 Coryn의 공개 API는 독립 참고 출처다. `coryn-reference.md`에 예시 5개/18개 응답의 종류·맵·난이도와 한계를 기록했다. Coryn 숫자 ID를 게임 ID로 승격하지 않는다.
 
-## 2026-10-22 실제 업데이트 재검증
+## 입장 메뉴 분기와 검사
 
-- releaseB는 이전 원본을 제공했고 releaseC에서 1,172 MapInfo·정상 몬스터9,238변종·ID1,298개를 추출했다. 이전 releaseB ready 원본과의 별도 의미 비교는 추가32·변경29·삭제0이다. releaseC의 첫 ready 전에는 같은 분기의 기준 포인터가 없으므로 원본 report의 added=9,238과 이 교차분기 비교를 혼동하지 않는다. 원본 번들/언어는 분기별로 분리한다.
-- 블랑은 UUID1314, key107602:1000의 field-boss/single로 기존 MMO 출현점 근거에 연결된다. Lv320·DEF/MDEF1280·물리/마법 내성12가 원본이다. 새 보스 변종13개 중 블랑1개가 field-boss이며 나머지12개는 양성 입장 근거가 없는 unresolved로 유지한다. 새 의미를 이름이나 Boss 비트만으로 채우지 않았다.
-- 설치 코드 변경 needs-review를 먼저 확인한 뒤 사용자 동의의 읽기 전용 모듈 보존본으로 보스221함수를 대조했다. Toram.Common 난이도 함수10개를 포함하며 난이도 초기화 배열10개×20바이트와 고난도/길드 상수15건을 원문에서 대조했다. 원본 추출·분류·정적 타겟 계산의 신규 의미 변경을 발견하지 못했다. [검토 보고서](../../data/sources/toram-monsters/native-update-20261022/README.md)·index/C/상수/재현 도구를 기존 근거와 함께 해시632개로 고정한 뒤 계약을 갱신했다.
-- sync의 `--check`는 발행하지 않는다. 설치 불일치를 update-available/0으로 반환하던 Python 검사를 needs-review/2로 고쳤고 wrapper의 실패·비JSON/비정상 성공 종료도1로 전달한다. Python self-test10/10, bosses:test 통과.
-- 공개분기·교차분기 의미 비교·최종 검토 자료는 `build/tmp/update-pipeline-20261022/`, 원본 이력은 `data/sources/toram-monsters/pipeline/releaseC/`에 보존한다. 이 폴더들은 Git 제외이므로 별도 백업한다.
+version16의 검토한 ProgressQuest/Check와 정수 operand만 따라가며 Check 양 분기는 가능한 출처 경로로 읽는다. 실제 퀘스트 해금/현재 상태는 확정하지 않는다. 동적 operand·미검토 명령에서 멈추고 잘린 입력·분기 범위·순환 방문을 검사한다. 근거는 native-entry-flow/의 해시 고정 fixture·코드·재현 도구다. 콜론3300:10은 difficulty-select,4500:100은 field/single이며 다른 UUID/맵에 분류를 복사하지 않는다.
 
-10/22 발행 검증: `npm run bosses:sync`는 development-updated/developmentApplied=true,691ID/5,209변종이었다. 같은 날짜의 `--check`·재실행은 unchanged였다. `bosses:test`·Python10/10·architecture·S1 427/427·회귀71/71(저장E2E1SKIP)·Edge 데이터/JSON/재열기 검증은 [아이템 갱신 검증](toram-item-pipeline.md)에 보존한다. 현재 판정은 handoff와 아래 후속 검증을 따른다.
-
-## 2026-10-23 퀘스트 분기 뒤 입장 메뉴
-
-사용자가 콜론 보스/조성중 지구의 실제 입장 방식을 알려 주어 원본을 대조했다.3300:10/UUID41의 이벤트10 시작 명령은 ProgressQuest38이며 Check20 뒤5719 위치에서 BossMenu130이 field3300/room0을 가리킨다. 이벤트 첫 명령만 보던 파이프라인 범위의 누락이었다. 보존된 코드와 metadata만으로 추가 분석했으며 게임 실행/프로세스 추가 접근은 없었다.
-
-version16의 검토한 ProgressQuest/Check와 정수 operand만 따라가도록 보완했다. Check 양 분기는 가능한 출처 경로로 읽으며 실제 퀘스트 해금/현재 상태는 확정하지 않는다. 동적 operand·미검토 명령에서 멈추고 잘린 입력·분기 범위·순환 방문을 검사한다. native 근거/스크립트 fixture/재현 Java/metadata enum을 `native-entry-flow/`에 해시 고정했다. 이 근거 없이 다른 UUID/맵에 분류를 복사하지 않는다.
-
-전체 보존 스크립트에서 추가 메뉴 경로40개를 찾아 기존 미분류65변종을 entry-boss로 연결했다.691ID/5,209변종은 그대로이며 분류는 entry851·field117·high-raid133·dungeon26·guild9·unresolved4073이다. 콜론 보스3300:10은 difficulty-select,4500:100은 기존 field/single을 유지한다. 다른 미연결 경로는 여전히 남으며 모르는 명령을 임의 건너뛰지 않는다.
-
-오프라인 sync와 재실행 unchanged, `bosses:test`·Python11/11 통과. Edge 소스/하위경로에서 콜론 보스 조성중 지구의 일반/Ultimate 난이도와 DEF7/42를 확인했다. 크리스타 ID 통합과 함께 수행한 검증/전체 성능 Gate 미통과는 [검증 기록](crysta-id-catalog.md)에 있다. 로그 `build/tmp/boss-colon-menu/`.
+설치 코드·상수 검토는 data/sources/toram-monsters/native-update-20261022/, 입장 분기는 native-entry-flow/를 따른다. npm test, Python 추출기 --self-test와 test-toram-boss-pipeline.py가 파서·분류·레벨/부위·실패 격리·wrapper 종료 코드를 검사한다. 실제 화면/JSON/재열기는 npm test -- browser로 확인한다. 현재 발행 건수는 handoff와 manifest를 따른다.

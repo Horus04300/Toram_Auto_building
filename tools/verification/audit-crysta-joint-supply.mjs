@@ -1,4 +1,4 @@
-import { readCrystaDataSource } from '../support/crysta-catalog-source.mjs';
+import {loadHeadlessEnvironment} from '../support/crysta-headless-environment.mjs';
 // Inventory only: formula families do not enable pruning or change candidates.
 import assert from 'node:assert/strict';
 import { readFile, writeFile } from 'node:fs/promises';
@@ -15,6 +15,7 @@ const pairs = [
   ...['STR', 'DEX', 'AGI', 'INT', 'VIT'].map(key => [key.toLowerCase(), `${key}P`, key])
 ];
 const classifiedOnly = {
+  ...Object.fromEntries(['FIRE','WATER','WIND','EARTH','LIGHT','DARK','NEUTRAL'].map(element=>[element+'_DMG','target element multiplier'])),
   PHYS_PIERCE:'physical raw power', MAG_PIERCE:'magic raw power', MAXMP:'INT -> MP -> AMPR',
   AMPR:'MP -> AMPR', AMPRP:'raw display; excluded from optimization goal',
   MOTIONSPEED:'ASPD -> motion goal', CAST_RED:'CSPD -> cast reduction; display only',
@@ -31,15 +32,10 @@ const sourcePaths = ['web/src/calculation/stat-registry.js', 'web/src/data/cryst
   'web/src/optimization/problem-compiler.js', 'web/src/optimization/candidate-preparation.js',
   'tools/fixtures/crysta-saved-sword-shield-revenir-unlocked.json'];
 const sources = await Promise.all(sourcePaths.map(async path => {
-  const content = path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8');
+  const content = await readFile(resolve(root,path),'utf8');
   return { path, content, sha256:createHash('sha256').update(content).digest('hex') };
 }));
-const sandbox = { console };
-sandbox.window = sandbox;
-vm.createContext(sandbox);
-for (const source of sources.slice(0, 2)) vm.runInContext(source.content, sandbox);
-const registry = sandbox.ToramStatRegistry;
-const crystas = vm.runInContext('crystaDataJson', sandbox);
+const env=await loadHeadlessEnvironment(), sandbox=env.context, registry=env.registry, crystas=sandbox.ToramCrystaCatalog.items;
 const nativeKeys = sources[2].content.match(/stat_keys!\s*\{([^}]+)\}/u)[1]
   .split(',').map(key => key.trim()).filter(Boolean).sort();
 const classifications = Object.fromEntries(pairs.flatMap(([family, ...keys]) => keys.map(key => [key, family])));
@@ -53,16 +49,11 @@ assert.equal(pairs.length, 14);
 // never merged into a fictional candidate for the raw-data co-occurrence count.
 const rawRows = crystas.flatMap(crysta => [
   { name:crysta.name, conditional:Boolean(crysta.cond), stats:crysta.stats || {} },
-  ...(crysta.condStats || []).map(row => ({ name:crysta.name, conditional:true, stats:row.stats || {} }))
+  ...(crysta.conditionalStats || []).map(row => ({ name:crysta.name, conditional:true, stats:row.stats || {} }))
 ]).map(row => ({ ...row, stats:Object.fromEntries(Object.entries(row.stats)
   .map(([key, value]) => [registry.normalize(key) || key, Number(value)])) }));
 const rawKeys = [...new Set(rawRows.flatMap(row => Object.keys(row.stats)))].sort();
 const fixture = JSON.parse(sources.at(-1).content).resolvedExecutionContext;
-const worker = await readFile(resolve(root, 'web/src/ui/crysta-ui.js'), 'utf8');
-vm.runInContext(worker.match(/const BASE_ASPD_MAP = \{[^}]+\};/u)[0], sandbox);
-for (const path of jsSources.filter(path => !['calculation/stat-registry.js', 'data/crysta-data.js'].includes(path))) {
-  vm.runInContext(await readFile(resolve(root, 'web/src', path), 'utf8'), sandbox, { filename:path });
-}
 const evaluator = sandbox.ToramBuildEvaluator;
 const scenario = evaluator.createScenarioSnapshot(fixture.baseContext, { requirements:fixture.scenarioRequirements });
 const compiled = sandbox.ToramCrystaOptimizationProblemCompiler.compileCrystaProblem({

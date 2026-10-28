@@ -1,17 +1,13 @@
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {comboSequence} from '../../../web/src/calculation/combo-sequence-engine.js';
 
-const root = resolve(import.meta.dirname, '../../..');
 const context = { window: {}, console };
 context.window.window = context.window;
 context.window.skillSimulatorState = { getInvestments: () => ({ Shot: {} }) };
-vm.createContext(context);
-for (const path of ['web/src/data/skill-tree-data.js', 'web/src/data/skill-combat-catalog.js', 'web/src/data/skill-effect-data.js', 'web/src/data/skill-effect-registry.js', 'web/src/data/skills/shot.js', 'web/src/data/skill-registration-metadata.js', 'web/src/data/skill-catalog-registration.js', 'web/src/calculation/skill-effect-engine.js', 'web/src/calculation/combo-sequence-engine.js']) vm.runInContext(await readFile(resolve(root, path), 'utf8'), context, { filename:path });
 
-const effects = context.window.ToramSkillEffects;
+const effects = skillEffects;
 const ids = Array.from({ length:25 }, (_, id) => `Shot:${id}`);
-const base = (mainType = '활', subType = '없음') => ({ mainType, subType, level:300, strBase:400, dexBase:500, intBase:100, vitBase:200, agiBase:300, crtBase:50 });
+const base = (mainType = '활', subType = '없음') => ({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType, subType, level:300, strBase:400, dexBase:500, intBase:100, vitBase:200, agiBase:300, crtBase:50 });
 const combat = { STR:400, DEX:500, INT:100, VIT:200, AGI:300, ATK:1000, MATK:500, AMPR:30 };
 const setLevels = (value, extra = {}) => { context.window.skillSimulatorState.getInvestments = () => ({ Shot:Object.assign(Object.fromEntries(ids.map((id) => [id.slice(5), value])), extra) }); };
 const assert = (condition, message) => { if (!condition) throw new Error(message); };
@@ -54,7 +50,7 @@ profile = effects.profile('Shot:4', base(), combat, { charge:5 });
 assert(profile.hits[0].multiplier > 0 && profile.hits[1].count === 1, '크로스 파이어 Lv.1 차지 상한 2');
 profile = effects.profile('Shot:0', base('자동활'), combat, {}, { activeBuffs:{ 'Shot:7':{ active:true, stacks:50 } } });
 close(profile.hits[0].multiplier, 2.1, '트윈 스톰 50스택 슛 피해 +20%');
-const sequence = context.window.ToramComboSequence;
+const sequence = comboSequence;
 const combo = sequence.evaluate([{ skillId:'Shot:9', tag:'none', inputs:{ recastWhileActive:true } }, { skillId:'Shot:0', tag:'none' }], base(), combat, { maxMp:1000 });
 assert(combo.entries[0].finalMp === 400 && combo.entries[0].mpRefund === 200 && combo.entries[0].mpAfter === 800, '퀵 로더 재사용 MP 반환');
 assert(combo.entries[1].motionSpeed === 50, '퀵 로더 Lv.10 다음 스킬 행동 속도');

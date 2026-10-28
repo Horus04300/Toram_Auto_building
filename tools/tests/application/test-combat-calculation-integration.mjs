@@ -1,40 +1,27 @@
-import { frontendSourcePath } from '../../support/frontend-paths.mjs';
-import { readCrystaDataSource } from '../../support/crysta-catalog-source.mjs';
+import {loadSavedBuildEnvironment} from '../../support/saved-build-headless-environment.mjs';
+import {createOptimizationResults} from '../../../web/src/ui/optimization-results.js';
+import {skillEffects} from '../../../web/src/calculation/skill-effect-engine.js';
+import {applyAttackProfileToContext,simulateWithCrystas} from '../../../web/src/calculation/calculator.js';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
-import { resolve } from 'node:path';
-import vm from 'node:vm';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
+import {readFile} from 'node:fs/promises';
 
-const root = resolve(import.meta.dirname, '../../..');
-const html = await readFile(resolve(root, 'web/src/pages/calculator/calculator.html'), 'utf8');
-const dataScripts = CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/'));
 let investments = { Battle:{ 12:10 }, MagicBlade:{ 6:10 }, Dagger:{ 5:10 } };
 const context = { window:{ skillSimulatorState:{ getInvestments:() => investments } }, console };
 context.window.window = context.window;
-vm.createContext(context);
-for (const path of dataScripts) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/skill-effect-engine.js'), 'utf8'), context, { filename:'calculation/skill-effect-engine.js' });
-for (const path of ['web/src/calculation/stat-registry.js', 'web/src/calculation/calculation-policies.js']) vm.runInContext(path === 'web/src/data/crysta-data.js' ? await readCrystaDataSource(root) : await readFile(resolve(root, path), 'utf8'), context, { filename:path });
-vm.runInContext('var BASE_ASPD_MAP={"한손검":100,"양손검":50,"활":75,"자동활":30,"지팡이":60,"마도구":90,"권갑":120,"선풍창":25,"발도검":200,"맨손":1000};', context);
-vm.runInContext(await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8'), context, { filename:'calculation/calculator.js' });
 
-const calculatorSource = await readFile(resolve(root, 'web/src/calculation/calculator.js'), 'utf8');
-assert.match(calculatorSource, /skillConst:\s*appliedComboHit\s*\?\s*appliedComboHit\.skillConst\s*:\s*0/, '계산 기준 기본 공격 상수는 0이어야 합니다.');
-assert.match(await readFile(resolve(root, 'web/src/pages/calculator/calculator.html'), 'utf8'), /\[평타\] 기준 빠른 추천/, '계산 기준 결과 최상단에 평타 기반 빠른 추천임을 표시해야 합니다.');
-assert.match(calculatorSource, /scopedInput\.rangeOverride[\s\S]*ctx\.rangeType\s*=\s*scopedInput\.rangeOverride/, '사용자 거리 선택은 스킬 기본 거리 판정 뒤에 최종 적용돼야 합니다.');
-const comboUiSource = await readFile(resolve(root, 'web/src/ui/combo-ui.js'), 'utf8');
-const applicationUseCasesSource = await readFile(resolve(root, 'web/src/application/application-use-cases.js'), 'utf8');
-assert.match(comboUiSource, /ToramApplication\.ApplyComboHit/, '콤보 타격 콤보 UI는 Application 유스케이스를 통해 타격을 전달해야 합니다.');
-assert.match(applicationUseCasesSource, /hitProfile:\{\s*damageType:selected\.damageType[\s\S]*flags:flags\s*\}/, '콤보 타격 Application 유스케이스는 결과 계산기로 타격 객체 전체를 전달해야 합니다.');
-const crystaUiSource = await readFile(resolve(root, 'web/src/ui/crysta-ui.js'), 'utf8');
-const optimizerSource = await readFile(resolve(root, 'web/src/ui/optimization-results.js'), 'utf8');
-assert.match(crystaUiSource, /function validateCrystaInputs\(\)[\s\S]*!getCrystaByName\(value\)/, '입력 검증 목록에 없는 크리스타 이름을 검사해야 합니다.');
-assert.match(optimizerSource, /validateCrystaInputs[\s\S]*return;[\s\S]*revealResultTab/, '입력 검증 잘못된 이름은 결과 탭을 열기 전에 계산을 차단해야 합니다.');
+const environment=await loadSavedBuildEnvironment();
+const saved=environment.ToramSettingsRepository.parseSavedBuild(await readFile(new URL('../../../samples/마법) 지팡이 크법 세팅 - pelio s.json',import.meta.url),'utf8'));
+const application=environment.ToramApplication;
+assert.equal(application.CreateCalculationSnapshot(saved).baseContext.skillConst,0,'Default normal attack has no skill constant');
+const comboHit=application.ApplyComboHit({damageType:'physical',count:1,multiplier:15,constant:500,flags:{usesAtkPlusMatk:true,forceLongRange:true,ignoreDefense:true}},1,{id:'MagicBlade:9',nameKo:'유니온 소드'});
+const ranged=application.CreateCalculationSnapshot({build:saved.build,scenario:{...saved.scenario,optimizationPreferences:{...saved.scenario.optimizationPreferences,rangeOverride:'SHORT'}},request:{selectedSkillId:'MagicBlade:9',selectedHitId:null,overrides:{appliedComboHit:comboHit}}});
+assert.equal(ranged.baseContext.skillConst,500);
+assert.equal(ranged.baseContext.attackPowerMode,'sum');
+assert.equal(ranged.baseContext.ignoreDefense,true);
+assert.equal(ranged.baseContext.rangeType,'SHORT','Explicit range override follows hit flags');
 
 const adapted = { atkType:'PHYS', rangeType:'SHORT' };
-context.applyAttackProfileToContext(adapted, {
+applyAttackProfileToContext(adapted, {
   skillName:'유니온 소드', skillId:'MagicBlade:9',
   hitProfile:{ damageType:'physical', count:1, multiplier:15, constant:500, flags:{ usesAtkPlusMatk:true, forceLongRange:true, physicalPierceBonus:25, guaranteedCritical:true, ignoreDefense:true } }
 });
@@ -45,12 +32,12 @@ assert.equal(adapted.physicalPierceSkillBonus, 25, '콤보 타격 타격 관통 
 assert.equal(adapted.chkGuaranteedCrit, true, '콤보 타격 확정 크리티컬을 전달해야 합니다.');
 assert.equal(adapted.ignoreDefense, true, '콤보 타격 방어 무시를 전달해야 합니다.');
 
-const effects = context.window.ToramSkillEffects;
-assert.ok(effects.learnedAilmentSources('poison').some(source => source.id === 'Dagger:5'), '중독 중독 가능 스킬 습득을 자동 탐지해야 합니다.');
-assert.ok(effects.learnedAilmentSources('weaken').some(source => source.id === 'MagicBlade:6'), '마법 크리티컬 쇠약 가능 스킬 습득을 자동 탐지해야 합니다.');
+const effects = skillEffects;
+assert.ok(effects.learnedAilmentSources('poison',context.window.skillSimulatorState.getInvestments()).some(source => source.id === 'Dagger:5'), '중독 중독 가능 스킬 습득을 자동 탐지해야 합니다.');
+assert.ok(effects.learnedAilmentSources('weaken',context.window.skillSimulatorState.getInvestments()).some(source => source.id === 'MagicBlade:6'), '마법 크리티컬 쇠약 가능 스킬 습득을 자동 탐지해야 합니다.');
 
 function base(overrides={}) {
-  return Object.assign({
+  return Object.assign({skillLevels:context.window.skillSimulatorState.getInvestments(),
     level:100, strBase:0, intBase:0, vitBase:0, agiBase:0, dexBase:100, crtBase:0,
     mainType:'한손검', wpnAtk:100, wpnRefine:0, wpnStab:100, subType:'없음', subAtk:0, subRefine:0, subStab:0, armorType:'일반',
     bossLevel:100, bossDef:600, bossMdef:0, bossCritResist:0, bossPhysResist:20, bossMagResist:40,
@@ -67,39 +54,47 @@ function base(overrides={}) {
   }, overrides);
 }
 
-const poisonResult = context.simulateWithCrystas(base({ poisonSources:effects.learnedAilmentSources('poison') }), []);
+const poisonResult = simulateWithCrystas(base({ poisonSources:effects.learnedAilmentSources('poison',context.window.skillSimulatorState.getInvestments()) }), []);
 const expectedPoison = (poisonResult.finalDEX + (poisonResult.finalATK + poisonResult.finalMATK) * .5) * .7;
 assert.equal(poisonResult.poisonDamageProfile.available, true, '중독 중독 가능 스킬을 배운 경우에만 중독 1회 계산을 활성화해야 합니다.');
 assert.ok(Math.abs(poisonResult.poisonDamageProfile.damage - expectedPoison) < 1e-9, '중독 DEF/MDEF 비율 상한 0.5와 평균 내성을 적용해야 합니다.');
-assert.equal(context.simulateWithCrystas(base(), []).poisonDamageProfile.damage, null, '중독 중독 가능 스킬을 배우지 않으면 중독값을 만들지 않아야 합니다.');
+assert.equal(simulateWithCrystas(base(), []).poisonDamageProfile.damage, null, '중독 중독 가능 스킬을 배우지 않으면 중독값을 만들지 않아야 합니다.');
 
-const staffWeakened = context.simulateWithCrystas(base({ atkType:'MAG', mainType:'지팡이', dexBase:0, spellBurstLevel:10, targetWeakened:true }), []);
-const swordNotWeak = context.simulateWithCrystas(base({ atkType:'MAG', mainType:'한손검', dexBase:0, spellBurstLevel:10, targetWeakened:true, magicElement:true }), []);
-const swordWeak = context.simulateWithCrystas(base({ atkType:'MAG', mainType:'한손검', dexBase:0, spellBurstLevel:10, targetWeakened:true, attackElement:'weakness' }), []);
+const staffWeakened = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, atkType:'MAG', mainType:'지팡이', dexBase:0, spellBurstLevel:10, targetWeakened:true }), []);
+const swordNotWeak = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, atkType:'MAG', mainType:'한손검', dexBase:0, spellBurstLevel:10, targetWeakened:true, magicElement:true }), []);
+const swordWeak = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, atkType:'MAG', mainType:'한손검', dexBase:0, spellBurstLevel:10, targetWeakened:true, attackElement:'weakness' }), []);
 assert.equal(staffWeakened.finalCrit, 18, '마법 크리티컬 지팡이는 쇠약 +50%와 스펠 버스트 25%를 합쳐 75% 반영해야 합니다.');
 assert.equal(swordNotWeak.finalCrit, 6, '마법 크리티컬 기타 무기의 마력 속성은 약점 공격이 아니므로 쇠약 +50%를 받지 않아야 합니다.');
 assert.equal(swordWeak.finalCrit, 18, '마법 크리티컬 기타 무기는 실제 약점 속성 공격일 때만 쇠약 +50%를 받아야 합니다.');
-const magicCdmgDecimal = context.simulateWithCrystas(base({ atkType:'MAG', strBase:225, spellBurstLevel:1 }), []);
+const magicCdmgDecimal = simulateWithCrystas(base({ atkType:'MAG', strBase:225, spellBurstLevel:1 }), []);
 assert.equal(magicCdmgDecimal.finalCDMG, 149, '마법 크뎀은 물리 크뎀 195와 스펠 버스트 Lv1 반영률 52.5%를 곱한 뒤 49로 내림해야 합니다.');
-const dualBringerCdmg = context.simulateWithCrystas(base({ atkType:'MAG', strBase:225, intBase:226, subType:'마도구', dualBringerActive:true, dualBringerLevel:10 }), []);
+const dualBringerCdmg = simulateWithCrystas(base({ atkType:'MAG', strBase:225, intBase:226, subType:'마도구', dualBringerActive:true, dualBringerLevel:10 }), []);
 assert.equal(dualBringerCdmg.finalCDMG, 171, '듀얼 브링거 활성·INT>STR이면 쇠약과 무관하게 마법 크뎀 반영률에 25%를 더해야 합니다.');
-const dualBringerEqualStats = context.simulateWithCrystas(base({ atkType:'MAG', strBase:225, intBase:225, subType:'마도구', dualBringerActive:true, dualBringerLevel:10 }), []);
+const dualBringerEqualStats = simulateWithCrystas(base({ atkType:'MAG', strBase:225, intBase:225, subType:'마도구', dualBringerActive:true, dualBringerLevel:10 }), []);
 assert.equal(dualBringerEqualStats.finalCDMG, 147, '듀얼 브링거 마법 크뎀 보정은 INT가 STR보다 클 때만 적용해야 합니다.');
-const layeredDamage = context.simulateWithCrystas(base({ dexBase:0, wpnAtk:1, bossDef:0, bossPhysResist:0, noCritical:true, skillMult:1.5, damageMultiplierLayers:{ skill:1.5, passive:1.1, active:1.1, combo:.9 } }), []);
+const layeredDamage = simulateWithCrystas(base({ dexBase:0, wpnAtk:1, bossDef:0, bossPhysResist:0, noCritical:true, skillMult:1.5, damageMultiplierLayers:{ skill:1.5, passive:1.1, active:1.1, combo:.9 } }), []);
 assert.equal(layeredDamage.damageFactor, 163, '스킬·패시브·거리·버프·콤보의 각 곱연산은 원문 순서에 따라 단계별 내림해야 합니다.');
-const conversionMatkFlat = context.simulateWithCrystas(base({ mainType:'한손검', wpnAtk:100, intBase:100, dexBase:0, conversionLevel:10, matkP:100 }), []);
+const conversionMatkFlat = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType:'한손검', wpnAtk:100, intBase:100, dexBase:0, conversionLevel:10, matkP:100 }), []);
 assert.equal(conversionMatkFlat.finalMATK, 1000, '컨버전의 무기·INT 보정은 MATK% 뒤의 MATK(+)로 더해야 합니다.');
-const knuckleMatkRatio = context.simulateWithCrystas(base({ mainType:'권갑', wpnAtk:101, intBase:0, dexBase:0 }), []);
+const knuckleMatkRatio = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType:'권갑', wpnAtk:101, intBase:0, dexBase:0 }), []);
 assert.equal(knuckleMatkRatio.finalMATK, 150, '권갑은 최종 무기 공격력의 50%를 MATK에 반영해야 합니다.');
-const dualSubFloor = context.simulateWithCrystas(base({ mainType:'한손검', subType:'한손검(듀얼소드)', subAtk:101, subRefine:1, watkP:.5, subStab:1, strBase:10, dexBase:0, agiBase:0 }), []);
+const dualSubFloor = simulateWithCrystas(base({get skillLevels(){return context.window.skillSimulatorState.getInvestments();}, mainType:'한손검', subType:'한손검(듀얼소드)', subAtk:101, subRefine:1, watkP:.5, subStab:1, strBase:10, dexBase:0, agiBase:0 }), []);
 assert.equal(dualSubFloor.finalSubAtk, 212, '듀얼소드 서브 무기 ATK%·재련 보정은 각각 곱한 뒤 내림해야 합니다.');
 assert.equal(dualSubFloor.finalSubStab, 0, '듀얼소드 서브 안정률의 0.5·0.06·0.04배 항은 각각 곱한 뒤 내림해야 합니다.');
-const physicalCdmgCap = context.simulateWithCrystas(base({ strBase:250, strF:5, agiBase:0, cdmgP:50, cdmgF:20 }), []);
+const physicalCdmgCap = simulateWithCrystas(base({ strBase:250, strF:5, agiBase:0, cdmgP:50, cdmgF:20 }), []);
 assert.equal(physicalCdmgCap.finalCDMG, 310, '물리 크뎀은 장비·스킬 STR을 포함해 퍼센트 곱셈 후 내림하고 321의 300 초과분을 절반으로 낮춰 310으로 만들어야 합니다.');
 
-
-const magicElementResult = context.simulateWithCrystas(base({ intBase:100, magicElement:true }), []);
-const elementAwakeningResult = context.simulateWithCrystas(base({ intBase:100, elementAwakening:true }), []);
+const magicElementResult = simulateWithCrystas(base({ intBase:100, magicElement:true }), []);
+const elementAwakeningResult = simulateWithCrystas(base({ intBase:100, elementAwakening:true }), []);
 assert.equal(magicElementResult.ctx.elemP, 10, '마법 크리티컬 마력 속성은 INT 비례 속성 보너스만 받고 약점 25%는 받지 않아야 합니다.');
 assert.equal(elementAwakeningResult.ctx.elemP, 35, '마법 크리티컬 속성 각성은 INT 보너스와 약점 25%를 모두 받아야 합니다.');
+const negativeStability=simulateWithCrystas(base({strBase:0,dexBase:0,wpnStab:-10}),[]);
+assert.equal(negativeStability.finalStab,-10,'Negative stability is not silently clamped');
+const fastContext=base({aspdF:50000,motionSpeed:40}),fast=simulateWithCrystas(fastContext,[]);
+assert.equal(fast.finalMotionSpeed,50);
+const rendered=new Map();
+const documentRef={defaultView:{},getElementById(id){if(!rendered.has(id))rendered.set(id,{style:{}});return rendered.get(id);}};
+createOptimizationResults(documentRef,{buildGroupedTagsHtml:()=>''}).current({baseContext:fastContext,crystas:[],build:{equipment:{mainWeapon:{options:[]}},externalOptions:[]}},{calculation:fast},[], 'preview');
+assert.match(rendered.get('resSpeed').innerHTML,/최종 행동속도: \+50\.0%/,'Displayed motion speed also respects the cap');
+assert.equal(rendered.get('optimizationBasisLabel').textContent,'[평타] 기준 빠른 추천');
 console.log('D-sector regressions: PASS');

@@ -4,40 +4,18 @@
   "private": true,
   "description": "Toram Online auto build calculator desktop shell",
   "scripts": {
-    "server:start": "node --env-file=server/.env server/account-server.mjs",
-    "web:preview": "node tools/prepare-frontend.mjs web && node tools/preview-platform.mjs",
-    "test:account": "node tools/tests/application/test-account-server.mjs && node tools/tests/application/test-account-client.mjs && node tools/tests/application/test-inventory-composition.mjs && node tools/tests/application/test-post-store.mjs",
-    "ai:files": "rg --files --hidden --ignore-file .aiignore",
-    "ai:search": "rg -n --hidden --ignore-file .aiignore",
-    "ai:audit": "node tools/verification/audit-ai-context.mjs",
-    "items:publish": "node tools/extraction/convert-toram-project-items.mjs",
-    "items:sync": "node tools/extraction/sync-toram-dev-items.mjs",
-    "items:test": "node tools/tests/application/test-item-catalog.mjs && node tools/tests/application/test-item-equipment.mjs && node tools/tests/application/test-item-events.mjs && node tools/tests/application/test-crysta-catalog.mjs && node tools/tests/application/test-supplemental-stats.mjs && node tools/tests/application/test-option-event-calculator.mjs && node tools/tests/application/test-option-calculation-integration.mjs",
-    "bosses:sync": "node tools/extraction/sync-toram-dev-bosses.mjs",
-    "bosses:test": "node tools/tests/application/test-boss-catalog.mjs && node tools/tests/application/test-boss-target.mjs",
-    "bench:optimization:build": "node tools/benchmarks/benchmark-crysta-computation.mjs build",
-    "bench:optimization": "node tools/benchmarks/benchmark-crysta-computation.mjs run",
-    "types:check": "tsc -p tsconfig.json",
-    "types:emit": "tsc -p desktop/tsconfig.storage.json && tsc -p desktop/tsconfig.update.json",
-    "verify:architecture": "npm run types:emit && npm run types:check && node tools/verification/verify-typescript-boundaries.mjs && node tools/verification/verify-calculation-contracts.mjs && node tools/verification/verify-application-boundary.mjs && node tools/verification/verify-build-state.mjs && node tools/verification/verify-ui-boundaries.mjs && node tools/tests/application/test-build-setting-snapshot.mjs && node tools/tests/application/test-tauri-build-storage-adapter.mjs && node tools/verification/verify-storage-contract.mjs && node tools/verification/verify-optimization-execution.mjs && node tools/tests/optimization/test-crysta-execution-adapter.mjs && node tools/tests/optimization/test-crysta-recommendation-apply.mjs && node tools/verification/verify-native-boundaries.mjs && node tools/verification/verify-runtime-contracts.mjs && node tools/verification/verify-role-layout.mjs",
-    "verify:entry": "node tools/verification/verify-es-module-entry.mjs",
-    "verify:entry:dist": "node tools/verification/verify-es-module-entry.mjs --dist",
-    "verify:entry:web": "node tools/verification/verify-es-module-entry.mjs --web",
-    "verify:web:browser": "node tools/verification/verify-web-browser.mjs && node tools/verification/verify-session-restore-browser.mjs && node tools/verification/verify-web-parallel.mjs",
-    "wasm:build": "node tools/build-wasm.mjs",
-    "web:dev": "npm run wasm:build && node tools/web-dev.mjs",
-    "web:build": "npm run wasm:build && node tools/prepare-frontend.mjs web",
-    "desktop:prepare": "npm run wasm:build && npm run types:emit && node tools/prepare-frontend.mjs desktop",
-    "desktop:clean": "cargo clean --manifest-path desktop/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator && cargo clean --release --manifest-path desktop/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator && cargo clean --release --target x86_64-pc-windows-msvc --manifest-path desktop/Cargo.toml -p tauri -p tauri-plugin-updater -p toram-online-auto-build-calculator",
+    "web:dev": "node tools/web-dev.mjs",
+    "web:build": "node tools/prepare-frontend.mjs web",
     "desktop:dev": "cd desktop && tauri dev",
-    "desktop:build": "cd desktop && tauri build --bundles nsis",
-    "desktop:build:exe": "cd desktop && tauri build --no-bundle",
-    "test:regression": "npm run wasm:build && node tools/run-regression-suite.mjs",
-    "test:regression:normal": "npm run wasm:build && node tools/run-regression-suite.mjs normal",
-    "test:regression:characterization": "node tools/run-regression-suite.mjs characterization"
+    "desktop:build": "cd desktop && tauri build",
+    "test": "node tools/run-regression-suite.mjs"
   },
   "devDependencies": {
     "@tauri-apps/cli": "2.11.4",
     "typescript": "^5.9.3"
+  },
+  "type": "module",
+  "engines": {
+    "node": ">=24"
   }
 }

@@ -10,8 +10,7 @@ import { root, jsSources, loadHeadlessEnvironment } from '../support/crysta-head
 import { loadSavedBuildEnvironment } from '../support/saved-build-headless-environment.mjs';
 import { createHeadlessTransport } from '../support/crysta-headless-transport.mjs';
 import { measureComputation } from '../support/crysta-computation-measurement.mjs';
-import { CLASSIC_SCRIPT_PATHS as runtimeScripts } from '../../web/src/classic-script-manifest.mjs';
-const CLASSIC_SCRIPT_PATHS = runtimeScripts.map(frontendSourcePath);
+
 
 const { values } = parseArgs({ options:{ child:{type:'boolean'}, case:{type:'string'}, disabled:{type:'boolean'}, 'compare-projection':{type:'boolean'},
   repeats:{type:'string',default:'3'}, 'max-ms':{type:'string',default:'120000'},
@@ -23,9 +22,8 @@ const cases = ['magic-device', 'magic-staff', 'revenir'];
 const maxDurationMs = Number(values['max-ms']);
 assert.ok(maxDurationMs > 0 && maxDurationMs <= 3600000);
 const inputPath = id => resolve(directory, `input-${id}.json`);
-const sourcePaths = [...new Set([...jsSources.map(path => frontendSourcePath('assets/js/' + path)),
-  ...CLASSIC_SCRIPT_PATHS.filter(path => path.startsWith('web/src/data/')),
-  'web/src/classic-script-manifest.mjs', 'web/src/calculation/skill-effect-engine.js', 'web/src/ui/crysta-ui.js',
+const sourcePaths = [...new Set([...jsSources,
+ 'web/src/calculation/skill-effect-engine.js', 'web/src/ui/crysta-ui.js',
   'web/src/calculation/combo-sequence-engine.js', 'web/src/application/application-use-cases.js', 'web/src/storage/settings-repository.js',
   'tools/support/saved-build-headless-environment.mjs', 'tools/support/crysta-headless-environment.mjs',
   'tools/support/crysta-catalog-source.mjs', 'web/public/game-data/items/manifest.json',
@@ -111,7 +109,7 @@ if (values.child) {
     assert.equal(entry.executionStatus, 'executed');
     assert.equal(sample.build.combo.find(entry => entry.skillId === 'Magic:11').inputs.charge, 200);
     const hit = entry.hits[0];
-    const appliedComboHit = savedEnv.ToramApplication.ApplyComboHit(hit, entry.damageMultiplier, entry.appliedNextSkillModifiers, entry.skill);
+    const appliedComboHit = savedEnv.ToramApplication.ApplyComboHit(hit, entry.damageMultiplier, entry.skill);
     const snapshot = savedEnv.ToramApplication.CreateCalculationSnapshot({ ...sample, request:{ overrides:{ appliedComboHit } } });
     assert.equal(snapshot.baseContext.atkType, 'MAG');
     assert.equal(snapshot.baseContext.appliedSkillId, 'Magic:11');

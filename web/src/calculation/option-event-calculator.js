@@ -1,5 +1,3 @@
-/* Explicit native option stages for one supplied event; no automatic battle timeline. */
-(function (root) {
   'use strict';
   var f = Math.fround;
   var elements = [['FIRE_RES','불'],['WATER_RES','물'],['WIND_RES','바람'],['EARTH_RES','땅'],['LIGHT_RES','빛'],['DARK_RES','어둠'],['NEUTRAL_RES','무속성']];
@@ -108,12 +106,18 @@
     if (dodgeRoll !== null && !Number.isInteger(dodgeRoll)) throw new Error('absoluteDodgeRoll: 0~99 정수 난수가 필요합니다.');
     row(values,'absoluteDodgeChance','옵션 절대회피 확률 (상한 30%)',dodgeChance,'%');
     row(outcomes,'absoluteDodge','해당 난수·공격 조건의 절대회피',dodgeEligible === null || dodgeRoll === null ? null : dodgeEligible && dodgeRoll < dodgeChance,'',['absoluteDodgeEligible','absoluteDodgeRoll']);
+    [['STOP_FLINCH','flinchInflictionStopped','기죽음 부여 정지'],['STOP_TUMBLE','tumbleInflictionStopped','넘어짐 부여 정지'],['STOP_STUN','stunInflictionStopped','기절 부여 정지']].forEach(function(entry){
+      var contributions=ctx.preservedStatContributions && ctx.preservedStatContributions[entry[0]];
+      var flags=Array.isArray(contributions)?contributions:[stats[entry[0]]===undefined?false:stats[entry[0]]];
+      var stopped=flags.some(function(value){return typeof value==='boolean'?value:numeric(value,entry[0])>0;});
+      row(values,entry[1],entry[2],stopped,'');
+    });
     return {values:values,outcomes:outcomes,rows:rows,requirements:requirements.map(function (entry) { return Object.assign({},entry); })};
   }
   var supportedKeys = ['PHYS_RES','MAG_RES'].concat(elements.map(function (entry) { return entry[0]; }),shapes.map(function (entry) { return entry[0]; }),
-    ['PHYS_BARR','MAG_BARR','FRAC_BARR','GUARD_POWER','GUARD_RECHARGE','AVOID_RECHARGE','REFLECT','AILMENT_RES','BARR_SPEED','ABS_DODGE']);
+    ['PHYS_BARR','MAG_BARR','FRAC_BARR','GUARD_POWER','GUARD_RECHARGE','AVOID_RECHARGE','REFLECT','AILMENT_RES','BARR_SPEED','ABS_DODGE','STOP_FLINCH','STOP_TUMBLE','STOP_STUN']);
   var inputDefinitions = Object.freeze(requirements.reduce(function (all, entry) { all[entry.key] = Object.freeze(Object.assign({},entry)); return all; },{}));
   var api = Object.freeze({evaluate:evaluate,resistDamage:resistDamage,shapeStat:shapeStat,supportedKeys:Object.freeze(supportedKeys),inputDefinitions:inputDefinitions});
-  if (typeof module === 'object' && module.exports) module.exports = api;
-  if (root) root.ToramOptionEvents = api;
-}(typeof window !== 'undefined' ? window : globalThis));
+
+export const optionEvents=api;
+export {evaluate,resistDamage,shapeStat,supportedKeys,inputDefinitions};

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { createRequire } from 'node:module';
+import {createRequire} from 'node:module';
 const events = createRequire(import.meta.url)('../../../web/src/calculation/option-event-calculator.js');
 const calculate = (stats = {}, inputs = {}, overrides = {}) => events.evaluate({ctx:{preservedStats:stats},finalMaxHP:1000,...overrides},inputs);
 
@@ -45,4 +45,8 @@ assert.equal(calculate({ABS_DODGE:30},{absoluteDodgeEligible:true,absoluteDodgeR
 assert.equal(calculate({ABS_DODGE:30},{absoluteDodgeEligible:true,absoluteDodgeRoll:30}).outcomes.absoluteDodge,false);
 assert.equal(calculate({ABS_DODGE:30},{absoluteDodgeEligible:false,absoluteDodgeRoll:0}).outcomes.absoluteDodge,false);
 assert.equal(calculate({ABS_DODGE:-10}).values.absoluteDodgeChance,0);
+for(const [key,name] of [['STOP_FLINCH','flinchInflictionStopped'],['STOP_TUMBLE','tumbleInflictionStopped'],['STOP_STUN','stunInflictionStopped']]) {
+  for(const [value,expected] of [[false,false],[0,false],[true,true],[1,true]])assert.equal(calculate({[key]:value}).values[name],expected);
+  assert.equal(calculate({}, {}, {ctx:{preservedStats:{},preservedStatContributions:{[key]:[0,1,0]}}}).values[name],true);
+}
 console.log('Option incoming stages: PASS (native resistance bands/order, all 11 shapes, barriers, guard/recovery, reflection, explicit event bases)');

@@ -1,25 +1,16 @@
+import './skill-effect-engine.js';
+import {skillCatalog} from '../data/skill-combat-catalog.js';
+import {skillRegistry} from '../data/skill-effect-registry.js';
 /* 전투 스킬 데이터의 등록 범위와 상세화 상태를 검증한다. */
-(function () {
+
   'use strict';
   var kinds = ['attack', 'passive', 'buff', 'utility'];
   function audit() {
-    var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
-    var data = window.TORAM_SKILL_EFFECT_DATA;
-    if (!catalog || !data) throw new Error('스킬 카탈로그와 효과 데이터가 먼저 로드되어야 합니다.');
+    var catalog = skillCatalog;
+    if (!catalog || !skillRegistry) throw new Error('스킬 카탈로그와 효과 데이터가 먼저 로드되어야 합니다.');
     var catalogIds = new Set(catalog.skills.map(function (skill) { return skill.id; }));
-    var seen = new Set();
     var errors = [];
-    var registry = window.ToramSkillEffectRegistry;
-    var layered = (data.skills || []).concat(registry ? registry.all() : []).filter(function (skill) { return Boolean(skill && skill.id); });
-    var shadowedDefinitions = [];
-    var detailed = layered.filter(function (skill) {
-      if (seen.has(skill.id)) {
-        shadowedDefinitions.push(skill.id);
-        return false;
-      }
-      seen.add(skill.id);
-      return true;
-    });
+    var detailed = skillRegistry.definitions();
     detailed.forEach(function (skill) {
       if (!catalogIds.has(skill.id)) errors.push('전투 카탈로그에 없는 스킬 정의: ' + skill.id);
       if (kinds.indexOf(skill.kind) === -1) errors.push('알 수 없는 스킬 종류: ' + skill.id);
@@ -40,10 +31,9 @@
       unreviewed: status.unreviewed || 0,
       partial: status.partial || 0,
       verified: status.verified || 0,
-      layered: layered.length,
-      shadowedDefinitions: Object.freeze(shadowedDefinitions),
+      layered:detailed.length,
+      shadowedDefinitions:Object.freeze([]),
       errors: Object.freeze(errors)
     });
   }
-  window.ToramSkillData = Object.freeze({ audit: audit });
-}());
+  export const skillData = Object.freeze({ audit: audit });

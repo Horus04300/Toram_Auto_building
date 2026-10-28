@@ -38,17 +38,20 @@ try {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
   await page.goto(`http://127.0.0.1:${server.address().port}/?view=calculator`);
-  await page.waitForFunction(() => window.ToramUiFeatures?.settings);
+  await page.waitForFunction(() => window.ToramApp?.features?.settings);
   assert.equal(await page.evaluate(() => typeof window.ToramCrystaOptimizationNativeClient), 'undefined');
   for (const [id, entry] of Object.entries(cases)) {
     for (let repeat = 1; repeat <= 3; repeat++) {
       const run = await page.evaluate(async input => {
-        const adapter = window.ToramCrystaOptimizationExecutionAdapter;
+        const adapter = window.ToramApp.execution;
+        const {buildEvaluator}=await import(new URL('assets/js/calculation/build-evaluator.js',document.baseURI));
+        const {problemCompiler}=await import(new URL('assets/js/optimization/problem-compiler.js',document.baseURI));
+        const {crystaCatalog}=await import(new URL('assets/js/data/crysta-data.js',document.baseURI));
         await adapter.disposeContinuation();
         const started = performance.now();
-        const scenarioSnapshot = window.ToramBuildEvaluator.createScenarioSnapshot(input.baseContext, { requirements:input.scenarioRequirements });
-        const problem = window.ToramCrystaOptimizationProblemCompiler.compileCrystaProblem({
-          registry:window.ToramStatRegistry, crystas:crystaDataJson, baseContext:input.baseContext, scenarioSnapshot,
+        const scenarioSnapshot = buildEvaluator.createScenarioSnapshot(input.baseContext, { requirements:input.scenarioRequirements });
+        const problem = problemCompiler.compileCrystaProblem({
+          registry:window.ToramApp.statRegistry, crystas:crystaCatalog.items, baseContext:input.baseContext, scenarioSnapshot,
           currentCrystas:input.currentCrystas, locks:input.locks, banned:input.banned
         });
         const compileMs = performance.now() - started;

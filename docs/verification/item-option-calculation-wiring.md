@@ -21,20 +21,18 @@ releaseC e99f6b32의 items.connected.json(SHA256 1e360559738f04313b522096107d327
 
 ## 검증 명령
 
-- npm run items:test: 변환/ID·단위·속성·이벤트·저장·실데이터 WASM oracle.
+- npm test: 변환/ID·단위·속성·이벤트·저장·실데이터 WASM oracle.
 - node tools/tests/optimization/test-elemental-option-parity.mjs: JS/Rust432사례와 signed i16 전체 범위/기초 스탯 경계·소수 파싱.
-- npm run verify:architecture: 타입·Application/저장/UI·실행 경계.
-- node tools/run-regression-suite.mjs:80fixture. localhost 차단3건은 같은 스크립트를 샌드박스 밖에서 재실행해 통과, Native 저장E2E1건은 TORAM_E2E_CDP가 없어 SKIP.
-- 두 Cargo manifest의 fmt/test/clippy, npm run wasm:build, source/web/desktop entry 검사.
-- Chrome verify-web-browser·verify-session-restore-browser: 개발 루트와 웹 하위 경로, PC/모바일, 실제 Worker, JSON/새로고침·탭 재열기. Browser plugin 미제공으로 기존 Playwright 사용.
-- npm run ai:audit, git diff --check, S1 --require-s1.
+- npm test: 타입·Application/저장/UI·실행 경계.
+- npm test: 현재 분류된 회귀. TORAM_E2E_CDP 없는 개별 Native 저장 검사는 SKIP이다.
+- 두 Cargo manifest의 fmt/test/clippy, node tools/build-wasm.mjs, source/web/desktop entry 검사.
+- Chrome verify-web-browser·verify-session-restore-browser: 개발 루트와 웹 하위 경로, PC/모바일, 실제 Worker, JSON/새로고침·탭 재열기. Chrome과 CODEX_PLAYWRIGHT_PATH를 사용한다.
+- node tools/verification/audit-ai-context.mjs, git diff --check, S1 --require-s1.
 
 피격·도움·보상 사건 소비와 현재 서버 이벤트 캘린더·실전 전투 결과는 검증하지 않았다. METEOR_RES/SUCTION_RES/HELP_INVINCIBILITY/STOP_FLINCH/PET_EXP/GEM_DUST_DROP은 보존/미계산으로 유지한다. 사용자 보류 범위의 피격 시뮬레이션과 콤보 후속을 구현하지 않았다.
 
-## 추천 정확성·성능 재검증
+## 후보·상한 계약
 
-가변 비례를 이유로 전체 affine plan/후보 투영을 비활성화하는 중간 구현은 웹 기존10초 exact Gate에서 bounded가 되어 채택하지 않았다. 최종 구현은 원시 비례 좌표를 동일하게 유지한 후보끼리만 비교하고, 독립적인 HP/공속 투영을 보존한다. affine 상한에는128×f32 epsilon×항별 절댓값 합의 오차와0 방향 절삭 완화를 포함한다. f32 overflow 영역에는 plan fallback을 유지한다. signed i16 경계·수동 격자 밖 소수·양/음 기초 스탯·상쇄의 부분공간 property를 추가했다.
+원시 비례 좌표가 같은 후보끼리만 비교하고 독립적인 HP/공속 투영을 보존한다. affine 상한에는128×f32 epsilon×항별 절댓값 합의 오차와0 방향 절삭 완화를 포함한다. f32 overflow는 plan fallback이다. signed i16·수동 격자 밖 소수·양/음 기초 스탯·상쇄의 부분공간 property를 검사한다. 실제 성능 비교는 동일 입력·출력·계측 경계와 새 프로세스 반복을 요구한다.
 
-최종 Rust99테스트와 실제 WASM 독립40완전탐색 score/ID 사례가 통과했다. 후보 투영은121context/5,430완성 조합/332교체 비교를 통과했다. Chrome의 기존26min-revenir fixture는 중단/재개 후 exact, 반복3회 모두 exact였다. 준비+탐색+JS 재평가 총883/794/958ms, 정밀203/144/220ms, 점수1,149,067.74로 재평가와 일치했다. 이것은 해당 입력의3회 측정이며 모든 입력10초나 P95를 보증하지 않는다.
-
-보존되지만 실제 소비가 미계산인 키는 총62종이다. 기존 명중/회피·DEF/MDEF·피해 저항/배리어·추격·자연 회복·쿨다운·어그로·경험치/드롭 계열을 포함하며 이번 정적 옵션 연결로 지원 상태를 바꾸지 않았다. 미연결0은 장비 데이터 매핑의 의미다. 사용자에게 모든 전투 효과 계산이 끝났다고 보고하면 안 된다.
+보존되지만 소비가 미계산인 키는 데이터 매핑과 별도다. 명중/회피·DEF/MDEF·피해 저항/배리어·추격·자연 회복·쿨다운·어그로·경험치/드롭이 포함된다. 미연결0은 장비 데이터 매핑의 의미이며 전투 효과 계산 완료가 아니다. 식 추출은 equipment-option-formulas.md, 마지막 통합 검사는 handoff를 따른다.

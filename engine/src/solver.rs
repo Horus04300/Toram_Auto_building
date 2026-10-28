@@ -130,15 +130,9 @@ impl NativeProblem {
         self.trees = Arc::new(trees);
         let supply = SupplyBounds::prepare(self, &roots);
         let joint = JointUtilityBounds::prepare(self, &roots)?;
-        let states = self
-            .metadata
-            .experimental_supply_states
-            .then(|| SupplyStateBounds::prepare(self, &roots, supply.plan.as_ref()))
-            .flatten();
         let trees = Arc::get_mut(&mut self.trees).unwrap();
         trees.joint = joint;
         trees.supply = Some(supply);
-        trees.states = states;
         Ok(roots)
     }
 
@@ -153,13 +147,13 @@ impl NativeProblem {
 
 #[derive(Clone, Default, Serialize, Deserialize)]
 pub struct NativeMetadata {
+    // Retained only for v25 checkpoint identity; both experimental policies are retired.
     #[serde(
         rename = "experimentalLocalBounds",
         default,
         skip_serializing_if = "std::ops::Not::not"
     )]
     pub experimental_local_bounds: bool,
-    /// Development prototype; serialized so resumes rebuild identical bounds.
     #[serde(
         rename = "experimentalSupplyStates",
         default,
@@ -244,7 +238,6 @@ struct TreeArena {
     roots: [NodeId; GROUP_COUNT],
     joint: Option<JointUtilityBounds>,
     supply: Option<SupplyBounds>,
-    states: Option<SupplyStateBounds>,
     ordering_keys: Vec<String>,
 }
 
@@ -448,264 +441,6 @@ struct BoxBound {
     optimization_damage_factor: f64,
 }
 
-// Profiles replace only upper-bound work, never the actual candidate space.
-// Rounded supplies are outward relaxations, including negative/fractional input.
-const STATE_UNITS: [f64; 2] = [16.0, 1.0];
-const STATE_PROFILE_LIMIT: usize = 4096;
-const STATE_ENTRY_LIMIT: usize = 1_000_000;
-const STATE_PAIR_WORK_LIMIT: usize = 65_536;
-
-#[derive(Clone, Copy, Debug)]
-struct SupplyStatePoint {
-    mp: i32,
-    ampr: i32,
-    score: f64,
-}
-
-fn state_sum_score(a: f64, b: f64) -> f64 {
-    a + b + 256.0 * f64::EPSILON * (1.0 + a.abs() + b.abs())
-}
-
-#[allow(clippy::manual_isolate_lowest_one)] // Threaded WASM's pinned nightly predates this API.
-fn state_update(index: &mut [f64], mut position: usize, score: f64) {
-    while position < index.len() {
-        index[position] = index[position].max(score);
-        position += position & position.wrapping_neg();
-    }
-}
-
-fn state_query(index: &[f64], mut position: usize) -> f64 {
-    let mut score = f64::NEG_INFINITY;
-    while position > 0 {
-        score = score.max(index[position]);
-        position &= position - 1;
-    }
-    score
-}
-
-fn state_frontier(mut points: Vec<SupplyStatePoint>) -> Vec<SupplyStatePoint> {
-    points.sort_unstable_by(|a, b| {
-        b.mp.cmp(&a.mp)
-            .then(b.ampr.cmp(&a.ampr))
-            .then(b.score.total_cmp(&a.score))
-    });
-    let mut coordinates: Vec<_> = points.iter().map(|p| p.ampr).collect();
-    coordinates.sort_unstable_by(|a, b| b.cmp(a));
-    coordinates.dedup();
-    let mut index = vec![f64::NEG_INFINITY; coordinates.len() + 1];
-    points.retain(|p| {
-        let rank = coordinates.partition_point(|v| *v > p.ampr) + 1;
-        if state_query(&index, rank) >= p.score {
-            return false;
-        }
-        state_update(&mut index, rank, p.score);
-        true
-    });
-    points
-}
-
-fn state_pair(a: &[SupplyStatePoint], b: &[SupplyStatePoint]) -> Option<Vec<SupplyStatePoint>> {
-    let work = a.len().checked_mul(b.len())?;
-    if work > STATE_PAIR_WORK_LIMIT {
-        return None;
-    }
-    let mut points = Vec::with_capacity(work);
-    for a in a {
-        for b in b {
-            points.push(SupplyStatePoint {
-                mp: a.mp + b.mp,
-                ampr: a.ampr + b.ampr,
-                score: state_sum_score(a.score, b.score),
-            });
-        }
-    }
-    Some(state_frontier(points))
-}
-
-#[derive(Clone)]
-struct SupplyStateBounds {
-    profiles: Vec<Option<Vec<SupplyStatePoint>>>,
-    resources: [Form; 2],
-    constant: f64,
-    power_stage: bool,
-    maxima: Vec<Option<SupplyStatePoint>>,
-}
-
-impl SupplyStateBounds {
-    fn prepare(
-        problem: &NativeProblem,
-        roots: &[NodeId; 4],
-        plan: Option<&SupplyPlan>,
-    ) -> Option<Self> {
-        let plan = plan?;
-        let requirements = Requirements::new(
-            problem
-                .scenario_snapshot
-                .get("requirements")
-                .unwrap_or(&Value::Null),
-        );
-        if requirements.max_mp.is_none() || requirements.ampr.is_none() {
-            return None;
-        }
-        let form = if plan.legacy_safe {
-            &plan.stages[0]
-        } else {
-            &plan.upper[0]
-        };
-        let mut result = Self {
-            profiles: vec![None; problem.trees.nodes.len()],
-            resources: plan.resource_upper.clone(),
-            constant: form.constant + form.error,
-            power_stage: plan.legacy_safe,
-            maxima: vec![None; problem.trees.nodes.len()],
-        };
-        let mut entries = 0;
-        for (group, root) in roots.iter().enumerate() {
-            result.fill(problem, group, *root, form, &mut entries)?;
-        }
-        Some(result)
-    }
-
-    fn fill(
-        &mut self,
-        problem: &NativeProblem,
-        group: usize,
-        node: NodeId,
-        form: &Form,
-        entries: &mut usize,
-    ) -> Option<()> {
-        let tree = &problem.trees[node];
-        let points = if let Some(package) = tree.package {
-            let stats = problem.groups[group].packages[package].evaluation_stats();
-            let resources = std::array::from_fn::<_, 2, _>(|i| {
-                (self.resources[i].package(stats) / STATE_UNITS[i]).ceil()
-            });
-            let score = form.package(stats);
-            if resources
-                .iter()
-                .any(|v| !v.is_finite() || v.abs() > 1_000_000.0)
-                || !score.is_finite()
-                || score.abs() > 1e18
-            {
-                return None;
-            }
-            Some(vec![SupplyStatePoint {
-                mp: resources[0] as i32,
-                ampr: resources[1] as i32,
-                score,
-            }])
-        } else {
-            let (left, right) = (tree.left?, tree.right?);
-            self.fill(problem, group, left, form, entries)?;
-            self.fill(problem, group, right, form, entries)?;
-            match (
-                &self.profiles[left.0 as usize],
-                &self.profiles[right.0 as usize],
-            ) {
-                (Some(a), Some(b)) if a.len() + b.len() <= 2 * STATE_PROFILE_LIMIT => {
-                    let points = state_frontier(a.iter().chain(b).copied().collect());
-                    (points.len() <= STATE_PROFILE_LIMIT).then_some(points)
-                }
-                _ => None,
-            }
-        };
-        *entries += points.as_ref().map_or(0, Vec::len);
-        if *entries > STATE_ENTRY_LIMIT {
-            return None;
-        }
-        self.maxima[node.0 as usize] = points.as_ref().and_then(|points| {
-            points
-                .iter()
-                .copied()
-                .max_by(|a, b| a.score.total_cmp(&b.score))
-        });
-        self.profiles[node.0 as usize] = points;
-        Some(())
-    }
-
-    fn score(&self, clusters: &[NodeId; 4], requirements: &Requirements) -> Option<f64> {
-        let minima = [requirements.max_mp?, requirements.ampr?];
-        let mut required = [0i64; 2];
-        for i in 0..2 {
-            let f = &self.resources[i];
-            let difference = minima[i] - f.constant - f.error;
-            let slack = 256.0 * f64::EPSILON * (1.0 + minima[i].abs() + f.constant.abs() + f.error);
-            let threshold = ((difference - slack) / STATE_UNITS[i]).ceil();
-            if !threshold.is_finite() || threshold.abs() > 8_000_000.0 {
-                return None;
-            }
-            required[i] = threshold as i64;
-        }
-        let profiles: [Option<&Vec<_>>; 4] =
-            clusters.map(|id| self.profiles[id.0 as usize].as_ref());
-        let profiles = [profiles[0]?, profiles[1]?, profiles[2]?, profiles[3]?];
-        let maxima = clusters.map(|id| self.maxima[id.0 as usize].unwrap());
-        if maxima.iter().map(|p| i64::from(p.mp)).sum::<i64>() >= required[0]
-            && maxima.iter().map(|p| i64::from(p.ampr)).sum::<i64>() >= required[1]
-        {
-            return None; // The independent maximum is reachable in the relaxed states.
-        }
-        if profiles.iter().map(|p| p.len()).product::<usize>() <= 256 {
-            let mut score = f64::NEG_INFINITY;
-            for a in profiles[0] {
-                for b in profiles[1] {
-                    let ab = state_sum_score(a.score, b.score);
-                    for c in profiles[2] {
-                        let abc = state_sum_score(ab, c.score);
-                        for d in profiles[3] {
-                            if i64::from(a.mp + b.mp + c.mp + d.mp) >= required[0]
-                                && i64::from(a.ampr + b.ampr + c.ampr + d.ampr) >= required[1]
-                            {
-                                score = score.max(state_sum_score(abc, d.score));
-                            }
-                        }
-                    }
-                }
-            }
-            return Some(if score.is_finite() {
-                state_sum_score(self.constant, score)
-            } else {
-                score
-            });
-        }
-        // Choose the cheapest join; all three partitions cover the same space.
-        let partition = [[0, 1, 2, 3], [0, 2, 1, 3], [0, 3, 1, 2]]
-            .into_iter()
-            .min_by_key(|p| {
-                profiles[p[0]].len() * profiles[p[1]].len()
-                    + profiles[p[2]].len() * profiles[p[3]].len()
-            })?;
-        let left = state_pair(profiles[partition[0]], profiles[partition[1]])?;
-        let right = state_pair(profiles[partition[2]], profiles[partition[3]])?;
-        let mut coordinates: Vec<_> = right.iter().map(|p| p.ampr).collect();
-        coordinates.sort_unstable_by(|a, b| b.cmp(a));
-        coordinates.dedup();
-        let mut index = vec![f64::NEG_INFINITY; coordinates.len() + 1];
-        let mut next = 0;
-        let mut score = f64::NEG_INFINITY;
-        for point in left.iter().rev() {
-            while next < right.len()
-                && i64::from(right[next].mp) >= required[0] - i64::from(point.mp)
-            {
-                let rank = coordinates.partition_point(|v| *v > right[next].ampr) + 1;
-                state_update(&mut index, rank, right[next].score);
-                next += 1;
-            }
-            let rank = coordinates
-                .partition_point(|v| i64::from(*v) >= required[1] - i64::from(point.ampr));
-            let other = state_query(&index, rank);
-            if other.is_finite() {
-                score = score.max(state_sum_score(point.score, other));
-            }
-        }
-        Some(if score.is_finite() {
-            state_sum_score(self.constant, score)
-        } else {
-            score
-        })
-    }
-}
-
 fn evaluate_box(
     problem: &NativeProblem,
     clusters: &[NodeId; GROUP_COUNT],
@@ -718,27 +453,11 @@ fn evaluate_box(
         }
     }
     let mut score = supply.map_or(f64::INFINITY, |s| s.score(clusters));
-    let conditional = requirements.and_then(|r| {
-        problem
-            .trees
-            .states
-            .as_ref()
-            .and_then(|s| s.score(clusters, r))
-    });
-    if conditional == Some(f64::NEG_INFINITY) {
-        return Ok(None);
-    }
-    let power_stage = problem.trees.states.as_ref().is_some_and(|s| s.power_stage);
     if supply.is_none_or(SupplyBounds::legacy_safe) {
         let stats = box_stats(&problem.trees, clusters);
         let accepts = |i, v| requirements.is_none_or(|r| r.accepts_value(i, v));
         let old = if let Some(supply) = supply {
-            let mut caps = std::array::from_fn(|i| supply.metric(clusters, SUPPLY_METRICS + i));
-            if power_stage {
-                if let Some(upper) = conditional {
-                    caps[0] = caps[0].min(upper);
-                }
-            }
+            let caps = std::array::from_fn(|i| supply.metric(clusters, SUPPLY_METRICS + i));
             evaluate_utility_feasible_bound(&problem.base_context, &stats, &caps, accepts)?
         } else {
             evaluate_feasible_summary(&problem.base_context, &stats, accepts)?
@@ -748,109 +467,9 @@ fn evaluate_box(
         };
         score = score.min(old.optimization_damage_factor);
     }
-    if !power_stage {
-        if let Some(upper) = conditional {
-            score = score.min(upper);
-        }
-    }
     Ok(Some(BoxBound {
         optimization_damage_factor: score,
     }))
-}
-
-const LOCAL_BOUND_CANDIDATE_LIMIT: usize = 96;
-
-fn box_supply_groups<'a>(
-    problem: &'a NativeProblem,
-    clusters: &[NodeId; GROUP_COUNT],
-) -> Vec<Vec<&'a Stats>> {
-    clusters
-        .iter()
-        .enumerate()
-        .map(|(g, id)| {
-            let mut group = Vec::with_capacity(problem.trees[*id].size);
-            visit_cluster_indices(&problem.trees, *id, &mut |i| {
-                group.push(problem.groups[g].packages[i].evaluation_stats())
-            });
-            group
-        })
-        .collect()
-}
-
-fn local_box_bound(
-    problem: &NativeProblem,
-    clusters: &[NodeId; GROUP_COUNT],
-    requirements: &Requirements,
-) -> Result<Option<BoxBound>, String> {
-    let groups = box_supply_groups(problem, clusters);
-    let Some(plan) = SupplyPlan::prepare(&problem.base_context, &groups) else {
-        return Ok(Some(BoxBound {
-            optimization_damage_factor: f64::INFINITY,
-        }));
-    };
-    let support = |form: &Form| {
-        let mut value = form.constant + form.error;
-        let mut magnitude = value.abs();
-        for group in &groups {
-            let term = group
-                .iter()
-                .map(|p| form.package(p))
-                .fold(f64::NEG_INFINITY, f64::max);
-            value += term;
-            magnitude += term.abs();
-        }
-        value + 256.0 * f64::EPSILON * (1.0 + magnitude)
-    };
-    if (0..5).any(|i| !requirements.accepts_value(i, support(&plan.upper[i + 1]))) {
-        return Ok(None);
-    }
-    let mut score = support(&plan.upper[0]);
-    if plan.legacy_safe {
-        let stats = box_stats(&problem.trees, clusters);
-        let caps = std::array::from_fn(|i| support(&plan.stages[i]));
-        let Some(bound) =
-            evaluate_utility_feasible_bound(&problem.base_context, &stats, &caps, |i, v| {
-                requirements.accepts_value(i, v)
-            })?
-        else {
-            return Ok(None);
-        };
-        score = score.min(bound.optimization_damage_factor);
-    }
-    Ok(Some(BoxBound {
-        optimization_damage_factor: score,
-    }))
-}
-
-fn evaluate_search_box(
-    problem: &NativeProblem,
-    clusters: &[NodeId; GROUP_COUNT],
-    requirements: &Requirements,
-    incumbent: f64,
-) -> Result<Option<BoxBound>, String> {
-    let Some(mut bound) = evaluate_box(problem, clusters, Some(requirements))? else {
-        return Ok(None);
-    };
-    // Scheduling only: every removal still needs a certified local bound.
-    if problem.metadata.experimental_local_bounds
-        && incumbent.is_finite()
-        && bound.optimization_damage_factor >= incumbent - EPSILON
-        && bound.optimization_damage_factor <= incumbent + incumbent.abs() * LOOKAHEAD_RELATIVE_GAP
-        && clusters
-            .iter()
-            .map(|id| problem.trees[*id].size)
-            .sum::<usize>()
-            <= LOCAL_BOUND_CANDIDATE_LIMIT
-        && box_combinations(&problem.trees, clusters, SMALL_BOX_LIMIT) > SMALL_BOX_LIMIT
-    {
-        let Some(local) = local_box_bound(problem, clusters, requirements)? else {
-            return Ok(None);
-        };
-        bound.optimization_damage_factor = bound
-            .optimization_damage_factor
-            .min(local.optimization_damage_factor);
-    }
-    Ok(Some(bound))
 }
 
 // Nonnegative integer directions are a cost/strength choice, not game constants.
@@ -3209,9 +2828,7 @@ pub fn solve_exact(problem: &NativeProblem) -> Result<NativeSolveResult, String>
         }
         for child_clusters in child_boxes {
             state.evaluations += 1;
-            let Some(bound) =
-                evaluate_search_box(problem, &child_clusters, requirements, state.best_score)?
-            else {
+            let Some(bound) = evaluate_box(problem, &child_clusters, Some(requirements))? else {
                 pruned_by_constraint += 1;
                 continue;
             };
@@ -3517,12 +3134,8 @@ impl NativeSearchSession {
                 }
                 for child_clusters in child_boxes {
                     self.state.evaluations += 1;
-                    let Some(bound) = evaluate_search_box(
-                        &self.problem,
-                        &child_clusters,
-                        &self.requirements,
-                        self.state.best_score,
-                    )?
+                    let Some(bound) =
+                        evaluate_box(&self.problem, &child_clusters, Some(&self.requirements))?
                     else {
                         self.pruned_by_constraint += 1;
                         continue;
@@ -4060,13 +3673,7 @@ fn expand_parallel_node_inner(
             }
         }
         counters.count_evaluations();
-        let Some(bound) = evaluate_search_box(
-            problem,
-            &child_clusters,
-            requirements,
-            shared_best_score(incumbent),
-        )?
-        else {
+        let Some(bound) = evaluate_box(problem, &child_clusters, Some(requirements))? else {
             counters.count_pruned_by_constraint();
             constraint_rejections += 1;
             continue;
@@ -4170,9 +3777,7 @@ fn create_parallel_shards(
         }
         for child_clusters in child_boxes {
             state.evaluations += 1;
-            let Some(bound) =
-                evaluate_search_box(problem, &child_clusters, requirements, state.best_score)?
-            else {
+            let Some(bound) = evaluate_box(problem, &child_clusters, Some(requirements))? else {
                 continue;
             };
             if bound.optimization_damage_factor >= state.best_score - EPSILON {

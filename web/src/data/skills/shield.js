@@ -1,7 +1,9 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 (function () {
   'use strict';
-  const R = window.ToramSkillEffectRegistry;
-  const C = window.TORAM_SKILL_COMBAT_CATALOG;
+  const R = skillRegistry;
+  const C = skillCatalog;
   if (!R || !C) throw new Error('Shield order');
   const v = value => ({ op: 'value', value });
   const r = path => ({ op: 'ref', path });
@@ -77,5 +79,5 @@
   skills[10] = { ...skills[10], cost: { mp: { timing: 'cast', value: q(shield, v(100), v(300)) } }, activeBuff: true, effects: [{ phase: 'combat', type: 'protectionResistance', physical: [15, 20, 25, 30], magicPenalty: [30, 25, 20, 15], durationSeconds: m(v(60), l()) }] };
   skills[11] = { ...skills[11], cost: { mp: { timing: 'cast', value: q(shield, v(100), v(300)) } }, activeBuff: true, effects: [{ phase: 'combat', type: 'aegisResistance', magic: [15, 20, 25, 30], physicalPenalty: [30, 25, 20, 15], durationSeconds: m(v(60), l()) }] };
   skills[12] = { ...skills[12], cost: { mp: { timing: 'cast', value: v(600) } }, activeBuff: true, effects: [{ phase: 'combat', type: 'guardianAura', notes: '연결 아군 수·방패 제련·3초 어그로·파티 분산은 전투 상태 엔진 필요.' }] };
-  R.register('Shield:calculation-rules', skills);
+  R.register(skills);
 }());

@@ -35,7 +35,7 @@ fullyMapped                       이 객체의 옵션 키 연결 범위. 계산
 
 ## 개발판 적용 경계
 
-`npm run items:sync`는 공개 revision 확인 → 추출/검증 → snapshot/project 변환 → 개발판 파일 검증/교체를 한 번 실행한다. 수동 명령만 제공하며 주기 실행·백그라운드 작업은 만들지 않는다. 코드 변경/형식 오류/변환 실패/출처 hash 불일치면 이전 개발판 manifest를 유지한다. 동시 sync는 잠금으로 차단한다.
+`node tools/extraction/sync-toram-dev-items.mjs`는 공개 revision 확인 → 추출/검증 → snapshot/project 변환 → 개발판 파일 검증/교체를 한 번 실행한다. 수동 명령만 제공하며 주기 실행·백그라운드 작업은 만들지 않는다. 코드 변경/형식 오류/변환 실패/출처 hash 불일치면 이전 개발판 manifest를 유지한다. 동시 sync는 잠금으로 차단한다.
 
 현재 앱은 `window.ToramApp.items`로 `getItem(id, locale)`, `listItems(kind, locale)`, `getDetails(id, locale)`, `refresh()`를 노출한다. 시작 시 데이터는 요청하지 않는다. 동일 파일의 동시 요청은 하나의 Promise를 공유하고 실패한 요청은 재시도할 수 있다. 반환한 캐시 데이터는 불변이다. 개발판 파일 갱신 뒤 페이지를 새로 열거나 `refresh()`로 manifest를 다시 읽는다.
 
@@ -71,11 +71,11 @@ fullyMapped                       이 객체의 옵션 키 연결 범위. 계산
 
 ## 검증 Gate
 
-- `npm run items:test`: 스탯 값/키, OR·듀얼·개조 조건, 활성 미연결 효과 차단, 중복 ID/키, lazy 요청·캐시·재시도·같은 이름의 ID 분리, hash·부분 적용/동시 실행 차단.
+- `npm test`: 스탯 값/키, OR·듀얼·개조 조건, 활성 미연결 효과 차단, 중복 ID/키, lazy 요청·캐시·재시도·같은 이름의 ID 분리, hash·부분 적용/동시 실행 차단.
 - 같은 명령의 `test-item-equipment.mjs`: 실제 ID/보조 8종, 일반 옵션 제외, 버프 값·그룹·저장 검증, 기존 커널 동치와 수동 옵션 보존. 변환 테스트는 동적 0 operand·음수 페널티·복합 명령·duration 순서/enum·사용 불가 분류도 확인한다. 브라우저는 한/영 ID·보조 기본 입력·수동 옵션·버프 교체/해제·JSON 왕복·재열기를 확인한다.
 - `test-crysta-catalog.mjs`: 실제 전수 ID/이전 이름/부모 연결, 조건별 원본·Application·compiler 동치, ID/영문 금지·잠금, 실데이터 소형 WASM 완전탐색의 점수·tie ID. 상세 `docs/verification/crysta-id-catalog.md`.
 - Python 파이프라인 `--self-test`: 추출 실패·코드 변경·변환 실패 때 latest 유지, 원본 보존·변경 비교·중도 revision 변경.
-- `npm run verify:architecture`, source/web/desktop `verify-es-module-entry.mjs`: 기존 계산/저장/실행 경계와 새 카탈로그 진입점.
+- `npm test`, source/web/desktop `verify-es-module-entry.mjs`: 기존 계산/저장/실행 경계와 새 카탈로그 진입점.
 - 실제 브라우저에서 개발 루트·배포 하위 경로의 ID 조회가 같은 데이터를 읽고, 필요 없는 언어/설명/재요청을 만들지 않는지 확인한다.
 - 표현/키/조건을 바꿀 때는 원본 옵션 커버리지와 float32·기존 산식 계약을 다시 대조한다. 추천기 전체 전환은 크리스타 최적화 계약의 계보/잠금/동점 Gate를 따른다.
 

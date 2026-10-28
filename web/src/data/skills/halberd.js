@@ -1,8 +1,10 @@
+import {skillCatalog} from '../skill-combat-catalog.js';
+import {skillRegistry} from '../skill-effect-registry.js';
 /* 할버드: 원문 대조가 끝난 신속의 수도의 누적 버프 규칙. */
 (function () {
   'use strict';
-  var registry = window.ToramSkillEffectRegistry;
-  var catalog = window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry = skillRegistry;
+  var catalog = skillCatalog;
   if (!registry || !catalog) throw new Error('할버드 스킬 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v = function (n) { return { op:'value', value:n }; };
   var r = function (path) { return { op:'ref', path:path }; };
@@ -18,7 +20,7 @@
   var stacks = r('buff.stacks');
   var halberd = eq(r('equipment.mainWeapon'), v('선풍창'));
   var resistanceDecrease = m(s(v(100), m(v(3), l())), i(halberd, v(.55), v(1)), stacks);
-  registry.register('Halberd-stack-buff', [{
+  registry.register([{
     id:skill.id, treeId:'Halberd', skillId:19, nameKo:skill.nameKo, kind:'buff', source:'halberd', dataStatus:'partial',
     sourceRef:{ file:'docs/sources/skills/Halberd.txt', anchor:'신속의 수도 버프 / 모든 무기 사용 가능' },
     stackRole:'active-buff', cost:{ mp:{ timing:'cast', value:v(100) } },
@@ -42,7 +44,7 @@
 /* 할버드: 원문 대조 S1~S3 전수 정의. S4는 별도 작업으로 남긴다. */
 (function () {
   'use strict';
-  var registry=window.ToramSkillEffectRegistry, catalog=window.TORAM_SKILL_COMBAT_CATALOG;
+  var registry=skillRegistry, catalog=skillCatalog;
   if(!registry || !catalog) throw new Error('할버드 S3 데이터는 등록기와 전투 카탈로그 뒤에 로드되어야 합니다.');
   var v=function(x){return {op:'value',value:x};}, r=function(path){return {op:'ref',path:path};}, l=function(){return r('skill.level');};
   var a=function(){return {op:'add',args:[].slice.call(arguments)};},m=function(){return {op:'multiply',args:[].slice.call(arguments)};},d=function(x,y){return {op:'divide',left:x,right:y};},q=function(w,y,n){return {op:'if',when:w,then:y,else:n};};
@@ -50,30 +52,27 @@
   var total=function(key){return r('combatStats.'+key);}, base=function(key){return r('baseStats.'+key);}, input=function(id){return r('attack.inputs.'+id);};
   var between=function(lo,hi,value){return {when:{op:'all',args:[{op:'gte',left:l(),right:v(lo)},{op:'lte',left:l(),right:v(hi)}]},value:value};}, tier=function(cases){return {op:'tier',cases:cases};};
   function def(id,kind,anchor,when,notes){var item=catalog.skills.find(function(s){return s.id==='Halberd:'+id;});if(!item)throw new Error('Halberd:'+id+' 스킬을 찾지 못했습니다.');return {id:item.id,treeId:'Halberd',skillId:id,nameKo:item.nameKo,kind:kind,source:'halberd',dataStatus:'partial',sourceRef:{file:'docs/sources/skills/Halberd.txt',anchor:anchor},requirements:{when:when},notes:notes};}
-  var list=[
-    def(0,'attack','플래쉬 스탭 물리 액티브',halbOrOne,'한손검/선풍창 전용.'),
-    def(1,'attack','캐논 스피어 물리 액티브',halb,'선풍창 전용 2타.'),
-    def(2,'attack','드래곤 테일 물리 액티브',halb,'선풍창 전용 2타.'),
-    def(3,'attack','다이브 임팩트 물리 액티브',halb,'선풍창 전용 2타·공중 무적.'),
-    def(4,'attack','드래곤 투스 물리 액티브',halb,'선풍창 전용 2타.'),
-    def(5,'attack','5차드래고닉 차지 물리(특수) 액티브',halb,'선풍창 전용 충전 돌진.'),
-    def(6,'attack','데들리 스피어 물리 액티브',halbOrOne,'한손검/선풍창 전용.'),
-    def(7,'attack','스트라이크 스탭 물리 액티브',halbOrOne,'한손검/선풍창 전용 3타.'),
-    def(8,'attack','크로노스 드라이브 물리 액티브',halb,'선풍창 전용 후속타 버프.'),
-    def(9,'attack','디멘젼 틸 물리 액티브',halb,'선풍창 전용 5초 5타.'),
-    def(10,'attack','배니쉬 레이 마법(특수) 액티브',halbOrOne,'ATK를 쓰는 특수 마법.'),
-    def(11,'attack','블리츠 파이크 액티브',halb,'거리 8m 경계로 변화.'),
-    def(12,'attack','라이트닝 헤일 마법(마법창 MATK) 액티브',halb,'선풍창 전용 확정 크리.'),
-    def(13,'attack','톨 해머 마법(마법창 MATK) 액티브',halb,'뇌흔 후속타와 버프.'),
-    def(14,'passive','할버드 마스터리 패시브',halb,'선풍창 정적 패시브.'),
-    def(15,'passive','회심의 일격 패시브',halb,'선풍창 크리 패시브.'),
-    def(16,'passive','토네이도 랜스 패시브',halb,'최대 10 스택, 피격 반감.'),
-    def(17,'buff','퀵 오러 버프',null,'HP 소모형 3분 버프.'),
-    def(18,'utility','역경의 사자후 액티브',null,'현재 HP 구간 MP 회복.'),
-    def(19,'buff','신속의 수도 버프',null,'기존 상세 정의와 함께 사용.'),
-    def(20,'passive','신의 창솜씨 패시브',halb,'신속의 수도 상호작용.'),
-    def(21,'attack','버스터랜스 물리 액티브',halb,'배니쉬 레이 버프 시 퍼니시 전환.')
-  ];
+  var list=[def(0,'attack','플래쉬 스탭 물리 액티브',halbOrOne,'한손검/선풍창 전용.'),
+def(1,'attack','캐논 스피어 물리 액티브',halb,'선풍창 전용 2타.'),
+def(2,'attack','드래곤 테일 물리 액티브',halb,'선풍창 전용 2타.'),
+def(3,'attack','다이브 임팩트 물리 액티브',halb,'선풍창 전용 2타·공중 무적.'),
+def(4,'attack','드래곤 투스 물리 액티브',halb,'선풍창 전용 2타.'),
+def(5,'attack','5차드래고닉 차지 물리(특수) 액티브',halb,'선풍창 전용 충전 돌진.'),
+def(6,'attack','데들리 스피어 물리 액티브',halbOrOne,'한손검/선풍창 전용.'),
+def(7,'attack','스트라이크 스탭 물리 액티브',halbOrOne,'한손검/선풍창 전용 3타.'),
+def(8,'attack','크로노스 드라이브 물리 액티브',halb,'선풍창 전용 후속타 버프.'),
+def(9,'attack','디멘젼 틸 물리 액티브',halb,'선풍창 전용 5초 5타.'),
+def(10,'attack','배니쉬 레이 마법(특수) 액티브',halbOrOne,'ATK를 쓰는 특수 마법.'),
+def(11,'attack','블리츠 파이크 액티브',halb,'거리 8m 경계로 변화.'),
+def(12,'attack','라이트닝 헤일 마법(마법창 MATK) 액티브',halb,'선풍창 전용 확정 크리.'),
+def(13,'attack','톨 해머 마법(마법창 MATK) 액티브',halb,'뇌흔 후속타와 버프.'),
+def(14,'passive','할버드 마스터리 패시브',halb,'선풍창 정적 패시브.'),
+def(15,'passive','회심의 일격 패시브',halb,'선풍창 크리 패시브.'),
+def(16,'passive','토네이도 랜스 패시브',halb,'최대 10 스택, 피격 반감.'),
+def(17,'buff','퀵 오러 버프',null,'HP 소모형 3분 버프.'),
+def(18,'utility','역경의 사자후 액티브',null,'현재 HP 구간 MP 회복.'),
+def(20,'passive','신의 창솜씨 패시브',halb,'신속의 수도 상호작용.'),
+def(21,'attack','버스터랜스 물리 액티브',halb,'배니쉬 레이 버프 시 퍼니시 전환.')];
   list[0]=Object.assign(list[0],{cost:{mp:{timing:'cast',value:v(100)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(1),m(v(.05),l())),constant:a(v(50),m(v(5),l())),flags:{longRange:true,unsheathe:false,castRange:null}}],effects:[{phase:'cast',type:'motionSpeed',value:a(v(25),q(halb,v(25),v(0)))}]});
   list[1]=Object.assign(list[1],{cost:{mp:{timing:'cast',value:v(200)}},attacks:[{id:'stab',damageType:'physical',count:v(1),multiplier:a(v(.4),m(v(.01),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:false}},{id:'throw',damageType:'physical',count:v(1),multiplier:a(v(1.5),m(v(.1),l())),constant:a(v(100),m(v(10),l())),flags:{longRange:true,unsheathe:false,lineLength:tier([between(1,2,v(8)),between(3,4,v(9)),between(5,6,v(10)),between(7,8,v(11)),between(9,10,v(12))]),areaRadius:2}}]});
   list[2]=Object.assign(list[2],{cost:{mp:{timing:'cast',value:v(300)}},attacks:[{id:'hit1',damageType:'physical',count:v(1),multiplier:a(v(.7),m(v(.03),l())),constant:v(100),flags:{longRange:true,unsheathe:false}},{id:'hit2',damageType:'physical',count:v(1),multiplier:a(v(2),m(v(.2),l())),constant:a(v(50),m(v(15),l())),flags:{longRange:true,unsheathe:false}}],effects:[{phase:'motion',type:'oneHitDamageReduction',value:v(50)},{phase:'hit',type:'ailmentChance',key:'tumble',chance:m(v(10),l())}]});
@@ -93,11 +92,11 @@
   list[16]=Object.assign(list[16],{stackModel:{mode:'hit-stack',hardCap:v(10),durationSeconds:v(100),onHit:v(1),onTakeHit:'floor(stacks/2)',notes:'스택당 크리티컬 데미지 +레벨/2, avoid +10%, 추격 확률 +레벨/4%, graze 안정률 +1%, 최소 명중 +0.8×레벨.'}});
   list[17]=Object.assign(list[17],{cost:{mp:{timing:'cast',value:v(0),hp:{timing:'cast',value:q(halb,m(r('combatStats.MAXHP'),v(.1)),m(r('combatStats.MAXHP'),v(.15)))}}},stateTransitions:[{event:'cast',operation:'grant',stateId:'halberd.quickAura',stacks:v(1),maxStacks:v(1),durationSeconds:q(halb,v(300),v(180))}],effects:[{phase:'combat',type:'stat',key:'ASPD',value:m(v(50),l())},{phase:'combat',type:'stat',key:'ASPD_P',value:m(v(2.5),l())}]});
   list[18]=Object.assign(list[18],{inputs:[{id:'hpPercent',label:'현재 HP(%)',type:'number',min:v(0),max:v(100),default:v(100)}],cost:{mp:{timing:'cast',value:v(100)}},effects:[{phase:'cast',type:'resourceRefund',key:'MP',value:tier([{when:{op:'gte',left:input('hpPercent'),right:v(86)},value:v(120)},{when:{op:'gte',left:input('hpPercent'),right:v(71)},value:a(v(120),m(v(2),l()))},{when:{op:'gte',left:input('hpPercent'),right:v(56)},value:a(v(120),m(v(6),l()))},{when:{op:'gte',left:input('hpPercent'),right:v(0)},value:a(v(140),m(v(16),l()))}])}]});
-  list[20]=Object.assign(list[20],{effects:[{phase:'combat',type:'damageMultiplier',target:'skillCategory:Halberd',value:a(v(1),d(l(),v(100)))},{phase:'takeHit',type:'godspeedStackPreserveChance',chance:m(v(10),l()),notes:'성공 시 신속의 수도는 종료하지 않고 1스택 감소.'}]});
-  list[21]=Object.assign(list[21],{inputs:[{id:'distance',label:'대상 거리(m)',type:'number',min:v(0),max:v(24),default:v(6)},{id:'punishActive',label:'배니쉬 레이 버프',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:v(100)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(5),d(total('STR'),v(200)),d(total('AGI'),v(200)),q({op:'gte',left:input('distance'),right:v(7)},m(m(v(-1),{op:'subtract',left:input('distance'),right:v(6)}),a(v(1),m(v(-.05),l()))),v(0))),constant:q({op:'truthy',value:input('punishActive')},v(200),v(100)),flags:{longRange:true,unsheathe:false,castRange:12,magicInertiaWhenPunish:true}}],stateTransitions:[{event:'cast',when:{op:'truthy',value:input('punishActive')},operation:'setStacks',stateId:'halberd.punishRay',stacks:v(3),maxStacks:v(3)}]});
+  list[19]=Object.assign(list[19],{effects:[{phase:'combat',type:'damageMultiplier',target:'skillCategory:Halberd',value:a(v(1),d(l(),v(100)))},{phase:'takeHit',type:'godspeedStackPreserveChance',chance:m(v(10),l()),notes:'성공 시 신속의 수도는 종료하지 않고 1스택 감소.'}]});
+  list[20]=Object.assign(list[20],{inputs:[{id:'distance',label:'대상 거리(m)',type:'number',min:v(0),max:v(24),default:v(6)},{id:'punishActive',label:'배니쉬 레이 버프',type:'boolean',default:false}],cost:{mp:{timing:'cast',value:v(100)}},attacks:[{id:'main',damageType:'physical',count:v(1),multiplier:a(v(5),d(total('STR'),v(200)),d(total('AGI'),v(200)),q({op:'gte',left:input('distance'),right:v(7)},m(m(v(-1),{op:'subtract',left:input('distance'),right:v(6)}),a(v(1),m(v(-.05),l()))),v(0))),constant:q({op:'truthy',value:input('punishActive')},v(200),v(100)),flags:{longRange:true,unsheathe:false,castRange:12,magicInertiaWhenPunish:true}}],stateTransitions:[{event:'cast',when:{op:'truthy',value:input('punishActive')},operation:'setStacks',stateId:'halberd.punishRay',stacks:v(3),maxStacks:v(3)}]});
   /* S4: 계산기에서 선택·적용할 수 있는 활성 스택과 반복/후속 공격을 연결한다. */
   list[8]=Object.assign(list[8],{specialAttacks:[{id:'chronosFollowup',hits:[{id:'followup',damageType:'physical',count:v(1),multiplier:a(v(.4),m(v(.01),l()),d(total('INT'),v(500))),constant:a(v(250),m(v(25),l())),flags:{longRange:false,unsheathe:false,ignoresComboDamageChange:true}}],notes:'지속시간 중 반복 간격은 통상 공격 딜레이·행동속도·시간 경과가 필요하므로 특수 공격 1회만 선택 계산한다.'}],effects:[{phase:'afterHit',type:'mpRestore',value:v(30),notes:'크로노스 드라이브 후속타 적중마다.'}]});
   list[16]=Object.assign(list[16],{activeBuff:true,stackControl:{stateId:'halberd.tornadoLance',minStacks:v(0),maxStacks:v(10),initialStacks:v(0),label:'토네이도 랜스 스택'},effects:[{phase:'combat',type:'stat',key:'CDMG',value:m(d(l(),v(2)),r('buff.stacks'))},{phase:'combat',type:'stat',key:'AVOID_P',value:m(v(10),r('buff.stacks'))},{phase:'combat',type:'stat',key:'HIT',value:m(m(v(.8),l()),r('buff.stacks'))},{phase:'combat',type:'chaseChance',value:m(d(l(),v(4)),r('buff.stacks')),notes:'물리/마법 추격이 이미 있을 때 확률만 증가.'}]});
   list[17]=Object.assign(list[17],{activeBuff:true,cost:{mp:{timing:'cast',value:v(0)},hp:{timing:'cast',value:q(halb,m(r('combatStats.MAXHP'),v(.1)),m(r('combatStats.MAXHP'),v(.15)))}}});
-  list[18]=Object.assign(list[18],{castTime:{type:'tier',seconds:tier([between(1,3,v(5)),between(4,6,v(4)),between(7,9,v(3)),between(10,10,v(2))]),affectedByCastSpeed:true,weaponModifier:q(halb,v(.8),v(1))}});  registry.register('Halberd-source-coverage',list);
+  list[18]=Object.assign(list[18],{castTime:{type:'tier',seconds:tier([between(1,3,v(5)),between(4,6,v(4)),between(7,9,v(3)),between(10,10,v(2))]),affectedByCastSpeed:true,weaponModifier:q(halb,v(.8),v(1))}});  registry.register(list);
 }());

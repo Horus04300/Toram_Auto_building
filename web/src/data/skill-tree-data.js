@@ -1,4 +1,5 @@
-window.SKILL_TREE_DATA = {
+
+export const skillTreeData = {
   "schemaVersion": 1,
   "source": "Coryn Club skill_simulator.php",
   "skillMaxLevel": 10,
@@ -5631,4 +5632,3 @@ window.SKILL_TREE_DATA = {
     }
   ]
 };
-
