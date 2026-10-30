@@ -5,6 +5,8 @@ import { createInventoryMergeUi } from './inventory-merge-ui.mjs';
 import { createInventoryNavigation, emptyInventoryFilters } from './inventory-navigation.mjs';
 import { createInventoryEquipmentEditor } from './inventory-equipment-editor.mjs';
 import { createInventorySkillEditor } from './inventory-skill-editor.mjs';
+import { createInventoryRegistletEditor } from './inventory-registlet-editor.mjs';
+import { EQUIPMENT_ICONS, prependEquipmentIcon } from '../../ui/equipment-icons.mjs';
 
 export function createInventoryUi(documentRef, account, shell, publish) {
   const root = documentRef.defaultView, api = account.inventory;
@@ -18,7 +20,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
 <form class="inventory-search"><label class="inventory-search-name">이름 검색<input type="search" name="q" maxlength="80" placeholder="구성 이름"></label><button type="submit">검색</button><span class="inventory-count"></span></form>
       <details class="inventory-capture-toggle"><summary>계산기 구성 담기</summary><form class="inventory-capture"><label class="inventory-capture-slot">가져올 계산기 부위<select name="slot">${Object.entries(account.slots).map(([id, label]) => `<option value="${id}">${label}</option>`).join('')}</select></label><label class="inventory-capture-tree" hidden>가져올 트리<select name="treeId"></select></label><label class="inventory-capture-consumable" hidden>가져올 도핑<select name="consumableId"></select></label><label>새 구성 이름<input name="name" maxlength="80" required placeholder="예: 보스전용 세팅"></label><button type="submit" class="inventory-primary">현재 구성 담기</button></form></details>
 <form class="inventory-rename" hidden><input name="name" maxlength="80" required aria-label="구성 이름"></form><div class="inventory-list" id="inventoryEntries" tabindex="-1"></div></section>
-      <section class="inventory-detail" aria-label="구성 작업공간"><button type="button" data-action="list">내 목록</button><section class="inventory-create" aria-label="새 장비 입력" hidden></section><section class="inventory-skill-editor" aria-label="스킬 구성 편집" hidden></section><div class="inventory-placeholder"></div><div class="inventory-selected" hidden>
+      <section class="inventory-detail" aria-label="구성 작업공간"><button type="button" data-action="list">내 목록</button><section class="inventory-create" aria-label="새 장비 입력" hidden></section><section class="inventory-skill-editor" aria-label="스킬 구성 편집" hidden></section><section class="inventory-registlet-editor" aria-label="레지스트렛 편집" hidden></section><div class="inventory-placeholder"></div><div class="inventory-selected" hidden>
         <div class="inventory-detail-heading"><span class="inventory-slot"></span></div>
 
         <nav class="inventory-detail-tabs" aria-label="구성 상세 구분"><button type="button" data-detail-tab="summary">요약</button><button type="button" data-detail-tab="options">옵션·구성</button><button type="button" data-detail-tab="source">출처</button></nav><dl class="inventory-summary" data-detail-panel="summary"></dl><div class="inventory-options" data-detail-panel="options" hidden></div><div class="inventory-combo-label" hidden><label>적용·편집할 콤보<select class="inventory-combo-choice" aria-label="적용할 콤보"></select></label><button type="button" data-action="remove-combo">선택 콤보 제거</button></div><p class="inventory-source" data-detail-panel="source" hidden></p>
@@ -37,6 +39,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
   }));
   const equipmentEditor = createInventoryEquipmentEditor(documentRef,page,root.ToramApp);
   const skillEditor = createInventorySkillEditor(documentRef,find('.inventory-skill-editor'),api,run,()=>root.ToramApp.skillTreeData);
+  const registletEditor = createInventoryRegistletEditor(documentRef,find('.inventory-registlet-editor'),root.ToramApp.registlets,shell);
   const drafts = new Map();
   let draftContext = '', navigationData, shownUrl = root.location.href;
   function active() { return shell.active('inventory'); }
@@ -82,10 +85,12 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     for (const option of options) box.append(text('p',`${option.key} ${option.value > 0 ? '+' : ''}${option.value}`));
   }
   const describe = describeInventoryObject;
-  function hasUnsavedWorkspace() {return skillEditor.isOpen() && skillEditor.isDirty() || equipmentEditor.isOpen() && equipmentEditor.isDirty() || selected && !rename.hidden && rename.elements.name.value !== selected.name;}
+  function hasUnsavedWorkspace() {return registletEditor.isOpen() && registletEditor.isDirty() || skillEditor.isOpen() && skillEditor.isDirty() || equipmentEditor.isOpen() && equipmentEditor.isDirty() || selected && !rename.hidden && rename.elements.name.value !== selected.name;}
   async function prepareCapture() { await root.ToramApp.ensureCalculator(); captureFields(); }
   function captureFields() {
     const type = state().type;
+    find('.inventory-capture-toggle').hidden = type === 'registlet';
+    if (type === 'registlet') find('.inventory-capture-toggle').open = false;
     find('.inventory-capture-slot').hidden = type !== 'equipment'; find('.inventory-capture-tree').hidden = type !== 'skill_tree'; find('.inventory-capture-consumable').hidden = type !== 'consumable';
     navigation.render(state());
     if (!root.ToramApp.calculatorReady) return;
@@ -104,8 +109,14 @@ export function createInventoryUi(documentRef, account, shell, publish) {
   function renderDetail() {
     page.classList.toggle('inventory-has-selection', Boolean(selected));
     const current = state(), type = selected?.type || current.type, skill = ['skill_tree','skill_set'].includes(type);
-    const creatable = ['equipment','skill_tree','skill_set'].includes(current.type), member = !find('.inventory-member').hidden;
+    const creatable = ['equipment','skill_tree','skill_set','registlet'].includes(current.type), member = !find('.inventory-member').hidden;
     const context = JSON.stringify([current.type,current.slot,current.equipmentType,current.treeId,current.skillCategory]);
+    page.classList.toggle('inventory-registlets',type === 'registlet');
+    if (type === 'registlet' && member) {
+      equipmentEditor.close(); skillEditor.close();
+      if (!registletEditor.isOpen() || registletEditor.record()?.id !== selected?.id || registletEditor.record()?.revision !== selected?.revision || draftContext !== context) registletEditor.open(selected || drafts.get(context));
+    } else {
+      registletEditor.close();
     if (skill && member) {
       if (selected) {if (!skillEditor.isOpen() || skillEditor.record()?.id !== selected.id || skillEditor.record()?.revision !== selected.revision) skillEditor.open(selected,current);}
       else if (!skillEditor.isOpen() || skillEditor.record()?.id || draftContext !== context) {equipmentEditor.close(); skillEditor.open(drafts.get(context),current);}
@@ -113,22 +124,25 @@ export function createInventoryUi(documentRef, account, shell, publish) {
       skillEditor.close();
       if (!selected && current.type === 'equipment' && member && (!equipmentEditor.isOpen() || equipmentEditor.record()?.id || draftContext !== context)) equipmentEditor.open(current,drafts.get(context));
     }
+    }
     draftContext = context;
-    const working = Boolean(selected) || equipmentEditor.isOpen() || skillEditor.isOpen();
+    const working = Boolean(selected) || equipmentEditor.isOpen() || skillEditor.isOpen() || registletEditor.isOpen();
     page.classList.toggle('inventory-has-workspace',working);
     button('create').hidden = button('save').hidden = !creatable || !member;
-    find('.inventory-placeholder').hidden = working; find('.inventory-selected').hidden = !selected || skill || equipmentEditor.isOpen();
+    find('.inventory-placeholder').hidden = working; find('.inventory-selected').hidden = !selected || skill || equipmentEditor.isOpen() || registletEditor.isOpen();
     find('.inventory-actions').hidden = !selected || skill || equipmentEditor.isOpen();
+    for (const action of ['apply','edit','merge']) button(action).hidden = type === 'registlet';
     if (!selected) return;
     const p = selected.type === 'equipment' ? selected.data.equipment : null, source = p?.catalogItem;
     rename.elements.name.value = selected.name;
     find('.inventory-slot').textContent = account.slots[selected.data.slot] || INVENTORY_TYPES[selected.type];
+    if (p) prependEquipmentIcon(find('.inventory-slot'),EQUIPMENT_ICONS[selected.equipmentType]);
     const summary = find('.inventory-summary'); summary.replaceChildren();
     if (p) for (const [label, value] of [['종류', p.type || account.slots[selected.data.slot]], ['ATK', p.attack ?? '—'], ['제련', p.refinement ?? '—'], ['안정률', p.stability === null ? '—' : p.stability + '%'], ['크리스타', p.crystas.map((v, i) => (v || '빈 슬롯') + (p.lockedCrystaSlots[i] ? ' (잠금)' : '')).join(' / ') || '없음']]) summary.append(text('dt', label), text('dd', value));
     if (!p) for (const [index,value] of describe(selected).slice(0,3).entries()) summary.append(text('dt',String(index + 1)),text('dd',value));
     renderOptions(); detailTab();
     find('.inventory-source').textContent = source ? `게임 원본: ${source.name || '#' + source.gameItemId} · #${source.gameItemId} · 데이터 ${source.cacheVersion}\n원본 옵션 ${Object.keys(source.stats).length}개 · 조건부 효과 ${source.conditionalStats.length}개 (계산기에서 확인)` : '저장 당시의 독립 구성';
-    if (selected.provenance.length) find('.inventory-source').textContent += '\n출처: ' + selected.provenance.map(source => source.kind === 'inventory' ? `내 구성 ${source.objectId.slice(0,8)}` : source.kind === 'release' ? `공개 릴리스 v${source.releaseNumber}` : `#${source.gameItemId} (${source.cacheVersion})`).join(', ');
+    if (selected.provenance.length) find('.inventory-source').textContent += '\n출처: ' + selected.provenance.map(source => source.kind === 'inventory' ? `내 구성 ${source.objectId.slice(0,8)}` : source.kind === 'release' ? `공개 릴리스 v${source.releaseNumber}` : `${source.kind === 'registlet-catalog' ? '젬 #' + source.registletId : '#' + source.gameItemId} (${source.cacheVersion})`).join(', ');
     for (const source of selected.provenance.filter(source => source.kind === 'release')) {
       const link = text('button',`원본 v${source.releaseNumber} 보기`); link.type = 'button';
       link.addEventListener('click',() => shell.open('board',{params:{post:source.postId,release:source.releaseNumber}})); find('.inventory-source').append(' ',link);
@@ -142,7 +156,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     page.querySelectorAll('[data-object-id]').forEach(node => { node.setAttribute('aria-pressed', String(node.dataset.objectId === selected.id)); });
   }
   async function saveWorkspace(create = false) {
-    const editor = skillEditor.isOpen() ? skillEditor : equipmentEditor.isOpen() ? equipmentEditor : null;
+    const editor = registletEditor.isOpen() ? registletEditor : skillEditor.isOpen() ? skillEditor : equipmentEditor.isOpen() ? equipmentEditor : null;
     if (editor && (editor.isDirty() || create)) {
       const draft = await editor.read(), previous = editor.record();
       if (!previous?.id && !create) {drafts.set(draftContext,draft); editor.saved(draft); return;}
@@ -152,7 +166,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
         const kind = draft.type === 'equipment' ? draft.data.slot === 'mainWeapon' ? '무기' : EQUIPMENT_SLOTS[draft.data.slot].replaceAll(' ','') : INVENTORY_TYPES[draft.type];
         const records = [];
         for (let pageNumber = 1, total = 1; (pageNumber - 1) * 50 < total; pageNumber++) {const result = await api.list({type:draft.type,page:pageNumber,pageSize:50}); total = result.total; records.push(...result.items);}
-        saved = await api.register(nextInventoryName(records,kind),draft.type,draft.data);
+        saved = await api.register(draft.type === 'registlet' ? draft.name : nextInventoryName(records,kind),draft.type,draft.data);
         drafts.delete(draftContext); setUrl({selected:saved.id,q:null});
       }
       editor.saved(saved); selected = saved;
@@ -161,6 +175,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
       selected = await api.update(selected,rename.elements.name.value);
       if (skillEditor.isOpen()) skillEditor.saved(selected);
       if (equipmentEditor.isOpen()) equipmentEditor.saved(selected);
+      if (registletEditor.isOpen()) registletEditor.saved(selected);
     }
     const row = selected && find(`[data-entry-id="${selected.id}"]`);
     if (row) row.querySelector('strong').textContent = selected.name;
@@ -184,6 +199,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
       const row = text('div',''); row.className = 'inventory-entry'; row.dataset.entryId = record.id;
       const entry = text('button', ''); entry.type = 'button'; entry.dataset.objectId = record.id;
       entry.append(text('strong', record.name), text('small', `${EQUIPMENT_TYPES[record.equipmentType]?.[0] || account.slots[record.equipmentType] || INVENTORY_TYPES[record.type]}`));
+      if (record.type === 'equipment') prependEquipmentIcon(entry,EQUIPMENT_ICONS[record.equipmentType]);
       entry.addEventListener('click', event => {
         if (selected?.id === record.id && event.target.closest('strong')) {void editName(); return;}
         void run(async () => {
@@ -201,6 +217,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
       try { selected = await api.get(id); }
       catch (error) { if (error.status !== 404) throw error; selected = null; message(error.message, true); }
     } else selected = null;
+    if (current.type === 'registlet' || selected?.type === 'registlet') await registletEditor.load();
     renderDetail();
     shownUrl = root.location.href;
   }
@@ -236,11 +253,12 @@ export function createInventoryUi(documentRef, account, shell, publish) {
     });
     page.querySelectorAll('[data-detail-tab]').forEach(button => button.addEventListener('click',() => {setUrl({detailTab:button.dataset.detailTab === 'summary' ? null : button.dataset.detailTab}); detailTab();}));
     button('create').addEventListener('click',() => run(async () => {
-      await saveWorkspace(); drafts.delete(draftContext); equipmentEditor.close(); skillEditor.close(); selected = null;
+      await saveWorkspace(); drafts.delete(draftContext); equipmentEditor.close(); skillEditor.close(); registletEditor.close(); selected = null;
       setUrl({selected:null}); page.classList.remove('inventory-show-list'); await refresh();
-      focusAfter = find('.inventory-skill-stage .skill-node') || equipmentEditor.form.elements.attack;
+      focusAfter = find('.inventory-skill-stage .skill-node') || (registletEditor.isOpen() ? registletEditor.form.elements.registletId : equipmentEditor.form.elements.attack);
     }));
     button('save').addEventListener('click',() => run(async () => {await saveWorkspace(true); await refresh();}));
+    registletEditor.form.addEventListener('submit',event => {event.preventDefault(); void run(async () => {await saveWorkspace(true); await refresh();});});
     equipmentEditor.form.addEventListener('submit',event => {event.preventDefault(); void run(saveWorkspace);});
 
 
@@ -259,7 +277,7 @@ export function createInventoryUi(documentRef, account, shell, publish) {
       selected = await api.update(next,next.name); await refresh(); message('선택한 콤보를 제거했습니다.');
     }));
     documentRef.addEventListener('toram:account-changed', () => {
-      drafts.clear(); equipmentEditor.close(); skillEditor.close(); button('create').hidden = true; selected = null; editing = null; banner.hidden = true; find('.inventory-list').replaceChildren(); renderDetail();
+      drafts.clear(); equipmentEditor.close(); skillEditor.close(); registletEditor.close(); button('create').hidden = true; selected = null; editing = null; banner.hidden = true; find('.inventory-list').replaceChildren(); renderDetail();
       find('.inventory-member').hidden = true; find('.inventory-guest').hidden = false;
       if (busy) routePending = true; else if (active()) run(connect);
     });

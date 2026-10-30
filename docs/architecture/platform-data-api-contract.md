@@ -93,6 +93,16 @@
 
 계산기에서 장비를 담기는 명시적 POST이며 자동 업로드가 아니다. 장비 적용은 현재 빌드의 해당 부위만 교체하고 다른 부위·캐릭터·Scenario를 보존한다. 주/보조 무기가 호환되지 않으면 적용 전에 거부한다. 편집 연결은 조회한 ID·revision으로 저장하며 409에서 초안을 보존한다. 새로운 사본은 별도 POST로 생성한다. 공개 출처의 독립 복사 API는 접근성 검증·요청 키 계약을 별도로 따른다.
 
+### 레지스트렛 v1 DTO
+
+조립 가능한 기본10종에 독립 보관 종류 `registlet`을 추가한다. 생성 입력은 `{type:"registlet",schemaVersion:1,name,data:{selection}}`이며 기존 개인 객체 CRUD·종류별200개·revision·공개 릴리스/독립 복사 계약을 따른다. DB 열·기존 행은 변경하지 않는다.
+
+- `selection`은 `{schema:"toram.registlet.v1",registletId,cacheVersion,sourceSha256,name,level,levelCap,baseValue,descriptionTemplate}`다. 이름·효과 원문·기본값·상한·ID·버전을 저장 당시 값으로 보존한다. 등록 ID와 원본 상한, 정수 `1..levelCap`, 허용 필드를 클라이언트/서버 공통 검증한다. 향후 원본 상한이 바뀌면 기존 스냅샷을 수용하는 호환 검증부터 변경한다.
+- 최초 출처는 서버가 `{kind:"registlet-catalog",registletId,cacheVersion,sourceSha256}`로 기록한다. 일반 아이템 ID와 별도 공간이며 수정은 최초 출처를 유지한다. 공개 릴리스는 원본 버전을 함께 기록한다.
+- `/catalog?section=registlets`는166종·6언어를 지연 로드한다. `registletKind=all|stats|status|support|skills`는 도감용 효과 용도 분류이며 `slots`는 별도 확장 비용 화면이다. 레벨 입력마다 설명·수식/대입/결과·재료별 강화 비용을 즉시 갱신하고 URL의 level은 replace로 유지한다. 도감에서 담기는 명시적 POST이며 `/inventory?type=registlet`에서 새 젬 선택·레벨 수정·이름 수정·삭제를 지원한다. 기존 항목의2분/이탈 저장과 실패 시 초안 보존을 재사용한다.
+- 설명 치환은 추출된 native UI 식이며 전투 계산과 분리한다. 파워 웨이브207과 스컬 셰이커1053은 관련 스킬 Lv 입력을 받는다. 1053은 사용 스택=min(현재 스택,L), 상한=L·기절확률0과 최대 스택의 두 무기 계수를 표시한다. 강화는 동종 재료1개당 `-trunc0(f32(P)*f32(-0.1))` 분말/재료Lv 증가, 타종은 P분말/+1Lv이며 상한을 넘기지 않는다. 이 컨텍스트 입력은 보관 selection에 추가하지 않는다. 획득처 미관측3종·보상 드롭률은 추정하지 않는다. 레지스트렛은 `sections`·병합·빌드 자식·계산기 담기/적용 대상에 넣지 않는다.
+- 발행은 `node tools/extraction/publish-toram-registlets.mjs [--check]`다. 원문 SHA256·도감 분류·해시 검증한 추가 native 근거에서 발행 버전을 만들고 공개 JSON과 공통 상한 색인을 함께 생성한다. 공개 배포에는 프로세스 캡처·역컴파일 원문을 포함하지 않는다. 검증은 `test-registlet-catalog.mjs`, `verify-registlet-browser.mjs [--source]`, `npm test`다.
+
 ### 조립 v1 DTO
 
 모든 종류는 `{type, schemaVersion:1, name, data}`로 생성한다. 수정·삭제의 revision 계약과 목록 응답은 장비와 같다. 종류별 200개이며 다른 종류에는 equipmentType 색인을 빈 문자열로 저장한다. 구형 장비 행·records를 재작성하지 않는 가산 스키마다.

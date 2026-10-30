@@ -1,0 +1,128 @@
+{
+  "schemaVersion": 1,
+  "checkedDate": "2026-10-29",
+  "authority": "saved-module-static-analysis-and-passive-fixed-runtime-constant",
+  "slotLimit": 10,
+  "gemPowderLimit": 999999999,
+  "costArrayLength": 9,
+  "costIndexExpression": "NeedGemPowder[currentSlotCount - 1]",
+  "costBindingStatus": "verified-runtime-field-name-token-and-metadata-content-hash",
+  "initialSlotCount": null,
+  "initialSlotCountReason": "Initialize reads RegistletData Slot from supplied data; client default constructor does not set the slot field.",
+  "sources": {
+    "metadata": {
+      "path": "build\\tmp\\update-pipeline-20261022\\installed-source\\global-metadata.dat",
+      "sha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9"
+    },
+    "mappedImage": {
+      "path": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.mapped.bin",
+      "sha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1"
+    },
+    "snapshotPe": {
+      "path": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.snapshot.dll",
+      "sha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d"
+    },
+    "initializerCapture": {
+      "path": "data/sources/toram-registlet/native-slots/initializer-capture.json",
+      "sha256": "7cb9cf2aa9e5e55c3f14a98bf8643cad7fb22f4126bf7cf999a93e72a63939f0"
+    }
+  },
+  "initializerReference": {
+    "va": "0x7ffe9c930e10",
+    "rva": "0x31f0e10",
+    "savedValue": "0x1aa5067c740",
+    "status": "bound-by-current-process-FieldInfo-name-and-token"
+  },
+  "limitations": [
+    "Client UI/read-only static evidence and constant read do not verify server expansion execution.",
+    "Initial new-account slot count is not established by this extraction.",
+    "The saved capture and current129-byte read were sequential, not atomic."
+  ],
+  "costsByCurrentSlot": [
+    100,
+    400,
+    2000,
+    7000,
+    30000,
+    200000,
+    500000,
+    2000000,
+    7000000
+  ],
+  "initializer": {
+    "fieldIndex": 54280,
+    "fieldName": "36E3BC65CDC0D0B6096AFEB3920791878FAA471FB3B14D041D7CF8E6D4324052",
+    "token": "0x400d409",
+    "metadataOffset": 9739968,
+    "bytes": 36,
+    "hex": "6400000090010000d0070000581b000030750000400d030020a1070080841e00c0cf6a00",
+    "values": [
+      100,
+      400,
+      2000,
+      7000,
+      30000,
+      200000,
+      500000,
+      2000000,
+      7000000
+    ]
+  },
+  "expansionSteps": [
+    {
+      "fromSlots": 1,
+      "toSlots": 2,
+      "requiredPowder": 100,
+      "cumulativePowderFromOneSlot": 100
+    },
+    {
+      "fromSlots": 2,
+      "toSlots": 3,
+      "requiredPowder": 400,
+      "cumulativePowderFromOneSlot": 500
+    },
+    {
+      "fromSlots": 3,
+      "toSlots": 4,
+      "requiredPowder": 2000,
+      "cumulativePowderFromOneSlot": 2500
+    },
+    {
+      "fromSlots": 4,
+      "toSlots": 5,
+      "requiredPowder": 7000,
+      "cumulativePowderFromOneSlot": 9500
+    },
+    {
+      "fromSlots": 5,
+      "toSlots": 6,
+      "requiredPowder": 30000,
+      "cumulativePowderFromOneSlot": 39500
+    },
+    {
+      "fromSlots": 6,
+      "toSlots": 7,
+      "requiredPowder": 200000,
+      "cumulativePowderFromOneSlot": 239500
+    },
+    {
+      "fromSlots": 7,
+      "toSlots": 8,
+      "requiredPowder": 500000,
+      "cumulativePowderFromOneSlot": 739500
+    },
+    {
+      "fromSlots": 8,
+      "toSlots": 9,
+      "requiredPowder": 2000000,
+      "cumulativePowderFromOneSlot": 2739500
+    },
+    {
+      "fromSlots": 9,
+      "toSlots": 10,
+      "requiredPowder": 7000000,
+      "cumulativePowderFromOneSlot": 9739500
+    }
+  ],
+  "totalPowderFromOneToTenSlots": 9739500
+}

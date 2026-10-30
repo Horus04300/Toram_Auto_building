@@ -1,0 +1,1940 @@
+[
+  {
+    "type_definition_index": 11754,
+    "name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25579588,
+      "size": 88
+    },
+    "byval_type_index": 26346,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 28757,
+      "exact_byval_name": "Asobimo.Photon.UnityHash.UnityHashBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 64718,
+        "name": "<DRankItemList>k__BackingField",
+        "type_index": 10653,
+        "exact_byval_name": null,
+        "token": "0x04000bfb",
+        "range": {
+          "offset": 22848152,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64719,
+        "name": "<CRankItemList>k__BackingField",
+        "type_index": 10653,
+        "exact_byval_name": null,
+        "token": "0x04000bfc",
+        "range": {
+          "offset": 22848164,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64720,
+        "name": "<BRankItemList>k__BackingField",
+        "type_index": 10653,
+        "exact_byval_name": null,
+        "token": "0x04000bfd",
+        "range": {
+          "offset": 22848176,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64721,
+        "name": "<ARankItemList>k__BackingField",
+        "type_index": 10653,
+        "exact_byval_name": null,
+        "token": "0x04000bfe",
+        "range": {
+          "offset": 22848188,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64722,
+        "name": "<SRankItemList>k__BackingField",
+        "type_index": 10653,
+        "exact_byval_name": null,
+        "token": "0x04000bff",
+        "range": {
+          "offset": 22848200,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 91209,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06000b5e",
+        "range": {
+          "offset": 7032748,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91210,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3621,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b5f",
+        "range": {
+          "offset": 7032784,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91211,
+        "name": "get_DRankItemList",
+        "return_type": {
+          "type_index": 10652,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b60",
+        "range": {
+          "offset": 7032820,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91212,
+        "name": "set_DRankItemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10652,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b61",
+        "range": {
+          "offset": 7032856,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91213,
+        "name": "get_CRankItemList",
+        "return_type": {
+          "type_index": 10652,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b62",
+        "range": {
+          "offset": 7032892,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91214,
+        "name": "set_CRankItemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10652,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b63",
+        "range": {
+          "offset": 7032928,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91215,
+        "name": "get_BRankItemList",
+        "return_type": {
+          "type_index": 10652,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b64",
+        "range": {
+          "offset": 7032964,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91216,
+        "name": "set_BRankItemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10652,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b65",
+        "range": {
+          "offset": 7033000,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91217,
+        "name": "get_ARankItemList",
+        "return_type": {
+          "type_index": 10652,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b66",
+        "range": {
+          "offset": 7033036,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91218,
+        "name": "set_ARankItemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10652,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b67",
+        "range": {
+          "offset": 7033072,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91219,
+        "name": "get_SRankItemList",
+        "return_type": {
+          "type_index": 10652,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b68",
+        "range": {
+          "offset": 7033108,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91220,
+        "name": "set_SRankItemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10652,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b69",
+        "range": {
+          "offset": 7033144,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91221,
+        "name": "get_Code",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06000b6a",
+        "range": {
+          "offset": 7033180,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91222,
+        "name": "GetValue",
+        "return_type": {
+          "type_index": 3621,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06000b6b",
+        "range": {
+          "offset": 7033216,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91223,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3621,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06000b6c",
+        "range": {
+          "offset": 7033252,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 11757,
+    "name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntGameSetting",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25579852,
+      "size": 88
+    },
+    "byval_type_index": 26325,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 12591,
+      "exact_byval_name": "Asobimo.Photon.Binary.BinaryBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 64738,
+        "name": "<EndingScriptId>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04000c0f",
+        "range": {
+          "offset": 22848392,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64739,
+        "name": "<TreasureNumMin>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04000c10",
+        "range": {
+          "offset": 22848404,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64740,
+        "name": "<TreasureNumMax>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04000c11",
+        "range": {
+          "offset": 22848416,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64741,
+        "name": "<DRankRandomRewardId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000c12",
+        "range": {
+          "offset": 22848428,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64742,
+        "name": "<DRankRate>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x04000c13",
+        "range": {
+          "offset": 22848440,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64743,
+        "name": "<CRankRandomRewardId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000c14",
+        "range": {
+          "offset": 22848452,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64744,
+        "name": "<CRankRate>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x04000c15",
+        "range": {
+          "offset": 22848464,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64745,
+        "name": "<BRankRandomRewardId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000c16",
+        "range": {
+          "offset": 22848476,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64746,
+        "name": "<BRankRate>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x04000c17",
+        "range": {
+          "offset": 22848488,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64747,
+        "name": "<ARankRandomRewardId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000c18",
+        "range": {
+          "offset": 22848500,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64748,
+        "name": "<ARankRate>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x04000c19",
+        "range": {
+          "offset": 22848512,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64749,
+        "name": "<SRankRandomRewardId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000c1a",
+        "range": {
+          "offset": 22848524,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 64750,
+        "name": "<SRankRate>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x04000c1b",
+        "range": {
+          "offset": 22848536,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 91224,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06000b6d",
+        "range": {
+          "offset": 7033288,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91225,
+        "name": "get_EndingScriptId",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06000b6e",
+        "range": {
+          "offset": 7033324,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91226,
+        "name": "set_EndingScriptId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06000b6f",
+        "range": {
+          "offset": 7033360,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91227,
+        "name": "get_TreasureNumMin",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06000b70",
+        "range": {
+          "offset": 7033396,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91228,
+        "name": "set_TreasureNumMin",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06000b71",
+        "range": {
+          "offset": 7033432,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91229,
+        "name": "get_TreasureNumMax",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06000b72",
+        "range": {
+          "offset": 7033468,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91230,
+        "name": "set_TreasureNumMax",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06000b73",
+        "range": {
+          "offset": 7033504,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91231,
+        "name": "get_DRankRandomRewardId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000b74",
+        "range": {
+          "offset": 7033540,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91232,
+        "name": "set_DRankRandomRewardId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000b75",
+        "range": {
+          "offset": 7033576,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91233,
+        "name": "get_DRankRate",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06000b76",
+        "range": {
+          "offset": 7033612,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91234,
+        "name": "set_DRankRate",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06000b77",
+        "range": {
+          "offset": 7033648,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91235,
+        "name": "get_CRankRandomRewardId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000b78",
+        "range": {
+          "offset": 7033684,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91236,
+        "name": "set_CRankRandomRewardId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000b79",
+        "range": {
+          "offset": 7033720,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91237,
+        "name": "get_CRankRate",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06000b7a",
+        "range": {
+          "offset": 7033756,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91238,
+        "name": "set_CRankRate",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06000b7b",
+        "range": {
+          "offset": 7033792,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91239,
+        "name": "get_BRankRandomRewardId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000b7c",
+        "range": {
+          "offset": 7033828,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91240,
+        "name": "set_BRankRandomRewardId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000b7d",
+        "range": {
+          "offset": 7033864,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91241,
+        "name": "get_BRankRate",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06000b7e",
+        "range": {
+          "offset": 7033900,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91242,
+        "name": "set_BRankRate",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06000b7f",
+        "range": {
+          "offset": 7033936,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91243,
+        "name": "get_ARankRandomRewardId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000b80",
+        "range": {
+          "offset": 7033972,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91244,
+        "name": "set_ARankRandomRewardId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000b81",
+        "range": {
+          "offset": 7034008,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91245,
+        "name": "get_ARankRate",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06000b82",
+        "range": {
+          "offset": 7034044,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91246,
+        "name": "set_ARankRate",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06000b83",
+        "range": {
+          "offset": 7034080,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91247,
+        "name": "get_SRankRandomRewardId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000b84",
+        "range": {
+          "offset": 7034116,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91248,
+        "name": "set_SRankRandomRewardId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000b85",
+        "range": {
+          "offset": 7034152,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91249,
+        "name": "get_SRankRate",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x06000b86",
+        "range": {
+          "offset": 7034188,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91250,
+        "name": "set_SRankRate",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06000b87",
+        "range": {
+          "offset": 7034224,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91251,
+        "name": "ToString",
+        "return_type": {
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        },
+        "parameters": [],
+        "token": "0x06000b88",
+        "range": {
+          "offset": 7034260,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91252,
+        "name": "GetBinary",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "ms",
+            "type_index": 20191,
+            "exact_byval_name": "System.IO.MemoryStream"
+          },
+          {
+            "name": "isThrow",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06000b89",
+        "range": {
+          "offset": 7034296,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 91253,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "ms",
+            "type_index": 20191,
+            "exact_byval_name": "System.IO.MemoryStream"
+          },
+          {
+            "name": "isThrow",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06000b8a",
+        "range": {
+          "offset": 7034332,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 12209,
+    "name": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoom",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25619628,
+      "size": 88
+    },
+    "byval_type_index": 13535,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21815,
+      "exact_byval_name": "Toram.Common.Operations.OperationRequestBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 66177,
+        "name": "<FieldId>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x040011ae",
+        "range": {
+          "offset": 22865660,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 66178,
+        "name": "<RoomId>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x040011af",
+        "range": {
+          "offset": 22865672,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 95977,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06001dfe",
+        "range": {
+          "offset": 7204396,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95978,
+        "name": "get_FieldId",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06001dff",
+        "range": {
+          "offset": 7204432,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95979,
+        "name": "set_FieldId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06001e00",
+        "range": {
+          "offset": 7204468,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95980,
+        "name": "get_RoomId",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e01",
+        "range": {
+          "offset": 7204504,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95981,
+        "name": "set_RoomId",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06001e02",
+        "range": {
+          "offset": 7204540,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95982,
+        "name": "get_Code",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e03",
+        "range": {
+          "offset": 7204576,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95983,
+        "name": "get_SubCode",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e04",
+        "range": {
+          "offset": 7204612,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95984,
+        "name": "ToString",
+        "return_type": {
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        },
+        "parameters": [],
+        "token": "0x06001e05",
+        "range": {
+          "offset": 7204648,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95985,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3191,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06001e06",
+        "range": {
+          "offset": 7204684,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95986,
+        "name": "GetPacket",
+        "return_type": {
+          "type_index": 3191,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06001e07",
+        "range": {
+          "offset": 7204720,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 12210,
+    "name": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoomResponse",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25619716,
+      "size": 88
+    },
+    "byval_type_index": 13537,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21817,
+      "exact_byval_name": "Toram.Common.Operations.OperationResponseBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 66179,
+        "name": "<Setting>k__BackingField",
+        "type_index": 23788,
+        "exact_byval_name": null,
+        "token": "0x040011b0",
+        "range": {
+          "offset": 22865684,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 66180,
+        "name": "<Members>k__BackingField",
+        "type_index": 10675,
+        "exact_byval_name": null,
+        "token": "0x040011b1",
+        "range": {
+          "offset": 22865696,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 66181,
+        "name": "<TrialPoint>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x040011b2",
+        "range": {
+          "offset": 22865708,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 66182,
+        "name": "<ResetTimer>k__BackingField",
+        "type_index": 26101,
+        "exact_byval_name": null,
+        "token": "0x040011b3",
+        "range": {
+          "offset": 22865720,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 66183,
+        "name": "<ItemData>k__BackingField",
+        "type_index": 26347,
+        "exact_byval_name": null,
+        "token": "0x040011b4",
+        "range": {
+          "offset": 22865732,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 95987,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3191,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06001e08",
+        "range": {
+          "offset": 7204756,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95988,
+        "name": "get_Setting",
+        "return_type": {
+          "type_index": 23787,
+          "exact_byval_name": "Toram.Common.Rooms.RoomLobbySetting"
+        },
+        "parameters": [],
+        "token": "0x06001e09",
+        "range": {
+          "offset": 7204792,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95989,
+        "name": "set_Setting",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 23787,
+            "exact_byval_name": "Toram.Common.Rooms.RoomLobbySetting"
+          }
+        ],
+        "token": "0x06001e0a",
+        "range": {
+          "offset": 7204828,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95990,
+        "name": "get_Members",
+        "return_type": {
+          "type_index": 10674,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06001e0b",
+        "range": {
+          "offset": 7204864,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95991,
+        "name": "set_Members",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10674,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06001e0c",
+        "range": {
+          "offset": 7204900,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95992,
+        "name": "get_TrialPoint",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e0d",
+        "range": {
+          "offset": 7204936,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95993,
+        "name": "set_TrialPoint",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06001e0e",
+        "range": {
+          "offset": 7204972,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95994,
+        "name": "get_ResetTimer",
+        "return_type": {
+          "type_index": 26100,
+          "exact_byval_name": "System.TimeSpan"
+        },
+        "parameters": [],
+        "token": "0x06001e0f",
+        "range": {
+          "offset": 7205008,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95995,
+        "name": "set_ResetTimer",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 26100,
+            "exact_byval_name": "System.TimeSpan"
+          }
+        ],
+        "token": "0x06001e10",
+        "range": {
+          "offset": 7205044,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95996,
+        "name": "get_ItemData",
+        "return_type": {
+          "type_index": 26346,
+          "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+        },
+        "parameters": [],
+        "token": "0x06001e11",
+        "range": {
+          "offset": 7205080,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95997,
+        "name": "set_ItemData",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 26346,
+            "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+          }
+        ],
+        "token": "0x06001e12",
+        "range": {
+          "offset": 7205116,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95998,
+        "name": "get_Code",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e13",
+        "range": {
+          "offset": 7205152,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 95999,
+        "name": "get_SubCode",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06001e14",
+        "range": {
+          "offset": 7205188,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 96000,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3191,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06001e15",
+        "range": {
+          "offset": 7205224,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 96001,
+        "name": "GetPacket",
+        "return_type": {
+          "type_index": 3191,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06001e16",
+        "range": {
+          "offset": 7205260,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 13216,
+    "name": "Toram.Common.Events.Room.TreasureHunt.TreasureHuntGameEndEvent",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25708244,
+      "size": 88
+    },
+    "byval_type_index": 26321,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 15542,
+      "exact_byval_name": "Toram.Common.Events.EventSubBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 69904,
+        "name": "<GameEndCode>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x0400203d",
+        "range": {
+          "offset": 22910384,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 69905,
+        "name": "<ScriptRetval>k__BackingField",
+        "type_index": 18779,
+        "exact_byval_name": null,
+        "token": "0x0400203e",
+        "range": {
+          "offset": 22910396,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 69906,
+        "name": "<acquiredTreasureNums>k__BackingField",
+        "type_index": 9989,
+        "exact_byval_name": null,
+        "token": "0x0400203f",
+        "range": {
+          "offset": 22910408,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 69907,
+        "name": "<ResultBonusDatas>k__BackingField",
+        "type_index": 10865,
+        "exact_byval_name": null,
+        "token": "0x04002040",
+        "range": {
+          "offset": 22910420,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 69908,
+        "name": "<RewardList>k__BackingField",
+        "type_index": 10869,
+        "exact_byval_name": null,
+        "token": "0x04002041",
+        "range": {
+          "offset": 22910432,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 69909,
+        "name": "<IsRegistletOpenSystem>k__BackingField",
+        "type_index": 12865,
+        "exact_byval_name": null,
+        "token": "0x04002042",
+        "range": {
+          "offset": 22910444,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 105869,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x060044a2",
+        "range": {
+          "offset": 7560508,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105870,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3191,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060044a3",
+        "range": {
+          "offset": 7560544,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105871,
+        "name": "get_GameEndCode",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x060044a4",
+        "range": {
+          "offset": 7560580,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105872,
+        "name": "set_GameEndCode",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x060044a5",
+        "range": {
+          "offset": 7560616,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105873,
+        "name": "get_ScriptRetval",
+        "return_type": {
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        },
+        "parameters": [],
+        "token": "0x060044a6",
+        "range": {
+          "offset": 7560652,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105874,
+        "name": "set_ScriptRetval",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x060044a7",
+        "range": {
+          "offset": 7560688,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105875,
+        "name": "get_acquiredTreasureNums",
+        "return_type": {
+          "type_index": 9988,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060044a8",
+        "range": {
+          "offset": 7560724,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105876,
+        "name": "set_acquiredTreasureNums",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 9988,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060044a9",
+        "range": {
+          "offset": 7560760,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105877,
+        "name": "get_ResultBonusDatas",
+        "return_type": {
+          "type_index": 10864,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060044aa",
+        "range": {
+          "offset": 7560796,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105878,
+        "name": "set_ResultBonusDatas",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10864,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060044ab",
+        "range": {
+          "offset": 7560832,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105879,
+        "name": "get_RewardList",
+        "return_type": {
+          "type_index": 10868,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060044ac",
+        "range": {
+          "offset": 7560868,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105880,
+        "name": "set_RewardList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 10868,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060044ad",
+        "range": {
+          "offset": 7560904,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105881,
+        "name": "get_IsRegistletOpenSystem",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x060044ae",
+        "range": {
+          "offset": 7560940,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105882,
+        "name": "set_IsRegistletOpenSystem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x060044af",
+        "range": {
+          "offset": 7560976,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105883,
+        "name": "get_Code",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x060044b0",
+        "range": {
+          "offset": 7561012,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105884,
+        "name": "get_SubCode",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x060044b1",
+        "range": {
+          "offset": 7561048,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105885,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "parameters",
+            "type_index": 3191,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x060044b2",
+        "range": {
+          "offset": 7561084,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 105886,
+        "name": "GetPacket",
+        "return_type": {
+          "type_index": 3191,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x060044b3",
+        "range": {
+          "offset": 7561120,
+          "size": 36
+        }
+      }
+    ]
+  }
+]

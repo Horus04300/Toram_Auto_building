@@ -1,0 +1,2073 @@
+[
+  {
+    "type_definition_index": 2291,
+    "name": "GemCartBag",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24746844,
+      "size": 88
+    },
+    "byval_type_index": 16424,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21695,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 10609,
+        "name": "bag",
+        "type_index": 6835,
+        "exact_byval_name": null,
+        "token": "0x04002972",
+        "range": {
+          "offset": 22198844,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10610,
+        "name": "equips",
+        "type_index": 6836,
+        "exact_byval_name": null,
+        "token": "0x04002973",
+        "range": {
+          "offset": 22198856,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10611,
+        "name": "slotCount",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04002974",
+        "range": {
+          "offset": 22198868,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10612,
+        "name": "prevGemCartData",
+        "type_index": 16434,
+        "exact_byval_name": null,
+        "token": "0x04002975",
+        "range": {
+          "offset": 22198880,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 19976,
+        "name": "get_Bag",
+        "return_type": {
+          "type_index": 5992,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06004e09",
+        "range": {
+          "offset": 4468360,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19977,
+        "name": "get_BagCount",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06004e0a",
+        "range": {
+          "offset": 4468396,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19978,
+        "name": "get_IsMax",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06004e0b",
+        "range": {
+          "offset": 4468432,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19979,
+        "name": "get_SlotCount",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x06004e0c",
+        "range": {
+          "offset": 4468468,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19980,
+        "name": "get_PrevGemCartData",
+        "return_type": {
+          "type_index": 16433,
+          "exact_byval_name": "GemCartData"
+        },
+        "parameters": [],
+        "token": "0x06004e0d",
+        "range": {
+          "offset": 4468504,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19981,
+        "name": "get_MaxBagCount",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06004e0e",
+        "range": {
+          "offset": 4468540,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19982,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e0f",
+        "range": {
+          "offset": 4468576,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19983,
+        "name": "AddGemCart",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gem",
+            "type_index": 16433,
+            "exact_byval_name": "GemCartData"
+          }
+        ],
+        "token": "0x06004e10",
+        "range": {
+          "offset": 4468612,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19984,
+        "name": "AddGemCarts",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gems",
+            "type_index": 10202,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e11",
+        "range": {
+          "offset": 4468648,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19985,
+        "name": "GetGemCart",
+        "return_type": {
+          "type_index": 16433,
+          "exact_byval_name": "GemCartData"
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "type_index": 18827,
+            "exact_byval_name": "System.Int64"
+          }
+        ],
+        "token": "0x06004e12",
+        "range": {
+          "offset": 4468684,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19986,
+        "name": "GetGemCart",
+        "return_type": {
+          "type_index": 16433,
+          "exact_byval_name": "GemCartData"
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "type_index": 18778,
+            "exact_byval_name": "System.Int16"
+          }
+        ],
+        "token": "0x06004e13",
+        "range": {
+          "offset": 4468720,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19987,
+        "name": "GetEquipGemCarts",
+        "return_type": {
+          "type_index": 10204,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06004e14",
+        "range": {
+          "offset": 4468756,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19988,
+        "name": "GetSortGemCarts",
+        "return_type": {
+          "type_index": 10201,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06004e15",
+        "range": {
+          "offset": 4468792,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19989,
+        "name": "GetSortEquipGemCarts",
+        "return_type": {
+          "type_index": 10204,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06004e16",
+        "range": {
+          "offset": 4468828,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19990,
+        "name": "GetReinforceSortGemCarts",
+        "return_type": {
+          "type_index": 6834,
+          "exact_byval_name": null
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06004e17",
+        "range": {
+          "offset": 4468864,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19991,
+        "name": "GetIDEquipGemCart",
+        "return_type": {
+          "type_index": 10332,
+          "exact_byval_name": null
+        },
+        "parameters": [],
+        "token": "0x06004e18",
+        "range": {
+          "offset": 4468900,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19992,
+        "name": "Update",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gems",
+            "type_index": 10202,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e19",
+        "range": {
+          "offset": 4468936,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19993,
+        "name": "Update",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gem",
+            "type_index": 16437,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartData"
+          }
+        ],
+        "token": "0x06004e1a",
+        "range": {
+          "offset": 4468972,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19994,
+        "name": "UpdateEquip",
+        "return_type": {
+          "type_index": 7283,
+          "exact_byval_name": null
+        },
+        "parameters": [
+          {
+            "name": "gems",
+            "type_index": 10206,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e1b",
+        "range": {
+          "offset": 4469008,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19995,
+        "name": "UpdateEquip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gem",
+            "type_index": 16442,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartEquipData"
+          }
+        ],
+        "token": "0x06004e1c",
+        "range": {
+          "offset": 4469044,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19996,
+        "name": "InitializeBag",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "gems",
+            "type_index": 10202,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e1d",
+        "range": {
+          "offset": 4469080,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19997,
+        "name": "InitializeEquip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "equips",
+            "type_index": 10206,
+            "exact_byval_name": null
+          },
+          {
+            "name": "slot",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06004e1e",
+        "range": {
+          "offset": 4469116,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19998,
+        "name": "Equip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "equipNo",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "uuid",
+            "type_index": 18827,
+            "exact_byval_name": "System.Int64"
+          }
+        ],
+        "token": "0x06004e1f",
+        "range": {
+          "offset": 4469152,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 19999,
+        "name": "Remove",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "uuid",
+            "type_index": 18827,
+            "exact_byval_name": "System.Int64"
+          }
+        ],
+        "token": "0x06004e20",
+        "range": {
+          "offset": 4469188,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20000,
+        "name": "ClearEquip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e21",
+        "range": {
+          "offset": 4469224,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20001,
+        "name": "Break",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "gemCart",
+            "type_index": 16433,
+            "exact_byval_name": "GemCartData"
+          }
+        ],
+        "token": "0x06004e22",
+        "range": {
+          "offset": 4469260,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20002,
+        "name": "Reinforce",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "deleteGemCartUidList",
+            "type_index": 10359,
+            "exact_byval_name": null
+          },
+          {
+            "name": "updateGemCart",
+            "type_index": 16437,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartData"
+          },
+          {
+            "name": "sourceGemCart",
+            "type_index": 9432,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e23",
+        "range": {
+          "offset": 4469296,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20003,
+        "name": "UpdateSlotCount",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "slot",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06004e24",
+        "range": {
+          "offset": 4469332,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20004,
+        "name": "UpdateData",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGemCart",
+            "type_index": 16437,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartData"
+          }
+        ],
+        "token": "0x06004e25",
+        "range": {
+          "offset": 4469368,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20005,
+        "name": "SortBag",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e26",
+        "range": {
+          "offset": 4469404,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 2299,
+    "name": "RegistletManager",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 24747548,
+      "size": 88
+    },
+    "byval_type_index": 23446,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21695,
+      "exact_byval_name": "System.Object"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 10658,
+        "name": "flag",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x040029a3",
+        "range": {
+          "offset": 22199432,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10659,
+        "name": "gemPowder",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x040029a4",
+        "range": {
+          "offset": 22199444,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10660,
+        "name": "_bag",
+        "type_index": 16425,
+        "exact_byval_name": null,
+        "token": "0x040029a5",
+        "range": {
+          "offset": 22199456,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10661,
+        "name": "gemCartBufManager",
+        "type_index": 16432,
+        "exact_byval_name": null,
+        "token": "0x040029a6",
+        "range": {
+          "offset": 22199468,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10662,
+        "name": "<IsLoadLocalize>k__BackingField",
+        "type_index": 12865,
+        "exact_byval_name": null,
+        "token": "0x040029a7",
+        "range": {
+          "offset": 22199480,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10663,
+        "name": "NeedGemPowder",
+        "type_index": 10354,
+        "exact_byval_name": null,
+        "token": "0x040029a8",
+        "range": {
+          "offset": 22199492,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10664,
+        "name": "GemPowderLimit",
+        "type_index": 18804,
+        "exact_byval_name": null,
+        "token": "0x040029a9",
+        "range": {
+          "offset": 22199504,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 10665,
+        "name": "SlotLimit",
+        "type_index": 13024,
+        "exact_byval_name": null,
+        "token": "0x040029aa",
+        "range": {
+          "offset": 22199516,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 20094,
+        "name": "get_IsSystemOpen",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06004e7f",
+        "range": {
+          "offset": 4472608,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20095,
+        "name": "get_GemPowder",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06004e80",
+        "range": {
+          "offset": 4472644,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20096,
+        "name": "get_Bag",
+        "return_type": {
+          "type_index": 16424,
+          "exact_byval_name": "GemCartBag"
+        },
+        "parameters": [],
+        "token": "0x06004e81",
+        "range": {
+          "offset": 4472680,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20097,
+        "name": "get_IsLoadLocalize",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06004e82",
+        "range": {
+          "offset": 4472716,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20098,
+        "name": "set_IsLoadLocalize",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06004e83",
+        "range": {
+          "offset": 4472752,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20099,
+        "name": "get_GemCartBufferManager",
+        "return_type": {
+          "type_index": 16431,
+          "exact_byval_name": "GemCartBufferManager"
+        },
+        "parameters": [],
+        "token": "0x06004e84",
+        "range": {
+          "offset": 4472788,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20100,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "manager",
+            "type_index": 16431,
+            "exact_byval_name": "GemCartBufferManager"
+          }
+        ],
+        "token": "0x06004e85",
+        "range": {
+          "offset": 4472824,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20101,
+        "name": "Initialize",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "registletData",
+            "type_index": 23439,
+            "exact_byval_name": "Toram.Common.Registlet.RegistletData"
+          },
+          {
+            "name": "cartData",
+            "type_index": 10202,
+            "exact_byval_name": null
+          },
+          {
+            "name": "equips",
+            "type_index": 10206,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e86",
+        "range": {
+          "offset": 4472860,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20102,
+        "name": "GetEquipSendData",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "updateEquips",
+            "type_index": 9003,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e87",
+        "range": {
+          "offset": 4472896,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20103,
+        "name": "AddReward",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "rewardGemCart",
+            "type_index": 10202,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e88",
+        "range": {
+          "offset": 4472932,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20104,
+        "name": "UpdateRewardGemPowder",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGemPowder",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06004e89",
+        "range": {
+          "offset": 4472968,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20105,
+        "name": "ProcessingGemCart",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGemPowder",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "uuidList",
+            "type_index": 10359,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e8a",
+        "range": {
+          "offset": 4473004,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20106,
+        "name": "Reinforce",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGem",
+            "type_index": 16437,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartData"
+          },
+          {
+            "name": "uuidList",
+            "type_index": 10359,
+            "exact_byval_name": null
+          },
+          {
+            "name": "gemPowder",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06004e8b",
+        "range": {
+          "offset": 4473040,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20107,
+        "name": "ExtensionSlot",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGemPowder",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "slot",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06004e8c",
+        "range": {
+          "offset": 4473076,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20108,
+        "name": "ChangeGemCartEquip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateEquipDatas",
+            "type_index": 10206,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06004e8d",
+        "range": {
+          "offset": 4473112,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20109,
+        "name": "ChangeGemCartFlag",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "updateGem",
+            "type_index": 16437,
+            "exact_byval_name": "Toram.Common.Registlet.GemCartData"
+          }
+        ],
+        "token": "0x06004e8e",
+        "range": {
+          "offset": 4473148,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20110,
+        "name": "OpenSystem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e8f",
+        "range": {
+          "offset": 4473184,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20111,
+        "name": "CloseSystem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e90",
+        "range": {
+          "offset": 4473220,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20112,
+        "name": "ChangeLoadLocalize",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "isLoad",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06004e91",
+        "range": {
+          "offset": 4473256,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20113,
+        "name": "CheckFlag",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06004e92",
+        "range": {
+          "offset": 4473292,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20114,
+        "name": "SetFlag",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "type",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          },
+          {
+            "name": "activate",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06004e93",
+        "range": {
+          "offset": 4473328,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 20115,
+        "name": ".cctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06004e94",
+        "range": {
+          "offset": 4473364,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 8250,
+    "name": "UIRegistletEditPanel",
+    "image": "Assembly-CSharp.dll",
+    "range": {
+      "offset": 25271236,
+      "size": 88
+    },
+    "byval_type_index": 28156,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 21098,
+      "exact_byval_name": "UnityEngine.MonoBehaviour"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 45081,
+        "name": "leftAnchorGameObject",
+        "type_index": 16371,
+        "exact_byval_name": null,
+        "token": "0x0400b01a",
+        "range": {
+          "offset": 22612508,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45082,
+        "name": "rightAnchorGameObject",
+        "type_index": 16371,
+        "exact_byval_name": null,
+        "token": "0x0400b01b",
+        "range": {
+          "offset": 22612520,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45083,
+        "name": "uiCamera",
+        "type_index": 26749,
+        "exact_byval_name": null,
+        "token": "0x0400b01c",
+        "range": {
+          "offset": 22612532,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45084,
+        "name": "gemPowderNumLabel",
+        "type_index": 27424,
+        "exact_byval_name": null,
+        "token": "0x0400b01d",
+        "range": {
+          "offset": 22612544,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45085,
+        "name": "gemCartNumLabel",
+        "type_index": 27424,
+        "exact_byval_name": null,
+        "token": "0x0400b01e",
+        "range": {
+          "offset": 22612556,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45086,
+        "name": "addSlotWindowObj",
+        "type_index": 16371,
+        "exact_byval_name": null,
+        "token": "0x0400b01f",
+        "range": {
+          "offset": 22612568,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45087,
+        "name": "addSlotWindowLabels",
+        "type_index": 10934,
+        "exact_byval_name": null,
+        "token": "0x0400b020",
+        "range": {
+          "offset": 22612580,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45088,
+        "name": "actionLabelObj",
+        "type_index": 16371,
+        "exact_byval_name": null,
+        "token": "0x0400b021",
+        "range": {
+          "offset": 22612592,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45089,
+        "name": "editButton",
+        "type_index": 27357,
+        "exact_byval_name": null,
+        "token": "0x0400b022",
+        "range": {
+          "offset": 22612604,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45090,
+        "name": "manager",
+        "type_index": 28163,
+        "exact_byval_name": null,
+        "token": "0x0400b023",
+        "range": {
+          "offset": 22612616,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45091,
+        "name": "systemTextManager",
+        "type_index": 25664,
+        "exact_byval_name": null,
+        "token": "0x0400b024",
+        "range": {
+          "offset": 22612628,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45092,
+        "name": "registletTextManager",
+        "type_index": 23452,
+        "exact_byval_name": null,
+        "token": "0x0400b025",
+        "range": {
+          "offset": 22612640,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45093,
+        "name": "leftAnchor",
+        "type_index": 27369,
+        "exact_byval_name": null,
+        "token": "0x0400b026",
+        "range": {
+          "offset": 22612652,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45094,
+        "name": "rightAnchor",
+        "type_index": 27369,
+        "exact_byval_name": null,
+        "token": "0x0400b027",
+        "range": {
+          "offset": 22612664,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45095,
+        "name": "equipGemCartListWindow",
+        "type_index": 28274,
+        "exact_byval_name": null,
+        "token": "0x0400b028",
+        "range": {
+          "offset": 22612676,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45096,
+        "name": "equipButtonObj",
+        "type_index": 16371,
+        "exact_byval_name": null,
+        "token": "0x0400b029",
+        "range": {
+          "offset": 22612688,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45097,
+        "name": "playerDataManager",
+        "type_index": 22749,
+        "exact_byval_name": null,
+        "token": "0x0400b02a",
+        "range": {
+          "offset": 22612700,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45098,
+        "name": "returnCall",
+        "type_index": 11535,
+        "exact_byval_name": null,
+        "token": "0x0400b02b",
+        "range": {
+          "offset": 22612712,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45099,
+        "name": "selectData",
+        "type_index": 16434,
+        "exact_byval_name": null,
+        "token": "0x0400b02c",
+        "range": {
+          "offset": 22612724,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45100,
+        "name": "changeData",
+        "type_index": 16434,
+        "exact_byval_name": null,
+        "token": "0x0400b02d",
+        "range": {
+          "offset": 22612736,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45101,
+        "name": "isCanAddSlot",
+        "type_index": 12865,
+        "exact_byval_name": null,
+        "token": "0x0400b02e",
+        "range": {
+          "offset": 22612748,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45102,
+        "name": "isAction",
+        "type_index": 12865,
+        "exact_byval_name": null,
+        "token": "0x0400b02f",
+        "range": {
+          "offset": 22612760,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45103,
+        "name": "isChangeEquip",
+        "type_index": 12865,
+        "exact_byval_name": null,
+        "token": "0x0400b030",
+        "range": {
+          "offset": 22612772,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 45104,
+        "name": "selectedParam",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x0400b031",
+        "range": {
+          "offset": 22612784,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 65866,
+        "name": "Initialize",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "manager",
+            "type_index": 28162,
+            "exact_byval_name": "UIRegistletMainManager"
+          },
+          {
+            "name": "systemTextManager",
+            "type_index": 25663,
+            "exact_byval_name": "SystemTextManager"
+          },
+          {
+            "name": "registletTextManager",
+            "type_index": 23451,
+            "exact_byval_name": "RegistletTextManager"
+          }
+        ],
+        "token": "0x0601014b",
+        "range": {
+          "offset": 6120400,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65867,
+        "name": "FadeIn",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0601014c",
+        "range": {
+          "offset": 6120436,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65868,
+        "name": "FadeOut",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0601014d",
+        "range": {
+          "offset": 6120472,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65869,
+        "name": "Panel",
+        "return_type": {
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        "parameters": [],
+        "token": "0x0601014e",
+        "range": {
+          "offset": 6120508,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65870,
+        "name": "PushLeftTopButton",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x0601014f",
+        "range": {
+          "offset": 6120544,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65871,
+        "name": "PushRightTopButton",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [],
+        "token": "0x06010150",
+        "range": {
+          "offset": 6120580,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65872,
+        "name": "Update",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010151",
+        "range": {
+          "offset": 6120616,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65873,
+        "name": "SetEquipList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010152",
+        "range": {
+          "offset": 6120652,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65874,
+        "name": "CreateEquipGemButton",
+        "return_type": {
+          "type_index": 16370,
+          "exact_byval_name": "UnityEngine.GameObject"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          {
+            "name": "pos",
+            "type_index": 29046,
+            "exact_byval_name": "UnityEngine.Vector3"
+          },
+          {
+            "name": "data",
+            "type_index": 16433,
+            "exact_byval_name": "GemCartData"
+          },
+          {
+            "name": "addSlot",
+            "type_index": 12885,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x06010153",
+        "range": {
+          "offset": 6120688,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65875,
+        "name": "SetEnableEquipGemCartListWindow",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "enabled",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06010154",
+        "range": {
+          "offset": 6120724,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65876,
+        "name": "Equip",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010155",
+        "range": {
+          "offset": 6120760,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65877,
+        "name": "OpenGemList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010156",
+        "range": {
+          "offset": 6120796,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65878,
+        "name": "OnEditButton",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010157",
+        "range": {
+          "offset": 6120832,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65879,
+        "name": "OnClickEquipGem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06010158",
+        "range": {
+          "offset": 6120868,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65880,
+        "name": "OnClickEquipButton",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06010159",
+        "range": {
+          "offset": 6120904,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65881,
+        "name": "OnClickAddSlotButton",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0601015a",
+        "range": {
+          "offset": 6120940,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65882,
+        "name": "OnClickSelectGem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0601015b",
+        "range": {
+          "offset": 6120976,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65883,
+        "name": "OnClickRemoveGem",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "param",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x0601015c",
+        "range": {
+          "offset": 6121012,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65884,
+        "name": "OnClickAddSlotWindowButton",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0601015d",
+        "range": {
+          "offset": 6121048,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65885,
+        "name": "ReloadList",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0601015e",
+        "range": {
+          "offset": 6121084,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65886,
+        "name": "AddSlot",
+        "return_type": {
+          "type_index": 18077,
+          "exact_byval_name": "System.Collections.IEnumerator"
+        },
+        "parameters": [],
+        "token": "0x0601015f",
+        "range": {
+          "offset": 6121120,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65887,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010160",
+        "range": {
+          "offset": 6121156,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 65888,
+        "name": "<AddSlot>b__44_0",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x06010161",
+        "range": {
+          "offset": 6121192,
+          "size": 36
+        }
+      }
+    ]
+  },
+  {
+    "type_definition_index": 11527,
+    "name": "Toram.Common.Registlet.RegistletData",
+    "image": "Toram.Common.dll",
+    "range": {
+      "offset": 25559612,
+      "size": 88
+    },
+    "byval_type_index": 23439,
+    "declaring_type": {
+      "type_index": -1,
+      "exact_byval_name": null
+    },
+    "parent_type": {
+      "type_index": 12591,
+      "exact_byval_name": "Asobimo.Photon.Binary.BinaryBase"
+    },
+    "is_enum": false,
+    "fields": [
+      {
+        "field_index": 63015,
+        "name": "<Flag>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04000554",
+        "range": {
+          "offset": 22827716,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 63016,
+        "name": "<Slot>k__BackingField",
+        "type_index": 13017,
+        "exact_byval_name": null,
+        "token": "0x04000555",
+        "range": {
+          "offset": 22827728,
+          "size": 12
+        }
+      },
+      {
+        "field_index": 63017,
+        "name": "<GemPowder>k__BackingField",
+        "type_index": 18796,
+        "exact_byval_name": null,
+        "token": "0x04000556",
+        "range": {
+          "offset": 22827740,
+          "size": 12
+        }
+      }
+    ],
+    "methods": [
+      {
+        "method_index": 88694,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [],
+        "token": "0x0600018b",
+        "range": {
+          "offset": 6942208,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88695,
+        "name": ".ctor",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "binary",
+            "type_index": 9988,
+            "exact_byval_name": null
+          }
+        ],
+        "token": "0x0600018c",
+        "range": {
+          "offset": 6942244,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88696,
+        "name": "get_Flag",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600018d",
+        "range": {
+          "offset": 6942280,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88697,
+        "name": "set_Flag",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x0600018e",
+        "range": {
+          "offset": 6942316,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88698,
+        "name": "get_Slot",
+        "return_type": {
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        },
+        "parameters": [],
+        "token": "0x0600018f",
+        "range": {
+          "offset": 6942352,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88699,
+        "name": "set_Slot",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 13016,
+            "exact_byval_name": "System.Byte"
+          }
+        ],
+        "token": "0x06000190",
+        "range": {
+          "offset": 6942388,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88700,
+        "name": "get_GemPowder",
+        "return_type": {
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        "parameters": [],
+        "token": "0x06000191",
+        "range": {
+          "offset": 6942424,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88701,
+        "name": "set_GemPowder",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "value",
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          }
+        ],
+        "token": "0x06000192",
+        "range": {
+          "offset": 6942460,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88702,
+        "name": "GetBinary",
+        "return_type": {
+          "type_index": 29201,
+          "exact_byval_name": "System.Void"
+        },
+        "parameters": [
+          {
+            "name": "ms",
+            "type_index": 20191,
+            "exact_byval_name": "System.IO.MemoryStream"
+          },
+          {
+            "name": "isThrow",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06000193",
+        "range": {
+          "offset": 6942496,
+          "size": 36
+        }
+      },
+      {
+        "method_index": 88703,
+        "name": "SetValue",
+        "return_type": {
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        "parameters": [
+          {
+            "name": "ms",
+            "type_index": 20191,
+            "exact_byval_name": "System.IO.MemoryStream"
+          },
+          {
+            "name": "isThrow",
+            "type_index": 12864,
+            "exact_byval_name": "System.Boolean"
+          }
+        ],
+        "token": "0x06000194",
+        "range": {
+          "offset": 6942532,
+          "size": 36
+        }
+      }
+    ]
+  }
+]

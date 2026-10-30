@@ -35,7 +35,7 @@
 .home-recent .home-empty strong { font-size:14px; }
 .home-recent-menu { margin:0 20px; padding:16px 4px; display:flex; align-items:center; gap:12px; color:#123e5b; background:white; border:0; border-bottom:1px solid #e4eff7; text-align:left; font-size:14px; }
 .home-recent-menu:hover { background:#f5faff; }
-.home-recent-menu svg { width:22px; height:22px; color:#4a6a80; }
+.home-recent-menu :is(svg,img) { width:22px; height:22px; color:#4a6a80; object-fit:contain; }
 .home-recent-menu svg:last-child { margin-left:auto; width:17px; }
 @media (max-width:900px) and (min-width:701px) { #homeWorkspace { padding:20px; } .home-dashboard { grid-template-columns:minmax(0,1.25fr) minmax(270px,1fr); gap:14px; } .home-side { gap:14px; } .home-panel-heading { padding:16px; } .home-account-main { padding:0 16px 16px; } }
 @media (max-width:700px) {

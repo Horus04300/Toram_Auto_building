@@ -111,9 +111,9 @@ export function resolveBossTarget(selection) {
   } else notes.push('입장 경로의 계산 규칙이 미확인입니다. 원본만 표시하며 기존 계산 값을 유지합니다.');
   const details = [
     ['지역 / 개체', `${row.fieldName ?? '#' + row.fieldId} · ${row.key}`],
-    ['본체 HP', hp ?? (guildRaid ? (selection.level === 40 ? 'Lv40은 남은 HP 게이지 0~10 중 어느 값인지 확인 필요' : 'int32 표현 범위 초과 · 자동값 미확정') : `미적용 (원본 ${base.maxHp})`)], ['본체 필요 명중', hit ?? `미적용 (원본 ${base.necessaryHit})`],
+    ['본체 HP', hp ?? (guildRaid ? (selection.level === 40 ? 'Lv40은 남은 HP 게이지 0~10 중 어느 값인지 확인 필요' : 'int32 표현 범위 초과 · 자동값 미확정') : `미적용 (원본 ${base.maxHp})`)], ['회피', hit ?? `미적용 (원본 ${base.necessaryHit})`],
     ['관성 변동률 · 통상', `${base.expDefNormal}%p`], ['관성 변동률 · 물리', `${base.expDefSkill}%p`], ['관성 변동률 · 마법', `${base.expDefMagic}%p`],
-    ['가드 / 회피 (원본)', `${base.guard} / ${base.avoid}`], ['속성 코드 (원본)', base.elementRaw],
+    ['가드율 / 어보이드율 (원본)', `${base.guard}% / ${base.avoid}%`], ['속성 코드 (원본)', base.elementRaw],
     ['기본 DEF / MDEF', `${base.def} / ${base.mdef}`], ['기본 CutAttack / CutMagicAttack', `${base.cutAttack} / ${base.cutMagicAttack}`],
     ['부위 수', row.parts.length], ['기본 크리티컬 저항', target.bossCritResist ?? '미확인'], ['데이터 버전', selection.revision]
   ];

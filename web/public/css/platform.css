@@ -7,7 +7,7 @@ body.has-platform-shell { max-width:none; margin:0; padding:0; background:#eef8f
 .platform-brand { width:44px; height:44px; display:grid; place-items:center; color:#1976a8; background:#dff1ff; border-radius:12px; font-size:28px; font-weight:800; text-decoration:none; }
 .platform-sidebar nav { display:flex; flex-direction:column; width:100%; gap:8px; }
 .platform-sidebar .platform-nav-button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; min-height:70px; border:0; border-radius:10px; background:transparent; padding:10px 2px; color:#4a6a80; font:600 11px/1.4 'Pretendard',sans-serif; cursor:pointer; }
-.platform-nav-button svg { width:25px; height:25px; }
+.platform-nav-button :is(svg,img) { width:25px; height:25px; object-fit:contain; }
 .platform-sidebar .platform-nav-button[aria-current="page"] { background:#dff1ff; color:#155f87; }
 .platform-sidebar .platform-nav-button:enabled:hover { background:#e8f5ff; color:#123e5b; }
 .platform-sidebar .platform-nav-button:disabled { opacity:.55; cursor:not-allowed; }
@@ -35,7 +35,7 @@ body.has-platform-shell { max-width:none; margin:0; padding:0; background:#eef8f
   .platform-brand { width:38px; height:38px; font-size:24px; }
   .platform-sidebar nav { gap:5px; }
   .platform-sidebar .platform-nav-button { font-size:10px; min-height:62px; gap:6px; }
-  .platform-nav-button svg { width:23px; height:23px; }
+  .platform-nav-button :is(svg,img) { width:23px; height:23px; }
   .platform-shell .app-titlebar { height:56px; padding:0 16px; }
   .platform-shell .app-titlebar h1 { flex-basis:auto; font-size:19px; gap:14px; }
   .platform-breadcrumb { padding-left:14px; font-size:12px; }

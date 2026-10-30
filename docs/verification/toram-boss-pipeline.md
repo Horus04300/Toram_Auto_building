@@ -50,6 +50,8 @@ node tools/extraction/sync-toram-dev-bosses.mjs --offline build/tmp/toram-monste
 
 도감의 `search('', locale, {classification})`는 분류를 선택했을 때만 변종 shard를 읽어 일치 개체가 있는 ID를 반환한다. 기본 검색의 지연 조회는 유지한다. `bossKind` URL은 입장/필드/고난도 선택을 보존하며 상세 개체도 해당 분류로 제한한다. 전체에서는 길드·던전·미분류도 원형대로 보존한다. 이벤트보스는 사용자 요청으로 카테고리 칸만 두고 기간·맵 연결은 보류한다.
 
+도감 상세는 기존 정적 타겟 해석 결과로 HP·레벨·DEF/MDEF·내성·크리 저항을, 본체 값으로 속성·회피·어보이드율·가드율·관성 변동률을 표시한다. ElementType의 None(0)은 미지정, Normal(7)은 무속성으로 구분하며 대응 근거는 `data/sources/toram-items/native-option-calculation/metadata-bindings.json`의 enum이다. 난이도·입장/현재 보스 레벨을 항상 명시한다. 미확인 입장 모델의 마스터 수치는 보존하고 계산 불명 값은 미확정으로 표시한다. 시스템 설명·원본 접미사는 화면에 붙이지 않는다. 회피/어보이드의 의미·범위는 `data/sources/toram-monsters/native-hit-accuracy/README.md`에 근거를 둔다. 같은 UUID 안에서 지역과 개체/페이즈 선택을 분리하고 같은 지역의 명시적 mode 연결만 페이즈로 식별한다. 지역 ID 일치만으로 다른 UUID를 합치거나 masterId 정렬을 전투 진행 순서로 승격하지 않는다. `test-catalog-browser.mjs`는 발행 전체의 표시·속성 enum·난이도·페이즈 경계를, `verify-catalog-browser.mjs [--web]`는 지역/페이즈·난이도·입장 Lv·새로고침·PC/모바일 표시를 검사한다.
+
 앱 파일은 Boss 비트 4 레코드를 보존한다. 여기에는 부위·단계 변종도 있으며 서로 다른 독립 보스의 수가 아니다. `baseStats`는 네이티브 명칭과 원시 단위다. 변종마다 출처 SHA, 방 목록, 직렬화 출현점, 속성·부위·모드를 제공한다. `partStats`는 같은 필드의 부위 마스터를 연결하며 Boss 비트가 없는 부위의 DEF/MDEF와 보정 속성도 포함한다. 누락 참조는 stats:null이다.
 
 분류는 변종별 `classification`·`classificationEvidence`와 `entry`로 전달한다. 필드는 정확한 mmo 출현점(`single`, 난이도 null), 입장은 BossMenu의 명시적 대상 맵/방(`difficulty-select`), 고난도 레이드는 HighRaidBossMaster의 ID 연결(`level-select`, BaseLevel/MinLevel 보존)이다. Dungeon 비트는 별도로 구분한다. 양성 근거가 없는 변종만 unresolved다. 다른 맵의 분류를 UUID만으로 복사하지 않는다. 상세 근거는 `boss-classification.md`에 있다.
@@ -60,7 +62,7 @@ node tools/extraction/sync-toram-dev-bosses.mjs --offline build/tmp/toram-monste
 
 `web/src/application/boss-target.mjs`는 출처로 확인한 정적 규칙만 사용한다. 일반 입장 DEF/MDEF는 본체와 각 부위를 별도로 float32 스케일·절삭한 뒤 합산한다. HighRaid는 별도의 레벨식과 첫 type32 고정 플래그를 적용한다. CutAttack/CutMagicAttack은 물리/마법 내성의 % 포인트이며 미파괴 부위의 type8 BodyCutCorrection을 더한다. 부위 원시 Cut를 합하는 식은 아니다. 기본 크리티컬 저항은 원본 순서의 첫 type6 Values[0], 속성이 없으면 0이다. UID를 단계 번호로 취급하지 않는다.
 
-부위 합산은 **등록 부위 모두 미파괴인 정적 가정**이다. 실제 장면의 활성 부위·파괴·상태이상·버프·보석을 자동 시뮬레이션하지 않는다. 연결 누락 수치는 기존 수동 값을 유지하고 경고한다. 관성 변동률 세 종류는 %p로 표시하며 현재 관성 배율로 사용하지 않는다. 추가 정보에서 본체 HP/명중·원본 방어/내성·가드/회피·속성 코드·버전을 볼 수 있다.
+부위 합산은 **등록 부위 모두 미파괴인 정적 가정**이다. 실제 장면의 활성 부위·파괴·상태이상·버프·보석을 자동 시뮬레이션하지 않는다. 연결 누락 수치는 기존 수동 값을 유지하고 경고한다. 관성 변동률 세 종류는 %p로 표시하며 현재 관성 배율로 사용하지 않는다. 추가 정보에서 본체 HP/회피·방어/내성·가드/어보이드·속성 코드·버전을 볼 수 있다.
 
 선택은 `scenario.bossSelection?`의 `toram.boss-selection.v1`로 ID·revision·변종 원본·난이도·레벨을 고정한다. 실제 계산에는 기존 `scenario.target` 여섯 숫자만 전달한다. JSON/세션 복원은 최신 카탈로그를 다시 읽거나 원본으로 덮어쓰지 않으므로 수동 수정도 보존한다. 원본을 갱신하려면 검색에서 다시 선택한다. 연결 해제도 현재 숫자를 유지한다. 기존 선택 필드 없는 v2 문서는 그대로 읽는다.
 

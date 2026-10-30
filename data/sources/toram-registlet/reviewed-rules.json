@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "authority": "retained-native-static-consumer-review",
+  "enhancement": {
+    "base": "P = target master EnhancePowder",
+    "sameKindFormula": "-trunc0(f32(P) * f32(-0.1))",
+    "differentKindFormula": "P",
+    "sameKindLevel": "min(cap, currentLevel + materialLevel)",
+    "differentKindLevel": "currentLevel + 1",
+    "materialLimit": 10,
+    "limitGuard": "currentLevel == levelCap -> cannot open reinforcement; no further materials can be selected once preview reaches cap",
+    "sources": [
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/20057.c",
+        "sha256": "78c8304cd6e270a32b3dca6cc3970031d9f33fc8e9828cf13325fa43e47f120d"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/20079.c",
+        "sha256": "9696e03d9d8fd469327c4086f0620edee8fb97525b4f99d76ddb88c5c6cad123"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/20081.c",
+        "sha256": "d3ba1248ac3ccc531d493b0c8878babc0ac461f4ddeca8deca8616ffcebadf1b"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/65824.c",
+        "sha256": "4527235e53d0801690d62711438d330caf606466d363685306b9e65d861afa9f"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/66048.c",
+        "sha256": "bbd104981967ec3831967104edddc39a5d62bd3d36f1ec4be8935ab79888a86e"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/66058.c",
+        "sha256": "b52f1ba6e3ab063c1f855a402ce3bb19d2af2d23be6b4aa49ab662250f7c258b"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/66066.c",
+        "sha256": "d151d081f24842ae1f8bca44b3e8a687551fcdc11e75b55cff8e448e600a56f3"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/66067.c",
+        "sha256": "16786a095147aec2a9a5cc27a5d5f55b5d63a9170f712557edf0d09d5a448a24"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/78171.c",
+        "sha256": "810ffcb477c68fc4a5fe176e0544d447e41298c60e5db726227aa4991d344f86"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/constant.json",
+        "sha256": "22abd081e332dae98b65a370f404a584bfe49fd308ef138b6914ec2b13b8046e"
+      },
+      {
+        "file": "data/sources/toram-registlet/native-enhancement/method-map.json",
+        "sha256": "b6d885ded7332bfa74f8973787d3f9a5954eb487930905034c372d456dbe940a"
+      }
+    ]
+  },
+  "effects": {
+    "1053": {
+      "nameKr": "스컬 셰이커・정지",
+      "stackCapFormula": "L",
+      "usedStacksFormula": "min(currentSkullStacks,L)",
+      "halberdCoefficientAtCap": "(750 + trunc0(f32(S*7.5)) * L)/100",
+      "staffCoefficientAtCap": "(1000 + (trunc0(f32(S*7.5)) + 25) * L)/100",
+      "stunProbability": 0,
+      "variables": {
+        "L": "GemCart level (1..5)",
+        "S": "Skull Shaker skill level (1..10)"
+      },
+      "sources": [
+        {
+          "file": "data/sources/toram-registlet/native/75645.c",
+          "sha256": "c8ff2b4de424ba39c8083a02b2e6d6a446de61d5455e02e335a7f992fa694f52"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-consumers/25971.c",
+          "sha256": "38d28b5cd72024f640f3bac688f5922ec38f5e26db9b80c6bf9c3816bfd69206"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/25972.c",
+          "sha256": "32042b5929eef52e4c6375952600edac16c3ac7dbfade3a654e7baac2d257f0a"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/25974.c",
+          "sha256": "3260bd633c615a0345aa9a03a9ac1d8b5496e1ab47c365d22e95ed9df00c63e3"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/25972.asm",
+          "sha256": "c9bd6d3671f44c14e7ffdb76317c4ae2d41ac9d7428e7bd84100275e3d1a703d"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/25974.asm",
+          "sha256": "d263886f6684d4576826b4ec43ff586e4677d2f9a5de2c0786a20c5b7d046047"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/method-map.json",
+          "sha256": "29aae607703879ec7a7b8a10b8137d427013df7618a3a151b23af5aa78738eea"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/TraceToramRegistletEffectReviewFocused.java",
+          "sha256": "35c910736698dcbac1ffd2aa13dc6130c856cc490dc0e661f04fbd1a4c2e9071"
+        },
+        {
+          "file": "data/sources/toram-registlet/native-skill-effects/1053/constant.json",
+          "sha256": "c2ebbfbf0e0ceae0cd6c74a6aee26fb67328bf79baa7480f77749b4e6bf167e8"
+        }
+      ],
+      "decompilationNote": "TryGetBuff observed ABI has out-object pointer in R8. Without declaring it Ghidra erases valid stack branches; corrected prototype and assembly are retained. Native type0xe uses base1000 and +25/stack, localized/source skill definition identifies staff; other supported halberd uses base750."
+    }
+  },
+  "limitations": [
+    "Static client calculation, not a performed reinforcement or server response. No powder or materials were consumed.",
+    "Skull coefficient is a skill multiplier at full allowed stacks, not final damage. No combat simulator is wired.",
+    "Current 166 master P values all agree with floor(P/10); native float32/truncation is used."
+  ]
+}

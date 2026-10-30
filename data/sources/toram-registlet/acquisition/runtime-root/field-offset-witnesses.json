@@ -1,0 +1,47 @@
+{
+  "sourcePeSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+  "methods": [
+    {
+      "class": "RoomDataBase",
+      "name": "get_FieldId",
+      "method_definition_index": 21661,
+      "oldIndex": 21661,
+      "token": "0x600549e",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "pointer_slot_offset": 51567512,
+      "pointer_slot_va": "0x7ffe9c86db98",
+      "runtime_va": "0x7ffe999fea70",
+      "rva": "0x2bea70",
+      "status": "mapped",
+      "code_preview_hex": "8b4138c3cccccccccccccccccccccccc48895c2408488974"
+    },
+    {
+      "class": "RoomDataBase",
+      "name": "get_RoomId",
+      "method_definition_index": 21664,
+      "oldIndex": 21664,
+      "token": "0x60054a1",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      "pointer_slot_offset": 51567536,
+      "pointer_slot_va": "0x7ffe9c86dbb0",
+      "runtime_va": "0x7ffe99a652f0",
+      "rva": "0x3252f0",
+      "status": "mapped",
+      "code_preview_hex": "0fb6413cc3cccccccccccccccccccccc40534883ec20f20f"
+    }
+  ],
+  "decodedGetters": {
+    "FieldId": "mov eax,[rcx+0x38]; ret",
+    "RoomId": "movzx eax,byte ptr [rcx+0x3c]; ret"
+  }
+}

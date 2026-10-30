@@ -1,8 +1,9 @@
 import { EQUIPMENT_SLOTS, validateEquipmentObject } from './equipment-object.mjs';
 import { validateConsumableBuffSelection, resolveConsumableBuffs, isConsumableGroupId } from './item-catalog.mjs';
 import { validateCharacter, validateScenario, validateBuildExtras } from './build-values.mjs';
+import { validateRegistletSelection } from './registlet-catalog.mjs';
 
-export const INVENTORY_TYPES = Object.freeze({ equipment:'장비', equipment_set:'장비 세팅', status:'스테이터스', skill_tree:'스킬트리', skill_set:'스킬셋', consumable:'도핑', consumable_set:'도핑 세팅', combo:'콤보', combo_set:'콤보 목록', build:'빌드' });
+export const INVENTORY_TYPES = Object.freeze({ equipment:'장비', equipment_set:'장비 세팅', status:'스테이터스', skill_tree:'스킬트리', skill_set:'스킬셋', consumable:'도핑', consumable_set:'도핑 세팅', combo:'콤보', combo_set:'콤보 목록', build:'빌드', registlet:'레지스트렛' });
 export const SECTION_TYPES = Object.freeze({ status:'status', equipment:'equipment_set', skills:'skill_set', consumables:'consumable_set', combos:'combo_set' });
 const groups = { equipment_set:['slots','equipment'], skill_set:['trees','skill_tree'], consumable_set:['categories','consumable'] };
 const own = (value, key) => Object.hasOwn(value, key);
@@ -17,6 +18,7 @@ export function validateProvenance(value) {
   for (const source of value) {
     if (source?.kind === 'inventory') { fields(source,['kind','objectId','revision']); requireValue(/^[a-f0-9-]{36}$/u.test(source.objectId) && Number.isSafeInteger(source.revision) && source.revision > 0, '개인 객체 출처가 올바르지 않습니다.'); }
     else if (source?.kind === 'release') { fields(source,['kind','postId','releaseNumber']); requireValue(/^[a-f0-9-]{36}$/u.test(source.postId) && Number.isSafeInteger(source.releaseNumber) && source.releaseNumber > 0, '공개 릴리스 출처가 올바르지 않습니다.'); }
+    else if (source?.kind === 'registlet-catalog') {fields(source,['kind','registletId','cacheVersion','sourceSha256']); requireValue(Number.isSafeInteger(source.registletId) && source.registletId > 0 && /^[a-f0-9]{8}$/u.test(source.cacheVersion) && /^[a-f0-9]{64}$/u.test(source.sourceSha256),'레지스트렛 출처가 올바르지 않습니다.');}
     else { fields(source,['kind','gameItemId','cacheVersion','sourceSha256']); requireValue(source.kind === 'catalog' && Number.isSafeInteger(source.gameItemId) && source.gameItemId > 0 && /^[a-f0-9]{8}$/iu.test(source.cacheVersion) && /^[a-f0-9]{64}$/u.test(source.sourceSha256), '도감 출처가 올바르지 않습니다.'); }
   }
 }
@@ -41,7 +43,8 @@ function validateContext(data, rules) {
 export function validateInventoryObject(type, data, rules) {
   requireValue(own(INVENTORY_TYPES,type), '지원하지 않는 구성 종류입니다.');
   if (type === 'equipment') return validateEquipmentObject(data, rules.registry);
-  if (type === 'status') {
+  if (type === 'registlet') {fields(data,['selection']); validateRegistletSelection(data.selection);}
+  else if (type === 'status') {
     fields(data,['character']); validateCharacter(data.character);
   } else if (type === 'skill_tree') {
     fields(data,['treeId','levels','activeBuffs']); const tree = treeInfo(rules,data.treeId); requireValue(tree, '등록된 스킬트리가 필요합니다.');
@@ -80,6 +83,7 @@ export function validateInventoryObject(type, data, rules) {
 
 // Values are flat during composition; v1 envelopes and provenance stay at the boundary.
 export function sections(record) {
+  requireValue(record.type !== 'registlet','레지스트렛은 개별 보관만 지원합니다.');
   const values={}, origins={};
   function origin(path,item) { const {data,...metadata}=snapshot(item); origins[path]=metadata; return data; }
   function leaf(section,id,item) {
@@ -126,6 +130,7 @@ export function encodeSections({values,origins}) {
 }
 
 export function captureObject(type, session, {slot='mainWeapon',treeId,consumableId,previous,comboId}={}) {
+  requireValue(type !== 'registlet','레지스트렛은 도감에서 선택해 보관하세요.');
   const build=session.build, prior=previous ? sections(previous) : {values:{},origins:{}};
   const section=({equipment:'equipment',skill_tree:'skills',consumable:'consumables',combo:'combos'})[type]||Object.keys(SECTION_TYPES).find(key=>SECTION_TYPES[key]===type);
   const keys=type==='build' ? previous ? Object.keys(previous.data) : [...Object.keys(SECTION_TYPES),'context'] : [section];
@@ -165,7 +170,7 @@ export function captureObject(type, session, {slot='mainWeapon',treeId,consumabl
 }
 
 function emptyEquipment(slot) { const weapon = ['mainWeapon','subWeapon'].includes(slot), count = slot === 'subWeapon' ? 0 : 2; return {type:({mainWeapon:'맨손',subWeapon:'없음',armor:'일반옷'})[slot] || null, attack:weapon ? 0 : null, refinement:weapon ? 0 : null, stability:weapon ? 0 : null, options:[], crystas:Array(count).fill(''), lockedCrystaSlots:Array(count).fill(false)}; }
-export function comboEntries(record) { return encodeSections(sections(record)).combos?.data.entries || []; }
+export function comboEntries(record) { return record.type === 'registlet' ? [] : encodeSections(sections(record)).combos?.data.entries || []; }
 export function applyObject(record, session, rules, comboId) {
   validateInventoryObject(record.type,record.data,rules);
   const result = structuredClone(session), build = result.build, parts = sections(record).values;

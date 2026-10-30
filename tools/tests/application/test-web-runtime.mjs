@@ -55,6 +55,7 @@ for (const [target,directory] of [['web','build/web'],['desktop','build/desktop'
   }
   for (const path of ['assets/game-data/items/manifest.json', 'assets/js/application/item-catalog.mjs', 'assets/js/ui/item-equipment-ui.mjs']) await access(resolve(output, path));
   await access(resolve(output, 'assets/js/application/boss-catalog.mjs'));
+  for (const path of ['assets/game-data/registlets/catalog.json','assets/js/application/registlet-catalog.mjs','assets/js/data/registlet-levels.mjs','assets/js/pages/inventory/inventory-registlet-editor.mjs']) await access(resolve(output,path));
   await readBossManifest(resolve(output, 'assets/game-data/bosses'));
   for (const path of [...graphs.desktop.files].filter(path => !scripts.includes(path))) {
     await assert.rejects(access(resolve(output, path)), { code:'ENOENT' });
@@ -115,12 +116,15 @@ try {
   assert.equal((await get('/index.html', 'HEAD')).body, '');
   assert.equal((await get('/assets/js/app-entry.mjs', 'HEAD')).body, '');
   for (const path of ['/package.json', '/.git/config', '/web/src/contracts/boundary-dtos.d.ts', '/desktop/tauri.conf.json',
-    '/engine/src/solver.rs', '/data/sources/skill-effect-source-links.json', '/assets/js/optimization/native-client.js',
-    '/assets/js/contracts/boundary-dtos.d.ts', '/server/account-server.mjs', '/assets/missing.js', '/api/inventory/missing', '/inventory/unknown', '/assets/../package.json',
+    '/engine/src/solver.rs', '/data/sources/skill-effect-source-links.json', '/assets/js/optimization/native-client.js', '/server/.env', '/server/data/accounts.sqlite',
+    '/assets/js/contracts/boundary-dtos.d.ts', '/server/account-server.mjs', '/assets/missing.js', '/inventory/unknown', '/assets/../package.json',
     '/assets/%2e%2e%5cpackage.json', '/assets/%2e%2e%2fpackage.json', '/assets/C:%5cWindows%5cwin.ini']) {
     assert.equal((await get(path)).status, 404, `Must not expose ${path}`);
   }
   assert.equal((await get('/assets/%ZZ')).status, 400);
+  const privateApi=await get('/api/inventory/missing');
+  assert.equal(privateApi.status,401);
+  assert.equal(JSON.parse(privateApi.body).code,'AUTH_REQUIRED');
   assert.equal((await get('/', 'POST')).status, 405);
   console.log('Web runtime: PASS (target HTML, source/Worker/font serving, HEAD, no cache, traversal/private path rejection)');
 } finally {

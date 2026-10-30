@@ -1,25 +1,26 @@
+import { ITEM_MENU_ICON, BOARD_MENU_ICON, CATALOG_MENU_ICON } from '../ui/game-menu-icons.mjs';
+
 export const PLATFORM_PAGES = Object.freeze([
   { id:'home', label:'홈', icon:'home' },
   { id:'catalog', label:'도감', icon:'book' },
   { id:'inventory', label:'인벤토리', icon:'bag' },
   { id:'simulator', label:'시뮬레이터', icon:'flask', pending:true },
   { id:'calculator', label:'계산기', icon:'calculator' },
-  { id:'board', label:'게시판', icon:'chat' }
+  { id:'board', label:'게시판', icon:'board' }
 ]);
 
 const paths = {
   home:'<path d="m3 10 9-7 9 7v10H15v-7H9v7H3Z"/>',
-  book:'<path d="M12 5v15M3 4c4-1 6 0 9 2 3-2 5-3 9-2v15c-4-1-6 0-9 1-3-1-5-2-9-1Z"/>',
-  bag:'<rect x="4" y="7" width="16" height="14" rx="3"/><path d="M8 7V5a4 4 0 0 1 8 0v2M8 12v3h8v-3"/>',
   flask:'<path d="M9 3h6m-5 0v7L4 20a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1l-6-10V3M7 15h10"/>',
   calculator:'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M8 6h8M8 11h1m3 0h1m3 0h.1M8 15h1m3 0h1m3 0h.1M8 19h1m3 0h1m3 0h.1"/>',
-  chat:'<path d="M4 3h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H9l-6 3V5a2 2 0 0 1 1-2Z"/><path d="M8 10h.1m4 0h.1m4 0h.1"/>',
   user:'<circle cx="12" cy="8" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/>',
   bookmark:'<path d="M6 21V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v17l-6-4Z"/>',
   clock:'<circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/>',
   arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>'
 };
 export function platformIcon(name) {
+  const image = name === 'bag' ? ITEM_MENU_ICON : name === 'board' ? BOARD_MENU_ICON : name === 'book' ? CATALOG_MENU_ICON : null;
+  if (image) return `<img src="${image}" width="25" height="25" alt="" aria-hidden="true">`;
   return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name] || paths.home}</svg>`;
 }
 

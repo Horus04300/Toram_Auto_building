@@ -23,7 +23,7 @@ function publicSnapshot(value) {
 }
 function catalogVersions(value,found = new Set()) {
   if (value && typeof value === 'object') {
-    if (['toram.equipment-item.v1','toram.consumable-buff.v1'].includes(value.schema)) found.add(value.cacheVersion);
+    if (['toram.equipment-item.v1','toram.consumable-buff.v1','toram.registlet.v1'].includes(value.schema)) found.add(value.cacheVersion);
     for (const item of Object.values(value)) catalogVersions(item,found);
   }
   return [...found].sort();

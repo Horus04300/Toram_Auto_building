@@ -1,0 +1,408 @@
+{
+  "schema": "toram.boss-hit-accuracy-evidence.v1",
+  "date": "2026-10-30",
+  "authority": "offline-ghidra-12.1.4-and-metadata-byte-reads",
+  "source": {
+    "snapshotPath": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.snapshot.dll",
+    "snapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+    "mappedSha256": "33fa1bc4a533cba3f99f0d711fb14ca6e9a2bee06b834484c98af2d2336767b1",
+    "metadataSha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9",
+    "imageBase": "0x7ffe99740000",
+    "ghidraVersion": "12.1.4",
+    "mappedPath": "build/tmp/update-pipeline-20261022/snapshot/GameAssembly.mapped.bin",
+    "metadataPath": "build/tmp/update-pipeline-20261022/installed-source/global-metadata.dat"
+  },
+  "constants": [
+    {
+      "va": "0x7ffe9c049b74",
+      "bytesHex": "00004040",
+      "float32": 3.0
+    },
+    {
+      "va": "0x7ffe9c049b18",
+      "bytesHex": "0000803f",
+      "float32": 1.0
+    },
+    {
+      "va": "0x7ffe9c049db0",
+      "bytesHex": "cdcc4c3f",
+      "float32": 0.800000011920929
+    },
+    {
+      "va": "0x7ffe9c049b7c",
+      "bytesHex": "00000041",
+      "float32": 8.0
+    },
+    {
+      "va": "0x7ffe9c049e50",
+      "bytesHex": "9a99193f",
+      "float32": 0.6000000238418579
+    }
+  ],
+  "field": {
+    "field_index": 5778,
+    "name": "necessaryHit",
+    "type_index": 18796,
+    "exact_byval_name": null,
+    "token": "0x04001693",
+    "range": {
+      "offset": 22140872,
+      "size": 12
+    }
+  },
+  "interfaces": {
+    "IMobStatusCalculator": {
+      "typeDefinitionIndex": 903,
+      "methods": [
+        {
+          "slot": 2,
+          "method_index": 7992,
+          "name": "get_NecessaryHit",
+          "return_type": {
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          "parameters": [],
+          "token": "0x06001f39",
+          "range": {
+            "offset": 4036936,
+            "size": 36
+          }
+        },
+        {
+          "slot": 7,
+          "method_index": 7997,
+          "name": "get_GuardProbability",
+          "return_type": {
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          "parameters": [],
+          "token": "0x06001f3e",
+          "range": {
+            "offset": 4037116,
+            "size": 36
+          }
+        },
+        {
+          "slot": 8,
+          "method_index": 7998,
+          "name": "get_AvoidProbability",
+          "return_type": {
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          "parameters": [],
+          "token": "0x06001f3f",
+          "range": {
+            "offset": 4037152,
+            "size": 36
+          }
+        }
+      ]
+    },
+    "IPlayerStatusCalculator": {
+      "typeDefinitionIndex": 1388,
+      "methods": [
+        {
+          "slot": 17,
+          "method_index": 12359,
+          "name": "get_Hit",
+          "return_type": {
+            "type_index": 18795,
+            "exact_byval_name": "System.Int32"
+          },
+          "parameters": [],
+          "token": "0x06003048",
+          "range": {
+            "offset": 4194148,
+            "size": 36
+          }
+        }
+      ]
+    }
+  },
+  "virtualMethods": [
+    {
+      "methodIndex": 14198,
+      "name": "get_Mp",
+      "slot": 22,
+      "token": "0x6003777"
+    },
+    {
+      "methodIndex": 14274,
+      "name": "CheckHit",
+      "slot": 85,
+      "token": "0x60037c3"
+    }
+  ],
+  "methods": [
+    {
+      "oldIndex": 7218,
+      "newIndex": 7218,
+      "class": "BossMobBattleStatus",
+      "name": "get_NecessaryHit",
+      "token": "0x6001c33",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a2a7470",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "7218.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/7218-BossMobBattleStatus-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 7753,
+      "newIndex": 7753,
+      "class": "GuildRaidBossMobBattleStatus",
+      "name": "get_NecessaryHit",
+      "token": "0x6001e4a",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a31df00",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "7753.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/7753-GuildRaidBossMobBattleStatus-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 7908,
+      "newIndex": 7908,
+      "class": "HighRaidBossBattleStatus",
+      "name": "get_NecessaryHit",
+      "token": "0x6001ee5",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a3239d0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "7908.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/7908-HighRaidBossBattleStatus-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 8280,
+      "newIndex": 8280,
+      "class": "MobBattleStatus",
+      "name": "get_NecessaryHit",
+      "token": "0x6002059",
+      "method_flags_raw": "0x9e6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a328e50",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "8280.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/8280-MobBattleStatus-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 9035,
+      "newIndex": 9035,
+      "class": "MobPartsStatus",
+      "name": "get_NecessaryHit",
+      "token": "0x600234c",
+      "method_flags_raw": "0x9c6",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe9a35bae0",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9035.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/9035-MobPartsStatus-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 9177,
+      "newIndex": 9177,
+      "class": "MobStatusMaster",
+      "name": "get_NecessaryHit",
+      "token": "0x60023da",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      "runtime_va": "0x7ffe999fea70",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "9177.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/9177-MobStatusMaster-get_NecessaryHit.c"
+    },
+    {
+      "oldIndex": 14129,
+      "newIndex": 14129,
+      "class": "NormalAttackAction",
+      "name": "calcPlayerToMobDamage",
+      "token": "0x6003732",
+      "method_flags_raw": "0xc4",
+      "parameters": [
+        {
+          "name": "playerAction",
+          "type_index": 22721,
+          "exact_byval_name": "PlayerActionManagerBase"
+        },
+        {
+          "name": "mobAction",
+          "type_index": 20513,
+          "exact_byval_name": "MobActionManagerBase"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "runtime_va": "0x7ffe9a49a380",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14129.c",
+      "evidenceFile": "data/sources/toram-monsters/native-hit-accuracy/14129-NormalAttackAction-calcPlayerToMobDamage.c"
+    },
+    {
+      "oldIndex": 14274,
+      "newIndex": 14274,
+      "class": "PlayerAttackBase",
+      "name": "CheckHit",
+      "token": "0x60037c3",
+      "method_flags_raw": "0x1c4",
+      "parameters": [
+        {
+          "name": "status",
+          "type_index": 22777,
+          "exact_byval_name": "PlayerStatusBase"
+        },
+        {
+          "name": "needHit",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "mp",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "isFlash",
+          "type_index": 12864,
+          "exact_byval_name": "System.Boolean"
+        },
+        {
+          "name": "correct",
+          "type_index": 9136
+        }
+      ],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "runtime_va": "0x7ffe9a4ac950",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14274.c",
+      "evidenceFile": "data/sources/toram-items/native-option-calculation/extended-consumption/14274-PlayerAttackBase-CheckHit.c"
+    },
+    {
+      "oldIndex": 14309,
+      "newIndex": 14309,
+      "class": "PlayerAttackBase",
+      "name": "templateToDamageData",
+      "token": "0x60037e6",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "template",
+          "type_index": 24567,
+          "exact_byval_name": "SkillCalcTemplate"
+        },
+        {
+          "name": "damageCount",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 36382,
+        "exact_byval_name": "DamageData"
+      },
+      "runtime_va": "0x7ffe9a4b4370",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14309.c"
+    },
+    {
+      "oldIndex": 14310,
+      "newIndex": 14310,
+      "class": "PlayerAttackBase",
+      "name": "templateToDamageData",
+      "token": "0x60037e7",
+      "method_flags_raw": "0x84",
+      "parameters": [
+        {
+          "name": "damageData",
+          "type_index": 36382,
+          "exact_byval_name": "DamageData"
+        },
+        {
+          "name": "templateList",
+          "type_index": 5546
+        }
+      ],
+      "return_type": {
+        "type_index": 36382,
+        "exact_byval_name": "DamageData"
+      },
+      "runtime_va": "0x7ffe9a4b3a80",
+      "status": "mapped",
+      "decompileCompleted": true,
+      "error": "",
+      "pseudocodeFile": "14310.c"
+    }
+  ],
+  "artifacts": {
+    "data/sources/toram-monsters/native-hit-accuracy/7218-BossMobBattleStatus-get_NecessaryHit.c": "3a002dcebfbddcd95f61067804859fd8bd9e2224a86a615ae50f32ed9274ee46",
+    "data/sources/toram-monsters/native-hit-accuracy/7753-GuildRaidBossMobBattleStatus-get_NecessaryHit.c": "49a685bce1247a1d08842af22dcdb8a5c6133bf5dd234a74857b124d01d3ce2e",
+    "data/sources/toram-monsters/native-hit-accuracy/7908-HighRaidBossBattleStatus-get_NecessaryHit.c": "d4b0eb620bdc9f8c8598ab3af12ef43870358d440c962dedcaf07e350a2188e8",
+    "data/sources/toram-monsters/native-hit-accuracy/8280-MobBattleStatus-get_NecessaryHit.c": "384e0a3dbeea2cc68c80afe220cc24abfb8a8082ba7996a77af97e0c5aa2125d",
+    "data/sources/toram-monsters/native-hit-accuracy/9035-MobPartsStatus-get_NecessaryHit.c": "6f415f47d1f85fcfeaa97721ea8dd410e10f29ce344e172b82b01b8ebd3809f9",
+    "data/sources/toram-monsters/native-hit-accuracy/9177-MobStatusMaster-get_NecessaryHit.c": "7584594876000a89be75ee1975a0f7995fae01c48eb59868c878659f61095dc5",
+    "data/sources/toram-monsters/native-hit-accuracy/14129-NormalAttackAction-calcPlayerToMobDamage.c": "c2dde35c027729bdcb45150e9554e750fc1c705abf2ef1b035ad2c552942a50f",
+    "data/sources/toram-items/native-option-calculation/extended-consumption/14274-PlayerAttackBase-CheckHit.c": "56691a5461ac049a37fd3f31a47a71b89114323dd4fece3fad4558660cdc06ec"
+  },
+  "limitations": [
+    "Static snapshot evidence; the game was not run or attached.",
+    "No REA MCP native evidence ID: the server has no configured deep provider; existing Ghidra 12.1.4 was invoked directly.",
+    "Indirect helper calls and shared generic labels are not proof of unrelated semantic identities.",
+    "CheckHit base threshold is not a complete final hit probability; state, skill, critical, absolute hit and guard/avoid paths remain separate.",
+    "The catalog exposes body-only necessaryHit; live part contributions are not included."
+  ]
+}

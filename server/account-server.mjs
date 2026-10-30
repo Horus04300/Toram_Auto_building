@@ -36,7 +36,7 @@ async function body(req) {
   catch { throw fail(400, 'JSON 형식이 올바르지 않습니다.'); }
 }
 
-export function createAccountServer({ publicOrigin, clientId = '', clientSecret = '', database = ':memory:', frontend = resolve(import.meta.dirname, '../build/web'), fetchImpl = fetch } = {}) {
+export function createAccountServer({ publicOrigin, clientId = '', clientSecret = '', database = ':memory:', frontend = resolve(import.meta.dirname, '../build/web'), serveFrontend, fetchImpl = fetch } = {}) {
   const origin = new URL(publicOrigin);
   if (origin.origin !== publicOrigin || origin.username || origin.password || (origin.protocol !== 'https:' && !(origin.protocol === 'http:' && ['localhost','127.0.0.1'].includes(origin.hostname)))) throw new Error('PUBLIC_ORIGIN must be an HTTPS origin (HTTP loopback is allowed for local testing).');
   if (database !== ':memory:') mkdirSync(dirname(database), { recursive:true });
@@ -109,7 +109,11 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
     try {
       const url = new URL(req.url, publicOrigin);
       const path = url.pathname;
-      if (!path.startsWith('/api/')) { await staticFile(req, res, decodeURIComponent(path)); return; }
+      if (!path.startsWith('/api/')) {
+        let pathname;
+        try { pathname=decodeURIComponent(path); } catch { throw fail(400,'경로 형식이 올바르지 않습니다.'); }
+        await (serveFrontend || staticFile)(req, res, pathname); return;
+      }
       if (requestOrigin && requestOrigin !== publicOrigin && !desktopOrigins.has(requestOrigin)) throw fail(403, '허용되지 않은 출처입니다.');
       if (desktopOrigins.has(requestOrigin)) {
         res.setHeader('Access-Control-Allow-Origin', requestOrigin);

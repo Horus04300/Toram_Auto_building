@@ -22,6 +22,8 @@
 | 인벤토리·조립 | web/src/application/{equipment-object,inventory-objects,inventory-merge,account-client}.mjs, web/src/pages/inventory/, server/inventory-{store,rules}.mjs | test:account, verify-inventory-browser.mjs (Chrome), 기존 저장 왕복; DTO는 플랫폼 DB/API 계약 |
 | 빌드 | tools/support/frontend-paths.mjs, tools/prepare-frontend.mjs, tools/web-dev.mjs | npm test; 실제 배포본은 verify-es-module-entry.mjs --web/--dist |
 | 게임 아이템 갱신 | tools/extraction/update-toram-items.py, toram-item-pipeline-contract.json | --self-test, docs/verification/toram-item-pipeline.md |
+| 레지스트렛 추출 | tools/extraction/extract-toram-registlets.py, data/sources/toram-registlet/ | --self-test/--check, docs/verification/toram-registlet-extraction.md; 원문·전투식·슬롯·서버 획득처 경계 분리 |
+| 레지스트렛 도감·보관 | tools/extraction/publish-toram-registlets.mjs, web/src/application/registlet-catalog.mjs, pages/inventory/inventory-registlet-editor.mjs | test-registlet-catalog.mjs, verify-registlet-browser.mjs [--source], npm test; 독립 보관 DTO는 플랫폼 DB/API 계약 |
 | 앱 아이템 가공/적용 | tools/extraction/{convert-toram-project-items,sync-toram-dev-items}.mjs, web/src/application/item-catalog.mjs, web/src/ui/item-{equipment,consumable}-ui.mjs | npm test, docs/architecture/item-data-format.md |
 | 보스 원본/앱 데이터 갱신 | tools/extraction/update-toram-bosses.py, toram-boss-pipeline-contract.json, {convert-toram-project-bosses,sync-toram-dev-bosses}.mjs, web/src/application/boss-catalog.mjs | npm test, docs/verification/toram-boss-pipeline.md |
 | 타겟 검색/기본 스탯 | web/src/ui/boss-target-ui.mjs, web/src/application/boss-target.mjs, application/build-draft-store.js | npm test / npm test -- browser; 원문 native-target/·native-highraid-target/·native-guildraid-target/; 길드 식별 guild-raid-bosses.json |

@@ -1,7 +1,8 @@
 import {statRegistry} from '../../calculation/stat-registry.js';
-import { EQUIPMENT_SLOTS, EQUIPMENT_TYPES, EQUIPMENT_SLOT_TYPES } from '../../application/equipment-object.mjs';
+import { EQUIPMENT_SLOTS, EQUIPMENT_TYPES, EQUIPMENT_SLOT_TYPES, equipmentType } from '../../application/equipment-object.mjs';
 import { createEquipmentDraft } from '../../application/inventory-equipment-draft.mjs';
 import { STAT_LABELS } from '../../application/stat-labels.mjs';
+import { EQUIPMENT_ICONS, EQUIPMENT_SLOT_ICONS, CRYSTA_ICONS, prependEquipmentIcon } from '../../ui/equipment-icons.mjs';
 
 export function createInventoryEquipmentEditor(documentRef,page,app) {
   const root = documentRef.defaultView, panel = page.querySelector('.inventory-create');
@@ -10,16 +11,17 @@ export function createInventoryEquipmentEditor(documentRef,page,app) {
     <form class="inventory-create-form" novalidate>
       <section data-editor-panel="base" hidden><fieldset><legend>장비 부위</legend><div class="inventory-create-slots"></div></fieldset><fieldset><legend>장비 종류</legend><div class="inventory-create-types"></div></fieldset></section><section data-editor-panel="values"><div class="inventory-create-values"><label>ATK<input name="attack" type="number" step="any" value="0" required></label><label>제련값<input name="refinement" type="number" step="any" value="0" required></label><label>안정률 (%)<input name="stability" type="number" step="any" value="0" required></label></div></section>
       <section data-editor-panel="options" hidden><header><h4>수동 옵션</h4><button type="button" data-create="add-option">옵션 추가</button></header><div class="inventory-create-options"></div></section>
-      <section data-editor-panel="crystas" hidden><p class="inventory-create-no-crystas" hidden>보조무기는 크리스타 슬롯을 사용하지 않습니다.</p><div class="inventory-create-crystas">${[0,1].map(index => `<div><label>크리스타 ${index + 1}<input name="crysta${index}" list="inventoryCrystaNames" placeholder="크리스타 이름 또는 게임 ID"></label><label class="inventory-create-lock"><input name="lock${index}" type="checkbox">추천 시 잠금</label></div>`).join('')}<datalist id="inventoryCrystaNames"></datalist></div><p class="inventory-create-crysta-status" role="status"></p></section>
+      <section data-editor-panel="crystas" hidden><p class="inventory-create-no-crystas" hidden>보조무기는 크리스타 슬롯을 사용하지 않습니다.</p><div class="inventory-create-crystas">${[0,1].map(index => `<div><label><span class="inventory-create-crysta-name">크리스타 ${index + 1}</span><input name="crysta${index}" list="inventoryCrystaNames" placeholder="크리스타 이름 또는 게임 ID"></label><label class="inventory-create-lock"><input name="lock${index}" type="checkbox">추천 시 잠금</label></div>`).join('')}<datalist id="inventoryCrystaNames"></datalist></div><p class="inventory-create-crysta-status" role="status"></p></section>
     </form>`;
   const form = panel.querySelector('form'), find = selector => panel.querySelector(selector);
+  for (const node of panel.querySelectorAll('[data-step="crystas"],.inventory-create-crysta-name')) prependEquipmentIcon(node,CRYSTA_ICONS.all);
   let slot = 'mainWeapon', type = '한손검', options = [], dirty = false, crystas, record;
-  function makeButton(label,selected,handler) {
-    const node = documentRef.createElement('button'); node.type = 'button'; node.textContent = label; node.setAttribute('aria-pressed',String(selected)); node.addEventListener('click',() => {handler(); if (!node.isConnected) Array.from(panel.querySelectorAll('button')).find(button => button.textContent === label && button.getClientRects().length)?.focus({preventScroll:true});}); return node;
+  function makeButton(label,selected,handler,icon) {
+    const node = documentRef.createElement('button'); node.type = 'button'; node.textContent = label; prependEquipmentIcon(node,icon); node.setAttribute('aria-pressed',String(selected)); node.addEventListener('click',() => {handler(); if (!node.isConnected) Array.from(panel.querySelectorAll('button')).find(button => button.textContent === label && button.getClientRects().length)?.focus({preventScroll:true});}); return node;
   }
   function renderTypes() {
-    find('.inventory-create-slots').replaceChildren(...Object.entries(EQUIPMENT_SLOTS).map(([id,label]) => makeButton(label,id === slot,() => {slot = id; type = EQUIPMENT_SLOT_TYPES[id][0]; dirty = true; renderTypes();})));
-    find('.inventory-create-types').replaceChildren(...EQUIPMENT_SLOT_TYPES[slot].map(value => makeButton(value || EQUIPMENT_SLOTS[slot],value === type,() => {type = value; dirty = true; renderTypes();})));
+    find('.inventory-create-slots').replaceChildren(...Object.entries(EQUIPMENT_SLOTS).map(([id,label]) => makeButton(label,id === slot,() => {slot = id; type = EQUIPMENT_SLOT_TYPES[id][0]; dirty = true; renderTypes();},EQUIPMENT_SLOT_ICONS[id])));
+    find('.inventory-create-types').replaceChildren(...EQUIPMENT_SLOT_TYPES[slot].map(value => makeButton(value || EQUIPMENT_SLOTS[slot],value === type,() => {type = value; dirty = true; renderTypes();},EQUIPMENT_ICONS[equipmentType({slot,equipment:{type:value}})])));
     const weapon = ['mainWeapon','subWeapon'].includes(slot);
     find('.inventory-create-values').hidden = !weapon;
     for (const key of ['attack','refinement','stability']) form.elements[key].required = weapon;

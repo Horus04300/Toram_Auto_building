@@ -44,7 +44,7 @@ async function build() {
     }
     const files=await artifactFiles(stage),written=await syncArtifacts(output,files,path=>readFile(resolve(stage,path)));
     await writeFile(stamp,JSON.stringify({inputs,files:await outputHashes(output)})+'\n');
-    console.log(`WASM bindings: generated (${written} changed artifacts).`);return {generated:true,written};
+    console.log(written ? `WASM bindings: generated (${written} changed artifacts).` : 'WASM bindings: verified (unchanged output).');return {generated:true,written};
   } finally {await syncArtifacts(stage,new Set(),()=>Buffer.alloc(0));await rmdir(stage);}
 }
 let active;

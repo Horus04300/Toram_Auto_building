@@ -1,0 +1,430 @@
+[
+  {
+    "class": "GemCartBag",
+    "name": ".ctor",
+    "oldIndex": 19982,
+    "method_definition_index": 19982,
+    "token": "0x6004e0f",
+    "method_flags_raw": "0x1886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51554080,
+    "pointer_slot_va": "0x7ffe9c86a720",
+    "runtime_va": "0x7ffe9a5af060",
+    "rva": "0xe6f060",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d39f7520200488bf97543488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "19982.c",
+    "pseudocodeSha256": "e095ca4d2f894252e690058c73601325b379524e8fa2b9c6a21c4c1ca4b59249"
+  },
+  {
+    "class": "GemCartBag",
+    "name": "InitializeBag",
+    "oldIndex": 19996,
+    "method_definition_index": 19996,
+    "token": "0x6004e1d",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "gems",
+        "type_index": 10202
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51554192,
+    "pointer_slot_va": "0x7ffe9c86a790",
+    "runtime_va": "0x7ffe9a5ada10",
+    "rva": "0xe6da10",
+    "status": "mapped",
+    "code_preview_hex": "415641574883ec28803d980d5302004c8bf24c8bf9752b48",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "19996.c",
+    "pseudocodeSha256": "5a26a3d5c29b51021cc265df9ecc092305cc6f90c232d9dc536b12ed0c11d1cf"
+  },
+  {
+    "class": "GemCartBag",
+    "name": "InitializeEquip",
+    "oldIndex": 19997,
+    "method_definition_index": 19997,
+    "token": "0x6004e1e",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "equips",
+        "type_index": 10206
+      },
+      {
+        "name": "slot",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51554200,
+    "pointer_slot_va": "0x7ffe9c86a798",
+    "runtime_va": "0x7ffe9a5adbb0",
+    "rva": "0xe6dbb0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420565741574883ec20803df40b530200410fb6f0",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "19997.c",
+    "pseudocodeSha256": "5ac71bf1da97d53e1a6d4fba276f793c43961262e9a42cb2af18eafd8442b583"
+  },
+  {
+    "class": "GemCartBag",
+    "name": "UpdateSlotCount",
+    "oldIndex": 20003,
+    "method_definition_index": 20003,
+    "token": "0x6004e24",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "slot",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51554248,
+    "pointer_slot_va": "0x7ffe9c86a7c8",
+    "runtime_va": "0x7ffe99a687e0",
+    "rva": "0x3287e0",
+    "status": "mapped",
+    "code_preview_hex": "885120c3cccccccccccccccccccccccc48895c2408574883",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "20003.c",
+    "pseudocodeSha256": "c7145170ac1c927f8e7c8365a3c426944114271778fc8eba1eabbeb2b0738c00"
+  },
+  {
+    "class": "RegistletManager",
+    "name": ".ctor",
+    "oldIndex": 20100,
+    "method_definition_index": 20100,
+    "token": "0x6004e85",
+    "method_flags_raw": "0x1886",
+    "parameters": [
+      {
+        "name": "manager",
+        "type_index": 16431,
+        "exact_byval_name": "GemCartBufferManager"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51555024,
+    "pointer_slot_va": "0x7ffe9c86aad0",
+    "runtime_va": "0x7ffe9a5db1b0",
+    "rva": "0xe9b1b0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803d0236500200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "20100.c",
+    "pseudocodeSha256": "235818bcfad2876ce92eb5389c4b9e351c0131f4ffea12d08f780721a539528f"
+  },
+  {
+    "class": "RegistletManager",
+    "name": "Initialize",
+    "oldIndex": 20101,
+    "method_definition_index": 20101,
+    "token": "0x6004e86",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "registletData",
+        "type_index": 23439,
+        "exact_byval_name": "Toram.Common.Registlet.RegistletData"
+      },
+      {
+        "name": "cartData",
+        "type_index": 10202
+      },
+      {
+        "name": "equips",
+        "type_index": 10206
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51555032,
+    "pointer_slot_va": "0x7ffe9c86aad8",
+    "runtime_va": "0x7ffe9a5daeb0",
+    "rva": "0xe9aeb0",
+    "status": "mapped",
+    "code_preview_hex": "4885d20f848500000048895c240848896c24104889742418",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "20101.c",
+    "pseudocodeSha256": "bd403e0d30830a293c735d7fc12131685a771ea90a08482d419d07cdd0283747"
+  },
+  {
+    "class": "RegistletManager",
+    "name": "ExtensionSlot",
+    "oldIndex": 20107,
+    "method_definition_index": 20107,
+    "token": "0x6004e8c",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "updateGemPowder",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "slot",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51555080,
+    "pointer_slot_va": "0x7ffe9c86ab08",
+    "runtime_va": "0x7ffe9a5dacd0",
+    "rva": "0xe9acd0",
+    "status": "mapped",
+    "code_preview_hex": "4883ec28488b41188951144885c07409448840204883c428",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "20107.c",
+    "pseudocodeSha256": "43175dc665be29a01ed670fd3c05328813cd1ec82ebffdac0c6b9c9566488184"
+  },
+  {
+    "class": "RegistletManager",
+    "name": ".cctor",
+    "oldIndex": 20115,
+    "method_definition_index": 20115,
+    "token": "0x6004e94",
+    "method_flags_raw": "0x1891",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51555144,
+    "pointer_slot_va": "0x7ffe9c86ab48",
+    "runtime_va": "0x7ffe9a5db160",
+    "rva": "0xe9b160",
+    "status": "mapped",
+    "code_preview_hex": "4883ec28803d61365002007513488d0d446b3502e8172439",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "20115.c",
+    "pseudocodeSha256": "e21424339b1e55cbaff25c2d981c919c59523ee48a90ba2367329743231e1929"
+  },
+  {
+    "class": "UIRegistletEditPanel",
+    "name": "SetEquipList",
+    "oldIndex": 65873,
+    "method_definition_index": 65873,
+    "token": "0x6010152",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51921208,
+    "pointer_slot_va": "0x7ffe9c8c4138",
+    "runtime_va": "0x7ffe9a049a10",
+    "rva": "0x909a10",
+    "status": "mapped",
+    "code_preview_hex": "40554881ecb0000000803d0129a90200488be97567488d0d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "65873.c",
+    "pseudocodeSha256": "90a785e465b8e53b807b3e152927d5a8f028634469ef2550e78b5f81da855257"
+  },
+  {
+    "class": "UIRegistletEditPanel",
+    "name": "CreateEquipGemButton",
+    "oldIndex": 65874,
+    "method_definition_index": 65874,
+    "token": "0x6010153",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "param",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "pos",
+        "type_index": 29046,
+        "exact_byval_name": "UnityEngine.Vector3"
+      },
+      {
+        "name": "data",
+        "type_index": 16433,
+        "exact_byval_name": "GemCartData"
+      },
+      {
+        "name": "addSlot",
+        "type_index": 12885
+      }
+    ],
+    "return_type": {
+      "type_index": 16370,
+      "exact_byval_name": "UnityEngine.GameObject"
+    },
+    "pointer_slot_offset": 51921216,
+    "pointer_slot_va": "0x7ffe9c8c4140",
+    "runtime_va": "0x7ffe9a047b30",
+    "rva": "0x907b30",
+    "status": "mapped",
+    "code_preview_hex": "40535657415541564883ec40803ddf47a902004d8bf1498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "65874.c",
+    "pseudocodeSha256": "78762375016cfd3a7108e2d43f064a88109d7731f73eefd08e12be6a2704f4e5"
+  },
+  {
+    "class": "UIRegistletEditPanel",
+    "name": "OnClickAddSlotButton",
+    "oldIndex": 65881,
+    "method_definition_index": 65881,
+    "token": "0x601015a",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "param",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51921272,
+    "pointer_slot_va": "0x7ffe9c8c4178",
+    "runtime_va": "0x7ffe9a048780",
+    "rva": "0x908780",
+    "status": "mapped",
+    "code_preview_hex": "40574883ec40803d9b3ba90200488bf97543488d0d9f3290",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "65881.c",
+    "pseudocodeSha256": "a2b797de4fd506bb7b5265678aabfa720be272042a1fb0ba3bfaf7bc765e4788"
+  },
+  {
+    "class": "UIRegistletEditPanel",
+    "name": "OnClickAddSlotWindowButton",
+    "oldIndex": 65884,
+    "method_definition_index": 65884,
+    "token": "0x601015d",
+    "method_flags_raw": "0x86",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51921296,
+    "pointer_slot_va": "0x7ffe9c8c4190",
+    "runtime_va": "0x7ffe9a048aa0",
+    "rva": "0x908aa0",
+    "status": "mapped",
+    "code_preview_hex": "40574883ec20803d7e38a90200488bf97513488d0dbfd190",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "65884.c",
+    "pseudocodeSha256": "cdb14c73f72eb79a223d08913ef715b5fa5e560c74fc5489620b039ad66a3aa1"
+  },
+  {
+    "class": "UIRegistletEditPanel",
+    "name": "AddSlot",
+    "oldIndex": 65886,
+    "method_definition_index": 65886,
+    "token": "0x601015f",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18077,
+      "exact_byval_name": "System.Collections.IEnumerator"
+    },
+    "pointer_slot_offset": 51921312,
+    "pointer_slot_va": "0x7ffe9c8c41a0",
+    "runtime_va": "0x7ffe9a047ac0",
+    "rva": "0x907ac0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d5b48a90200488bf97513488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "65886.c",
+    "pseudocodeSha256": "c5d35a6d22a3547a62df96817e839a277756554a5257adb258b39db219ea2dc8"
+  },
+  {
+    "class": "Toram.Common.Registlet.RegistletData",
+    "name": ".ctor",
+    "oldIndex": 88694,
+    "method_definition_index": 88694,
+    "token": "0x600018b",
+    "method_flags_raw": "0x1886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 53752896,
+    "pointer_slot_va": "0x7ffe9ca83440",
+    "runtime_va": "0x7ffe9bb9e0b0",
+    "rva": "0x245e0b0",
+    "status": "mapped",
+    "code_preview_hex": "33d2e9891ae3fdcccccccccccccccccc4533c0e9081ce3fd",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "88694.c",
+    "pseudocodeSha256": "d732e9ab875f56a146eac2d200b2b95a7ad2a370acbcc403073beb90296e2501"
+  },
+  {
+    "class": "Toram.Common.Registlet.RegistletData",
+    "name": ".ctor",
+    "oldIndex": 88695,
+    "method_definition_index": 88695,
+    "token": "0x600018c",
+    "method_flags_raw": "0x1886",
+    "parameters": [
+      {
+        "name": "binary",
+        "type_index": 9988
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 53752904,
+    "pointer_slot_va": "0x7ffe9ca83448",
+    "runtime_va": "0x7ffe9bb9f410",
+    "rva": "0x245f410",
+    "status": "mapped",
+    "code_preview_hex": "4533c0e98807e3fdcccccccccccccccc40574883ec20803d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "88695.c",
+    "pseudocodeSha256": "96c8b29e65fea32c477634984d2a1487b11ded70b7ad62c35b16b349fc502bd9"
+  }
+]

@@ -1,0 +1,206 @@
+[
+  {
+    "class": "TreasureHuntRoomData",
+    "name": "get_ItemData",
+    "method_definition_index": 22035,
+    "oldIndex": 22035,
+    "token": "0x6005614",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 26346,
+      "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+    },
+    "pointer_slot_offset": 51570504,
+    "pointer_slot_va": "0x7ffe9c86e748",
+    "runtime_va": "0x7ffe99b27550",
+    "rva": "0x3e7550",
+    "status": "mapped",
+    "code_preview_hex": "488b81e0000000c3ccccccccccccccccf30f108198000000",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22035.c"
+  },
+  {
+    "class": "GameManager",
+    "name": "CheckTreasureHuntRoom",
+    "method_definition_index": 35645,
+    "oldIndex": 35645,
+    "token": "0x6008b3e",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "fieldId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "roomId",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51679384,
+    "pointer_slot_va": "0x7ffe9c889098",
+    "runtime_va": "0x7ffe9a8a7180",
+    "rva": "0x1167180",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742418574883ec20803d5a8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "35645.c"
+  },
+  {
+    "class": "\u003cWaitRoomData\u003ed__87",
+    "name": "MoveNext",
+    "method_definition_index": 54287,
+    "oldIndex": 54287,
+    "token": "0x600d410",
+    "method_flags_raw": "0x1e1",
+    "parameters": [],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51828520,
+    "pointer_slot_va": "0x7ffe9c8ad728",
+    "runtime_va": "0x7ffe99c6bdc0",
+    "rva": "0x52bdc0",
+    "status": "mapped",
+    "code_preview_hex": "40565741544883ec50803dd1ede60200488bf10f85eb0000",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "54287.c"
+  },
+  {
+    "class": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoomResponse",
+    "name": "get_ItemData",
+    "method_definition_index": 95996,
+    "oldIndex": 95996,
+    "token": "0x6001e11",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 26346,
+      "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+    },
+    "pointer_slot_offset": 53811312,
+    "pointer_slot_va": "0x7ffe9ca91870",
+    "runtime_va": "0x7ffe999d22d0",
+    "rva": "0x2922d0",
+    "status": "mapped",
+    "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "95996.c"
+  },
+  {
+    "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "name": "get_DRankItemList",
+    "method_definition_index": 91211,
+    "oldIndex": 91211,
+    "token": "0x6000b60",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 10652
+    },
+    "pointer_slot_offset": 53773032,
+    "pointer_slot_va": "0x7ffe9ca882e8",
+    "runtime_va": "0x7ffe999c3070",
+    "rva": "0x283070",
+    "status": "mapped",
+    "code_preview_hex": "488b4120c3ccccccccccccccccccccccf20f104128c3cccc",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "91211.c"
+  },
+  {
+    "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "name": "get_CRankItemList",
+    "method_definition_index": 91213,
+    "oldIndex": 91213,
+    "token": "0x6000b62",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 10652
+    },
+    "pointer_slot_offset": 53773048,
+    "pointer_slot_va": "0x7ffe9ca882f8",
+    "runtime_va": "0x7ffe999c33c0",
+    "rva": "0x2833c0",
+    "status": "mapped",
+    "code_preview_hex": "488b4128c3cccccccccccccccccccccc4883c128488911e9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "91213.c"
+  },
+  {
+    "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "name": "get_BRankItemList",
+    "method_definition_index": 91215,
+    "oldIndex": 91215,
+    "token": "0x6000b64",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 10652
+    },
+    "pointer_slot_offset": 53773064,
+    "pointer_slot_va": "0x7ffe9ca88308",
+    "runtime_va": "0x7ffe999d1530",
+    "rva": "0x291530",
+    "status": "mapped",
+    "code_preview_hex": "488b4130c3cccccccccccccccccccccc0fb64121c3cccccc",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "91215.c"
+  },
+  {
+    "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "name": "get_ARankItemList",
+    "method_definition_index": 91217,
+    "oldIndex": 91217,
+    "token": "0x6000b66",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 10652
+    },
+    "pointer_slot_offset": 53773080,
+    "pointer_slot_va": "0x7ffe9ca88318",
+    "runtime_va": "0x7ffe999d2260",
+    "rva": "0x292260",
+    "status": "mapped",
+    "code_preview_hex": "488b4138c3cccccccccccccccccccccc4883ec28803d4577",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "91217.c"
+  },
+  {
+    "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+    "name": "get_SRankItemList",
+    "method_definition_index": 91219,
+    "oldIndex": 91219,
+    "token": "0x6000b68",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 10652
+    },
+    "pointer_slot_offset": 53773096,
+    "pointer_slot_va": "0x7ffe9ca88328",
+    "runtime_va": "0x7ffe999d22d0",
+    "rva": "0x2922d0",
+    "status": "mapped",
+    "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "91219.c"
+  }
+]

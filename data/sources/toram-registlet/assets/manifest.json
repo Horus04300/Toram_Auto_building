@@ -1,0 +1,505 @@
+{
+  "schemaVersion": 1,
+  "authority": "retained-public-static-game-assets-and-native-loader",
+  "application": "releaseC",
+  "manifest": {
+    "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/manifest.bytes",
+    "bytes": 66357,
+    "sha256": "32263a7b5f34a7259985f2c1f69db2bf1a6100b05cd62e0a79bd5f189a82ff54"
+  },
+  "sources": [
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/BynaryData.unity3d",
+        "bytes": 531177,
+        "sha256": "3c3b818f0d2af27bda5480d3bab770cfe643b03522384d9acb1fafba643168d9"
+      },
+      "manifestAsset": "BynaryData",
+      "revision": {
+        "asset": "BynaryData",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845914089,
+        "cacheKey": "e99f6b32",
+        "extraRaw": 50
+      },
+      "textAssets": [
+        {
+          "name": "RegistletMaster",
+          "pathId": 28,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/RegistletMaster.raw.bin",
+            "bytes": 1334,
+            "sha256": "5dc0bc3f652b9b663a48fef16f08892554f861240713116211b86f080fc74ab8"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/RegistletMaster.decoded.bin",
+            "bytes": 1334,
+            "sha256": "b1bef837d35abe1e96c5da97d0fb268c10c29d53b662476b68dd32707854d8cc"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/RegistletMaster.structural.json",
+            "bytes": 19135,
+            "sha256": "6cc5f62081510ba4d9432c811905402f0629ed4d8248d5f31831efb9cd0f252e"
+          },
+          "rows": 166,
+          "allBytesConsumed": true,
+          "layout": "int32 version; int16 count; repeated int16 Id, int16 LevelCap, int32 EnhancePowder"
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_cnt.unity3d",
+        "bytes": 1334974,
+        "sha256": "0307350b93c21861ff4737afde3f678dfbe6bf5d88c8d98b514a35318d7c97f7"
+      },
+      "manifestAsset": "Localize/cnt/GameScene_cnt",
+      "revision": {
+        "asset": "Localize/cnt/GameScene_cnt",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845981785,
+        "cacheKey": "59a86c32",
+        "extraRaw": 127
+      },
+      "textAssets": [
+        {
+          "name": "System_cnt",
+          "pathId": 8,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_cnt.raw.bin",
+            "bytes": 594946,
+            "sha256": "2b574aaa13b1d22b3b1f5bc3d57e15c0925e7231b18236d0a7d0e2166d2b3bb4"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_cnt.decoded.bin",
+            "bytes": 594946,
+            "sha256": "6ae92fb39ccb3b41358e33ce7857a982c16e47f6ecc1f34a0dcfeaafab568664"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10521,
+          "selectedRows": 112,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_cnt.selected.json",
+            "bytes": 14099,
+            "sha256": "b361fca51cfe16cf7c1fcb2e5e28a9450d4426119a1f278a59e25a9b97be3244"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        },
+        {
+          "name": "Registlet_cnt",
+          "pathId": 14,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_cnt.raw.bin",
+            "bytes": 21293,
+            "sha256": "a70b0c91543b4145403c6f5ceb4dc268836701761199899c0105ffb1ed7429ea"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_cnt.decoded.bin",
+            "bytes": 21293,
+            "sha256": "6cd9170cf278910f631898c1a9cf06dfe97b0327ac4d7ec29d2cbb671c32a47c"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_cnt.parsed.json",
+            "bytes": 63349,
+            "sha256": "dd03435ebb7a42ba30ac003ede3fb36db578e0597df019ea36fafd000173ebdf"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_idn.unity3d",
+        "bytes": 1373892,
+        "sha256": "8c396cbe7ab621ad938bae770da76e8a1e2d195ef30af49ccc56bffce8b7b30f"
+      },
+      "manifestAsset": "Localize/idn/GameScene_idn",
+      "revision": {
+        "asset": "Localize/idn/GameScene_idn",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845924785,
+        "cacheKey": "b1c96b32",
+        "extraRaw": 130
+      },
+      "textAssets": [
+        {
+          "name": "System_idn",
+          "pathId": 16,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_idn.raw.bin",
+            "bytes": 615618,
+            "sha256": "1cc07e5cc7f617945540aa8183623d629aafe47b3d723ee1a1e8ab3001ece639"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_idn.decoded.bin",
+            "bytes": 615618,
+            "sha256": "d199f5ea1fc69c22a317c73d67fbd2e6fe28056c757475deb0f36bbb9ad65c77"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10521,
+          "selectedRows": 118,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_idn.selected.json",
+            "bytes": 14900,
+            "sha256": "d32a82f0eee233365e4b15d96a95573a68d3555ec3689024ce78d05fa79e3da3"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        },
+        {
+          "name": "Registlet_idn",
+          "pathId": 20,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_idn.raw.bin",
+            "bytes": 23580,
+            "sha256": "6cf38b68df4e3e43ca5b7d40fd4a6646fead722e52804e8d2cd320f06bd31b40"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_idn.decoded.bin",
+            "bytes": 23580,
+            "sha256": "9ed133a2e55466f6e6b2a0f8c32568b2f0ae3361bda0446787462ab32dc59429"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_idn.parsed.json",
+            "bytes": 65842,
+            "sha256": "e2077042373ebd553600bb392403614de8abc985cc877ae0267db9b10ca9663f"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_jp.unity3d",
+        "bytes": 1648569,
+        "sha256": "48a11e78a4f6d1dcf741426d64901f8e6f677f289132bc382ab8a3a2fbb90838"
+      },
+      "manifestAsset": "Localize/jp/GameScene_jp",
+      "revision": {
+        "asset": "Localize/jp/GameScene_jp",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845924785,
+        "cacheKey": "b1c96b32",
+        "extraRaw": 157
+      },
+      "textAssets": [
+        {
+          "name": "Registlet_jp",
+          "pathId": 14,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_jp.raw.bin",
+            "bytes": 26886,
+            "sha256": "131438bf3dee136840a29c8ffb493d376ab6042743184ab2a8051c27645ef535"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_jp.decoded.bin",
+            "bytes": 26886,
+            "sha256": "a583e01314affa67ca63bc7308a071048e881643ad502adba09884bf25f6e408"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_jp.parsed.json",
+            "bytes": 68945,
+            "sha256": "b2fb5035d291419687e981b4af04dabaeef05b9791b8e57ec23b449994bc3b77"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        },
+        {
+          "name": "System_jp",
+          "pathId": 19,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_jp.raw.bin",
+            "bytes": 719625,
+            "sha256": "f7e9e2365b55cc2867d28dbc24b45f736c6cad8334e98823bf9d20dd9f06adb6"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_jp.decoded.bin",
+            "bytes": 719625,
+            "sha256": "74e8727a7bbef248a9837f474d8f8078425deb0d1fe0bbaa24cacb1ba3f68aa7"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10520,
+          "selectedRows": 112,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_jp.selected.json",
+            "bytes": 15662,
+            "sha256": "28a9d01ff8521b6f43bfb3d2baac1ec89a3535c54b5e2c01deffea37fdffcb7f"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_kr.unity3d",
+        "bytes": 1555795,
+        "sha256": "8284d344a05480f8d7bfc4f041b69dadb0e22a4d760a0ab707da02536d61a9e2"
+      },
+      "manifestAsset": "Localize/kr/GameScene_kr",
+      "revision": {
+        "asset": "Localize/kr/GameScene_kr",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845924785,
+        "cacheKey": "b1c96b32",
+        "extraRaw": 148
+      },
+      "textAssets": [
+        {
+          "name": "Registlet_kr",
+          "pathId": 6,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_kr.raw.bin",
+            "bytes": 24672,
+            "sha256": "8ca97509291dfcff381a417cbc2caabd5ba69242fb03407fb2d53b2c48bb5c89"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_kr.decoded.bin",
+            "bytes": 24672,
+            "sha256": "85e651c7fcd30a822ac9463fd0ba4b02760233eeffd9d27f52f87d14799681df"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_kr.parsed.json",
+            "bytes": 66735,
+            "sha256": "63481497a3460e9cfc635d1da6d8766e96cc8f3efd560528a5e9e2806213403b"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        },
+        {
+          "name": "System_kr",
+          "pathId": 14,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_kr.raw.bin",
+            "bytes": 695002,
+            "sha256": "8cb02340a8524b404a1a02c2776cd335524190598c7f6614b109497da994c359"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_kr.decoded.bin",
+            "bytes": 695002,
+            "sha256": "c20d9ab01e540daf3638c44de57982c6a8654ed52a2824c05aa12b2e5bb68ec2"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10521,
+          "selectedRows": 118,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_kr.selected.json",
+            "bytes": 16403,
+            "sha256": "6b18706c2250bd87db9e0b6e3bc8d9b6c498d6b0cace6dfc074c2eab34525142"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_th.unity3d",
+        "bytes": 2710209,
+        "sha256": "65d342f53f3cd7b2f10ec4a41fbb933f64e01434099279bf5edb0bfb20f3d125"
+      },
+      "manifestAsset": "Localize/th/GameScene_th",
+      "revision": {
+        "asset": "Localize/th/GameScene_th",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845924785,
+        "cacheKey": "b1c96b32",
+        "extraRaw": 258
+      },
+      "textAssets": [
+        {
+          "name": "System_th",
+          "pathId": 4,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_th.raw.bin",
+            "bytes": 1049786,
+            "sha256": "29065a99efba7d47d15a6f996100e9a29c3df47c9da93740bc5b37bbc174b47d"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_th.decoded.bin",
+            "bytes": 1049786,
+            "sha256": "76b8d763862e412fa1622fe16fac74b8ce08f77fcc5db4190d589753eeb73a94"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10521,
+          "selectedRows": 112,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_th.selected.json",
+            "bytes": 19820,
+            "sha256": "83bcbd0227d9e7690df91ef5fb069f266125b6bf7c9ed4357a73fa6d7f61e714"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        },
+        {
+          "name": "Registlet_th",
+          "pathId": 9,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_th.raw.bin",
+            "bytes": 47478,
+            "sha256": "0519b5c7e2d9e7bfe4981a8c432acf06dc96e6f0879b1da92f18e8a15f853ee3"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_th.decoded.bin",
+            "bytes": 47478,
+            "sha256": "15c5202fef5cea2d67617b39b3ac85d3e3d66de365813d1bb171f241c5ad4d9e"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_th.parsed.json",
+            "bytes": 89492,
+            "sha256": "f6a444007f612057d219726505e1287ad9c48ed740f59a623d2e526d13ff1949"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        }
+      ]
+    },
+    {
+      "bundle": {
+        "file": "data/sources/toram-items/pipeline/releaseC/snapshots/e99f6b32-e4542534930d404783ff8219d089e6ff/source/GameScene_us.unity3d",
+        "bytes": 1353265,
+        "sha256": "947399f43889bf049f37de2b06c254cc696a2929172e5858778df8427024a176"
+      },
+      "manifestAsset": "Localize/us/GameScene_us",
+      "revision": {
+        "asset": "Localize/us/GameScene_us",
+        "flagRaw": 1,
+        "formatArgument": 0,
+        "revisionSignedInt32": 845924785,
+        "cacheKey": "b1c96b32",
+        "extraRaw": 129
+      },
+      "textAssets": [
+        {
+          "name": "System_us",
+          "pathId": 9,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/System_us.raw.bin",
+            "bytes": 614686,
+            "sha256": "52ba10d9e06ac5ece90d20e01d4ed341d867b29c047c7d1c9ac4a6fb17fe23cf"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/System_us.decoded.bin",
+            "bytes": 614686,
+            "sha256": "0bfaea4f2f7ca36cdc82993276ddab96cf0c0ac8e3bd7fea9715c3e7dc4545c0"
+          },
+          "allBytesConsumed": true,
+          "totalRows": 10521,
+          "selectedRows": 118,
+          "selectedFile": {
+            "file": "data/sources/toram-registlet/assets/System_us.selected.json",
+            "bytes": 14690,
+            "sha256": "675ad0d1fbfcad18f9dd280c604d75851277a25ccb6115fc5b2c82155dfac592"
+          },
+          "rawRetained": false,
+          "decodedRetained": false
+        },
+        {
+          "name": "Registlet_us",
+          "pathId": 16,
+          "raw": {
+            "file": "data/sources/toram-registlet/assets/Registlet_us.raw.bin",
+            "bytes": 22937,
+            "sha256": "30e20d0a8c23cacf41d30b571e751fc222171cee5a670bf6e6514ad66d9aa47d"
+          },
+          "decoded": {
+            "file": "data/sources/toram-registlet/assets/Registlet_us.decoded.bin",
+            "bytes": 22937,
+            "sha256": "b98b627b5a0fee1814c5ddcbc272ca8422677ffc9e0ef587b277fba74b901b3d"
+          },
+          "rawRetained": true,
+          "decodedRetained": true,
+          "parsed": {
+            "file": "data/sources/toram-registlet/assets/Registlet_us.parsed.json",
+            "bytes": 65187,
+            "sha256": "fe047255fafd8c7d62417974c8111591868e435765096fa66f1c79fb59774504"
+          },
+          "rows": 497,
+          "allBytesConsumed": true,
+          "layout": "int32 count; repeated int32 ID, byte kind (0=name,1=description,2=BaseValue as integer text), BinaryReader UTF-8 string"
+        }
+      ]
+    }
+  ],
+  "nativeSchemaEvidence": [
+    {
+      "file": "data/sources/toram-registlet/native/20077.c",
+      "bytes": 198,
+      "sha256": "449278d2f45ddb9c8ad49fc32ed7be38aea07dc6616521ba57dc58e7cf0ef8f7"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/20079.c",
+      "bytes": 205,
+      "sha256": "9696e03d9d8fd469327c4086f0620edee8fb97525b4f99d76ddb88c5c6cad123"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/20081.c",
+      "bytes": 204,
+      "sha256": "d3ba1248ac3ccc531d493b0c8878babc0ac461f4ddeca8deca8616ffcebadf1b"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/20083.c",
+      "bytes": 1421,
+      "sha256": "18e90cf1e2002d9375dcb5211a1c9527e2e9a8d40fe8ebcad2a51ca415a1408a"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/20085.c",
+      "bytes": 3972,
+      "sha256": "c16b801877794c6f0008635faf177a2ad0be937f799059f03cdf51c3426aac90"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/46486.c",
+      "bytes": 8068,
+      "sha256": "af48bb6cf3c49008517edcb50a2120802bcc644387cb497564e3dd1cc6e3735b"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/46493.c",
+      "bytes": 208,
+      "sha256": "5ef3f4e09d4aeeb65742061772106e675b4bbfd13200cf9a458db8860405a9e2"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/65950.c",
+      "bytes": 8395,
+      "sha256": "aed4b850c5cb88dc851735f262739d15205b4e5768c598441b3654baea488552"
+    },
+    {
+      "file": "data/sources/toram-registlet/native/65962.c",
+      "bytes": 3817,
+      "sha256": "664f169b361032839a8cee22db7546bc491c45a694d61a139ca1bff7f5a8c5ca"
+    }
+  ],
+  "verification": {
+    "masterIds": 166,
+    "localeNamesAndDescriptionsMatchMaster": true,
+    "baseValuesIdenticalAcrossSixLocales": true,
+    "baseValueRows": 165
+  },
+  "finalUiObserved": false,
+  "activeServerObserved": false
+}

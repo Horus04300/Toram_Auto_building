@@ -12,7 +12,7 @@ Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build
     cargo install wasm-bindgen-cli --version 0.2.127 --locked
     npm run web:dev
 
-웹은 http://127.0.0.1:5173/ 에서 열립니다. HTML·JS·CSS 변경은 새로고침, Rust 변경은 개발 서버를 다시 시작합니다. 포트는 환경변수 PORT로 바꿉니다.
+웹 개발은 http://localhost:8787/ 에서 화면과 계정·인벤토리·게시판 API를 함께 제공합니다. `server/.env`를 자동으로 읽고 기존 Google 키와 계정 DB를 사용합니다. 첫 설정은 server/.env.example을 복사해 키를 입력하고 Google 콜백을 http://localhost:8787/api/auth/google/callback으로 등록합니다. 기존 .env와 DB는 덮어쓰지 않습니다. HTML·JS·CSS는 새로고침, Rust·서버 코드는 개발 서버를 다시 시작합니다. 포트를 바꿀 때는 PORT·PUBLIC_ORIGIN·Google 콜백을 함께 맞춥니다.
 
 | 명령 | 용도 |
 | --- | --- |
@@ -23,6 +23,8 @@ Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build
 | npm test | 타입·모듈 경계·JS 회귀·S1·Rust fmt/test/clippy |
 
 WASM·앱 TypeScript와 프론트엔드 준비는 build/dev/test가 필요한 만큼 실행합니다. 따로 준비 명령을 실행하지 않습니다. 설치 파일 없이 EXE만 필요하면 `npm run desktop:build -- --no-bundle`을 사용합니다. 서명 릴리스에는 업데이터 키가 필요합니다.
+
+최초 실행·Rust 변경 때는 단일/병렬 WASM을 컴파일합니다. 변경 없는 재실행은 Cargo 신선도와 출력 해시만 확인합니다. 고정 nightly의 atomics 경고는 공유 메모리 병렬 타깃의 알려진 경고이며 빌드 실패와 구분합니다. 출력이 같으면 변경 없음으로 표시합니다.
 
 브라우저 검증은 Chrome과 CODEX_PLAYWRIGHT_PATH를 지정한 뒤 `npm test -- browser`로 실행합니다. 웹 준비도 이 명령이 수행합니다.
 

@@ -4,10 +4,10 @@
 
 | 위치 | 역할 |
 | --- | --- |
-| prepare-frontend.mjs, web-dev.mjs | 배포본 조립·개발 서버 |
+| prepare-frontend.mjs, web-dev.mjs | 배포본 조립·실제 계정 API를 포함한 개발 서버 |
 | support/frontend-paths.mjs | 배포 URL과 원본 대응 |
 | build-wasm.mjs | stable 단일·pinned nightly 공유 메모리 WASM 생성 |
-| extraction/ | 아이템·보스 추출·수동 갱신 |
+| extraction/ | 아이템·보스·레지스트렛 추출·수동 갱신 |
 | tests/, fixtures/, regression-fixtures.mjs | 회귀·입력·분류 (동작 검증의 단일 실행 목록) |
 | verification/ | 구조·출처·브라우저 검사 |
 | benchmarks/, support/ | 계측·테스트 지원 |
@@ -22,6 +22,7 @@
 | verify-web-browser.mjs, verify-session-restore-browser.mjs, verify-web-parallel.mjs | 소스·하위 경로·계산·저장·WASM 정밀/취소/재개·격리 없는 fallback |
 | verify-platform-startup-browser.mjs | 홈 독립 로딩·계산기 최초 1회 초기화·입력 유지·실패 격리 |
 | verify-catalog-browser.mjs [--web] | 도감 검색·번역·계보·보스 선택·반응형·읽기 전용 |
+| verify-registlet-browser.mjs [--source] | 웹 생성본/소스 효과별2열·실시간 수식/결과·스컬 스택·재료별 강화·별도 슬롯표·담기/복원·모바일 |
 | verify-inventory-browser.mjs | 홈·계정·내 구성·병합·계산기 왕복 |
 | verify-inventory-authoring-browser.mjs | 직접 등록·책갈피·트리 편집·2분/이탈 저장·실패 보존 |
 | verify-posts-browser.mjs | 공개·버전·즐겨찾기·독립 복사·409 초안 |

@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import {CATALOG_KINDS,CATALOG_SUBCATEGORIES,catalogState,catalogPage,itemCatalogContent} from '../../../web/src/application/catalog-browser.mjs';
+import {CATALOG_KINDS,CATALOG_SUBCATEGORIES,catalogState,catalogPage,itemCatalogContent,bossCatalogContent,bossCatalogPhaseLabel} from '../../../web/src/application/catalog-browser.mjs';
 import {createItemCatalog} from '../../../web/src/application/item-catalog.mjs';
+import {createBossSelection} from '../../../web/src/application/boss-target.mjs';
 
 const defaults = catalogState(new URLSearchParams()); assert.equal(defaults.section,'items'); assert.equal(defaults.kind,'all'); assert.equal(defaults.selected,null);
 for (const query of ['section=quests','kind=invalid','locale=invalid','page=-1','selected=NaN','selected=-1','difficulty=9','variant=../x','level=99999','kind=weapons&subcategory=999','kind=crystas&subcategory=강화','kind=armor&subcategory=17','section=bosses&kind=weapons&subcategory=17','section=bosses&bossKind=wrong','bossKind=entry-boss']) assert.throws(() => catalogState(new URLSearchParams(query)),/확인/);
@@ -55,6 +56,8 @@ for (const kind of Object.keys(CATALOG_KINDS).filter(kind => kind !== 'all')) {
     assert.equal(grouped.length,Object.values(items).filter(item => kind === 'weapons' || item.category).length);
     assert.equal((await api.listItems(kind)).length,Object.keys(items).length,'All view preserves the entire published list');
   }
+  if (['weapons','armor','additional','special'].includes(kind)) for (const item of await api.listItems(kind)) assert.equal(item.typeId,items[item.id].typeId,'Equipment lists retain their game type for icons');
+  if (kind === 'crystas') for (const item of await api.listItems(kind)) assert.equal(item.category,items[item.id].category,'Crysta lists retain the shared base/enhanced family for icons');
   if (kind === 'consumables') {
     const result = itemCatalogContent(items[2000],details[2000]);
     assert.equal(result.duration,'효과 시간 : 1800초'); assert.equal(result.summary,'');
@@ -62,4 +65,42 @@ for (const kind of Object.keys(CATALOG_KINDS).filter(kind => kind !== 'all')) {
   }
 }
 assert.equal(count,manifest.counts.items);
+const bossBase = new URL('../../../web/public/game-data/bosses/',import.meta.url), bossManifest = JSON.parse(await readFile(new URL('manifest.json',bossBase)));
+const variants = (await Promise.all(Object.values(bossManifest.groups).map(path => readFile(new URL(path,bossBase)).then(JSON.parse)))).flat();
+const selectBoss = key => {const row = variants.find(row => row.key === key); return createBossSelection({gameMonsterId:row.gameMonsterId,name:'보스',revision:bossManifest.revision},row);};
+const contentFor = selection => bossCatalogContent(selection,variants.filter(row => row.gameMonsterId === selection.gameMonsterId));
+const stat = (content,label) => content.groups.flatMap(([,rows]) => rows).find(([key]) => key === label)?.[1];
+const colon = selectBoss('3300:10');
+for (const [difficulty,hp,def,hit] of [[-1,'100','0','1'],[0,'1,000','7','11'],[1,'2,000','14','22'],[2,'5,000','28','44'],[3,'10,000','42','66']]) {
+  const content = contentFor({...colon,difficulty});
+  assert.equal(stat(content,'HP'),hp); assert.equal(stat(content,'DEF'),def); assert.equal(stat(content,'회피'),hit);
+  assert.equal(stat(content,'속성'),'땅'); assert.equal(stat(content,'어보이드율'),'0%');
+  assert.equal(content.notes,undefined); assert.equal(content.description,undefined);
+  assert.match(content.summary,new RegExp(['Easy','Normal','Hard','Nightmare','Ultimate'][difficulty + 1]));
+}
+const soteria = selectBoss('100500:1'), phases = variants.filter(row => row.gameMonsterId === soteria.gameMonsterId);
+assert.equal(stat(contentFor(soteria),'선택 개체'),'남자 소테리아 · 마법 방어형 · 페이즈 #1');
+assert.equal(stat(contentFor(soteria),'다음 페이즈'),'#101');
+assert.match(bossCatalogPhaseLabel(phases.find(row => row.key === '100500:102'),phases),/여자.*페이즈 #102/);
+const independent = {...phases[0],key:'100500:999',masterId:999,modes:[]};
+assert.match(bossCatalogPhaseLabel(independent,[...phases,independent]),/개체 #999/,'Sharing a field does not prove a phase relationship');
+assert.match(bossCatalogPhaseLabel({...independent,modes:[{targetMonsterId:1}]},[{...phases[0],gameMonsterId:999},independent]),/개체 #999/,'A different boss in the same field is not merged');
+const raid = contentFor({...selectBoss('90961:1'),level:200});
+assert.match(raid.summary,/입장 Lv200/);
+const unresolved = selectBoss(variants.find(row => row.entry.model === 'unresolved').key), raw = contentFor(unresolved);
+assert.match(raw.summary,/난이도 미확인/); assert.equal(stat(raw,'DEF'),unresolved.variant.baseStats.def.toLocaleString('ko-KR'));
+assert.equal(stat(raw,'크리티컬 저항'),(unresolved.variant.properties.find(property => property.typeRaw === 6)?.values[0] ?? 0).toLocaleString('ko-KR'));
+const enumMetadata = JSON.parse(await readFile(new URL('../../../data/sources/toram-items/native-option-calculation/metadata-bindings.json',import.meta.url)));
+const element = enumMetadata.types.find(type => type.name === 'ElementType');
+for (const [name,label] of [['None','미지정'],['Fire','불'],['Water','물'],['Wind','바람'],['Earth','땅'],['Light','빛'],['Dark','어둠'],['Normal','무']]) {
+  const elementRaw = element.fields.find(field => field.name === name).default.int32_value;
+  assert.equal(stat(contentFor({...colon,variant:{...colon.variant,baseStats:{...colon.variant.baseStats,elementRaw}}}),'속성'),label);
+}
+for (const row of variants) {
+  const content = contentFor(selectBoss(row.key));
+  for (const label of ['HP','속성','회피','어보이드율','크리티컬 저항','DEF','MDEF','물리 내성','마법 내성','통상','물리','마법']) assert.ok(stat(content,label),`${row.key}: ${label}`);
+  assert.doesNotMatch(JSON.stringify(content),/undefined|NaN/);
+  assert.doesNotMatch(JSON.stringify(content),/원본|필요 명중|본체|플레이어/);
+}
 console.log(`Catalog browser: PASS (URL/subcategory validation, 13 weapon types, 5 crysta families including enhancements, all views, name/ID search, bounded pages, Unicode text, ${count} published item details, unresolved effects preserved)`);
+console.log(`Boss catalog display: PASS (${variants.length} variants, complete stats, native elements, five difficulties, raid levels, explicit phase links, unknown rules preserved)`);

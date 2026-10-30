@@ -1,0 +1,60 @@
+{
+  "authority": "passive-fixed-registlet-initializer",
+  "pid": 25168,
+  "moduleBase": "0x7ffc1de90000",
+  "moduleSha256": "c0f666aa071136bfae7ada61135ba01fc2907c3987945a86cce5909c6011fbff",
+  "metadataSha256": "c5cb57c13fb2f4ba9258b8cf155ee866a8f67eee30f32d043e1fd854bba2eec9",
+  "capturedUtc": "2026-10-29T01:20:02.975497+00:00",
+  "processAccess": "PROCESS_QUERY_INFORMATION | PROCESS_VM_READ",
+  "bytesRead": 129,
+  "referenceRva": "0x31f0e10",
+  "initializer": {
+    "fieldIndex": 54280,
+    "fieldName": "36E3BC65CDC0D0B6096AFEB3920791878FAA471FB3B14D041D7CF8E6D4324052",
+    "token": "0x400d409",
+    "metadataOffset": 9739968,
+    "bytes": 36,
+    "hex": "6400000090010000d0070000581b000030750000400d030020a1070080841e00c0cf6a00",
+    "values": [
+      100,
+      400,
+      2000,
+      7000,
+      30000,
+      200000,
+      500000,
+      2000000,
+      7000000
+    ]
+  },
+  "reads": [
+    {
+      "address": "0x7ffc1ed2b1b0",
+      "bytes": 24,
+      "purpose": "RegistletManager constructor code identity",
+      "hex": "48895c24084889742410574883ec20803d0236500200488b"
+    },
+    {
+      "address": "0x7ffc21080e10",
+      "bytes": 8,
+      "purpose": "NeedGemPowder initializer RuntimeFieldHandle",
+      "hex": "40da67d067010000"
+    },
+    {
+      "address": "0x167d067da40",
+      "bytes": 32,
+      "purpose": "Initializer FieldInfo",
+      "hex": "c30bb30d68010000c8760e21fc7f0000700b56d0670100000f23000009d40004"
+    },
+    {
+      "address": "0x1680db30bc3",
+      "bytes": 65,
+      "purpose": "Compiler field hash",
+      "hex": "3336453342433635434443304430423630393641464542333932303739313837384641413437314642334231344430343144374346384536443433323430353200"
+    }
+  ],
+  "limitations": [
+    "Sequential fixed-reference read, not an atomic snapshot.",
+    "No player data, target writes, injection, function execution, or gameplay."
+  ]
+}

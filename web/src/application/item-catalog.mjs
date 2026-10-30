@@ -204,9 +204,10 @@ export function createItemCatalog(manifestUrl = new URL('../../game-data/items/m
     async listItems(kind, locale = 'kr', {typeId,category} = {}) {
       const value = await manifest();
       const files = localeFiles(value, kind, locale);
-      const [names,items] = await Promise.all([get(files.names),typeId !== undefined || category !== undefined ? get(value.kinds[kind]) : null]);
+      const equipment = kind === 'weapons' || Object.hasOwn(equipmentTypes,kind);
+      const [names,items] = await Promise.all([get(files.names),equipment || kind === 'crystas' || typeId !== undefined || category !== undefined ? get(value.kinds[kind]) : null]);
       return Object.entries(names).filter(([id]) => !items || (typeId === undefined || items[id].typeId === typeId) && (category === undefined || items[id].category === category))
-        .map(([id, name]) => ({ id:Number(id), name }));
+        .map(([id, name]) => ({ id:Number(id), name, ...(equipment ? {typeId:items[id].typeId} : kind === 'crystas' ? {category:items[id].category} : {}) }));
     },
     async listBuffItems(locale = 'kr') {
       const value = await manifest(), files = localeFiles(value, 'consumables', locale);

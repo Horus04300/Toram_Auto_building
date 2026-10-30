@@ -1,0 +1,5433 @@
+[
+  {
+    "class": "WeaponTypeCalculatorBase",
+    "name": "CalcAtk",
+    "method_definition_index": 4550,
+    "oldIndex": 4550,
+    "token": "0x60011c7",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "plusBaseValue",
+        "type_index": 9239
+      },
+      {
+        "name": "plusValue",
+        "type_index": 9239
+      },
+      {
+        "name": "plusRateValue",
+        "type_index": 9355
+      },
+      {
+        "name": "minusBaseValue",
+        "type_index": 9239
+      },
+      {
+        "name": "minusValue",
+        "type_index": 9239
+      },
+      {
+        "name": "minusRateValue",
+        "type_index": 9355
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51430624,
+    "pointer_slot_va": "0x7ffe9c84c4e0",
+    "runtime_va": "0x7ffe99c1d4d0",
+    "rva": "0x4dd4d0",
+    "status": "mapped",
+    "code_preview_hex": "48894c2408555356574154415541564157488d6c24f94881",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "4550.c"
+  },
+  {
+    "class": "WeaponTypeCalculatorBase",
+    "name": "CalcMatk",
+    "method_definition_index": 4551,
+    "oldIndex": 4551,
+    "token": "0x60011c8",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "plusBaseValue",
+        "type_index": 9239
+      },
+      {
+        "name": "plusValue",
+        "type_index": 9239
+      },
+      {
+        "name": "plusRateValue",
+        "type_index": 9355
+      },
+      {
+        "name": "minusBaseValue",
+        "type_index": 9239
+      },
+      {
+        "name": "minusValue",
+        "type_index": 9239
+      },
+      {
+        "name": "minusRateValue",
+        "type_index": 9355
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51430632,
+    "pointer_slot_va": "0x7ffe9c84c4e8",
+    "runtime_va": "0x7ffe99c1e3b0",
+    "rva": "0x4de3b0",
+    "status": "mapped",
+    "code_preview_hex": "48894c24085553574154415541564157488d6c24f94881ec",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "4551.c"
+  },
+  {
+    "class": "MainPlayer",
+    "name": "CalcItemDelay",
+    "method_definition_index": 5048,
+    "oldIndex": 5048,
+    "token": "0x60013b9",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "time",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "bonus",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51434608,
+    "pointer_slot_va": "0x7ffe9c84d470",
+    "runtime_va": "0x7ffe99cfbd70",
+    "rva": "0x5bbd70",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec30803d75f1dd0200410fb6f80f2974",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "5048.c"
+  },
+  {
+    "class": "MainPlayer",
+    "name": "UseItem",
+    "method_definition_index": 5047,
+    "oldIndex": 5047,
+    "token": "0x60013b8",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "uuid",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "isAutoUse",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51434600,
+    "pointer_slot_va": "0x7ffe9c84d468",
+    "runtime_va": "0x7ffe99d01fb0",
+    "rva": "0x5c1fb0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420565741544883ec30803d318fdd0200450fb6e0",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "5047.c"
+  },
+  {
+    "class": "OldSong.SkillSongBufferDataBase",
+    "name": ".ctor",
+    "method_definition_index": 75061,
+    "oldIndex": 75061,
+    "token": "0x6012536",
+    "method_flags_raw": "0x1886",
+    "parameters": [
+      {
+        "name": "lv",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "self",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      {
+        "name": "notice_song_buff_lv",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51994712,
+    "pointer_slot_va": "0x7ffe9c8d6058",
+    "runtime_va": "0x7ffe9a2f1010",
+    "rva": "0xbb1010",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec40418bd90f2974243041b90a000000",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "75061.c"
+  },
+  {
+    "class": "OldSong.SkillSongBufferDataBase",
+    "name": "songbuff_lvup",
+    "method_definition_index": 75066,
+    "oldIndex": 75066,
+    "token": "0x601253b",
+    "method_flags_raw": "0x1c4",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51994752,
+    "pointer_slot_va": "0x7ffe9c8d6080",
+    "runtime_va": "0x7ffe9a2f14f0",
+    "rva": "0xbb14f0",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec3083792c0a488bd90f8dd00000000f29742420",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "75066.c"
+  },
+  {
+    "class": "MobaPlayer",
+    "name": "CalcItemDelay",
+    "method_definition_index": 10415,
+    "oldIndex": 10415,
+    "token": "0x60028b0",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "time",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "bonus",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51477544,
+    "pointer_slot_va": "0x7ffe9c857c28",
+    "runtime_va": "0x7ffe9a39f720",
+    "rva": "0xc5f720",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec30803d3ae1730200410fb6f80f2974",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "10415.c"
+  },
+  {
+    "class": "MobaPlayerActionManager",
+    "name": "AddAbnormalState",
+    "method_definition_index": 12573,
+    "oldIndex": 12573,
+    "token": "0x600311e",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "type",
+        "type_index": 11503,
+        "exact_byval_name": "AbnormalType"
+      },
+      {
+        "name": "time",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "resist",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "addResist",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "localId",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "force",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51494808,
+    "pointer_slot_va": "0x7ffe9c85bf98",
+    "runtime_va": "0x7ffe9a41e7d0",
+    "rva": "0xcde7d0",
+    "status": "mapped",
+    "code_preview_hex": "40555657415541564883ec70803d18f46b0200418be80f29",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12573.c"
+  },
+  {
+    "class": "MobaPlayerActionManager",
+    "name": "Damaged",
+    "method_definition_index": 12589,
+    "oldIndex": 12589,
+    "token": "0x600312e",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      },
+      {
+        "name": "id",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51494936,
+    "pointer_slot_va": "0x7ffe9c85c018",
+    "runtime_va": "0x7ffe9a421ca0",
+    "rva": "0xce1ca0",
+    "status": "mapped",
+    "code_preview_hex": "4c89442418555657415541564157488d6c24e14881ecc800",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12589.c"
+  },
+  {
+    "class": "MobaPlayerActionManager",
+    "name": "get_MoveSpeed",
+    "method_definition_index": 12557,
+    "oldIndex": 12557,
+    "token": "0x600310e",
+    "method_flags_raw": "0x8c6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51494680,
+    "pointer_slot_va": "0x7ffe9c85bf18",
+    "runtime_va": "0x7ffe9a42cd30",
+    "rva": "0xcecd30",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec60803db00e6b0200488bd97513488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12557.c"
+  },
+  {
+    "class": "MobaPlayerBattleManager",
+    "name": "OnSkillActionEnd",
+    "method_definition_index": 12695,
+    "oldIndex": 12695,
+    "token": "0x6003198",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "targetActManager",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51495784,
+    "pointer_slot_va": "0x7ffe9c85c368",
+    "runtime_va": "0x7ffe9a434f70",
+    "rva": "0xcf4f70",
+    "status": "mapped",
+    "code_preview_hex": "488bc4488958104889701848894808574154415541564157",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12695.c"
+  },
+  {
+    "class": "MobaPlayerBattleManager",
+    "name": "StartMagicFinawPursuitAttack",
+    "method_definition_index": 12754,
+    "oldIndex": 12754,
+    "token": "0x60031d3",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "targetActionManager",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51496256,
+    "pointer_slot_va": "0x7ffe9c85c540",
+    "runtime_va": "0x7ffe9a43fed0",
+    "rva": "0xcffed0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803d8cdd690200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12754.c"
+  },
+  {
+    "class": "<>c__DisplayClass64_0",
+    "name": "<AddAbnormalState>b__4",
+    "method_definition_index": 12649,
+    "oldIndex": 12649,
+    "token": "0x600316a",
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 11487,
+        "exact_byval_name": "AbnormalData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51495416,
+    "pointer_slot_va": "0x7ffe9c85c1f8",
+    "runtime_va": "0x7ffe9a442970",
+    "rva": "0xd02970",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803da2b2690200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12649.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "AddAbnormalState",
+    "method_definition_index": 12971,
+    "oldIndex": 12971,
+    "token": "0x60032ac",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "type",
+        "type_index": 11503,
+        "exact_byval_name": "AbnormalType"
+      },
+      {
+        "name": "time",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "resist",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "addResist",
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      {
+        "name": "localId",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "force",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51497992,
+    "pointer_slot_va": "0x7ffe9c85cc08",
+    "runtime_va": "0x7ffe9a443380",
+    "rva": "0xd03380",
+    "status": "mapped",
+    "code_preview_hex": "488954241055565741564157488d6c24f14881eca0000000",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12971.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "CalcAbnormalKnockBackDistance",
+    "method_definition_index": 12974,
+    "oldIndex": 12974,
+    "token": "0x60032af",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51498016,
+    "pointer_slot_va": "0x7ffe9c85cc20",
+    "runtime_va": "0x7ffe9a446700",
+    "rva": "0xd06700",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec40803d9775690200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12974.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "Damaged",
+    "method_definition_index": 12962,
+    "oldIndex": 12962,
+    "token": "0x60032a3",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      },
+      {
+        "name": "id",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51497920,
+    "pointer_slot_va": "0x7ffe9c85cbc0",
+    "runtime_va": "0x7ffe9a448540",
+    "rva": "0xd08540",
+    "status": "mapped",
+    "code_preview_hex": "4c894424184889542410555657415441554156488d6c24e1",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12962.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "EventDamaged",
+    "method_definition_index": 12960,
+    "oldIndex": 12960,
+    "token": "0x60032a1",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      },
+      {
+        "name": "id",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "trapDamage",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51497904,
+    "pointer_slot_va": "0x7ffe9c85cbb0",
+    "runtime_va": "0x7ffe9a44c1e0",
+    "rva": "0xd0c1e0",
+    "status": "mapped",
+    "code_preview_hex": "40555356574155488bec4883ec60803dab1a690200498bf1",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12960.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "OnRespawn",
+    "method_definition_index": 12982,
+    "oldIndex": 12982,
+    "token": "0x60032b7",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "orbRespawn",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51498080,
+    "pointer_slot_va": "0x7ffe9c85cc60",
+    "runtime_va": "0x7ffe9a450590",
+    "rva": "0xd10590",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c2420574883ec50803d0ad76802000fb6",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12982.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "get_MoveSpeed",
+    "method_definition_index": 12915,
+    "oldIndex": 12915,
+    "token": "0x6003274",
+    "method_flags_raw": "0x8c6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51497544,
+    "pointer_slot_va": "0x7ffe9c85ca48",
+    "runtime_va": "0x7ffe9a455db0",
+    "rva": "0xd15db0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec60803dc27e680200488bd97537488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12915.c"
+  },
+  {
+    "class": "PlayerBattleManager",
+    "name": "CheckZeroActionDelay",
+    "method_definition_index": 13148,
+    "oldIndex": 13148,
+    "token": "0x600335d",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51499408,
+    "pointer_slot_va": "0x7ffe9c85d190",
+    "runtime_va": "0x7ffe9a45a900",
+    "rva": "0xd1a900",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20488bd9488b89880000004885c90f840e0200",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13148.c"
+  },
+  {
+    "class": "PlayerBattleManager",
+    "name": "StartMagicFinawPursuitAttack",
+    "method_definition_index": 13183,
+    "oldIndex": 13183,
+    "token": "0x6003380",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "targetActionManager",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51499688,
+    "pointer_slot_va": "0x7ffe9c85d2a8",
+    "runtime_va": "0x7ffe9a46f520",
+    "rva": "0xd2f520",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803deae7660200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13183.c"
+  },
+  {
+    "class": "PlayerBattleStatus",
+    "name": "get_Aspd",
+    "method_definition_index": 13296,
+    "oldIndex": 13296,
+    "token": "0x60033f1",
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51500592,
+    "pointer_slot_va": "0x7ffe9c85d630",
+    "runtime_va": "0x7ffe9a479410",
+    "rva": "0xd39410",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec30803d6549660200488bd97513488d0d17794c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13296.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "get_CurrectHit",
+    "method_definition_index": 13578,
+    "oldIndex": 13578,
+    "token": "0x600350b",
+    "method_flags_raw": "0x886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51502848,
+    "pointer_slot_va": "0x7ffe9c85df00",
+    "runtime_va": "0x7ffe9a488180",
+    "rva": "0xd48180",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420574883ec20803d805c650200488bf97513488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13578.c"
+  },
+  {
+    "class": "<>c__DisplayClass102_0",
+    "name": "<AddAbnormalState>b__4",
+    "method_definition_index": 13025,
+    "oldIndex": 13025,
+    "token": "0x60032e2",
+    "method_flags_raw": "0x83",
+    "parameters": [
+      {
+        "name": "x",
+        "type_index": 11487,
+        "exact_byval_name": "AbnormalData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51498424,
+    "pointer_slot_va": "0x7ffe9c85cdb8",
+    "runtime_va": "0x7ffe9a48c120",
+    "rva": "0xd4c120",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d261c650200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13025.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CalcLastDamageRate",
+    "method_definition_index": 14284,
+    "oldIndex": 14284,
+    "token": "0x60037cd",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "playerStatus",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "attackType",
+        "type_index": 24549,
+        "exact_byval_name": "SkillAttackType"
+      }
+    ],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51508496,
+    "pointer_slot_va": "0x7ffe9c85f510",
+    "runtime_va": "0x7ffe9a4aa8e0",
+    "rva": "0xd6a8e0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec60803dcb35630200418b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14284.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CalcSkillMasteryLastDamageRate",
+    "method_definition_index": 14290,
+    "oldIndex": 14290,
+    "token": "0x60037d3",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "playerStatus",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "attackType",
+        "type_index": 24549,
+        "exact_byval_name": "SkillAttackType"
+      }
+    ],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51508544,
+    "pointer_slot_va": "0x7ffe9c85f540",
+    "runtime_va": "0x7ffe9a4ab4f0",
+    "rva": "0xd6b4f0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420555741574883ec40803dc129630200458bf80f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14290.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "ChackCorrectHit",
+    "method_definition_index": 14275,
+    "oldIndex": 14275,
+    "token": "0x60037c4",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "hit",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "isFlash",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      {
+        "name": "correct",
+        "type_index": 9136
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51508424,
+    "pointer_slot_va": "0x7ffe9c85f4c8",
+    "runtime_va": "0x7ffe9a4abe90",
+    "rva": "0xd6be90",
+    "status": "mapped",
+    "code_preview_hex": "48895c242056574154415641574883ec30803d1320630200",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14275.c"
+  },
+  {
+    "class": "AccelBladeAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22526,
+    "oldIndex": 22526,
+    "token": "0x60057ff",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51574432,
+    "pointer_slot_va": "0x7ffe9c86f6a0",
+    "runtime_va": "0x7ffe9a630b40",
+    "rva": "0xef0b40",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418564883ec30803dfbdf4a0200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22526.c"
+  },
+  {
+    "class": "AssassinStubAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 22326,
+    "oldIndex": 22326,
+    "token": "0x6005737",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51572832,
+    "pointer_slot_va": "0x7ffe9c86f060",
+    "runtime_va": "0x7ffe9a631380",
+    "rva": "0xef1380",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418555641564883ec50803d72d74a0200498be848",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22326.c"
+  },
+  {
+    "class": "AuraBladeAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 22564,
+    "oldIndex": 22564,
+    "token": "0x6005825",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51574736,
+    "pointer_slot_va": "0x7ffe9c86f7d0",
+    "runtime_va": "0x7ffe9a633d10",
+    "rva": "0xef3d10",
+    "status": "mapped",
+    "code_preview_hex": "40554154415641574883ec58803d3bae4a0200498be84c8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22564.c"
+  },
+  {
+    "class": "HardHitAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22642,
+    "oldIndex": 22642,
+    "token": "0x6005873",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51575360,
+    "pointer_slot_va": "0x7ffe9c86fa40",
+    "runtime_va": "0x7ffe9a6506d0",
+    "rva": "0xf106d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec30803d93e4480200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22642.c"
+  },
+  {
+    "class": "MoonSlashAction",
+    "name": "ActionStart",
+    "method_definition_index": 22677,
+    "oldIndex": 22677,
+    "token": "0x6005896",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51575640,
+    "pointer_slot_va": "0x7ffe9c86fb58",
+    "runtime_va": "0x7ffe9a6523d0",
+    "rva": "0xf123d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418488974242057415641574883ec50803d9ec748",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22677.c"
+  },
+  {
+    "class": "SpiralAirAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22756,
+    "oldIndex": 22756,
+    "token": "0x60058e5",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51576272,
+    "pointer_slot_va": "0x7ffe9c86fdd0",
+    "runtime_va": "0x7ffe9a65a190",
+    "rva": "0xf1a190",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803d064a480200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22756.c"
+  },
+  {
+    "class": "TriggerSlashAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22817,
+    "oldIndex": 22817,
+    "token": "0x6005922",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51576760,
+    "pointer_slot_va": "0x7ffe9c86ffb8",
+    "runtime_va": "0x7ffe9a65e560",
+    "rva": "0xf1e560",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803d4706480200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22817.c"
+  },
+  {
+    "class": "AirSlicerAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23197,
+    "oldIndex": 23197,
+    "token": "0x6005a9e",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51579800,
+    "pointer_slot_va": "0x7ffe9c870b98",
+    "runtime_va": "0x7ffe9a6600e0",
+    "rva": "0xf200e0",
+    "status": "mapped",
+    "code_preview_hex": "405356574883ec30803d57eb470200488bf2488bf9752b48",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23197.c"
+  },
+  {
+    "class": "AirSlideAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23221,
+    "oldIndex": 23221,
+    "token": "0x6005ab6",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51579992,
+    "pointer_slot_va": "0x7ffe9c870c58",
+    "runtime_va": "0x7ffe9a660e80",
+    "rva": "0xf20e80",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec40803dbadd470200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23221.c"
+  },
+  {
+    "class": "BloodBiteAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23033,
+    "oldIndex": 23033,
+    "token": "0x60059fa",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51578488,
+    "pointer_slot_va": "0x7ffe9c870678",
+    "runtime_va": "0x7ffe9a666950",
+    "rva": "0xf26950",
+    "status": "mapped",
+    "code_preview_hex": "405356574883ec30803dab82470200488bf14c897424684c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23033.c"
+  },
+  {
+    "class": "DragoonSwordAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23281,
+    "oldIndex": 23281,
+    "token": "0x6005af2",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51580472,
+    "pointer_slot_va": "0x7ffe9c870e38",
+    "runtime_va": "0x7ffe9a66a560",
+    "rva": "0xf2a560",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418564883ec30803df146470200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23281.c"
+  },
+  {
+    "class": "LunaDitherStarAction",
+    "name": "ActionStart",
+    "method_definition_index": 23326,
+    "oldIndex": 23326,
+    "token": "0x6005b1f",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51580832,
+    "pointer_slot_va": "0x7ffe9c870fa0",
+    "runtime_va": "0x7ffe9a66e2c0",
+    "rva": "0xf2e2c0",
+    "status": "mapped",
+    "code_preview_hex": "405556574156488bec4883ec78803da1094702004d8bf048",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23326.c"
+  },
+  {
+    "class": "ParryingSwordAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23387,
+    "oldIndex": 23387,
+    "token": "0x6005b5c",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51581320,
+    "pointer_slot_va": "0x7ffe9c871188",
+    "runtime_va": "0x7ffe9a670760",
+    "rva": "0xf30760",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803d18e5460200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23387.c"
+  },
+  {
+    "class": "BusterLanceAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23653,
+    "oldIndex": 23653,
+    "token": "0x6005c66",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51583448,
+    "pointer_slot_va": "0x7ffe9c8719d8",
+    "runtime_va": "0x7ffe9a677330",
+    "rva": "0xf37330",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec20803da079460200488bf2488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23653.c"
+  },
+  {
+    "class": "CannonSpearAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 23673,
+    "oldIndex": 23673,
+    "token": "0x6005c7a",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51583608,
+    "pointer_slot_va": "0x7ffe9c871a78",
+    "runtime_va": "0x7ffe9a678230",
+    "rva": "0xf38230",
+    "status": "mapped",
+    "code_preview_hex": "405556574883ec70803dac6a460200498be8488bf2488bf9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23673.c"
+  },
+  {
+    "class": "DiveImpactAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23738,
+    "oldIndex": 23738,
+    "token": "0x6005cbb",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51584128,
+    "pointer_slot_va": "0x7ffe9c871c80",
+    "runtime_va": "0x7ffe9a67b310",
+    "rva": "0xf3b310",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec30803ddc39460200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23738.c"
+  },
+  {
+    "class": "DragonTailAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23783,
+    "oldIndex": 23783,
+    "token": "0x6005ce8",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51584488,
+    "pointer_slot_va": "0x7ffe9c871de8",
+    "runtime_va": "0x7ffe9a67c650",
+    "rva": "0xf3c650",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec30803db626460200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23783.c"
+  },
+  {
+    "class": "PhantomRaveAction",
+    "name": "CalcPhantomRaveLastDamageRate",
+    "method_definition_index": 23420,
+    "oldIndex": 23420,
+    "token": "0x6005b7d",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      },
+      {
+        "name": "bonusLastRate",
+        "type_index": 9355
+      },
+      {
+        "name": "noBonusLastRate",
+        "type_index": 9355
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51581584,
+    "pointer_slot_va": "0x7ffe9c871290",
+    "runtime_va": "0x7ffe9a682840",
+    "rva": "0xf42840",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c242056415641574881ec80000000803d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23420.c"
+  },
+  {
+    "class": "PhantomRaveAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23409,
+    "oldIndex": 23409,
+    "token": "0x6005b72",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51581496,
+    "pointer_slot_va": "0x7ffe9c871238",
+    "runtime_va": "0x7ffe9a682f70",
+    "rva": "0xf42f70",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c2420564883ec30803d0abd450200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23409.c"
+  },
+  {
+    "class": "TwinBusterBladeAction",
+    "name": "ActionStart",
+    "method_definition_index": 23505,
+    "oldIndex": 23505,
+    "token": "0x6005bd2",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51582264,
+    "pointer_slot_va": "0x7ffe9c871538",
+    "runtime_va": "0x7ffe9a687470",
+    "rva": "0xf47470",
+    "status": "mapped",
+    "code_preview_hex": "48896c2420565741544883ec40803d2c784502004d8be048",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23505.c"
+  },
+  {
+    "class": "TwinSlashAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23521,
+    "oldIndex": 23521,
+    "token": "0x6005be2",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51582392,
+    "pointer_slot_va": "0x7ffe9c8715b8",
+    "runtime_va": "0x7ffe9a688ab0",
+    "rva": "0xf48ab0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803df661450200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23521.c"
+  },
+  {
+    "class": "FlashStubAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23828,
+    "oldIndex": 23828,
+    "token": "0x6005d15",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51584848,
+    "pointer_slot_va": "0x7ffe9c871f50",
+    "runtime_va": "0x7ffe9a68e5b0",
+    "rva": "0xf4e5b0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418564883ec30803d6907450200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23828.c"
+  },
+  {
+    "class": "AssaultAttackAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24378,
+    "oldIndex": 24378,
+    "token": "0x6005f3b",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51589248,
+    "pointer_slot_va": "0x7ffe9c873080",
+    "runtime_va": "0x7ffe9a69ede0",
+    "rva": "0xf5ede0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec30803d0900440200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24378.c"
+  },
+  {
+    "class": "RageSwordAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 24466,
+    "oldIndex": 24466,
+    "token": "0x6005f93",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51589952,
+    "pointer_slot_va": "0x7ffe9c873340",
+    "runtime_va": "0x7ffe9a6ae8d0",
+    "rva": "0xf6e8d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec60803d3305430200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24466.c"
+  },
+  {
+    "class": "MagicArrowAction",
+    "name": "InitializeEnchantedSpell",
+    "method_definition_index": 24649,
+    "oldIndex": 24649,
+    "token": "0x600604a",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "isPlayer",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51591416,
+    "pointer_slot_va": "0x7ffe9c8738f8",
+    "runtime_va": "0x7ffe9a6b5940",
+    "rva": "0xf75940",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742420574883ec20803d0195",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24649.c"
+  },
+  {
+    "class": "MagicArrowAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24641,
+    "oldIndex": 24641,
+    "token": "0x6006042",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51591352,
+    "pointer_slot_va": "0x7ffe9c8738b8",
+    "runtime_va": "0x7ffe9a6b5dc0",
+    "rva": "0xf75dc0",
+    "status": "mapped",
+    "code_preview_hex": "48896c24184889742420574883ec20803d7f90420200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24641.c"
+  },
+  {
+    "class": "MagicBlastAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24667,
+    "oldIndex": 24667,
+    "token": "0x600605c",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51591560,
+    "pointer_slot_va": "0x7ffe9c873988",
+    "runtime_va": "0x7ffe9a6b7680",
+    "rva": "0xf77680",
+    "status": "mapped",
+    "code_preview_hex": "4889742418574883ec30803dd077420200488bf2488bf975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24667.c"
+  },
+  {
+    "class": "MagicFallAction",
+    "name": "ActionStart",
+    "method_definition_index": 24769,
+    "oldIndex": 24769,
+    "token": "0x60060c2",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51592376,
+    "pointer_slot_va": "0x7ffe9c873cb8",
+    "runtime_va": "0x7ffe9a6bdd10",
+    "rva": "0xf7dd10",
+    "status": "mapped",
+    "code_preview_hex": "4c894424185556415441564157488d6c24c94881ecf00000",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24769.c"
+  },
+  {
+    "class": "EarthBindAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25127,
+    "oldIndex": 25127,
+    "token": "0x6006228",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51595240,
+    "pointer_slot_va": "0x7ffe9c8747e8",
+    "runtime_va": "0x7ffe9a6cab80",
+    "rva": "0xf8ab80",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742418574883ec30803d8a43410200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25127.c"
+  },
+  {
+    "class": "HeavySmashAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25171,
+    "oldIndex": 25171,
+    "token": "0x6006254",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51595592,
+    "pointer_slot_va": "0x7ffe9c874948",
+    "runtime_va": "0x7ffe9a6cc960",
+    "rva": "0xf8c960",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742418574883ec20803db825410200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25171.c"
+  },
+  {
+    "class": "MagicLancerAction",
+    "name": "InitializeEnchantedSpell",
+    "method_definition_index": 24948,
+    "oldIndex": 24948,
+    "token": "0x6006175",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "isPlayer",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51593808,
+    "pointer_slot_va": "0x7ffe9c874250",
+    "runtime_va": "0x7ffe9a6ce700",
+    "rva": "0xf8e700",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742420574883ec30803dc207",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24948.c"
+  },
+  {
+    "class": "MagicLancerAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24938,
+    "oldIndex": 24938,
+    "token": "0x600616b",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51593728,
+    "pointer_slot_va": "0x7ffe9c874200",
+    "runtime_va": "0x7ffe9a6cebb0",
+    "rva": "0xf8ebb0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c2420574883ec30803d0f03410200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24938.c"
+  },
+  {
+    "class": "MagicStormAction",
+    "name": "InitializeEnchantedSpell",
+    "method_definition_index": 25017,
+    "oldIndex": 25017,
+    "token": "0x60061ba",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "isPlayer",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51594360,
+    "pointer_slot_va": "0x7ffe9c874478",
+    "runtime_va": "0x7ffe9a6d1b70",
+    "rva": "0xf91b70",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742420574883ec20803d73d3",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25017.c"
+  },
+  {
+    "class": "MagicStormAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24995,
+    "oldIndex": 24995,
+    "token": "0x60061a4",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51594184,
+    "pointer_slot_va": "0x7ffe9c8743c8",
+    "runtime_va": "0x7ffe9a6d1fa0",
+    "rva": "0xf91fa0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec20803d35cf400200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24995.c"
+  },
+  {
+    "class": "MagicWallAction",
+    "name": "InitializeEnchantedSpell",
+    "method_definition_index": 25047,
+    "oldIndex": 25047,
+    "token": "0x60061d8",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "isPlayer",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51594600,
+    "pointer_slot_va": "0x7ffe9c874568",
+    "runtime_va": "0x7ffe9a6d3ab0",
+    "rva": "0xf93ab0",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742420574883ec30803d41b4",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25047.c"
+  },
+  {
+    "class": "MagicWallAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25033,
+    "oldIndex": 25033,
+    "token": "0x60061ca",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51594488,
+    "pointer_slot_va": "0x7ffe9c8744f8",
+    "runtime_va": "0x7ffe9a6d40c0",
+    "rva": "0xf940c0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420564883ec30803d2fae400200488bf2488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25033.c"
+  },
+  {
+    "class": "CutOffTheDisasterAction",
+    "name": "DamageCut",
+    "method_definition_index": 25469,
+    "oldIndex": 25469,
+    "token": "0x600637e",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "skillAction",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51597976,
+    "pointer_slot_va": "0x7ffe9c875298",
+    "runtime_va": "0x7ffe9a6e0230",
+    "rva": "0xfa0230",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408488974241048897c241841564883ec20803d5c",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25469.c"
+  },
+  {
+    "class": "FlashDrawnSwordAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25503,
+    "oldIndex": 25503,
+    "token": "0x60063a0",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51598248,
+    "pointer_slot_va": "0x7ffe9c8753a8",
+    "runtime_va": "0x7ffe9a6e1b60",
+    "rva": "0xfa1b60",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803d3ad43f0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25503.c"
+  },
+  {
+    "class": "ShellBreakAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25292,
+    "oldIndex": 25292,
+    "token": "0x60062cd",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51596560,
+    "pointer_slot_va": "0x7ffe9c874d10",
+    "runtime_va": "0x7ffe9a6ee5e0",
+    "rva": "0xfae5e0",
+    "status": "mapped",
+    "code_preview_hex": "4889742418574883ec40803d77093f0200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25292.c"
+  },
+  {
+    "class": "SmashAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25343,
+    "oldIndex": 25343,
+    "token": "0x6006300",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51596968,
+    "pointer_slot_va": "0x7ffe9c874ea8",
+    "runtime_va": "0x7ffe9a6f0be0",
+    "rva": "0xfb0be0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742418574883ec30803d84e33e0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25343.c"
+  },
+  {
+    "class": "SonicWaveAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25359,
+    "oldIndex": 25359,
+    "token": "0x6006310",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51597096,
+    "pointer_slot_va": "0x7ffe9c874f28",
+    "runtime_va": "0x7ffe9a6f1500",
+    "rva": "0xfb1500",
+    "status": "mapped",
+    "code_preview_hex": "405356574883ec30803d6fda3e0200488bda488bf9752b48",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25359.c"
+  },
+  {
+    "class": "SkullShakerAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25971,
+    "oldIndex": 25971,
+    "token": "0x6006574",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51601992,
+    "pointer_slot_va": "0x7ffe9c876248",
+    "runtime_va": "0x7ffe9a716650",
+    "rva": "0xfd6650",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c2420564883ec20803d908a3c0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25971.c"
+  },
+  {
+    "class": "StrikeBackOfSwordAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 25761,
+    "oldIndex": 25761,
+    "token": "0x60064a2",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51600312,
+    "pointer_slot_va": "0x7ffe9c875bb8",
+    "runtime_va": "0x7ffe9a717e60",
+    "rva": "0xfd7e60",
+    "status": "mapped",
+    "code_preview_hex": "40565741564883ec70803d3c723c02004d8bf0488bf2488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25761.c"
+  },
+  {
+    "class": "FireStyleAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26190,
+    "oldIndex": 26190,
+    "token": "0x600664f",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51603744,
+    "pointer_slot_va": "0x7ffe9c876920",
+    "runtime_va": "0x7ffe9a728790",
+    "rva": "0xfe8790",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec30803da0693b0200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26190.c"
+  },
+  {
+    "class": "FumaShurikenAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26215,
+    "oldIndex": 26215,
+    "token": "0x6006668",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51603944,
+    "pointer_slot_va": "0x7ffe9c8769e8",
+    "runtime_va": "0x7ffe9a729ae0",
+    "rva": "0xfe9ae0",
+    "status": "mapped",
+    "code_preview_hex": "4889742418574883ec30803d58563b0200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26215.c"
+  },
+  {
+    "class": "ThunderStyleAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26315,
+    "oldIndex": 26315,
+    "token": "0x60066cc",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51604744,
+    "pointer_slot_va": "0x7ffe9c876d08",
+    "runtime_va": "0x7ffe9a732850",
+    "rva": "0xff2850",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec40803d09c93a0200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26315.c"
+  },
+  {
+    "class": "WindStyleAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26394,
+    "oldIndex": 26394,
+    "token": "0x600671b",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51605376,
+    "pointer_slot_va": "0x7ffe9c876f80",
+    "runtime_va": "0x7ffe9a737ea0",
+    "rva": "0xff7ea0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec40803dd1723a0200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26394.c"
+  },
+  {
+    "class": "ArrowRainAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26869,
+    "oldIndex": 26869,
+    "token": "0x60068f6",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51609176,
+    "pointer_slot_va": "0x7ffe9c877e58",
+    "runtime_va": "0x7ffe9a739b10",
+    "rva": "0xff9b10",
+    "status": "mapped",
+    "code_preview_hex": "4889742420574883ec30803d05573a0200488bf2488bf975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26869.c"
+  },
+  {
+    "class": "DecoyShooterAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26941,
+    "oldIndex": 26941,
+    "token": "0x600693e",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51609752,
+    "pointer_slot_va": "0x7ffe9c878098",
+    "runtime_va": "0x7ffe9a7415b0",
+    "rva": "0x10015b0",
+    "status": "mapped",
+    "code_preview_hex": "40535556574883ec48803d82dc390200488bda488bf97537",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26941.c"
+  },
+  {
+    "class": "ShieldBashAction",
+    "name": "CheckAbnormalSubEffect",
+    "method_definition_index": 26813,
+    "oldIndex": 26813,
+    "token": "0x60068be",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "abnormalType",
+        "type_index": 11503,
+        "exact_byval_name": "AbnormalType"
+      },
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51608728,
+    "pointer_slot_va": "0x7ffe9c877c98",
+    "runtime_va": "0x7ffe9a74d320",
+    "rva": "0x100d320",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803de11e390200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26813.c"
+  },
+  {
+    "class": "DecoyShooterPursuitAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26973,
+    "oldIndex": 26973,
+    "token": "0x600695e",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51610008,
+    "pointer_slot_va": "0x7ffe9c878198",
+    "runtime_va": "0x7ffe9a752fd0",
+    "rva": "0x1012fd0",
+    "status": "mapped",
+    "code_preview_hex": "405355574883ec50803d6ec2380200488bda488bf9753748",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26973.c"
+  },
+  {
+    "class": "OneWheelAction",
+    "name": "OnInitialize",
+    "method_definition_index": 27044,
+    "oldIndex": 27044,
+    "token": "0x60069a5",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51610576,
+    "pointer_slot_va": "0x7ffe9c8783d0",
+    "runtime_va": "0x7ffe9a755cc0",
+    "rva": "0x1015cc0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec30803d8d95380200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27044.c"
+  },
+  {
+    "class": "ParalysisShotAction",
+    "name": "ActionHit",
+    "method_definition_index": 27090,
+    "oldIndex": 27090,
+    "token": "0x60069d3",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51610944,
+    "pointer_slot_va": "0x7ffe9c878540",
+    "runtime_va": "0x7ffe9a758d80",
+    "rva": "0x1018d80",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec40803de264380200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27090.c"
+  },
+  {
+    "class": "ParalysisShotAction",
+    "name": "CalcBufferTime",
+    "method_definition_index": 27092,
+    "oldIndex": 27092,
+    "token": "0x60069d5",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51610960,
+    "pointer_slot_va": "0x7ffe9c878550",
+    "runtime_va": "0x7ffe9a758f60",
+    "rva": "0x1018f60",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20bb0a0000004885c9744b488b11488b821802",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27092.c"
+  },
+  {
+    "class": "PowerShootAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 27147,
+    "oldIndex": 27147,
+    "token": "0x6006a0c",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51611400,
+    "pointer_slot_va": "0x7ffe9c878708",
+    "runtime_va": "0x7ffe9a75d3b0",
+    "rva": "0x101d3b0",
+    "status": "mapped",
+    "code_preview_hex": "405356574883ec60803dcf1e380200498bf0488bda488bf9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27147.c"
+  },
+  {
+    "class": "SmokeDustAction",
+    "name": "ActionHit",
+    "method_definition_index": 27163,
+    "oldIndex": 27163,
+    "token": "0x6006a1c",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51611528,
+    "pointer_slot_va": "0x7ffe9c878788",
+    "runtime_va": "0x7ffe9a75d7e0",
+    "rva": "0x101d7e0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec50803da21a380200488bf148897c24",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27163.c"
+  },
+  {
+    "class": "SmokeDustAction",
+    "name": "CalcBufferTime",
+    "method_definition_index": 27165,
+    "oldIndex": 27165,
+    "token": "0x6006a1e",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51611544,
+    "pointer_slot_va": "0x7ffe9c878798",
+    "runtime_va": "0x7ffe9a75d9d0",
+    "rva": "0x101d9d0",
+    "status": "mapped",
+    "code_preview_hex": "4883ec380f29742420f30f103503c38e014885c97457488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27165.c"
+  },
+  {
+    "class": "SkillBufferManager",
+    "name": "AddSelfDanceBuf",
+    "method_definition_index": 30997,
+    "oldIndex": 30997,
+    "token": "0x6007916",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "id",
+        "type_index": 24625,
+        "exact_byval_name": "SkillId"
+      },
+      {
+        "name": "level",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51642200,
+    "pointer_slot_va": "0x7ffe9c87ff58",
+    "runtime_va": "0x7ffe9a7c2ba0",
+    "rva": "0x1082ba0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241048896c24184889742420574883ec40803dcfc9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "30997.c"
+  },
+  {
+    "class": "BerserkAction",
+    "name": "ActionHit",
+    "method_definition_index": 31561,
+    "oldIndex": 31561,
+    "token": "0x6007b4a",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51646712,
+    "pointer_slot_va": "0x7ffe9c8810f8",
+    "runtime_va": "0x7ffe9a806fe0",
+    "rva": "0x10c6fe0",
+    "status": "mapped",
+    "code_preview_hex": "415641574883ec38803d3c872d02004c8bf24c8bf9751f48",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "31561.c"
+  },
+  {
+    "class": "HighnessHealAction",
+    "name": "OnInitialize",
+    "method_definition_index": 32273,
+    "oldIndex": 32273,
+    "token": "0x6007e12",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51652408,
+    "pointer_slot_va": "0x7ffe9c882738",
+    "runtime_va": "0x7ffe9a820f00",
+    "rva": "0x10e0f00",
+    "status": "mapped",
+    "code_preview_hex": "4053564883ec38803dd9e82b0200488bda488bf17537488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32273.c"
+  },
+  {
+    "class": "ManaCrystalAction",
+    "name": "OnInitialize",
+    "method_definition_index": 32560,
+    "oldIndex": 32560,
+    "token": "0x6007f31",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51654704,
+    "pointer_slot_va": "0x7ffe9c883030",
+    "runtime_va": "0x7ffe9a82b740",
+    "rva": "0x10eb740",
+    "status": "mapped",
+    "code_preview_hex": "4889742410574883ec30803df1402b0200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32560.c"
+  },
+  {
+    "class": "RecoveryAction",
+    "name": "OnInitialize",
+    "method_definition_index": 32909,
+    "oldIndex": 32909,
+    "token": "0x600808e",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51657496,
+    "pointer_slot_va": "0x7ffe9c883b18",
+    "runtime_va": "0x7ffe9a8362c0",
+    "rva": "0x10f62c0",
+    "status": "mapped",
+    "code_preview_hex": "488974242041564883ec20803dd9952a02004c8bf2488bf1",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32909.c"
+  },
+  {
+    "class": "ResonanceAction",
+    "name": "ActionHit",
+    "method_definition_index": 32951,
+    "oldIndex": 32951,
+    "token": "0x60080b8",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51657832,
+    "pointer_slot_va": "0x7ffe9c883c68",
+    "runtime_va": "0x7ffe9a836a80",
+    "rva": "0x10f6a80",
+    "status": "mapped",
+    "code_preview_hex": "40535541564883ec40803d258e2a0200488bda488be97537",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32951.c"
+  },
+  {
+    "class": "GameManager",
+    "name": "ReceivePlayerAttackStart",
+    "method_definition_index": 35411,
+    "oldIndex": 35411,
+    "token": "0x6008a54",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "archetypeType",
+        "type_index": 11840,
+        "exact_byval_name": "Toram.Common.ArchetypeType"
+      },
+      {
+        "name": "archetypeId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "response",
+        "type_index": 12108,
+        "exact_byval_name": "Toram.Common.Actions.AttackStartResponseData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51677512,
+    "pointer_slot_va": "0x7ffe9c888948",
+    "runtime_va": "0x7ffe9a8cd9d0",
+    "rva": "0x118d9d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241855565741544155488bec4883ec50803d5d2221",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "35411.c"
+  },
+  {
+    "class": "ReceiveBattleResult",
+    "name": "Attack",
+    "method_definition_index": 44598,
+    "oldIndex": 44598,
+    "token": "0x600ae37",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "returnCode",
+        "type_index": 16393,
+        "exact_byval_name": "Toram.Common.GameReturnCode"
+      },
+      {
+        "name": "archetypeType",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "archetypeId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "response",
+        "type_index": 12105,
+        "exact_byval_name": "Toram.Common.Actions.AttackResponseData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51751008,
+    "pointer_slot_va": "0x7ffe9c89a860",
+    "runtime_va": "0x7ffe9aade120",
+    "rva": "0x139e120",
+    "status": "mapped",
+    "code_preview_hex": "48896c241856574154415641574883ec50803d732b000200",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "44598.c"
+  },
+  {
+    "class": "UIPlayerStatusDetailPanel",
+    "name": "CalcAvoidBreakerValue",
+    "method_definition_index": 66864,
+    "oldIndex": 66864,
+    "token": "0x6010531",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51929136,
+    "pointer_slot_va": "0x7ffe9c8c6030",
+    "runtime_va": "0x7ffe9a0905e0",
+    "rva": "0x9505e0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec40803ddabea40200488bd97513488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "66864.c"
+  },
+  {
+    "class": "UIPlayerStatusDetailPanel",
+    "name": "CalcGuardBreakerValue",
+    "method_definition_index": 66865,
+    "oldIndex": 66865,
+    "token": "0x6010532",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51929144,
+    "pointer_slot_va": "0x7ffe9c8c6038",
+    "runtime_va": "0x7ffe9a0909d0",
+    "rva": "0x9509d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec40803debbaa40200488bd97513488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "66865.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CalcHitReaction",
+    "method_definition_index": 14318,
+    "oldIndex": 14318,
+    "token": "0x60037ef",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "attackType",
+        "type_index": 24549,
+        "exact_byval_name": "SkillAttackType"
+      },
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      },
+      {
+        "name": "resistReactionType",
+        "type_index": 9361
+      }
+    ],
+    "return_type": {
+      "type_index": 24617,
+      "exact_byval_name": "SkillHitReactionType"
+    },
+    "pointer_slot_offset": 51508768,
+    "pointer_slot_va": "0x7ffe9c85f620",
+    "runtime_va": "0x7ffe9a4a9890",
+    "rva": "0xd69890",
+    "status": "mapped",
+    "code_preview_hex": "4c894c242089542410555356574156488d6c24d94881ecb0",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14318.c"
+  },
+  {
+    "class": "HealAction",
+    "name": "OnInitialize",
+    "method_definition_index": 32160,
+    "oldIndex": 32160,
+    "token": "0x6007da1",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51651504,
+    "pointer_slot_va": "0x7ffe9c8823b0",
+    "runtime_va": "0x7ffe9a81d480",
+    "rva": "0x10dd480",
+    "status": "mapped",
+    "code_preview_hex": "4053564883ec48803d3a232c0200488bda488bf17573488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32160.c"
+  },
+  {
+    "class": "ImprovisationSongAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 32377,
+    "oldIndex": 32377,
+    "token": "0x6007e7a",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51653240,
+    "pointer_slot_va": "0x7ffe9c882a78",
+    "runtime_va": "0x7ffe9a8232c0",
+    "rva": "0x10e32c0",
+    "status": "mapped",
+    "code_preview_hex": "488bc4488958104889701848894808574154415541564157",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32377.c"
+  },
+  {
+    "class": "P_DeffenceAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 32842,
+    "oldIndex": 32842,
+    "token": "0x600804b",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51656960,
+    "pointer_slot_va": "0x7ffe9c883900",
+    "runtime_va": "0x7ffe9a830c30",
+    "rva": "0x10f0c30",
+    "status": "mapped",
+    "code_preview_hex": "405355565741564883ec20803d58ec2a0200498bf8488bf2",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32842.c"
+  },
+  {
+    "class": "PutitHealAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 32823,
+    "oldIndex": 32823,
+    "token": "0x6008038",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51656808,
+    "pointer_slot_va": "0x7ffe9c883868",
+    "runtime_va": "0x7ffe9a834200",
+    "rva": "0x10f4200",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24184889742420574883ec20803d78b6",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32823.c"
+  },
+  {
+    "class": "MobaPlayerSecondaryStatus",
+    "name": "get_AtkMpRecovery",
+    "method_definition_index": 12847,
+    "oldIndex": 12847,
+    "token": "0x6003230",
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51497000,
+    "pointer_slot_va": "0x7ffe9c85c828",
+    "runtime_va": "0x7ffe9a474890",
+    "rva": "0xd34890",
+    "status": "mapped",
+    "code_preview_hex": "405356574883ec4033ff0f29742430488bd948897c247848",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12847.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "get_AtkMpRecovery",
+    "method_definition_index": 13587,
+    "oldIndex": 13587,
+    "token": "0x6003514",
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51502920,
+    "pointer_slot_va": "0x7ffe9c85df48",
+    "runtime_va": "0x7ffe9a4868a0",
+    "rva": "0xd468a0",
+    "status": "mapped",
+    "code_preview_hex": "40555357488bec4881ec80000000803d5e75650200488bd9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13587.c"
+  },
+  {
+    "class": "FamiliaActionManager",
+    "name": "UpdateHighFamilia",
+    "method_definition_index": 4748,
+    "oldIndex": 4748,
+    "token": "0x600128d",
+    "method_flags_raw": "0x81",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51432208,
+    "pointer_slot_va": "0x7ffe9c84cb10",
+    "runtime_va": "0x7ffe99c0c130",
+    "rva": "0x4cc130",
+    "status": "mapped",
+    "code_preview_hex": "48895c241048894c240856574154415641574883ec700f29",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "4748.c"
+  },
+  {
+    "class": "MainPlayer",
+    "name": "OnChangeState",
+    "method_definition_index": 5066,
+    "oldIndex": 5066,
+    "token": "0x60013cb",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "response",
+        "type_index": 11834,
+        "exact_byval_name": "Toram.Common.Events.ArchetypeChangeState"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51434752,
+    "pointer_slot_va": "0x7ffe9c84d500",
+    "runtime_va": "0x7ffe99cff950",
+    "rva": "0x5bf950",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803d9eb5dd0200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "5066.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "InMobAttackArea",
+    "method_definition_index": 12997,
+    "oldIndex": 12997,
+    "token": "0x60032c6",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "enemyAction",
+        "type_index": 15303,
+        "exact_byval_name": "EnemyMobActionManagerBase"
+      },
+      {
+        "name": "mobAttack",
+        "type_index": 20543,
+        "exact_byval_name": "MobAttackBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51498200,
+    "pointer_slot_va": "0x7ffe9c85ccd8",
+    "runtime_va": "0x7ffe9a44ec80",
+    "rva": "0xd0ec80",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec20803d25f0680200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12997.c"
+  },
+  {
+    "class": "PlayerActionManager",
+    "name": "SkillReserveMpLess",
+    "method_definition_index": 12957,
+    "oldIndex": 12957,
+    "token": "0x600329e",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "sendActionStart",
+        "type_index": 9136
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51497880,
+    "pointer_slot_va": "0x7ffe9c85cb98",
+    "runtime_va": "0x7ffe9a4511d0",
+    "rva": "0xd111d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410488974241848897c242041564883ec20803db2",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12957.c"
+  },
+  {
+    "class": "PlayerBattleManager",
+    "name": "OnSkillActionStart",
+    "method_definition_index": 13129,
+    "oldIndex": 13129,
+    "token": "0x600334a",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "targetActManager",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51499256,
+    "pointer_slot_va": "0x7ffe9c85d0f8",
+    "runtime_va": "0x7ffe9a465330",
+    "rva": "0xd25330",
+    "status": "mapped",
+    "code_preview_hex": "4c894424184889542410555657415441564157488d6c24d9",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13129.c"
+  },
+  {
+    "class": "PlayerBattleManager",
+    "name": "PursuitAttack",
+    "method_definition_index": 13159,
+    "oldIndex": 13159,
+    "token": "0x6003368",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "targetActManager",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51499496,
+    "pointer_slot_va": "0x7ffe9c85d1e8",
+    "runtime_va": "0x7ffe9a4695c0",
+    "rva": "0xd295c0",
+    "status": "mapped",
+    "code_preview_hex": "40574154415641574883ec48803d3547670200498bf84c8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13159.c"
+  },
+  {
+    "class": "MobaPlayerSecondaryStatus",
+    "name": "GetCrtConstant",
+    "method_definition_index": 12873,
+    "oldIndex": 12873,
+    "token": "0x600324a",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "isNormalAttack",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51497208,
+    "pointer_slot_va": "0x7ffe9c85c8f8",
+    "runtime_va": "0x7ffe9a472ca0",
+    "rva": "0xd32ca0",
+    "status": "mapped",
+    "code_preview_hex": "48895c241855564156488bec4883ec20803d96b066020044",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "12873.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "GetCrtConstant",
+    "method_definition_index": 13606,
+    "oldIndex": 13606,
+    "token": "0x6003527",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "isNormalAttack",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51503072,
+    "pointer_slot_va": "0x7ffe9c85dfe0",
+    "runtime_va": "0x7ffe9a484110",
+    "rva": "0xd44110",
+    "status": "mapped",
+    "code_preview_hex": "48895c241855564156488bec4883ec20803df39c65020044",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13606.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "GetExpBonus",
+    "method_definition_index": 13626,
+    "oldIndex": 13626,
+    "token": "0x600353b",
+    "method_flags_raw": "0x86",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51503232,
+    "pointer_slot_va": "0x7ffe9c85e080",
+    "runtime_va": "0x7ffe9a485c70",
+    "rva": "0xd45c70",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20803dab81650200488bd9751f488d0d47ff4a",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13626.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "get_AvoidSpeed",
+    "method_definition_index": 13596,
+    "oldIndex": 13596,
+    "token": "0x600351d",
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51502992,
+    "pointer_slot_va": "0x7ffe9c85df90",
+    "runtime_va": "0x7ffe9a486e70",
+    "rva": "0xd46e70",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420554883ec20803d976f650200488bd9751f488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13596.c"
+  },
+  {
+    "class": "PlayerSecondaryStatus",
+    "name": "get_AvoidStack",
+    "method_definition_index": 13597,
+    "oldIndex": 13597,
+    "token": "0x600351e",
+    "method_flags_raw": "0x9e6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51503000,
+    "pointer_slot_va": "0x7ffe9c85df98",
+    "runtime_va": "0x7ffe9a4873f0",
+    "rva": "0xd473f0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2420574883ec20803d186a650200488bf9752b488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13597.c"
+  },
+  {
+    "class": "CronosDrivePursuitAction",
+    "name": "OnInitialize",
+    "method_definition_index": 13966,
+    "oldIndex": 13966,
+    "token": "0x600368f",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51505952,
+    "pointer_slot_va": "0x7ffe9c85eb20",
+    "runtime_va": "0x7ffe9a4907d0",
+    "rva": "0xd507d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec30803d85d6640200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13966.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "OnInitialize",
+    "method_definition_index": 14119,
+    "oldIndex": 14119,
+    "token": "0x6003728",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51507176,
+    "pointer_slot_va": "0x7ffe9c85efe8",
+    "runtime_va": "0x7ffe9a496230",
+    "rva": "0xd56230",
+    "status": "mapped",
+    "code_preview_hex": "40565741564883ec40803d3d7c6402004c8bf2488bf1754f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14119.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "RampageHitCheck",
+    "method_definition_index": 14147,
+    "oldIndex": 14147,
+    "token": "0x6003744",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "hit",
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51507400,
+    "pointer_slot_va": "0x7ffe9c85f0c8",
+    "runtime_va": "0x7ffe9a497710",
+    "rva": "0xd57710",
+    "status": "mapped",
+    "code_preview_hex": "48896c24184889742420574883ec20803d7267640200410f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14147.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 14129,
+    "oldIndex": 14129,
+    "token": "0x6003732",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51507256,
+    "pointer_slot_va": "0x7ffe9c85f038",
+    "runtime_va": "0x7ffe9a49a380",
+    "rva": "0xd5a380",
+    "status": "mapped",
+    "code_preview_hex": "4c894424185553565741544157488d6c24884881ec780100",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14129.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "calcRampageConstantDamage",
+    "method_definition_index": 14142,
+    "oldIndex": 14142,
+    "token": "0x600373f",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51507360,
+    "pointer_slot_va": "0x7ffe9c85f0a0",
+    "runtime_va": "0x7ffe9a49c4a0",
+    "rva": "0xd5c4a0",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20803de719640200488bda7513488d0d5f7f49",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14142.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "calcRampageFinish",
+    "method_definition_index": 14144,
+    "oldIndex": 14144,
+    "token": "0x6003741",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51507376,
+    "pointer_slot_va": "0x7ffe9c85f0b0",
+    "runtime_va": "0x7ffe9a49c630",
+    "rva": "0xd5c630",
+    "status": "mapped",
+    "code_preview_hex": "4c8944241848894c240853565741544155415641574881ec",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14144.c"
+  },
+  {
+    "class": "NormalAttackAction",
+    "name": "calcRampageSkillRate",
+    "method_definition_index": 14143,
+    "oldIndex": 14143,
+    "token": "0x6003740",
+    "method_flags_raw": "0x81",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "attackStage",
+        "type_index": 18819
+      }
+    ],
+    "return_type": {
+      "type_index": 24505,
+      "exact_byval_name": "System.Single"
+    },
+    "pointer_slot_offset": 51507368,
+    "pointer_slot_va": "0x7ffe9c85f0a8",
+    "runtime_va": "0x7ffe9a49cc30",
+    "rva": "0xd5cc30",
+    "status": "mapped",
+    "code_preview_hex": "48895c24185556574883ec30803d5212640200418bf00f29",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14143.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CalcPlayerDamageUpLimit",
+    "method_definition_index": 14326,
+    "oldIndex": 14326,
+    "token": "0x60037f7",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "baseDamage",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51508832,
+    "pointer_slot_va": "0x7ffe9c85f660",
+    "runtime_va": "0x7ffe9a4aaf30",
+    "rva": "0xd6af30",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803d942f630200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14326.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CheckGemCartEmergencyMpRecovery",
+    "method_definition_index": 14335,
+    "oldIndex": 14335,
+    "token": "0x6003800",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51508904,
+    "pointer_slot_va": "0x7ffe9c85f6a8",
+    "runtime_va": "0x7ffe9a4ac850",
+    "rva": "0xd6c850",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d8016630200488bda488bf975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14335.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CheckPlayerDamageUpLimit",
+    "method_definition_index": 14325,
+    "oldIndex": 14325,
+    "token": "0x60037f6",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      },
+      {
+        "name": "limitDamage",
+        "type_index": 9239
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51508824,
+    "pointer_slot_va": "0x7ffe9c85f658",
+    "runtime_va": "0x7ffe9a4ad190",
+    "rva": "0xd6d190",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803d330d630200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14325.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "TemplateAssignment",
+    "method_definition_index": 14308,
+    "oldIndex": 14308,
+    "token": "0x60037e5",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "template",
+        "type_index": 24567,
+        "exact_byval_name": "SkillCalcTemplate"
+      },
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      },
+      {
+        "name": "attackType",
+        "type_index": 24549,
+        "exact_byval_name": "SkillAttackType"
+      },
+      {
+        "name": "TreeType",
+        "type_index": 24669,
+        "exact_byval_name": "SkillTreeType"
+      },
+      {
+        "name": "addRegist",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      }
+    ],
+    "return_type": {
+      "type_index": 24567,
+      "exact_byval_name": "SkillCalcTemplate"
+    },
+    "pointer_slot_offset": 51508688,
+    "pointer_slot_va": "0x7ffe9c85f5d0",
+    "runtime_va": "0x7ffe9a4b0ac0",
+    "rva": "0xd70ac0",
+    "status": "mapped",
+    "code_preview_hex": "4055564154415541564157488d6c24f14881eca800000080",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14308.c"
+  },
+  {
+    "class": "MagicPursuit",
+    "name": "Calc",
+    "method_definition_index": 16308,
+    "oldIndex": 16308,
+    "token": "0x6003fb5",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "value",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "playerAct",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAct",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51524688,
+    "pointer_slot_va": "0x7ffe9c863450",
+    "runtime_va": "0x7ffe9a52bbe0",
+    "rva": "0xdebbe0",
+    "status": "mapped",
+    "code_preview_hex": "40535641564883ec30803d51265b0200498bf1498bd84c8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "16308.c"
+  },
+  {
+    "class": "PhysicalPursuit",
+    "name": "Calc",
+    "method_definition_index": 16323,
+    "oldIndex": 16323,
+    "token": "0x6003fc4",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "value",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "playerAct",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAct",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 18795,
+      "exact_byval_name": "System.Int32"
+    },
+    "pointer_slot_offset": 51524808,
+    "pointer_slot_va": "0x7ffe9c8634c8",
+    "runtime_va": "0x7ffe9a52caa0",
+    "rva": "0xdecaa0",
+    "status": "mapped",
+    "code_preview_hex": "40535641564883ec30803d95175b0200498bf1498bd84c8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "16323.c"
+  },
+  {
+    "class": "AuraBladeAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 22559,
+    "oldIndex": 22559,
+    "token": "0x6005820",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51574696,
+    "pointer_slot_va": "0x7ffe9c86f7a8",
+    "runtime_va": "0x7ffe9a632cb0",
+    "rva": "0xef2cb0",
+    "status": "mapped",
+    "code_preview_hex": "48896c241848897c242041564883ec30803d93be4a020049",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22559.c"
+  },
+  {
+    "class": "ShadowWalkAttackAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22408,
+    "oldIndex": 22408,
+    "token": "0x6005789",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51573488,
+    "pointer_slot_va": "0x7ffe9c86f2f0",
+    "runtime_va": "0x7ffe9a63d1d0",
+    "rva": "0xefd1d0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803d3d194a0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22408.c"
+  },
+  {
+    "class": "FloatingKickAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 22880,
+    "oldIndex": 22880,
+    "token": "0x6005961",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51577264,
+    "pointer_slot_va": "0x7ffe9c8701b0",
+    "runtime_va": "0x7ffe9a648dc0",
+    "rva": "0xf08dc0",
+    "status": "mapped",
+    "code_preview_hex": "4055565741564157488d6c24c94881ecb0000000803dfb5d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22880.c"
+  },
+  {
+    "class": "StormBlazerAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 22775,
+    "oldIndex": 22775,
+    "token": "0x60058f8",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51576424,
+    "pointer_slot_va": "0x7ffe9c86fe68",
+    "runtime_va": "0x7ffe9a65b0a0",
+    "rva": "0xf1b0a0",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24184889742420574883ec30803df33a",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22775.c"
+  },
+  {
+    "class": "SwordTempestAction",
+    "name": "OnInitialize",
+    "method_definition_index": 22798,
+    "oldIndex": 22798,
+    "token": "0x600590f",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51576608,
+    "pointer_slot_va": "0x7ffe9c86ff20",
+    "runtime_va": "0x7ffe9a65ce00",
+    "rva": "0xf1ce00",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803da41d480200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "22798.c"
+  },
+  {
+    "class": "DemonCroweAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 23084,
+    "oldIndex": 23084,
+    "token": "0x6005a2d",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51578896,
+    "pointer_slot_va": "0x7ffe9c870810",
+    "runtime_va": "0x7ffe9a668c40",
+    "rva": "0xf28c40",
+    "status": "mapped",
+    "code_preview_hex": "48896c2410488974241857415641574883ec40803dc25f47",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23084.c"
+  },
+  {
+    "class": "HorizontalCutAction",
+    "name": "Damaged",
+    "method_definition_index": 23305,
+    "oldIndex": 23305,
+    "token": "0x6005b0a",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "actor",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      {
+        "name": "action",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51580664,
+    "pointer_slot_va": "0x7ffe9c870ef8",
+    "runtime_va": "0x7ffe9a66b750",
+    "rva": "0xf2b750",
+    "status": "mapped",
+    "code_preview_hex": "48896c2410488974241848897c242041564883ec60803d04",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23305.c"
+  },
+  {
+    "class": "LunaDitherStarAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23322,
+    "oldIndex": 23322,
+    "token": "0x6005b1b",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51580800,
+    "pointer_slot_va": "0x7ffe9c870f80",
+    "runtime_va": "0x7ffe9a66eb40",
+    "rva": "0xf2eb40",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803d1c01470200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23322.c"
+  },
+  {
+    "class": "SacrificeAction",
+    "name": "ActionStart",
+    "method_definition_index": 23158,
+    "oldIndex": 23158,
+    "token": "0x6005a77",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51579488,
+    "pointer_slot_va": "0x7ffe9c870a60",
+    "runtime_va": "0x7ffe9a671c30",
+    "rva": "0xf31c30",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803df1cf460200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23158.c"
+  },
+  {
+    "class": "BlankTrapAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23941,
+    "oldIndex": 23941,
+    "token": "0x6005d86",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51585752,
+    "pointer_slot_va": "0x7ffe9c8722d8",
+    "runtime_va": "0x7ffe9a68ae70",
+    "rva": "0xf4ae70",
+    "status": "mapped",
+    "code_preview_hex": "4889742420574883ec50803dcf3e450200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23941.c"
+  },
+  {
+    "class": "ExplossiveAction",
+    "name": "OnInitialize",
+    "method_definition_index": 23986,
+    "oldIndex": 23986,
+    "token": "0x6005db3",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51586112,
+    "pointer_slot_va": "0x7ffe9c872440",
+    "runtime_va": "0x7ffe9a68db00",
+    "rva": "0xf4db00",
+    "status": "mapped",
+    "code_preview_hex": "4056574883ec58803d5512450200488bfa488bf1755b488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "23986.c"
+  },
+  {
+    "class": "SleepTrapAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24112,
+    "oldIndex": 24112,
+    "token": "0x6005e31",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51587120,
+    "pointer_slot_va": "0x7ffe9c872830",
+    "runtime_va": "0x7ffe9a699b70",
+    "rva": "0xf59b70",
+    "status": "mapped",
+    "code_preview_hex": "4889742420574883ec50803d1a52440200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24112.c"
+  },
+  {
+    "class": "SteelTrapAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24140,
+    "oldIndex": 24140,
+    "token": "0x6005e4d",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51587344,
+    "pointer_slot_va": "0x7ffe9c872910",
+    "runtime_va": "0x7ffe9a69b6e0",
+    "rva": "0xf5b6e0",
+    "status": "mapped",
+    "code_preview_hex": "4889742420574883ec50803db636440200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24140.c"
+  },
+  {
+    "class": "BindStrikeAction",
+    "name": "PossibilityAbnormalState",
+    "method_definition_index": 24397,
+    "oldIndex": 24397,
+    "token": "0x6005f4e",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "status",
+        "type_index": 22777,
+        "exact_byval_name": "PlayerStatusBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 9909
+    },
+    "pointer_slot_offset": 51589400,
+    "pointer_slot_va": "0x7ffe9c873118",
+    "runtime_va": "0x7ffe9a69fd90",
+    "rva": "0xf5fd90",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20803d66f0430200488bda7513488d0d2f0127",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24397.c"
+  },
+  {
+    "class": "BindStrikeAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 24395,
+    "oldIndex": 24395,
+    "token": "0x6005f4c",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51589384,
+    "pointer_slot_va": "0x7ffe9c873108",
+    "runtime_va": "0x7ffe9a69fe40",
+    "rva": "0xf5fe40",
+    "status": "mapped",
+    "code_preview_hex": "40565741564881ec80000000803dafef4302004d8bf0488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24395.c"
+  },
+  {
+    "class": "EtherFlareAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24563,
+    "oldIndex": 24563,
+    "token": "0x6005ff4",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51590728,
+    "pointer_slot_va": "0x7ffe9c873648",
+    "runtime_va": "0x7ffe9a6a9500",
+    "rva": "0xf69500",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec20803d2d59430200488bda488bf975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24563.c"
+  },
+  {
+    "class": "SonicThrustAction",
+    "name": "ActionStart",
+    "method_definition_index": 24479,
+    "oldIndex": 24479,
+    "token": "0x6005fa0",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51590056,
+    "pointer_slot_va": "0x7ffe9c8733a8",
+    "runtime_va": "0x7ffe9a6aec30",
+    "rva": "0xf6ec30",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec20803dd601430200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24479.c"
+  },
+  {
+    "class": "SonicThrustAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 24481,
+    "oldIndex": 24481,
+    "token": "0x6005fa2",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51590072,
+    "pointer_slot_va": "0x7ffe9c8733b8",
+    "runtime_va": "0x7ffe9a6af210",
+    "rva": "0xf6f210",
+    "status": "mapped",
+    "code_preview_hex": "405556415441564883ec68803dfcfb420200498be80f2974",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24481.c"
+  },
+  {
+    "class": "MagicImpactAction",
+    "name": "OnInitialize",
+    "method_definition_index": 24861,
+    "oldIndex": 24861,
+    "token": "0x600611e",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51593112,
+    "pointer_slot_va": "0x7ffe9c873f98",
+    "runtime_va": "0x7ffe9a6c3d60",
+    "rva": "0xf83d60",
+    "status": "mapped",
+    "code_preview_hex": "48895c24184889742420574883ec30803d3fb1410200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "24861.c"
+  },
+  {
+    "class": "ThreeStageThrustAction",
+    "name": "OnInitialize",
+    "method_definition_index": 25795,
+    "oldIndex": 25795,
+    "token": "0x60064c4",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51600584,
+    "pointer_slot_va": "0x7ffe9c875cc8",
+    "runtime_va": "0x7ffe9a71eb90",
+    "rva": "0xfdeb90",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803d15053c0200488bda488bf975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "25795.c"
+  },
+  {
+    "class": "RapidAquaVortexAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26280,
+    "oldIndex": 26280,
+    "token": "0x60066a9",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51604464,
+    "pointer_slot_va": "0x7ffe9c876bf0",
+    "runtime_va": "0x7ffe9a730200",
+    "rva": "0xff0200",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742410574883ec40803d48ef3a0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26280.c"
+  },
+  {
+    "class": "WaterStyleAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26367,
+    "oldIndex": 26367,
+    "token": "0x6006700",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51605160,
+    "pointer_slot_va": "0x7ffe9c876ea8",
+    "runtime_va": "0x7ffe9a736400",
+    "rva": "0xff6400",
+    "status": "mapped",
+    "code_preview_hex": "48895c24104889742418574883ec30803d668d3a0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26367.c"
+  },
+  {
+    "class": "ConquesterAction",
+    "name": "OnInitialize",
+    "method_definition_index": 26884,
+    "oldIndex": 26884,
+    "token": "0x6006905",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51609296,
+    "pointer_slot_va": "0x7ffe9c877ed0",
+    "runtime_va": "0x7ffe9a73c8f0",
+    "rva": "0xffc8f0",
+    "status": "mapped",
+    "code_preview_hex": "48896c24104889742418574883ec30803d26293a0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "26884.c"
+  },
+  {
+    "class": "ParabolaCannonAction",
+    "name": "ActionStart",
+    "method_definition_index": 27067,
+    "oldIndex": 27067,
+    "token": "0x60069bc",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51610760,
+    "pointer_slot_va": "0x7ffe9c878488",
+    "runtime_va": "0x7ffe9a757320",
+    "rva": "0x1017320",
+    "status": "mapped",
+    "code_preview_hex": "48897c24205541564157488bec4881ec80000000803d317f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27067.c"
+  },
+  {
+    "class": "AutoDeviceAttackAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 27322,
+    "oldIndex": 27322,
+    "token": "0x6006abb",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51612800,
+    "pointer_slot_va": "0x7ffe9c878c80",
+    "runtime_va": "0x7ffe9a7640e0",
+    "rva": "0x10240e0",
+    "status": "mapped",
+    "code_preview_hex": "40535657415541564881ec90000000803dceb13702004d8b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27322.c"
+  },
+  {
+    "class": "MeteorStrikeAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 27742,
+    "oldIndex": 27742,
+    "token": "0x6006c5f",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51616160,
+    "pointer_slot_va": "0x7ffe9c8799a0",
+    "runtime_va": "0x7ffe9a771810",
+    "rva": "0x1031810",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec20803d29db360200488bf2488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27742.c"
+  },
+  {
+    "class": "MeteorStrikeAction",
+    "name": "InitializeHighFamilia",
+    "method_definition_index": 27752,
+    "oldIndex": 27752,
+    "token": "0x6006c69",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51616240,
+    "pointer_slot_va": "0x7ffe9c8799f0",
+    "runtime_va": "0x7ffe9a772340",
+    "rva": "0x1032340",
+    "status": "mapped",
+    "code_preview_hex": "48895c240848896c24104889742418574883ec40803df6cf",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "27752.c"
+  },
+  {
+    "class": "GemCartHealStockpileBuf",
+    "name": "Updata",
+    "method_definition_index": 28556,
+    "oldIndex": 28556,
+    "token": "0x6006f8d",
+    "method_flags_raw": "0xc6",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51622672,
+    "pointer_slot_va": "0x7ffe9c87b310",
+    "runtime_va": "0x7ffe9a78d2e0",
+    "rva": "0x104d2e0",
+    "status": "mapped",
+    "code_preview_hex": "40534883ec20488bd9488b49284885c97441488b11488b82",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "28556.c"
+  },
+  {
+    "class": "HandlingerOfGodspeedBuf",
+    "name": "DamageFunction",
+    "method_definition_index": 28648,
+    "oldIndex": 28648,
+    "token": "0x6006fe9",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "damageData",
+        "type_index": 24594,
+        "exact_byval_name": "SkillDamageData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51623408,
+    "pointer_slot_va": "0x7ffe9c87b5f0",
+    "runtime_va": "0x7ffe9a78f490",
+    "rva": "0x104f490",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410488974241848897c242041564883ec20803d3a",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "28648.c"
+  },
+  {
+    "class": "CallGolemNormalAttackAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 30001,
+    "oldIndex": 30001,
+    "token": "0x6007532",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51634232,
+    "pointer_slot_va": "0x7ffe9c87e038",
+    "runtime_va": "0x7ffe9a7a9890",
+    "rva": "0x1069890",
+    "status": "mapped",
+    "code_preview_hex": "405556415441564157488d6c24c94881ec00010000803d06",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "30001.c"
+  },
+  {
+    "class": "FamiliaMeteorStrikeAction",
+    "name": "OnInitialize",
+    "method_definition_index": 29954,
+    "oldIndex": 29954,
+    "token": "0x6007503",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51633856,
+    "pointer_slot_va": "0x7ffe9c87dec0",
+    "runtime_va": "0x7ffe9a7ae880",
+    "rva": "0x106e880",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418574883ec30803d150c330200488bf948897424",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "29954.c"
+  },
+  {
+    "class": "HuntingOneNormalAttackAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 30094,
+    "oldIndex": 30094,
+    "token": "0x600758f",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51634976,
+    "pointer_slot_va": "0x7ffe9c87e320",
+    "runtime_va": "0x7ffe9a7b24f0",
+    "rva": "0x10724f0",
+    "status": "mapped",
+    "code_preview_hex": "405556415441554156488d6c24c94881ece0000000803dbd",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "30094.c"
+  },
+  {
+    "class": "ISwordMove",
+    "name": "CheckSwordMoveStart",
+    "method_definition_index": 30136,
+    "oldIndex": 30136,
+    "token": "0x60075b9",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "skill",
+        "type_index": 24538,
+        "exact_byval_name": "SkillActionBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51635312,
+    "pointer_slot_va": "0x7ffe9c87e470",
+    "runtime_va": "0x7ffe9a7b3a70",
+    "rva": "0x1073a70",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec20803d4dba320200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "30136.c"
+  },
+  {
+    "class": "AvoidActionManager",
+    "name": "CheckAvoidEquip",
+    "method_definition_index": 2397,
+    "oldIndex": 2397,
+    "token": "0x600095e",
+    "method_flags_raw": "0x86",
+    "parameters": [],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51413400,
+    "pointer_slot_va": "0x7ffe9c848198",
+    "runtime_va": "0x7ffe9a7d5880",
+    "rva": "0x1095880",
+    "status": "mapped",
+    "code_preview_hex": "40574883ec20803d4a9d300200488bf97513488d0def0016",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "2397.c"
+  },
+  {
+    "class": "AegisAction",
+    "name": "ActionHit",
+    "method_definition_index": 31439,
+    "oldIndex": 31439,
+    "token": "0x6007ad0",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51645736,
+    "pointer_slot_va": "0x7ffe9c880d28",
+    "runtime_va": "0x7ffe9a801d00",
+    "rva": "0x10c1d00",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec20803dfad92d0200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "31439.c"
+  },
+  {
+    "class": "BreathingMethodAction",
+    "name": "OnInitialize",
+    "method_definition_index": 31608,
+    "oldIndex": 31608,
+    "token": "0x6007b79",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51647088,
+    "pointer_slot_va": "0x7ffe9c881270",
+    "runtime_va": "0x7ffe9a8081e0",
+    "rva": "0x10c81e0",
+    "status": "mapped",
+    "code_preview_hex": "4889742410574883ec20803d44752d0200488bfa488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "31608.c"
+  },
+  {
+    "class": "SummonDemonicAttackAction",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 31397,
+    "oldIndex": 31397,
+    "token": "0x6007aa6",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51645400,
+    "pointer_slot_va": "0x7ffe9c880bd8",
+    "runtime_va": "0x7ffe9a813800",
+    "rva": "0x10d3800",
+    "status": "mapped",
+    "code_preview_hex": "405556415441554156488d6c24c94881ecf0000000803de2",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "31397.c"
+  },
+  {
+    "class": "SummonDemonicSpecialAttack",
+    "name": "calcPlayerToMobDamage",
+    "method_definition_index": 31424,
+    "oldIndex": 31424,
+    "token": "0x6007ac1",
+    "method_flags_raw": "0xc4",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      },
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51645616,
+    "pointer_slot_va": "0x7ffe9c880cb0",
+    "runtime_va": "0x7ffe9a8153a0",
+    "rva": "0x10d53a0",
+    "status": "mapped",
+    "code_preview_hex": "405556415441554156488d6c24c94881ecf0000000803d49",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "31424.c"
+  },
+  {
+    "class": "HideAttackAction",
+    "name": "ActionHit",
+    "method_definition_index": 32208,
+    "oldIndex": 32208,
+    "token": "0x6007dd1",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51651888,
+    "pointer_slot_va": "0x7ffe9c882530",
+    "runtime_va": "0x7ffe9a81f590",
+    "rva": "0x10df590",
+    "status": "mapped",
+    "code_preview_hex": "48895c241848896c2420564883ec20803d36022c0200488b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32208.c"
+  },
+  {
+    "class": "MindimageSenjuSupportAction",
+    "name": "ActionHit",
+    "method_definition_index": 32643,
+    "oldIndex": 32643,
+    "token": "0x6007f84",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51655368,
+    "pointer_slot_va": "0x7ffe9c8832c8",
+    "runtime_va": "0x7ffe9a82c5b0",
+    "rva": "0x10ec5b0",
+    "status": "mapped",
+    "code_preview_hex": "40535556574883ec68803da5322b0200488bda488be90f85",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32643.c"
+  },
+  {
+    "class": "ProtectionAction",
+    "name": "ActionHit",
+    "method_definition_index": 32809,
+    "oldIndex": 32809,
+    "token": "0x600802a",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51656696,
+    "pointer_slot_va": "0x7ffe9c8837f8",
+    "runtime_va": "0x7ffe9a833c90",
+    "rva": "0x10f3c90",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410564883ec20803df0bb2a0200488bda488bf175",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32809.c"
+  },
+  {
+    "class": "QuickLoaderAction",
+    "name": "ActionHit",
+    "method_definition_index": 32860,
+    "oldIndex": 32860,
+    "token": "0x600805d",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51657104,
+    "pointer_slot_va": "0x7ffe9c883990",
+    "runtime_va": "0x7ffe9a834bc0",
+    "rva": "0x10f4bc0",
+    "status": "mapped",
+    "code_preview_hex": "48896c2410488974241848897c242041564883ec30803dc4",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "32860.c"
+  },
+  {
+    "class": "WarCryAction",
+    "name": "ActionPreparation",
+    "method_definition_index": 33279,
+    "oldIndex": 33279,
+    "token": "0x6008200",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51660456,
+    "pointer_slot_va": "0x7ffe9c8846a8",
+    "runtime_va": "0x7ffe9a846850",
+    "rva": "0x1106850",
+    "status": "mapped",
+    "code_preview_hex": "48895c2410574883ec20803db390290200488bfa488bd975",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "33279.c"
+  },
+  {
+    "class": "WeirdnessOfGodAction",
+    "name": "ActionStart",
+    "method_definition_index": 33295,
+    "oldIndex": 33295,
+    "token": "0x6008210",
+    "method_flags_raw": "0xc6",
+    "parameters": [
+      {
+        "name": "actarAction",
+        "type_index": 13454,
+        "exact_byval_name": "CharacterActionManagerBase"
+      },
+      {
+        "name": "target",
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51660584,
+    "pointer_slot_va": "0x7ffe9c884728",
+    "runtime_va": "0x7ffe9a8471c0",
+    "rva": "0x11071c0",
+    "status": "mapped",
+    "code_preview_hex": "48895c24084889742418574883ec20803d4187290200498b",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "33295.c"
+  },
+  {
+    "class": "SkillActionBase",
+    "name": "AddTemporarySkillBuffer",
+    "method_definition_index": 2910,
+    "oldIndex": 2910,
+    "token": "0x6000b5f",
+    "method_flags_raw": "0x84",
+    "parameters": [
+      {
+        "name": "playerAction",
+        "type_index": 22721,
+        "exact_byval_name": "PlayerActionManagerBase"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51417504,
+    "pointer_slot_va": "0x7ffe9c8491a0",
+    "runtime_va": "0x7ffe9a8fbeb0",
+    "rva": "0x11bbeb0",
+    "status": "mapped",
+    "code_preview_hex": "48894c24085341544155415641574883ec40803d0c401e02",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "2910.c"
+  },
+  {
+    "class": "PhotonListener",
+    "name": "OnActionPartyChangeHateMine",
+    "method_definition_index": 43640,
+    "oldIndex": 43640,
+    "token": "0x600aa79",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "game",
+        "type_index": 16326,
+        "exact_byval_name": "Toram.Client.Game"
+      },
+      {
+        "name": "archetype",
+        "type_index": 11823,
+        "exact_byval_name": "Toram.Client.Avatar.Archetype"
+      },
+      {
+        "name": "mobList",
+        "type_index": 10478
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51743344,
+    "pointer_slot_va": "0x7ffe9c898a70",
+    "runtime_va": "0x7ffe9aa97830",
+    "rva": "0x1357830",
+    "status": "mapped",
+    "code_preview_hex": "405641564883ec38803d3b91040200498bf14d8bf00f85a3",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "43640.c"
+  },
+  {
+    "class": "PhotonListener",
+    "name": "OnActionRoomChangeHateMine",
+    "method_definition_index": 43647,
+    "oldIndex": 43647,
+    "token": "0x600aa80",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "game",
+        "type_index": 16326,
+        "exact_byval_name": "Toram.Client.Game"
+      },
+      {
+        "name": "archetype",
+        "type_index": 11823,
+        "exact_byval_name": "Toram.Client.Avatar.Archetype"
+      },
+      {
+        "name": "mobList",
+        "type_index": 10478
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51743400,
+    "pointer_slot_va": "0x7ffe9c898aa8",
+    "runtime_va": "0x7ffe9aa98620",
+    "rva": "0x1358620",
+    "status": "mapped",
+    "code_preview_hex": "48895c241048896c241856574155415641574883ec20803d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "43647.c"
+  },
+  {
+    "class": "ReceiveSupportResult",
+    "name": "OnEventPlayerSupport",
+    "method_definition_index": 44618,
+    "oldIndex": 44618,
+    "token": "0x600ae4b",
+    "method_flags_raw": "0x96",
+    "parameters": [
+      {
+        "name": "skillId",
+        "type_index": 18778,
+        "exact_byval_name": "System.Int16"
+      },
+      {
+        "name": "skillLv",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "targetArchetypeType",
+        "type_index": 13016,
+        "exact_byval_name": "System.Byte"
+      },
+      {
+        "name": "targetArchetypeId",
+        "type_index": 18795,
+        "exact_byval_name": "System.Int32"
+      },
+      {
+        "name": "supportData",
+        "type_index": 25563,
+        "exact_byval_name": "Toram.Common.Actions.SupportResultData"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51751168,
+    "pointer_slot_va": "0x7ffe9c89a900",
+    "runtime_va": "0x7ffe9aae2500",
+    "rva": "0x13a2500",
+    "status": "mapped",
+    "code_preview_hex": "44894c242044884424188854241055535641544155415641",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "44618.c"
+  }
+]

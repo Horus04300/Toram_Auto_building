@@ -1,0 +1,106 @@
+[
+  {
+    "class": "AutoMemberAITactical",
+    "name": ".ctor",
+    "method_definition_index": 3631,
+    "oldIndex": 3631,
+    "token": "0x6000e30",
+    "method_flags_raw": "0x1886",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51423272,
+    "pointer_slot_va": "0x7ffe9c84a828",
+    "runtime_va": "0x7ffe9a9e3080",
+    "rva": "0x12a3080",
+    "status": "mapped",
+    "code_preview_hex": "48895c2408574883ec20803d4bd40f0200488bf9751f488d",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "3631.c"
+  },
+  {
+    "class": "PlayerDataManager",
+    "name": "OnAbnormalDamage",
+    "method_definition_index": 13446,
+    "oldIndex": 13446,
+    "token": "0x6003487",
+    "method_flags_raw": "0x1e6",
+    "parameters": [
+      {
+        "name": "response",
+        "type_index": 11486,
+        "exact_byval_name": "Toram.Common.Events.Battle.AbnormalDamageEvent"
+      }
+    ],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51501792,
+    "pointer_slot_va": "0x7ffe9c85dae0",
+    "runtime_va": "0x7ffe9a47c8b0",
+    "rva": "0xd3c8b0",
+    "status": "mapped",
+    "code_preview_hex": "40565741574883ec70803d3915660200488bf2488bf9754f",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "13446.c"
+  },
+  {
+    "class": "PlayerAttackBase",
+    "name": "CheckAbnormalDamageIncrease",
+    "method_definition_index": 14329,
+    "oldIndex": 14329,
+    "token": "0x60037fa",
+    "method_flags_raw": "0x86",
+    "parameters": [
+      {
+        "name": "mobAction",
+        "type_index": 20513,
+        "exact_byval_name": "MobActionManagerBase"
+      },
+      {
+        "name": "rate",
+        "type_index": 9355
+      }
+    ],
+    "return_type": {
+      "type_index": 12864,
+      "exact_byval_name": "System.Boolean"
+    },
+    "pointer_slot_offset": 51508856,
+    "pointer_slot_va": "0x7ffe9c85f678",
+    "runtime_va": "0x7ffe9a4ac1c0",
+    "rva": "0xd6c1c0",
+    "status": "mapped",
+    "code_preview_hex": "48895c2418564883ec20803d0b1d630200498bf0488bda75",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "14329.c"
+  },
+  {
+    "class": "SkillBufferManager",
+    "name": "OnAbnormalDamaged",
+    "method_definition_index": 30952,
+    "oldIndex": 30952,
+    "token": "0x60078e9",
+    "method_flags_raw": "0x86",
+    "parameters": [],
+    "return_type": {
+      "type_index": 29201,
+      "exact_byval_name": "System.Void"
+    },
+    "pointer_slot_offset": 51641840,
+    "pointer_slot_va": "0x7ffe9c87fdf0",
+    "runtime_va": "0x7ffe9a7c9b90",
+    "rva": "0x1089b90",
+    "status": "mapped",
+    "code_preview_hex": "48895c241048894c2408565741564881ec800000004c8bf1",
+    "decompileCompleted": true,
+    "error": "",
+    "pseudocodeFile": "30952.c"
+  }
+]

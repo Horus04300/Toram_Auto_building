@@ -1,0 +1,937 @@
+{
+  "image_base": "0x7ffe99740000",
+  "snapshotSha256": "49cce5c641aa2077c0395f24640f87ec9925d8919bbfb137638d65b7c6e8eb0d",
+  "methods": [
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "get_ItemData",
+      "method_definition_index": 22035,
+      "oldIndex": 22035,
+      "token": "0x6005614",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26346,
+        "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+      },
+      "pointer_slot_offset": 51570504,
+      "pointer_slot_va": "0x7ffe9c86e748",
+      "runtime_va": "0x7ffe99b27550",
+      "rva": "0x3e7550",
+      "status": "mapped",
+      "code_preview_hex": "488b81e0000000c3ccccccccccccccccf30f108198000000"
+    },
+    {
+      "class": "GameManager",
+      "name": "CheckTreasureHuntRoom",
+      "method_definition_index": 35645,
+      "oldIndex": 35645,
+      "token": "0x6008b3e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fieldId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679384,
+      "pointer_slot_va": "0x7ffe9c889098",
+      "runtime_va": "0x7ffe9a8a7180",
+      "rva": "0x1167180",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d5a8b"
+    },
+    {
+      "class": "<WaitRoomData>d__87",
+      "name": "MoveNext",
+      "method_definition_index": 54287,
+      "oldIndex": 54287,
+      "token": "0x600d410",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51828520,
+      "pointer_slot_va": "0x7ffe9c8ad728",
+      "runtime_va": "0x7ffe99c6bdc0",
+      "rva": "0x52bdc0",
+      "status": "mapped",
+      "code_preview_hex": "40565741544883ec50803dd1ede60200488bf10f85eb0000"
+    },
+    {
+      "class": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoomResponse",
+      "name": "get_ItemData",
+      "method_definition_index": 95996,
+      "oldIndex": 95996,
+      "token": "0x6001e11",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26346,
+        "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+      },
+      "pointer_slot_offset": 53811312,
+      "pointer_slot_va": "0x7ffe9ca91870",
+      "runtime_va": "0x7ffe999d22d0",
+      "rva": "0x2922d0",
+      "status": "mapped",
+      "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_DRankItemList",
+      "method_definition_index": 91211,
+      "oldIndex": 91211,
+      "token": "0x6000b60",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773032,
+      "pointer_slot_va": "0x7ffe9ca882e8",
+      "runtime_va": "0x7ffe999c3070",
+      "rva": "0x283070",
+      "status": "mapped",
+      "code_preview_hex": "488b4120c3ccccccccccccccccccccccf20f104128c3cccc"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_CRankItemList",
+      "method_definition_index": 91213,
+      "oldIndex": 91213,
+      "token": "0x6000b62",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773048,
+      "pointer_slot_va": "0x7ffe9ca882f8",
+      "runtime_va": "0x7ffe999c33c0",
+      "rva": "0x2833c0",
+      "status": "mapped",
+      "code_preview_hex": "488b4128c3cccccccccccccccccccccc4883c128488911e9"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_BRankItemList",
+      "method_definition_index": 91215,
+      "oldIndex": 91215,
+      "token": "0x6000b64",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773064,
+      "pointer_slot_va": "0x7ffe9ca88308",
+      "runtime_va": "0x7ffe999d1530",
+      "rva": "0x291530",
+      "status": "mapped",
+      "code_preview_hex": "488b4130c3cccccccccccccccccccccc0fb64121c3cccccc"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_ARankItemList",
+      "method_definition_index": 91217,
+      "oldIndex": 91217,
+      "token": "0x6000b66",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773080,
+      "pointer_slot_va": "0x7ffe9ca88318",
+      "runtime_va": "0x7ffe999d2260",
+      "rva": "0x292260",
+      "status": "mapped",
+      "code_preview_hex": "488b4138c3cccccccccccccccccccccc4883ec28803d4577"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_SRankItemList",
+      "method_definition_index": 91219,
+      "oldIndex": 91219,
+      "token": "0x6000b68",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773096,
+      "pointer_slot_va": "0x7ffe9ca88328",
+      "runtime_va": "0x7ffe999d22d0",
+      "rva": "0x2922d0",
+      "status": "mapped",
+      "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c"
+    }
+  ],
+  "helperAddresses": [
+    "0x7ffe99982110",
+    "0x7ffe998e0270",
+    "0x7ffe9996c900"
+  ],
+  "callees": [
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "get_ItemData",
+      "method_definition_index": 22035,
+      "oldIndex": 22035,
+      "token": "0x6005614",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26346,
+        "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+      },
+      "pointer_slot_offset": 51570504,
+      "pointer_slot_va": "0x7ffe9c86e748",
+      "runtime_va": "0x7ffe99b27550",
+      "rva": "0x3e7550",
+      "status": "mapped",
+      "code_preview_hex": "488b81e0000000c3ccccccccccccccccf30f108198000000"
+    },
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "get_TreasureHuntPanelManager",
+      "method_definition_index": 22036,
+      "oldIndex": 22036,
+      "token": "0x6005615",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26328,
+        "exact_byval_name": "TreasureHuntManager"
+      },
+      "pointer_slot_offset": 51570512,
+      "pointer_slot_va": "0x7ffe9c86e750",
+      "runtime_va": "0x7ffe9a628ba0",
+      "rva": "0xee8ba0",
+      "status": "mapped",
+      "code_preview_hex": "40574883ec20803dd55e4b0200488bf97513488d0d773434"
+    },
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "PlayMobDropBox",
+      "method_definition_index": 22076,
+      "oldIndex": 22076,
+      "token": "0x600563d",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "ranks",
+          "type_index": 9988,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51570832,
+      "pointer_slot_va": "0x7ffe9c86e890",
+      "runtime_va": "0x7ffe9a626fc0",
+      "rva": "0xee6fc0",
+      "status": "mapped",
+      "code_preview_hex": "4055564881ec28010000803dc97a4b0200488bf2488be975"
+    },
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "OnTreasureBoxDropEvent",
+      "method_definition_index": 22077,
+      "oldIndex": 22077,
+      "token": "0x600563e",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "takePlayerUid",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "eventType",
+          "type_index": 25697,
+          "exact_byval_name": "TakeEventType"
+        },
+        {
+          "name": "param",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51570840,
+      "pointer_slot_va": "0x7ffe9c86e898",
+      "runtime_va": "0x7ffe9a625e40",
+      "rva": "0xee5e40",
+      "status": "mapped",
+      "code_preview_hex": "48895c24205541554157488d6c24c14881eca0000000803d"
+    },
+    {
+      "class": "GameManager",
+      "name": "GmTreasureHuntTrialPointMax",
+      "method_definition_index": 35280,
+      "oldIndex": 35280,
+      "token": "0x60089d1",
+      "method_flags_raw": "0x86",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51676464,
+      "pointer_slot_va": "0x7ffe9c888530",
+      "runtime_va": "0x7ffe9a8b5ac0",
+      "rva": "0x1175ac0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d08a1220200751f488d0ddebe"
+    },
+    {
+      "class": "GameManager",
+      "name": "GmFixDropItemRP",
+      "method_definition_index": 35327,
+      "oldIndex": 35327,
+      "token": "0x6008a00",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fixRP",
+          "type_index": 18778,
+          "exact_byval_name": "System.Int16"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51676840,
+      "pointer_slot_va": "0x7ffe9c8886a8",
+      "runtime_va": "0x7ffe9a8b30f0",
+      "rva": "0x11730f0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2408574883ec20803d07cb2202000fb7fa751f488d"
+    },
+    {
+      "class": "GameManager",
+      "name": "CheckTreasureHuntRoom",
+      "method_definition_index": 35645,
+      "oldIndex": 35645,
+      "token": "0x6008b3e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fieldId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679384,
+      "pointer_slot_va": "0x7ffe9c889098",
+      "runtime_va": "0x7ffe9a8a7180",
+      "rva": "0x1167180",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d5a8b"
+    },
+    {
+      "class": "GameManager",
+      "name": "ReceiveCheckTreasureHuntRoom",
+      "method_definition_index": 35646,
+      "oldIndex": 35646,
+      "token": "0x6008b3f",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "response",
+          "type_index": 13537,
+          "exact_byval_name": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoomResponse"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679392,
+      "pointer_slot_va": "0x7ffe9c8890a0",
+      "runtime_va": "0x7ffe9a8c9320",
+      "rva": "0x1189320",
+      "status": "mapped",
+      "code_preview_hex": "48896c2418564883ec20803dc569210200488bf2488be975"
+    },
+    {
+      "class": "GameManager",
+      "name": "TreasureHuntRoomLobbyBattleStart",
+      "method_definition_index": 35678,
+      "oldIndex": 35678,
+      "token": "0x6008b5f",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusList",
+          "type_index": 9988,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679648,
+      "pointer_slot_va": "0x7ffe9c8891a0",
+      "runtime_va": "0x7ffe9a8d8740",
+      "rva": "0x1198740",
+      "status": "mapped",
+      "code_preview_hex": "488974242041564883ec50803dc0752002004c8bf2488bf1"
+    },
+    {
+      "class": "GameManager",
+      "name": "TreasureHuntRoomLobbyBattleStart_Plus",
+      "method_definition_index": 35679,
+      "oldIndex": 35679,
+      "token": "0x6008b60",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "bonusList",
+          "type_index": 9988,
+          "exact_byval_name": null
+        },
+        {
+          "name": "supportItems",
+          "type_index": 10344,
+          "exact_byval_name": null
+        },
+        {
+          "name": "supportOrbItems",
+          "type_index": 10344,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679656,
+      "pointer_slot_va": "0x7ffe9c8891a8",
+      "runtime_va": "0x7ffe9a8d85c0",
+      "rva": "0x11985c0",
+      "status": "mapped",
+      "code_preview_hex": "48897424204154415641574883ec60803d3d772002004d8b"
+    },
+    {
+      "class": "GameManager",
+      "name": "SetTreasureHuntBonus",
+      "method_definition_index": 35990,
+      "oldIndex": 35990,
+      "token": "0x6008c97",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "supportData",
+          "type_index": 10679,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51682144,
+      "pointer_slot_va": "0x7ffe9c889b60",
+      "runtime_va": "0x7ffe9a8d5410",
+      "rva": "0x1195410",
+      "status": "mapped",
+      "code_preview_hex": "4885d2746c48896c2418574883ec2048895c2430488bfa33"
+    },
+    {
+      "class": "GameManager",
+      "name": "OpenTreasureHuntBox",
+      "method_definition_index": 35991,
+      "oldIndex": 35991,
+      "token": "0x6008c98",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "data",
+          "type_index": 26353,
+          "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntTreasureData"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51682152,
+      "pointer_slot_va": "0x7ffe9c889b68",
+      "runtime_va": "0x7ffe9a8c4ad0",
+      "rva": "0x1184ad0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec20803d1fb3210200488b"
+    },
+    {
+      "class": "GameManager",
+      "name": "ReceiveOpenTreasureHuntBox",
+      "method_definition_index": 35992,
+      "oldIndex": 35992,
+      "token": "0x6008c99",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "localId",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51682160,
+      "pointer_slot_va": "0x7ffe9c889b70",
+      "runtime_va": "0x7ffe9a8cd270",
+      "rva": "0x118d270",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d892b2102000fb6da751f488d0d7f9308"
+    },
+    {
+      "class": "GameManager",
+      "name": "UpdateTreasureHuntTrialPoint",
+      "method_definition_index": 35993,
+      "oldIndex": 35993,
+      "token": "0x6008c9a",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "trialPoint",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51682168,
+      "pointer_slot_va": "0x7ffe9c889b78",
+      "runtime_va": "0x7ffe9a8da9c0",
+      "rva": "0x119a9c0",
+      "status": "mapped",
+      "code_preview_hex": "40534883ec20803d3a542002000fb6da751f488d0da7aa07"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "OnDrop",
+      "method_definition_index": 54222,
+      "oldIndex": 54222,
+      "token": "0x600d3cf",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51828000,
+      "pointer_slot_va": "0x7ffe9c8ad520",
+      "runtime_va": "0x7ffe99c722d0",
+      "rva": "0x5322d0",
+      "status": "mapped",
+      "code_preview_hex": "4533c0418d5001e9c4dcffffcccccccc40534883ec20803d"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "SetDropItemList",
+      "method_definition_index": 54233,
+      "oldIndex": 54233,
+      "token": "0x600d3da",
+      "method_flags_raw": "0x81",
+      "parameters": [],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51828088,
+      "pointer_slot_va": "0x7ffe9c8ad578",
+      "runtime_va": "0x7ffe99c72ae0",
+      "rva": "0x532ae0",
+      "status": "mapped",
+      "code_preview_hex": "48895c2410574883ec50488bd9488b89f80000004885c90f"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "DropCategoryBox",
+      "method_definition_index": 54234,
+      "oldIndex": 54234,
+      "token": "0x600d3db",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "y",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "rank",
+          "type_index": 26356,
+          "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntTreasureRankType"
+        },
+        {
+          "name": "rewardItem",
+          "type_index": 10652,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "pointer_slot_offset": 51828096,
+      "pointer_slot_va": "0x7ffe9c8ad580",
+      "runtime_va": "0x7ffe99c70ed0",
+      "rva": "0x530ed0",
+      "status": "mapped",
+      "code_preview_hex": "40565741564883ec60803dac9ce602004d8bf10f29742450"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "AddDropCategoryButton",
+      "method_definition_index": 54235,
+      "oldIndex": 54235,
+      "token": "0x600d3dc",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "y",
+          "type_index": 24505,
+          "exact_byval_name": "System.Single"
+        },
+        {
+          "name": "rank",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "itemNum",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 24505,
+        "exact_byval_name": "System.Single"
+      },
+      "pointer_slot_offset": 51828104,
+      "pointer_slot_va": "0x7ffe9c8ad588",
+      "runtime_va": "0x7ffe99c6f680",
+      "rva": "0x52f680",
+      "status": "mapped",
+      "code_preview_hex": "4489442418535741564883ec60803df9b4e60200458bf10f"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "CreateDropElement",
+      "method_definition_index": 54236,
+      "oldIndex": 54236,
+      "token": "0x600d3dd",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "pos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "data",
+          "type_index": 23658,
+          "exact_byval_name": "Toram.Common.Items.RewardData"
+        }
+      ],
+      "return_type": {
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51828112,
+      "pointer_slot_va": "0x7ffe9c8ad590",
+      "runtime_va": "0x7ffe99c70660",
+      "rva": "0x530660",
+      "status": "mapped",
+      "code_preview_hex": "48895c24104889742418574883ec30803d18a5e60200498b"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "CreateDropCategoryElement",
+      "method_definition_index": 54237,
+      "oldIndex": 54237,
+      "token": "0x600d3de",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "pos",
+          "type_index": 29046,
+          "exact_byval_name": "UnityEngine.Vector3"
+        },
+        {
+          "name": "text",
+          "type_index": 25263,
+          "exact_byval_name": "System.String"
+        },
+        {
+          "name": "name",
+          "type_index": 25284,
+          "exact_byval_name": null
+        }
+      ],
+      "return_type": {
+        "type_index": 16370,
+        "exact_byval_name": "UnityEngine.GameObject"
+      },
+      "pointer_slot_offset": 51828120,
+      "pointer_slot_va": "0x7ffe9c8ad598",
+      "runtime_va": "0x7ffe99c704c0",
+      "rva": "0x5304c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec30803db4a6"
+    },
+    {
+      "class": "UITreasureHuntEnterManager",
+      "name": "GetDropItemName",
+      "method_definition_index": 54238,
+      "oldIndex": 54238,
+      "token": "0x600d3df",
+      "method_flags_raw": "0x81",
+      "parameters": [
+        {
+          "name": "type",
+          "type_index": 23665,
+          "exact_byval_name": "Toram.Common.Items.RewardType"
+        },
+        {
+          "name": "rewardValue",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        }
+      ],
+      "return_type": {
+        "type_index": 25263,
+        "exact_byval_name": "System.String"
+      },
+      "pointer_slot_offset": 51828128,
+      "pointer_slot_va": "0x7ffe9c8ad5a0",
+      "runtime_va": "0x7ffe99c711c0",
+      "rva": "0x5311c0",
+      "status": "mapped",
+      "code_preview_hex": "48895c24084889742418574883ec40803dba99e60200418b"
+    },
+    {
+      "class": "TreasureHuntRoomData",
+      "name": "get_ItemData",
+      "method_definition_index": 22035,
+      "oldIndex": 22035,
+      "token": "0x6005614",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26346,
+        "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+      },
+      "pointer_slot_offset": 51570504,
+      "pointer_slot_va": "0x7ffe9c86e748",
+      "runtime_va": "0x7ffe99b27550",
+      "rva": "0x3e7550",
+      "status": "mapped",
+      "code_preview_hex": "488b81e0000000c3ccccccccccccccccf30f108198000000"
+    },
+    {
+      "class": "GameManager",
+      "name": "CheckTreasureHuntRoom",
+      "method_definition_index": 35645,
+      "oldIndex": 35645,
+      "token": "0x6008b3e",
+      "method_flags_raw": "0x86",
+      "parameters": [
+        {
+          "name": "fieldId",
+          "type_index": 18795,
+          "exact_byval_name": "System.Int32"
+        },
+        {
+          "name": "roomId",
+          "type_index": 13016,
+          "exact_byval_name": "System.Byte"
+        }
+      ],
+      "return_type": {
+        "type_index": 29201,
+        "exact_byval_name": "System.Void"
+      },
+      "pointer_slot_offset": 51679384,
+      "pointer_slot_va": "0x7ffe9c889098",
+      "runtime_va": "0x7ffe9a8a7180",
+      "rva": "0x1167180",
+      "status": "mapped",
+      "code_preview_hex": "48895c240848896c24104889742418574883ec20803d5a8b"
+    },
+    {
+      "class": "<WaitRoomData>d__87",
+      "name": "MoveNext",
+      "method_definition_index": 54287,
+      "oldIndex": 54287,
+      "token": "0x600d410",
+      "method_flags_raw": "0x1e1",
+      "parameters": [],
+      "return_type": {
+        "type_index": 12864,
+        "exact_byval_name": "System.Boolean"
+      },
+      "pointer_slot_offset": 51828520,
+      "pointer_slot_va": "0x7ffe9c8ad728",
+      "runtime_va": "0x7ffe99c6bdc0",
+      "rva": "0x52bdc0",
+      "status": "mapped",
+      "code_preview_hex": "40565741544883ec50803dd1ede60200488bf10f85eb0000"
+    },
+    {
+      "class": "Toram.Common.Operations.Rooms.TreasureHunt.CheckTreasureHuntRoomResponse",
+      "name": "get_ItemData",
+      "method_definition_index": 95996,
+      "oldIndex": 95996,
+      "token": "0x6001e11",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 26346,
+        "exact_byval_name": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData"
+      },
+      "pointer_slot_offset": 53811312,
+      "pointer_slot_va": "0x7ffe9ca91870",
+      "runtime_va": "0x7ffe999d22d0",
+      "rva": "0x2922d0",
+      "status": "mapped",
+      "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_DRankItemList",
+      "method_definition_index": 91211,
+      "oldIndex": 91211,
+      "token": "0x6000b60",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773032,
+      "pointer_slot_va": "0x7ffe9ca882e8",
+      "runtime_va": "0x7ffe999c3070",
+      "rva": "0x283070",
+      "status": "mapped",
+      "code_preview_hex": "488b4120c3ccccccccccccccccccccccf20f104128c3cccc"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_CRankItemList",
+      "method_definition_index": 91213,
+      "oldIndex": 91213,
+      "token": "0x6000b62",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773048,
+      "pointer_slot_va": "0x7ffe9ca882f8",
+      "runtime_va": "0x7ffe999c33c0",
+      "rva": "0x2833c0",
+      "status": "mapped",
+      "code_preview_hex": "488b4128c3cccccccccccccccccccccc4883c128488911e9"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_BRankItemList",
+      "method_definition_index": 91215,
+      "oldIndex": 91215,
+      "token": "0x6000b64",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773064,
+      "pointer_slot_va": "0x7ffe9ca88308",
+      "runtime_va": "0x7ffe999d1530",
+      "rva": "0x291530",
+      "status": "mapped",
+      "code_preview_hex": "488b4130c3cccccccccccccccccccccc0fb64121c3cccccc"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_ARankItemList",
+      "method_definition_index": 91217,
+      "oldIndex": 91217,
+      "token": "0x6000b66",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773080,
+      "pointer_slot_va": "0x7ffe9ca88318",
+      "runtime_va": "0x7ffe999d2260",
+      "rva": "0x292260",
+      "status": "mapped",
+      "code_preview_hex": "488b4138c3cccccccccccccccccccccc4883ec28803d4577"
+    },
+    {
+      "class": "Toram.Common.Rooms.TreasureHunt.TreasureHuntRewardData",
+      "name": "get_SRankItemList",
+      "method_definition_index": 91219,
+      "oldIndex": 91219,
+      "token": "0x6000b68",
+      "method_flags_raw": "0x886",
+      "parameters": [],
+      "return_type": {
+        "type_index": 10652,
+        "exact_byval_name": null
+      },
+      "pointer_slot_offset": 53773096,
+      "pointer_slot_va": "0x7ffe9ca88328",
+      "runtime_va": "0x7ffe999d22d0",
+      "rva": "0x2922d0",
+      "status": "mapped",
+      "code_preview_hex": "488b4140c3cccccccccccccccccccccc48895c240848896c"
+    }
+  ]
+}

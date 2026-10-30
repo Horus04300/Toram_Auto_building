@@ -56,7 +56,7 @@ const session = {build:{character:{level:325,attributes:{STR:1,INT:1,VIT:1,AGI:1
   skillLevels:{Blade:{0:5,1:1},Magic:{0:1}},activeBuffs:{'Blade:0':{active:false,stacks:0}},externalOptions:[],myRoomFood:[null,null,null,null,null],guildFoodBuff:true,consumableBuffs:[buffs[0]],combo:[{skillId:'Blade:0',tag:'none',includeSpecialAttack:false,inputs:{}}]},
   scenario:{target:{bossLevel:330,bossDef:0,bossMdef:0,bossPhysResist:0,bossMagResist:0,bossCritResist:0},conditions:{},optimizationPreferences:{rangeOverride:null,requirements:{maxHp:null},bannedCrystas:[]}}};
 const record = (type, source = session, parameters = {}) => ({id:randomUUID(),type,name:INVENTORY_TYPES[type],schemaVersion:1,revision:1,provenance:[],data:captureObject(type,source,{slot:'mainWeapon',treeId:'Blade',consumableId:2000,...parameters})});
-for (const type of Object.keys(INVENTORY_TYPES)) {
+for (const type of Object.keys(INVENTORY_TYPES).filter(type => type !== 'registlet')) {
   const item=record(type), normalized=sections(item);
   validateInventoryObject(type,item.data,rules);
   assert.doesNotMatch(JSON.stringify(normalized.values),/"(?:schemaVersion|provenance)":/,'Composition values do not contain inventory envelopes or provenance');
@@ -144,7 +144,7 @@ try {
   assert.equal(store.list('alice',new URLSearchParams({type:'build'})).total,1);
   db.exec("ALTER TABLE users ADD COLUMN nickname TEXT NOT NULL DEFAULT '테스터';");
   const posts = createPostStore(db,store);
-  for (const type of Object.keys(INVENTORY_TYPES)) {
+  for (const type of Object.keys(INVENTORY_TYPES).filter(type => type !== 'registlet')) {
     const original = create(record(type));
     const published = posts.publish('alice',{title:original.name,source:{objectId:original.id,revision:1},release:{name:'첫 공개'}},randomUUID());
     const copied = posts.copy('bob',{postId:published.id,releaseNumber:1},randomUUID());

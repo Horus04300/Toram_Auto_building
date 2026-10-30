@@ -1,7 +1,9 @@
 import { EQUIPMENT_SLOTS } from './equipment-object.mjs';
 import { INVENTORY_TYPES, SECTION_TYPES, sections } from './inventory-objects.mjs';
+import {registletDescription} from './registlet-catalog.mjs';
 
 export function describeInventoryObject(record) {
+  if (record.type === 'registlet') {const item = record.data.selection; return [item.name,`Lv${item.level} / ${item.levelCap}`,registletDescription(item)];}
   const {values,origins}=sections(record);
   function unit(section,id,value,name) {
     if(section==='equipment') return [`${EQUIPMENT_SLOTS[id]} · ${value.type||INVENTORY_TYPES.equipment} · ATK ${value.attack??'—'} · 제련 ${value.refinement??'—'} · 옵션 ${value.options.slice(0,4).map(item=>item.key+' '+item.value).join(', ')||'없음'}${value.options.length>4 ? ' 외 '+(value.options.length-4)+'개' : ''}`];

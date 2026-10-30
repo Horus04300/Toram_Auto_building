@@ -5,6 +5,8 @@ import { join,resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createWebDevServer } from '../web-dev.mjs';
 import { createAccountServer } from '../../server/account-server.mjs';
+import { CRYSTA_ICONS } from '../../web/src/ui/equipment-icons.mjs';
+import { ITEM_MENU_ICON } from '../../web/src/ui/game-menu-icons.mjs';
 
 if (!process.env.CODEX_PLAYWRIGHT_PATH) throw new Error('Set CODEX_PLAYWRIGHT_PATH to the installed playwright module.');
 const {chromium} = createRequire(import.meta.url)(process.env.CODEX_PLAYWRIGHT_PATH);
@@ -23,8 +25,12 @@ try {
   const catalog = page.locator('#catalogWorkspace'), form = catalog.locator('.catalog-search'), action = name => catalog.locator(`[data-action="${name}"]`), dialog = catalog.locator('.catalog-navigation-dialog');
   const wait = async () => {await catalog.waitFor({state:'visible'}); await page.waitForFunction(() => !document.querySelector('#catalogWorkspace').hasAttribute('aria-busy'));};
   const snapshot = () => page.evaluate(() => JSON.stringify({saved:localStorage.getItem('toram.auto-build.application-state.v2'),calculatorReady:Boolean(window.ToramApp.calculatorReady),calculatorInputs:document.querySelectorAll('#calculatorWorkspace input').length}));
-  async function capture(name) {const path = join(directory,name + '.png'); await page.screenshot({path}); screenshots.push(path);}
+  async function capture(name) {const path = join(directory,name + '.png'); await catalog.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode()))); await page.screenshot({path}); screenshots.push(path);}
   await page.goto(origin + '/catalog'); await wait(); assert.match(await page.title(),/도감/);
+  for (const selector of ['[data-section="items"] img','[data-kind="all"] img']) {
+    assert.equal(await catalog.locator(selector).getAttribute('src'),ITEM_MENU_ICON);
+    await catalog.locator(selector).evaluate(image => image.decode());
+  }
   assert.equal(requests.filter(path => path.includes('/game-data/bosses/')).length,0,'Boss assets must stay lazy');
   assert.ok(await catalog.locator('.catalog-search').evaluate(element => element.parentElement.classList.contains('catalog-shelf')),'Search belongs inside the content area beside bookmarks');
   const majorRail = await catalog.locator('.catalog-major-rail').boundingBox(), kindRail = await catalog.locator('.catalog-kind-rail').boundingBox(), searchBar = await form.boundingBox();
@@ -35,6 +41,7 @@ try {
   const open = async kind => {await catalog.locator(`[data-kind="${kind}"]`).click(); await dialog.waitFor({state:'visible'});};
   await open('weapons');
   assert.equal(await dialog.locator('[data-subcategory]').count(),14,'One list covers main and sub weapons plus all');
+  assert.equal(await dialog.locator('[data-subcategory] img').count(),14,'All weapon categories use game icons');
   await capture('weapon-categories');
   await page.keyboard.press('Escape'); await dialog.waitFor({state:'hidden'});
   assert.ok(await catalog.locator('[data-kind="weapons"]').evaluate(element => element === document.activeElement));
@@ -48,17 +55,35 @@ try {
     await open('weapons'); await dialog.locator(`[data-subcategory="${typeId}"]`).click(); await wait();
     assert.equal(new URL(page.url()).searchParams.get('subcategory'),String(typeId));
     assert.ok((await catalog.locator('.catalog-count').innerText()).startsWith(Object.values(weaponItems).filter(item => item.typeId === typeId).length.toLocaleString('ko-KR') + '개'));
+    const icons = catalog.locator('.catalog-list .equipment-icon');
+    assert.equal(await icons.count(),await catalog.locator('[data-entry-id]').count());
+    await icons.evaluateAll(images => Promise.all(images.map(image => image.decode())));
+    await catalog.locator('[data-entry-id]').first().click(); await wait();
+    assert.equal(await catalog.locator('.catalog-name .equipment-icon').getAttribute('src'),await icons.first().getAttribute('src'),'List/detail use the same equipment type icon');
   }
   await page.reload(); await wait(); assert.equal(new URL(page.url()).searchParams.get('subcategory'),'8');
   await open('crystas');
   assert.deepEqual(await dialog.locator('[data-subcategory]').allTextContents(),['전체 크리스타','공용','무기','몸장비','추가장비','특수장비']);
+  assert.equal(await catalog.locator('[data-kind="crystas"] img').getAttribute('src'),CRYSTA_ICONS.all);
+  assert.deepEqual(await dialog.locator('[data-subcategory] img').evaluateAll(images => images.map(image => image.getAttribute('src'))),['all','노말','무기','방어구','추가','특수'].map(category => CRYSTA_ICONS[category]));
   await capture('crysta-categories');
   for (const category of ['노말','무기','방어구','추가','특수']) {
     if (!await dialog.isVisible()) await open('crystas');
     await dialog.locator(`[data-subcategory="${category}"]`).click(); await wait();
     assert.ok((await catalog.locator('.catalog-count').innerText()).startsWith(Object.values(crystaItems).filter(item => item.category === category).length.toLocaleString('ko-KR') + '개'),'Normal and enhanced crystas share a family');
+    const entries = catalog.locator('[data-entry-id]');
+    assert.equal(await catalog.locator('.catalog-list .equipment-icon').count(),await entries.count());
+    assert.ok((await catalog.locator('.catalog-list .equipment-icon').evaluateAll(images => images.map(image => image.getAttribute('src')))).every(src => src === CRYSTA_ICONS[category]));
   }
   await page.goBack(); await wait(); assert.equal(new URL(page.url()).searchParams.get('subcategory'),'추가');
+  for (const category of ['노말','무기','방어구','추가','특수']) {
+    for (const enhanced of [false,true]) {
+      const item = Object.values(crystaItems).find(item => item.category === category && (item.typeId >= 61) === enhanced);
+      await page.goto(origin + `/catalog?kind=crystas&selected=${item.gameItemId}&subcategory=${encodeURIComponent(category)}`); await wait();
+      assert.equal(await catalog.locator('.catalog-name .equipment-icon').getAttribute('src'),CRYSTA_ICONS[category],'Base/enhanced crystas keep their category icon');
+    }
+  }
+  await capture('crysta-list-detail');
   await open('crystas'); await dialog.locator('[data-subcategory="all"]').click(); await wait();
   assert.equal(new URL(page.url()).searchParams.has('subcategory'),false);
   assert.ok((await catalog.locator('.catalog-count').innerText()).startsWith(Object.keys(crystaItems).length.toLocaleString('ko-KR') + '개'));
@@ -75,6 +100,7 @@ try {
     const ids = new Set(bossVariants.filter(row => row.classification === classification).map(row => row.gameMonsterId));
     assert.ok((await catalog.locator('.catalog-count').innerText()).startsWith(ids.size.toLocaleString('ko-KR') + '개'));
     await catalog.locator('[data-entry-id]').first().click(); await wait();
+    assert.equal(await catalog.locator('.catalog-name .equipment-icon,.catalog-list .equipment-icon').count(),0,'Bosses must not retain an equipment icon');
     const id = Number(new URL(page.url()).searchParams.get('selected'));
     const allowed = new Set(bossVariants.filter(row => row.gameMonsterId === id && row.classification === classification).map(row => row.key));
     assert.ok((await catalog.locator('[name="variant"] option').evaluateAll(options => options.map(option => option.value))).every(key => allowed.has(key)),'Only variants in the selected category belong in details');
@@ -121,15 +147,42 @@ try {
   await catalog.locator('.catalog-lineage select').selectOption('9900'); await action('lineage').click(); await wait(); assert.equal(new URL(page.url()).searchParams.get('selected'),'9900');
   await page.goto(origin + '/catalog?section=bosses&selected=1314&variant=107602:1000'); await wait();
   assert.match(await catalog.locator('.catalog-details').innerText(),/필드 보스/); assert.match(await catalog.locator('.catalog-details').innerText(),/320/);
+  const bossStat = label => catalog.locator('.catalog-boss-stat-group dl > div').filter({has:page.getByText(label,{exact:true})}).locator('dd');
+  for (const [label,value] of [['HP','40,052,000'],['속성','빛'],['DEF','1,280'],['MDEF','1,280'],['회피','960'],['어보이드율','3%'],['크리티컬 저항','65'],['물리 내성','12%'],['마법 내성','12%'],['통상','15%p'],['물리','10%p'],['마법','15%p']]) assert.equal(await bossStat(label).innerText(),value,label);
+  assert.equal(await catalog.locator('.catalog-notes,.catalog-description').count(),0);
+  assert.doesNotMatch(await catalog.locator('.catalog-details').innerText(),/원본|필요 명중/);
+  assert.ok(await catalog.locator('.catalog-difficulty-label').isHidden());
+  assert.ok(await catalog.locator('[name="bossRegion"]').isHidden()); assert.ok(await catalog.locator('[name="variant"]').isHidden(),'A single static record needs no phase picker');
   await capture('boss-field');
+  await page.goto(origin + '/catalog?section=bosses&selected=59&variant=90961:1&level=200'); await wait();
+  assert.match(await catalog.locator('.catalog-summary').innerText(),/입장 Lv200/);
+  assert.equal(await bossStat('다음 페이즈').innerText(),'#100');
+  assert.ok((await catalog.locator('[name="variant"] option').allTextContents()).every(text => text.includes('페이즈')));
+  assert.ok((await catalog.locator('[name="variant"] option').evaluateAll(options => options.map(option => option.value))).every(key => key.startsWith('90961:')));
+  await catalog.locator('[name="variant"]').selectOption('90961:100'); await wait();
+  assert.equal(new URL(page.url()).searchParams.get('selected'),'59','Phase changes keep the same boss');
+  assert.equal(new URL(page.url()).searchParams.get('level'),'200','Phase changes keep the selected raid level');
+  assert.equal(await bossStat('세부 번호').innerText(),'90961:100');
+  await page.reload(); await wait(); assert.equal(await catalog.locator('[name="variant"]').inputValue(),'90961:100');
+  await capture('boss-raid-phase');
+  const otherRegion = await catalog.locator('[name="bossRegion"] option').evaluateAll(options => options.find(option => option.value !== '90961').value);
+  await catalog.locator('[name="bossRegion"]').selectOption(otherRegion); await wait();
+  assert.equal(new URL(page.url()).searchParams.get('selected'),'59');
+  assert.ok((await catalog.locator('[name="variant"] option').evaluateAll(options => options.map(option => option.value))).every(key => key.startsWith(otherRegion + ':')));
+  await page.goto(origin + '/catalog?section=bosses&selected=1195&variant=100500:1&level=200'); await wait();
+  await catalog.locator('[name="variant"]').selectOption('100500:102'); await wait();
+  assert.match(await bossStat('선택 개체').innerText(),/여자.*페이즈 #102/); assert.equal(await catalog.locator('[name="level"]').inputValue(),'200');
+  await capture('boss-guild-phase');
   const manifest = JSON.parse(await readFile(new URL('../../web/public/game-data/bosses/manifest.json',import.meta.url)));
   let entry;
   for (const file of Object.values(manifest.groups)) {entry = JSON.parse(await readFile(new URL('../../web/public/game-data/bosses/' + file,import.meta.url))).find(row => row.key === '3300:10'); if (entry) break;}
   assert.ok(entry && entry.entry.model === 'difficulty-select');
   await page.goto(origin + `/catalog?section=bosses&selected=${entry.gameMonsterId}&variant=3300:10`); await wait();
   const normal = await catalog.locator('.catalog-details').innerText();
-  await catalog.locator('.catalog-boss-controls [name="difficulty"]').selectOption('3'); await action('boss-values').click(); await wait();
+  assert.match(normal,/Normal/);
+  await catalog.locator('.catalog-boss-controls [name="difficulty"]').selectOption('3'); await wait();
   assert.equal(new URL(page.url()).searchParams.get('difficulty'),'3'); assert.notEqual(await catalog.locator('.catalog-details').innerText(),normal);
+  assert.match(await catalog.locator('.catalog-summary').innerText(),/Ultimate/); assert.equal(await bossStat('HP').innerText(),'10,000'); assert.equal(await bossStat('DEF').innerText(),'42');
   await capture('boss-difficulty');
   assert.ok(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1),'Desktop boss detail should fit the first viewport');
   await page.setViewportSize({width:1366,height:768}); await page.reload(); await wait();
@@ -144,6 +197,9 @@ try {
   await page.setViewportSize({width:390,height:844});
   assert.ok(await catalog.locator('.catalog-selected').isVisible()); assert.ok(await form.isVisible());
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); await capture('mobile-boss');
+  await catalog.locator('.catalog-boss-stat-group').nth(1).scrollIntoViewIfNeeded();
+  assert.ok(await bossStat('크리티컬 저항').isVisible()); await capture('mobile-boss-stats');
+  assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth && document.documentElement.scrollHeight <= innerHeight + 1));
   await action('list').click(); await wait(); assert.ok(await form.isVisible());
   await catalog.locator('.catalog-navigation-toggle').click();
   await catalog.locator('[data-section="bosses"]').click(); await wait();
@@ -157,6 +213,11 @@ try {
   await capture('mobile-categories');
   await dialog.locator('[data-subcategory="17"]').click(); await wait();
   assert.ok(await form.isVisible()); assert.equal(new URL(page.url()).searchParams.get('subcategory'),'17');
+  await catalog.locator('.catalog-navigation-toggle').click(); await open('crystas');
+  await capture('mobile-crysta-categories');
+  await dialog.locator('[data-subcategory="특수"]').click(); await wait();
+  await catalog.locator('[data-entry-id]').first().click(); await wait();
+  await capture('mobile-crysta-detail');
   await action('reset').click(); await wait();
   await form.locator('[name="q"]').fill('10182'); await form.locator('[type="submit"]').click(); await wait(); await catalog.locator('[data-entry-id="10182"]').click(); await wait();
   await page.setViewportSize({width:390,height:600});
@@ -170,11 +231,13 @@ try {
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)); await capture('mobile-item');
   await page.goto(origin + '/catalog?section=bosses&selected=0'); await wait();
   assert.doesNotMatch(await catalog.locator('.catalog-details').innerText(),/:\s*(?:null|undefined)(?:\n|$)/u,'Missing boss values are omitted');
+  assert.doesNotMatch(await catalog.locator('.catalog-details').innerText(),/원본|필요 명중/);
+  assert.equal(await catalog.locator('.catalog-notes,.catalog-description').count(),0);
   await page.goto(origin + '/catalog?section=items&selected=99999999'); await wait(); assert.match(await catalog.locator('.catalog-status').innerText(),/Unknown game item ID/);
   await action('reset').click(); await wait(); assert.equal(await catalog.locator('[data-entry-id]').count(),4);
   await page.goto(origin + '/catalog?section=wrong&page=-1'); await wait(); assert.match(await catalog.locator('.catalog-status').innerText(),/선택 조건/);
   await action('reset').click(); await wait();
-  await form.locator('[name="q"]').fill('<img src=x onerror=alert(1)>'); await form.locator('[type="submit"]').click(); await wait(); assert.equal(await catalog.locator('img').count(),0); assert.equal(await catalog.locator('[data-entry-id]').count(),0);
+  await form.locator('[name="q"]').fill('<img src=x onerror=alert(1)>'); await form.locator('[type="submit"]').click(); await wait(); assert.equal(await catalog.locator('img[src="x"],.catalog-list img').count(),0); assert.equal(await catalog.locator('[data-entry-id]').count(),0);
   assert.deepEqual(errors,[]);
   console.log(`Catalog browser: PASS (${builtWeb ? 'build/web' : 'source'}, Chrome PC/mobile, native option text/base ATK/condition colors, no detail tabs/pages, keyboard internal scroll, fixed bookmarks/categories, URL/search/locale, crysta lineage, boss variant/difficulty, no calculator mutation or API requests)`);
   console.log('Screenshots: ' + screenshots.join(' | '));

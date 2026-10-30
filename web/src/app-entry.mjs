@@ -2,6 +2,7 @@ import {statRegistry} from './calculation/stat-registry.js';
 import * as buildValues from './application/build-values.mjs';
 import { createItemCatalog, resolveEquipmentOptions, resolveEquipmentElement, validateEquipmentSelection, resolveConsumableBuffs } from './application/item-catalog.mjs';
 import { createBossCatalog } from './application/boss-catalog.mjs';
+import { createRegistletCatalog } from './application/registlet-catalog.mjs';
 import { validateBossSelection } from './application/boss-target.mjs';
 import { createAccountClient } from './application/account-client.mjs';
 import { createAccountUi } from './ui/account-ui.mjs';
@@ -19,6 +20,7 @@ export async function startApplication(documentRef = document) {
   const root = documentRef.defaultView, app = root.ToramApp ||= {};
   app.items = createItemCatalog(new URL('assets/game-data/items/manifest.json',documentRef.baseURI));
   app.bosses = createBossCatalog(new URL('assets/game-data/bosses/manifest.json',documentRef.baseURI));
+  app.registlets = createRegistletCatalog(new URL('assets/game-data/registlets/catalog.json',documentRef.baseURI));
   app.bossRules = Object.freeze({validateBossSelection});
   app.itemRules = Object.freeze({resolveEquipmentOptions,resolveEquipmentElement,validateEquipmentSelection,resolveConsumableBuffs,subWeaponRules:SUB_WEAPON_RULES});
   app.statLabels = STAT_LABELS;

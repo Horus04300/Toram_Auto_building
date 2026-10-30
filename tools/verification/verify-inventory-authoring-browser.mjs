@@ -73,6 +73,9 @@ try {
   assert.equal(await inventory.locator('[data-leaf],.inventory-pagination,.inventory-create-option-pages').count(),0);
   await inventory.locator('[data-inventory-group="mainWeapon"]').click(); await wait();
   assert.equal(await chooser.isVisible(),true); assert.equal(new URL(page.url()).search,'');
+  assert.equal(await chooser.locator('[data-inventory-leaf] img').count(),9,'All main weapon categories except unarmed have game icons');
+  await chooser.locator('img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  await capture('equipment-categories');
   await inventory.locator('[data-inventory-leaf="staff"]').focus(); await page.keyboard.press('Enter'); await wait();
   assert.equal(await chooser.isVisible(),false);
   assert.equal(await page.evaluate(() => document.activeElement.dataset.inventoryGroup),'mainWeapon');
@@ -82,12 +85,24 @@ try {
   await editor.locator('[data-step="options"]').click();
   for (const [key,value] of [['MATKP','12'],['MAXMP','200']]) {await editor.locator('[data-create="add-option"]').click(); const row = editor.locator('.inventory-create-option').last(); await row.locator('select').selectOption(key); await row.locator('input').fill(value);}
   await capture('equipment-options');
-  await editor.locator('[data-step="crystas"]').click(); await editor.locator('[name="crysta0"]').fill('댄드라이언'); await editor.locator('[name="lock1"]').check();
+  await editor.locator('[data-step="crystas"]').click();
+  assert.match(await editor.locator('[data-step="crystas"] img').getAttribute('src'),/\/crystas\/empty\.png$/u);
+  assert.equal(await editor.locator('.inventory-create-crysta-name img').count(),2);
+  await editor.locator('.inventory-create-crysta-name img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+  await capture('crysta-empty-slots');
+  await editor.locator('[name="crysta0"]').fill('댄드라이언'); await editor.locator('[name="lock1"]').check();
   await editor.locator('[name="crysta0"]').fill('등록되지 않은 크리스타'); await action('refresh').click(); await wait();
   assert.equal(await editor.isVisible(),true); assert.match(await inventory.locator('.inventory-status').innerText(),/찾을 수 없습니다/);
   assert.match(await inventory.locator('.inventory-list').innerText(),/내가 제작한 지팡이/); await editor.locator('[name="crysta0"]').fill('댄드라이언');
   await action('refresh').click(); await wait();
   const id = new URL(page.url()).searchParams.get('selected'), saved = await api('inventory/' + id);
+  const equipmentIcon = inventory.locator(`[data-object-id="${id}"] .equipment-icon`);
+  assert.match(await equipmentIcon.getAttribute('src'),/\/staff\.png$/u);
+  await equipmentIcon.evaluate(image => image.decode());
+  await editor.locator('[data-step="base"]').click();
+  assert.equal(await editor.locator('.inventory-create-slots img').count(),5);
+  assert.match(await editor.locator('.inventory-create-types [aria-pressed="true"] img').getAttribute('src'),/\/staff\.png$/u);
+  await capture('equipment-types');
   assert.equal(saved.data.slot,'mainWeapon'); assert.equal(saved.data.equipment.type,'지팡이'); assert.equal(saved.data.equipment.attack,500);
   assert.deepEqual(saved.data.equipment.options,[{key:'MATKP',value:12},{key:'MAXMP',value:200}]); assert.deepEqual(saved.data.equipment.crystas,['9776','']); assert.deepEqual(saved.provenance,[]);
   assert.equal(requests.includes('/assets/pages/calculator.html'),false,'Registration must not initialize or alter the calculator');
@@ -138,6 +153,7 @@ try {
   await page.setViewportSize({width:390,height:844}); await page.reload(); await wait(); await capture('mobile-bookmarks');
   assert.ok(await page.evaluate(() => document.documentElement.scrollHeight <= innerHeight + 1),'Mobile browsing must fit without page scrolling');
   await inventory.locator('.inventory-navigation-toggle').click(); await leftBookmarks();
+  assert.ok(await inventory.locator('.inventory-group-rail .bookmark-label').evaluateAll(labels => labels.every(label => label.scrollWidth <= label.clientWidth)),'Equipment icons must leave all mobile category labels readable');
   assert.equal(await inventory.locator('.inventory-shelf').isVisible(),false); await capture('mobile-left-bookmarks');
   await inventory.locator('[data-inventory-group="mainWeapon"]').click(); await anchoredChoices(); await capture('mobile-choice-modal');
   await inventory.locator('[data-inventory-leaf="staff"]').click(); await wait();

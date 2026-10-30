@@ -1,0 +1,43 @@
+
+/* WARNING: Globals starting with '_' overlap smaller symbols at the same address */
+/* WARNING: Unknown calling convention -- yet parameter storage is locked */
+
+byte GemCartBuffer_TransferBuff_GetBonusData
+               (undefined *self,undefined *id,undefined *val,undefined *methodInfo)
+
+{
+  code *pcVar1;
+  byte bVar2;
+  longlong lVar3;
+  
+  if (DAT_7ffe9cadd3d7 == '\0') {
+    FUN_7ffe9996d590(&DAT_7ffe9c917e58);
+    DAT_7ffe9cadd3d7 = '\x01';
+  }
+  lVar3 = func_0x7ffe9996c990(_DAT_7ffe9c917e58,1);
+  if (lVar3 != 0) {
+    if (*(int *)(lVar3 + 0x18) != 0) {
+      *(undefined2 *)(lVar3 + 0x20) = 0xe;
+      *(longlong *)id = lVar3;
+      il2cpp_write_barrier_0();
+      lVar3 = func_0x7ffe9996c990(_DAT_7ffe9c917e58,1);
+      if (lVar3 == 0) goto LAB_7ffe9a2f34f5;
+      if (*(int *)(lVar3 + 0x18) != 0) {
+        *(short *)(lVar3 + 0x20) = (*(short *)(self + 0x14) + -0xb) * 100;
+        *(longlong *)val = lVar3;
+        il2cpp_write_barrier_0();
+        return 1;
+      }
+    }
+    FUN_7ffe9996d790();
+    pcVar1 = (code *)swi(3);
+    bVar2 = (*pcVar1)();
+    return bVar2;
+  }
+LAB_7ffe9a2f34f5:
+  FUN_7ffe9996d7a0();
+  pcVar1 = (code *)swi(3);
+  bVar2 = (*pcVar1)();
+  return bVar2;
+}
+

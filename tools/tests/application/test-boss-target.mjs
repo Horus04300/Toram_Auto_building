@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {createHash} from 'node:crypto';
 import {createBossSelection,resolveBossTarget,validateBossSelection} from '../../../web/src/application/boss-target.mjs';
 
 const sha = 'a'.repeat(64);
@@ -31,7 +33,7 @@ Object.assign(input.variants[0].baseStats,{level:290,maxHp:380,def:600,mdef:600,
 selection = select(input);
 assert.deepEqual(resolveBossTarget(selection).target,{bossLevel:290,bossDef:1740,bossMdef:1740,bossPhysResist:25,bossMagResist:25,bossCritResist:0});
 assert.ok(resolveBossTarget(selection).details.some(([label,value])=>label==='본체 HP' && value===11909278));
-assert.ok(resolveBossTarget(selection).details.some(([label,value])=>label==='본체 필요 명중' && value===761));
+assert.ok(resolveBossTarget(selection).details.some(([label,value])=>label==='회피' && value===761));
 selection.level = 325; selection.variant.baseStats.maxHp=280;
 assert.equal(resolveBossTarget(selection).target.bossDef,1950);
 assert.equal(resolveBossTarget(selection).target.bossPhysResist,27);
@@ -73,4 +75,21 @@ selection.level=900; selection.variant.baseStats.def=13;
 assert.equal(resolveBossTarget(selection).target.bossDef,117,'Guild integer multiplication then f32 percent differs from HighRaid (116).');
 assert.match(resolveBossTarget(selection).details.find(([label])=>label==='본체 HP')[1],/int32/);
 for (const level of [39,41,1024]) assert.throws(()=>validateBossSelection({...selection,level}));
+const evidence = JSON.parse(await readFile(new URL('../../../data/sources/toram-monsters/native-hit-accuracy/report.json',import.meta.url)));
+const parent = JSON.parse(await readFile(new URL('../../../data/sources/toram-items/native-option-calculation/index.json',import.meta.url)));
+assert.deepEqual(evidence.source,parent.source,'The hit investigation uses the same pinned native snapshot as the retained player-status evidence');
+for (const [path,expected] of Object.entries(evidence.artifacts)) {
+  const bytes = await readFile(new URL('../../../' + path,import.meta.url));
+  assert.equal(createHash('sha256').update(bytes).digest('hex'),expected,path);
+}
+assert.equal(evidence.field.name,'necessaryHit');
+assert.deepEqual(evidence.interfaces.IMobStatusCalculator.methods.map(({slot,name}) => [slot,name]),[[2,'get_NecessaryHit'],[7,'get_GuardProbability'],[8,'get_AvoidProbability']]);
+assert.deepEqual(evidence.interfaces.IPlayerStatusCalculator.methods.map(({slot,name}) => [slot,name]),[[17,'get_Hit']]);
+const divisor = evidence.constants.find(row => row.va === '0x7ffe9c049b74');
+assert.equal(divisor.bytesHex,'00004040'); assert.equal(Buffer.from(divisor.bytesHex,'hex').readFloatLE(),3);
+const checkHit = await readFile(new URL('../../../data/sources/toram-items/native-option-calculation/extended-consumption/14274-PlayerAttackBase-CheckHit.c',import.meta.url),'utf8');
+assert.match(checkHit,/FUN_7ffe99742ec0\(0x11,/);
+assert.ok(checkHit.includes('(mp / 100 + 10) * 10 - (int)((float)(needHit - iVar10) / _DAT_7ffe9c049b74)'));
+assert.ok(checkHit.includes('*correct = 0;'),'The accuracy comparison also controls a separate output; it is not the entire final hit result');
 console.log('Boss target: PASS (field, difficulty/parts, HighRaid, guild actors/level/HP/precision, missing sources and validation).');
+console.log('Boss accuracy evidence: PASS (native snapshot identity, necessaryHit versus player HIT, separate Avoid/Guard slots, divisor bytes, retained decompilation hashes)');

@@ -11,6 +11,10 @@ function catalogSources(data) {
   const sources = new Map();
   function visit(value) {
     if (!value || typeof value !== 'object') return;
+    if (value.schema === 'toram.registlet.v1') {
+      const source = {kind:'registlet-catalog',registletId:value.registletId,cacheVersion:value.cacheVersion,sourceSha256:value.sourceSha256};
+      sources.set(JSON.stringify(source),source); return;
+    }
     if (['toram.equipment-item.v1','toram.consumable-buff.v1'].includes(value.schema)) {
       const source = {kind:'catalog',gameItemId:value.gameItemId,cacheVersion:value.cacheVersion,sourceSha256:value.sourceSha256};
       sources.set(JSON.stringify(source),source); return;
