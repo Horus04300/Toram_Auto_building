@@ -34,6 +34,10 @@ if(!dist&&!web) {
  assert.ok(!worker.some(path=>path.includes('/ui/')),'Worker is headless');
  const docker=await readFile(resolve(root,'server/Dockerfile'),'utf8');
  const copied=docker.split(/\r?\n/).filter(line=>line.startsWith('COPY ')).flatMap(line=>line.split(/\s+/).slice(1,-1).filter(part=>!part.startsWith('--')));
+ const dockerAllowed=new Set((await readFile(resolve(root,'.dockerignore'),'utf8')).split(/\r?\n/));
+ for(const path of ['package.json',...await sourceModuleFiles(['server/account-server.mjs'])]) {
+  for(let entry=path;entry;entry=entry.includes('/')?entry.slice(0,entry.lastIndexOf('/')):'') assert.ok(dockerAllowed.has('!'+entry+(entry===path?'':'/')),'Docker context omits runtime dependency or parent: '+entry);
+ }
  for(const path of await sourceModuleFiles(['server/account-server.mjs'])) assert.ok(copied.includes(path),'Docker omits runtime dependency: '+path);
  assert.ok(copied.includes('package.json'),'Docker preserves the ESM boundary');
  // Public IPC registration is a wire contract, independent of internal Rust module layout.
@@ -48,5 +52,5 @@ if(!dist&&!web) {
   }
   visit(source);
  }
- console.log('Module boundaries: PASS (calculation/rendering/execution/Worker direction, Docker closure, public IPC registration)');
+ console.log('Module boundaries: PASS (calculation/rendering/execution/Worker direction, Docker closure/context allowlist, public IPC registration)');
 }

@@ -1,0 +1,11 @@
+toram.nimp.dev {
+    tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key
+    # Managed by Toram deployment.
+    reverse_proxy https://toram:443 {
+        header_up Host {host}
+        transport http {
+            tls_trust_pool file /etc/caddy/certs/toram-upstream.pem
+            tls_server_name toram.nimp.dev
+        }
+    }
+}

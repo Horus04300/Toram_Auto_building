@@ -16,6 +16,7 @@ export const NORMAL_VALUE_FIXTURES = Object.freeze([
   'tests/application/test-boss-target.mjs',
   'tests/optimization/test-crysta-wasm.mjs',
   'tests/application/test-web-runtime.mjs',
+  'tests/application/test-web-deploy.mjs',
   'tests/application/test-web-dev-account.mjs',
   'tests/application/test-ui-bootstrap.mjs',
   'tests/application/test-my-room-food.mjs',

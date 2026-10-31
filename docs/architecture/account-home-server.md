@@ -59,6 +59,31 @@ SQLite는 사용자/세션/OAuth 대기/앱 로그인 대기/저장 항목을 �
 
 ## Linux/Docker 배포
 
+### nimp 원격 배포
+
+운영 대상은 SSH 별칭 `nimp`, 공개 origin `https://toram.nimp.dev`다. cloudflared가 서버에서 Cloudflare로 먼저 연결해 이중 NAT의 인바운드 경로를 우회한다. 공개 경로는 Tunnel→기존 Caddy HTTPS443→공유 Docker `proxy` 네트워크의 Toram HTTPS443이다. Caddy는 `/srv/compose/proxy`를 유지하고 Toram에는 호스트 `ports`를 설정하지 않는다. cloudflared는 Cloudflare Origin CA와 `toram.nimp.dev` SNI로 Caddy 인증서를 검증하며, Caddy는 전용 내부 인증서를 trust pool에 고정해 Toram을 검증한다. 두 연결 모두 TLS 검증을 끄지 않는다.
+
+최초 Cloudflare의 Networking→Tunnels에서 toram 터널을 만들고 토큰을 준비한다. 개발 PC에서 `npm run web:deploy -- --setup`을 실행한다. 로컬 `server/.env`의 Google client ID/secret 두 값만 SSH로 전송하며 다른 환경값·로컬 DB·원문·테스트 인증서는 배포하지 않는다. 출력된 `ssh -t nimp "sudo bash /srv/compose/toram/bootstrap/setup.sh"`를 사용자가 실행하고 서버 sudo 비밀번호와 터널 토큰을 해당 터미널에 입력한다. 토큰은 채팅·명령 인자·Git에 넣지 않으며 입력은 숨긴다. 설정은 전용 디렉터리·비공개 환경파일·내부 인증서·배포 sudo 권한을 만들고 기존 환경파일과 DB는 보존한다. Google 콜백은 `https://toram.nimp.dev/api/auth/google/callback`이다.
+
+커넥터가 Healthy이면 터널의 Routes→Published application을 `toram.nimp.dev`, 서비스 `https://caddy:443`, Origin Server Name `toram.nimp.dev`로 등록한다. TLS 검증 해제는 끈다. 이 이름의 터널 CNAME이 기존 와일드카드 A보다 우선하며 다른 도메인·Minecraft는 변경하지 않는다. 서버의 외부 TCP/UDP7844 연결이 필요하며 인바운드 NAT 포워딩은 Toram 경로에 사용하지 않는다. 터널 구간 암호화와 로컬 인증서 검증은 zone의 Full 설정과 별개다.
+
+이후 저장소 루트의 `npm run web:deploy` 하나가 다음을 실행한다.
+
+1. 원격 전용 배포 권한·Docker·네트워크·인증서 사전 확인.
+2. 로컬 전체 `npm test`, 웹 WASM/정적 빌드, 생성본 ESM 검사.
+3. 서버의 실제 import 의존과 Dockerfile·웹 산출물만 SHA-256 manifest와 함께 압축·SCP 전송.
+4. 서버에서 파일 경로·종류·전체 해시를 확인한 후 릴리스 보관. Docker는 이미 준비된 파일을 Node24 이미지에 복사하며 소스를 컴파일하거나 npm 의존성을 설치하지 않는다.
+5. SQLite backup API로 일관된 백업을 만들고 무결성 검사. 이미지 교체, HTTPS 인증서 검증, cloudflared 연결 readiness 검사.
+6. 기존 Toram 빈 Caddy 블록만 변경하고 전체 설정 검증 후 reload. 공개 HTTPS API와 OAuth 설정 확인 후 현재 릴리스를 기록.
+
+로컬 마지막 검사는 공개 HTML·CSS·JS·WASM·API와 COOP/COEP도 확인한다. Cloudflare525나 타임아웃이면 성공으로 표시하지 않는다. 내부 healthcheck만 정상이라면 Tunnel 상태·공개 hostname 경로·CA/SNI와 외부 네트워크를 확인한다. readiness는 커넥터의 localhost metrics를 사용하고 포트를 공개하지 않는다.
+
+경로는 `/srv/compose/toram`(환경·고정 Compose·릴리스·전송 대기), `/srv/data/toram/db`(SQLite), `/srv/data/toram/tls`(내부 TLS), `/srv/data/toram/cloudflared`(토큰·공개 CA), `/srv/backups/toram`(DB·프록시 백업)이다. 토큰은 root:65532/640이며 해당 커넥터에만 읽기 전용으로 마운트한다. Google 키는 커넥터에 주지 않는다. `/usr/local/sbin/toram-deploy`·`/usr/local/lib/toram-deploy`는 root 소유이며 자동화 계정에는 이 배포 명령만 sudo로 허용한다. 인프라를 바꾸면 최초 설정을 다시 적용한다. 루틴 배포는 환경값·DB·다른 사이트를 보존한다.
+
+기존 서비스 교체에는 짧은 중단이 발생할 수 있다. 실패하면 이전 코드/프록시를 복원하고 DB는 보존한다. 이전 코드와 호환되지 않는 DB 변경은 이 방식으로 자동 복구할 수 없으므로 별도 이관/복원 계획이 필요하다. 이전 릴리스·이미지·백업은 자동 삭제하지 않으며 디스크 사용량을 관리한다. 내부 인증서는 최초10년 유효하며 배포 전30일 잔여를 확인한다. 만료 전 운영자가 인증서 교체와 최초 설정을 수행한다. 공개 Caddy 인증서 갱신은 기존 프록시 운영 범위다.
+
+운영 Node CLI는 `TLS_CERT_PATH`·`TLS_KEY_PATH` 두 값을 함께 받으면 HTTPS(기본443)로 실행한다. 둘 다 없으면 HTTP(기본8787)이며 개발 서버는 기존 HTTP를 유지한다. nimp Compose는 환경값을 직접 주입하고 TLS·DB만 마운트한다. 기존 아래 수동 HTTP 배포 예시는 별도 환경용이다.
+
 필요한 준비물은 공개 HTTPS 주소(예: `https://calculator.example.com`), 그 주소를 홈 서버로 연결할 도메인/프록시, Google Cloud OAuth 웹 클라이언트 ID·secret이다. 사설 IP의 HTTP 주소만으로 외부 Google 로그인 서비스를 배포하지 않는다. Google Cloud 프로젝트/동의 화면/발급 키는 소유자가 준비해야 한다.
 
 1. Google Cloud의 OAuth 클라이언트 유형을 **웹 애플리케이션**으로 만들고 승인된 리디렉션 URI를 `https://실제주소/api/auth/google/callback`으로 정확하게 등록한다. 동의 화면의 앱 이름·소유자 연락처·대상 사용자·공개 상태를 설정한다. 테스트 모드라면 로그인할 Google 계정을 테스트 사용자로 등록한다.

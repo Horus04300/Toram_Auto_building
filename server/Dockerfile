@@ -11,5 +11,5 @@ COPY --chown=node:node web/src/data/registlet-levels.mjs ./web/src/data/
 COPY --chown=node:node web/src/calculation/stat-registry.js web/src/calculation/calculation-policies.js ./web/src/calculation/
 COPY --chown=node:node build/web ./build/web
 USER node
-EXPOSE 8787
+EXPOSE 443
 CMD ["node", "--env-file=server/.env", "server/account-server.mjs"]

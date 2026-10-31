@@ -18,6 +18,7 @@ Node.js 24 LTS와 Rust가 필요합니다. Windows 앱에는 Microsoft C++ Build
 | --- | --- |
 | npm run desktop:build | Windows 앱·NSIS 설치 파일 |
 | npm run web:build | 정적 웹 배포본 build/web/ |
+| npm run web:deploy | 로컬 검사·빌드 후 ssh nimp로 toram.nimp.dev 배포 |
 | npm run desktop:dev | Tauri 개발 앱 |
 | npm run web:dev | 웹 개발 서버 |
 | npm test | 타입·모듈 경계·JS 회귀·S1·Rust fmt/test/clippy |
@@ -67,6 +68,8 @@ desktop/src/ + engine/ + build/desktop/        → Windows 앱
 홈(`/`)·계산기(`/calculator`)·도감(`/catalog`)·내 구성(`/inventory?type=equipment`)·게시판을 공통 메뉴로 전환하며 계산기 입력을 유지합니다. 화면 동작은 [웹 안내](web/README.md)를 따릅니다.
 
 계정 저장·Google 로그인·공개 빌드는 별도 홈 서버가 필요합니다. 키·HTTPS·Docker·앱 서버 주소 설정은 [홈 서버 배포 방법](docs/architecture/account-home-server.md)을 따릅니다. 서버 설정 전에는 로컬 저장을 사용합니다.
+
+`toram.nimp.dev`는 Cloudflare Tunnel 생성 후 최초 `npm run web:deploy -- --setup`과 표시된 서버 sudo 명령을 실행하고 터널 토큰을 서버 터미널에 입력합니다. 공개 경로는 HTTPS caddy:443, Origin Server Name toram.nimp.dev이며 TLS 검증을 켜둡니다. 이후 루트의 `npm run web:deploy` 하나로 배포합니다. Node24·Python3·SSH/SCP·tar와 웹 빌드 도구가 개발 PC에 필요합니다. 서버는 Docker로 실행하며 Rust·npm 빌드는 하지 않습니다. Tunnel이 NAT 포워딩 경로를 우회하고 Caddy→Toram은 HTTPS443을 사용합니다. 로컬 `server/.env`의 Google 키와 공개 도메인 OAuth 콜백 등록이 필요합니다.
 
 data/sources/와 docs/sources/의 원문, web/public/game-data/의 현재 manifest와 참조 자산은 보존합니다. 과거 자산 정리는 이전 manifest를 캐시한 화면에 영향을 줄 수 있으므로 별도 검토합니다. build/ 전체, 각 Rust 프로젝트의 target/, node_modules/는 Git에서 제외한 생성물입니다. 저장·업데이트 어댑터는 desktop/adapters/의 TypeScript 원본을 수정합니다. 앱 build/dev가 build/generated/desktop/에 컴파일합니다.
 

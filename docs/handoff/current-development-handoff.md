@@ -10,7 +10,7 @@
 - BuildDraftStore는 확정 Build/Scenario·일회 Request·revision을, OptimizerController는 추천 작업 수명을 소유한다. SettingsRepository는 저장 계약, UpdateController는 업데이트 상태·설치 조정·잠금/epoch를 소유한다.
 - 스킬29트리·427정의는 ID별 단일 원본이며 registry가 중복을 거부한다. 수치·순서는 fixture와 S1 Gate로 검증한다. S1 출처 연결, S2~S5 계산 연결, 전투 상태 시뮬레이션은 별도 완료 기준이다.
 - 실제 ESM 그래프가 웹/앱·Worker 배포를 결정한다. 계산 커널은4모듈이고 UI/스킬 데이터에 의존하지 않는다. 동결 JS 수식은 테스트 전용 독립 oracle이며 제품 그래프에 포함하지 않는다.
-- npm 명령은 desktop:build/web:build/desktop:dev/web:dev와 test만 제공한다. build/dev/test가 WASM·TS 준비를 소유한다. 웹은 build/web/, 앱 프론트엔드는 build/desktop/, TS는 build/generated/desktop/이다. build/·Rust target/·node_modules/는 생성물이다.
+- build/dev/test가 WASM·TS를 준비한다. web:build는 build/web/, 앱은 build/desktop/, TS는 build/generated/desktop/이다. API는 Node 서버이며 모듈 Gate가 Docker 의존·허용 목록을 검사한다. web:deploy는 검사/빌드→SSH nimp→Tunnel/Caddy/Toram HTTPS443 배포다. 계약은 docs/architecture/account-home-server.md다.
 - web:dev는 server/.env를 읽고 기본 http://localhost:8787/에서 소스 화면과 실제 계정·Google 로그인·인벤토리/게시판 API를 함께 제공한다. 기존 키와 server/data/accounts.sqlite를 사용하며 다른 주소의 페이지는 설정 origin으로 이동한다. PORT·PUBLIC_ORIGIN·Google 콜백은 일치시킨다.
 
 ## 추천·계산 계약
@@ -27,7 +27,7 @@
 
 - `toram-auto-build-document` schema v2의 saved-build/application-state를 공유한다. 자동 복원 키는 toram.auto-build.application-state.v2다. v1 읽기는 파생 externalOptions만 폐기한다. 사용자 옵션·빈 목록·장비/제련을 보존하며 선택지를 먼저 초기화한 뒤 복원한다.
 - 설치는 LocalAppData 아래 공백 포함 Toram Online Auto Build Calculator 폴더, 사용자 세팅은 `%LOCALAPPDATA%\ToramOnlineAutoBuildCalculator`다. 앱 제거와 세팅 삭제는 별개다.
-- 식별자는 com.toramonline.autobuildcalculator다. package/Cargo/Tauri·제품 lockfile은0.7.3이다. 확인된 공개 릴리스는0.7.3이며 현재 로컬 통합본은 설치·배포하지 않았다.
+- 식별자는 com.toramonline.autobuildcalculator다. package/Cargo/Tauri·제품 lockfile은0.7.3이다. 공개 Windows 릴리스는0.7.3이며 로컬 통합본은 미설치다. 웹은 toram.nimp.dev에 배포했다.
 - Tauri updater2.11.0·GitHub Latest endpoint·명시적 동의·서명 검증을 사용한다. 설치 전 계산 종료·최신 입력 저장 실패는 설치를 차단한다. 계약은 `docs/architecture/app-update-release.md`다.
 - 저장/업데이트 TS는 `desktop/adapters/` 원본과 `desktop/tsconfig.json`으로 관리한다. 앱 준비의 TS 출력은 `build/generated/desktop/`이다.
 
@@ -49,7 +49,7 @@
 
 ## 검증
 
-- 현재 검사: npm test의 회귀88/88(실제87 PASS·Native 저장1 SKIP)·공용 Rust96·desktop24·타입/모듈 경계·S1·fmt/clippy와 Chrome 계산/JSON/Worker/병렬 검사 PASS. 개발 서버의 OAuth/PKCE·쿠키·저장/재시작·권한/비공개 경로는 격리 DB와 Google 응답 대체로 검사한다. 실제 localhost:8787 CLI·계정 버튼→Google 인증 페이지 진입도 확인했으며 실제 계정 인증 완료는 별도다. 로그는 build/tmp/web-dev-integration/에 있다.
+- npm test 회귀89/89(88 PASS·Native 저장1 SKIP)·Rust96/desktop24·타입/모듈·S1·fmt/clippy PASS. HTTPS·배포 해시/경로/변조·백업/실패복구 PASS. Tunnel/Caddy/Toram healthcheck·공개 자산/병렬12회·Chrome PC/모바일·Worker exact·복원 PASS. Google 실인증은 별도다. 로그는 build/tmp/web-deploy-tunnel.log다.
 - `npm test`가 프론트엔드 준비·타입·실제 모듈 경계·전체 JS 회귀·S1·두 Rust manifest의 fmt/test/clippy를 소유한다. 개별 계산 검사는 WASM 선행 빌드가 필요하다.
 - 실제 Chrome 검사는 `npm test -- browser`가 웹 준비와 계산/JSON/재열기/Worker/병렬 검사를 실행한다. 실제 앱은 audit-desktop-e2e.mjs의 격리 프로필로 확인한다. TORAM_E2E_CDP 없는 개별 Native 저장 검사는 SKIP이다.
 - 장비·크리스타 아이콘은 `test-skill-icon-assets.mjs`의 원본 해시/종류 대응, `verify-catalog-browser.mjs`의 소스·웹 생성본 PC/모바일(크리스타5분류·기본/강화 상세 포함)과 인벤토리 장비/크리스타 PC/노트북/모바일 표시·편집·저장을 검증했다. 전체 인벤토리 authoring의 모바일 스킬셋 배치 타임아웃은 변경 전 파일에서도 재현하며 장비 검사와 구분한다.

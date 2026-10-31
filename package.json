@@ -6,6 +6,7 @@
   "scripts": {
     "web:dev": "node tools/web-dev.mjs",
     "web:build": "node tools/prepare-frontend.mjs web",
+    "web:deploy": "node tools/deploy-web.mjs",
     "desktop:dev": "cd desktop && tauri dev",
     "desktop:build": "cd desktop && tauri build",
     "test": "node tools/run-regression-suite.mjs"

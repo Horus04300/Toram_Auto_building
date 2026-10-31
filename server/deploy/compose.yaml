@@ -1,0 +1,64 @@
+name: toram
+
+services:
+  tunnel:
+    image: cloudflare/cloudflared:2026.10.6
+    command: [tunnel, --metrics, '127.0.0.1:20241', run, --token-file, /run/secrets/tunnel-token]
+    user: '65532:65532'
+    restart: unless-stopped
+    environment:
+      SSL_CERT_DIR: /etc/ssl/certs
+    volumes:
+      - /srv/data/toram/cloudflared/token:/run/secrets/tunnel-token:ro
+      - /srv/data/toram/cloudflared/origin-ca.pem:/etc/ssl/certs/cloudflare-origin-ca.pem:ro
+    networks: [proxy]
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    healthcheck:
+      test: [CMD, cloudflared, tunnel, --metrics, '127.0.0.1:20241', ready]
+      interval: 5s
+      timeout: 4s
+      retries: 18
+      start_period: 10s
+
+  calculator:
+    image: toram-web:${TORAM_RELEASE:?A verified release is required}
+    build:
+      context: ./releases/${TORAM_RELEASE}
+      dockerfile: server/Dockerfile
+    command: [node, server/account-server.mjs]
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      PUBLIC_ORIGIN: https://toram.nimp.dev
+      PORT: '443'
+      TLS_CERT_PATH: /run/toram-tls/cert.pem
+      TLS_KEY_PATH: /run/toram-tls/key.pem
+    volumes:
+      - /srv/data/toram/db:/app/server/data
+      - /srv/data/toram/tls:/run/toram-tls:ro
+    expose: ['443']
+    networks:
+      proxy:
+        aliases: [toram]
+    read_only: true
+    security_opt: [no-new-privileges:true]
+    cap_drop: [ALL]
+    sysctls:
+      net.ipv4.ip_unprivileged_port_start: '0'
+    healthcheck:
+      test:
+        - CMD
+        - node
+        - -e
+        - "require('https').get('https://127.0.0.1/api/session',{ca:require('fs').readFileSync(process.env.TLS_CERT_PATH),servername:'toram.nimp.dev',timeout:3000},r=>{r.resume();process.exitCode=r.statusCode===200?0:1}).on('timeout',function(){this.destroy()}).on('error',()=>process.exit(1))"
+      interval: 5s
+      timeout: 4s
+      retries: 12
+      start_period: 10s
+
+networks:
+  proxy:
+    external: true
+    name: proxy

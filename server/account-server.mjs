@@ -2,6 +2,7 @@ import {createLegacyRecords} from './legacy-records.mjs';
 import {RECORD_KINDS as kinds} from './account-records.mjs';
 import {APP_PATHS,contentType,staticHeaders,containedFile} from './static-assets.mjs';
 import { createServer } from 'node:http';
+import { createServer as createHttpsServer } from 'node:https';
 import { DatabaseSync } from 'node:sqlite';
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
 import { mkdirSync } from 'node:fs';
@@ -36,7 +37,7 @@ async function body(req) {
   catch { throw fail(400, 'JSON 형식이 올바르지 않습니다.'); }
 }
 
-export function createAccountServer({ publicOrigin, clientId = '', clientSecret = '', database = ':memory:', frontend = resolve(import.meta.dirname, '../build/web'), serveFrontend, fetchImpl = fetch } = {}) {
+export function createAccountServer({ publicOrigin, clientId = '', clientSecret = '', database = ':memory:', frontend = resolve(import.meta.dirname, '../build/web'), serveFrontend, fetchImpl = fetch, tls } = {}) {
   const origin = new URL(publicOrigin);
   if (origin.origin !== publicOrigin || origin.username || origin.password || (origin.protocol !== 'https:' && !(origin.protocol === 'http:' && ['localhost','127.0.0.1'].includes(origin.hostname)))) throw new Error('PUBLIC_ORIGIN must be an HTTPS origin (HTTP loopback is allowed for local testing).');
   if (database !== ':memory:') mkdirSync(dirname(database), { recursive:true });
@@ -101,7 +102,7 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
     res.writeHead(200, { 'Content-Type':contentType(file) });
     res.end(req.method === 'HEAD' ? undefined : content);
   }
-  const server = createServer({ maxHeaderSize:16384, requestTimeout:20000 }, async (req, res) => {
+  const server = (tls ? createHttpsServer : createServer)({ ...tls, maxHeaderSize:16384, requestTimeout:20000 }, async (req, res) => {
     staticHeaders(res);
     res.setHeader('Referrer-Policy', 'no-referrer');
     res.setHeader('Vary', 'Origin');
@@ -246,9 +247,12 @@ export function createAccountServer({ publicOrigin, clientId = '', clientSecret 
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
-  const port = Number(process.env.PORT || 8787);
+  const cert = process.env.TLS_CERT_PATH, key = process.env.TLS_KEY_PATH;
+  if (Boolean(cert) !== Boolean(key)) throw new Error('TLS_CERT_PATH and TLS_KEY_PATH must be configured together.');
+  const tls = cert ? { cert:await readFile(cert), key:await readFile(key), minVersion:'TLSv1.2' } : undefined;
+  const port = Number(process.env.PORT || (tls ? 443 : 8787));
   if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('PORT must be between 1 and 65535.');
   const server = createAccountServer({ publicOrigin:process.env.PUBLIC_ORIGIN, clientId:process.env.GOOGLE_CLIENT_ID, clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-    database:process.env.DATABASE_PATH || resolve(import.meta.dirname, 'data/accounts.sqlite') });
-  server.listen(port, '0.0.0.0', () => console.log(`Account server listening on ${port}`));
+    database:process.env.DATABASE_PATH || resolve(import.meta.dirname, 'data/accounts.sqlite'), tls });
+  server.listen(port, '0.0.0.0', () => console.log(`Account server listening on ${tls ? 'HTTPS' : 'HTTP'} ${port}`));
 }
